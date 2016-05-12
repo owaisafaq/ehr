@@ -24,6 +24,13 @@ $app = new Laravel\Lumen\Application(
 );
 
  $app->withFacades();
+ $app->configure('jwt');
+
+class_alias('Tymon\JWTAuth\Facades\JWTAuth', 'JWTAuth');
+/** This gives you finer control over the payloads you create if you require it.
+ *  Source: https://github.com/tymondesigns/jwt-auth/wiki/Installation
+ */
+class_alias('Tymon\JWTAuth\Facades\JWTFactory', 'JWTFactory'); // Optional
 
 // $app->withEloquent();
 
@@ -48,6 +55,22 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
+
+$app->singleton(
+    Illuminate\Auth\AuthManager::class,
+    function ($app) {
+        return $app->make('auth');
+    }
+);
+
+$app->singleton(
+    Illuminate\Cache\CacheManager::class,
+    function ($app) {
+        return $app->make('cache');
+    }
+);
+
+
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -63,9 +86,11 @@ $app->singleton(
 //    App\Http\Middleware\ExampleMiddleware::class
 // ]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+ $app->routeMiddleware([
+     'auth' => App\Http\Middleware\Authenticate::class,
+     'jwt.auth'    => Tymon\JWTAuth\Middleware\GetUserFromToken::class,
+     'jwt.refresh' => Tymon\JWTAuth\Middleware\RefreshToken::class,
+ ]);
 
 /*
 |--------------------------------------------------------------------------
@@ -77,6 +102,9 @@ $app->singleton(
 | totally optional, so you are not required to uncomment this line.
 |
 */
+
+// JWTAuth Dependencies
+$app->register(Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class);
 
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
@@ -92,6 +120,9 @@ $app->singleton(
 | can respond to, as well as the controllers that may handle them.
 |
 */
+
+
+
 
 $app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
     require __DIR__.'/../app/Http/routes.php';
