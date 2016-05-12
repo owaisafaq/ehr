@@ -25,6 +25,7 @@ class GetUserFromToken extends BaseMiddleware
      */
     public function handle($request, \Closure $next)
     {
+
         if (! $token = $this->auth->setRequest($request)->getToken()) {
             return $this->respond('tymon.jwt.absent', 'token_not_provided', 400);
         }

@@ -32,7 +32,7 @@ class_alias('Tymon\JWTAuth\Facades\JWTAuth', 'JWTAuth');
  */
 class_alias('Tymon\JWTAuth\Facades\JWTFactory', 'JWTFactory'); // Optional
 
-// $app->withEloquent();
+ $app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
@@ -69,6 +69,7 @@ $app->singleton(
         return $app->make('cache');
     }
 );
+
 
 
 /*
@@ -120,7 +121,6 @@ $app->register(Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class);
 | can respond to, as well as the controllers that may handle them.
 |
 */
-
 
 
 

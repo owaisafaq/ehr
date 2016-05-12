@@ -38,7 +38,7 @@ return [
 
     'guards' => [
         'api' => [
-            'users' => 'api',
+            'driver' => 'api',
             'provider' => 'users',
             'identifier' => 'email_address',
             'password' => 'password',
