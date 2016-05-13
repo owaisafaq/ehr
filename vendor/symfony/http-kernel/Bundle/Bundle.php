@@ -11,7 +11,7 @@
 
 namespace Symfony\Component\HttpKernel\Bundle;
 
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Console\Application;
@@ -24,10 +24,8 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-abstract class Bundle implements BundleInterface
+abstract class Bundle extends ContainerAware implements BundleInterface
 {
-    use ContainerAwareTrait;
-
     protected $name;
     protected $extension;
     protected $path;
@@ -70,17 +68,17 @@ abstract class Bundle implements BundleInterface
     public function getContainerExtension()
     {
         if (null === $this->extension) {
-            $extension = $this->createContainerExtension();
+            $class = $this->getContainerExtensionClass();
+            if (class_exists($class)) {
+                $extension = new $class();
 
-            if (null !== $extension) {
                 if (!$extension instanceof ExtensionInterface) {
-                    throw new \LogicException(sprintf('Extension %s must implement Symfony\Component\DependencyInjection\Extension\ExtensionInterface.', get_class($extension)));
+                    throw new \LogicException(sprintf('Extension %s must implement Symfony\Component\DependencyInjection\Extension\ExtensionInterface.', $class));
                 }
 
                 // check naming convention
                 $basename = preg_replace('/Bundle$/', '', $this->getName());
                 $expectedAlias = Container::underscore($basename);
-
                 if ($expectedAlias != $extension->getAlias()) {
                     throw new \LogicException(sprintf(
                         'Users will expect the alias of the default extension of a bundle to be the underscored version of the bundle name ("%s"). You can override "Bundle::getContainerExtension()" if you want to use "%s" or another alias.',
@@ -205,17 +203,5 @@ abstract class Bundle implements BundleInterface
         $basename = preg_replace('/Bundle$/', '', $this->getName());
 
         return $this->getNamespace().'\\DependencyInjection\\'.$basename.'Extension';
-    }
-
-    /**
-     * Creates the bundle's container extension.
-     *
-     * @return ExtensionInterface|null
-     */
-    protected function createContainerExtension()
-    {
-        if (class_exists($class = $this->getContainerExtensionClass())) {
-            return new $class();
-        }
     }
 }

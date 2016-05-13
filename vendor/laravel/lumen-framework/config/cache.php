@@ -28,10 +28,6 @@ return [
 
     'stores' => [
 
-        'apc' => [
-            'driver' => 'apc',
-        ],
-
         'array' => [
             'driver' => 'array',
         ],
@@ -39,7 +35,7 @@ return [
         'database' => [
             'driver' => 'database',
             'table'  => env('CACHE_DATABASE_TABLE', 'cache'),
-            'connection' => env('CACHE_DATABASE_CONNECTION', null),
+            'connection' => null,
         ],
 
         'file' => [
@@ -58,7 +54,7 @@ return [
 
         'redis' => [
             'driver' => 'redis',
-            'connection' => env('CACHE_REDIS_CONNECTION', 'default'),
+            'connection' => 'default',
         ],
 
     ],
@@ -74,6 +70,6 @@ return [
     |
     */
 
-    'prefix' => env('CACHE_PREFIX', 'laravel'),
+    'prefix' => 'laravel',
 
 ];

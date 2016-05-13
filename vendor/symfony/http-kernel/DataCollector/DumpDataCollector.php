@@ -70,7 +70,12 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
             $this->isCollected = false;
         }
 
-        $trace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT | DEBUG_BACKTRACE_IGNORE_ARGS, 7);
+        $trace = DEBUG_BACKTRACE_PROVIDE_OBJECT | DEBUG_BACKTRACE_IGNORE_ARGS;
+        if (PHP_VERSION_ID >= 50400) {
+            $trace = debug_backtrace($trace, 7);
+        } else {
+            $trace = debug_backtrace($trace);
+        }
 
         $file = $trace[0]['file'];
         $line = $trace[0]['line'];
@@ -200,8 +205,12 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
         $dumps = array();
 
         foreach ($this->data as $dump) {
-            $dumper->dump($dump['data']->withMaxDepth($maxDepthLimit)->withMaxItemsPerDepth($maxItemsPerDepth));
-
+            if (method_exists($dump['data'], 'withMaxDepth')) {
+                $dumper->dump($dump['data']->withMaxDepth($maxDepthLimit)->withMaxItemsPerDepth($maxItemsPerDepth));
+            } else {
+                // getLimitedClone is @deprecated, to be removed in 3.0
+                $dumper->dump($dump['data']->getLimitedClone($maxDepthLimit, $maxItemsPerDepth));
+            }
             rewind($data);
             $dump['data'] = stream_get_contents($data);
             ftruncate($data, 0);
@@ -248,7 +257,7 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
 
     private function doDump($data, $name, $file, $line)
     {
-        if ($this->dumper instanceof CliDumper) {
+        if (PHP_VERSION_ID >= 50400 && $this->dumper instanceof CliDumper) {
             $contextDumper = function ($name, $file, $line, $fileLinkFormat) {
                 if ($this instanceof HtmlDumper) {
                     if ('' !== $file) {

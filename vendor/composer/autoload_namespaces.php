@@ -14,6 +14,7 @@ return array(
     'Namshi\\JOSE' => array($vendorDir . '/namshi/jose/src'),
     'Math' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
     'File' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
+    'Dotenv' => array($vendorDir . '/vlucas/phpdotenv/src'),
     'Doctrine\\Common\\Inflector\\' => array($vendorDir . '/doctrine/inflector/lib'),
     'Crypt' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
     'Cron' => array($vendorDir . '/mtdowling/cron-expression/src'),

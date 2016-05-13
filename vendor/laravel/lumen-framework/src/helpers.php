@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Str;
 use Illuminate\Container\Container;
-use Illuminate\Contracts\Bus\Dispatcher;
 
 if (! function_exists('abort')) {
     /**
@@ -53,29 +52,17 @@ if (! function_exists('base_path')) {
     }
 }
 
-if (! function_exists('decrypt')) {
+if (! function_exists('bcrypt')) {
     /**
-     * Decrypt the given value.
+     * Hash the given value.
      *
      * @param  string  $value
+     * @param  array   $options
      * @return string
      */
-    function decrypt($value)
+    function bcrypt($value, $options = [])
     {
-        return app('encrypter')->decrypt($value);
-    }
-}
-
-if (! function_exists('dispatch')) {
-    /**
-     * Dispatch a job to its appropriate handler.
-     *
-     * @param  mixed  $job
-     * @return mixed
-     */
-    function dispatch($job)
-    {
-        return app(Dispatcher::class)->dispatch($job);
+        return app('hash')->make($value, $options);
     }
 }
 
@@ -103,6 +90,49 @@ if (! function_exists('config')) {
     }
 }
 
+if (! function_exists('cookie')) {
+    /**
+     * Create a new cookie instance.
+     *
+     * @param  string  $name
+     * @param  string  $value
+     * @param  int     $minutes
+     * @param  string  $path
+     * @param  string  $domain
+     * @param  bool    $secure
+     * @param  bool    $httpOnly
+     * @return \Symfony\Component\HttpFoundation\Cookie
+     */
+    function cookie($name = null, $value = null, $minutes = 0, $path = null, $domain = null, $secure = false, $httpOnly = true)
+    {
+        $cookie = app('cookie');
+
+        if (is_null($name)) {
+            return $cookie;
+        }
+
+        return $cookie->make($name, $value, $minutes, $path, $domain, $secure, $httpOnly);
+    }
+}
+
+if (! function_exists('csrf_token')) {
+    /**
+     * Get the CSRF token value.
+     *
+     * @return string
+     *
+     * @throws RuntimeException
+     */
+    function csrf_token()
+    {
+        $session = app('session');
+        if (isset($session)) {
+            return $session->getToken();
+        }
+        throw new RuntimeException('Application session store not set.');
+    }
+}
+
 if (! function_exists('database_path')) {
     /**
      * Get the path to the database directory of the install.
@@ -113,19 +143,6 @@ if (! function_exists('database_path')) {
     function database_path($path = '')
     {
         return app()->databasePath().($path ? '/'.$path : $path);
-    }
-}
-
-if (! function_exists('encrypt')) {
-    /**
-     * Encrypt the given value.
-     *
-     * @param  string  $value
-     * @return string
-     */
-    function encrypt($value)
-    {
-        return app('encrypter')->encrypt($value);
     }
 }
 
@@ -225,6 +242,20 @@ if (! function_exists('info')) {
     }
 }
 
+if (! function_exists('old')) {
+    /**
+     * Retrieve an old input item.
+     *
+     * @param  string  $key
+     * @param  mixed   $default
+     * @return mixed
+     */
+    function old($key = null, $default = null)
+    {
+        return app('request')->old($key, $default);
+    }
+}
+
 if (! function_exists('redirect')) {
     /**
      * Get an instance of the redirector.
@@ -283,6 +314,31 @@ if (! function_exists('route')) {
     }
 }
 
+if (! function_exists('session')) {
+    /**
+     * Get / set the specified session value.
+     *
+     * If an array is passed as the key, we will assume you want to set an array of values.
+     *
+     * @param  array|string  $key
+     * @param  mixed  $default
+     * @return mixed
+     */
+    function session($key = null, $default = null)
+    {
+        $session = app('session');
+
+        if (is_null($key)) {
+            return $session;
+        }
+        if (is_array($key)) {
+            return $session->put($key);
+        }
+
+        return $session->get($key, $default);
+    }
+}
+
 if (! function_exists('storage_path')) {
     /**
      * Get the path to the storage folder.
@@ -293,6 +349,43 @@ if (! function_exists('storage_path')) {
     function storage_path($path = '')
     {
         return app()->storagePath($path);
+    }
+}
+
+if (! function_exists('trans')) {
+    /**
+     * Translate the given message.
+     *
+     * @param  string  $id
+     * @param  array   $parameters
+     * @param  string  $domain
+     * @param  string  $locale
+     * @return string
+     */
+    function trans($id = null, $parameters = [], $domain = 'messages', $locale = null)
+    {
+        if (is_null($id)) {
+            return app('translator');
+        }
+
+        return app('translator')->trans($id, $parameters, $domain, $locale);
+    }
+}
+
+if (! function_exists('trans_choice')) {
+    /**
+     * Translates the given message based on a count.
+     *
+     * @param  string  $id
+     * @param  int     $number
+     * @param  array   $parameters
+     * @param  string  $domain
+     * @param  string  $locale
+     * @return string
+     */
+    function trans_choice($id, $number, array $parameters = [], $domain = 'messages', $locale = null)
+    {
+        return app('translator')->transChoice($id, $number, $parameters, $domain, $locale);
     }
 }
 

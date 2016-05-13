@@ -188,7 +188,7 @@ class ApiController extends Controller
     public function user_login(Request $request)
     {
 
-        $username = $request->input('name');
+        $email_address = $request->input('email');
 
         $password = $request->input('password');
 
@@ -196,7 +196,7 @@ class ApiController extends Controller
 
         $user = DB::table('users')
             ->select(DB::raw('id'))
-            ->where('name', $username)
+            ->where('email', $email_address)
             ->where('password', $password_user)
             ->get();
 

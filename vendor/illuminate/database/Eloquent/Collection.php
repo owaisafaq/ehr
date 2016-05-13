@@ -85,6 +85,19 @@ class Collection extends BaseCollection
     }
 
     /**
+     * Fetch a nested element of the collection.
+     *
+     * @param  string  $key
+     * @return static
+     *
+     * @deprecated since version 5.1. Use pluck instead.
+     */
+    public function fetch($key)
+    {
+        return new static(Arr::fetch($this->toArray(), $key));
+    }
+
+    /**
      * Get the array of primary keys.
      *
      * @return array
@@ -197,48 +210,24 @@ class Collection extends BaseCollection
     }
 
     /**
-     * Make the given, typically visible, attributes hidden across the entire collection.
-     *
-     * @param  array|string  $attributes
-     * @return $this
-     */
-    public function makeHidden($attributes)
-    {
-        return $this->each(function ($model) use ($attributes) {
-            $model->addHidden($attributes);
-        });
-    }
-
-    /**
      * Make the given, typically hidden, attributes visible across the entire collection.
      *
      * @param  array|string  $attributes
      * @return $this
-     */
-    public function makeVisible($attributes)
-    {
-        return $this->each(function ($model) use ($attributes) {
-            $model->makeVisible($attributes);
-        });
-    }
-
-    /**
-     * Make the given, typically hidden, attributes visible across the entire collection.
-     *
-     * @param  array|string  $attributes
-     * @return $this
-     *
-     * @deprecated since version 5.2. Use the "makeVisible" method directly.
      */
     public function withHidden($attributes)
     {
-        return $this->makeVisible($attributes);
+        $this->each(function ($model) use ($attributes) {
+            $model->withHidden($attributes);
+        });
+
+        return $this;
     }
 
     /**
      * Get a dictionary keyed by primary keys.
      *
-     * @param  \ArrayAccess|array|null  $items
+     * @param  \ArrayAccess|array  $items
      * @return array
      */
     public function getDictionary($items = null)
@@ -252,74 +241,6 @@ class Collection extends BaseCollection
         }
 
         return $dictionary;
-    }
-
-    /**
-     * The following methods are intercepted to always return base collections.
-     */
-
-    /**
-     * Get an array with the values of a given key.
-     *
-     * @param  string  $value
-     * @param  string|null  $key
-     * @return \Illuminate\Support\Collection
-     */
-    public function pluck($value, $key = null)
-    {
-        return $this->toBase()->pluck($value, $key);
-    }
-
-    /**
-     * Get the keys of the collection items.
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    public function keys()
-    {
-        return $this->toBase()->keys();
-    }
-
-    /**
-     * Zip the collection together with one or more arrays.
-     *
-     * @param  mixed ...$items
-     * @return \Illuminate\Support\Collection
-     */
-    public function zip($items)
-    {
-        return call_user_func_array([$this->toBase(), 'zip'], func_get_args());
-    }
-
-    /**
-     * Collapse the collection of items into a single array.
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    public function collapse()
-    {
-        return $this->toBase()->collapse();
-    }
-
-    /**
-     * Get a flattened array of the items in the collection.
-     *
-     * @param  int  $depth
-     * @return \Illuminate\Support\Collection
-     */
-    public function flatten($depth = INF)
-    {
-        return $this->toBase()->flatten($depth);
-    }
-
-    /**
-     * Flip the items in the collection.
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    public function flip()
-    {
-        return $this->toBase()->flip();
     }
 
     /**

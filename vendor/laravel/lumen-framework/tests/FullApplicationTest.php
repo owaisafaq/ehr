@@ -4,7 +4,7 @@ use Mockery as m;
 use Illuminate\Http\Request;
 use Laravel\Lumen\Application;
 
-class FullApplicationTest extends PHPUnit_Framework_TestCase
+class ExampleTest extends PHPUnit_Framework_TestCase
 {
     public function tearDown()
     {
@@ -77,6 +77,18 @@ class FullApplicationTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('12', $response->getContent());
     }
 
+    public function testRequestToControllerWithParameters()
+    {
+        $app = new Application;
+
+        $app->get('/foo/{bar}', 'LumenTestController@actionWithParameter');
+
+        $response = $app->handle(Request::create('/foo/1', 'GET'));
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('1', $response->getContent());
+    }
+
     public function testCallbackRouteWithDefaultParameter()
     {
         $app = new Application;
@@ -88,6 +100,17 @@ class FullApplicationTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('something', $response->getContent());
+    }
+
+    public function testControllerRouteWithDefaultParameter()
+    {
+        $app = new Application;
+        $app->get('/foo-bar/{baz}', 'LumenTestController@actionWithDefaultParameter');
+
+        $response = $app->handle(Request::create('/foo-bar/something2', 'GET'));
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('something2', $response->getContent());
     }
 
     public function testGlobalMiddleware()
@@ -110,7 +133,7 @@ class FullApplicationTest extends PHPUnit_Framework_TestCase
     {
         $app = new Application;
 
-        $app->routeMiddleware(['foo' => 'LumenTestMiddleware', 'passing' => 'LumenTestPlainMiddleware']);
+        $app->routeMiddleware(['foo' => 'LumenTestMiddleware']);
 
         $app->get('/', function () {
             return response('Hello World');
@@ -120,27 +143,11 @@ class FullApplicationTest extends PHPUnit_Framework_TestCase
             return response('Hello World');
         }]);
 
-        $app->get('/bar', ['middleware' => ['foo'], function () {
-            return response('Hello World');
-        }]);
-
-        $app->get('/fooBar', ['middleware' => 'passing|foo', function () {
-            return response('Hello World');
-        }]);
-
         $response = $app->handle(Request::create('/', 'GET'));
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('Hello World', $response->getContent());
 
         $response = $app->handle(Request::create('/foo', 'GET'));
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('Middleware', $response->getContent());
-
-        $response = $app->handle(Request::create('/bar', 'GET'));
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('Middleware', $response->getContent());
-
-        $response = $app->handle(Request::create('/fooBar', 'GET'));
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('Middleware', $response->getContent());
     }
@@ -165,9 +172,9 @@ class FullApplicationTest extends PHPUnit_Framework_TestCase
     {
         $app = new Application;
 
-        $app->routeMiddleware(['foo' => 'LumenTestParameterizedMiddleware', 'passing' => 'LumenTestPlainMiddleware']);
+        $app->routeMiddleware(['foo' => 'LumenTestParameterizedMiddleware']);
 
-        $app->get('/', ['middleware' => 'passing|foo:bar,boom', function () {
+        $app->get('/', ['middleware' => 'foo:bar,boom', function () {
             return response('Hello World');
         }]);
 
@@ -175,6 +182,39 @@ class FullApplicationTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('Middleware - bar - boom', $response->getContent());
+    }
+
+    public function testGroupRouteMiddleware()
+    {
+        $app = new Application;
+
+        $app->routeMiddleware(['foo' => 'LumenTestMiddleware']);
+
+        $app->group(['middleware' => 'foo'], function ($app) {
+            $app->get('/', function () {
+                return 'Hello World';
+            });
+            $app->group([], function () {});
+            $app->get('/fooBar', function () {
+                return 'Hello World';
+            });
+        });
+
+        $app->get('/foo', function () {
+            return 'Hello World';
+        });
+
+        $response = $app->handle(Request::create('/', 'GET'));
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('Middleware', $response->getContent());
+
+        $response = $app->handle(Request::create('/foo', 'GET'));
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('Hello World', $response->getContent());
+
+        $response = $app->handle(Request::create('/fooBar', 'GET'));
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('Middleware', $response->getContent());
     }
 
     public function testWithMiddlewareDisabled()
@@ -192,6 +232,37 @@ class FullApplicationTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('Hello World', $response->getContent());
+    }
+
+    public function testGroupPrefixRoutes()
+    {
+        $app = new Application;
+
+        $app->group(['prefix' => 'user'], function ($app) {
+            $app->get('/', function () {
+                return response('User Index');
+            });
+
+            $app->get('profile', function () {
+                return response('User Profile');
+            });
+
+            $app->get('/show', function () {
+                return response('User Show');
+            });
+        });
+
+        $response = $app->handle(Request::create('/user', 'GET'));
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('User Index', $response->getContent());
+
+        $response = $app->handle(Request::create('/user/profile', 'GET'));
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('User Profile', $response->getContent());
+
+        $response = $app->handle(Request::create('/user/show', 'GET'));
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('User Show', $response->getContent());
     }
 
     public function testNotFoundResponse()
@@ -224,18 +295,38 @@ class FullApplicationTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(405, $response->getStatusCode());
     }
 
-    public function testUncaughtExceptionResponse()
+    public function testControllerResponse()
     {
         $app = new Application;
-        $app->instance('Illuminate\Contracts\Debug\ExceptionHandler', $mock = m::mock('Laravel\Lumen\Exceptions\Handler[report]'));
-        $mock->shouldIgnoreMissing();
 
-        $app->get('/', function () {
-            throw new \RuntimeException('app exception');
+        $app->get('/', 'LumenTestController@action');
+
+        $response = $app->handle(Request::create('/', 'GET'));
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('LumenTestController', $response->getContent());
+    }
+
+    public function testNamespacedControllerResponse()
+    {
+        $app = new Application;
+
+        require_once __DIR__.'/fixtures/TestController.php';
+
+        $app->group(['namespace' => 'Lumen\Tests'], function ($app) {
+            $app->get('/', 'TestController@action');
+            $app->group([], function () {});
+            $app->get('/foo', 'TestController@action');
         });
 
         $response = $app->handle(Request::create('/', 'GET'));
-        $this->assertInstanceOf('Illuminate\Http\Response', $response);
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('Lumen\Tests\TestController', $response->getContent());
+
+        $response = $app->handle(Request::create('/foo', 'GET'));
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('Lumen\Tests\TestController', $response->getContent());
     }
 
     public function testGeneratingUrls()
@@ -331,75 +422,6 @@ class FullApplicationTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(true, $_SERVER['__middleware.response']);
     }
 
-    public function testBasicControllerDispatching()
-    {
-        $app = new Application;
-
-        $app->get('/show/{id}', 'LumenTestController@show');
-
-        $response = $app->handle(Request::create('/show/25', 'GET'));
-
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('25', $response->getContent());
-    }
-
-    public function testBasicControllerDispatchingWithGroup()
-    {
-        $app = new Application;
-        $app->routeMiddleware(['test' => LumenTestMiddleware::class]);
-
-        $app->group(['middleware' => 'test'], function ($app) {
-            $app->get('/show/{id}', 'LumenTestController@show');
-        });
-
-        $response = $app->handle(Request::create('/show/25', 'GET'));
-
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('Middleware', $response->getContent());
-    }
-
-    public function testBasicControllerDispatchingWithGroupSuffix()
-    {
-        $app = new Application;
-        $app->routeMiddleware(['test' => LumenTestMiddleware::class]);
-
-        $app->group(['suffix' => '.{format:json|xml}'], function ($app) {
-            $app->get('/show/{id}', 'LumenTestController@show');
-        });
-
-        $response = $app->handle(Request::create('/show/25.xml', 'GET'));
-
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('25', $response->getContent());
-    }
-
-    public function testBasicControllerDispatchingWithGroupAndSuffixWithPath()
-    {
-        $app = new Application;
-        $app->routeMiddleware(['test' => LumenTestMiddleware::class]);
-
-        $app->group(['suffix' => '/{format:json|xml}'], function ($app) {
-            $app->get('/show/{id}', 'LumenTestController@show');
-        });
-
-        $response = $app->handle(Request::create('/show/test/json', 'GET'));
-
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('test', $response->getContent());
-    }
-
-    public function testBasicControllerDispatchingWithMiddlewareIntercept()
-    {
-        $app = new Application;
-        $app->routeMiddleware(['test' => LumenTestMiddleware::class]);
-        $app->get('/show/{id}', 'LumenTestControllerWithMiddleware@show');
-
-        $response = $app->handle(Request::create('/show/25', 'GET'));
-
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('Middleware', $response->getContent());
-    }
-
     public function testEnvironmentDetection()
     {
         $app = new Application;
@@ -407,66 +429,6 @@ class FullApplicationTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('production', $app->environment());
         $this->assertTrue($app->environment('production'));
         $this->assertTrue($app->environment(['production']));
-    }
-
-    public function testValidationHelpers()
-    {
-        $app = new Application;
-
-        $app->get('/', function (Illuminate\Http\Request $request) {
-            $this->validate($request, ['name' => 'required']);
-        });
-
-        $response = $app->handle(Request::create('/', 'GET'));
-
-        $this->assertEquals(422, $response->getStatusCode());
-    }
-
-    public function testRedirectResponse()
-    {
-        $app = new Application;
-
-        $app->get('/', function (Illuminate\Http\Request $request) {
-            return redirect('home');
-        });
-
-        $response = $app->handle(Request::create('/', 'GET'));
-
-        $this->assertEquals(302, $response->getStatusCode());
-    }
-
-    public function testRedirectToNamedRoute()
-    {
-        $app = new Application;
-
-        $app->get('login', ['as' => 'login', function (Illuminate\Http\Request $request) {
-            return 'login';
-        }]);
-
-        $app->get('/', function (Illuminate\Http\Request $request) {
-            return redirect()->route('login');
-        });
-
-        $response = $app->handle(Request::create('/', 'GET'));
-
-        $this->assertEquals(302, $response->getStatusCode());
-    }
-
-    public function testRequestUser()
-    {
-        $app = new Application();
-
-        $app['auth']->viaRequest('api', function ($request) {
-            return new \Illuminate\Auth\GenericUser(['id' => 1234]);
-        });
-
-        $app->get('/', function (Illuminate\Http\Request $request) {
-            return $request->user()->getAuthIdentifier();
-        });
-
-        $response = $app->handle(Request::create('/', 'GET'));
-
-        $this->assertSame('1234', $response->getContent());
     }
 }
 
@@ -478,32 +440,6 @@ class LumenTestServiceProvider extends Illuminate\Support\ServiceProvider
 {
     public function register()
     {
-    }
-}
-
-class LumenTestController
-{
-    public function __construct(LumenTestService $service)
-    {
-        //
-    }
-
-    public function show($id)
-    {
-        return $id;
-    }
-}
-
-class LumenTestControllerWithMiddleware extends Laravel\Lumen\Routing\Controller
-{
-    public function __construct(LumenTestService $service)
-    {
-        $this->middleware('test');
-    }
-
-    public function show($id)
-    {
-        return $id;
     }
 }
 
@@ -531,5 +467,30 @@ class LumenTestParameterizedMiddleware
     public function handle($request, $next, $parameter1, $parameter2)
     {
         return response("Middleware - $parameter1 - $parameter2");
+    }
+}
+
+class LumenTestController
+{
+    public $service;
+
+    public function __construct(LumenTestService $service)
+    {
+        $this->service = $service;
+    }
+
+    public function action()
+    {
+        return response(__CLASS__);
+    }
+
+    public function actionWithParameter($baz)
+    {
+        return response($baz);
+    }
+
+    public function actionWithDefaultParameter($baz = 'default-value')
+    {
+        return response($baz);
     }
 }

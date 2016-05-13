@@ -2,9 +2,9 @@
 
 namespace Laravel\Lumen\Routing;
 
-class Controller
+abstract class Controller
 {
-    use ProvidesConvenienceMethods;
+    use DispatchesJobs, ValidatesRequests;
 
     /**
      * The middleware defined on the controller.

@@ -25,8 +25,6 @@ class SqlServerGrammar extends Grammar
      */
     public function compileSelect(Builder $query)
     {
-        $original = $query->columns;
-
         if (is_null($query->columns)) {
             $query->columns = ['*'];
         }
@@ -40,11 +38,7 @@ class SqlServerGrammar extends Grammar
             return $this->compileAnsiOffset($query, $components);
         }
 
-        $sql = $this->concatenate($components);
-
-        $query->columns = $original;
-
-        return $sql;
+        return $this->concatenate($components);
     }
 
     /**

@@ -25,18 +25,11 @@ class LazyLoadingFragmentHandler extends FragmentHandler
     private $container;
     private $rendererIds = array();
 
-    /**
-     * Constructor.
-     *
-     * @param ContainerInterface $container    A container
-     * @param RequestStack       $requestStack The Request stack that controls the lifecycle of requests
-     * @param bool               $debug        Whether the debug mode is enabled or not
-     */
-    public function __construct(ContainerInterface $container, RequestStack $requestStack, $debug = false)
+    public function __construct(ContainerInterface $container, $debug = false, RequestStack $requestStack = null)
     {
         $this->container = $container;
 
-        parent::__construct($requestStack, array(), $debug);
+        parent::__construct(array(), $debug, $requestStack);
     }
 
     /**

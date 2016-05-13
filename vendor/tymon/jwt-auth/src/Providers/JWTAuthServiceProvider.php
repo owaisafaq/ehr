@@ -157,7 +157,6 @@ class JWTAuthServiceProvider extends ServiceProvider
         $this->app['tymon.jwt.provider.storage'] = $this->app->share(function ($app) {
             return $this->getConfigInstance($this->config('providers.storage'));
         });
-
     }
 
     /**

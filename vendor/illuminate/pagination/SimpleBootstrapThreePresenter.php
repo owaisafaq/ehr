@@ -2,7 +2,6 @@
 
 namespace Illuminate\Pagination;
 
-use Illuminate\Support\HtmlString;
 use Illuminate\Contracts\Pagination\Paginator as PaginatorContract;
 
 class SimpleBootstrapThreePresenter extends BootstrapThreePresenter
@@ -31,16 +30,16 @@ class SimpleBootstrapThreePresenter extends BootstrapThreePresenter
     /**
      * Convert the URL window into Bootstrap HTML.
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return string
      */
     public function render()
     {
         if ($this->hasPages()) {
-            return new HtmlString(sprintf(
+            return sprintf(
                 '<ul class="pager">%s %s</ul>',
                 $this->getPreviousButton(),
                 $this->getNextButton()
-            ));
+            );
         }
 
         return '';

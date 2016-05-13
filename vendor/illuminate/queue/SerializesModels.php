@@ -64,8 +64,7 @@ trait SerializesModels
     protected function getRestoredPropertyValue($value)
     {
         return $value instanceof ModelIdentifier
-                        ? (new $value->class)->newQuery()->useWritePdo()->findOrFail($value->id)
-                        : $value;
+                        ? (new $value->class)->findOrFail($value->id) : $value;
     }
 
     /**

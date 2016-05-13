@@ -2,7 +2,6 @@
 
 namespace Illuminate\Cache;
 
-use Memcached;
 use Illuminate\Contracts\Cache\Store;
 
 class MemcachedStore extends TaggableStore implements Store
@@ -37,7 +36,7 @@ class MemcachedStore extends TaggableStore implements Store
     /**
      * Retrieve an item from the cache by key.
      *
-     * @param  string|array  $key
+     * @param  string  $key
      * @return mixed
      */
     public function get($key)
@@ -47,29 +46,6 @@ class MemcachedStore extends TaggableStore implements Store
         if ($this->memcached->getResultCode() == 0) {
             return $value;
         }
-    }
-
-    /**
-     * Retrieve multiple items from the cache by key.
-     *
-     * Items not found in the cache will have a null value.
-     *
-     * @param  array  $keys
-     * @return array
-     */
-    public function many(array $keys)
-    {
-        $prefixedKeys = array_map(function ($key) {
-            return $this->prefix.$key;
-        }, $keys);
-
-        $values = $this->memcached->getMulti($prefixedKeys, null, Memcached::GET_PRESERVE_ORDER);
-
-        if ($this->memcached->getResultCode() != 0) {
-            return array_fill_keys($keys, null);
-        }
-
-        return array_combine($keys, $values);
     }
 
     /**
@@ -83,24 +59,6 @@ class MemcachedStore extends TaggableStore implements Store
     public function put($key, $value, $minutes)
     {
         $this->memcached->set($this->prefix.$key, $value, $minutes * 60);
-    }
-
-    /**
-     * Store multiple items in the cache for a given number of minutes.
-     *
-     * @param  array  $values
-     * @param  int  $minutes
-     * @return void
-     */
-    public function putMany(array $values, $minutes)
-    {
-        $prefixedValues = [];
-
-        foreach ($values as $key => $value) {
-            $prefixedValues[$this->prefix.$key] = $value;
-        }
-
-        $this->memcached->setMulti($prefixedValues, $minutes * 60);
     }
 
     /**

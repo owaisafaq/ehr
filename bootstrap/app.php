@@ -2,11 +2,7 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-try {
-    (new Dotenv\Dotenv(__DIR__.'/../'))->load();
-} catch (Dotenv\Exception\InvalidPathException $e) {
-    //
-}
+Dotenv::load(__DIR__ . '/../');
 
 /*
 |--------------------------------------------------------------------------
@@ -23,16 +19,17 @@ $app = new Laravel\Lumen\Application(
     realpath(__DIR__.'/../')
 );
 
- $app->withFacades();
- $app->configure('jwt');
+$app->withFacades();
 
-class_alias('Tymon\JWTAuth\Facades\JWTAuth', 'JWTAuth');
-/** This gives you finer control over the payloads you create if you require it.
- *  Source: https://github.com/tymondesigns/jwt-auth/wiki/Installation
- */
-class_alias('Tymon\JWTAuth\Facades\JWTFactory', 'JWTFactory'); // Optional
+$app->configure('jwt');
+$app->configure('auth');
 
- $app->withEloquent();
+class_alias(Tymon\JWTAuth\Facades\JWTAuth::class, 'JWTAuth');
+
+class_alias('Laravel\Lumen\Http\Middleware\VerifyCsrfToken', 'csrf');
+class_alias(Tymon\JWTAuth\Facades\JWTFactory::class, 'JWTFactory');
+
+$app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
@@ -55,6 +52,10 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
+$app->singleton(
+    Illuminate\Contracts\Routing\ResponseFactory::class,
+    Illuminate\Routing\ResponseFactory::class
+);
 
 $app->singleton(
     Illuminate\Auth\AuthManager::class,
@@ -69,8 +70,6 @@ $app->singleton(
         return $app->make('cache');
     }
 );
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -87,11 +86,22 @@ $app->singleton(
 //    App\Http\Middleware\ExampleMiddleware::class
 // ]);
 
- $app->routeMiddleware([
-     'auth' => App\Http\Middleware\Authenticate::class,
-     'jwt.auth'    => Tymon\JWTAuth\Middleware\GetUserFromToken::class,
-     'jwt.refresh' => Tymon\JWTAuth\Middleware\RefreshToken::class,
- ]);
+$app->middleware([
+    // 'Illuminate\Cookie\Middleware\EncryptCookies',
+    'Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse',
+    'Illuminate\Session\Middleware\StartSession',
+    'Illuminate\View\Middleware\ShareErrorsFromSession',
+
+
+    //'Laravel\Lumen\Http\Middleware\VerifyCsrfToken',
+]);
+
+$app->routeMiddleware([
+    'auth'        => App\Http\Middleware\Authenticate::class,
+    'jwt.auth'    => Tymon\JWTAuth\Middleware\GetUserFromToken::class,
+    'jwt.refresh' => Tymon\JWTAuth\Middleware\RefreshToken::class,
+
+]);
 
 /*
 |--------------------------------------------------------------------------
@@ -104,12 +114,13 @@ $app->singleton(
 |
 */
 
-// JWTAuth Dependencies
-$app->register(Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class);
-
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
+
+// JWTAuth Dependencies
+$app->register(App\Providers\GuardServiceProvider::class);
+$app->register(Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -122,10 +133,9 @@ $app->register(Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class);
 |
 */
 
-
-
 $app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
     require __DIR__.'/../app/Http/routes.php';
 });
+
 
 return $app;

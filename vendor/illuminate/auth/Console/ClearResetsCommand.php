@@ -7,11 +7,11 @@ use Illuminate\Console\Command;
 class ClearResetsCommand extends Command
 {
     /**
-     * The name and signature of the console command.
+     * The console command name.
      *
      * @var string
      */
-    protected $signature = 'auth:clear-resets {name? : The name of the password broker}';
+    protected $name = 'auth:clear-resets';
 
     /**
      * The console command description.
@@ -27,7 +27,7 @@ class ClearResetsCommand extends Command
      */
     public function fire()
     {
-        $this->laravel['auth.password']->broker($this->argument('name'))->getRepository()->deleteExpired();
+        $this->laravel['auth.password.tokens']->deleteExpired();
 
         $this->info('Expired reset tokens cleared!');
     }

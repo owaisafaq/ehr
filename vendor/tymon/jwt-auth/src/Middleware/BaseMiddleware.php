@@ -12,9 +12,8 @@
 namespace Tymon\JWTAuth\Middleware;
 
 use Tymon\JWTAuth\JWTAuth;
-
 use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Routing\ResponseFactory;
+use Illuminate\Contracts\Routing\ResponseFactory;
 
 abstract class BaseMiddleware
 {
@@ -60,6 +59,6 @@ abstract class BaseMiddleware
     {
         $response = $this->events->fire($event, $payload, true);
 
-        return $response ?: $this->response->json(['error' => $error], $status);
+        return $response ?: $this->response->json(['message' => $error, 'status' => false], $status);
     }
 }

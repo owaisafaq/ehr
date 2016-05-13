@@ -24,17 +24,15 @@ trait SoftDeletes
     /**
      * Force a hard delete on a soft deleted model.
      *
-     * @return bool|null
+     * @return void
      */
     public function forceDelete()
     {
         $this->forceDeleting = true;
 
-        $deleted = $this->delete();
+        $this->delete();
 
         $this->forceDeleting = false;
-
-        return $deleted;
     }
 
     /**

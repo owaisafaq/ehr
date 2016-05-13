@@ -3,6 +3,7 @@
 namespace Illuminate\Console\Scheduling;
 
 use Symfony\Component\Process\ProcessUtils;
+use Illuminate\Contracts\Foundation\Application;
 use Symfony\Component\Process\PhpExecutableFinder;
 
 class Schedule
@@ -99,7 +100,7 @@ class Schedule
      * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return array
      */
-    public function dueEvents($app)
+    public function dueEvents(Application $app)
     {
         return array_filter($this->events, function ($event) use ($app) {
             return $event->isDue($app);

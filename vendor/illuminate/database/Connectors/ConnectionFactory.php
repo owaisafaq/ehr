@@ -57,9 +57,7 @@ class ConnectionFactory
      */
     protected function createSingleConnection(array $config)
     {
-        $pdo = function () use ($config) {
-            return $this->createConnector($config)->connect($config);
-        };
+        $pdo = $this->createConnector($config)->connect($config);
 
         return $this->createConnection($config['driver'], $pdo, $config['database'], $config['prefix'], $config);
     }
@@ -201,7 +199,7 @@ class ConnectionFactory
      * Create a new connection instance.
      *
      * @param  string   $driver
-     * @param  \PDO|\Closure     $connection
+     * @param  \PDO     $connection
      * @param  string   $database
      * @param  string   $prefix
      * @param  array    $config
@@ -209,7 +207,7 @@ class ConnectionFactory
      *
      * @throws \InvalidArgumentException
      */
-    protected function createConnection($driver, $connection, $database, $prefix = '', array $config = [])
+    protected function createConnection($driver, PDO $connection, $database, $prefix = '', array $config = [])
     {
         if ($this->container->bound($key = "db.connection.{$driver}")) {
             return $this->container->make($key, [$connection, $database, $prefix, $config]);

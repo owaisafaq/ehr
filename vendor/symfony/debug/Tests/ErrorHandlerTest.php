@@ -73,6 +73,9 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             $this->fail('ContextErrorException expected');
         } catch (ContextErrorException $exception) {
             // if an exception is thrown, the test passed
+            restore_error_handler();
+            restore_exception_handler();
+
             $this->assertEquals(E_NOTICE, $exception->getSeverity());
             $this->assertEquals(__FILE__, $exception->getFile());
             $this->assertRegExp('/^Notice: Undefined variable: (foo|bar)/', $exception->getMessage());
@@ -93,9 +96,11 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals(__CLASS__, $trace[2]['class']);
             $this->assertEquals(__FUNCTION__, $trace[2]['function']);
             $this->assertEquals('->', $trace[2]['type']);
-        } finally {
+        } catch (\Exception $e) {
             restore_error_handler();
             restore_exception_handler();
+
+            throw $e;
         }
     }
 
@@ -113,9 +118,14 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             $handler = ErrorHandler::register();
             $handler->throwAt(3, true);
             $this->assertEquals(3 | E_RECOVERABLE_ERROR | E_USER_ERROR, $handler->throwAt(0));
-        } finally {
+
             restore_error_handler();
             restore_exception_handler();
+        } catch (\Exception $e) {
+            restore_error_handler();
+            restore_exception_handler();
+
+            throw $e;
         }
     }
 
@@ -147,9 +157,14 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
                 E_CORE_ERROR => array(null, LogLevel::CRITICAL),
             );
             $this->assertSame($loggers, $handler->setLoggers(array()));
-        } finally {
+
             restore_error_handler();
             restore_exception_handler();
+        } catch (\Exception $e) {
+            restore_error_handler();
+            restore_exception_handler();
+
+            throw $e;
         }
     }
 
@@ -200,13 +215,14 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
 
             $logger = $this->getMock('Psr\Log\LoggerInterface');
 
-            $warnArgCheck = function ($logLevel, $message, $context) {
-                $this->assertEquals('info', $logLevel);
-                $this->assertEquals('foo', $message);
-                $this->assertArrayHasKey('type', $context);
-                $this->assertEquals($context['type'], E_USER_DEPRECATED);
-                $this->assertArrayHasKey('stack', $context);
-                $this->assertInternalType('array', $context['stack']);
+            $that = $this;
+            $warnArgCheck = function ($logLevel, $message, $context) use ($that) {
+                $that->assertEquals('info', $logLevel);
+                $that->assertEquals('foo', $message);
+                $that->assertArrayHasKey('type', $context);
+                $that->assertEquals($context['type'], E_USER_DEPRECATED);
+                $that->assertArrayHasKey('stack', $context);
+                $that->assertInternalType('array', $context['stack']);
             };
 
             $logger
@@ -224,10 +240,11 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
 
             $logger = $this->getMock('Psr\Log\LoggerInterface');
 
-            $logArgCheck = function ($level, $message, $context) {
-                $this->assertEquals('Undefined variable: undefVar', $message);
-                $this->assertArrayHasKey('type', $context);
-                $this->assertEquals($context['type'], E_NOTICE);
+            $that = $this;
+            $logArgCheck = function ($level, $message, $context) use ($that) {
+                $that->assertEquals('Undefined variable: undefVar', $message);
+                $that->assertArrayHasKey('type', $context);
+                $that->assertEquals($context['type'], E_NOTICE);
             };
 
             $logger
@@ -268,19 +285,25 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             }
 
             $this->assertSame($x, $e);
-        } finally {
+
             restore_error_handler();
             restore_exception_handler();
+        } catch (\Exception $e) {
+            restore_error_handler();
+            restore_exception_handler();
+
+            throw $e;
         }
     }
 
     public function testHandleDeprecation()
     {
-        $logArgCheck = function ($level, $message, $context) {
-            $this->assertEquals(LogLevel::INFO, $level);
-            $this->assertArrayHasKey('level', $context);
-            $this->assertEquals(E_RECOVERABLE_ERROR | E_USER_ERROR | E_DEPRECATED | E_USER_DEPRECATED, $context['level']);
-            $this->assertArrayHasKey('stack', $context);
+        $that = $this;
+        $logArgCheck = function ($level, $message, $context) use ($that) {
+            $that->assertEquals(LogLevel::INFO, $level);
+            $that->assertArrayHasKey('level', $context);
+            $that->assertEquals(E_RECOVERABLE_ERROR | E_USER_ERROR | E_DEPRECATED | E_USER_DEPRECATED, $context['level']);
+            $that->assertArrayHasKey('stack', $context);
         };
 
         $logger = $this->getMock('Psr\Log\LoggerInterface');
@@ -304,10 +327,11 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
 
             $logger = $this->getMock('Psr\Log\LoggerInterface');
 
-            $logArgCheck = function ($level, $message, $context) {
-                $this->assertEquals('Uncaught Exception: foo', $message);
-                $this->assertArrayHasKey('type', $context);
-                $this->assertEquals($context['type'], E_ERROR);
+            $that = $this;
+            $logArgCheck = function ($level, $message, $context) use ($that) {
+                $that->assertEquals('Uncaught Exception: foo', $message);
+                $that->assertArrayHasKey('type', $context);
+                $that->assertEquals($context['type'], E_ERROR);
             };
 
             $logger
@@ -325,14 +349,20 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
                 $this->assertSame($exception, $e);
             }
 
-            $handler->setExceptionHandler(function ($e) use ($exception) {
-                $this->assertSame($exception, $e);
+            $that = $this;
+            $handler->setExceptionHandler(function ($e) use ($exception, $that) {
+                $that->assertSame($exception, $e);
             });
 
             $handler->handleException($exception);
-        } finally {
+
             restore_error_handler();
             restore_exception_handler();
+        } catch (\Exception $e) {
+            restore_error_handler();
+            restore_exception_handler();
+
+            throw $e;
         }
     }
 
@@ -359,9 +389,14 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             @trigger_error('Silenced warning', E_USER_WARNING);
             $logger->log(LogLevel::WARNING, 'Dummy log');
             ErrorHandler::unstackErrors();
-        } finally {
+
             restore_error_handler();
             restore_exception_handler();
+        } catch (\Exception $e) {
+            restore_error_handler();
+            restore_exception_handler();
+
+            throw $e;
         }
     }
 
@@ -422,10 +457,11 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
 
             $logger = $this->getMock('Psr\Log\LoggerInterface');
 
-            $logArgCheck = function ($level, $message, $context) {
-                $this->assertEquals('Fatal Parse Error: foo', $message);
-                $this->assertArrayHasKey('type', $context);
-                $this->assertEquals($context['type'], E_PARSE);
+            $that = $this;
+            $logArgCheck = function ($level, $message, $context) use ($that) {
+                $that->assertEquals('Fatal Parse Error: foo', $message);
+                $that->assertArrayHasKey('type', $context);
+                $that->assertEquals($context['type'], E_PARSE);
             };
 
             $logger
@@ -483,9 +519,56 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
 
             call_user_func_array(array($handler, 'handleError'), $error);
             $handler->handleFatalError($error);
-        } finally {
+
             restore_error_handler();
             restore_exception_handler();
+        } catch (\Exception $e) {
+            restore_error_handler();
+            restore_exception_handler();
+
+            throw $e;
+        }
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testLegacyInterface()
+    {
+        try {
+            $handler = ErrorHandler::register(0);
+            $this->assertFalse($handler->handle(0, 'foo', 'foo.php', 12, array()));
+
+            restore_error_handler();
+            restore_exception_handler();
+
+            $logger = $this->getMock('Psr\Log\LoggerInterface');
+
+            $that = $this;
+            $logArgCheck = function ($level, $message, $context) use ($that) {
+                $that->assertEquals('Undefined variable: undefVar', $message);
+                $that->assertArrayHasKey('type', $context);
+                $that->assertEquals($context['type'], E_NOTICE);
+            };
+
+            $logger
+                ->expects($this->once())
+                ->method('log')
+                ->will($this->returnCallback($logArgCheck))
+            ;
+
+            $handler = ErrorHandler::register(E_NOTICE);
+            @$handler->setLogger($logger, 'scream');
+            unset($undefVar);
+            @$undefVar++;
+
+            restore_error_handler();
+            restore_exception_handler();
+        } catch (\Exception $e) {
+            restore_error_handler();
+            restore_exception_handler();
+
+            throw $e;
         }
     }
 }

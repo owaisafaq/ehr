@@ -21,10 +21,10 @@ trait HandlesAuthorization
      * @param  string  $message
      * @return void
      *
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Illuminate\Auth\Access\UnauthorizedException
      */
     protected function deny($message = 'This action is unauthorized.')
     {
-        throw new AuthorizationException($message);
+        throw new UnauthorizedException($message);
     }
 }

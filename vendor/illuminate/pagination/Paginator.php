@@ -4,7 +4,6 @@ namespace Illuminate\Pagination;
 
 use Countable;
 use ArrayAccess;
-use JsonSerializable;
 use IteratorAggregate;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Jsonable;
@@ -12,7 +11,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Pagination\Presenter;
 use Illuminate\Contracts\Pagination\Paginator as PaginatorContract;
 
-class Paginator extends AbstractPaginator implements Arrayable, ArrayAccess, Countable, IteratorAggregate, JsonSerializable, Jsonable, PaginatorContract
+class Paginator extends AbstractPaginator implements Arrayable, ArrayAccess, Countable, IteratorAggregate, Jsonable, PaginatorContract
 {
     /**
      * Determine if there are more items in the data source.
@@ -76,7 +75,7 @@ class Paginator extends AbstractPaginator implements Arrayable, ArrayAccess, Cou
      */
     public function nextPageUrl()
     {
-        if ($this->hasMorePages()) {
+        if ($this->hasMore) {
             return $this->url($this->currentPage() + 1);
         }
     }
@@ -89,17 +88,6 @@ class Paginator extends AbstractPaginator implements Arrayable, ArrayAccess, Cou
     public function hasMorePages()
     {
         return $this->hasMore;
-    }
-
-    /**
-     * Render the paginator using the given presenter.
-     *
-     * @param  \Illuminate\Contracts\Pagination\Presenter|null  $presenter
-     * @return string
-     */
-    public function links(Presenter $presenter = null)
-    {
-        return $this->render($presenter);
     }
 
     /**
@@ -135,16 +123,6 @@ class Paginator extends AbstractPaginator implements Arrayable, ArrayAccess, Cou
     }
 
     /**
-     * Convert the object into something JSON serializable.
-     *
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
      * Convert the object to its JSON representation.
      *
      * @param  int  $options
@@ -152,6 +130,6 @@ class Paginator extends AbstractPaginator implements Arrayable, ArrayAccess, Cou
      */
     public function toJson($options = 0)
     {
-        return json_encode($this->jsonSerialize(), $options);
+        return json_encode($this->toArray(), $options);
     }
 }

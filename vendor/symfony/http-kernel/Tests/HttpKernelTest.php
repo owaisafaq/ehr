@@ -154,6 +154,17 @@ class HttpKernelTest extends \PHPUnit_Framework_TestCase
         $kernel->handle(new Request());
     }
 
+    /**
+     * @expectedException \LogicException
+     */
+    public function testHandleWhenTheControllerIsNotACallable()
+    {
+        $dispatcher = new EventDispatcher();
+        $kernel = new HttpKernel($dispatcher, $this->getResolver('foobar'));
+
+        $kernel->handle(new Request());
+    }
+
     public function testHandleWhenTheControllerIsAClosure()
     {
         $response = new Response('foo');

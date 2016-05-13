@@ -1,9 +1,11 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Eloquent\Model;
+use App\Status;
 
-class DatabaseSeeder extends Seeder
-{
+class DatabaseSeeder extends Seeder {
+
     /**
      * Run the database seeds.
      *
@@ -11,6 +13,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call('UserTableSeeder');
+        Model::unguard();
+
+        $this->call('UsersTableSeeder');
+        $this->call('AdminTableSeeder');
+        $pending = ['name' => 'Pending'];
+        $doing = ['name' => 'Doing'];
+        $completed = ['name' => 'Completed'];
+
+        Status::create($pending);
+        Status::create($doing);
+        Status::create($completed);
     }
+
 }

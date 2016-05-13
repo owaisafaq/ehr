@@ -28,7 +28,7 @@ class PostgresGrammar extends Grammar
      */
     public function compileTableExists()
     {
-        return 'select * from information_schema.tables where table_schema = ? and table_name = ?';
+        return 'select * from information_schema.tables where table_name = ?';
     }
 
     /**
@@ -61,7 +61,7 @@ class PostgresGrammar extends Grammar
     }
 
     /**
-     * Compile a column addition command.
+     * Compile a create table command.
      *
      * @param  \Illuminate\Database\Schema\Blueprint  $blueprint
      * @param  \Illuminate\Support\Fluent  $command
@@ -101,11 +101,9 @@ class PostgresGrammar extends Grammar
     {
         $table = $this->wrapTable($blueprint);
 
-        $index = $this->wrap($command->index);
-
         $columns = $this->columnize($command->columns);
 
-        return "alter table $table add constraint {$index} unique ($columns)";
+        return "alter table $table add constraint {$command->index} unique ($columns)";
     }
 
     /**
@@ -119,9 +117,7 @@ class PostgresGrammar extends Grammar
     {
         $columns = $this->columnize($command->columns);
 
-        $index = $this->wrap($command->index);
-
-        return "create index {$index} on ".$this->wrapTable($blueprint)." ({$columns})";
+        return "create index {$command->index} on ".$this->wrapTable($blueprint)." ({$columns})";
     }
 
     /**
@@ -175,9 +171,7 @@ class PostgresGrammar extends Grammar
     {
         $table = $blueprint->getTable();
 
-        $index = $this->wrap("{$table}_pkey");
-
-        return 'alter table '.$this->wrapTable($blueprint)." drop constraint {$index}";
+        return 'alter table '.$this->wrapTable($blueprint)." drop constraint {$table}_pkey";
     }
 
     /**
@@ -191,9 +185,7 @@ class PostgresGrammar extends Grammar
     {
         $table = $this->wrapTable($blueprint);
 
-        $index = $this->wrap($command->index);
-
-        return "alter table {$table} drop constraint {$index}";
+        return "alter table {$table} drop constraint {$command->index}";
     }
 
     /**
@@ -205,9 +197,7 @@ class PostgresGrammar extends Grammar
      */
     public function compileDropIndex(Blueprint $blueprint, Fluent $command)
     {
-        $index = $this->wrap($command->index);
-
-        return "drop index {$index}";
+        return "drop index {$command->index}";
     }
 
     /**
@@ -221,9 +211,7 @@ class PostgresGrammar extends Grammar
     {
         $table = $this->wrapTable($blueprint);
 
-        $index = $this->wrap($command->index);
-
-        return "alter table {$table} drop constraint {$index}";
+        return "alter table {$table} drop constraint {$command->index}";
     }
 
     /**
@@ -536,28 +524,6 @@ class PostgresGrammar extends Grammar
     protected function typeUuid(Fluent $column)
     {
         return 'uuid';
-    }
-
-    /**
-     * Create the column definition for an IP address type.
-     *
-     * @param  \Illuminate\Support\Fluent  $column
-     * @return string
-     */
-    protected function typeIpAddress(Fluent $column)
-    {
-        return 'inet';
-    }
-
-    /**
-     * Create the column definition for a MAC address type.
-     *
-     * @param  \Illuminate\Support\Fluent  $column
-     * @return string
-     */
-    protected function typeMacAddress(Fluent $column)
-    {
-        return 'macaddr';
     }
 
     /**

@@ -29,7 +29,6 @@ class Pluralizer
         'rain',
         'money',
         'moose',
-        'nutrition',
         'offspring',
         'plankton',
         'police',
