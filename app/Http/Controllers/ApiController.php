@@ -17,8 +17,32 @@ class ApiController extends Controller
 {
 
 
+    protected function checkToken($token, $user_id)
+    {
+
+        $user_from_token = JWTAuth::authenticate($token)->id;
+        if ($user_id != $user_from_token) {
+
+            return false;
+        }
+        return true;
+    }
+
+
+
     public function register_patient(Request $request)
     {
+
+
+        $user_id = $request->input('source_id');
+
+        $token = $request->input('token');
+
+
+        if (!$this->checkToken($token, $user_id)) {
+            return response()->json(['status' => false, 'message' => 'sourceId and token not match', 'error_code' => 200]);
+
+        }
 
         $first_name = $request->input('first_name');
 
@@ -122,6 +146,93 @@ class ApiController extends Controller
         );
 
 
+        $kin_fullname = $request->input('kin_fullname');
+
+        $kin_middlename = $request->input('kin_middlename');
+
+        $kin_lastname = $request->input('kin_lastname');
+
+        $kin_relationship = $request->input('kin_relationship');
+
+        $others = $request->input('others');
+
+        $kin_phone_number = $request->input('kin_phone_number');
+
+        $kin_mobile_number = $request->input('kin_mobile_number');
+
+        $kin_email = $request->input('kin_email');
+
+        $kin_house_number = $request->input('kin_house_number');
+
+        $kin_street = $request->input('kin_street');
+
+        $kin_city = $request->input('kin_city');
+
+        $kin_state = $request->input('kin_state');
+
+        $kin_country = $request->input('kin_country');
+
+        $kin_postal_code = $request->input('kin_postal_code');
+
+
+        DB::table('patient_kin')->insert(
+            ['patient_id' => $patient_id,
+                'fullname' => $kin_fullname,
+                'middlename' => $kin_middlename,
+                'lastname' => $kin_lastname,
+                'relationship' => $kin_relationship,
+                'others' => $others,
+                'phone_number' => $kin_phone_number,
+                'mobile_number' => $kin_mobile_number,
+                'email' => $kin_email,
+                'house_number' => $kin_house_number,
+                'street' => $kin_street,
+                'city' => $kin_city,
+                'state' => $kin_state,
+                'country' => $kin_country,
+                'postal_code' => $kin_postal_code,
+                'created_at' => $currentdatetime
+
+            ]
+        );
+
+
+
+        $employer_name = $request->input('employer_name');
+
+        $employer_phone_number = $request->input('employer_phone_number');
+
+        $employer_mobile_number= $request->input('employer_mobile_number');
+
+        $employer_email = $request->input('employer_email');
+
+        $employer_house_number= $request->input('employer_house_number');
+
+        $employer_street= $request->input('employer_street');
+
+        $employer_city= $request->input('employer_city');
+
+        $employer_state= $request->input('employer_state');
+
+        $employer_country= $request->input('employer_country');
+
+        DB::table('patient_employers')->insert(
+            ['patient_id' => $patient_id,
+                'name' => $employer_name,
+                'phone_number' => $employer_phone_number,
+                'mobile_number' => $employer_mobile_number,
+                'email' => $employer_email,
+                'house_number' => $employer_house_number,
+                'street' => $employer_street,
+                'city' => $employer_city,
+                'state' => $employer_state,
+                'country' => $employer_country,
+                'created_at' => $currentdatetime
+
+            ]
+        );
+
+
         return response()->json(['status' => true, 'message' => 'Patient Registered Successfully']);
 
 
@@ -188,6 +299,7 @@ class ApiController extends Controller
     public function user_login(Request $request)
     {
 
+
         $email_address = $request->input('email');
 
         $password = $request->input('password');
@@ -199,6 +311,7 @@ class ApiController extends Controller
             ->where('email', $email_address)
             ->where('password', $password_user)
             ->get();
+
 
         if (count($user) == 1) {
 
