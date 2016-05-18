@@ -284,6 +284,52 @@ class ApiController extends Controller
         );
 
 
+
+        $patient_plan_id = $request->input('patient_plan_id');
+
+        $hmo= $request->input('hmo');
+
+        $policies= $request->input('policies');
+
+        $insurance_id = $request->input('insurance_id');
+
+        $principal= $request->input('principal');
+
+        $depandent = $request->input('depandent');
+
+        $principal_id= $request->input('principal_id');
+
+        $depandent_id = $request->input('depandent_id');
+
+        $principal_relationship = $request->input('principal_relationship');
+
+        $dependant_relationship = $request->input('dependant_relationship');
+
+        $description = $request->input('description');
+
+
+        DB::table('patient_plan')->insert(
+            ['patient_id' => $patient_id,
+                'patient_plan_id' => $patient_plan_id,
+                'hmo' => $hmo,
+                'policies' => $policies,
+                'insurance_id' => $insurance_id,
+                'principal' => $principal,
+                'depandent' => $depandent,
+                'principal_id' => $principal_id,
+                'depandent_id' => $depandent_id,
+                'principal_relationship' => $principal_relationship,
+                'dependant_relationship' => $dependant_relationship,
+                'description' => $description,
+                'created_at' => $currentdatetime
+
+            ]
+        );
+
+
+
+
+
         return response()->json(['status' => true, 'message' => 'Patient Registered Successfully']);
 
 
