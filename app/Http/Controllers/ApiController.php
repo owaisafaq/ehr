@@ -44,6 +44,30 @@ class ApiController extends Controller
 
         }
 
+
+        $email = $request->input('email');
+
+        $name = $request->input('name');
+
+        $password = md5($request->input('password'));
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+        DB::table('users')->insert(
+            ['email' => $email,
+                'name' => $name,
+                'password' => $password,
+                'role_id' => 3,
+                'created_at' => $currentdatetime
+
+            ]
+        );
+
+
+        $patient_id = DB::getPdo()->lastInsertId();
+
+
         $first_name = $request->input('first_name');
 
         $middle_name = $request->input('middle_name');
@@ -78,11 +102,29 @@ class ApiController extends Controller
 
         $patient_unit_number = $request->input('patient_unit_number');
 
-        $currentdatetime = date("Y-m-d  H:i:s");
+        $identity_type = $request->input('identity_type');
+
+        $identity_number = $request->input('identity_number');
+
+        $patient_state = $request->input('patient_state');
+
+        $patient_local_goverment_area = $request->input('patient_local_goverment_area');
+
+        $tribe = $request->input('tribe');
+
+        $nationality = $request->input('nationality');
+
+        $blood_group = $request->input('blood_group');
+
+        $hospital_plan= $request->input('hospital_plan');
+
+        $occupation= $request->input('occupation');
 
 
-        DB::table('patients')->insert(
-            ['first_name' => $first_name,
+
+        DB::table('patient_profile')->insert(
+            ['patient_id' => $patient_id,
+                'first_name' => $first_name,
                 'middle_name' => $middle_name,
                 'last_name' => $last_name,
                 'date_of_birth' => $date_of_birth,
@@ -99,12 +141,21 @@ class ApiController extends Controller
                 'refered_email' => $refered_email,
                 'refered_phone' => $refered_phone,
                 'patient_unit_number' => $patient_unit_number,
+                'identity_type' => $identity_type,
+                'identity_number' => $identity_number,
+                'state' => $patient_state,
+                'local_goverment_area' => $patient_local_goverment_area,
+                'tribe' => $tribe,
+                'language' => $patient_unit_number,
+                'nationality' => $nationality,
+                'blood_group' => $blood_group,
+                'hospital_plan' => $hospital_plan,
+                'occcupation' => $occupation,
                 'created_at' => $currentdatetime
 
             ]
         );
 
-        $patient_id = DB::getPdo()->lastInsertId();
 
 
         $address_type = $request->input('address_type');
