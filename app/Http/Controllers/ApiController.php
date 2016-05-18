@@ -102,6 +102,24 @@ class ApiController extends Controller
 
         $patient_unit_number = $request->input('patient_unit_number');
 
+        $identity_type = $request->input('identity_type');
+
+        $identity_number = $request->input('identity_number');
+
+        $patient_state = $request->input('patient_state');
+
+        $patient_local_goverment_area = $request->input('patient_local_goverment_area');
+
+        $tribe = $request->input('tribe');
+
+        $nationality = $request->input('nationality');
+
+        $blood_group = $request->input('blood_group');
+
+        $hospital_plan= $request->input('hospital_plan');
+
+        $occupation= $request->input('occupation');
+
 
 
         DB::table('patient_profile')->insert(
@@ -123,6 +141,16 @@ class ApiController extends Controller
                 'refered_email' => $refered_email,
                 'refered_phone' => $refered_phone,
                 'patient_unit_number' => $patient_unit_number,
+                'identity_type' => $identity_type,
+                'identity_number' => $identity_number,
+                'state' => $patient_state,
+                'local_goverment_area' => $patient_local_goverment_area,
+                'tribe' => $tribe,
+                'language' => $patient_unit_number,
+                'nationality' => $nationality,
+                'blood_group' => $blood_group,
+                'hospital_plan' => $hospital_plan,
+                'occcupation' => $occupation,
                 'created_at' => $currentdatetime
 
             ]
