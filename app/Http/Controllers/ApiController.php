@@ -44,6 +44,30 @@ class ApiController extends Controller
 
         }
 
+
+        $email = $request->input('email');
+
+        $name = $request->input('name');
+
+        $password = md5($request->input('password'));
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+        DB::table('users')->insert(
+            ['email' => $email,
+                'name' => $name,
+                'password' => $password,
+                'role_id' => 3,
+                'created_at' => $currentdatetime
+
+            ]
+        );
+
+
+        $patient_id = DB::getPdo()->lastInsertId();
+
+
         $first_name = $request->input('first_name');
 
         $middle_name = $request->input('middle_name');
@@ -78,11 +102,11 @@ class ApiController extends Controller
 
         $patient_unit_number = $request->input('patient_unit_number');
 
-        $currentdatetime = date("Y-m-d  H:i:s");
 
 
-        DB::table('patients')->insert(
-            ['first_name' => $first_name,
+        DB::table('patient_profile')->insert(
+            ['patient_id' => $patient_id,
+                'first_name' => $first_name,
                 'middle_name' => $middle_name,
                 'last_name' => $last_name,
                 'date_of_birth' => $date_of_birth,
@@ -104,7 +128,6 @@ class ApiController extends Controller
             ]
         );
 
-        $patient_id = DB::getPdo()->lastInsertId();
 
 
         $address_type = $request->input('address_type');
