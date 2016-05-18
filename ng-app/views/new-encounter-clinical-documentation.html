@@ -1,516 +1,410 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>EHR</title>
-
-        <!-- BEGIN META -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="keywords" content="your,keywords">
-        <meta name="description" content="Short explanation about this website">
-        <!-- END META -->
-
-        <!-- BEGIN STYLESHEETS -->
-        <link href='http://fonts.googleapis.com/css?family=Roboto:300italic,400italic,300,400,500,700,900' rel='stylesheet' type='text/css'/>
-        <link type="text/css" rel="stylesheet" href="assets/css/theme-default/bootstrap.css?1422792965" />
-        <link type="text/css" rel="stylesheet" href="assets/css/theme-default/materialadmin.css?1425466319" />
-        <link type="text/css" rel="stylesheet" href="assets/css/theme-default/font-awesome.min.css?1422529194" />
-        <link type="text/css" rel="stylesheet" href="assets/css/theme-default/material-design-iconic-font.min.css?1421434286" />
-        <link type="text/css" rel="stylesheet" href="assets/css/theme-default/libs/select2/select2.css?1424887856" />
-        <link type="text/css" rel="stylesheet" href="assets/css/theme-default/libs/multi-select/multi-select.css?1424887857" />
-        <link type="text/css" rel="stylesheet" href="assets/css/theme-default/libs/bootstrap-datepicker/datepicker3.css?1424887858" />
-        <link href="assets/css/theme-default/style.css" rel="stylesheet" type="text/css"/>
-        <!-- END STYLESHEETS -->
-
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-        <script type="text/javascript" src="assets/js/libs/utils/html5shiv.js?1403934957"></script>
-        <script type="text/javascript" src="assets/js/libs/utils/respond.min.js?1403934956"></script>
-        <![endif]-->
-    </head>
-    <body class="menubar-hoverable header-fixed">
-        <header id="header">
-            <form action="post">
-                <div class="headerbar">
-                    <div class="headerbar-left">
-                        <a href="javascript:;" class="white-btn"><img src="assets/img/add_person.png" /></a>
-                        <a href="javascript:;" class="white-btn"><img src="assets/img/heart_plus.png" /></a>
-                        <a href="javascript:;" class="white-btn"><img src="assets/img/content_icn.png" /></a>
-                        <a href="javascript:;" class="white-btn"><img src="assets/img/report_icn.png" /></a>
-                    </div>
-                    <div class="headerbar-right">
-                        <a class="margin-right-20" href="javascript:;"><img src="assets/img/emergency.png" /></a>
-                        <div class="header-search margin-right-0">
-                            <button type="submit">
-                                <i class="fa fa-search"></i>
-                            </button>
-                            <input class="search_field" type="text" placeholder="Search for a patient" />
-                        </div> 
-                    </div>
+<div id="content">
+    <section>
+        <div class="card custom-card">
+            <div class="card-head card-head-custom card-color-3">
+                <div class="col-lg-3">
+                    <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
+                    <span class="txt-style-2 col-lg-12">Elbert Bloggs Woo</span>
                 </div>
-            </form>
-        </header>
-
-        <div id="base">
-            <div id="content">
-                <section>
-                    <div class="card custom-card">
-                        <div class="card-head card-head-custom card-color-3">
-                            <div class="col-lg-3">
-                                <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
-                                <span class="txt-style-2 col-lg-12">Elbert Bloggs Woo</span>
-                            </div>
-                            <div class="col-lg-2">
-                                <label class="txt-style-1 text-uppercase col-lg-12">Patient Number</label>
-                                <span class="txt-style-2 col-lg-12">PA-90189191</span>
-                            </div>
-                            <div class="col-lg-2">
-                                <label class="txt-style-1 text-uppercase col-lg-12">Age</label>
-                                <span class="txt-style-2 col-lg-12">39 Years</span>
-                            </div>
-                            <div class="col-lg-1">
-                                <label class="txt-style-1 text-uppercase col-lg-12">Sex</label>
-                                <span class="txt-style-2 col-lg-12">Male</span>
-                            </div>
-                            <div class="col-lg-2">
-                                <label class="txt-style-1 text-uppercase col-lg-12">marital status</label>
-                                <span class="txt-style-2 col-lg-12">Single</span>
-                            </div>
-                            <div class="col-lg-2">
-                                <a href="javascript:;" class="button-style-2">
-                                    <img src="assets/img/content_icn_blue.png" />
-                                </a>
-                                <a href="javascript:;" class="button-style-2">
-                                    <img src="assets/img/assign_blue.png" />
-                                </a>
-                                <a href="javascript:;" class="button-style-2">
-                                    <img src="assets/img/discharge_icn_blue.png" />
-                                </a>                             
-                            </div>
-                        </div>
-                        <div class="table-header col-lg-12">
-                            <div class="col-lg-12 no-padding table-header-2">
-                                <span class="txt-style-3 pull-left text-uppercase">Encounter id</span>
-                                <span class="txt-style-4 pull-left">1029828</span>
-                                <span class="txt-style-3 pull-left text-uppercase">date of service</span>
-                                <span class="txt-style-4 pull-left">April 05, 2015</span>
-                                <div class="pull-left header-checkboxes">
-                                    <div class="checkbox checkbox-styled">
-                                        <label>
-                                            <input type="checkbox" value="">
-                                            <span>H & P</span>
-                                        </label>
-                                    </div>
-
-                                    <div class="checkbox checkbox-styled">
-                                        <label>
-                                            <input type="checkbox" value="">
-                                            <span>SOAP Template</span>
-                                        </label>
-                                    </div>
-
-                                    <div class="checkbox checkbox-styled">
-                                        <label>
-                                            <input type="checkbox" value="">
-                                            <span>Custom Template</span>
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-2 pull-right select-con">
-                                    <select class="form-control">
-                                        <option>Select a template</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                    </select>
-                                </div>
-                            </div> 
-                        </div>
-                        <div class="card-body col-lg-12 accordian-body-con">
-                            <div class="col-lg-12 pull-right no-padding">
-                                <div class="panel-group custom-accordian" id="accordion3">
-                                    <div class="card panel expanded">
-                                        <div class="card-head card-head-sm" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-1">
-                                            <header>PLAN</header>
-                                            <div class="tools">
-                                                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
-                                            </div>
-                                        </div>
-                                        <div id="accordion3-1" class="collapse in">
-                                            <div class="card-body card-body">
-                                                <ul class="ulli">
-                                                    <li>Chief Complaint and HPI</li>
-                                                    <li>Problems</li>
-                                                    <li>History</li>
-                                                    <li>Allergies / Adverse Reactions</li>
-                                                    <li>Active Medications</li>
-                                                    <li>Review of Systems</li>
-                                                    <li>Subjective Text</li>                                                    
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div><!--end .panel -->
-                                    <div class="card panel">
-                                        <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-3">
-                                            <header>Objective</header>
-                                            <div class="tools">
-                                                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
-                                            </div>
-                                        </div>
-                                        <div id="accordion3-3" class="collapse">
-                                            <div class="card-body">
-                                                <ul class="ulli">
-                                                    <li>Vitals</li>
-                                                    <li>Physical Exams</li>
-                                                    <li>Objective Text</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div><!--end .panel -->
-                                    <div class="card panel">
-                                        <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-2">
-                                            <header>Assessment</header>
-                                            <div class="tools">
-                                                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
-                                            </div>
-                                        </div>
-                                        <div id="accordion3-2" class="collapse">
-                                            <div class="card-body">
-                                                <ul class="ulli">
-                                                    <li>Diagnosis</li>
-                                                    <li>Assessment Text</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div><!--end .panel -->
-
-                                    <div class="card panel">
-                                        <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-4">
-                                            <header>Subjective</header>
-                                            <div class="tools">
-                                                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
-                                            </div>
-                                        </div>
-                                        <div id="accordion3-4" class="collapse">
-                                            <div class="card-body">
-                                                <ul class="ulli">
-                                                    <li>Lab Order</li>
-                                                    <li>Prescription</li>
-                                                    <li>Radiology Order</li>
-                                                    <li>Procedure</li>
-                                                    <li>Clinical Education</li>
-                                                    <li>Medical Examination</li>
-                                                    <li>Plain Text</li>                                                    
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div><!--end .panel -->
-                                </div><!--end .panel-group -->
-
-                                <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right">finalize report</button>
-                                <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10">preview report</button>
-                                <button type="button" class="btn ink-reaction button-style-1 btn-big pull-right margin-right-10">save</button>
-                            </div>
-                        </div><!--end .card-body -->
-                    </div><!--end .card -->
-
-
-
-                    <div id="menubar" class="menubar-inverse ">
-                        <div class="site_name">
-                            ERH
-                        </div>
-                        <div class="menubar-scroll-panel">
-
-                            <!-- BEGIN MAIN MENU -->
-                            <ul id="main-menu" class="gui-controls">
-
-                                <!-- BEGIN DASHBOARD -->
-                                <li>
-                                    <a href="../../html/dashboards/dashboard.html" >
-                                        <div class="gui-icon"><i class="md md-home"></i></div>
-                                        <span class="title">Dashboard</span>
-                                    </a>
-                                </li><!--end /menu-li -->
-                                <!-- END DASHBOARD -->
-
-                                <!-- BEGIN EMAIL -->
-                                <li class="gui-folder">
-                                    <a>
-                                        <div class="gui-icon"><i class="md md-email"></i></div>
-                                        <span class="title">Email</span>
-                                    </a>
-                                    <!--start submenu -->
-                                    <ul>
-                                        <li><a href="../../html/mail/inbox.html" ><span class="title">Inbox</span></a></li>
-                                        <li><a href="../../html/mail/compose.html" ><span class="title">Compose</span></a></li>
-                                        <li><a href="../../html/mail/reply.html" ><span class="title">Reply</span></a></li>
-                                        <li><a href="../../html/mail/message.html" ><span class="title">View message</span></a></li>
-                                    </ul><!--end /submenu -->
-                                </li><!--end /menu-li -->
-                                <!-- END EMAIL -->
-
-                                <!-- BEGIN DASHBOARD -->
-                                <li>
-                                    <a href="../../html/layouts/builder.html" >
-                                        <div class="gui-icon"><i class="md md-web"></i></div>
-                                        <span class="title">Layouts</span>
-                                    </a>
-                                </li><!--end /menu-li -->
-                                <!-- END DASHBOARD -->
-
-                                <!-- BEGIN UI -->
-                                <li class="gui-folder">
-                                    <a>
-                                        <div class="gui-icon"><i class="fa fa-puzzle-piece fa-fw"></i></div>
-                                        <span class="title">UI elements</span>
-                                    </a>
-                                    <!--start submenu -->
-                                    <ul>
-                                        <li><a href="../../html/ui/colors.html" ><span class="title">Colors</span></a></li>
-                                        <li><a href="../../html/ui/typography.html" ><span class="title">Typography</span></a></li>
-                                        <li><a href="../../html/ui/cards.html" ><span class="title">Cards</span></a></li>
-                                        <li><a href="../../html/ui/buttons.html" ><span class="title">Buttons</span></a></li>
-                                        <li><a href="../../html/ui/lists.html" ><span class="title">Lists</span></a></li>
-                                        <li><a href="../../html/ui/tabs.html" class="active"><span class="title">Tabs</span></a></li>
-                                        <li><a href="../../html/ui/accordions.html" ><span class="title">Accordions</span></a></li>
-                                        <li><a href="../../html/ui/messages.html" ><span class="title">Messages</span></a></li>
-                                        <li><a href="../../html/ui/offcanvas.html" ><span class="title">Off-canvas</span></a></li>
-                                        <li><a href="../../html/ui/grid.html" ><span class="title">Grid</span></a></li>
-                                        <li class="gui-folder">
-                                            <a href="javascript:void(0);">
-                                                <span class="title">Icons</span>
-                                            </a>
-                                            <!--start submenu -->
-                                            <ul>
-                                                <li><a href="../../html/ui/icons/materialicons.html" ><span class="title">Material Design Icons</span></a></li>
-                                                <li><a href="../../html/ui/icons/fontawesome.html" ><span class="title">Font Awesome</span></a></li>
-                                                <li><a href="../../html/ui/icons/glyphicons.html" ><span class="title">Glyphicons</span></a></li>
-                                                <li><a href="../../html/ui/icons/skycons.html" ><span class="title">Skycons</span></a></li>
-                                            </ul><!--end /submenu -->
-                                        </li><!--end /menu-li -->
-                                    </ul><!--end /submenu -->
-                                </li><!--end /menu-li -->
-                                <!-- END UI -->
-
-                                <!-- BEGIN TABLES -->
-                                <li class="gui-folder">
-                                    <a>
-                                        <div class="gui-icon"><i class="fa fa-table"></i></div>
-                                        <span class="title">Tables</span>
-                                    </a>
-                                    <!--start submenu -->
-                                    <ul>
-                                        <li><a href="../../html/tables/static.html" ><span class="title">Static Tables</span></a></li>
-                                        <li><a href="../../html/tables/dynamic.html" ><span class="title">Dynamic Tables</span></a></li>
-                                        <li><a href="../../html/tables/responsive.html" ><span class="title">Responsive Table</span></a></li>
-                                    </ul><!--end /submenu -->
-                                </li><!--end /menu-li -->
-                                <!-- END TABLES -->
-
-                                <!-- BEGIN FORMS -->
-                                <li class="gui-folder">
-                                    <a>
-                                        <div class="gui-icon"><span class="glyphicon glyphicon-list-alt"></span></div>
-                                        <span class="title">Forms</span>
-                                    </a>
-                                    <!--start submenu -->
-                                    <ul>
-                                        <li><a href="../../html/forms/basic.html" ><span class="title">Form basic</span></a></li>
-                                        <li><a href="../../html/forms/advanced.html" ><span class="title">Form advanced</span></a></li>
-                                        <li><a href="../../html/forms/layouts.html" ><span class="title">Form layouts</span></a></li>
-                                        <li><a href="../../html/forms/editors.html" ><span class="title">Editors</span></a></li>
-                                        <li><a href="../../html/forms/validation.html" ><span class="title">Form validation</span></a></li>
-                                        <li><a href="../../html/forms/wizard.html" ><span class="title">Form wizard</span></a></li>
-                                    </ul><!--end /submenu -->
-                                </li><!--end /menu-li -->
-                                <!-- END FORMS -->
-
-                                <!-- BEGIN PAGES -->
-                                <li class="gui-folder">
-                                    <a>
-                                        <div class="gui-icon"><i class="md md-computer"></i></div>
-                                        <span class="title">Pages</span>
-                                    </a>
-                                    <!--start submenu -->
-                                    <ul>
-                                        <li class="gui-folder">
-                                            <a href="javascript:void(0);">
-                                                <span class="title">Contacts</span>
-                                            </a>
-                                            <!--start submenu -->
-                                            <ul>
-                                                <li><a href="../../html/pages/contacts/search.html" ><span class="title">Search</span></a></li>
-                                                <li><a href="../../html/pages/contacts/details.html" ><span class="title">Contact card</span></a></li>
-                                                <li><a href="../../html/pages/contacts/add.html" ><span class="title">Insert contact</span></a></li>
-                                            </ul><!--end /submenu -->
-                                        </li><!--end /menu-li -->
-                                        <li class="gui-folder">
-                                            <a href="javascript:void(0);">
-                                                <span class="title">Search</span>
-                                            </a>
-                                            <!--start submenu -->
-                                            <ul>
-                                                <li><a href="../../html/pages/search/results-text.html" ><span class="title">Results - Text</span></a></li>
-                                                <li><a href="../../html/pages/search/results-text-image.html" ><span class="title">Results - Text and Image</span></a></li>
-                                            </ul><!--end /submenu -->
-                                        </li><!--end /menu-li -->
-                                        <li class="gui-folder">
-                                            <a href="javascript:void(0);">
-                                                <span class="title">Blog</span>
-                                            </a>
-                                            <!--start submenu -->
-                                            <ul>
-                                                <li><a href="../../html/pages/blog/masonry.html" ><span class="title">Blog masonry</span></a></li>
-                                                <li><a href="../../html/pages/blog/list.html" ><span class="title">Blog list</span></a></li>
-                                                <li><a href="../../html/pages/blog/post.html" ><span class="title">Blog post</span></a></li>
-                                            </ul><!--end /submenu -->
-                                        </li><!--end /menu-li -->
-                                        <li class="gui-folder">
-                                            <a href="javascript:void(0);">
-                                                <span class="title">Error pages</span>
-                                            </a>
-                                            <!--start submenu -->
-                                            <ul>
-                                                <li><a href="../../html/pages/404.html" ><span class="title">404 page</span></a></li>
-                                                <li><a href="../../html/pages/500.html" ><span class="title">500 page</span></a></li>
-                                            </ul><!--end /submenu -->
-                                        </li><!--end /menu-li -->
-                                        <li><a href="../../html/pages/profile.html" ><span class="title">User profile<span class="badge style-accent">42</span></span></a></li>
-                                        <li><a href="../../html/pages/invoice.html" ><span class="title">Invoice</span></a></li>
-                                        <li><a href="../../html/pages/calendar.html" ><span class="title">Calendar</span></a></li>
-                                        <li><a href="../../html/pages/pricing.html" ><span class="title">Pricing</span></a></li>
-                                        <li><a href="../../html/pages/timeline.html" ><span class="title">Timeline</span></a></li>
-                                        <li><a href="../../html/pages/maps.html" ><span class="title">Maps</span></a></li>
-                                        <li><a href="../../html/pages/locked.html" ><span class="title">Lock screen</span></a></li>
-                                        <li><a href="../../html/pages/login.html" ><span class="title">Login</span></a></li>
-                                        <li><a href="../../html/pages/blank.html" ><span class="title">Blank page</span></a></li>
-                                    </ul><!--end /submenu -->
-                                </li><!--end /menu-li -->
-                                <!-- END FORMS -->
-
-                                <!-- BEGIN CHARTS -->
-                                <li>
-                                    <a href="../../html/charts/charts.html" >
-                                        <div class="gui-icon"><i class="md md-assessment"></i></div>
-                                        <span class="title">Charts</span>
-                                    </a>
-                                </li><!--end /menu-li -->
-                                <!-- END CHARTS -->
-
-                                <!-- BEGIN LEVELS -->
-                                <li class="gui-folder">
-                                    <a>
-                                        <div class="gui-icon"><i class="fa fa-folder-open fa-fw"></i></div>
-                                        <span class="title">Menu levels demo</span>
-                                    </a>
-                                    <!--start submenu -->
-                                    <ul>
-                                        <li><a href="#"><span class="title">Item 1</span></a></li>
-                                        <li><a href="#"><span class="title">Item 1</span></a></li>
-                                        <li class="gui-folder">
-                                            <a href="javascript:void(0);">
-                                                <span class="title">Open level 2</span>
-                                            </a>
-                                            <!--start submenu -->
-                                            <ul>
-                                                <li><a href="#"><span class="title">Item 2</span></a></li>
-                                                <li class="gui-folder">
-                                                    <a href="javascript:void(0);">
-                                                        <span class="title">Open level 3</span>
-                                                    </a>
-                                                    <!--start submenu -->
-                                                    <ul>
-                                                        <li><a href="#"><span class="title">Item 3</span></a></li>
-                                                        <li><a href="#"><span class="title">Item 3</span></a></li>
-                                                        <li class="gui-folder">
-                                                            <a href="javascript:void(0);">
-                                                                <span class="title">Open level 4</span>
-                                                            </a>
-                                                            <!--start submenu -->
-                                                            <ul>
-                                                                <li><a href="#"><span class="title">Item 4</span></a></li>
-                                                                <li class="gui-folder">
-                                                                    <a href="javascript:void(0);">
-                                                                        <span class="title">Open level 5</span>
-                                                                    </a>
-                                                                    <!--start submenu -->
-                                                                    <ul>
-                                                                        <li><a href="#"><span class="title">Item 5</span></a></li>
-                                                                        <li><a href="#"><span class="title">Item 5</span></a></li>
-                                                                    </ul><!--end /submenu -->
-                                                                </li><!--end /submenu-li -->
-                                                            </ul><!--end /submenu -->
-                                                        </li><!--end /submenu-li -->
-                                                    </ul><!--end /submenu -->
-                                                </li><!--end /submenu-li -->
-                                            </ul><!--end /submenu -->
-                                        </li><!--end /submenu-li -->
-                                    </ul><!--end /submenu -->
-                                </li><!--end /menu-li -->
-                                <!-- END LEVELS -->
-
-                            </ul><!--end .main-menu -->
-                            <!-- END MAIN MENU -->
-
-                            <div class="menubar-foot-panel">
-                                <small class="no-linebreak hidden-folded">
-                                    <span class="opacity-75">Copyright &copy; 2014</span> <strong>CodeCovers</strong>
-                                </small>
-                            </div>
-                        </div><!--end .menubar-scroll-panel-->
-                    </div><!--end #menubar-->
-                </section>
+                <div class="col-lg-2">
+                    <label class="txt-style-1 text-uppercase col-lg-12">Patient Number</label>
+                    <span class="txt-style-2 col-lg-12">PA-90189191</span>
+                </div>
+                <div class="col-lg-2">
+                    <label class="txt-style-1 text-uppercase col-lg-12">Age</label>
+                    <span class="txt-style-2 col-lg-12">39 Years</span>
+                </div>
+                <div class="col-lg-1">
+                    <label class="txt-style-1 text-uppercase col-lg-12">Sex</label>
+                    <span class="txt-style-2 col-lg-12">Male</span>
+                </div>
+                <div class="col-lg-2">
+                    <label class="txt-style-1 text-uppercase col-lg-12">marital status</label>
+                    <span class="txt-style-2 col-lg-12">Single</span>
+                </div>
+                <div class="col-lg-2">
+                    <a href="javascript:;" class="button-style-2">
+                        <img src="assets/img/content_icn_blue.png" />
+                    </a>
+                    <a href="javascript:;" class="button-style-2">
+                        <img src="assets/img/assign_blue.png" />
+                    </a>
+                    <a href="javascript:;" class="button-style-2">
+                        <img src="assets/img/discharge_icn_blue.png" />
+                    </a>                             
+                </div>
             </div>
-        </div><!--end #base-->
-        <div class="modal fade" id="addpatient" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header pop_head">
-                        <h2>Print ID Card</h2>
-                    </div>
-                    <div class="modal-body">
-                        <img src="assets/img/id_card_img.jpg" />
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default button-style-1">Print</button>
-                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+            <div class="table-header col-lg-12">
+                <div class="col-lg-12 no-padding table-header-2">
+                    <span class="txt-style-3 pull-left text-uppercase">Encounter id</span>
+                    <span class="txt-style-4 pull-left">1029828</span>
+                    <span class="txt-style-3 pull-left text-uppercase">date of service</span>
+                    <span class="txt-style-4 pull-left">April 05, 2015</span>
+                    <div class="pull-left header-checkboxes">
+                        <div class="checkbox checkbox-styled">
+                            <label>
+                                <input type="checkbox" value="">
+                                <span>H & P</span>
+                            </label>
+                        </div>
 
-        <!-- END BASE -->
+                        <div class="checkbox checkbox-styled">
+                            <label>
+                                <input type="checkbox" value="">
+                                <span>SOAP Template</span>
+                            </label>
+                        </div>
 
-        <!-- BEGIN JAVASCRIPT -->
-        <script src="assets/js/libs/jquery/jquery-1.11.2.min.js"></script>
-        <script src="assets/js/libs/jquery/jquery-migrate-1.2.1.min.js"></script>
-        <script src="assets/js/libs/bootstrap/bootstrap.min.js"></script>
-        <script src="assets/js/libs/spin.js/spin.min.js"></script>
-        <script src="assets/js/libs/autosize/jquery.autosize.min.js"></script>
-        <script src="assets/js/libs/nanoscroller/jquery.nanoscroller.min.js"></script>
-        <script src="assets/js/core/source/App.js"></script>
-        <script src="assets/js/core/source/AppNavigation.js"></script>
-        <script src="assets/js/core/source/AppOffcanvas.js"></script>
-        <script src="assets/js/core/source/AppCard.js"></script>
-        <script src="assets/js/core/source/AppForm.js"></script>
-        <script src="assets/js/core/source/AppNavSearch.js"></script>
-        <script src="assets/js/core/source/AppVendor.js"></script>
-        <script src="assets/js/core/demo/Demo.js"></script>
-        <script src="assets/js/core/source/script.js" type="text/javascript"></script>
-        <script src="assets/js/libs/select2/select2.min.js" type="text/javascript"></script>
-        <script src="assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
-        <!-- END JAVASCRIPT -->
-        <script>
-            $(document).ready(function () {
-                $('select').select2(
-                        {
-                            minimumResultsForSearch: Infinity
-                        }
-                );
-            });
-            $('#demo-date').datepicker({autoclose: true, todayHighlight: true});
-        </script>
+                        <div class="checkbox checkbox-styled">
+                            <label>
+                                <input type="checkbox" value="">
+                                <span>Custom Template</span>
+                            </label>
+                        </div>
+                    </div>
 
-    </body>
-</html>
+                    <div class="col-lg-2 pull-right select-con">
+                        <select class="form-control">
+                            <option>Select a template</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                    </div>
+                </div> 
+            </div>
+            <div class="card-body col-lg-12 accordian-body-con">
+                <div class="col-lg-12 pull-right no-padding">
+                    <div class="panel-group custom-accordian" id="accordion3">
+                        <div class="card panel expanded">
+                            <div class="card-head card-head-sm" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-1">
+                                <header>PLAN</header>
+                                <div class="tools">
+                                    <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+                                </div>
+                            </div>
+                            <div id="accordion3-1" class="collapse in">
+                                <div class="card-body card-body">
+                                    <ul class="ulli">
+                                        <li>Chief Complaint and HPI</li>
+                                        <li>Problems</li>
+                                        <li>History</li>
+                                        <li>Allergies / Adverse Reactions</li>
+                                        <li>Active Medications</li>
+                                        <li>Review of Systems</li>
+                                        <li>Subjective Text</li>                                                    
+                                    </ul>
+                                </div>
+                            </div>
+                        </div><!--end .panel -->
+                        <div class="card panel">
+                            <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-3">
+                                <header>Objective</header>
+                                <div class="tools">
+                                    <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+                                </div>
+                            </div>
+                            <div id="accordion3-3" class="collapse">
+                                <div class="card-body">
+                                    <ul class="ulli">
+                                        <li>Vitals</li>
+                                        <li>Physical Exams</li>
+                                        <li>Objective Text</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div><!--end .panel -->
+                        <div class="card panel">
+                            <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-2">
+                                <header>Assessment</header>
+                                <div class="tools">
+                                    <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+                                </div>
+                            </div>
+                            <div id="accordion3-2" class="collapse">
+                                <div class="card-body">
+                                    <ul class="ulli">
+                                        <li>Diagnosis</li>
+                                        <li>Assessment Text</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div><!--end .panel -->
+
+                        <div class="card panel">
+                            <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-4">
+                                <header>Subjective</header>
+                                <div class="tools">
+                                    <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+                                </div>
+                            </div>
+                            <div id="accordion3-4" class="collapse">
+                                <div class="card-body">
+                                    <ul class="ulli">
+                                        <li>Lab Order</li>
+                                        <li>Prescription</li>
+                                        <li>Radiology Order</li>
+                                        <li>Procedure</li>
+                                        <li>Clinical Education</li>
+                                        <li>Medical Examination</li>
+                                        <li>Plain Text</li>                                                    
+                                    </ul>
+                                </div>
+                            </div>
+                        </div><!--end .panel -->
+                    </div><!--end .panel-group -->
+
+                    <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right">finalize report</button>
+                    <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10">preview report</button>
+                    <button type="button" class="btn ink-reaction button-style-1 btn-big pull-right margin-right-10">save</button>
+                </div>
+            </div><!--end .card-body -->
+        </div><!--end .card -->
+
+
+
+        <div id="menubar" class="menubar-inverse ">
+            <div class="site_name">
+                ERH
+            </div>
+            <div class="menubar-scroll-panel">
+
+                <!-- BEGIN MAIN MENU -->
+                <ul id="main-menu" class="gui-controls">
+
+                    <!-- BEGIN DASHBOARD -->
+                    <li>
+                        <a href="../../html/dashboards/dashboard.html" >
+                            <div class="gui-icon"><i class="md md-home"></i></div>
+                            <span class="title">Dashboard</span>
+                        </a>
+                    </li><!--end /menu-li -->
+                    <!-- END DASHBOARD -->
+
+                    <!-- BEGIN EMAIL -->
+                    <li class="gui-folder">
+                        <a>
+                            <div class="gui-icon"><i class="md md-email"></i></div>
+                            <span class="title">Email</span>
+                        </a>
+                        <!--start submenu -->
+                        <ul>
+                            <li><a href="../../html/mail/inbox.html" ><span class="title">Inbox</span></a></li>
+                            <li><a href="../../html/mail/compose.html" ><span class="title">Compose</span></a></li>
+                            <li><a href="../../html/mail/reply.html" ><span class="title">Reply</span></a></li>
+                            <li><a href="../../html/mail/message.html" ><span class="title">View message</span></a></li>
+                        </ul><!--end /submenu -->
+                    </li><!--end /menu-li -->
+                    <!-- END EMAIL -->
+
+                    <!-- BEGIN DASHBOARD -->
+                    <li>
+                        <a href="../../html/layouts/builder.html" >
+                            <div class="gui-icon"><i class="md md-web"></i></div>
+                            <span class="title">Layouts</span>
+                        </a>
+                    </li><!--end /menu-li -->
+                    <!-- END DASHBOARD -->
+
+                    <!-- BEGIN UI -->
+                    <li class="gui-folder">
+                        <a>
+                            <div class="gui-icon"><i class="fa fa-puzzle-piece fa-fw"></i></div>
+                            <span class="title">UI elements</span>
+                        </a>
+                        <!--start submenu -->
+                        <ul>
+                            <li><a href="../../html/ui/colors.html" ><span class="title">Colors</span></a></li>
+                            <li><a href="../../html/ui/typography.html" ><span class="title">Typography</span></a></li>
+                            <li><a href="../../html/ui/cards.html" ><span class="title">Cards</span></a></li>
+                            <li><a href="../../html/ui/buttons.html" ><span class="title">Buttons</span></a></li>
+                            <li><a href="../../html/ui/lists.html" ><span class="title">Lists</span></a></li>
+                            <li><a href="../../html/ui/tabs.html" class="active"><span class="title">Tabs</span></a></li>
+                            <li><a href="../../html/ui/accordions.html" ><span class="title">Accordions</span></a></li>
+                            <li><a href="../../html/ui/messages.html" ><span class="title">Messages</span></a></li>
+                            <li><a href="../../html/ui/offcanvas.html" ><span class="title">Off-canvas</span></a></li>
+                            <li><a href="../../html/ui/grid.html" ><span class="title">Grid</span></a></li>
+                            <li class="gui-folder">
+                                <a href="javascript:void(0);">
+                                    <span class="title">Icons</span>
+                                </a>
+                                <!--start submenu -->
+                                <ul>
+                                    <li><a href="../../html/ui/icons/materialicons.html" ><span class="title">Material Design Icons</span></a></li>
+                                    <li><a href="../../html/ui/icons/fontawesome.html" ><span class="title">Font Awesome</span></a></li>
+                                    <li><a href="../../html/ui/icons/glyphicons.html" ><span class="title">Glyphicons</span></a></li>
+                                    <li><a href="../../html/ui/icons/skycons.html" ><span class="title">Skycons</span></a></li>
+                                </ul><!--end /submenu -->
+                            </li><!--end /menu-li -->
+                        </ul><!--end /submenu -->
+                    </li><!--end /menu-li -->
+                    <!-- END UI -->
+
+                    <!-- BEGIN TABLES -->
+                    <li class="gui-folder">
+                        <a>
+                            <div class="gui-icon"><i class="fa fa-table"></i></div>
+                            <span class="title">Tables</span>
+                        </a>
+                        <!--start submenu -->
+                        <ul>
+                            <li><a href="../../html/tables/static.html" ><span class="title">Static Tables</span></a></li>
+                            <li><a href="../../html/tables/dynamic.html" ><span class="title">Dynamic Tables</span></a></li>
+                            <li><a href="../../html/tables/responsive.html" ><span class="title">Responsive Table</span></a></li>
+                        </ul><!--end /submenu -->
+                    </li><!--end /menu-li -->
+                    <!-- END TABLES -->
+
+                    <!-- BEGIN FORMS -->
+                    <li class="gui-folder">
+                        <a>
+                            <div class="gui-icon"><span class="glyphicon glyphicon-list-alt"></span></div>
+                            <span class="title">Forms</span>
+                        </a>
+                        <!--start submenu -->
+                        <ul>
+                            <li><a href="../../html/forms/basic.html" ><span class="title">Form basic</span></a></li>
+                            <li><a href="../../html/forms/advanced.html" ><span class="title">Form advanced</span></a></li>
+                            <li><a href="../../html/forms/layouts.html" ><span class="title">Form layouts</span></a></li>
+                            <li><a href="../../html/forms/editors.html" ><span class="title">Editors</span></a></li>
+                            <li><a href="../../html/forms/validation.html" ><span class="title">Form validation</span></a></li>
+                            <li><a href="../../html/forms/wizard.html" ><span class="title">Form wizard</span></a></li>
+                        </ul><!--end /submenu -->
+                    </li><!--end /menu-li -->
+                    <!-- END FORMS -->
+
+                    <!-- BEGIN PAGES -->
+                    <li class="gui-folder">
+                        <a>
+                            <div class="gui-icon"><i class="md md-computer"></i></div>
+                            <span class="title">Pages</span>
+                        </a>
+                        <!--start submenu -->
+                        <ul>
+                            <li class="gui-folder">
+                                <a href="javascript:void(0);">
+                                    <span class="title">Contacts</span>
+                                </a>
+                                <!--start submenu -->
+                                <ul>
+                                    <li><a href="../../html/pages/contacts/search.html" ><span class="title">Search</span></a></li>
+                                    <li><a href="../../html/pages/contacts/details.html" ><span class="title">Contact card</span></a></li>
+                                    <li><a href="../../html/pages/contacts/add.html" ><span class="title">Insert contact</span></a></li>
+                                </ul><!--end /submenu -->
+                            </li><!--end /menu-li -->
+                            <li class="gui-folder">
+                                <a href="javascript:void(0);">
+                                    <span class="title">Search</span>
+                                </a>
+                                <!--start submenu -->
+                                <ul>
+                                    <li><a href="../../html/pages/search/results-text.html" ><span class="title">Results - Text</span></a></li>
+                                    <li><a href="../../html/pages/search/results-text-image.html" ><span class="title">Results - Text and Image</span></a></li>
+                                </ul><!--end /submenu -->
+                            </li><!--end /menu-li -->
+                            <li class="gui-folder">
+                                <a href="javascript:void(0);">
+                                    <span class="title">Blog</span>
+                                </a>
+                                <!--start submenu -->
+                                <ul>
+                                    <li><a href="../../html/pages/blog/masonry.html" ><span class="title">Blog masonry</span></a></li>
+                                    <li><a href="../../html/pages/blog/list.html" ><span class="title">Blog list</span></a></li>
+                                    <li><a href="../../html/pages/blog/post.html" ><span class="title">Blog post</span></a></li>
+                                </ul><!--end /submenu -->
+                            </li><!--end /menu-li -->
+                            <li class="gui-folder">
+                                <a href="javascript:void(0);">
+                                    <span class="title">Error pages</span>
+                                </a>
+                                <!--start submenu -->
+                                <ul>
+                                    <li><a href="../../html/pages/404.html" ><span class="title">404 page</span></a></li>
+                                    <li><a href="../../html/pages/500.html" ><span class="title">500 page</span></a></li>
+                                </ul><!--end /submenu -->
+                            </li><!--end /menu-li -->
+                            <li><a href="../../html/pages/profile.html" ><span class="title">User profile<span class="badge style-accent">42</span></span></a></li>
+                            <li><a href="../../html/pages/invoice.html" ><span class="title">Invoice</span></a></li>
+                            <li><a href="../../html/pages/calendar.html" ><span class="title">Calendar</span></a></li>
+                            <li><a href="../../html/pages/pricing.html" ><span class="title">Pricing</span></a></li>
+                            <li><a href="../../html/pages/timeline.html" ><span class="title">Timeline</span></a></li>
+                            <li><a href="../../html/pages/maps.html" ><span class="title">Maps</span></a></li>
+                            <li><a href="../../html/pages/locked.html" ><span class="title">Lock screen</span></a></li>
+                            <li><a href="../../html/pages/login.html" ><span class="title">Login</span></a></li>
+                            <li><a href="../../html/pages/blank.html" ><span class="title">Blank page</span></a></li>
+                        </ul><!--end /submenu -->
+                    </li><!--end /menu-li -->
+                    <!-- END FORMS -->
+
+                    <!-- BEGIN CHARTS -->
+                    <li>
+                        <a href="../../html/charts/charts.html" >
+                            <div class="gui-icon"><i class="md md-assessment"></i></div>
+                            <span class="title">Charts</span>
+                        </a>
+                    </li><!--end /menu-li -->
+                    <!-- END CHARTS -->
+
+                    <!-- BEGIN LEVELS -->
+                    <li class="gui-folder">
+                        <a>
+                            <div class="gui-icon"><i class="fa fa-folder-open fa-fw"></i></div>
+                            <span class="title">Menu levels demo</span>
+                        </a>
+                        <!--start submenu -->
+                        <ul>
+                            <li><a href="#"><span class="title">Item 1</span></a></li>
+                            <li><a href="#"><span class="title">Item 1</span></a></li>
+                            <li class="gui-folder">
+                                <a href="javascript:void(0);">
+                                    <span class="title">Open level 2</span>
+                                </a>
+                                <!--start submenu -->
+                                <ul>
+                                    <li><a href="#"><span class="title">Item 2</span></a></li>
+                                    <li class="gui-folder">
+                                        <a href="javascript:void(0);">
+                                            <span class="title">Open level 3</span>
+                                        </a>
+                                        <!--start submenu -->
+                                        <ul>
+                                            <li><a href="#"><span class="title">Item 3</span></a></li>
+                                            <li><a href="#"><span class="title">Item 3</span></a></li>
+                                            <li class="gui-folder">
+                                                <a href="javascript:void(0);">
+                                                    <span class="title">Open level 4</span>
+                                                </a>
+                                                <!--start submenu -->
+                                                <ul>
+                                                    <li><a href="#"><span class="title">Item 4</span></a></li>
+                                                    <li class="gui-folder">
+                                                        <a href="javascript:void(0);">
+                                                            <span class="title">Open level 5</span>
+                                                        </a>
+                                                        <!--start submenu -->
+                                                        <ul>
+                                                            <li><a href="#"><span class="title">Item 5</span></a></li>
+                                                            <li><a href="#"><span class="title">Item 5</span></a></li>
+                                                        </ul><!--end /submenu -->
+                                                    </li><!--end /submenu-li -->
+                                                </ul><!--end /submenu -->
+                                            </li><!--end /submenu-li -->
+                                        </ul><!--end /submenu -->
+                                    </li><!--end /submenu-li -->
+                                </ul><!--end /submenu -->
+                            </li><!--end /submenu-li -->
+                        </ul><!--end /submenu -->
+                    </li><!--end /menu-li -->
+                    <!-- END LEVELS -->
+
+                </ul><!--end .main-menu -->
+                <!-- END MAIN MENU -->
+
+                <div class="menubar-foot-panel">
+                    <small class="no-linebreak hidden-folded">
+                        <span class="opacity-75">Copyright &copy; 2014</span> <strong>CodeCovers</strong>
+                    </small>
+                </div>
+            </div><!--end .menubar-scroll-panel-->
+        </div><!--end #menubar-->
+    </section>
+</div>
