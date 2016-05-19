@@ -34,6 +34,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->post('register_patient', 'App\Http\Controllers\ApiController@register_patient');
 
+    $app->post('add_encounter' ,'App\Http\Controllers\ApiController@add_encounter');
+
 
 
 });

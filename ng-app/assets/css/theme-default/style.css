@@ -307,6 +307,27 @@ Menu styling
     border:1px solid #dfe7f6;
     font-family: 'proxi-reg';
 }
+.custom-form .header-search input[type=text]{
+    width: 234px;
+    height: 30px;
+    border-radius: 15px; 
+    padding-left: 35px;
+    border:1px solid #dfe7f6;
+    font-family: 'proxi-reg';
+}
+.custom-form .header-search button{
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    line-height: 30px;
+    background: transparent;
+    border:none;
+    border-radius: 18px 0 0 18px;
+    padding-left: 12px;
+    color: #b6bbcc;
+}
 .header-search input[type=text]::-webkit-input-placeholder {
     color: #b6bbcc;
 }
@@ -335,6 +356,7 @@ Menu styling
 .header-search{
     margin-right: 20px;
     margin-top: 5px;
+    padding: 0;
 }
 .custom-card .card-head{
     height: 40px;
@@ -1319,10 +1341,6 @@ Patient Plan
 .modal-body-2{
     padding: 30px 20px;
 }
-/*MUZAMMIL*/
-.hide{
+.show-on-dependant{
     display: none;
-}
-.show{
-    display: block;
 }
