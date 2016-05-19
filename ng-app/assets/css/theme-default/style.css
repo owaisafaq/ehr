@@ -1319,3 +1319,10 @@ Patient Plan
 .modal-body-2{
     padding: 30px 20px;
 }
+/*MUZAMMIL*/
+.hide{
+    display: none;
+}
+.show{
+    display: block;
+}
