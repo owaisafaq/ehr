@@ -3,12 +3,12 @@
         <div class="card custom-card no-padding">
             <div class="card-head">
                 <ul class="nav nav-tabs nav-justified custom-tab" data-toggle="tabs">
-                    <li><a href="#info">patient information</a></li>
-                    <li><a href="#address">address</a></li>
-                    <li><a href="#kin">next of kin</a></li>
-                    <li><a href="#employer">employer</a></li>
-                    <li class="active"><a href="#plan">patient plan</a></li>
-                    <li><a href="#archive">archive</a></li>
+                    <li><a showtab href="#info">patient information</a></li>
+                    <li><a showtab href="#address">address</a></li>
+                    <li><a showtab href="#kin">next of kin</a></li>
+                    <li><a showtab href="#employer">employer</a></li>
+                    <li class="active"><a showtab href="#plan">patient plan</a></li>
+                    <li><a showtab href="#archive">archive</a></li>
                 </ul>
             </div><!--end .card-head -->
             <div class="card-body tab-content">
@@ -585,7 +585,7 @@
                             <div class="radio radio-styled">
                                 <label>
                                     <input type="radio" name="checkoutpatient" value="admit_patient">
-                                    <span>NHIS</span>
+                                    <span data-toggle="modal" data-target="#nhis">NHIS</span>
                                 </label>
                             </div>
                             <div class="radio radio-styled">
@@ -638,5 +638,87 @@
 
             </div><!--end .card-body -->
         </div><!--end .card -->
+
     </section>
 </div>
+<div class="modal fade big-modal" id="nhis" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>NHIS</h2>
+            </div>
+            <div class="modal-body pull-left">
+                <form class="custom-form">
+                    <div class="col-lg-3">
+                        <label>HMO</label>
+                    </div>
+                    <div class="col-lg-3">
+                        <select class="form-control">                                
+                            <option>Select</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3">
+                        <label>Policies</label>
+                    </div>
+                    <div class="col-lg-3">
+                        <input type="text" class="form-control" placeholder="Select Policies" />
+                    </div>
+                    <div class="col-lg-3">
+                        <label>Speciality</label>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="checkbox checkbox-styled col-lg-6">
+                            <label>
+                                <input type="checkbox" name="" value="">
+                                <span>Principal</span>
+                            </label>
+                        </div>
+                        <div class="checkbox checkbox-styled col-lg-6">
+                            <label>
+                                <input type="checkbox" name="" value="">
+                                <span>Dependant</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <label>Insurance ID</label>
+                    </div>
+                    <div class="col-lg-3">
+                        <input type="text" class="form-control" placeholder="06" />
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="header-search col-lg-4">
+                            <button type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            <input class="search_field" type="text" placeholder="Type patient id or name">
+                        </div>
+                        <button type="button" class="btn btn-default button-style-1">create</button>
+                    </div>
+                    <div class="col-lg-3">
+                        <label>Dependant Relationship</label>
+                    </div>
+                    <div class="col-lg-3">
+                        <select class="form-control">                                
+                            <option>Select Relationship</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-12">
+                        <label>Description</label>
+                    </div>
+                    <div class="col-lg-12">
+                        <textarea placeholder="Write here..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1">create</button>
+                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
