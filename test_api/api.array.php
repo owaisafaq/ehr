@@ -42,15 +42,12 @@ $api->name = "Register Patient";
 $api->url = HOST . 'register_patient';
 $api->method = "POST";
 $api->description = "Register Patient";
-$api->params->source_id="1";
-$api->params->email="test@test.com";
-$api->params->name="test";
-$api->params->password="1234";
 $api->params->first_name = "owais";
 $api->params->middle_name = "ahmed";
 $api->params->last_name = "imran";
 $api->params->date_of_birth = "18-02-1990";
 $api->params->age = "20";
+$api->params->sex = "1";
 $api->params->martial_status = "single";
 $api->params->religion = "Islam";
 $api->params->father_firstname = "ahmed";
@@ -116,10 +113,62 @@ $api->params->depandent_id = "3";
 $api->params->principal_relationship = "";
 $api->params->dependant_relationship = "Brother";
 $api->params->description = "Need Financial Help for Brother";
-
-
-
 $api->params->token = "123";
+
+
+$api_arr [] = $api;
+
+
+
+// Add Encounter
+$api = new api();
+$api->name = "Add Encounter";
+$api->url = HOST . 'add_encounter';
+$api->method = "POST";
+$api->description = "Add Encounter";
+$api->params->source_id="1";
+$api->params->token = "123";
+
+
+
+$api_arr [] = $api;
+
+// Get Countries
+$api = new api();
+$api->name = "Get Countries";
+$api->url = HOST . 'get_countries';
+$api->method = "GET";
+$api->description = "Get Countries";
+$api->params->token = "123";
+
+
+
+$api_arr [] = $api;
+
+
+// Get States
+$api = new api();
+$api->name = "Get States";
+$api->url = HOST . 'get_states';
+$api->method = "GET";
+$api->description = "Get States";
+$api->params->country_id = "1";
+$api->params->token = "123";
+
+
+
+$api_arr [] = $api;
+
+// Get Cities
+$api = new api();
+$api->name = "Get Cities";
+$api->url = HOST . 'get_cities';
+$api->method = "GET";
+$api->description = "Get Cities";
+$api->params->state_id = "1";
+$api->params->token = "123";
+
+
 
 
 $api_arr [] = $api;

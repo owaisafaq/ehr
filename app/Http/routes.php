@@ -36,6 +36,11 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->post('add_encounter' ,'App\Http\Controllers\ApiController@add_encounter');
 
+    $app->get('get_countries' ,'App\Http\Controllers\ApiController@get_countries');
+
+    $app->get('get_states' ,'App\Http\Controllers\ApiController@get_states');
+
+    $app->get('get_cities' ,'App\Http\Controllers\ApiController@get_cities');
 
 
 });
