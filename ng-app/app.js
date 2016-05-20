@@ -1,10 +1,15 @@
 var AppEHR = angular.module('AppEHR', [
-    'ngRoute'
+    'ngRoute', 'ngResource'
 ]);
 
-AppEHR.config(['$routeProvider', '$locationProvider',
-    function ($routeProvider, $locationProvider) {
+AppEHR.config(['$httpProvider','$routeProvider', '$locationProvider',
+    function ($httpProvider, $routeProvider, $locationProvider) {
         $locationProvider.hashPrefix();
+        $httpProvider.defaults.headers.common = {};
+        $httpProvider.defaults.headers.post = {};
+        $httpProvider.defaults.headers.put = {};
+        $httpProvider.defaults.headers.patch = {};
+        //$locationProvider.html5Mode(true);
         $routeProvider.
                 when('/', {
                     templateUrl: 'views/login.html',
@@ -15,31 +20,31 @@ AppEHR.config(['$routeProvider', '$locationProvider',
                     controller: 'loginController'
                 }).
                 when('/appointments-calander-view', {
-                    templateUrl: 'views/main.html',
+                    templateUrl: 'views/appointments-calander-view.html',
                     controller: 'appointmentsCalenderController'
                 }).
                 when('/appointments-list', {
-                    templateUrl: 'views/main.html',
+                    templateUrl: 'views/ppointments-list.html',
                     controller: 'appointmentsListController'
                 }).
                 when('/clinical-documentation-clinic-progress-note', {
-                    templateUrl: 'views/main.html',
+                    templateUrl: 'views/clinical-documentation-clinic-progress-note.html',
                     controller: 'clinicalDocumentationClinicProgressNote'
                 }).
                 when('/new-encounter-clinical-documentation', {
-                    templateUrl: 'views/main.html',
+                    templateUrl: 'views/new-encounter-clinical-documentation.html',
                     controller: 'newEncounterClinicalDocumentationController'
                 }).
                 when('/new-encounter-encounter-list', {
-                    templateUrl: 'views/main.html',
+                    templateUrl: 'views/new-encounter-encounter-list.html',
                     controller: 'newEncounterEncounterListController'
                 }).
                 when('/new-encounter-patient-search', {
-                    templateUrl: 'views/main.html',
+                    templateUrl: 'views/new-encounter-patient-search.html',
                     controller: 'newEncounterPatientSearchController'
                 }).
                 when('/patient-listing', {
-                    templateUrl: 'views/main.html',
+                    templateUrl: 'views/patient-listing.html',
                     controller: 'patientListingController'
                 }).
                 when('/patient-registration', {
@@ -47,23 +52,23 @@ AppEHR.config(['$routeProvider', '$locationProvider',
                     controller: 'patientRegistrationController'
                 }).
                 when('/patient-summary-demographics', {
-                    templateUrl: 'views/main.html',
+                    templateUrl: 'views/patient-summary-demographics.html',
                     controller: 'patientSummaryDemographicsController'
                 }).
                 when('/ward-bed-listing', {
-                    templateUrl: 'views/main.html',
+                    templateUrl: 'views/ward-bed-listing.html',
                     controller: 'wardBedListingController'
                 }).
                 when('/wards-bed-occupancy', {
-                    templateUrl: 'views/main.html',
+                    templateUrl: 'views/wards-bed-occupancy.html',
                     controller: 'wardsBedOccupancyController'
                 }).
                 when('/wards-bed-shematic', {
-                    templateUrl: 'views/main.html',
+                    templateUrl: 'views/wards-bed-shematic.html',
                     controller: 'wardsBedShematicController'
                 }).
                 when('/wards-discharge-summary', {
-                    templateUrl: 'views/main.html',
+                    templateUrl: 'views/wards-discharge-summary.html',
                     controller: 'wardsDischargeSummaryController'
                 }).
                 otherwise({
@@ -71,17 +76,27 @@ AppEHR.config(['$routeProvider', '$locationProvider',
                 });
     }]);
 AppEHR.run(function ($rootScope, $location, $window) {
+    $rootScope.pageTitle = "EHR - " + $location.$$path;
+    /*$rootScope.loginCheck = $location.$$path != '/login' || $location.$$path != '/' ? true : false ;
+    console.log($rootScope.loginCheck);*/
     $rootScope.$on("$routeChangeStart", function (event, next, current) {
-        if ($window.sessionStorage.email != undefined && $window.sessionStorage.email != 'undefined' && $window.sessionStorage.password != undefined && window.sessionStorage.password != 'undefined') {
+        if($location.$$path != '/login' && $location.$$path != '/'){
+            console.log($location.$$path);
+            $rootScope.class = "show";
+        }else{
+            $rootScope.class = "hide";
+        }
+        $rootScope.loginCheck = $location.$$path == '/login' || $location.$$path == '/' ? true : false ;
+        /*if ($window.sessionStorage.email != undefined && $window.sessionStorage.email != 'undefined' && $window.sessionStorage.password != undefined && window.sessionStorage.password != 'undefined') {
             var path = $location.$$path;
             if ((path == "/login" || path == "/") && path != undefined) {
                 $location.path("patient-registration");
             }
         } else
-            $location.path("login");
+            $location.path("login");*/
     });
 
-    $rootScope.$on('$viewContentLoaded', function () {
+    $rootScope.$on('$viewContentLoaded', function () { 
         $('.select-date').datepicker({autoclose: true, todayHighlight: true});
         $('select').select2({minimumResultsForSearch: Infinity});
     });

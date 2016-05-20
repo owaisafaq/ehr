@@ -1,76 +1,40 @@
-<!DOCTYPE html>
-<html lang="en" ng-app="AppEHR">
-    <head>
-        <title>{{pageTitle}}</title>
-        <!-- BEGIN META -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="keywords" content="your,keywords">
-        <meta name="description" content="Short explanation about this website">
-        <!-- END META -->
-        <!-- BEGIN STYLESHEETS -->
-        <link href='http://fonts.googleapis.com/css?family=Roboto:300italic,400italic,300,400,500,700,900' rel='stylesheet' type='text/css'/>
-        <link type="text/css" rel="stylesheet" href="assets/css/theme-default/bootstrap.css?1422792965" />
-        <link type="text/css" rel="stylesheet" href="assets/css/theme-default/materialadmin.css?1425466319" />
-        <link type="text/css" rel="stylesheet" href="assets/css/theme-default/font-awesome.min.css?1422529194" />
-        <link type="text/css" rel="stylesheet" href="assets/css/theme-default/material-design-iconic-font.min.css?1421434286" />
-        <link type="text/css" rel="stylesheet" href="assets/css/theme-default/libs/select2/select2.css?1424887856" />
-        <link type="text/css" rel="stylesheet" href="assets/css/theme-default/libs/multi-select/multi-select.css?1424887857" />
-        <link type="text/css" rel="stylesheet" href="assets/css/theme-default/libs/bootstrap-datepicker/datepicker3.css?1424887858" />
-        <link href="assets/css/theme-default/style.css" rel="stylesheet" type="text/css"/>
-        <!-- END STYLESHEETS -->
-
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-        <script type="text/javascript" src="assets/js/libs/utils/html5shiv.js?1403934957"></script>
-        <script type="text/javascript" src="assets/js/libs/utils/respond.min.js?1403934956"></script>
-        <![endif]-->
-    </head>
-    <body>
-        <div class="container">
-            <div class="col-sm-6 col-xs-8 col-sm-offset-3 col-xs-offset-1 card">
+<div class="container">
+    <div class="col-sm-6 col-xs-8 col-sm-offset-3 col-xs-offset-1 card">
+        <div>
+            <div class="col-xs-12 col-sm-12">
                 <div class="">
-                    <div class="text-center">
-                        <img src="images/logo.png"/>
-                    </div>
-                </div>
-                <div>
-                    <div class="col-xs-12 col-sm-12">
-                        <div class="">
-                            <form>
-                                <div class="row text-center">
-                                    <h1>LOGO</h1>
-                                	<h3>Sign In to EHR</h3>
-                                </div>
-                                <div class="row">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <span class="help-block"></span> 
-                                            <input type="text" class="form-control" placeholder="USERNAME" ng-model="email" required="required"/>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <span class="help-block"></span> 
-                                            <input type="password" class="form-control" placeholder="PASSWORD" ng-model="password" required="required"/>
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <div class="row">
-                                        <span class="help-block"></span> 
-                                        <button class="btn btn-block ink-reaction button-style-1 btn-big" type="button" ng-click="login(email, password);">SIGN IN</button>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <h4>{{ errorMessage }}</h4> 
-                                    </div>
-                                </div>
-                            </form>
+                    <form>
+                        <div class="row text-center">
+                            <h1>LOGO</h1>
+                        	<h3>Sign In to EHR</h3>
                         </div>
-                    </div>
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <span class="help-block"></span> 
+                                    <input type="text" class="form-control" placeholder="USERNAME" ng-model="email" required="required"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <span class="help-block"></span> 
+                                    <input type="password" class="form-control" placeholder="PASSWORD" ng-model="password" required="required"/>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <span class="help-block"></span> 
+                                <button class="btn btn-block ink-reaction button-style-1 btn-big" type="button" ng-click="login(email, password);">SIGN IN</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4>{{ errorMessage }}</h4> 
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </body>
-</html>
+    </div>
+</div>
