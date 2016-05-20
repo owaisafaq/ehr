@@ -17,6 +17,15 @@ class ApiController extends Controller
 {
 
 
+    public function __construct()
+    {
+
+        header('Access-Control-Allow-Origin: *');
+
+
+    }
+
+
     protected function checkToken($token, $user_id)
     {
 
@@ -33,41 +42,6 @@ class ApiController extends Controller
     public function register_patient(Request $request)
     {
 
-
-        $user_id = $request->input('source_id');
-
-        $token = $request->input('token');
-
-
-        if (!$this->checkToken($token, $user_id)) {
-            return response()->json(['status' => false, 'message' => 'sourceId and token not match', 'error_code' => 200]);
-
-        }
-
-
-        $email = $request->input('email');
-
-        $name = $request->input('name');
-
-        $password = md5($request->input('password'));
-
-        $currentdatetime = date("Y-m-d  H:i:s");
-
-
-        DB::table('users')->insert(
-            ['email' => $email,
-                'name' => $name,
-                'password' => $password,
-                'role_id' => 3,
-                'created_at' => $currentdatetime
-
-            ]
-        );
-
-
-        $patient_id = DB::getPdo()->lastInsertId();
-
-
         $first_name = $request->input('first_name');
 
         $middle_name = $request->input('middle_name');
@@ -77,6 +51,8 @@ class ApiController extends Controller
         $date_of_birth = $request->input('date_of_birth');
 
         $age = $request->input('age');
+
+        $sex = $request->input('sex');
 
         $martial_status = $request->input('martial_status');
 
@@ -129,6 +105,7 @@ class ApiController extends Controller
                 'last_name' => $last_name,
                 'date_of_birth' => $date_of_birth,
                 'age' => $age,
+                'sex' => $sex,
                 'martial_status' => $martial_status,
                 'religion' => $religion,
                 'father_firstname' => $father_firstname,
@@ -156,6 +133,8 @@ class ApiController extends Controller
             ]
         );
 
+
+        $patient_id = DB::getPdo()->lastInsertId();
 
 
         $address_type = $request->input('address_type');
@@ -404,15 +383,20 @@ class ApiController extends Controller
         $password_user = md5($password);
 
         $user = DB::table('users')
-            ->select(DB::raw('id'))
+            ->select(DB::raw('id as source_id,email,name,role_id'))
             ->where('email', $email_address)
             ->where('password', $password_user)
             ->get();
 
-
         if (count($user) == 1) {
 
-            $token = JWTAuth::fromUser($user[0]);
+            $users = DB::table('users')
+                ->select(DB::raw('id'))
+                ->where('email', $email_address)
+                ->where('password', $password_user)
+                ->get();
+
+            $token = JWTAuth::fromUser($users[0]);
 
             return response()->json(['status' => true, 'data' => $user[0], 'token' => $token]);
 
@@ -425,5 +409,83 @@ class ApiController extends Controller
 
     }
 
+    public function add_encounter(Request $request){
 
+
+        $user_id = $request->input('source_id');
+
+        $patient_id = $request->input('patient_id');
+
+        $department_id= $request->input('department_id');
+
+        $encounter_class = $request->input('encounter_class');
+
+        $whome_to_see = $request->input('whome_to_see');
+
+        $decscribe_whome_to_see = $request->input('decscribe_whome_to_see');
+
+
+        $token = $request->input('token');
+
+        if (!$this->checkToken($token, $user_id)) {
+            return response()->json(['status' => false, 'message' => 'sourceId and token not match', 'error_code' => 200]);
+
+        }
+
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+        DB::table('encounters')->insert(
+            ['patient_id' => $patient_id
+
+
+            ]
+        );
+
+
+    }
+
+
+    public function get_countries(){
+
+
+        $countries = DB::table('countries')
+            ->select(DB::raw('id,name'))
+            ->get();
+
+        return response()->json(['status' => true, 'data'=>$countries]);
+
+    }
+
+
+
+    public function get_states(Request $request){
+
+
+        $country_id = $request->input('country_id');
+
+        $states = DB::table('states')
+            ->select(DB::raw('id,name'))
+            ->where('country_id',$country_id)
+            ->get();
+
+        return response()->json(['status' => true, 'data'=>$states]);
+
+    }
+
+
+    public function get_cities(Request $request){
+
+
+        $state_id = $request->input('state_id');
+
+        $cities = DB::table('cities')
+            ->select(DB::raw('id,name'))
+            ->where('state_id',$state_id)
+            ->get();
+
+        return response()->json(['status' => true, 'data'=>$cities]);
+
+    }
 }
