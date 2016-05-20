@@ -1,6 +1,5 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('patientSummaryDemographicsController', ['$scope', function($scope){
-	$scope.pageTitle = "EHR - Patient Summary Demographics";
-	$scope.includeTemplate = 'views/patient-summary-demographics.html';
+AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', function($scope, $rootScope){
+	$rootScope.pageTitle = "EHR - Patient Summary Demographics";
 }]);

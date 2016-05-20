@@ -5,31 +5,29 @@ AppEHR.controller('loginController', ['$scope', '$window', '$http', 'AUTH', func
 	$window.sessionStorage.clear();
 	$scope.class = "hide";
 	$scope.login = function (email, password){
-		console.log(email + "-" + password);
 		if(email != undefined && password != undefined){
-			console.log("Login");
-			$scope.errorMessage = '';
-			$window.sessionStorage.email = email;
-			$window.sessionStorage.password = password;
-			var postData = {};
-			postData.email = $window.sessionStorage.email;
-			postData.password = $window.sessionStorage.password;
-			console.log(postData);
-
-			$http.post(serverPath +  'user_login', postData, function(data){
-				console.log(data);
-			});
-
-			/*AUTH.get({},function (data) {
-				if(data != undefined){
-					console.log(data);
+			AUTH.get({email: email, password: password}, authSuccess, authFailed);
+			function authSuccess(res){
+				if(res.status == true){
+					$scope.errorMessage = '';
+					$window.sessionStorage.email = res.data.email;
+					$window.sessionStorage.name = res.data.name;
+					$window.sessionStorage.role_id = res.data.role_id;
+					$window.sessionStorage.source_id = res.data.source_id;
+					$window.sessionStorage.token = res.token;
+					$window.location.href = '#/patient-registration';
 				}else{
-					console.log(data);
+					console.log(res);
+					$scope.errorMessage = errorMessages.authFailed;
 				}
-			});*/
-			//$window.location.href = '#/patient-registration';
+			}
+			function authFailed(error){
+				console.log(error);
+				$scope.errorMessage = "";
+			}
+			
 		}else{
-			$scope.errorMessage = "Email or Password is invalid";
+			$scope.errorMessage = errorMessages.authFailed;
 		}
 	};
 }]);
