@@ -591,7 +591,7 @@
                             <div class="radio radio-styled">
                                 <label>
                                     <input type="radio" name="checkoutpatient" value="dead">
-                                    <span>Relationship</span>
+                                    <span data-toggle="modal" data-target="#relationship">Relationship</span>
                                 </label>
                             </div>
                         </div>
@@ -668,16 +668,16 @@
                     <div class="col-lg-3">
                         <label>Speciality</label>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-3 select-speciality">
                         <div class="checkbox checkbox-styled col-lg-6">
                             <label>
-                                <input type="checkbox" name="" value="">
+                                <input type="radio" name="select-speciality" value="principal" checked>
                                 <span>Principal</span>
                             </label>
                         </div>
                         <div class="checkbox checkbox-styled col-lg-6">
                             <label>
-                                <input type="checkbox" name="" value="">
+                                <input type="radio" name="select-speciality" value="dependant">
                                 <span>Dependant</span>
                             </label>
                         </div>
@@ -688,17 +688,75 @@
                     <div class="col-lg-3">
                         <input type="text" class="form-control" placeholder="06" />
                     </div>
-                    <div class="col-lg-12">
-                        <div class="header-search col-lg-4">
-                            <button type="submit">
-                                <i class="fa fa-search"></i>
-                            </button>
-                            <input class="search_field" type="text" placeholder="Type patient id or name">
+                    <div class="show-on-dependant">
+                        <div class="col-lg-12">
+                            <div class="header-search col-lg-4">
+                                <button type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <input class="search_field" type="text" placeholder="Type patient id or name">
+                            </div>
+                            <button type="button" class="btn btn-default button-style-1">add dependant</button>
                         </div>
-                        <button type="button" class="btn btn-default button-style-1">create</button>
+                        <div class="col-lg-3">
+                            <label>Dependant Relationship</label>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <select class="form-control">                                
+                                <option>Select Relationship</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>
                     </div>
+                    <div class="show-on-principal">
+                        <div class="col-lg-12">
+                            <div class="header-search col-lg-4">
+                                <button type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <input class="search_field" type="text" placeholder="Type patient id or name">
+                            </div>
+                            <button type="button" class="btn btn-default button-style-1">add Principal</button>
+                        </div>
+                        <div class="col-lg-3">
+                            <label>Principal Relationship</label>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <select class="form-control">                                
+                                <option>Select Relationship</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <label>Description</label>
+                    </div>
+                    <div class="col-lg-12">
+                        <textarea placeholder="Write here..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1">create</button>
+                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade big-modal" id="relationship" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>NHIS</h2>
+            </div>
+            <div class="modal-body pull-left">
+                <form class="custom-form">
                     <div class="col-lg-3">
-                        <label>Dependant Relationship</label>
+                        <label>Relationship</label>
                     </div>
                     <div class="col-lg-3">
                         <select class="form-control">                                
@@ -706,6 +764,83 @@
                             <option>2</option>
                             <option>3</option>
                         </select>
+                    </div>
+                    <div class="col-lg-3">
+                        <label>Category</label>
+                    </div>
+                    <div class="col-lg-3">
+                        <select class="form-control">                                
+                            <option>Select Category</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3">
+                        <label>Speciality</label>
+                    </div>
+                    <div class="col-lg-3 select-speciality">
+                        <div class="checkbox checkbox-styled col-lg-6">
+                            <label>
+                                <input type="radio" name="select-speciality" value="principal" checked>
+                                <span>Principal</span>
+                            </label>
+                        </div>
+                        <div class="checkbox checkbox-styled col-lg-6">
+                            <label>
+                                <input type="radio" name="select-speciality" value="dependant">
+                                <span>Dependant</span>
+                            </label>
+                        </div>
+                    </div>
+<!--                    <div class="col-lg-3">
+                        <label>Insurance ID</label>
+                    </div>
+                    <div class="col-lg-3">
+                        <input type="text" class="form-control" placeholder="06" />
+                    </div>-->
+                    <div class="show-on-dependant">
+                        <div class="col-lg-12">
+                            <div class="header-search col-lg-4">
+                                <button type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <input class="search_field" type="text" placeholder="Type patient id or name">
+                            </div>
+                            <button type="button" class="btn btn-default button-style-1">add dependant</button>
+                        </div>
+                        <div class="col-lg-3">
+                            <label>Dependant Relationship</label>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <select class="form-control">                                
+                                <option>Select Relationship</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="show-on-principal">
+                        <div class="col-lg-12">
+                            <div class="header-search col-lg-4">
+                                <button type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <input class="search_field" type="text" placeholder="Type patient id or name">
+                            </div>
+                            <button type="button" class="btn btn-default button-style-1">add Principal</button>
+                        </div>
+                        <div class="col-lg-3">
+                            <label>Principal Relationship</label>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <select class="form-control">                                
+                                <option>Select Relationship</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="col-lg-12">
                         <label>Description</label>
