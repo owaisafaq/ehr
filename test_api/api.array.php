@@ -1,8 +1,8 @@
 <?php
 
 require 'api.class.php';
-//define('HOST', 'http://131.107.100.10/ehr/public/api/');
-define('HOST', 'http://demoz.online/ehr/public/api/');
+define('HOST', 'http://131.107.100.10/ehr/public/api/');
+//define('HOST', 'http://demoz.online/ehr/public/api/');
 define('APP', '');
 define('ROUTE', '');
 
@@ -174,6 +174,8 @@ $api->params->state_id = "1";
 $api->params->token = "123";
 
 
+$api_arr [] = $api;
+
 // Get Local Goverment Area
 $api = new api();
 $api->name = "Get Local Goverment Area";
@@ -182,6 +184,17 @@ $api->method = "GET";
 $api->description = "Get Local Goverment Area";
 $api->params->state_id = "1";
 $api->params->token = "123";
+
+
+
+// Get Drop Down Data
+$api = new api();
+$api->name = "Get Drop Dowon Data";
+$api->url = HOST . 'get_dropdowndata';
+$api->method = "GET";
+$api->description = "Get Drop Down Data`";
+$api->params->token = "123";
+
 
 
 

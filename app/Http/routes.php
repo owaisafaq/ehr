@@ -44,6 +44,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->get('get_local_goverment_area' ,'App\Http\Controllers\ApiController@get_local_goverment_area');
 
+    $app->get('get_dropdowndata' ,'App\Http\Controllers\ApiController@get_dropdowndata');
+
 
 
 });

@@ -432,7 +432,7 @@ class ApiController extends Controller
         $currentdatetime = date("Y-m-d  H:i:s");
 
 
-        DB::table('encounters')->insert(
+        DB::table('visits')->insert(
             ['patient_id' => $patient_id,
                 'department_id' => $department_id,
                 'encounter_class' => $encounter_class,
@@ -444,6 +444,9 @@ class ApiController extends Controller
             ]
         );
 
+
+
+        return response()->json(['status' => true, 'message'=>'Visit added successfully']);
 
     }
 
@@ -506,4 +509,36 @@ class ApiController extends Controller
 
     }
 
+
+
+    public function get_dropdowndata(Request $request){
+
+        $religion = DB::table('religion')
+              ->select(DB::raw('id,name'))
+              ->get();
+
+        $maritial_status = DB::table('maritial_status')
+              ->select(DB::raw('id,name'))
+              ->get();
+
+        $nationality = DB::table('nationality')
+              ->select(DB::raw('id,name'))
+              ->get();
+
+        $bloodgroup = DB::table('blood_group')
+              ->select(DB::raw('id,name'))
+              ->get();
+
+
+        $data = array(
+            "religion" =>  $religion,
+            "maritial_status" => $maritial_status,
+            "nationality" => $nationality,
+            "blood_group" => $bloodgroup,
+        );
+
+        return response()->json(['status' => true, 'data'=>$data]);
+
+
+    }
 }
