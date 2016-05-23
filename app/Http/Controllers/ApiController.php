@@ -409,7 +409,7 @@ class ApiController extends Controller
 
     }
 
-    public function add_encounter(Request $request){
+    public function add_visit(Request $request){
 
 
         $user_id = $request->input('source_id');
@@ -420,29 +420,33 @@ class ApiController extends Controller
 
         $encounter_class = $request->input('encounter_class');
 
-        $whome_to_see = $request->input('whome_to_see');
+        $encounter_type = $request->input('encounter_type');
 
-        $decscribe_whome_to_see = $request->input('decscribe_whome_to_see');
+        $whom_to_see = $request->input('whom_to_see');
 
+        $decscribe_whom_to_see = $request->input('decscribe_whom_to_see');
 
         $token = $request->input('token');
-
-        if (!$this->checkToken($token, $user_id)) {
-            return response()->json(['status' => false, 'message' => 'sourceId and token not match', 'error_code' => 200]);
-
-        }
 
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
 
-        DB::table('encounters')->insert(
-            ['patient_id' => $patient_id
-
+        DB::table('visits')->insert(
+            ['patient_id' => $patient_id,
+                'department_id' => $department_id,
+                'encounter_class' => $encounter_class,
+                'encounter_type' => $encounter_type,
+                'whom_to_see' => $whom_to_see,
+                'decscribe_whom_to_see' => $decscribe_whom_to_see,
+                'created_at' => $currentdatetime
 
             ]
         );
 
+
+
+        return response()->json(['status' => true, 'message'=>'Visit added successfully']);
 
     }
 
@@ -486,6 +490,55 @@ class ApiController extends Controller
             ->get();
 
         return response()->json(['status' => true, 'data'=>$cities]);
+
+    }
+
+    public function get_local_goverment_area(Request $request){
+
+
+        $state_id = $request->input('state_id');
+
+        $local_goverment_area = DB::table('local_goverment_area')
+              ->select(DB::raw('id,name'))
+              ->where('state_id',$state_id)
+              ->get();
+
+          return response()->json(['status' => true, 'data'=>$local_goverment_area]);
+
+
+
+    }
+
+
+
+    public function get_dropdowndata(Request $request){
+
+        $religion = DB::table('religion')
+              ->select(DB::raw('id,name'))
+              ->get();
+
+        $maritial_status = DB::table('maritial_status')
+              ->select(DB::raw('id,name'))
+              ->get();
+
+        $nationality = DB::table('nationality')
+              ->select(DB::raw('id,name'))
+              ->get();
+
+        $bloodgroup = DB::table('blood_group')
+              ->select(DB::raw('id,name'))
+              ->get();
+
+
+        $data = array(
+            "religion" =>  $religion,
+            "maritial_status" => $maritial_status,
+            "nationality" => $nationality,
+            "blood_group" => $bloodgroup,
+        );
+
+        return response()->json(['status' => true, 'data'=>$data]);
+
 
     }
 }
