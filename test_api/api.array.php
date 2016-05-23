@@ -1,8 +1,8 @@
 <?php
 
 require 'api.class.php';
-define('HOST', 'http://131.107.100.10/ehr/public/api/');
-//define('HOST', 'http://demoz.online/ehr/public/api/');
+//define('HOST', 'http://131.107.100.10/ehr/public/api/');
+define('HOST', 'http://demoz.online/ehr/public/api/');
 define('APP', '');
 define('ROUTE', '');
 
@@ -120,13 +120,18 @@ $api_arr [] = $api;
 
 
 
-// Add Encounter
+// Add Visit
 $api = new api();
-$api->name = "Add Encounter";
-$api->url = HOST . 'add_encounter';
+$api->name = "Add Visit";
+$api->url = HOST . 'add_visit';
 $api->method = "POST";
-$api->description = "Add Encounter";
-$api->params->source_id="1";
+$api->description = "Add Visit";
+$api->params->patient_id = "123";
+$api->params->department_id = "123";
+$api->params->encounter_class = "123";
+$api->params->encounter_type = "123";
+$api->params->whom_to_see = "123";
+$api->params->decscribe_whom_to_see = "123";
 $api->params->token = "123";
 
 
@@ -167,6 +172,17 @@ $api->method = "GET";
 $api->description = "Get Cities";
 $api->params->state_id = "1";
 $api->params->token = "123";
+
+
+// Get Local Goverment Area
+$api = new api();
+$api->name = "Get Local Goverment Area";
+$api->url = HOST . 'get_local_goverment_area';
+$api->method = "GET";
+$api->description = "Get Local Goverment Area";
+$api->params->state_id = "1";
+$api->params->token = "123";
+
 
 
 
