@@ -2,7 +2,7 @@ var AppEHR = angular.module('AppEHR', [
     'ngRoute', 'ngResource'
 ]);
 
-AppEHR.config(['$httpProvider','$routeProvider', '$locationProvider',
+AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
     function ($httpProvider, $routeProvider, $locationProvider) {
         $locationProvider.hashPrefix();
         $httpProvider.defaults.headers.common = {};
@@ -71,6 +71,10 @@ AppEHR.config(['$httpProvider','$routeProvider', '$locationProvider',
                     templateUrl: 'views/wards-discharge-summary.html',
                     controller: 'wardsDischargeSummaryController'
                 }).
+                when('/lab-order-listing', {
+                    templateUrl: 'views/lab-order-listing.html',
+                    controller: 'labOrderListing'
+                }).
                 otherwise({
                     redirectTo: '/error'
                 });
@@ -78,29 +82,30 @@ AppEHR.config(['$httpProvider','$routeProvider', '$locationProvider',
 AppEHR.run(function ($rootScope, $location, $window) {
     $rootScope.pageTitle = "EHR - " + $location.$$path;
     $rootScope.$on("$routeChangeStart", function (event, next, current) {
-        if($location.$$path != '/login' && $location.$$path != '/'){
+        if ($location.$$path != '/login' && $location.$$path != '/') {
             $rootScope.class = "show";
-        }else{
+        } else {
             $rootScope.class = "hide";
         }
         $rootScope.userName = $window.sessionStorage.name;
-        $rootScope.loginCheck = $location.$$path == '/login' || $location.$$path == '/' ? true : false ;
+        $rootScope.loginCheck = $location.$$path == '/login' || $location.$$path == '/' ? true : false;
         if ($window.sessionStorage.email != undefined && $window.sessionStorage.email != 'undefined' && $window.sessionStorage.token != undefined && window.sessionStorage.token != 'undefined' && $window.sessionStorage.role_id != undefined && window.sessionStorage.role_id != 'undefined') {
             var path = $location.$$path;
             if ((path == "/login" || path == "/") && path != undefined) {
                 $location.path("patient-registration");
             }
-        } else $location.path("login");
+        } else
+            $location.path("login");
     });
 
-    $rootScope.$on('$viewContentLoaded', function () { 
+    $rootScope.$on('$viewContentLoaded', function () {
         $('.select-date').datepicker({autoclose: true, todayHighlight: true});
         $('select').select2({minimumResultsForSearch: Infinity});
     });
 
 });
-AppEHR.filter('capitalize', function() {
-    return function(input) {
-      return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+AppEHR.filter('capitalize', function () {
+    return function (input) {
+        return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
     }
 });
