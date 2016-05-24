@@ -223,7 +223,8 @@ Menu styling
     min-width: 1170px;
 }
 #content{
-    padding-top: 60px;
+    /*padding-top: 60px;*/
+    padding-top: 36px;
 }
 .site_name{
     height: 60px;
