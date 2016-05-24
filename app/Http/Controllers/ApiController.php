@@ -38,7 +38,6 @@ class ApiController extends Controller
     }
 
 
-
     public function register_patient(Request $request)
     {
 
@@ -92,10 +91,9 @@ class ApiController extends Controller
 
         $blood_group = $request->input('blood_group');
 
-        $hospital_plan= $request->input('hospital_plan');
+        $hospital_plan = $request->input('hospital_plan');
 
-        $occupation= $request->input('occupation');
-
+        $occupation = $request->input('occupation');
 
 
         DB::table('patient_profile')->insert(
@@ -227,24 +225,23 @@ class ApiController extends Controller
         );
 
 
-
         $employer_name = $request->input('employer_name');
 
         $employer_phone_number = $request->input('employer_phone_number');
 
-        $employer_mobile_number= $request->input('employer_mobile_number');
+        $employer_mobile_number = $request->input('employer_mobile_number');
 
         $employer_email = $request->input('employer_email');
 
-        $employer_house_number= $request->input('employer_house_number');
+        $employer_house_number = $request->input('employer_house_number');
 
-        $employer_street= $request->input('employer_street');
+        $employer_street = $request->input('employer_street');
 
-        $employer_city= $request->input('employer_city');
+        $employer_city = $request->input('employer_city');
 
-        $employer_state= $request->input('employer_state');
+        $employer_state = $request->input('employer_state');
 
-        $employer_country= $request->input('employer_country');
+        $employer_country = $request->input('employer_country');
 
         DB::table('patient_employers')->insert(
             ['patient_id' => $patient_id,
@@ -263,20 +260,19 @@ class ApiController extends Controller
         );
 
 
-
         $patient_plan_id = $request->input('patient_plan_id');
 
-        $hmo= $request->input('hmo');
+        $hmo = $request->input('hmo');
 
-        $policies= $request->input('policies');
+        $policies = $request->input('policies');
 
         $insurance_id = $request->input('insurance_id');
 
-        $principal= $request->input('principal');
+        $principal = $request->input('principal');
 
         $depandent = $request->input('depandent');
 
-        $principal_id= $request->input('principal_id');
+        $principal_id = $request->input('principal_id');
 
         $depandent_id = $request->input('depandent_id');
 
@@ -304,9 +300,6 @@ class ApiController extends Controller
 
             ]
         );
-
-
-
 
 
         return response()->json(['status' => true, 'message' => 'Patient Registered Successfully']);
@@ -409,14 +402,15 @@ class ApiController extends Controller
 
     }
 
-    public function add_visit(Request $request){
+    public function add_visit(Request $request)
+    {
 
 
         $user_id = $request->input('source_id');
 
         $patient_id = $request->input('patient_id');
 
-        $department_id= $request->input('department_id');
+        $department_id = $request->input('department_id');
 
         $encounter_class = $request->input('encounter_class');
 
@@ -445,100 +439,132 @@ class ApiController extends Controller
         );
 
 
-
-        return response()->json(['status' => true, 'message'=>'Visit added successfully']);
+        return response()->json(['status' => true, 'message' => 'Visit added successfully']);
 
     }
 
 
-    public function get_countries(){
+    public function get_countries()
+    {
 
 
         $countries = DB::table('countries')
             ->select(DB::raw('id,name'))
             ->get();
 
-        return response()->json(['status' => true, 'data'=>$countries]);
+        return response()->json(['status' => true, 'data' => $countries]);
 
     }
 
 
-
-    public function get_states(Request $request){
+    public function get_states(Request $request)
+    {
 
 
         $country_id = $request->input('country_id');
 
         $states = DB::table('states')
             ->select(DB::raw('id,name'))
-            ->where('country_id',$country_id)
+            ->where('country_id', $country_id)
             ->get();
 
-        return response()->json(['status' => true, 'data'=>$states]);
+        return response()->json(['status' => true, 'data' => $states]);
 
     }
 
 
-    public function get_cities(Request $request){
+    public function get_cities(Request $request)
+    {
 
 
         $state_id = $request->input('state_id');
 
         $cities = DB::table('cities')
             ->select(DB::raw('id,name'))
-            ->where('state_id',$state_id)
+            ->where('state_id', $state_id)
             ->get();
 
-        return response()->json(['status' => true, 'data'=>$cities]);
+        return response()->json(['status' => true, 'data' => $cities]);
 
     }
 
-    public function get_local_goverment_area(Request $request){
+    public function get_local_goverment_area(Request $request)
+    {
 
 
         $state_id = $request->input('state_id');
 
         $local_goverment_area = DB::table('local_goverment_area')
-              ->select(DB::raw('id,name'))
-              ->where('state_id',$state_id)
-              ->get();
+            ->select(DB::raw('id,name'))
+            ->where('state_id', $state_id)
+            ->get();
 
-          return response()->json(['status' => true, 'data'=>$local_goverment_area]);
-
+        return response()->json(['status' => true, 'data' => $local_goverment_area]);
 
 
     }
 
 
-
-    public function get_dropdowndata(Request $request){
+    public function get_dropdowndata(Request $request)
+    {
 
         $religion = DB::table('religion')
-              ->select(DB::raw('id,name'))
-              ->get();
+            ->select(DB::raw('id,name'))
+            ->get();
 
         $maritial_status = DB::table('maritial_status')
-              ->select(DB::raw('id,name'))
-              ->get();
+            ->select(DB::raw('id,name'))
+            ->get();
 
         $nationality = DB::table('nationality')
-              ->select(DB::raw('id,name'))
-              ->get();
+            ->select(DB::raw('id,name'))
+            ->get();
 
         $bloodgroup = DB::table('blood_group')
-              ->select(DB::raw('id,name'))
-              ->get();
+            ->select(DB::raw('id,name'))
+            ->get();
 
+
+        $hospital_plan = DB::table('hospital_plan')
+            ->select(DB::raw('id,name'))
+            ->get();
+
+
+        $occupation = DB::table('occupation')
+            ->select(DB::raw('id,name'))
+            ->get();
 
         $data = array(
-            "religion" =>  $religion,
+            "religion" => $religion,
             "maritial_status" => $maritial_status,
             "nationality" => $nationality,
             "blood_group" => $bloodgroup,
+            "hospital_plan" => $hospital_plan,
+            "occupation" => $occupation
         );
 
-        return response()->json(['status' => true, 'data'=>$data]);
+        return response()->json(['status' => true, 'data' => $data]);
 
 
     }
+
+
+    public function patient_visit_list(Request $request)
+    {
+
+        $patient_id = $request->input('patient_id');
+
+        $data = DB::table('visits')
+            ->leftJoin('patient_profile', 'patient_profile.patient_id', '=', 'visits.patient_id')
+            ->select(DB::raw('*'))
+            ->where('visits.patient_id', $patient_id)
+            ->get();
+
+
+        return response()->json(['status' => true, 'data' => $data]);
+
+
+    }
+
+
 }

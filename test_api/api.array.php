@@ -195,6 +195,18 @@ $api->method = "GET";
 $api->description = "Get Drop Down Data`";
 $api->params->token = "123";
 
+$api_arr [] = $api;
+
+
+
+// Get Visit List
+$api = new api();
+$api->name = "Get Visit List";
+$api->url = HOST . 'patient_visit_list';
+$api->method = "GET";
+$api->description = "Get Visit List";
+$api->params->patient_id = "1";
+$api->params->token = "123";
 
 
 
