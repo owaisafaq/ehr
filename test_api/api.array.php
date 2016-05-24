@@ -42,15 +42,12 @@ $api->name = "Register Patient";
 $api->url = HOST . 'register_patient';
 $api->method = "POST";
 $api->description = "Register Patient";
-$api->params->source_id="1";
-$api->params->email="test@test.com";
-$api->params->name="test";
-$api->params->password="1234";
 $api->params->first_name = "owais";
 $api->params->middle_name = "ahmed";
 $api->params->last_name = "imran";
 $api->params->date_of_birth = "18-02-1990";
 $api->params->age = "20";
+$api->params->sex = "1";
 $api->params->martial_status = "single";
 $api->params->religion = "Islam";
 $api->params->father_firstname = "ahmed";
@@ -116,10 +113,91 @@ $api->params->depandent_id = "3";
 $api->params->principal_relationship = "";
 $api->params->dependant_relationship = "Brother";
 $api->params->description = "Need Financial Help for Brother";
-
-
-
 $api->params->token = "123";
+
+
+$api_arr [] = $api;
+
+
+
+// Add Visit
+$api = new api();
+$api->name = "Add Visit";
+$api->url = HOST . 'add_visit';
+$api->method = "POST";
+$api->description = "Add Visit";
+$api->params->patient_id = "123";
+$api->params->department_id = "123";
+$api->params->encounter_class = "123";
+$api->params->encounter_type = "123";
+$api->params->whom_to_see = "123";
+$api->params->decscribe_whom_to_see = "123";
+$api->params->token = "123";
+
+
+
+$api_arr [] = $api;
+
+// Get Countries
+$api = new api();
+$api->name = "Get Countries";
+$api->url = HOST . 'get_countries';
+$api->method = "GET";
+$api->description = "Get Countries";
+$api->params->token = "123";
+
+
+
+$api_arr [] = $api;
+
+
+// Get States
+$api = new api();
+$api->name = "Get States";
+$api->url = HOST . 'get_states';
+$api->method = "GET";
+$api->description = "Get States";
+$api->params->country_id = "1";
+$api->params->token = "123";
+
+
+
+$api_arr [] = $api;
+
+// Get Cities
+$api = new api();
+$api->name = "Get Cities";
+$api->url = HOST . 'get_cities';
+$api->method = "GET";
+$api->description = "Get Cities";
+$api->params->state_id = "1";
+$api->params->token = "123";
+
+
+$api_arr [] = $api;
+
+// Get Local Goverment Area
+$api = new api();
+$api->name = "Get Local Goverment Area";
+$api->url = HOST . 'get_local_goverment_area';
+$api->method = "GET";
+$api->description = "Get Local Goverment Area";
+$api->params->state_id = "1";
+$api->params->token = "123";
+
+
+
+// Get Drop Down Data
+$api = new api();
+$api->name = "Get Drop Dowon Data";
+$api->url = HOST . 'get_dropdowndata';
+$api->method = "GET";
+$api->description = "Get Drop Down Data`";
+$api->params->token = "123";
+
+
+
+
 
 
 $api_arr [] = $api;

@@ -34,7 +34,17 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->post('register_patient', 'App\Http\Controllers\ApiController@register_patient');
 
-    $app->post('add_encounter' ,'App\Http\Controllers\ApiController@add_encounter');
+    $app->post('add_visit' ,'App\Http\Controllers\ApiController@add_visit');
+
+    $app->get('get_countries' ,'App\Http\Controllers\ApiController@get_countries');
+
+    $app->get('get_states' ,'App\Http\Controllers\ApiController@get_states');
+
+    $app->get('get_cities' ,'App\Http\Controllers\ApiController@get_cities');
+
+    $app->get('get_local_goverment_area' ,'App\Http\Controllers\ApiController@get_local_goverment_area');
+
+    $app->get('get_dropdowndata' ,'App\Http\Controllers\ApiController@get_dropdowndata');
 
 
 
