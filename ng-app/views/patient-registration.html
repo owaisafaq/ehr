@@ -72,25 +72,15 @@ chozen plugin -->
                                     <label>Marital Status</label>
                                 </div>
                                 <div class="col-lg-3">
-                                    <select class="form-control" ng-model="PI.martial_status">
-                                        <option value=null>Marital Status</option>
-                                        <option ng-repeat="religion in dropDownData.religion" value="religion.id">{{religion.name}}</option>
+                                    <select class="form-control" ng-model="PI.martial_status" ng-options='option.id as option.name for option in dropDownData.maritial_status'>
+                                        <!-- <option value=null>Marital Status</option> -->
+                                        <!-- <option ng-repeat="maritialStatus in dropDownData.maritial_status" value="maritialStatus.id">{{maritialStatus.name}}</option> -->
                                     </select>
                                 </div>
                                 <div class="col-lg-3">
                                     <select class="form-control" ng-model="PI.religion">
                                         <option>Religion</option>
-                                        <option ng-repeat="maritialStatus in dropDownData.maritial_status" value="maritialStatus.id">{{maritialStatus.name}}</option>
-                                        <!-- <option value="1">Christian</option>              
-                                        <option value="2">Muslim</option>
-                                        <option value="3">Buddhist</option>
-                                        <option value="4">Hindu</option>
-                                        <option value="5">Jewish</option>
-                                        <option value="6">Agnostic</option>
-                                        <option value="7">Atheist</option>
-                                        <option value="8">Sikh</option>
-                                        <option value="9">Not Religious</option>
-                                        <option value="10">Other</option>      --> 
+                                        <option ng-repeat="religion in dropDownData.religion" value="religion.id">{{religion.name}}</option>
                                     </select>
                                 </div>
                             </div>

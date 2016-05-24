@@ -44,6 +44,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 	function dropDownSuccess(res) {
 		if(res.status == true){
 			angular.copy(res.data, $scope.dropDownData);
+			console.log($scope.dropDownData.maritial_status[0].name);
+			$scope.PI = {martial_status : $scope.dropDownData.maritial_status[0].name};
+			console.log($scope.PI.martial_status);
 		}
 	}
 
