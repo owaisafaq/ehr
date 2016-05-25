@@ -10,7 +10,6 @@ define('ROUTE', '');
 $api_arr = array();
 
 
-
 // Login to app
 $api = new api();
 $api->name = "Login User";
@@ -119,7 +118,6 @@ $api->params->token = "123";
 $api_arr [] = $api;
 
 
-
 // Add Visit
 $api = new api();
 $api->name = "Add Visit";
@@ -135,7 +133,6 @@ $api->params->decscribe_whom_to_see = "123";
 $api->params->token = "123";
 
 
-
 $api_arr [] = $api;
 
 // Get Countries
@@ -145,7 +142,6 @@ $api->url = HOST . 'get_countries';
 $api->method = "GET";
 $api->description = "Get Countries";
 $api->params->token = "123";
-
 
 
 $api_arr [] = $api;
@@ -159,7 +155,6 @@ $api->method = "GET";
 $api->description = "Get States";
 $api->params->country_id = "1";
 $api->params->token = "123";
-
 
 
 $api_arr [] = $api;
@@ -185,6 +180,7 @@ $api->description = "Get Local Goverment Area";
 $api->params->state_id = "1";
 $api->params->token = "123";
 
+$api_arr [] = $api;
 
 
 // Get Drop Down Data
@@ -198,7 +194,6 @@ $api->params->token = "123";
 $api_arr [] = $api;
 
 
-
 // Get Visit List
 $api = new api();
 $api->name = "Get Visit List";
@@ -209,7 +204,16 @@ $api->params->patient_id = "1";
 $api->params->token = "123";
 
 
+$api_arr [] = $api;
 
+
+// Get Patient Vital Fields
+$api = new api();
+$api->name = "Get Patient Vital Fields";
+$api->url = HOST . 'get_patient_vitals';
+$api->method = "GET";
+$api->description = "Get Patient Vital Fields";
+$api->params->token = "123";
 
 
 $api_arr [] = $api;
