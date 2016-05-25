@@ -2,21 +2,20 @@
 GENERAL
 ------------------*/
 @font-face {
-    font-family: 'proxi-bold';
-    src: url('../../fonts/proxi-bold/ProximaNova-Bold.eot.eot');
-    src: url('../../fonts/proxi-bold/ProximaNova-Bold.eot?#iefix') format('embedded-opentype'), 
-        url('../../fonts/proxi-bold/ProximaNova-Bold.woff') format('woff'), 
-        url('../../fonts/proxi-bold/ProximaNova-Bold.ttf') format('truetype'), 
-        url('../../fonts/proxi-bold/ProximaNova-Bold.svg#ProximaNova-Bold') format('svg');
+    font-family: 'sgui-bold';
+    src: url('../../fonts/SegoeUI-Bold/SegoeUI-Bold.eot');
+    src: url('../../fonts/SegoeUI-Bold/SegoeUI-Bold.eot?#iefix') format('embedded-opentype'), 
+        url('../../fonts/SegoeUI-Bold/SegoeUI-Bold.woff') format('woff'), 
+        url('../../fonts/SegoeUI-Bold/SegoeUI-Bold.ttf') format('truetype'), 
+        url('../../fonts/SegoeUI-Bold/SegoeUI-Bold.svg#ProximaNova-Bold') format('svg');
 }
 @font-face {
-    font-family: 'proxi-reg';
-    src: url('../../fonts/proxi-reg/proximanova-regular-webfont.eot');
-    src: url('../../fonts/proxi-reg/proximanova-regular-webfont.eot?#iefix') format('embedded-opentype'), 
-        url('../../fonts/proxi-reg/proximanova-regular-webfont.woff') format('woff'), 
-        url('../../fonts/proxi-reg/proximanova-regular-webfont.ttf') format('truetype'), 
-        url('../../fonts/proxi-reg/proximanova-regular-webfont.svg#ProximaNova-Bold') format('svg');
+    font-family: 'SegoeUI-reg';
+    src: url('../../fonts/SegoeUI-reg/SegoeUI.eot?#iefix') format('embedded-opentype'),  url('../../fonts/SegoeUI-reg/SegoeUI.woff') format('woff'), url('../../fonts/SegoeUI-reg/SegoeUI.ttf')  format('truetype'), url('../../fonts/SegoeUI-reg/SegoeUI.svg#SegoeUI') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
+
 input:focus,select:focus,button:focus,textarea:focus{
     outline: none;
 }
@@ -25,7 +24,7 @@ section{
 }
 body{
     background: #fff;
-    font-family: 'proxi-reg';
+    font-family: 'SegoeUI-reg';
 }
 .no-margin{
     margin: 0;
@@ -51,6 +50,9 @@ body{
 .margin-top-5{
     margin-top: 5px;
 }
+.margin-top-10{
+    margin-top: 10px;
+}
 input[disabled] {
     background: #ddecf8;
 }
@@ -58,7 +60,7 @@ input[disabled] {
     font-size: 12px;
     line-height: 12px;
     color: #003d51;
-    font-family: 'proxi-bold';
+    font-family: 'sgui-bold';
 }
 .custom-form label.txt-style-4,.txt-style-4{
     font-size: 14px;
@@ -70,14 +72,14 @@ input[disabled] {
 }
 .custom-form label.txt-style-4{
     text-transform: capitalize; 
-    font-family: 'proxi-reg';
+    font-family: 'SegoeUI-reg';
     font-weight: bold;
 }
 .txt-style-2{
     font-size: 18px;
     line-height: 18px;
     color: #fff;
-    font-family: 'proxi-bold';
+    font-family: 'sgui-bold';
 }
 /*========
 Tabs Styling
@@ -223,8 +225,8 @@ Menu styling
     min-width: 1170px;
 }
 #content{
-    /*padding-top: 60px;*/
-    padding-top: 36px;
+    padding-top: 60px;
+    /*padding-top: 36px;*/
 }
 .site_name{
     height: 60px;
@@ -232,13 +234,13 @@ Menu styling
     position: relative;
     color: #fff;
     font-size: 24px;
-    font-family: 'proxi-bold';
+    font-family: 'sgui-bold';
     text-align: center;
     line-height: 60px;
 }
 .custom-tab{
     background: #c8ddee;
-    font-family: 'proxi-bold';
+    font-family: 'sgui-bold';
     position: fixed;
     left: 0;
     padding-left: 80px !important;
@@ -306,7 +308,10 @@ Menu styling
     border-radius: 15px; 
     padding-left: 35px;
     border:1px solid #dfe7f6;
-    font-family: 'proxi-reg';
+    font-family: 'SegoeUI-reg';
+}
+.header-search input[type=text].search_field_big{
+    width: 334px !important;
 }
 .custom-form .header-search input[type=text]{
     width: 234px;
@@ -314,7 +319,7 @@ Menu styling
     border-radius: 15px; 
     padding-left: 35px;
     border:1px solid #dfe7f6;
-    font-family: 'proxi-reg';
+    font-family: 'SegoeUI-reg';
 }
 .custom-form .header-search button{
     position: absolute;
@@ -393,7 +398,7 @@ Menu styling
     margin-right: 0;
 }
 .custom-form label{
-    font-size: 14px;
+    font-size: 13px;
     color: #56aeea;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -401,15 +406,14 @@ Menu styling
     margin: 0;
     height: 28px;
     line-height: 28px;
-    font-family: 'proxi-bold';
+    font-family: 'sgui-bold';
 }
 .custom-form input[type=text]{
     width: 100%;
     font-size: 14px;
     padding-left: 10px;
-    font-family: 'proxi-reg';
+    font-family: 'SegoeUI-reg';
     box-sizing: border-box;
-    padding-top: 3px;
     border-radius: 2px;
 }
 .custom-form textarea{
@@ -419,7 +423,7 @@ Menu styling
     resize: none;
     padding-left: 10px;
     padding-top: 10px;
-    font-family: 'proxi-reg';
+    font-family: 'SegoeUI-reg';
 }
 .custom-form input[type=text]::-webkit-input-placeholder,.custom-form textarea::-webkit-input-placeholder {
     color:#a2a6b9;
@@ -445,7 +449,7 @@ DropDown Styling
     width: 100%;
     font-size: 14px;
     padding-left: 10px;
-    font-family: 'proxi-reg';
+    font-family: 'SegoeUI-reg';
     box-sizing: border-box;
     display: inline-block;
     color: #b6bbcc;
@@ -474,7 +478,7 @@ DropDown Styling
 }
 .select2-results li{
     padding-left: 12px;    
-    font-family: 'proxi-reg';
+    font-family: 'SegoeUI-reg';
 }
 .select2-results .select2-result-label{
     padding: 0;
@@ -518,7 +522,7 @@ file upload custom
     height: 100%;
     line-height: 28px;
     color: #a2a6b9;
-    font-family: 'proxi-reg';
+    font-family: 'SegoeUI-reg';
     text-transform: capitalize;
 }
 
@@ -555,7 +559,7 @@ file upload custom
 .custom-form label.label-style{
     font-size: 18px;
     color: #516e81;
-    font-family: 'proxi-bold';
+    font-family: 'sgui-bold';
     margin: 0;
     text-transform: capitalize;
 }
@@ -563,7 +567,7 @@ file upload custom
     font-size: 14px;
     color: #a2a6b9;
     text-transform: capitalize;
-    font-family: 'proxi-reg';
+    font-family: 'SegoeUI-reg';
     line-height: 24px;
 }
 .checkbox-styled:not(ie8) input ~ span:before{
@@ -581,7 +585,7 @@ Table Styling
 .table-custom thead > tr > th{
     background: #ddecf8;
     color: #516e81;
-    font-family: 'proxi-bold';
+    font-family: 'sgui-bold';
     text-transform: uppercase;
     padding: 3px 10px;
 }
@@ -595,6 +599,12 @@ Table Styling
     padding: 3px 10px;
     color: #003d51;
     font-size: 14px;
+}
+.table-custom .radio-styled{
+    display: inline-block;
+    margin : auto !important;
+    float: none;
+    height: 12px;
 }
 .table thead {
     opacity: 1;
@@ -641,6 +651,23 @@ Table Styling
 }
 .notes{
     background: url(../..//img/notes.jpg) no-repeat top center;
+}
+.report{
+    background: url(../..//img/report.png) no-repeat top center;
+}
+
+
+.add-result{
+    background: url(../..//img/add_result.png) no-repeat top center;
+}
+.update{
+    background: url(../..//img/update.png) no-repeat top center;
+}
+.new_order{
+    background: url(../..//img/new_order.png) no-repeat top center;
+}
+.print{
+    background: url(../..//img/print.png) no-repeat top center;
 }
 .icons_con{
     float: right;
@@ -698,7 +725,7 @@ Table Styling
     font-size: 12px;
     line-height: 12px;
     border-radius: 3px;
-    font-family: 'proxi-bold';
+    font-family: 'sgui-bold';
     letter-spacing: 1px;
     padding: 12px 15px;
 }
@@ -732,14 +759,14 @@ Table Styling
     color: #a2a6b9;
     font-size: 13px;
     letter-spacing: 1px;
-    font-family: 'proxi-bold';
+    font-family: 'sgui-bold';
 }
 .table-header .txt-style-3{
     margin-right: 20px;
     color: #a2a6b9;
     font-size: 13px;
     letter-spacing: 1px;
-    font-family: 'proxi-bold';
+    font-family: 'sgui-bold';
     line-height: 13px;
     margin-top: 15px;
 }
@@ -803,7 +830,7 @@ Side PopUp
     margin: 0;
     padding: 20px 0;
     font-size: 18px;
-    font-family: 'proxi-bold';
+    font-family: 'sgui-bold';
     text-transform: capitalize;
 }
 .pop_body{
@@ -823,6 +850,15 @@ Side PopUp
     font-weight: bold;
     color: #56aeea !important;
 }
+.link-style_2{
+    font-size: 12px;
+    font-weight: bold;
+    color: #a2a6b9 !important;
+    text-transform: uppercase;
+    border-bottom: 1px dashed #a2a6b9;
+    padding-bottom: 5px;
+    text-decoration: none !important;
+}
 .card-color-2{
     background: #c8ddee;
 }
@@ -841,7 +877,7 @@ Side PopUp
 .modal-body p{
     font-size:20px;
     color: #003d51;
-    font-family: 'proxi-bold';
+    font-family: 'sgui-bold';
 }
 .modal-footer{
     border:none;
@@ -950,7 +986,7 @@ new-encounter-clinical-documentation
 .ulli{
     font-size: 14px;
     color: #56aeea;
-    font-family: 'proxi-bold';
+    font-family: 'sgui-bold';
     margin: 0;
 }
 .ulli li{
@@ -1026,7 +1062,7 @@ new-encounter-clinical-documentation
     text-transform: capitalize;
 }
 #small-calendar {
-    font-family: 'proxi-reg';
+    font-family: 'SegoeUI-reg';
     margin-bottom: 20px;
     width: 100%;
 }
@@ -1231,7 +1267,7 @@ Patient Summary
     font-size: 14px;
     color: #a2a6b9;
     letter-spacing: 0;
-    font-family: 'proxi-reg';
+    font-family: 'SegoeUI-reg';
     text-transform: capitalize;
 }
 .radio-styled:not(ie8) input:checked ~ span:before {
@@ -1266,7 +1302,7 @@ Patient Summary
     margin-top: 11px;
     color: #516e81;
     font-size: 22px;
-    font-family: 'proxi-bold';
+    font-family: 'sgui-bold';
     padding-left: 15px;
 }
 .move_patient{
@@ -1367,5 +1403,168 @@ Patient Plan
     width:65%;
 }
 input[type="email"].username::webkit-input-placeholder {
-  color: orange;
+    color: orange;
+}
+/*-----------
+BED Occupancy
+-----------*/
+.bed-box{
+    width: 118px;
+    height: 160px;
+    float: left;
+    border: 1px solid #ddecf8;
+    padding: 19px;
+    margin-right: 30px;
+    margin-bottom: 30px;
+    position: relative;
+}
+.bed-box:hover{
+    background: #526f82;
+}
+.bed-box:hover > span{
+    color: #fff;
+}
+
+.bed-info{
+    width: 280px;
+    height: auto;
+    background: #fff;
+    position: absolute;
+    top: 20px;
+    left: 110%;
+    z-index: 1;
+    box-shadow: 11px 0 40px 0px rgba(224,232,238,1);
+    padding: 16px 8px;
+    padding-top: 23px;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -o-transition: 0.5s;
+}
+.bed-box:hover .bed-info{
+    opacity: 1;
+    visibility: visible;
+    top: 20px;
+    left: 100%;
+}
+/*.person_info{
+    
+}*/
+.bed-info .txt-style-4{
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.bed-info .txt-style-3{
+    font-size: 14px;
+    font-family: 'SegoeUI-reg';
+    line-height: 14px;
+    margin-bottom: 12px;
+}
+.bed-info:before{
+    position: absolute;
+    left: 0; 
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 24px;
+    content: "\f0d9";
+    left: -8px;
+    top: 10px;
+    color: #fff;
+}
+.txt5{
+    font-size: 14px;
+    color: #a2a6b9;
+    line-height: 14px;
+}
+.txt6{
+    color: #516e81;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 18px;
+}
+.bed-box span{
+    display: block;
+}
+.bed-box .txt6{
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.bed-box img{
+    margin-bottom: 10px;
+}
+.txt7{
+    color: #516e81;
+    font-size: 12px;
+    line-height: 12px;
+}
+/*Lab New Order*/
+.person-detail-box{
+    position: relative;
+}
+.person_info{
+    top: -10px;
+    left: 100%;
+    height: auto;
+    padding-top: 27px;
+}
+.person-detail-box > span{
+    font-size: 14px;
+    color: #56aeea;
+}
+.person-detail-box:hover .person_info{
+    top: -10px;
+    left: 90%;
+    opacity: 1;
+    visibility: visible;
+}
+.person-detail-box span {
+    display: block;
+}
+.plus{
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    background: #a2a6b9;
+    color: #fff;
+    display: inline-block;
+    border-radius: 100%;
+    font-size: 22px;
+    text-align: center;
+    line-height: 34px;
+}
+.radio-align .radio-styled:not(ie8) input ~ span{
+    margin-top: 5px;    
+}
+.form-wizard.form-wizard-horizontal .nav li.done .step{
+    border-color: #a2a6b9;
+    background-color: #a2a6b9;
+}
+
+.form-wizard.form-wizard-horizontal .nav .title{
+    text-transform: uppercase;
+    color: #a2a6b9;
+    top: 50px;
+    line-height: 17px;
+}
+.form-wizard.form-wizard-horizontal .nav li.active .step, .form-wizard.form-wizard-horizontal .nav li:hover .step{
+    border-color: #309fe7;
+    background-color: #309fe7;
+    color: #fff;
+}
+.progress-bar-primary {
+    background-color: #d4e5f2;
+}
+.form-wizard.form-wizard-horizontal .nav .step{
+    border:3px solid #dadfe5;
+    color: #a2a6b9;
+    font-size: 12px;
+}
+.form-wizard.form-wizard-horizontal .nav li.active .title, .form-wizard.form-wizard-horizontal .nav li:hover .title{
+    color: #309fe7;
 }

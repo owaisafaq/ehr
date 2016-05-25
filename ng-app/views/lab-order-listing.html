@@ -1,45 +1,12 @@
 <div id="content">
     <section>
-        <div class="card custom-card">
-            <div class="card-head card-head-custom card-color-3">
-                <div class="col-lg-3">
-                    <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
-                    <span class="txt-style-2 col-lg-12">Elbert Bloggs Woo</span>
-                </div>
-                <div class="col-lg-2">
-                    <label class="txt-style-1 text-uppercase col-lg-12">Patient Number</label>
-                    <span class="txt-style-2 col-lg-12">PA-90189191</span>
-                </div>
-                <div class="col-lg-2">
-                    <label class="txt-style-1 text-uppercase col-lg-12">Age</label>
-                    <span class="txt-style-2 col-lg-12">39 Years</span>
-                </div>
-                <div class="col-lg-1">
-                    <label class="txt-style-1 text-uppercase col-lg-12">Sex</label>
-                    <span class="txt-style-2 col-lg-12">Male</span>
-                </div>
-                <div class="col-lg-2">
-                    <label class="txt-style-1 text-uppercase col-lg-12">marital status</label>
-                    <span class="txt-style-2 col-lg-12">Single</span>
-                </div>
-                <div class="col-lg-2">
-                    <a href="javascript:;" class="button-style-2">
-                        <img src="assets/img/content_icn_blue.png" />
-                    </a>
-                    <a href="javascript:;" class="button-style-2">
-                        <img src="assets/img/assign_blue.png" />
-                    </a>
-                    <a href="javascript:;" class="button-style-2">
-                        <img src="assets/img/discharge_icn_blue.png" />
-                    </a>                             
-                </div>
-            </div>
+        <div class="card">
             <div class="table-header col-lg-12">
                 <div class="col-lg-12 no-padding">
-                    <span class="txt-style-3 pull-left text-uppercase">search appointment</span>
+                    <span class="txt-style-3 pull-left text-uppercase">lab orders</span>
                     <div class="col-lg-2 pull-right no-margin">
                         <select class="form-control">
-                            <option>View Appointment By</option>
+                            <option>Group By</option>
                             <option>2</option>
                             <option>3</option>
                         </select>
@@ -48,30 +15,39 @@
                         <button type="submit">
                             <i class="fa fa-search"></i>
                         </button>
-                        <input class="search_field" type="text" placeholder="Type patient id or name">
+                        <input class="search_field search_field_big" type="text" placeholder="Search with patient order by patient name or id">
                     </div>
                 </div> 
             </div>
             <div class="card-body col-lg-12">
-                <div class="icons_con">
-                    <button class="calendar button-custom">Encounter</button>
-                    <button class="notification button-custom">Notification</button>
-                    <button class="edit button-custom">Update</button>
-                    <button class="delete button-custom">Delete</button>
-                    <button data-toggle="modal" data-target="#createappoint" class="add button-custom">ADD</button>
+                <div class="pull-left margin-top-10">
+                    <a class="link-style_2" href="javascript:;">open orders</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                    <a class="link-style_2" href="javascript:;">in progress</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                    <a class="link-style_2" href="javascript:;">closed orders</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                    <a class="link-style_2" href="javascript:;">canceled orders</a>
                 </div>
-                <div>
+                <div class="icons_con"> 
+                    <button class="print button-custom">print order label</button>
+                    <button data-toggle="modal" data-target="#neworder" class="new_order button-custom">new order</button>
+                    <button class="update button-custom">update status</button>
+                    <button class="add-result button-custom">add result</button>
+                    <button data-toggle="modal" data-target="#cancelOrder2" class="report button-custom">view report</button>
+                    <button data-toggle="modal" data-target="#cancelOrder" class="add button-custom">sign off</button>
+                </div>
+                <div class="col-lg-12 no-padding">
                     <table class="table table-striped no-margin table-custom">
                         <thead>
                             <tr>
-                                <th></th>
+                                <th width='10px'></th>
+                                <th>order no</th>
                                 <th>patient id</th>
-                                <th>name</th>
-                                <th>to see1</th>
-                                <th>department</th>
-                                <th>reason</th>
-                                <th>date</th>
+                                <th>patient name</th>
+                                <th>lab test</th>
+                                <th>lab</th>
+                                <th>ordered by</th>
+                                <th>priority</th>
                                 <th>status</th>
+                                <th>handling by</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -83,13 +59,40 @@
                                         </label>
                                     </div>
                                 </td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>OR5521</td>
+                                <td>
+                                    <div class="person-detail-box"><span>PA000214</span>
+                                        <div class="bed-info person_info">
+                                            <div class="col-lg-12">
+                                                <span class="txt-style-4">Name</span>
+                                                <span class="txt-style-3">Elton John Woods</span>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <span class="txt-style-4">Sex</span>
+                                                <span class="txt-style-3">Male</span>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <span class="txt-style-4">Age</span>
+                                                <span class="txt-style-3">24</span>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <span class="txt-style-4">Id</span>
+                                                <span class="txt-style-3 pull-left">PA000214</span>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <span class="txt-style-4">Marital Status</span>
+                                                <span class="txt-style-3 pull-left">Single</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Elton John Woods</td>
+                                <td>Blood Test</td>
+                                <td>Lab 21</td>
+                                <td>Dr. Smiths</td>
+                                <td>Urgent</td>
+                                <td>In Progress</td>
+                                <td>Asst. John</td>
                             </tr>
                             <tr>
                                 <td align="center">
@@ -99,13 +102,34 @@
                                         </label>
                                     </div>
                                 </td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>OR5521</td>
+                                <td><div class="person-detail-box"><span>PA000214</span>
+                                        <div class="bed-info person_info">
+                                            <div class="col-lg-12">
+                                                <span class="txt-style-4">Name</span>
+                                                <span class="txt-style-3">Elton John Woods</span>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <span class="txt-style-4">Sex</span>
+                                                <span class="txt-style-3">Male</span>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <span class="txt-style-4">DOB</span>
+                                                <span class="txt-style-3">October 10, 1990</span>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <span class="txt-style-4">Expected Discharge Date</span>
+                                                <span class="txt-style-3 pull-left">May 15, 2016</span><span class="txt-style-3 pull-left">4:30 PM</span>
+                                            </div>
+                                        </div>
+                                    </div></td>
+                                <td>Elton John Woods</td>
+                                <td>Blood Test</td>
+                                <td>Lab 21</td>
+                                <td>Dr. Smiths</td>
+                                <td>Urgent</td>
+                                <td>In Progress</td>
+                                <td>Asst. John</td>
                             </tr>
                             <tr>
                                 <td align="center">
@@ -115,18 +139,258 @@
                                         </label>
                                     </div>
                                 </td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>OR5521</td>
+                                <td><div class="person-detail-box"><span>PA000214</span>
+                                        <div class="bed-info person_info">
+                                            <div class="col-lg-12">
+                                                <span class="txt-style-4">Name</span>
+                                                <span class="txt-style-3">Elton John Woods</span>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <span class="txt-style-4">Sex</span>
+                                                <span class="txt-style-3">Male</span>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <span class="txt-style-4">DOB</span>
+                                                <span class="txt-style-3">October 10, 1990</span>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <span class="txt-style-4">Expected Discharge Date</span>
+                                                <span class="txt-style-3 pull-left">May 15, 2016</span><span class="txt-style-3 pull-left">4:30 PM</span>
+                                            </div>
+                                        </div>
+                                    </div></td>
+                                <td>Elton John Woods</td>
+                                <td>Blood Test</td>
+                                <td>Lab 21</td>
+                                <td>Dr. Smiths</td>
+                                <td>Urgent</td>
+                                <td>In Progress</td>
+                                <td>Asst. John</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+                <div class="modal fade big-modal" id="neworder" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header pop_head">
+                                <h2>New Order</h2>
+                            </div>
+                            <div class="modal-body pull-left">
+                                <form class="custom-form">
+                                    <div class="col-lg-12">
+                                        <div class="header-search col-lg-3">
+                                            <button type="submit">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                            <input class="search_field" type="text" placeholder="Search by  patient id or name" ng-model="PI.search">
+                                        </div>
+                                        <button type="button" class="btn btn-default button-style-1">Add</button>
+                                    </div>
 
+                                    <div class="col-lg-3">
+                                        <label>order number</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <input type="text" placeholder="ID1234435656" disabled="" ng-model="PI.patient_ID" class="ng-pristine ng-untouched ng-valid ng-empty">
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>time order created</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <input type="text" placeholder="May 12, 2016 04:25 PM" disabled="" ng-model="PI.patient_ID" class="ng-pristine ng-untouched ng-valid ng-empty">
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>LAB</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <select class="form-control" ng-model="PI.hmo">                                
+                                            <option>Select Lab</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-3"><label></label></div>
+                                    <div class="col-lg-3"><label></label></div>
+                                    <div class="col-lg-3">
+                                        <label>add lab test</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <input type="text" class="form-control" placeholder="Type name or LOINIC code" ng-model="PI.policies"/>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>test cost</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <input type="text" placeholder="$124.55" disabled="" ng-model="PI.patient_ID" class="ng-pristine ng-untouched ng-valid ng-empty">
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>blood sample</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="radio radio-styled">
+                                            <label>
+                                                <input type="radio" name="optionsRadios" value="option1">
+                                                <span>Blood</span>
+                                            </label>
+                                        </div>
+
+                                        <div class="radio radio-styled">
+                                            <label>
+                                                <input type="radio" name="optionsRadios" value="option1">
+                                                <span>Urine</span>
+                                            </label>
+                                        </div>
+
+                                        <div class="radio radio-styled">
+                                            <label>
+                                                <input type="radio" name="optionsRadios" value="option1">
+                                                <span>Stool</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span class="plus"><i class="md-add"></i></span>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <label>add notes</label>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <textarea placeholder="Write here..." ng-model="PI.description"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default button-style-1">create</button>
+                                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+                <div class="modal fade" id="cancelOrder" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form class="custom-form">
+                            <div class="modal-content pull-left">
+                                <div class="modal-header pop_head">
+                                    <h2>Cancel Order</h2>
+                                </div>
+                                <div class="modal-body pull-left modal-body-2">
+                                    <div class="col-lg-6">
+                                        <span class="txt-style-4">Do you want to cancel the order?</span>
+                                    </div>
+                                    <div class="col-lg-3 radio-align">
+                                        <div class="radio radio-styled">
+                                            <label>
+                                                <input type="radio" name="cancelOrder" value="option1">
+                                                <span>Yes</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 radio-align">
+                                        <div class="radio radio-styled">
+                                            <label>
+                                                <input type="radio" name="cancelOrder" value="option1" checked>
+                                                <span>No</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Reason</label>
+                                    </div>
+                                    <div class="col-lg-6 select-con">
+                                        <select class="form-control">
+                                            <option>Select Reason</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <label class="margin-bottom-xl">Note</label>
+                                        <textarea placeholder="Write Here..."></textarea>
+                                    </div>
+                                    <div class="modal-footer col-lg-12 no-padding no-margin">
+                                        <button type="button" class="btn btn-default button-style-1">Proceed</button>
+                                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+
+                            </div><!-- /.modal-content -->
+                        </form>
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+
+                <div class="modal fade big-modal" id="cancelOrder2" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header pop_head">
+                                <h2>New Order</h2>
+                            </div>
+                            <div class="modal-body pull-left">
+                                <form class="custom-form">
+                                    <div class="col-lg-12">
+                                        <div class="header-search col-lg-3">
+                                            <button type="submit">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                            <input class="search_field" type="text" placeholder="Search by  patient id or name" ng-model="PI.search">
+                                        </div>
+                                        <button type="button" class="btn btn-default button-style-1">Add</button>
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <label>lab order number</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <input type="text" placeholder="ID1234435656" disabled="" ng-model="PI.patient_ID" class="ng-pristine ng-untouched ng-valid ng-empty">
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>current status</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <input type="text" placeholder="In Progress" disabled="" ng-model="PI.patient_ID" class="ng-pristine ng-untouched ng-valid ng-empty">
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Change Order Status</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="radio radio-styled">
+                                            <label>
+                                                <input type="radio" name="cancelOrder" value="option1">
+                                                <span>Yes</span>
+                                            </label>
+                                        </div>
+                                        <!--</div>-->
+                                        <!--<div class="col-lg-3 radio-align">-->
+                                        <div class="radio radio-styled">
+                                            <label>
+                                                <input type="radio" name="cancelOrder" value="option1" checked>
+                                                <span>No</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 form-wizard form-wizard-horizontal">
+                                        <div class="form-wizard-nav">
+                                            <div class="progress" style="width: 85%;"><div class="progress-bar progress-bar-primary" style="width: 40%;"></div></div>
+                                            <ul class="nav nav-justified">
+                                                <li class="done"><a href="javascript:;"><span class="step">1</span> <span class="title">paid</span></a></li>
+                                                <li class="done"><a href="javascript:;"><span class="step">2</span> <span class="title">sample <br />collected</span></a></li>
+                                                <li class="active"><a href="javascript:;"><span class="step">3</span> <span class="title">test in <br />progress</span></a></li>
+                                                <li><a href="javascript:;"><span class="step">4</span> <span class="title">result <br />completed</span></a></li>
+                                                <li><a href="javascript:;"><span class="step">5</span> <span class="title">signed</span></a></li>
+                                                <li><a href="javascript:;"><span class="step">6</span> <span class="title">completed</span></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default button-style-1">create</button>
+                                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
 
             </div><!--end .card-body -->
         </div><!--end .card -->
