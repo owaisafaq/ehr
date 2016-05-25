@@ -28,7 +28,7 @@ AppEHR.config(['$httpProvider','$routeProvider', '$locationProvider',
                     controller: 'appointmentsListController'
                 }).
                 when('/clinical-documentation-clinic-progress-note', {
-                    templateUrl: 'views/clinical-documentation-clinic-progress-note.html',
+                    templateUrl: 'views/clinicaldocumentationclinicprogressnote.html',
                     controller: 'clinicalDocumentationClinicProgressNote'
                 }).
                 when('/new-encounter-clinical-documentation', {
@@ -40,7 +40,7 @@ AppEHR.config(['$httpProvider','$routeProvider', '$locationProvider',
                     controller: 'newEncounterEncounterListController'
                 }).
                 when('/new-encounter-patient-search', {
-                    templateUrl: 'views/new-encounter-patient-search.html',
+                    templateUrl: 'views/newencounterpatientsearch.html',
                     controller: 'newEncounterPatientSearchController'
                 }).
                 when('/patient-listing', {
@@ -95,9 +95,9 @@ AppEHR.run(function ($rootScope, $location, $window) {
 
     $rootScope.$on('$viewContentLoaded', function () { 
         $('.select-date').datepicker({autoclose: true, todayHighlight: true});
-        $('select').select2({minimumResultsForSearch: Infinity});
+        $('select').not('.select_searchFields').select2({minimumResultsForSearch: Infinity});
+        $('.select_searchFields').select2();
     });
-
 });
 AppEHR.filter('capitalize', function() {
     return function(input) {
