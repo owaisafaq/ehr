@@ -23,6 +23,26 @@ class ApiController extends Controller
         header('Access-Control-Allow-Origin: *');
 
 
+        $token = $request->input('token');
+
+        $token = JWTAuth::fromUser($users[0]);
+
+        $user_id = JWTAuth::authenticate($token)->id;
+
+        $user_status = DB::table('users')
+            ->select(DB::raw('user_status'))
+            ->where('id', $user_id)
+            ->first();
+
+
+        if($user_status->user_status =='block'){
+
+
+            return response()->json(['status' => false, 'message'=>'This user is Blocked']);
+
+        }
+
+
     }
 
 
@@ -381,6 +401,8 @@ class ApiController extends Controller
             ->where('password', $password_user)
             ->get();
 
+        
+
         if (count($user) == 1) {
 
             $users = DB::table('users')
@@ -389,7 +411,23 @@ class ApiController extends Controller
                 ->where('password', $password_user)
                 ->get();
 
+
             $token = JWTAuth::fromUser($users[0]);
+
+            $user_id = JWTAuth::authenticate($token)->id;
+
+            $user_status = DB::table('users')
+                ->select(DB::raw('user_status'))
+                ->where('id', $user_id)
+                ->first();
+
+
+            if($user_status->user_status !='active'){
+
+
+                return response()->json(['status' => false, 'message'=>'This user is not active']);
+
+            }
 
             return response()->json(['status' => true, 'data' => $user[0], 'token' => $token]);
 
@@ -562,6 +600,21 @@ class ApiController extends Controller
 
 
         return response()->json(['status' => true, 'data' => $data]);
+
+
+    }
+
+
+    public function get_patient_vitals(Request $request){
+
+
+        $data = DB::table('medical_record_fields')
+            ->select(DB::raw('id,category,name'))
+            ->get();
+
+
+        return response()->json(['status' => true, 'data' => $data]);
+
 
 
     }
