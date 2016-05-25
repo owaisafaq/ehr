@@ -1,4 +1,4 @@
-chozen plugin -->
+
 <div id="content">
     <section>
         <div class="card custom-card no-padding">
@@ -256,42 +256,42 @@ chozen plugin -->
                                     </div>
                                 </div>
                             </div>
-                            <div class="row no-margin">
+                            <div class="row no-margin hidePermanentAddress">
                                 <div class="col-lg-3">
                                     <label>contact</label>
                                 </div>
                                 <div class="col-lg-3">
-                                    <input type="text" numbers-only placeholder="Phone Number" ng-model="PI.permanent_phonenumber"/> 
+                                    <input type="text" numbers-only placeholder="Phone Number" ng-model="PI.permanent_phonenumber" ng-disabled="isDisabled"/> 
                                 </div>
                                 <div class="col-lg-3">
-                                    <input type="text" numbers-only placeholder="Mobile Number" ng-model="PI.permanent_mobilenumber"/> 
+                                    <input type="text" numbers-only placeholder="Mobile Number" ng-model="PI.permanent_mobilenumber" ng-disabled="isDisabled"/> 
                                 </div>
                                 <div class="col-lg-3">
-                                    <input type="text" placeholder="Email" ng-model="PI.permanent_email"/> 
+                                    <input type="text" placeholder="Email" ng-model="PI.permanent_email" ng-disabled="isDisabled"/> 
                                 </div>
 
                                 <div class="col-lg-3">
                                     <label>address</label>
                                 </div>
                                 <div class="col-lg-9">
-                                    <input type="text" placeholder="House Number" ng-model="PI.permanent_housenumber"/>
+                                    <input type="text" placeholder="House Number" ng-model="PI.permanent_housenumber" ng-disabled="isDisabled"/>
                                 </div>
                                 <div class="col-lg-3">
                                 </div>
                                 <div class="col-lg-9">
-                                    <input type="text" placeholder="Street" ng-model="PI.permanent_street"/>
+                                    <input type="text" placeholder="Street" ng-model="PI.permanent_street" ng-disabled="isDisabled"/>
                                 </div>
                                 <div class="col-lg-3">
                                     <label>Country/State</label>  
                                 </div>
                                 <div class="col-lg-3">
-                                    <select class="form-control select_searchFields" ng-model="PI.permanent_country" ng-change="addressStateByCountry(PI.permanent_country, 1);">
+                                    <select class="form-control select_searchFields" ng-model="PI.permanent_country" ng-change="addressStateByCountry(PI.permanent_country, 1);" ng-disabled="isDisabled">
                                         <option value=null>Country</option>
                                         <option ng-repeat="country in permanentAddressCountries" value="{{country.id}}">{{country.name}}</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-3">
-                                    <select class="form-control select_searchFields" ng-model="PI.permanent_state" ng-change="addressLocalGovtAreaByStates(PI.permanent_state, 1);">
+                                    <select class="form-control select_searchFields" ng-model="PI.permanent_state" ng-change="addressLocalGovtAreaByStates(PI.permanent_state, 1);" ng-disabled="isDisabled">
                                         <option value=null>State</option>
                                         <option ng-repeat="states in permanentAddressStates" value="{{states.id}}">{{states.name}}</option>
                                     </select>
@@ -303,14 +303,14 @@ chozen plugin -->
                                     <label>City</label>
                                 </div>
                                 <div class="col-lg-3">
-                                    <select class="form-control select_searchFields" ng-model="PI.permanent_city">
+                                    <select class="form-control select_searchFields" ng-model="PI.permanent_city" ng-disabled="isDisabled">
                                         <option value=null>City</option>
                                         <option ng-repeat="city in addressPerminentCities" value="{{city.id}}">{{city.name}}</option>
                                     </select>
                                 </div>
                                 
                                 <div class="col-lg-3">
-                                    <input type="text" numbers-only placeholder="Post Code" ng-model="PI.permanent_postalCode"/> 
+                                    <input type="text" numbers-only placeholder="Post Code" ng-model="PI.permanent_postalCode" ng-disabled="isDisabled"/> 
                                 </div>
                             </div>
                         </div>

@@ -1,30 +1,30 @@
 var AppEHR = angular.module('AppEHR');
-AppEHR.factory("AUTH1", function ($resource) {
-    return $resource(serverPath +  'user_login', /*{email: '@email', password: '@password'}, */{
+AppEHR.factory("AUTH", function ($resource) {
+    return $resource(serverPath +  'user_login', {email: '@email', password: '@password'}, {
         get: {method: 'POST'}
     });
 });
-function getResource() {
-    var res2 = $resource(serverPath +  'user_login' {
-        save: {method: 'POST'}
-    });
-    return res2;
-}
-
-var AUTH = {
-    save:function(params,body,success) {
-      var res = getResource();  
-      return res.save(params,body,success);
-    }
-};
-return AUTH;
-
 AppEHR.factory("PatientRegistration", function ($resource) {
+    function getResource() {
+        var res2 = $resource(serverPath +  'register_patient', {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var patientRegistration = {
+        save:function(params,body,success) {
+          var res = getResource();  
+          return res.save(params,body,success);
+        }
+    };
+    return patientRegistration;
+});
+/*AppEHR.factory("PatientRegistration", function ($resource) {
 	var params = {};
     return $resource(serverPath +  'register_patient', {
         save: {method: 'POST'}
     });
-});
+});*/
 AppEHR.factory("Countries", function ($resource) {
     return $resource(serverPath +  'get_countries', {token: '@token'}, {
         get: {method: 'GET'}

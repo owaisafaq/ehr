@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'PatientRegistration', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', function ($rootScope, $scope, $window, PatientRegistration, Countries, States, GetLocalGovermentArea, City, DropDownData) {
+AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'PatientRegistration', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', 'PatientRegistration', function ($rootScope, $scope, $window, PatientRegistration, Countries, States, GetLocalGovermentArea, City, DropDownData, PatientRegistration) {
     $rootScope.pageTitle = "EHR - Patient Registration";
     $scope.PI = {};
     $scope.contactAddressCountries = [];
@@ -18,6 +18,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     $scope.employerStates = [];
     $scope.employerCities = [];
     $scope.dropDownData = [];
+    $scope.isDisabled = false;
+    $scope.sameAsAbove = true;    
+    $('.hidePermanentAddress').slideUp(500);
 
     $scope.validateEmail = function (email) { 
         var re = /^(([^<>()[\]\\.,;:+-\s@\"]+(\.[^<>()[\]\\.,;:+-\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -50,6 +53,8 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 	function dropDownSuccess(res) {
 		if(res.status == true){
 			angular.copy(res.data, $scope.dropDownData);
+			console.log($scope.dropDownData.maritial_status);
+    		$scope.PI.maritial_status = $scope.dropDownData.maritial_status[0].id;
 		/*	$scope.PI = {martial_status : $scope.dropDownData.maritial_status[0].name};
 			console.log($scope.dropDownData.maritial_status[0].name);
 			console.log($scope.PI.martial_status);*/
@@ -221,16 +226,44 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     };
 
     // Permanent Address checkbox
-    $scope.isChecked = function(checked) {
+    $scope.isChecked = function(checked){
     	if(checked){
-    		//$scope.PI.
+    		$('.hidePermanentAddress').slideUp(500);
+    		//$scope.isDisabled = true;
     	}else{
-    		console.log(false);
+    		//$scope.isDisabled = false;
+    		$('.hidePermanentAddress').slideDown(500);
     	}
     };
 
-    $scope.submit = function(PI){
-    	console.log(PI);
+    $scope.submit = function(itemsToBeAdded){
+    	console.log(itemsToBeAdded);
+    	if($scope.sameAsAbove == true){
+	    	itemsToBeAdded.permanent_phonenumber = '';
+	    	itemsToBeAdded.permanent_mobilenumber = '';
+	    	itemsToBeAdded.permanent_email = '';
+	    	itemsToBeAdded.permanent_housenumber = '';
+	    	itemsToBeAdded.permanent_street = '';
+	    	itemsToBeAdded.permanent_country = '';
+	    	itemsToBeAdded.permanent_state = '';
+	    	itemsToBeAdded.permanent_postalCode = '';
+	    	itemsToBeAdded.permanent_city = '';
+	    	console.log(1);
+	    }
+    	PatientRegistration.save({}, {
+    		token: $window.sessionStorage.token,
+    		patientInformation: itemsToBeAdded
+    	}, registrationSuccess, registrationFailed);
+    	function registrationSuccess(res){
+    		if(res.states ==  true){
+    			alert("Hola!");
+    		}else{
+    			console.log(res);
+    		}
+    	}
+    	function registrationFailed(error){
+    		console.log(error);
+    	}
     };
     
 }]);
