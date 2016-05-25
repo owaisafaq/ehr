@@ -17,31 +17,33 @@ class ApiController extends Controller
 {
 
 
-    public function __construct()
+    public function __construct(Request $request)
     {
 
         header('Access-Control-Allow-Origin: *');
 
 
-        $token = $request->input('token');
-
-        $token = JWTAuth::fromUser($users[0]);
-
-        $user_id = JWTAuth::authenticate($token)->id;
-
-        $user_status = DB::table('users')
-            ->select(DB::raw('user_status'))
-            ->where('id', $user_id)
-            ->first();
+        if ($request->input('token')) {
 
 
-        if($user_status->user_status =='block'){
+            $token=$request->input('token');
+
+            $user_id = JWTAuth::authenticate($token)->id;
+
+            $user_status = DB::table('users')
+                ->select(DB::raw('user_status'))
+                ->where('id', $user_id)
+                ->first();
 
 
-            return response()->json(['status' => false, 'message'=>'This user is Blocked']);
+            if ($user_status->user_status == 'block') {
+
+
+                return response()->json(['status' => false, 'message' => 'This user is Blocked']);
+
+            }
 
         }
-
 
     }
 
@@ -401,7 +403,6 @@ class ApiController extends Controller
             ->where('password', $password_user)
             ->get();
 
-        
 
         if (count($user) == 1) {
 
@@ -422,10 +423,10 @@ class ApiController extends Controller
                 ->first();
 
 
-            if($user_status->user_status !='active'){
+            if ($user_status->user_status != 'active') {
 
 
-                return response()->json(['status' => false, 'message'=>'This user is not active']);
+                return response()->json(['status' => false, 'message' => 'This user is not active']);
 
             }
 
@@ -605,7 +606,8 @@ class ApiController extends Controller
     }
 
 
-    public function get_patient_vitals(Request $request){
+    public function get_patient_vitals(Request $request)
+    {
 
 
         $data = DB::table('medical_record_fields')
@@ -614,7 +616,6 @@ class ApiController extends Controller
 
 
         return response()->json(['status' => true, 'data' => $data]);
-
 
 
     }
