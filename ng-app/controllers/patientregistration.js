@@ -18,6 +18,12 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     $scope.employerStates = [];
     $scope.employerCities = [];
     $scope.dropDownData = [];
+
+    $scope.validateEmail = function (email) { 
+        var re = /^(([^<>()[\]\\.,;:+-\s@\"]+(\.[^<>()[\]\\.,;:+-\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
+
     Countries.get({token: $window.sessionStorage.token}, countrySuccess, countryFailed);
 
     function countrySuccess(res){
@@ -44,9 +50,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 	function dropDownSuccess(res) {
 		if(res.status == true){
 			angular.copy(res.data, $scope.dropDownData);
+		/*	$scope.PI = {martial_status : $scope.dropDownData.maritial_status[0].name};
 			console.log($scope.dropDownData.maritial_status[0].name);
-			$scope.PI = {martial_status : $scope.dropDownData.maritial_status[0].name};
-			console.log($scope.PI.martial_status);
+			console.log($scope.PI.martial_status);*/
 		}
 	}
 
@@ -214,7 +220,17 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     	}
     };
 
+    // Permanent Address checkbox
+    $scope.isChecked = function(checked) {
+    	if(checked){
+    		//$scope.PI.
+    	}else{
+    		console.log(false);
+    	}
+    };
+
     $scope.submit = function(PI){
     	console.log(PI);
     };
+    
 }]);

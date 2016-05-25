@@ -6,7 +6,7 @@ AppEHR.controller('loginController', ['$scope', '$window', '$http', 'AUTH', func
 	$scope.class = "hide";
 	$scope.login = function (email, password){
 		if(email != undefined && password != undefined){
-			AUTH.get({email: email, password: password}, authSuccess, authFailed);
+			AUTH.get({}, {email: email, password: password}, authSuccess, authFailed);
 			function authSuccess(res){
 				if(res.status == true){
 					$scope.errorMessage = '';
