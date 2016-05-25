@@ -46,6 +46,9 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->get('get_dropdowndata' ,'App\Http\Controllers\ApiController@get_dropdowndata');
 
+    $app->get('patient_visit_list','App\Http\Controllers\ApiController@patient_visit_list');
+
+    $app->get('get_patient_vitals','App\Http\Controllers\ApiController@get_patient_vitals');
 
 
 });
