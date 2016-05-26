@@ -5,23 +5,22 @@ AppEHR.factory("AUTH", function ($resource) {
     });
 });
 AppEHR.factory("PatientRegistration", function ($resource) {
-    function getResource() {
-        var res2 = $resource(serverPath +  'register_patient', {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'register_patient', params, {
             save: {method: 'POST'}
         });
         return res2;
     }
     var patientRegistration = {
         save:function(params,body,success) {
-          var res = getResource();  
+          var res = getResource(params, body);  
           return res.save(params,body,success);
         }
     };
     return patientRegistration;
 });
 /*AppEHR.factory("PatientRegistration", function ($resource) {
-	var params = {};
-    return $resource(serverPath +  'register_patient', {
+    return $resource(serverPath +  'register_patient', {token: '@token', age: '@age'}, {
         save: {method: 'POST'}
     });
 });*/
