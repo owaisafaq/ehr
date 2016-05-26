@@ -25,19 +25,19 @@
                                 <label>Unit Number</label>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" placeholder="Unit Numbers" ng-model="PI.patient_unit_number"/>
+                                <input type="text" numbers-only placeholder="Unit Numbers" ng-model="PI.patient_unit_number"/>
                             </div>
                             <div class="col-lg-3">
                                 <label>Full Name</label>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" placeholder="First Name" ng-model="PI.first_name"/>
+                                <input type="text" alphabets-only placeholder="First Name" ng-model="PI.first_name"/>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" placeholder="Middle Name" ng-model="PI.middle_name"/>
+                                <input type="text" alphabets-only placeholder="Middle Name" ng-model="PI.middle_name"/>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" placeholder="Last Name" ng-model="PI.last_name"/>
+                                <input type="text" alphabets-only placeholder="Last Name" ng-model="PI.last_name"/>
                             </div>
                             <div class="col-lg-3">
                                 <label>Date of birth</label>  
@@ -52,13 +52,13 @@
                                 </div>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" placeholder="Age" ng-model="PI.age"/>
+                                <input type="text" numbers-only placeholder="Age" ng-model="PI.age"/>
                             </div>
                             <div class="col-lg-3">
                                 <!--<input type="text" placeholder="Upload Photo" />-->
                                 <div class="file-field">
                                     <div class="file-path-wrapper">
-                                        <input class="file-path" type="text" placeholder="Upload Image" id="csv">
+                                        <input class="file-path" type="text" ng-model="patient_picture" placeholder="Upload Image" id="csv">
                                     </div>
                                     <input type="file">
                                     <div class="btn">
@@ -71,15 +71,15 @@
                                     <label>Marital Status</label>
                                 </div>
                                 <div class="col-lg-3">
-                                    <select class="form-control" ng-model="PI.martial_status" ng-options='option.id as option.name for option in dropDownData.maritial_status'>
-                                        <!-- <option value=null>Marital Status</option> -->
-                                        <!-- <option ng-repeat="maritialStatus in dropDownData.maritial_status" value="maritialStatus.id">{{maritialStatus.name}}</option> -->
+                                    <select class="form-control select_searchFields" ng-model="PI.maritial_status">
+                                        <option value=null>Marital Status</option>
+                                        <option ng-repeat="maritialStatus in dropDownData.maritial_status" value="{{maritialStatus.id}}">{{maritialStatus.name}}</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-3">
-                                    <select class="form-control" ng-model="PI.religion">
-                                        <option>Religion</option>
-                                        <option ng-repeat="religion in dropDownData.religion" value="religion.id">{{religion.name}}</option>
+                                    <select class="form-control select_searchFields" ng-model="PI.religion">
+                                        <option value=null>Religion</option>
+                                        <option ng-repeat="religion in dropDownData.religion" value="{{religion.id}}">{{religion.name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -88,63 +88,51 @@
                                     <label>Identity Number</label>
                                 </div>
                                 <div class="col-lg-3">
-                                    <select class="form-control" ng-model="PI.identity_type">
-                                        <option>ID Type</option>
-                                        <option>2</option>
-                                        <option>3</option>
+                                    <select class="form-control select_searchFields" ng-model="PI.identity_type">
+                                        <option value=null>ID Type</option>
+                                        <option ng-repeat="idType in dropDownInfo.IdType" value="{{idType.id}}">{{idType.type}}</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-3">
-                                    <select class="form-control" ng-model="PI.identity_number">
-                                        <option>ID Number</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                    </select>
+                                    <input type="text" numbers-only class="form-control" ng-model="PI.identity_number" placeholder="ID Number">
                                 </div>
                             </div>
                             <div class="col-lg-3">
                             </div>
                             <div class="col-lg-3">
-                                <select class="form-control" ng-model="PI.patient_origin" ng-change="addressLocalGovtAreaByStates(PI.patient_origin, 1);">
-                                    <option>State of Origin</option>
+                                <select class="form-control select_searchFields" ng-model="PI.patient_state" ng-change="addressLocalGovtAreaByStates(PI.patient_origin, 1);">
+                                    <option value="1">State of Origin</option>
                                     <!-- <option ng-repeat="state in stateOfOrigin" value="{{state.id}}">{{state.name}}</option> -->
                                 </select>
                             </div>
                             <div class="col-lg-3">
-                                <select class="form-control" ng-model="PI.patient_local_goverment_area">
-                                    <option value=null>Local Government Area</option>
+                                <select class="form-control select_searchFields" ng-model="PI.patient_local_goverment_area">
+                                    <option value="1">Local Government Area</option>
                                     <!-- <option ng-repeat="LGA in patientInfolocalGovtArea" value="{{LGA.id}}">{{LGA.name}}</option> -->
                                 </select>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" class="form-control" ng-model="PI.tribe" placeholder="Tribe"/>
+                                <input type="text" alphabets-only class="form-control" ng-model="PI.tribe" placeholder="Tribe"/>
                             </div>
                             <div class="row no-margin">
                                 <div class="col-lg-3">
                                 </div>
                                 <div class="col-lg-3">
-                                    <select class="form-control" ng-model="PI.language">
-                                        <option>Language</option>
+                                    <select class="form-control select_searchFields" ng-model="PI.language">
+                                        <option value="1">Language</option>
                                         <option ng-repeat="language in dropDownData.language" value="language.id">{{language.name}}</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-3">
-                                    <select class="form-control" ng-model="PI.nationality">
-                                        <option>Nationality</option>
-                                        <option ng-repeat="nationality in dropDownData.nationality" value="nationality.id">{{nationality.name}}</option>
+                                    <select class="form-control select_searchFields" ng-model="PI.nationality">
+                                        <option value=null>Nationality</option>
+                                        <option ng-repeat="nationality in dropDownData.nationality" value="{{nationality.id}}">{{nationality.name}}</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-3">
-                                    <select class="form-control" ng-model="PI.blood_group">
+                                    <select class="form-control select_searchFields" ng-model="PI.blood_group">
                                         <option value=null>Blood Group</option>
-                                        <option ng-repeat="bloodGrop in dropDownData.blood_group" value="bloodGrop.id">{{bloodGrop.name}}</option>
-                                        <!-- <option value="a-">A-</option>
-                                        <option value="b+">B+</option>
-                                        <option value="b-">B-</option>
-                                        <option value="ab+">AB+</option>
-                                        <option value="ab-">AB-</option>
-                                        <option value="o+">O+</option>
-                                        <option value="o-">O-</option> -->
+                                        <option ng-repeat="bloodGroup in dropDownData.blood_group" value="{{bloodGroup.id}}">{{bloodGroup.name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -153,32 +141,32 @@
                                 <label>Father’s Name</label>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" placeholder="First Name" ng-model="PI.father_firstname"/>
+                                <input type="text" alphabets-only placeholder="First Name" ng-model="PI.father_firstname"/>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" placeholder="Middle Name" ng-model="PI.father_middlename"/>
+                                <input type="text" alphabets-only placeholder="Middle Name" ng-model="PI.father_middlename"/>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" placeholder="Last Name" ng-model="PI.father_lastname"/>
+                                <input type="text" alphabets-only placeholder="Last Name" ng-model="PI.father_lastname"/>
                             </div>
                             <div class="col-lg-3">
                                 <label>Mother’s Name</label>
                             </div>
                             <div class="col-lg-3">
 
-                                <input type="text" placeholder="First Name" ng-model="PI.mother_firstname"/>
+                                <input type="text" alphabets-only placeholder="First Name" ng-model="PI.mother_firstname"/>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" placeholder="Middle Name" ng-model="PI.mother_middlename"/>
+                                <input type="text" alphabets-only placeholder="Middle Name" ng-model="PI.mother_middlename"/>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" placeholder="Last Name" ng-model="PI.mother_lastname"/>
+                                <input type="text" alphabets-only placeholder="Last Name" ng-model="PI.mother_lastname"/>
                             </div>
                             <div class="col-lg-3">
                                 <label>Referred</label>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" placeholder="Name" ng-model="PI.refered_name"/>
+                                <input type="text" alphabets-only placeholder="Name" ng-model="PI.refered_name"/>
                             </div>
                         </div>
                     </form>
@@ -193,10 +181,10 @@
                                 <label>contact</label>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" placeholder="Phone Number" ng-model="PI.phone_number"/> 
+                                <input type="text" numbers-only placeholder="Phone Number" ng-click="submit(PI);" ng-model="PI.phone_number"/> 
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" placeholder="Mobile Number" ng-model="PI.mobile_number"/> 
+                                <input type="text" numbers-only placeholder="Mobile Number" ng-model="PI.mobile_number"/> 
                             </div>
                             <div class="col-lg-3">
                                 <input type="text" placeholder="Email" ng-model="PI.patient_email"/> 
@@ -218,19 +206,19 @@
                                 <label>Country/State</label>
                             </div>
                             <div class="col-lg-3">
-                                <select class="form-control" ng-model="PI.patient_country" ng-change="addressStateByCountry(PI.patient_country, 0);">
+                                <select class="form-control select_searchFields" ng-model="PI.patient_country" ng-change="addressStateByCountry(PI.patient_country, 0);">
                                     <option value=null>Country</option>
                                     <option ng-repeat="country in contactAddressCountries" value="{{country.id}}">{{country.name}}</option>
                                 </select>
                             </div>
                             <div class="col-lg-3">
-                                <select class="form-control" ng-model="PI.patient_state" ng-change="addressLocalGovtAreaByStates(PI.patient_state, 0);">
+                                <select class="form-control select_searchFields" ng-model="PI.patient_state" ng-change="addressLocalGovtAreaByStates(PI.patient_state, 0);">
                                     <option value=null>State</option>
                                     <option ng-repeat="state in contactAddressStates" value="{{state.id}}">{{state.name}}</option>
                                 </select>
                             </div>
                             <div class="col-lg-3">
-                                <select class="form-control" ng-model="PI.local_goverment_area">
+                                <select class="form-control select_searchFields" ng-model="PI.local_goverment_area">
                                     <option value=null>Local Government Area</option>
                                     <option ng-repeat="LGA in addresslocalGovtArea" value="{{LGA.id}}">{{LGA.name}}</option>
                                 </select>
@@ -241,13 +229,13 @@
                             </div>
                             
                             <div class="col-lg-3">
-                                <select class="form-control" ng-model="PI.patient_city">
+                                <select class="form-control select_searchFields" ng-model="PI.patient_city">
                                     <option value=null>City</option>
                                     <option ng-repeat="city in addressContactCities" value="{{city.id}}">{{city.name}}</option>
                                 </select>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" placeholder="Post Code" ng-model="PI.patient_postal_code"/> 
+                                <input type="text" numbers-only placeholder="Post Code" ng-model="PI.patient_postal_code"/> 
                             </div>
             
                             <div class="col-lg-3">
@@ -259,48 +247,48 @@
                                 <div class="col-lg-3">
                                     <div class="checkbox checkbox-styled">
                                         <label>
-                                            <input type="checkbox" value="" ng-model="PI.same_as_above">
+                                            <input type="checkbox" ng-change="isChecked(sameAsAbove);" ng-model="sameAsAbove">
                                             <span>Same As Above</span>
                                         </label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row no-margin">
+                            <div class="row no-margin hidePermanentAddress">
                                 <div class="col-lg-3">
                                     <label>contact</label>
                                 </div>
                                 <div class="col-lg-3">
-                                    <input type="text" placeholder="Phone Number" ng-model="PI.permanent_phonenumber"/> 
+                                    <input type="text" numbers-only placeholder="Phone Number" ng-model="PI.permanent_phonenumber" ng-disabled="isDisabled"/> 
                                 </div>
                                 <div class="col-lg-3">
-                                    <input type="text" placeholder="Mobile Number" ng-model="PI.permanent_mobilenumber"/> 
+                                    <input type="text" numbers-only placeholder="Mobile Number" ng-model="PI.permanent_mobilenumber" ng-disabled="isDisabled"/> 
                                 </div>
                                 <div class="col-lg-3">
-                                    <input type="text" placeholder="Email" ng-model="PI.permanent_email"/> 
+                                    <input type="text" placeholder="Email" ng-model="PI.permanent_email" ng-disabled="isDisabled"/> 
                                 </div>
 
                                 <div class="col-lg-3">
                                     <label>address</label>
                                 </div>
                                 <div class="col-lg-9">
-                                    <input type="text" placeholder="House Number" ng-model="PI.permanent_housenumber"/>
+                                    <input type="text" placeholder="House Number" ng-model="PI.permanent_housenumber" ng-disabled="isDisabled"/>
                                 </div>
                                 <div class="col-lg-3">
                                 </div>
                                 <div class="col-lg-9">
-                                    <input type="text" placeholder="Street" ng-model="PI.permanent_street"/>
+                                    <input type="text" placeholder="Street" ng-model="PI.permanent_street" ng-disabled="isDisabled"/>
                                 </div>
                                 <div class="col-lg-3">
                                     <label>Country/State</label>  
                                 </div>
                                 <div class="col-lg-3">
-                                    <select class="form-control" ng-model="PI.permanent_country" ng-change="addressStateByCountry(PI.permanent_country, 1);">
+                                    <select class="form-control select_searchFields" ng-model="PI.permanent_country" ng-change="addressStateByCountry(PI.permanent_country, 1);" ng-disabled="isDisabled">
                                         <option value=null>Country</option>
                                         <option ng-repeat="country in permanentAddressCountries" value="{{country.id}}">{{country.name}}</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-3">
-                                    <select class="form-control" ng-model="PI.permanent_state" ng-change="addressLocalGovtAreaByStates(PI.permanent_state, 1);">
+                                    <select class="form-control select_searchFields" ng-model="PI.permanent_state" ng-change="addressLocalGovtAreaByStates(PI.permanent_state, 1);" ng-disabled="isDisabled">
                                         <option value=null>State</option>
                                         <option ng-repeat="states in permanentAddressStates" value="{{states.id}}">{{states.name}}</option>
                                     </select>
@@ -312,14 +300,14 @@
                                     <label>City</label>
                                 </div>
                                 <div class="col-lg-3">
-                                    <select class="form-control" ng-model="PI.permanent_city">
+                                    <select class="form-control select_searchFields" ng-model="PI.permanent_city" ng-disabled="isDisabled">
                                         <option value=null>City</option>
                                         <option ng-repeat="city in addressPerminentCities" value="{{city.id}}">{{city.name}}</option>
                                     </select>
                                 </div>
                                 
                                 <div class="col-lg-3">
-                                    <input type="text" placeholder="Post Code" ng-model="PI.permanent_postalCode"/> 
+                                    <input type="text" numbers-only placeholder="Post Code" ng-model="PI.permanent_postalCode" ng-disabled="isDisabled"/> 
                                 </div>
                             </div>
                         </div>
@@ -333,36 +321,43 @@
                                 <label>Full Name</label>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" placeholder="First Name" ng-model="PI.kin_fullname"/>
+                                <input type="text" alphabets-only placeholder="First Name" ng-model="PI.kin_fullname"/>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" placeholder="Middle Name" ng-model="PI.kin_middlename"/>
+                                <input type="text" alphabets-only placeholder="Middle Name" ng-model="PI.kin_middlename"/>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" placeholder="Last Name" ng-model="PI.kin_lastname"/>
+                                <input type="text" alphabets-only placeholder="Last Name" ng-model="PI.kin_lastname"/>
                             </div>
 
                             <div class="col-lg-3">
                                 <label>relationship</label>
                             </div>
                             <div class="col-lg-3">
-                                <select class="form-control" ng-model="PI.kin_relationship">
-                                    <option>Relationship</option>
-                                    <option>2</option>
-                                    <option>3</option>
+                                <select class="form-control select_searchFields" ng-model="PI.kin_relationship">
+                                <option>Relationship</option>
+                                <option ng-repeat="relation in dropDownInfo.relationship" value="{{relation.id}}">
+                                {{relation.type}}</option>
+                                    <!-- <option>Relationship</option>
+                                    <option vaule="1">Brother</option>
+                                    <option value="2">Father</option>
+                                    <option value="3">Hansband</option>
+                                    <option value="4">Mother</option>
+                                    <option value="5">Sister</option>
+                                    <option value="6">Wife</option> -->
                                 </select>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" placeholder="Others" ng-model="PI.others"/>
+                                <input type="text" alphabets-only placeholder="Others" ng-model="PI.others"/>
                             </div>
                             <div class="col-lg-3">
                                 <label>contact numbers</label>  
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" placeholder="Phone Number" ng-model="PI.kin_phone_number"/>
+                                <input type="text" numbers-only placeholder="Phone Number" ng-model="PI.kin_phone_number"/>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" placeholder="Mobile Number" ng-model="PI.kin_mobile_number"/>
+                                <input type="text" numbers-only placeholder="Mobile Number" ng-model="PI.kin_mobile_number"/>
                             </div>
                             <div class="col-lg-3">
                                 <input type="text" placeholder="Email" ng-model="PI.kin_email"/>
@@ -379,16 +374,16 @@
                                 <input type="text" placeholder="Street" ng-model="PI.kin_street"/>
                             </div>
                             <div class="col-lg-3">
-                                <label>City/State</label>  
+                                <label>Country/State</label>  
                             </div>
                             <div class="col-lg-3">
-                                <select class="form-control" ng-model="PI.kin_city">
-                                    <option value=null>City</option>
-                                    <option ng-repeat="city in nextOfKinCities" value="{{city.id}}">{{city.name}}</option>
+                                <select class="form-control select_searchFields" ng-model="PI.kin_country" ng-change="nextOfKinStateByCountry(PI.kin_country);">
+                                    <option value=null>Country</option>
+                                    <option ng-repeat="country in nextOfKinCountries" value="{{country.id}}">{{country.name}}</option>
                                 </select>
                             </div>
                             <div class="col-lg-3">
-                                <select class="form-control" ng-model="PI.kin_state" ng-change="nextOfKinCityByStates(PI.kin_state)">
+                                <select class="form-control select_searchFields" ng-model="PI.kin_state" ng-change="nextOfKinCityByStates(PI.kin_state)">
                                     <option value=null>State</option>
                                     <option ng-repeat="state in nextOfKinStates" value="{{state.id}}">{{state.name}}</option>
                                 </select>
@@ -397,16 +392,17 @@
                                 <label></label>  
                             </div>
                             <div class="col-lg-3">
-                                <label>COUNTRY</label>  
+                                <label>City</label>  
                             </div>
                             <div class="col-lg-3">
-                                <select class="form-control" ng-model="PI.kin_country" ng-change="nextOfKinStateByCountry(PI.kin_country);">
-                                    <option value=null>Country</option>
-                                    <option ng-repeat="country in nextOfKinCountries" value="{{country.id}}">{{country.name}}</option>
+                                <select class="form-control select_searchFields" ng-model="PI.kin_city">
+                                    <option value=null>City</option>
+                                    <option ng-repeat="city in nextOfKinCities" value="{{city.id}}">{{city.name}}</option>
                                 </select>
                             </div>
+                            
                             <div class="col-lg-3">
-                                <input type="text" placeholder="Post Code" ng-model="PI.kin_postal_code"/>
+                                <input type="text" numbers-only placeholder="Post Code" ng-model="PI.kin_postal_code"/>
                             </div>
                         </div>
                     </form>
@@ -419,22 +415,22 @@
                                 <label>Employer</label>
                             </div>
                             <div class="col-lg-9">
-                                <input type="text" placeholder="Employer Name" ng-model="PI.employer_name"/>
+                                <input type="text" alphabets-only placeholder="Employer Name" ng-model="PI.employer_name"/>
                             </div>
                             <div class="col-lg-3">
                                 <label>Occupation</label>
                             </div>
                             <div class="col-lg-9">
-                                <input type="text" placeholder="Add Occupation" ng-model="PI.employer_occupation"/>
+                                <input type="text" alphabets-only placeholder="Add Occupation" ng-model="PI.employer_occupation"/>
                             </div>
                             <div class="col-lg-3">
                                 <label>contact</label>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" placeholder="Phone Number" ng-model="PI.employer_phone_number"/> 
+                                <input type="text" numbers-only placeholder="Phone Number" ng-model="PI.employer_phone_number"/> 
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" placeholder="Mobile Number" ng-model="PI.employer_mobile_number"/> 
+                                <input type="text" numbers-only placeholder="Mobile Number" ng-model="PI.employer_mobile_number"/> 
                             </div>
                             <div class="col-lg-3">
                                 <input type="text" placeholder="Email" ng-model="PI.employer_email"/> 
@@ -455,13 +451,13 @@
                                 <label>Country/State</label>  
                             </div>
                             <div class="col-lg-3">
-                                <select class="form-control" ng-model="PI.employer_country" ng-change="employerStateByCountry(PI.employer_country);">
+                                <select class="form-control select_searchFields" ng-model="PI.employer_country" ng-change="employerStateByCountry(PI.employer_country);">
                                     <option value=null>Country</option>
                                     <option ng-repeat="country in employerCountries" value="{{country.id}}">{{country.name}}</option>
                                 </select>
                             </div>
                             <div class="col-lg-3">
-                                <select class="form-control" ng-model="PI.employer_state" ng-change="employerCityByStates(PI.employer_state);">
+                                <select class="form-control select_searchFields" ng-model="PI.employer_state" ng-change="employerCityByStates(PI.employer_state);">
                                     <option value=null>State</option>
                                     <option ng-repeat="state in employerStates" value="{{state.id}}">{{state.name}}</option>
                                 </select>
@@ -473,7 +469,7 @@
                                 <label>City</label>
                             </div>
                             <div class="col-lg-3">
-                                <select class="form-control" ng-model="PI.employer_city">
+                                <select class="form-control select_searchFields" ng-model="PI.employer_city">
                                     <option value=null>City</option>
                                     <option ng-repeat="city in employerCities" value="{{city.id}}">{{city.name}}</option>
                                 </select>
@@ -677,7 +673,7 @@
                         <label>Insurance ID</label>
                     </div>
                     <div class="col-lg-3">
-                        <input type="text" class="form-control" placeholder="06" ng-model="PI.insurance_id"/>
+                        <input type="text" numbers-only class="form-control" placeholder="06" ng-model="PI.insurance_id"/>
                     </div>
                     <div class="show-on-dependant">
                         <div class="col-lg-12">
@@ -694,10 +690,12 @@
                         </div>
 
                         <div class="col-lg-3">
-                            <select class="form-control" ng-model="PI.dependant_relationship">                                
-                                <option>Select Relationship</option>
+                            <select class="form-control" ng-model="PI.dependant_relationship">
+                            <option>Relationship</option>
+                            <option ng-repeat="relation in dropDownInfo.relationship" value="{{relation.id}}">{{relation.type}}</option>                         
+                                <!-- <option>Select Relationship</option>
                                 <option>2</option>
-                                <option>3</option>
+                                <option>3</option> -->
                             </select>
                         </div>
                     </div>
@@ -716,10 +714,16 @@
                         </div>
 
                         <div class="col-lg-3">
-                            <select class="form-control" ng-model="PI.principal_relationship">                                
-                                <option>Select Relationship</option>
-                                <option>2</option>
-                                <option>3</option>
+                            <select class="form-control" ng-model="PI.principal_relationship">
+                            <option>Relationship</option>
+                            <option ng-repeat="relation in dropDownInfo.relationship" value="{{relation.id}}">{{relation.type}}</option>
+                                <!-- <option value="null">Select Relationship</option>
+                                <option vaule="1">Brother</option>
+                                <option value="2">Father</option>
+                                <option value="3">Hansband</option>
+                                <option value="4">Mother</option>
+                                <option value="5">Sister</option>
+                                <option value="6">Wife</option> -->
                             </select>
                         </div>
                     </div>
@@ -750,10 +754,16 @@
                         <label>Relationship</label>
                     </div>
                     <div class="col-lg-3">
-                        <select class="form-control" ng-model="PI.nhis_principal_relationship">                                
-                            <option>Select Relationship</option>
-                            <option>2</option>
-                            <option>3</option>
+                        <select class="form-control" ng-model="PI.nhis_principal_relationship">
+                            <option>Relationship</option>
+                            <option ng-repeat="relation in dropDownInfo.relationship" value="{{relation.id}}">{{relation.type}}</option>                    
+                            <!-- <option>Select Relationship</option>
+                            <option vaule="1">Brother</option>
+                            <option value="2">Father</option>
+                            <option value="3">Hansband</option>
+                            <option value="4">Mother</option>
+                            <option value="5">Sister</option>
+                            <option value="6">Wife</option> -->
                         </select>
                     </div>
                     <div class="col-lg-3">
@@ -804,10 +814,16 @@
                         </div>
 
                         <div class="col-lg-3">
-                            <select class="form-control" ng-model="PI.dependant_relationship">                         
-                                <option>Select Relationship</option>
-                                <option>2</option>
-                                <option>3</option>
+                            <select class="form-control" ng-model="PI.dependant_relationship">
+                                <option>Relationship</option>
+                                <option ng-repeat="relation in dropDownInfo.relationship" value="{{relation.id}}">{{relation.type}}</option>
+                                <!-- <option>Select Relationship</option>
+                                <option vaule="1">Brother</option>
+                                <option value="2">Father</option>
+                                <option value="3">Hansband</option>
+                                <option value="4">Mother</option>
+                                <option value="5">Sister</option>
+                                <option value="6">Wife</option> -->
                             </select>
                         </div>
                     </div>
@@ -826,10 +842,16 @@
                         </div>
 
                         <div class="col-lg-3">
-                            <select class="form-control" ng-model="PI.principal_relationship">                                
-                                <option>Select Relationship</option>
-                                <option>2</option>
-                                <option>3</option>
+                            <select class="form-control" ng-model="PI.principal_relationship">
+                                <option>Relationship</option>
+                                <option ng-repeat="relation in dropDownInfo.relationship" value="{{relation.id}}">{{relation.type}}</option>                         
+                                <!-- <option>Select Relationship</option>
+                                <option vaule="1">Brother</option>
+                                <option value="2">Father</option>
+                                <option value="3">Hansband</option>
+                                <option value="4">Mother</option>
+                                <option value="5">Sister</option>
+                                <option value="6">Wife</option> -->
                             </select>
                         </div>
                     </div>
