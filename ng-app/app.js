@@ -79,6 +79,10 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/lab-order-history.html',
                     controller: 'labOrderHistory'
                 }).
+                when('/lab-order-reporting', {
+                    templateUrl: 'views/lab-order-reporting.html',
+                    controller: 'labOrderReporting'
+                }).
                 otherwise({
                     redirectTo: '/error'
                 });

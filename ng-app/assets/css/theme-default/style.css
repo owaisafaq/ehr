@@ -655,7 +655,9 @@ Table Styling
 .report{
     background: url(../..//img/report.png) no-repeat top center;
 }
-
+.email{
+    background: url(../..//img/envelop.jpg) no-repeat top center;
+}
 
 .add-result{
     background: url(../..//img/add_result.png) no-repeat top center;
@@ -1638,4 +1640,51 @@ BED Occupancy
 }
 .hospital-pop-date{
     margin-top: 35px;
+}
+.button-style-3{
+    color: #516e81;
+    font-size: 12px;
+    border:1px solid #dfe7f6;
+    background: transparent;
+    border-radius: 5px;
+    text-transform: uppercase;
+    padding: 12px 20px;
+    line-height: 12px;
+}
+
+/*Canvas Styling*/
+.offcanvas_custom .offcanvas-head header {
+    font-size: 13px;
+}
+.offcanvas_custom .offcanvas-pane{
+    width: 420px;
+    padding-top: 40px;
+}
+.offcanvas_custom .offcanvas-pane.active{
+    transform: translate(-420px, 0px) !important;
+}
+.offcanvas_custom .offcanvas-head{
+    float: left;
+    width: 100%;
+    margin-bottom: 40px;
+    padding: 0 12px;
+}
+.offcanvas_custom .btn-default-light.btn-icon-toggle {
+    line-height: 0;
+}
+.offcanvas_custom .btn-default-light.btn-icon-toggle:hover{
+    background: transparent;
+}
+.offcanvas_custom .btn-default-light.btn-icon-toggle i{
+    line-height: 21px;
+}
+.offcanvas_custom .offcanvas-pane{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.offcanvas_custom .nano-content form > div{
+    margin-bottom: 40px;
+}
+.offcanvas_custom .input-group{
+    width: 100%;
 }
