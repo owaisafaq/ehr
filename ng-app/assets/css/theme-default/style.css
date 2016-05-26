@@ -16,7 +16,7 @@ GENERAL
     font-style: normal;
 }
 
-input:focus,select:focus,button:focus,textarea:focus{
+input:focus,select:focus,button:focus,textarea:focus,a:focus{
     outline: none;
 }
 section{
@@ -295,7 +295,7 @@ Menu styling
     top: 0;
     bottom: 0;
     margin: auto;
-    line-height: 30px;
+    line-height: 26px;
     background: transparent;
     border:none;
     border-radius: 18px 0 0 18px;
@@ -312,6 +312,7 @@ Menu styling
 }
 .header-search input[type=text].search_field_big{
     width: 334px !important;
+    padding-top: 0;
 }
 .custom-form .header-search input[type=text]{
     width: 234px;
@@ -401,7 +402,6 @@ Menu styling
     font-size: 13px;
     color: #56aeea;
     text-transform: uppercase;
-    letter-spacing: 1px;
     width: 236px;
     margin: 0;
     height: 28px;
@@ -568,7 +568,7 @@ file upload custom
     color: #a2a6b9;
     text-transform: capitalize;
     font-family: 'SegoeUI-reg';
-    line-height: 24px;
+    line-height: 22px;
 }
 .checkbox-styled:not(ie8) input ~ span:before{
     border: 2px solid #ddecf8;
@@ -726,8 +726,8 @@ Table Styling
     line-height: 12px;
     border-radius: 3px;
     font-family: 'sgui-bold';
-    letter-spacing: 1px;
-    padding: 12px 15px;
+    padding: 10px 17px;
+    margin-top: 4px;
 }
 .button-style-1:focus{
     background-color: #56aeea;
@@ -884,7 +884,7 @@ Side PopUp
     padding: 15px 15px 40px;
 }
 .modal-footer button{
-    width: 116px;
+    width: 126px;
     height: 40px;
 }
 .padding11{
@@ -1219,6 +1219,16 @@ Patient Summary
 }
 .patient_summary > .row:first-child{
     border-top: 1px solid #ddecf8;
+    padding: 20px 10px;
+}
+.patient_summary_2 .row{
+    border-left: none;
+    border-right: none;    
+    border-top: none !important;
+    border-bottom: 1px solid #ebebeb;
+}
+.patient_summary_2 .patient_summary{
+    padding: 20px 30px;
 }
 .patient_summary label{
     height: 22px;
@@ -1567,4 +1577,65 @@ BED Occupancy
 }
 .form-wizard.form-wizard-horizontal .nav li.active .title, .form-wizard.form-wizard-horizontal .nav li:hover .title{
     color: #309fe7;
+}
+.nav > li > a:focus {
+    background-color: none;
+}
+/*Patient Summary Pop up*/
+.patient_summary_2{
+    float: left;
+    width: 100%;
+}
+.modal-body-2_a,.modal-body-2_a + .modal-footer{
+    background: #f9fafd;
+}
+.txt-style-5{
+    color: #939598;
+    font-size: 12px;
+}
+.label-style-con {
+    background: #fff;    
+}
+.label-style-con label{
+    font-size: 13px;
+    color: #1a1a1a;
+    text-transform: capitalize;
+}
+.label-style-con label.txt-style-4{
+    font-size: 13px;
+    color: #666666;
+    text-transform: capitalize;
+    font-weight: normal;
+    padding-top: 8px !important;
+    height: 22px;
+}
+.patient_summary_2 .patient_summary .row:first-child,.patient_summary_2 .patient_summary .row:last-child{
+    background: #fbfbfb;
+    border:none !important;
+}
+.patient_summary_2 .patient_summary .row:first-child .col-lg-12{
+    margin-bottom: 0; 
+}
+.patient_summary_2 .patient_summary .row:last-child{
+    height: 40px;
+    padding: 5px 0;
+    margin-top: 210px;
+}
+.patient_summary_2 .patient_summary .row:last-child > div:first-child{
+    padding-left: 0;
+}
+.patient_summary_2 .patient_summary .row:last-child *{
+    margin: 0 !important;
+}
+.patient_summary_2 .patient_summary .col-lg-3,.patient_summary_2 .patient_summary .col-lg-9{
+    margin-bottom: 0px !important;
+}
+.patient_summary_2 .patient_summary .col-lg-9{
+    margin-bottom: 20px;
+}
+.patient_summary_2 label.col-lg-12{
+    width: 100%;
+}
+.hospital-pop-date{
+    margin-top: 35px;
 }
