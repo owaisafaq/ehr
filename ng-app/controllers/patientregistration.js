@@ -19,7 +19,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     $scope.employerCities = [];
     $scope.dropDownData = [];
     $scope.isDisabled = false;
-    $scope.sameAsAbove = true;
+    $scope.PI.sameAsAbove = true;
     $('.hidePermanentAddress').slideUp(500);
     $scope.dropDownInfo = dropDownInfo;
     //$scope.PI.identity_type = dropDownInfo.IdType[0].id;
@@ -86,8 +86,8 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     			$scope.PI.permanent_city = 'null';
     		}else{
     			$scope.addressContactCities = [];
-    			$scope.PI.patient_city = "null";
-    			$scope.PI.patient_state = "null";
+    			$scope.PI.city = "null";
+    			$scope.PI.state = "null";
     			$scope.contactAddressStates = [];
     			$scope.PI.local_goverment_area = "null";
     			$scope.addresslocalGovtArea = [];
@@ -246,28 +246,29 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     	}
     };
 
-    $scope.submit = function(itemsToBeAdded){
+    $scope.submit = function(PI){
     	console.log($scope.PI);
-    	if($scope.sameAsAbove == false){
-	    	itemsToBeAdded.permanent_phonenumber = '';
-	    	itemsToBeAdded.permanent_mobilenumber = '';
-	    	itemsToBeAdded.permanent_email = '';
-	    	itemsToBeAdded.permanent_housenumber = '';
-	    	itemsToBeAdded.permanent_street = '';
-	    	itemsToBeAdded.permanent_country = '';
-	    	itemsToBeAdded.permanent_state = '';
-	    	itemsToBeAdded.permanent_postalCode = '';
-	    	itemsToBeAdded.permanent_city = '';
+    	if($scope.PI.sameAsAbove == true){
+	    	$scope.PI.permanent_phonenumber = $scope.PI.phone_number;
+	    	$scope.PI.permanent_mobilenumber = $scope.PI.mobile_number;
+	    	$scope.PI.permanent_email = $scope.PI.patient_email;
+	    	$scope.PI.permanent_housenumber = $scope.PI.house_number;
+	    	$scope.PI.permanent_street = $scope.PI.street;
+	    	$scope.PI.permanent_country = $scope.PI.country;
+	    	$scope.PI.permanent_state = $scope.PI.state;
+	    	$scope.PI.permanent_postalCode = $scope.postal_code;
+	    	$scope.PI.permanent_city = $scope.PI.city;
 	    }
     	PatientRegistration.save({
     		token: $window.sessionStorage.token,
-    		patient_unit_number: $scope.PI.patient_unit_number,
+    		patient_unit_number: $scope.PI.patient_unit_number, // info tab
     		first_name: $scope.PI.first_name,
     		middle_name: $scope.PI.middle_name,
     		last_name: $scope.PI.last_name,
     		date_of_birth: $scope.PI.date_of_birth,
     		age: $scope.PI.age,
-    		martial_status: $scope.PI.maritial_status,
+    		patient_picture: $scope.PI.patient_picture,
+    		maritial_status: $scope.PI.maritial_status,
     		patient_local_goverment_area: $scope.PI.patient_local_goverment_area,
     		religion: $scope.PI.religion,
     		identity_type: $scope.PI.identity_type,
@@ -283,17 +284,61 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     		mother_firstname: $scope.PI.mother_firstname,
     		mother_middlename: $scope.PI.mother_middlename,
     		mother_lastname: $scope.PI.mother_lastname,
-    		refered_name: $scope.PI.refered_name
+    		refered_name: $scope.PI.refered_name,
+    		phone_number: $scope.PI.phone_number, // Address tab
+    		mobile_number: $scope.PI.mobile_number,
+    		patient_email: $scope.PI.patient_email,
+    		house_number: $scope.PI.house_number,
+    		street: $scope.PI.street,
+    		country: $scope.PI.country,
+    		state: $scope.PI.state,
+    		city: $scope.PI.city,
+    		email: $scope.PI.email,
+    		postal_code: $scope.PI.postal_code,
+    		local_goverment_area: $scope.PI.local_goverment_area,
+    		same_as_above: $scope.PI.sameAsAbove,
+    		permanent_phonenumber: $scope.PI.permanent_phonenumber, // paremenant address
+    		permanent_mobilenumber: $scope.PI.permanent_mobilenumber,
+    		permanent_email: $scope.PI.permanent_email,
+    		permanent_housenumber: $scope.PI.permanent_housenumber,
+    		permanent_street: $scope.PI.permanent_street,
+    		permanent_country: $scope.PI.permanent_country,
+    		patient_city: $scope.PI.patient_city,
+    		permanent_state: $scope.PI.permanent_state,
+    		permanent_postalCode: $scope.PI.permanent_postalCode,
+    		kin_fullname: $scope.PI.kin_fullname, // Kin tab
+    		kin_middlename: $scope.PI.kin_middlename,
+    		kin_lastname: $scope.PI.kin_lastname,
+    		kin_relationship: $scope.PI.kin_relationship,
+    		others: $scope.PI.others,
+    		kin_phone_number: $scope.PI.kin_phone_number,
+    		kin_mobile_number: $scope.PI.kin_mobile_number,
+    		kin_email: $scope.PI.kin_email,
+    		kin_house_number: $scope.PI.kin_house_number,
+    		kin_street: $scope.PI.kin_street,
+    		kin_country: $scope.PI.kin_country,
+    		kin_state: $scope.PI.kin_state,
+    		kin_city: $scope.PI.kin_city,
+    		kin_postal_code: $scope.PI.kin_postal_code,
+    		employer_name: $scope.PI.employer_name, // employer tab
+    		employer_occupation: $scope.PI.employer_occupation,
+    		employer_phone_number: $scope.PI.employer_phone_number,
+    		employer_mobile_number: $scope.PI.employer_mobile_number,
+    		employer_email: $scope.PI.employer_email,
+    		employer_house_number: $scope.PI.employer_house_number,
+    		employer_street: $scope.PI.employer_street,
+    		employer_country: $scope.PI.employer_country,
+    		employer_state: $scope.PI.employer_state,
+    		employer_city: $scope.PI.employer_city,
     	}, registrationSuccess, registrationFailed);
     	function registrationSuccess(res){
-    		if(res.states ==  true){
-    			alert("Hola!");
+    		if(res.status == true){
+    			console.log(res);
     		}else{
     			console.log(res);
     		}
     	}
     	function registrationFailed(error){
-    		alert(error);
     		console.log(error);
     	}
     };
