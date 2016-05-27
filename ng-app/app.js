@@ -1,8 +1,9 @@
 var AppEHR = angular.module('AppEHR', [
-    'ngRoute', 'ngResource'
+    'ngRoute', 'ngResource',
+    'ngTouch', 'ui.grid','ui.grid.pagination'
 ]);
 
-AppEHR.config(['$httpProvider','$routeProvider', '$locationProvider',
+AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
     function ($httpProvider, $routeProvider, $locationProvider) {
         $locationProvider.hashPrefix();
         $httpProvider.defaults.headers.common = {};
@@ -12,7 +13,7 @@ AppEHR.config(['$httpProvider','$routeProvider', '$locationProvider',
         //$locationProvider.html5Mode(true);
         $routeProvider.
                 when('/', {
-                    templateUrl: 'views/login.html',
+                    templateUrl: 'views/patient-registration.html',
                     controller: 'loginController'
                 }).
                 when('/login', {
@@ -71,36 +72,55 @@ AppEHR.config(['$httpProvider','$routeProvider', '$locationProvider',
                     templateUrl: 'views/wards-discharge-summary.html',
                     controller: 'wardsDischargeSummaryController'
                 }).
+                when('/lab-order-listing', {
+                    templateUrl: 'views/lab-order-listing.html',
+                    controller: 'labOrderListing'
+                }).
+                when('/lab-order-history', {
+                    templateUrl: 'views/lab-order-history.html',
+                    controller: 'labOrderHistory'
+                }).
+                when('/lab-order-reporting', {
+                    templateUrl: 'views/lab-order-reporting.html',
+                    controller: 'labOrderReporting'
+                }).
                 otherwise({
                     redirectTo: '/error'
                 });
     }]);
 AppEHR.run(function ($rootScope, $location, $window) {
-    $rootScope.pageTitle = "EHR - " + $location.$$path;
+//    $rootScope.class = "show";
+//    $rootScope.pageTitle = "EHR - " + $location.$$path;
     $rootScope.$on("$routeChangeStart", function (event, next, current) {
-        if($location.$$path != '/login' && $location.$$path != '/'){
+        if ($location.$$path != '/login' && $location.$$path != '/') {
             $rootScope.class = "show";
-        }else{
+        } else {
             $rootScope.class = "hide";
         }
         $rootScope.userName = $window.sessionStorage.name;
-        $rootScope.loginCheck = $location.$$path == '/login' || $location.$$path == '/' ? true : false ;
-        if ($window.sessionStorage.email != undefined && $window.sessionStorage.email != 'undefined' && $window.sessionStorage.token != undefined && window.sessionStorage.token != 'undefined' && $window.sessionStorage.role_id != undefined && window.sessionStorage.role_id != 'undefined') {
-            var path = $location.$$path;
-            if ((path == "/login" || path == "/") && path != undefined) {
-                $location.path("patient-registration");
-            }
-        } else $location.path("login");
+        $rootScope.loginCheck = $location.$$path == '/login' || $location.$$path == '/' ? true : false;
+       if ($window.sessionStorage.email != undefined && $window.sessionStorage.email != 'undefined' && $window.sessionStorage.token != undefined && window.sessionStorage.token != 'undefined' && $window.sessionStorage.role_id != undefined && window.sessionStorage.role_id != 'undefined') {
+           var path = $location.$$path;
+           if ((path == "/login" || path == "/") && path != undefined) {
+               $location.path("patient-registration");
+           }
+       } else
+           $location.path("login");
     });
 
-    $rootScope.$on('$viewContentLoaded', function () { 
-        $('.select-date').datepicker({autoclose: true, todayHighlight: true});
+    $rootScope.$on('$viewContentLoaded', function () {
+        //$('body').append('<script src="assets/js/libs/bootstrap/bootstrap.min.js"></script><script src="assets/js/libs/spin.js/spin.min.js"></script><script src="assets/js/libs/autosize/jquery.autosize.min.js"></script><script src="assets/js/libs/nanoscroller/jquery.nanoscroller.min.js"></script><script src="assets/js/core/source/App.js"></script><script src="assets/js/core/source/AppNavigation.js"></script><script src="assets/js/core/source/AppOffcanvas.js"></script><script src="assets/js/core/source/AppCard.js"></script><script src="assets/js/core/source/AppForm.js"></script><script src="assets/js/core/source/AppNavSearch.js"></script><script src="assets/js/core/source/AppVendor.js"></script><script src="assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script><script src="assets/js/core/demo/Demo.js"></script><script src="assets/js/core/source/script.js" type="text/javascript"></script><script src="assets/js/libs/select2/select2.min.js" type="text/javascript"></script>');
+        //$rootScope.html = '<div ng-include="\'views/scripts.html\'"></div>';
+        $('.select-date').datepicker({autoclose: true, todayHighlight: true, format: 'yyyy-mm-dd'});
         $('select').not('.select_searchFields').select2({minimumResultsForSearch: Infinity});
         $('.select_searchFields').select2();
     });
+    //$rootScope.html = '<div ng-include="\'views/scripts.html\'"></div>';
+    $rootScope.html = '<script src="assets/js/libs/bootstrap/bootstrap.min.js"></script><script src="assets/js/libs/spin.js/spin.min.js"></script><script src="assets/js/libs/autosize/jquery.autosize.min.js"></script><script src="assets/js/libs/nanoscroller/jquery.nanoscroller.min.js"></script><script src="assets/js/core/source/App.js"></script><script src="assets/js/core/source/AppNavigation.js"></script><script src="assets/js/core/source/AppOffcanvas.js"></script><script src="assets/js/core/source/AppCard.js"></script><script src="assets/js/core/source/AppForm.js"></script><script src="assets/js/core/source/AppNavSearch.js"></script><script src="assets/js/core/source/AppVendor.js"></script><script src="assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script><script src="assets/js/core/demo/Demo.js"></script><script src="assets/js/core/source/script.js" type="text/javascript"></script><script src="assets/js/libs/select2/select2.min.js" type="text/javascript"></script>';
+
 });
-AppEHR.filter('capitalize', function() {
-    return function(input) {
-      return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+AppEHR.filter('capitalize', function () {
+    return function (input) {
+        return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
     }
 });

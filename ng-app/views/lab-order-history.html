@@ -36,41 +36,29 @@
             </div>
             <div class="table-header col-lg-12">
                 <div class="col-lg-8">
-                    <span class="txt-style-3 pull-left text-uppercase">fint patient</span>
-                    <div class="col-lg-2">
-                        <select class="form-control">
-                            <option>Patient ID</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                    </div>
-                    <div class="header-search margin-right-0 pull-left">
+                    <span class="txt-style-3 pull-left text-uppercase">lab orders history</span>
+                    <div class="header-search pull-left">
                         <button type="submit">
                             <i class="fa fa-search"></i>
                         </button>
-                        <input class="search_field" type="text" placeholder="Search for a patient">
+                        <input class="search_field search_field_big" type="text" placeholder="Search with patient order by patient name or id">
                     </div>
+                    <button type="button" class="btn ink-reaction button-style-1 button-style-1 pull-left">Select</button>
                 </div> 
-                <button type="button" data-toggle="modal" data-target="#addpatient" class="btn ink-reaction button-style-1 button-style-1 pull-right">create patient id card</button>
-                <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10">export</button>
-                <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10">import</button>
             </div>
             <div class="card-body col-lg-12">
-                <div class="icons_con">
-                    <a class="edit button-custom" href=""></a>
-                    <a class="delete button-custom" href=""></a>
-                    <a class="add button-custom" href=""></a>
-                </div>
                 <div>
                     <table class="table table-striped no-margin table-custom">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th>patient id</th>
-                                <th>first name</th>
-                                <th>last name</th>
-                                <th>date of birth</th>
-                                <th>phone number</th>
+                                <th width="10px"></th>
+                                <th>date</th>
+                                <th>Order no</th>
+                                <th>lab test name</th>
+                                <th>loinic code</th>
+                                <th>lab</th>
+                                <th>ordered by</th>
+                                <th>report</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -87,6 +75,8 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                                <td></td>
+                                <td><a href="javascript:;" class="link-style">View</a></td>
                             </tr>
                             <tr>
                                 <td align="center">
@@ -101,6 +91,8 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td align="center">
@@ -110,6 +102,8 @@
                                         </label>
                                     </div>
                                 </td>
+                                <td></td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
