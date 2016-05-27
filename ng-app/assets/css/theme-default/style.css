@@ -582,12 +582,18 @@ Table Styling
 .table-custom{
     border: 2px solid #ddecf8;
 }
-.table-custom thead > tr > th{
-    background: #ddecf8;
+.table-custom thead > tr > th,.ui-grid-top-panel{
+    background: #ddecf8 !important;
     color: #516e81;
     font-family: 'sgui-bold';
     text-transform: uppercase;
     padding: 3px 10px;
+    border:none;
+    border-bottom: 2px solid #ddecf8;
+    font-size: 13px;
+}
+.ui-grid-top-panel{
+    padding: 0;
 }
 .table-custom > tbody > tr:nth-of-type(odd) {
     background-color: #f9fafd;
@@ -1687,4 +1693,50 @@ BED Occupancy
 }
 .offcanvas_custom .input-group{
     width: 100%;
+}
+.ui-grid-cell-contents {
+    padding: 0px !important;
+    line-height: 1.846153846;
+    color: #003d51;
+    font-size: 14px;
+    width: 95%;
+}
+.ui-grid-header-cell {
+    border: none !important; 
+}
+.ui-grid-header-cell ,.ui-grid-cell{
+    padding: 3px 10px;
+}
+.ui-grid-cell{
+    border-top: 2px solid #ddecf8;
+    border-left: 2px solid #ddecf8;
+    border-right: none;
+    border-bottom: none;
+}
+.ui-grid-header{
+    border: none !important;
+}
+.ui-grid{
+    width: 100%;
+    height: auto !important;
+    border: 2px solid #ddecf8 !important;
+    border-left: none !important;
+}
+.ui-grid-row:nth-child(odd) .ui-grid-cell {
+    background-color: rgba(242, 243, 243, 0.35);
+}
+.ui-grid-row:nth-child(even) .ui-grid-cell {
+    background-color: #fff;
+}
+.ui-grid-canvas{
+    padding-top: 0;
+}
+.ui-grid-column-menu-button-last-col{
+    margin-right: 0;
+}
+.custom-grid_big .ui-grid-cell-contents{
+    font-size: 12px;
+}
+.custom-grid_big .ui-grid-cell-contents:focus{
+    outline: none !important;
 }
