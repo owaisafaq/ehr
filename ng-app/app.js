@@ -93,8 +93,10 @@ AppEHR.run(function ($rootScope, $location, $window) {
 //    $rootScope.pageTitle = "EHR - " + $location.$$path;
     $rootScope.$on("$routeChangeStart", function (event, next, current) {
         if ($location.$$path != '/login' && $location.$$path != '/') {
+            $rootScope.backgroundImg = "";
             $rootScope.class = "show";
         } else {
+            $rootScope.backgroundImg = "wrapper";
             $rootScope.class = "hide";
         }
         $rootScope.userName = $window.sessionStorage.name;
@@ -102,20 +104,29 @@ AppEHR.run(function ($rootScope, $location, $window) {
        if ($window.sessionStorage.email != undefined && $window.sessionStorage.email != 'undefined' && $window.sessionStorage.token != undefined && window.sessionStorage.token != 'undefined' && $window.sessionStorage.role_id != undefined && window.sessionStorage.role_id != 'undefined') {
            var path = $location.$$path;
            if ((path == "/login" || path == "/") && path != undefined) {
-               $location.path("patient-registration");
+                $rootScope.backgroundImg = "";
+                $location.path("patient-registration");
            }
-       } else
-           $location.path("login");
+       } else{
+            $rootScope.backgroundImg = "wrapper";
+            $location.path("login");
+       }
     });
+
+    $rootScope.logout = function(){
+        $window.sessionStorage.clear();
+        console.log(1)
+        $window.location.href = '#/login';
+    }
 
     $rootScope.$on('$viewContentLoaded', function () {
         //$('body').append('<script src="assets/js/libs/bootstrap/bootstrap.min.js"></script><script src="assets/js/libs/spin.js/spin.min.js"></script><script src="assets/js/libs/autosize/jquery.autosize.min.js"></script><script src="assets/js/libs/nanoscroller/jquery.nanoscroller.min.js"></script><script src="assets/js/core/source/App.js"></script><script src="assets/js/core/source/AppNavigation.js"></script><script src="assets/js/core/source/AppOffcanvas.js"></script><script src="assets/js/core/source/AppCard.js"></script><script src="assets/js/core/source/AppForm.js"></script><script src="assets/js/core/source/AppNavSearch.js"></script><script src="assets/js/core/source/AppVendor.js"></script><script src="assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script><script src="assets/js/core/demo/Demo.js"></script><script src="assets/js/core/source/script.js" type="text/javascript"></script><script src="assets/js/libs/select2/select2.min.js" type="text/javascript"></script>');
-        //$rootScope.html = '<div ng-include="\'views/scripts.html\'"></div>';
+        //$rootScope.html = '<div ng-include="\'views/script-file.html\'"></div>';
         $('.select-date').datepicker({autoclose: true, todayHighlight: true, format: 'yyyy-mm-dd'});
         $('select').not('.select_searchFields').select2({minimumResultsForSearch: Infinity});
         $('.select_searchFields').select2();
     });
-    //$rootScope.html = '<div ng-include="\'views/scripts.html\'"></div>';
+    //$rootScope.html = '<div ng-include="\'utils/script-file.html\'"></div>';
     $rootScope.html = '<script src="assets/js/libs/bootstrap/bootstrap.min.js"></script><script src="assets/js/libs/spin.js/spin.min.js"></script><script src="assets/js/libs/autosize/jquery.autosize.min.js"></script><script src="assets/js/libs/nanoscroller/jquery.nanoscroller.min.js"></script><script src="assets/js/core/source/App.js"></script><script src="assets/js/core/source/AppNavigation.js"></script><script src="assets/js/core/source/AppOffcanvas.js"></script><script src="assets/js/core/source/AppCard.js"></script><script src="assets/js/core/source/AppForm.js"></script><script src="assets/js/core/source/AppNavSearch.js"></script><script src="assets/js/core/source/AppVendor.js"></script><script src="assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script><script src="assets/js/core/demo/Demo.js"></script><script src="assets/js/core/source/script.js" type="text/javascript"></script><script src="assets/js/libs/select2/select2.min.js" type="text/javascript"></script>';
 
 });

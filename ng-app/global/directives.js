@@ -132,8 +132,22 @@ AppEHR.directive('dynamic', function ($compile) {
     }
   };
 });
-/*AppEHR.directive('alphabetsOnly', [allowPatternDirective]);
 
+AppEHR.directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+            element.bind('change', function(){
+                scope.$apply(function(){
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+}]);
+/*AppEHR.directive('alphabetsOnly', [allowPatternDirective]);
 function allowPatternDirective() {
     return {
         restrict: "A",
