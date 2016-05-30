@@ -416,6 +416,7 @@ Menu styling
     font-family: 'SegoeUI-reg';
     box-sizing: border-box;
     border-radius: 2px;
+    color: #313534;
 }
 .custom-form textarea{
     width: 100%;
@@ -678,6 +679,12 @@ Table Styling
 }
 .print{
     background: url(../..//img/print.png) no-repeat top center;
+}
+.save{
+    background: url(../..//img/save.png) no-repeat top center;
+}
+.check-button{
+    background: url(../..//img/check_style.png) no-repeat top center;
 }
 .icons_con{
     float: right;
@@ -973,6 +980,9 @@ Accordian
 }
 .table-header-2 .header-checkboxes,.table-header-2 .select-con{
     margin-top: 6px;
+}
+.table-header-2 .header-checkboxes{
+    padding-top: 4px;
 }
 .table-header-2 .header-checkboxes > .checkbox-styled:last-child {
     margin-right: 0;
@@ -1752,6 +1762,7 @@ BED Occupancy
 .offcanvas_custom .input-group{
     width: 100%;
 }
+/*===========Grid Styling=================*/
 .ui-grid-cell-contents {
     padding: 0px !important;
     line-height: 1.846153846;
@@ -1781,7 +1792,7 @@ BED Occupancy
     border-left: none !important;
 }
 .ui-grid-row:nth-child(odd) .ui-grid-cell {
-    background-color: rgba(242, 243, 243, 0.35);
+    background-color: #f9fafd;
 }
 .ui-grid-row:nth-child(even) .ui-grid-cell {
     background-color: #fff;
@@ -1797,4 +1808,64 @@ BED Occupancy
 }
 .custom-grid_big .ui-grid-cell-contents:focus{
     outline: none !important;
+}
+.ui-grid-pager-panel{
+    position: relative;
+    float: left;
+    background: #f9fafd;
+    border: 2px solid #ddecf8;
+    padding: 10px 0;
+    width: 99.90%;
+}
+.ui-grid-pager-control button{
+    background: transparent !important;    
+    border-color: transparent !important;
+}
+.ui-grid-viewport{
+    height: auto !important;
+}
+.ui-grid-pager-control .last-triangle{
+    border-color: transparent transparent transparent #516e81;
+}
+.ui-grid-pager-control .last-triangle{
+    border-width: 4px 0 4px 7.7px;
+}
+.ui-grid-pager-control .last-bar,.ui-grid-pager-control .first-bar{
+    border-left: 2px solid #516e81;
+    height: 10px;
+}
+.ui-grid-pager-control .prev-triangle ,.ui-grid-pager-control .first-triangle{
+    border-color: transparent #516e81; 
+}
+.ui-grid-pager-control input,.ui-grid-pager-row-count-picker select{
+    border: none;
+    background: #ddecf8;
+    box-shadow: none;
+    color: #516e81;
+}
+.ui-grid-pager-row-count-picker .ui-grid-pager-row-count-label,.ui-grid-pager-count-container .ui-grid-pager-count{
+    color: #516e81;
+}
+/*---------------
+Lab Report Parasitology
+-----------------------*/
+.ulli_2 li{
+    width: calc(100% / 2);
+    height: 30px;
+}
+.ulli_2 li:nth-child(-n+4) {
+    margin-top: 18px;
+}
+.ulli_2 input[type=text]{
+    width: 270px;
+    height: 30px;
+    float: right;
+    margin-right: 35px;
+}
+.ulli_2 span{
+    cursor: pointer;
+    text-decoration: underline;
+}
+.ulli_2 input[type=text]{
+    display: none;
 }

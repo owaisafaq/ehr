@@ -22,6 +22,8 @@ $app->group(['prefix' => 'api'], function () use ($app) {
 
     $app->post('user_login','App\Http\Controllers\ApiController@user_login');
 
+    $app->post('test_upload','App\Http\Controllers\ApiController@test_upload');
+
 
 
 });
