@@ -1,6 +1,7 @@
 var AppEHR = angular.module('AppEHR');
+
 AppEHR.factory("AUTH", function ($resource) {
-    return $resource(serverPath +  'user_login', /*{email: '@email', password: '@password'},*/ {
+    return $resource(serverPath +  'user_login', {email: '@email', password: '@password'}, {
         get: {method: 'POST'}
     });
 });

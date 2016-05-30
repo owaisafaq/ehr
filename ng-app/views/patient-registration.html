@@ -24,24 +24,22 @@
                             <div class="col-lg-3">
                                 <label>Unit Number</label>
                             </div>
-                            <div class="col-lg-3" ng-class="{ 'has-error' : userForm1.patient_unit_number.$invalid && !userForm1.patient_unit_number.$pristine }">
+                            <div class="col-lg-3">
                                 <input type="text" numbers-only placeholder="Unit Numbers" name="patient_unit_number" ng-model="PI.patient_unit_number" required/>
-                                 <p ng-show="userForm1.patient_unit_number.$invalid && !userForm1.patient_unit_number.$pristine" class="help-block">Required</p>
                             </div>
                             <div class="col-lg-3">
                                 <label>Full Name</label>
                             </div>
-                            <div class="col-lg-3" ng-class="{ 'has-error' : userForm1.first_name.$invalid && !userForm1.first_name.$pristine }">
-                                <input type="text" alphabets-only placeholder="First Name" name="first_name" ng-model="PI.first_name" required/>
-                                <p ng-show="userForm1.first_name.$invalid && !userForm1.first_name.$pristine" class="help-block">Required</p>
+                            <div class="col-lg-3">
+                                <input type="text" ng-class="{true: 'error'}[submitted && userForm1.first_name.$invalid]" alphabets-only placeholder="First Name" name="first_name" ng-model="PI.first_name" required/>
+                                <p class="help-block PIValid" ng-show="submitted && userForm1.first_name.$error.required">Required</p>
                             </div>
-                            <div class="col-lg-3" ng-class="{ 'has-error' : userForm1.middle_name.$invalid && !userForm1.middle_name.$pristine }">
-                                <input type="text" alphabets-only placeholder="Middle Name" name="middle_name" ng-model="PI.middle_name" required/>
-                                <p ng-show="userForm1.middle_name.$invalid && !userForm1.middle_name.$pristine" class="help-block">Required</p>
+                            <div class="col-lg-3">
+                                <input type="text" alphabets-only placeholder="Middle Name" name="middle_name" ng-model="PI.middle_name"/>
                             </div>
-                            <div class="col-lg-3" ng-class="{ 'has-error' : userForm1.last_name.$invalid && !userForm1.last_name.$pristine }">
-                                <input type="text" alphabets-only placeholder="Last Name" name="last_name" ng-model="PI.last_name" required/>
-                                <p ng-show="userForm1.last_name.$invalid && !userForm1.last_name.$pristine" class="help-block">Required</p>
+                            <div class="col-lg-3">
+                                <input type="text" ng-class="{true: 'error'}[submitted && userForm1.last_name.$invalid]" alphabets-only placeholder="Last Name" name="last_name" ng-model="PI.last_name" required/>
+                                <p class="help-block PIValid" ng-show="submitted && userForm1.last_name.$error.required">Required</p>
                             </div>
                             <div class="col-lg-3">
                                 <label>Date of birth</label>  
@@ -50,14 +48,15 @@
                                 <!--<input type="text" placeholder="Pick Date" />-->
                                 <div class="input-group date select-date">
                                     <div class="input-group-content">
-                                        <input type="text" class="form-control" ng-model="PI.date_of_birth">
+                                        <input type="text" name="date_of_birth" ng-model="PI.date_of_birth" ng-change="calculateAge(PI.date_of_birth);" ng-class="{true: 'error'}[submitted && userForm1.date_of_birth.$invalid]" class="form-control" required placeholder="Pick Date" />
+                                        <p class="help-block PIValid" ng-show="submitted && userForm1.date_of_birth
+                                        .$error.required">Required</p>
                                     </div>
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
                             </div>
-                            <div class="col-lg-3" ng-class="{ 'has-error' : userForm1.age.$invalid && !userForm1.age.$pristine }">
-                                <input type="text" numbers-only placeholder="Age" name="age" ng-model="PI.age" required/>
-                                <p ng-show="userForm1.age.$invalid && !userForm1.age.$pristine" class="help-block" required>Required</p>
+                            <div class="col-lg-3" >
+                                <input type="text" numbers-only placeholder="Age" name="age" ng-disabled="true" ng-model="PI.age" required/>
                             </div>
                             <div class="col-lg-3">
                                 <!--<input type="text" placeholder="Upload Photo" />-->
@@ -87,6 +86,13 @@
                                         <option ng-repeat="religion in dropDownData.religion" value="{{religion.id}}">{{religion.name}}</option>
                                     </select>
                                 </div>
+                                <div class="col-lg-3">
+                                    <select class="form-control select_searchFields" ng-model="PI.sex">
+                                        <option value=null>Gender</option>
+                                        <option value="1">Female</option>
+                                        <option value="2">Male</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="row no-margin">
                                 <div class="col-lg-3">
@@ -98,28 +104,36 @@
                                         <option ng-repeat="idType in dropDownInfo.IdType" value="{{idType.id}}">{{idType.type}}</option>
                                     </select>
                                 </div>
-                                <div class="col-lg-3" ng-class="{ 'has-error' : userForm1.identity_number.$invalid && !userForm1.identity_number.$pristine }">
+                                <div class="col-lg-3">
                                     <input type="text" numbers-only class="form-control" name="identity_number" ng-model="PI.identity_number" placeholder="ID Number" required>
-                                    <p ng-show="userForm1.identity_number.$invalid && !userForm1.identity_number.$pristine" class="help-block">Required</p>
                                 </div>
+                                <!-- <div class="col-lg-3">
+                                    <select class="form-control select_searchFields" ng-model="PI.sex">
+                                        <option value=null>Country</option>
+                                        <option value="{{country.id}}" ng-repeat="country in counties">{{country.name}}</option>
+                                    </select>
+                                </div> -->
                             </div>
                             <div class="col-lg-3">
                             </div>
                             <div class="col-lg-3">
                                 <select class="form-control select_searchFields" ng-model="PI.patient_state" ng-change="addressLocalGovtAreaByStates(PI.patient_origin, 1);">
-                                    <option value="1">State of Origin</option>
+                                    <option value=null>State of Origin</option>
+                                    <option value="2">1</option>
+                                    <option value="3">2</option>
                                     <!-- <option ng-repeat="state in stateOfOrigin" value="{{state.id}}">{{state.name}}</option> -->
                                 </select>
                             </div>
                             <div class="col-lg-3">
                                 <select class="form-control select_searchFields" ng-model="PI.patient_local_goverment_area">
                                     <option value="1">Local Government Area</option>
+                                    <option value="2">1</option>
+                                    <option value="3">2</option>
                                     <!-- <option ng-repeat="LGA in patientInfolocalGovtArea" value="{{LGA.id}}">{{LGA.name}}</option> -->
                                 </select>
                             </div>
-                            <div class="col-lg-3" ng-class="{ 'has-error' : userForm1.tribe.$invalid && !userForm1.tribe.$pristine }">
-                                <input type="text" alphabets-only class="form-control" name="tribe" ng-model="PI.tribe" placeholder="Tribe" required/>
-                                <p ng-show="userForm1.tribe.$invalid && !userForm1.tribe.$pristine" class="help-block">Required</p>
+                            <div class="col-lg-3">
+                                <input type="text" alphabets-only class="form-control" name="tribe" ng-model="PI.tribe" placeholder="Tribe"/>
                             </div>
                             <div class="row no-margin">
                                 <div class="col-lg-3">
@@ -146,45 +160,36 @@
                             <div class="col-lg-3">
                                 <label>Father’s Name</label>
                             </div>
-                            <div class="col-lg-3" ng-class="{ 'has-error' : userForm1.father_firstname.$invalid && !userForm1.father_firstname.$pristine }">
-                                <input type="text" alphabets-only placeholder="First Name" name="father_firstname" ng-model="PI.father_firstname" required />
-                                <p ng-show="userForm1.father_firstname.$invalid && !userForm1.father_firstname.$pristine" class="help-block">Required</p>
+                            <div class="col-lg-3">
+                                <input type="text" alphabets-only placeholder="First Name" name="father_firstname" ng-model="PI.father_firstname"/>
                             </div>
-                            <div class="col-lg-3" ng-class="{ 'has-error' : userForm1.father_middlename.$invalid && !userForm1.father_middlename.$pristine }">
-                                <input type="text" alphabets-only placeholder="Middle Name" ng-model="PI.father_middlename" name="father_middlename" required/>
-                                <p ng-show="userForm1.father_middlename.$invalid && !userForm1.father_middlename.$pristine" class="help-block">Required</p>
+                            <div class="col-lg-3">
+                                <input type="text" alphabets-only placeholder="Middle Name" ng-model="PI.father_middlename" name="father_middlename"/>
                             </div>
-                            <div class="col-lg-3" ng-class="{ 'has-error' : userForm1.father_lastname.$invalid && !userForm1.father_lastname.$pristine }">
-                                <input type="text" alphabets-only placeholder="Last Name" name="father_lastname" ng-model="PI.father_lastname" required/>
-                                <p ng-show="userForm1.father_lastname.$invalid && !userForm1.father_lastname.$pristine" class="help-block">Required</p>
+                            <div class="col-lg-3">
+                                <input type="text" alphabets-only placeholder="Last Name" name="father_lastname" ng-model="PI.father_lastname"/>
                             </div>
                             <div class="col-lg-3">
                                 <label>Mother’s Name</label>
                             </div>
-                            <div class="col-lg-3" ng-class="{ 'has-error' : userForm1.mother_firstname.$invalid && !userForm1.mother_firstname.$pristine }">
-                                <input type="text" alphabets-only placeholder="First Name" ng-model="PI.mother_firstname" name="mother_firstname" required/>
-                                <p ng-show="userForm1.mother_firstname.$invalid && !userForm1.mother_firstname.$pristine" class="help-block">Required</p>
+                            <div class="col-lg-3">
+                                <input type="text" alphabets-only placeholder="First Name" ng-model="PI.mother_firstname" name="mother_firstname"/>
                             </div>
-                            <div class="col-lg-3" ng-class="{ 'has-error' : userForm1.mother_middlename.$invalid && !userForm1.mother_middlename.$pristine }">
-                                <input type="text" alphabets-only placeholder="Middle Name" name="mother_middlename" ng-model="PI.mother_middlename" required/>
-                                <p ng-show="userForm1.mother_middlename.$invalid && !userForm1.mother_middlename.$pristine" class="help-block">Required</p>
+                            <div class="col-lg-3">
+                                <input type="text" alphabets-only placeholder="Middle Name" name="mother_middlename" ng-model="PI.mother_middlename"/>
                             </div>
-                            <div class="col-lg-3" ng-class="{ 'has-error' : userForm1.mother_lastname.$invalid && !userForm1.mother_lastname.$pristine }">
-                                <input type="text" alphabets-only placeholder="Last Name" name="mother_lastname" ng-model="PI.mother_lastname" required/>
-                                <p ng-show="userForm1.mother_lastname.$invalid && !userForm1.mother_lastname.$pristine" class="help-block">Required</p>
+                            <div class="col-lg-3">
+                                <input type="text" alphabets-only placeholder="Last Name" name="mother_lastname" ng-model="PI.mother_lastname"/>
                             </div>
                             <div class="col-lg-3">
                                 <label>Referred</label>
                             </div>
-                            <div class="col-lg-3" ng-class="{ 'has-error' : userForm1.refered_name.$invalid && !userForm1.refered_name.$pristine }">
-                                <input type="text" alphabets-only placeholder="Name" name="refered_name" ng-model="PI.refered_name" required/>
-                                <p ng-show="userForm1.refered_name.$invalid && !userForm1.refered_name.$pristine" class="help-block">Required</p>
+                            <div class="col-lg-3">
+                                <input type="text" alphabets-only placeholder="Name" name="refered_name" ng-model="PI.refered_name"/>
                             </div>
                         </div>
                         <div class="clear">
-                            <button type="button" class="btn btn-default button-style-1 float-right btn-big" ng-click="validatePatientInfo(PI);" ng-disabled="isDisabledInfo(PI);" value="Next">Next 
-                                <i class="fa fa-caret-right"></i>
-                            </button>
+                            <button type="submit" class="btn btn-default button-style-1 float-right btn-big" ng-click="submitted=true; validatePatientInfo(PI);" value="Next">Next</button>
                         </div>
                     </form>
                 </div>
@@ -197,12 +202,18 @@
                             <div class="col-lg-3" >
                                 <label>contact</label>
                             </div>
-                            <div class="col-lg-3" ng-class="{ 'has-error' : userForm.phone_number.$invalid && !userForm.phone_number.$pristine }">
-                                <input type="text" numbers-only placeholder="Phone Number" name="phone_number" ng-model="PI.phone_number" required/>
-                                <p ng-show="userForm.phone_number.$invalid && !userForm.phone_number.$pristine" class="help-block">Required</p>
+                            <div class="col-lg-1">
+                                <select class="form-control" class="contry-code" ng-model="PI.countryCode">
+                                    <!-- <option value=null>Select Code</option> -->
+                                    <option ng-repeat="countryCode in contactAddressCountries" value="{{countryCode.id}}" ng-selected="{{countryCode.country_code == PI.countryCode}}">{{countryCode.country_code}}</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-2">
+                                <input type="text" numbers-only placeholder="Phone Number" name="phone_number" ng-model="PI.phone_number" phone-number="^[d-d]/g" required ng-class="{true: 'error'}[submitted && userForm.phone_number.$invalid]"/>
+                                <p class="help-block PIValid" ng-show="submitted && userForm.phone_number.$error.required">Required</p>
                             </div>
                             <div class="col-lg-3" ng-class="{ 'has-error' : userForm.mobile_number.$invalid && !userForm.mobile_number.$pristine }">
-                                <input type="text" numbers-only placeholder="Mobile Number" name="mobile_number" ng-model="PI.mobile_number" required/>
+                                <input type="text" numbers-only placeholder="Mobile Number" name="mobile_number" ng-model="PI.mobile_number" my-Maxlength="11" required/>
                                 <p ng-show="userForm.mobile_number.$invalid && !userForm.mobile_number.$pristine" class="help-block">Required</p>
                             </div>
                             <div class="col-lg-3" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
@@ -331,9 +342,7 @@
                             </div>
                         </div>
                         <div class="clear">
-                            <button type="button" class="btn btn-default button-style-1 float-right" ng-click="validatePatientInfo(PI);" ng-disabled="isDisabledAddress(PI);" value="Next">Next 
-                                <i class="fa fa-caret-right"></i>
-                            </button>
+                            <button type="button" class="btn btn-default button-style-1 float-right" ng-click="submitted=true; validatePatientInfo(PI);" value="Next" >Next</button>
                         </div>
                     </form>
                 </div>
