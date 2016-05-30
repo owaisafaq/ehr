@@ -25,4 +25,8 @@ $(document).ready(function () {
             $('.show-on-dependant').show();
         }
     })
+    $('body').on('click', '.ulli_2 span', function () {
+        $(this).siblings('input[type=text]').show();
+//        alert("a")
+    })
 })
