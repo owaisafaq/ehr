@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR', [
     'ngRoute', 'ngResource',
-    'ngTouch', 'ui.grid','ui.grid.pagination'
+    'ngTouch', 'ui.grid', 'ui.grid.pagination'
 ]);
 
 AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
@@ -84,6 +84,10 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/lab-order-reporting.html',
                     controller: 'labOrderReporting'
                 }).
+                when('/lab-report-parasitology', {
+                    templateUrl: 'views/lab-report-parasitology.html',
+                    controller: 'labReportParasitology'
+                }).
                 otherwise({
                     redirectTo: '/error'
                 });
@@ -101,16 +105,13 @@ AppEHR.run(function ($rootScope, $location, $window) {
         }
         $rootScope.userName = $window.sessionStorage.name;
         $rootScope.loginCheck = $location.$$path == '/login' || $location.$$path == '/' ? true : false;
-       if ($window.sessionStorage.email != undefined && $window.sessionStorage.email != 'undefined' && $window.sessionStorage.token != undefined && window.sessionStorage.token != 'undefined' && $window.sessionStorage.role_id != undefined && window.sessionStorage.role_id != 'undefined') {
-           var path = $location.$$path;
-           if ((path == "/login" || path == "/") && path != undefined) {
-                $rootScope.backgroundImg = "";
-                $location.path("patient-registration");
-           }
-       } else{
-            $rootScope.backgroundImg = "wrapper";
-            $location.path("login");
-       }
+//       if ($window.sessionStorage.email != undefined && $window.sessionStorage.email != 'undefined' && $window.sessionStorage.token != undefined && window.sessionStorage.token != 'undefined' && $window.sessionStorage.role_id != undefined && window.sessionStorage.role_id != 'undefined') {
+//           var path = $location.$$path;
+//           if ((path == "/login" || path == "/") && path != undefined) {
+//               $location.path("patient-registration");
+//           }
+//       } else
+//           $location.path("login");
     });
 
     $rootScope.logout = function(){
