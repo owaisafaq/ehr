@@ -41,7 +41,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     controller: 'newEncounterEncounterListController'
                 }).
                 when('/new-encounter-patient-search', {
-                    templateUrl: 'views/newencounterpatientsearch.html',
+                    templateUrl: 'views/new-encounter-patient-search.html',
                     controller: 'newEncounterPatientSearchController'
                 }).
                 when('/patient-listing', {
@@ -88,6 +88,10 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/lab-report-parasitology.html',
                     controller: 'labReportParasitology'
                 }).
+                when('/lab-report-haematology', {
+                    templateUrl: 'views/lab-report-haematology.html',
+                    controller: 'labReportHaematology'
+                }).
                 otherwise({
                     redirectTo: '/error'
                 });
@@ -114,7 +118,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
 //           $location.path("login");
     });
 
-    $rootScope.logout = function(){
+    $rootScope.logout = function () {
         $window.sessionStorage.clear();
         console.log(1)
         $window.location.href = '#/login';

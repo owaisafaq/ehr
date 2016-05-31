@@ -1,8 +1,9 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', 'PatientRegistration', 'fileUpload', '$location', function ($rootScope, $scope, $window, Countries, States, GetLocalGovermentArea, City, DropDownData, PatientRegistration, fileUpload, $location) {
+AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', 'PatientRegistration', 'fileUpload', '$location', '$filter', function ($rootScope, $scope, $window, Countries, States, GetLocalGovermentArea, City, DropDownData, PatientRegistration, fileUpload, $location, $filter) {
     $rootScope.pageTitle = "EHR - Patient Registration";
     $scope.PI = {};
+    $scope.counties = [];
     $scope.contactAddressCountries = [];
     $scope.permanentAddressCountries = [];
     $scope.addressContactCities = [];
@@ -38,6 +39,10 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     function countrySuccess(res){
     	if(res.status ==  true){
     		angular.copy(res.data, $scope.contactAddressCountries);
+    		$scope.PI.countryCode = $scope.contactAddressCountries;
+    		var tempcountry = $scope.contactAddressCountries;
+            tempcountry = $filter('filter')(tempcountry, {country_code: 234});
+            $scope.PI.countryCode = tempcountry[0].country_code;
     		angular.copy(res.data, $scope.permanentAddressCountries);
     		angular.copy(res.data, $scope.nextOfKinCountries);
     		angular.copy(res.data, $scope.employerCountries);
@@ -287,6 +292,15 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
     $scope.validatePatientInfo = function(PI){
     	console.log(PI);
+    	if(PI.first_name == undefined){
+    		$scope.fNameError = "First Name required";
+    	}else if(PI.last_name == undefined){
+    		$scope.lNameError = "Last Name required";
+    	}
+    }
+
+    $scope.validatePatientAddress = function(PI){
+    	console.log(PI);
     	if($scope.validateEmail(PI.email)){
     		$scope.validateClass = "";
     	}else{
@@ -298,6 +312,14 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     		console.log(PI);
     		console.log(angular.equals({}, PI));
     	}*/
+    }
+
+    $scope.calculateAge = function(birthday) { // birthday is a date
+    	var splitDate = birthday.split('-');
+    	$scope.birthdate = new Date(splitDate[0],splitDate[1],splitDate[2]);
+	    var ageDifMs = Date.now() - $scope.birthdate.getTime();
+	    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+	    $scope.PI.age = Math.abs(ageDate.getUTCFullYear() - 1970);
     }
 
     $scope.submit = function(PI){
@@ -329,6 +351,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     		last_name: $scope.PI.last_name,
     		date_of_birth: $scope.PI.date_of_birth,
     		age: $scope.PI.age,
+    		sex: $scope.PI.sex,
     		patient_picture: $scope.PI.myFile,
     		maritial_status: $scope.PI.maritial_status,
     		patient_local_goverment_area: $scope.PI.patient_local_goverment_area,

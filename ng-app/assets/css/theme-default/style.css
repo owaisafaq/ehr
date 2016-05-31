@@ -550,6 +550,7 @@ file upload custom
 }
 .file-field{
     position: relative;
+    overflow: hidden;
 }
 .file-field .file-path-wrapper {
     padding-left: 0;
@@ -1450,7 +1451,7 @@ Patient Plan
 .wrap-container{
     margin:0px auto;
     width:65%;
-    
+
 }
 
 .username::-webkit-input-placeholder, .username::-moz-input-placeholder { 
@@ -1459,8 +1460,10 @@ Patient Plan
 }
 
 .error{
-    margin-top:5px;
-    color:#999;
+    margin-top:0px;
+    padding-right: 10px;
+    border:1px solid red !important;
+    color: red;/*#999;*/
 }
 .invalid{
     border: 1px solid #f44336 !important;
@@ -1477,6 +1480,16 @@ Patient Plan
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+}
+.validError{
+    border:1px solid red !important;
+}
+.PIValid{
+    color:red;
+    padding-right: 11px;
+}
+.contry-code{
+    width:10px;
 }
 /*-----------
 BED Occupancy
@@ -1855,4 +1868,37 @@ Lab Report Parasitology
 }
 .ulli_2 input[type=text]{
     display: none;
+}
+
+.txt-style-3_a{
+    color: #a2a6b9;
+    font-size: 12px;
+}
+.check-with-field .checkbox{
+    float: left;  
+}
+.check-with-field input[type=text]{
+    width: 100px;
+    height: 30px;
+    float: right;
+}
+.check-with-field .align-label{
+    padding-left: 30px;
+    font-family: 'SegoeUI-reg';
+}
+.check-with-field .textarea-big{
+    width: 50%;
+    margin-left: 5px;
+}
+.check-with-field > div:first-child{
+    margin-bottom: 20px !important;
+}
+.check-with-field > div{
+    margin-bottom: 5px !important;
+}
+.check-with-field .checkbox-styled:not(ie8) input ~ span{
+    color: #56aeea;
+}
+.check-with-field .checkbox-styled:not(ie8) input ~ span:before,.check-with-field .radio-styled:not(ie8) input ~ span:before {
+    border: 2px solid #ddecf8;
 }
