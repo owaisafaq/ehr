@@ -17,11 +17,41 @@ class ApiController extends Controller
 {
 
 
-    public function __construct()
+    public function __construct(Request $request)
     {
 
         header('Access-Control-Allow-Origin: *');
 
+
+        if ($request->input('token')) {
+
+
+            $token = $request->input('token');
+
+            $user_id = JWTAuth::authenticate($token)->id;
+
+
+            if (!isset($user_id)) {
+
+                return response()->json(['status' => false, 'message' => 'Invalid Token']);
+
+
+            }
+
+            $user_status = DB::table('users')
+                ->select(DB::raw('user_status'))
+                ->where('id', $user_id)
+                ->first();
+
+
+            if ($user_status->user_status == 'block') {
+
+
+                return response()->json(['status' => false, 'message' => 'This user is Blocked']);
+
+            }
+
+        }
 
     }
 
@@ -41,6 +71,7 @@ class ApiController extends Controller
     public function register_patient(Request $request)
     {
 
+
         $first_name = $request->input('first_name');
 
         $middle_name = $request->input('middle_name');
@@ -53,7 +84,7 @@ class ApiController extends Controller
 
         $sex = $request->input('sex');
 
-        $martial_status = $request->input('martial_status');
+        $marital_status = $request->input('marital_status');
 
         $religion = $request->input('religion');
 
@@ -95,16 +126,17 @@ class ApiController extends Controller
 
         $occupation = $request->input('occupation');
 
+        $currentdatetime = date("Y-m-d  H:i:s");
 
-        DB::table('patient_profile')->insert(
-            ['patient_id' => $patient_id,
-                'first_name' => $first_name,
+
+
+        DB::table('patients')->insert(
+            ['first_name' => $first_name,
                 'middle_name' => $middle_name,
                 'last_name' => $last_name,
                 'date_of_birth' => $date_of_birth,
                 'age' => $age,
-                'sex' => $sex,
-                'martial_status' => $martial_status,
+                'martial_status' => $marital_status,
                 'religion' => $religion,
                 'father_firstname' => $father_firstname,
                 'father_middlename' => $father_middlename,
@@ -113,29 +145,31 @@ class ApiController extends Controller
                 'mother_middlename' => $mother_middlename,
                 'mother_lastname' => $mother_lastname,
                 'refered_name' => $refered_name,
-                'refered_email' => $refered_email,
-                'refered_phone' => $refered_phone,
                 'patient_unit_number' => $patient_unit_number,
                 'identity_type' => $identity_type,
                 'identity_number' => $identity_number,
                 'state' => $patient_state,
                 'local_goverment_area' => $patient_local_goverment_area,
                 'tribe' => $tribe,
-                'language' => $patient_unit_number,
                 'nationality' => $nationality,
                 'blood_group' => $blood_group,
-                'hospital_plan' => $hospital_plan,
-                'occcupation' => $occupation,
                 'created_at' => $currentdatetime
+
 
             ]
         );
 
 
+
+
+
+
         $patient_id = DB::getPdo()->lastInsertId();
 
 
-        $address_type = $request->input('address_type');
+        $same_as_above = $request->input('same_as_above');
+
+        $email = $request->input('email');
 
         $phone_number = $request->input('phone_number');
 
@@ -151,15 +185,18 @@ class ApiController extends Controller
 
         $country = $request->input('country');
 
+
         $local_goverment_area = $request->input('local_goverment_area');
 
         $postal_code = $request->input('postal_code');
 
 
+
         DB::table('patient_address')->insert(
             ['patient_id' => $patient_id,
-                'address_type' => $address_type,
-                'phone_number' => $phone_number,
+                'email'=>'',
+                'address_type' => 'contact',
+               'phone_number' => $phone_number,
                 'mobile_number' => $mobile_number,
                 'house_number' => $house_number,
                 'street' => $street,
@@ -172,6 +209,10 @@ class ApiController extends Controller
 
             ]
         );
+
+
+
+
 
 
         $kin_fullname = $request->input('kin_fullname');
@@ -225,6 +266,10 @@ class ApiController extends Controller
         );
 
 
+
+
+
+
         $employer_name = $request->input('employer_name');
 
         $employer_phone_number = $request->input('employer_phone_number');
@@ -258,6 +303,12 @@ class ApiController extends Controller
 
             ]
         );
+
+
+
+        return response()->json(['status' => true, 'message' => 'Patient Registered Successfully']);
+
+           exit;
 
 
         $patient_plan_id = $request->input('patient_plan_id');
@@ -302,7 +353,6 @@ class ApiController extends Controller
         );
 
 
-        return response()->json(['status' => true, 'message' => 'Patient Registered Successfully']);
 
 
     }
@@ -381,6 +431,7 @@ class ApiController extends Controller
             ->where('password', $password_user)
             ->get();
 
+
         if (count($user) == 1) {
 
             $users = DB::table('users')
@@ -389,7 +440,23 @@ class ApiController extends Controller
                 ->where('password', $password_user)
                 ->get();
 
+
             $token = JWTAuth::fromUser($users[0]);
+
+            $user_id = JWTAuth::authenticate($token)->id;
+
+            $user_status = DB::table('users')
+                ->select(DB::raw('user_status'))
+                ->where('id', $user_id)
+                ->first();
+
+
+            if ($user_status->user_status != 'active') {
+
+
+                return response()->json(['status' => false, 'message' => 'This user is not active']);
+
+            }
 
             return response()->json(['status' => true, 'data' => $user[0], 'token' => $token]);
 
@@ -558,6 +625,21 @@ class ApiController extends Controller
             ->leftJoin('patient_profile', 'patient_profile.patient_id', '=', 'visits.patient_id')
             ->select(DB::raw('*'))
             ->where('visits.patient_id', $patient_id)
+            ->get();
+
+
+        return response()->json(['status' => true, 'data' => $data]);
+
+
+    }
+
+
+    public function get_patient_vitals(Request $request)
+    {
+
+
+        $data = DB::table('medical_record_fields')
+            ->select(DB::raw('id,category,name'))
             ->get();
 
 

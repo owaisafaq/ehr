@@ -18,9 +18,9 @@ $app->get('/', function () use ($app) {
 
 $app->group(['prefix' => 'api'], function () use ($app) {
 
-    $app->post('register_user', 'App\Http\Controllers\ApiController@register_user');
+    $app->post('register_user','App\Http\Controllers\ApiController@register_user');
 
-    $app->post('user_login', 'App\Http\Controllers\ApiController@user_login');
+    $app->post('user_login','App\Http\Controllers\ApiController@user_login');
 
 
 

@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 AppEHR.factory("AUTH", function ($resource) {
-    return $resource(serverPath +  'user_login', {email: '@email', password: '@password'}, {
+    return $resource(serverPath +  'user_login', /*{email: '@email', password: '@password'},*/ {
         get: {method: 'POST'}
     });
 });
@@ -49,3 +49,19 @@ AppEHR.factory("DropDownData", function ($resource) {
         get: {method: 'GET'}
     });
 });
+AppEHR.service('fileUpload', ['$http', function ($http) {
+    this.uploadFileToUrl = function(file, uploadUrl){
+        var fd = new FormData();
+        fd.append('file', file);
+        $http.post(uploadUrl, fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        })
+        .success(function(){
+            console.log("here");
+        })
+        .error(function(){
+            console.log("failed");
+        });
+    }
+}]);
