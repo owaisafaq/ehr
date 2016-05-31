@@ -36,7 +36,7 @@ $api->params->role_id = "1";
 
 $api_arr [] = $api;
 
-// Login to app
+/*// Login to app
 $api = new api();
 $api->name = "Register Patient";
 $api->url = HOST . 'register_patient';
@@ -48,7 +48,6 @@ $api->params->last_name = "imran";
 $api->params->date_of_birth = "18-02-1990";
 $api->params->age = "20";
 $api->params->sex = "1";
-$api->params->patient_image = "";
 $api->params->marital_status = "1";
 $api->params->religion = "1";
 $api->params->father_firstname = "ahmed";
@@ -123,6 +122,47 @@ $api->params->depandent_id = "3";
 $api->params->principal_relationship = "";
 $api->params->dependant_relationship = "Brother";
 $api->params->description = "Need Financial Help for Brother";
+$api->params->token = "123";
+
+
+$api_arr [] = $api;*/
+
+
+
+
+
+// Add Patient
+$api = new api();
+$api->name = "Add Patient";
+$api->url = HOST . 'add_patient';
+$api->method = "POST";
+$api->description = "Add Patient";
+$api->params->first_name = "owais";
+$api->params->middle_name = "ahmed";
+$api->params->last_name = "imran";
+$api->params->date_of_birth = "18-02-1990";
+$api->params->age = "20";
+$api->params->sex = "1";
+$api->params->patient_image = "";
+$api->params->marital_status = "1";
+$api->params->religion = "1";
+$api->params->father_firstname = "ahmed";
+$api->params->father_middlename = "hassan";
+$api->params->father_lastname = "zai";
+$api->params->mother_firstname = "fouzai";
+$api->params->mother_middlename = "bibi";
+$api->params->mother_lastname = "khatoon";
+$api->params->refered_name = "james";
+$api->params->patient_unit_number = "190";
+$api->params->identity_type = "Nigerian";
+$api->params->identity_number = "1120";
+$api->params->patient_state = "test";
+$api->params->patient_local_goverment_area = "190";
+$api->params->tribe = "mangolian";
+$api->params->language = "english";
+$api->params->nationality = "1";
+$api->params->blood_group = "1";
+
 $api->params->token = "123";
 
 
@@ -224,6 +264,20 @@ $api->name = "Get Patient Vital Fields";
 $api->url = HOST . 'get_patient_vitals';
 $api->method = "GET";
 $api->description = "Get Patient Vital Fields";
+$api->params->token = "123";
+
+
+$api_arr [] = $api;
+
+
+
+// Get Patient Plans
+$api = new api();
+$api->name = "Get Patient Plans";
+$api->url = HOST . 'get_patient_plan';
+$api->method = "GET";
+$api->description = "get_patient_plan";
+$api->params->patient_id = "1";
 $api->params->token = "123";
 
 
