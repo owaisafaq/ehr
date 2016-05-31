@@ -386,6 +386,123 @@ class ApiController extends Controller
 
     }
 
+
+    public function add_patient(Request $request){
+
+
+
+        $first_name = $request->input('first_name');
+
+        $middle_name = $request->input('middle_name');
+
+        $last_name = $request->input('last_name');
+
+        $date_of_birth = $request->input('date_of_birth');
+
+        $age = $request->input('age');
+
+        $sex = $request->input('sex');
+
+        $marital_status = $request->input('marital_status');
+
+        $religion = $request->input('religion');
+
+        $father_firstname = $request->input('father_firstname');
+
+        $father_middlename = $request->input('father_middlename');
+
+        $father_lastname = $request->input('father_lastname');
+
+        $mother_firstname = $request->input('mother_firstname');
+
+        $mother_middlename = $request->input('mother_middlename');
+
+        $mother_lastname = $request->input('mother_lastname');
+
+        $refered_name = $request->input('refered_name');
+
+
+        $patient_unit_number = $request->input('patient_unit_number');
+
+        $identity_type = $request->input('identity_type');
+
+        $identity_number = $request->input('identity_number');
+
+        $patient_state = $request->input('patient_state');
+
+        $patient_local_goverment_area = $request->input('patient_local_goverment_area');
+
+        $tribe = $request->input('tribe');
+
+        $nationality = $request->input('nationality');
+
+        $blood_group = $request->input('blood_group');
+
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+
+        if ($request->file('patient_image')) {
+
+            if ($request->file('patient_image')->isValid()) {
+
+                $destinationPath = base_path() . '/public/uploaded_images'; // upload path
+                $extension = $request->file('patient_image')->getClientOriginalExtension(); // getting image extension
+                $fileName = time() . '.' . $extension; // renameing image
+
+                $request->file('patient_image')->move($destinationPath, $fileName); // uploading file to given path
+
+            }else{
+
+                $fileName = '';
+
+            }
+
+        }else{
+
+            $fileName = '';
+        }
+
+        DB::table('patients')->insert(
+            ['first_name' => $first_name,
+                'middle_name' => $middle_name,
+                'last_name' => $last_name,
+                'date_of_birth' => $date_of_birth,
+                'age' => $age,
+                'sex' => $sex,
+                'patient_image'=>$fileName,
+                'martial_status' => $marital_status,
+                'religion' => $religion,
+                'father_firstname' => $father_firstname,
+                'father_middlename' => $father_middlename,
+                'father_lastname' => $father_lastname,
+                'mother_firstname' => $mother_firstname,
+                'mother_middlename' => $mother_middlename,
+                'mother_lastname' => $mother_lastname,
+                'refered_name' => $refered_name,
+                'patient_unit_number' => $patient_unit_number,
+                'identity_type' => $identity_type,
+                'identity_number' => $identity_number,
+                'state' => $patient_state,
+                'local_goverment_area' => $patient_local_goverment_area,
+                'tribe' => $tribe,
+                'nationality' => $nationality,
+                'blood_group' => $blood_group,
+                'created_at' => $currentdatetime
+            ]
+        );
+
+
+        $patient_id = DB::getPdo()->lastInsertId();
+
+
+
+
+        return response()->json(['status' => true, 'message' => "Patient registered successfully" , "patient_id"=>$patient_id]);
+
+    }
+
     public function register_user(Request $request)
     {
 
@@ -710,7 +827,41 @@ class ApiController extends Controller
 
 
 
-        dd('here');
+    }
+
+
+    public function get_patient_plan(Request $request)
+    {
+
+
+        $patient_id = $request->input('patient_id');
+
+        $patient_plan = DB::table('patient_plan')
+            ->select(DB::raw('hmo,policies,insurance_id,principal,depandent'))
+            ->get();
+
+
+        foreach ($patient_plan as $plan) {
+
+
+            if ($plan->principal == 1) {
+
+                $dependants = DB::table('patient_dependants')
+                    ->select(DB::raw('dependant_id'))
+                    ->get();
+
+
+                $plan->dependants = $dependants;
+
+
+            } else {
+
+
+            }
+        }
+
+        return response()->json(['status' => true, 'data' => $plan]);
+
 
     }
 
