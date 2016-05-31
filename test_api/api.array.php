@@ -169,6 +169,37 @@ $api->params->token = "123";
 $api_arr [] = $api;
 
 
+
+// Add Patient Address
+$api = new api();
+$api->name = "Add Patient Address";
+$api->url = HOST . 'add_patient';
+$api->method = "POST";
+$api->description = "Add Patient Address";
+$api->params->same_as_above = "0";
+$api->params->patient_id = "0";
+$api->params->email = "test@test.com";
+$api->params->phone_number = "021212121";
+$api->params->mobile_number = "03335656563";
+$api->params->house_number = "21";
+$api->params->street = "1";
+$api->params->city = "1";
+$api->params->state = "1";
+$api->params->postal_code = "0021";
+$api->params->country = "1";
+$api->params->local_goverment_area = "1";
+$api->params->permanent_city = "1";
+$api->params->permanent_country = "1";
+$api->params->permanent_email = "test@test.com";
+$api->params->permanent_housenumber = "1";
+$api->params->permanent_mobilenumber = "1";
+$api->params->permanent_phonenumber = "1";
+$api->params->permanent_postalCode = "1";
+$api->params->token = "123";
+
+
+$api_arr [] = $api;
+
 // Add Visit
 $api = new api();
 $api->name = "Add Visit";
