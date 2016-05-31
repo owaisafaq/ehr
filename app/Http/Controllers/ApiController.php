@@ -28,12 +28,9 @@ class ApiController extends Controller
         if ($request->input('token')) {
 
 
-
-
             $token = $request->input('token');
 
             $user_id = JWTAuth::authenticate($token)->id;
-
 
 
             if (!isset($user_id)) {
@@ -57,7 +54,6 @@ class ApiController extends Controller
             }
 
         }
-
 
 
     }
@@ -136,6 +132,29 @@ class ApiController extends Controller
         $currentdatetime = date("Y-m-d  H:i:s");
 
 
+        if ($request->file('patient_image')) {
+
+            if ($request->file('patient_image')->isValid()) {
+
+                $destinationPath = base_path() . '/public/uploaded_images'; // upload path
+                $extension = $request->file('patient_image')->getClientOriginalExtension(); // getting image extension
+                $fileName = time() . '.' . $extension; // renameing image
+
+                $request->file('patient_image')->move($destinationPath, $fileName); // uploading file to given path
+
+            } else {
+
+                $fileName = '';
+
+            }
+
+        } else {
+
+            $fileName = '';
+
+        }
+
+
         DB::table('patients')->insert(
             ['first_name' => $first_name,
                 'middle_name' => $middle_name,
@@ -143,6 +162,7 @@ class ApiController extends Controller
                 'date_of_birth' => $date_of_birth,
                 'age' => $age,
                 'sex' => $sex,
+                'patient_image' => $fileName,
                 'martial_status' => $marital_status,
                 'religion' => $religion,
                 'father_firstname' => $father_firstname,
@@ -639,8 +659,6 @@ class ApiController extends Controller
             ->get();
 
 
-
-
         $data = array(
             "religion" => $religion,
             "maritial_status" => $maritial_status,
@@ -649,7 +667,7 @@ class ApiController extends Controller
             "hospital_plan" => $hospital_plan,
             "occupation" => $occupation,
             "departments" => $departments,
-            "doctors" =>$doctors
+            "doctors" => $doctors
         );
 
         return response()->json(['status' => true, 'data' => $data]);
@@ -709,10 +727,9 @@ class ApiController extends Controller
         }
 
 
-
         dd('here');
 
     }
 
 
-    }
+}

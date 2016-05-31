@@ -48,6 +48,7 @@ $api->params->last_name = "imran";
 $api->params->date_of_birth = "18-02-1990";
 $api->params->age = "20";
 $api->params->sex = "1";
+$api->params->patient_image = "";
 $api->params->marital_status = "1";
 $api->params->religion = "1";
 $api->params->father_firstname = "ahmed";
