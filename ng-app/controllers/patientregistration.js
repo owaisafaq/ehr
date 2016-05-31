@@ -1,8 +1,9 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', 'PatientRegistration', 'fileUpload', '$location', '$filter', function ($rootScope, $scope, $window, Countries, States, GetLocalGovermentArea, City, DropDownData, PatientRegistration, fileUpload, $location, $filter) {
+AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', 'PatientInformation', 'fileUpload', '$location', '$filter', 'Upload', '$timeout', function ($rootScope, $scope, $window, Countries, States, GetLocalGovermentArea, City, DropDownData, PatientInformation, fileUpload, $location, $filter, Upload, $timeout) {
     $rootScope.pageTitle = "EHR - Patient Registration";
     $scope.PI = {};
+    $scope.myForm = {};
     $scope.counties = [];
     $scope.contactAddressCountries = [];
     $scope.permanentAddressCountries = [];
@@ -291,12 +292,39 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     }
 
     $scope.validatePatientInfo = function(PI){
-    	console.log(PI);
-    	if(PI.first_name == undefined){
-    		$scope.fNameError = "First Name required";
-    	}else if(PI.last_name == undefined){
-    		$scope.lNameError = "Last Name required";
-    	}
+    	console.log($scope.PI.religion);
+    	if(PI.first_name != undefined && PI.last_name != undefined && PI.date_of_birth != undefined && PI.age != undefined && PI.sex != undefined){
+			PatientInformation.save({
+				token: $window.sessionStorage.token,
+	    		patient_unit_number: $scope.PI.patient_unit_number == undefined ? '' : $scope.PI.patient_unit_number,
+	    		first_name: $scope.PI.first_name == undefined ? '' : $scope.PI.first_name,
+	    		middle_name: $scope.PI.middle_name == undefined ? '' : $scope.PI.middle_name,
+	    		last_name: $scope.PI.last_name == undefined ? '' : $scope.PI.last_name,
+	    		date_of_birth: $scope.PI.date_of_birth == undefined ? '' : $scope.PI.date_of_birth,
+	    		age: $scope.PI.age == undefined ? '' : $scope.PI.age,
+	    		sex: $scope.PI.sex == undefined ? '' : $scope.PI.sex,
+	    		patient_picture: $scope.PI.file == undefined ? '' : $scope.PI.file,
+	    		maritial_status: $scope.PI.maritial_status == undefined ? '' : $scope.PI.maritial_status,
+	    		patient_local_goverment_area: $scope.PI.patient_local_goverment_area == undefined ? '' : $scope.PI.patient_local_goverment_area,
+	    		religion: $scope.PI.religion == undefined ? '' : $scope.PI.religion,
+	    		identity_type: $scope.PI.identity_type == undefined ? '' : $scope.PI.identity_type,
+	    		identity_number: $scope.PI.identity_number == undefined ? '' : $scope.PI.identity_number,
+	    		patient_state: $scope.PI.patient_state == undefined ? '' : $scope.PI.patient_state,
+	    		tribe: $scope.PI.tribe == undefined ? '' : $scope.PI.tribe,
+	    		language: $scope.PI.language == undefined ? '' : $scope.PI.language,
+	    		nationality: $scope.PI.nationality == undefined ? '' : $scope.PI.nationality,
+	    		blood_group: $scope.PI.blood_group == undefined ? '' : $scope.PI.blood_group,
+			}, patientInformationSuccess, patientInformationFailed);
+			function patientInformationSuccess(res){
+				console.log(res);
+				if(res.status == true){
+					$window.sessionStorage.patient_id = res.patient_id;
+				}
+			}
+			function patientInformationFailed(error){
+				console.log(error);
+			}
+		}
     }
 
     $scope.validatePatientAddress = function(PI){
@@ -321,6 +349,29 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 	    var ageDate = new Date(ageDifMs); // miliseconds from epoch
 	    $scope.PI.age = Math.abs(ageDate.getUTCFullYear() - 1970);
     }
+
+    $scope.uploadPic = function(file) {
+	    file.upload = Upload.upload({
+	      url: 'http://demoz.online/ehr/public/api/register_patient',
+	      method:'post',
+	      data: {
+	        username: $scope.username,
+	        file: file
+	      },
+	    });
+
+	    file.upload.then(function(response) {
+	      $timeout(function() {
+	        file.result = response.data;
+	      });
+	    }, function(response) {
+	      if (response.status > 0)
+	        $scope.errorMsg = response.status + ': ' + response.data;
+	    }, function(evt) {
+	      // Math.min is to fix IE which reports 200% sometimes
+	      file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+	    });
+	 }
 
     $scope.submit = function(PI){
     	console.log($scope.PI);
