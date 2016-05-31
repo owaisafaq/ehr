@@ -17,7 +17,7 @@ $api->name = "Login User";
 $api->url = HOST . 'user_login';
 $api->method = "POST";
 $api->description = "Login User";
-$api->params->email = "owais@gmail.com";
+$api->params->email = "owais@hotmail.com";
 $api->params->password = "1234";
 
 $api_arr [] = $api;
@@ -134,11 +134,11 @@ $api->name = "Add Visit";
 $api->url = HOST . 'add_visit';
 $api->method = "POST";
 $api->description = "Add Visit";
-$api->params->patient_id = "123";
-$api->params->department_id = "123";
+$api->params->patient_id = "1";
+$api->params->department_id = "1";
 $api->params->encounter_class = "123";
 $api->params->encounter_type = "123";
-$api->params->whom_to_see = "123";
+$api->params->whom_to_see = "1";
 $api->params->decscribe_whom_to_see = "123";
 $api->params->token = "123";
 

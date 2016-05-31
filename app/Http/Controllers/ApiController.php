@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Response as IlluminateResponse;
 
+
+use Illuminate\Support\Facades\File;
 use DB;
 
 
@@ -26,9 +28,12 @@ class ApiController extends Controller
         if ($request->input('token')) {
 
 
+
+
             $token = $request->input('token');
 
             $user_id = JWTAuth::authenticate($token)->id;
+
 
 
             if (!isset($user_id)) {
@@ -52,6 +57,8 @@ class ApiController extends Controller
             }
 
         }
+
+
 
     }
 
@@ -129,13 +136,13 @@ class ApiController extends Controller
         $currentdatetime = date("Y-m-d  H:i:s");
 
 
-
         DB::table('patients')->insert(
             ['first_name' => $first_name,
                 'middle_name' => $middle_name,
                 'last_name' => $last_name,
                 'date_of_birth' => $date_of_birth,
                 'age' => $age,
+                'sex' => $sex,
                 'martial_status' => $marital_status,
                 'religion' => $religion,
                 'father_firstname' => $father_firstname,
@@ -154,14 +161,8 @@ class ApiController extends Controller
                 'nationality' => $nationality,
                 'blood_group' => $blood_group,
                 'created_at' => $currentdatetime
-
-
             ]
         );
-
-
-
-
 
 
         $patient_id = DB::getPdo()->lastInsertId();
@@ -191,12 +192,11 @@ class ApiController extends Controller
         $postal_code = $request->input('postal_code');
 
 
-
         DB::table('patient_address')->insert(
             ['patient_id' => $patient_id,
-                'email'=>'',
+                'email' => $email,
                 'address_type' => 'contact',
-               'phone_number' => $phone_number,
+                'phone_number' => $phone_number,
                 'mobile_number' => $mobile_number,
                 'house_number' => $house_number,
                 'street' => $street,
@@ -211,8 +211,44 @@ class ApiController extends Controller
         );
 
 
+        if ($same_as_above == 1) {
 
 
+            $permanent_city = $request->input('permanent_city');
+
+            $permanent_country = $request->input('permanent_country');
+
+            $permanent_email = $request->input('permanent_email');
+
+            $permanent_housenumber = $request->input('permanent_housenumber');
+
+            $permanent_mobilenumber = $request->input('permanent_mobilenumber');
+
+            $permanent_phonenumber = $request->input('permanent_phonenumber');
+
+            $permanent_postalCode = $request->input('permanent_postalCode');
+
+
+            DB::table('patient_address')->insert(
+                ['patient_id' => $patient_id,
+                    'email' => $permanent_email,
+                    'address_type' => 'permanent',
+                    'phone_number' => $permanent_phonenumber,
+                    'mobile_number' => $permanent_mobilenumber,
+                    'house_number' => $permanent_housenumber,
+                    'street' => '',
+                    'city' => $permanent_city,
+                    'state' => '',
+                    'country' => $country,
+                    'local_goverment_area' => '',
+                    'postal_code' => $permanent_postalCode,
+                    'created_at' => $currentdatetime
+
+                ]
+            );
+
+
+        }
 
 
         $kin_fullname = $request->input('kin_fullname');
@@ -266,10 +302,6 @@ class ApiController extends Controller
         );
 
 
-
-
-
-
         $employer_name = $request->input('employer_name');
 
         $employer_phone_number = $request->input('employer_phone_number');
@@ -305,10 +337,9 @@ class ApiController extends Controller
         );
 
 
-
         return response()->json(['status' => true, 'message' => 'Patient Registered Successfully']);
 
-           exit;
+        exit;
 
 
         $patient_plan_id = $request->input('patient_plan_id');
@@ -351,8 +382,6 @@ class ApiController extends Controller
 
             ]
         );
-
-
 
 
     }
@@ -516,7 +545,7 @@ class ApiController extends Controller
 
 
         $countries = DB::table('countries')
-            ->select(DB::raw('id,name'))
+            ->select(DB::raw('id,name,country_code'))
             ->get();
 
         return response()->json(['status' => true, 'data' => $countries]);
@@ -601,13 +630,26 @@ class ApiController extends Controller
             ->select(DB::raw('id,name'))
             ->get();
 
+        $departments = DB::table('departments')
+            ->select(DB::raw('id,name'))
+            ->get();
+
+        $doctors = DB::table('doctors')
+            ->select(DB::raw('id,name'))
+            ->get();
+
+
+
+
         $data = array(
             "religion" => $religion,
             "maritial_status" => $maritial_status,
             "nationality" => $nationality,
             "blood_group" => $bloodgroup,
             "hospital_plan" => $hospital_plan,
-            "occupation" => $occupation
+            "occupation" => $occupation,
+            "departments" => $departments,
+            "doctors" =>$doctors
         );
 
         return response()->json(['status' => true, 'data' => $data]);
@@ -621,8 +663,9 @@ class ApiController extends Controller
 
         $patient_id = $request->input('patient_id');
 
+
         $data = DB::table('visits')
-            ->leftJoin('patient_profile', 'patient_profile.patient_id', '=', 'visits.patient_id')
+            ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
             ->select(DB::raw('*'))
             ->where('visits.patient_id', $patient_id)
             ->get();
@@ -648,5 +691,28 @@ class ApiController extends Controller
 
     }
 
+    public function test_upload(Request $request)
+    {
 
-}
+        if ($request->file('patient_image')) {
+
+            if ($request->file('patient_image')->isValid()) {
+
+                $destinationPath = base_path() . '/public/uploaded_images'; // upload path
+                $extension = $request->file('patient_image')->getClientOriginalExtension(); // getting image extension
+                $fileName = time() . '.' . $extension; // renameing image
+
+                $request->file('patient_image')->move($destinationPath, $fileName); // uploading file to given path
+
+            }
+
+        }
+
+
+
+        dd('here');
+
+    }
+
+
+    }
