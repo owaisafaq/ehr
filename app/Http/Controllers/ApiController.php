@@ -569,6 +569,8 @@ class ApiController extends Controller
 
             $permanent_postalCode = $request->input('permanent_postalCode');
 
+            $currentdatetime = date("Y-m-d  H:i:s");
+
 
             DB::table('patient_address')->insert(
                 ['patient_id' => $patient_id,
@@ -590,6 +592,73 @@ class ApiController extends Controller
 
 
         }
+
+
+        return response()->json(['status' => true, 'message' => "Patient address registered successfully" , "patient_id"=>$patient_id]);
+
+    }
+
+
+    public function add_patient_kin(Request $request){
+
+
+        $patient_id =  $request->input('patient_id');
+
+        $kin_fullname = $request->input('kin_fullname');
+
+        $kin_middlename = $request->input('kin_middlename');
+
+        $kin_lastname = $request->input('kin_lastname');
+
+        $kin_relationship = $request->input('kin_relationship');
+
+        $others = $request->input('others');
+
+        $kin_phone_number = $request->input('kin_phone_number');
+
+        $kin_mobile_number = $request->input('kin_mobile_number');
+
+        $kin_email = $request->input('kin_email');
+
+        $kin_house_number = $request->input('kin_house_number');
+
+        $kin_street = $request->input('kin_street');
+
+        $kin_city = $request->input('kin_city');
+
+        $kin_state = $request->input('kin_state');
+
+        $kin_country = $request->input('kin_country');
+
+        $kin_postal_code = $request->input('kin_postal_code');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+        DB::table('patient_kin')->insert(
+            ['patient_id' => $patient_id,
+                'fullname' => $kin_fullname,
+                'middlename' => $kin_middlename,
+                'lastname' => $kin_lastname,
+                'relationship' => $kin_relationship,
+                'others' => $others,
+                'phone_number' => $kin_phone_number,
+                'mobile_number' => $kin_mobile_number,
+                'email' => $kin_email,
+                'house_number' => $kin_house_number,
+                'street' => $kin_street,
+                'city' => $kin_city,
+                'state' => $kin_state,
+                'country' => $kin_country,
+                'postal_code' => $kin_postal_code,
+                'created_at' => $currentdatetime
+
+            ]
+        );
+
+        return response()->json(['status' => true, 'message' => "Patient kin registered successfully" , "patient_id"=>$patient_id]);
+
+
 
     }
 

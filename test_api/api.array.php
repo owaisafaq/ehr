@@ -1,9 +1,9 @@
 <?php
 
 require 'api.class.php';
-define('HOST', 'http://131.107.100.10/ehr/public/api/');
+//define('HOST', 'http://131.107.100.10/ehr/public/api/');
 //define('HOST', 'http://localhost/ehr/public/api/');
-//define('HOST', 'http://demoz.online/ehr/public/api/');
+define('HOST', 'http://demoz.online/ehr/public/api/');
 define('APP', '');
 define('ROUTE', '');
 
@@ -173,7 +173,7 @@ $api_arr [] = $api;
 // Add Patient Address
 $api = new api();
 $api->name = "Add Patient Address";
-$api->url = HOST . 'add_patient';
+$api->url = HOST . 'add_patient_address';
 $api->method = "POST";
 $api->description = "Add Patient Address";
 $api->params->same_as_above = "0";
@@ -199,6 +199,37 @@ $api->params->token = "123";
 
 
 $api_arr [] = $api;
+
+
+
+
+// Add Patient Kin
+$api = new api();
+$api->name = "Add Patient Kin";
+$api->url = HOST . 'add_patient_kin';
+$api->method = "POST";
+$api->description = "Add Patient Kin";
+$api->params->patient_id = "1";
+$api->params->kin_fullname = "test";
+$api->params->kin_middlename = "test";
+$api->params->kin_lastname = "test";
+$api->params->kin_relationship = "test";
+$api->params->others = "tesr";
+$api->params->kin_phone_number = "021";
+$api->params->kin_mobile_number = "021";
+$api->params->kin_email = "test12@test.com";
+$api->params->kin_house_number = "21";
+$api->params->kin_street = "new street";
+$api->params->kin_city = "igbo";
+$api->params->kin_state = "Abia";
+$api->params->kin_country = "Nigeroa";
+$api->params->kin_postal_code = "021";
+$api->params->token = "123";
+
+
+$api_arr [] = $api;
+
+
 
 // Add Visit
 $api = new api();

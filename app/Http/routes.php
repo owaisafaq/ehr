@@ -38,6 +38,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->post('add_patient_address', 'App\Http\Controllers\ApiController@add_patient_address');
 
+    $app->post('add_patient_kin', 'App\Http\Controllers\ApiController@add_patient_kin');
+
     $app->post('add_visit' ,'App\Http\Controllers\ApiController@add_visit');
 
     $app->get('get_countries' ,'App\Http\Controllers\ApiController@get_countries');
