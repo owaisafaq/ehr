@@ -1,9 +1,9 @@
 <?php
 
 require 'api.class.php';
-define('HOST', 'http://131.107.100.10/ehr/public/api/');
+//define('HOST', 'http://131.107.100.10/ehr/public/api/');
 //define('HOST', 'http://localhost/ehr/public/api/');
-//define('HOST', 'http://demoz.online/ehr/public/api/');
+define('HOST', 'http://demoz.online/ehr/public/api/');
 define('APP', '');
 define('ROUTE', '');
 
@@ -23,7 +23,7 @@ $api->params->password = "1234";
 $api_arr [] = $api;
 
 
-// Login to app
+// Register User
 $api = new api();
 $api->name = "Register User";
 $api->url = HOST . 'register_user';
@@ -36,7 +36,7 @@ $api->params->role_id = "1";
 
 $api_arr [] = $api;
 
-// Login to app
+/*// Login to app
 $api = new api();
 $api->name = "Register Patient";
 $api->url = HOST . 'register_patient';
@@ -125,7 +125,110 @@ $api->params->description = "Need Financial Help for Brother";
 $api->params->token = "123";
 
 
+$api_arr [] = $api;*/
+
+
+
+
+
+// Add Patient
+$api = new api();
+$api->name = "Add Patient";
+$api->url = HOST . 'add_patient';
+$api->method = "POST";
+$api->description = "Add Patient";
+$api->params->first_name = "owais";
+$api->params->middle_name = "ahmed";
+$api->params->last_name = "imran";
+$api->params->date_of_birth = "18-02-1990";
+$api->params->age = "20";
+$api->params->sex = "1";
+$api->params->patient_image = "";
+$api->params->marital_status = "1";
+$api->params->religion = "1";
+$api->params->father_firstname = "ahmed";
+$api->params->father_middlename = "hassan";
+$api->params->father_lastname = "zai";
+$api->params->mother_firstname = "fouzai";
+$api->params->mother_middlename = "bibi";
+$api->params->mother_lastname = "khatoon";
+$api->params->refered_name = "james";
+$api->params->patient_unit_number = "190";
+$api->params->identity_type = "Nigerian";
+$api->params->identity_number = "1120";
+$api->params->patient_state = "test";
+$api->params->patient_local_goverment_area = "190";
+$api->params->tribe = "mangolian";
+$api->params->language = "english";
+$api->params->nationality = "1";
+$api->params->blood_group = "1";
+
+$api->params->token = "123";
+
+
 $api_arr [] = $api;
+
+
+
+// Add Patient Address
+$api = new api();
+$api->name = "Add Patient Address";
+$api->url = HOST . 'add_patient_address';
+$api->method = "POST";
+$api->description = "Add Patient Address";
+$api->params->same_as_above = "0";
+$api->params->patient_id = "1";
+$api->params->email = "test@test.com";
+$api->params->phone_number = "021212121";
+$api->params->mobile_number = "03335656563";
+$api->params->house_number = "21";
+$api->params->street = "1";
+$api->params->city = "1";
+$api->params->state = "1";
+$api->params->postal_code = "0021";
+$api->params->country = "1";
+$api->params->local_goverment_area = "1";
+$api->params->permanent_city = "1";
+$api->params->permanent_country = "1";
+$api->params->permanent_email = "test@test.com";
+$api->params->permanent_housenumber = "1";
+$api->params->permanent_mobilenumber = "1";
+$api->params->permanent_phonenumber = "1";
+$api->params->permanent_postalCode = "1";
+$api->params->token = "123";
+
+
+$api_arr [] = $api;
+
+
+
+
+// Add Patient Kin
+$api = new api();
+$api->name = "Add Patient Kin";
+$api->url = HOST . 'add_patient_kin';
+$api->method = "POST";
+$api->description = "Add Patient Kin";
+$api->params->patient_id = "1";
+$api->params->kin_fullname = "test";
+$api->params->kin_middlename = "test";
+$api->params->kin_lastname = "test";
+$api->params->kin_relationship = "test";
+$api->params->others = "tesr";
+$api->params->kin_phone_number = "021";
+$api->params->kin_mobile_number = "021";
+$api->params->kin_email = "test12@test.com";
+$api->params->kin_house_number = "21";
+$api->params->kin_street = "new street";
+$api->params->kin_city = "igbo";
+$api->params->kin_state = "Abia";
+$api->params->kin_country = "Nigeroa";
+$api->params->kin_postal_code = "021";
+$api->params->token = "123";
+
+
+$api_arr [] = $api;
+
 
 
 // Add Visit
@@ -223,6 +326,20 @@ $api->name = "Get Patient Vital Fields";
 $api->url = HOST . 'get_patient_vitals';
 $api->method = "GET";
 $api->description = "Get Patient Vital Fields";
+$api->params->token = "123";
+
+
+$api_arr [] = $api;
+
+
+
+// Get Patient Plans
+$api = new api();
+$api->name = "Get Patient Plans";
+$api->url = HOST . 'get_patient_plan';
+$api->method = "GET";
+$api->description = "get_patient_plan";
+$api->params->patient_id = "1";
 $api->params->token = "123";
 
 

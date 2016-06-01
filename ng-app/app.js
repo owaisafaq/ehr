@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR', [
     'ngRoute', 'ngResource',
-    'ngTouch', 'ui.grid', 'ui.grid.pagination'
+    'ngTouch', 'ui.grid', 'ui.grid.pagination', 'ngFileUpload'
 ]);
 
 AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
@@ -124,7 +124,6 @@ AppEHR.run(function ($rootScope, $location, $window) {
 
     $rootScope.logout = function () {
         $window.sessionStorage.clear();
-        console.log(1)
         $window.location.href = '#/login';
     }
 
