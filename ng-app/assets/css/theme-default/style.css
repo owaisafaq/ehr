@@ -1925,3 +1925,12 @@ Lab Report Lokoja
 .labels-width-con > div {
     margin-bottom: 10px !important;
 }
+.spacing-between-field{
+    margin-top: 50px;
+}
+.spacing-between-field > div{
+    margin-bottom: 20px;
+}
+.spacing-between-field .radio-styled{
+    margin-top: 10px !important;
+}
