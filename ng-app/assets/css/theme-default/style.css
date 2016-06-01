@@ -1463,7 +1463,7 @@ Patient Plan
     margin-top:0px;
     padding-right: 10px;
     border:1px solid red !important;
-    color: red;/*#999;*/
+    color: #f44336;/*#999;*/
 }
 .invalid{
     border: 1px solid #f44336 !important;
@@ -1490,6 +1490,19 @@ Patient Plan
 }
 .contry-code{
     width:10px;
+}
+.disabled-tabs{
+    pointer-events: none;
+}
+.alert{
+    padding: 10px 15px!important;
+}
+.alert-icon{
+    margin-right: 15px;
+}
+.patient-submit-btn{
+    padding: 15px 56px;
+    font-size: 16px;
 }
 /*-----------
 BED Occupancy

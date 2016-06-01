@@ -8,7 +8,8 @@ AppEHR.factory("AUTH", function ($resource) {
 AppEHR.factory("PatientInformation", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath +  'add_patient', params, {
-            save: {method: 'POST'}
+            save: {method: 'POST'},
+            update: {method: 'PUT'}
         });
         return res2;
     }
@@ -16,15 +17,74 @@ AppEHR.factory("PatientInformation", function ($resource) {
         save:function(params,body,success) {
           var res = getResource(params, body);  
           return res.save(params,body,success);
+        },
+        update:function(params,body,success) {
+          var res = getResource(params, body);  
+          return res.update(params,body,success);
         }
     };
     return patientRegistration;
 });
-/*AppEHR.factory("PatientRegistration", function ($resource) {
-    return $resource(serverPath +  'register_patient', {token: '@token', age: '@age'}, {
-        save: {method: 'POST'}
-    });
-});*/
+AppEHR.factory("PatientRegistrationAddress", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'add_patient_address', params, {
+            save: {method: 'POST'},
+            update: {method: 'PUT'}
+        });
+        return res2;
+    }
+    var patientRegistrationAddress = {
+        save:function(params,body,success) {
+          var res = getResource(params, body);  
+          return res.save(params,body,success);
+        },
+        update:function(params,body,success) {
+          var res = getResource(params, body);  
+          return res.update(params,body,success);
+        }
+    };
+    return patientRegistrationAddress;
+});
+AppEHR.factory("PatientRegistrationKin", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'add_patient_kin', params, {
+            save: {method: 'POST'},
+            update: {method: 'PUT'}
+        });
+        return res2;
+    }
+    var patientRegistrationKin = {
+        save:function(params,body,success) {
+          var res = getResource(params, body);  
+          return res.save(params,body,success);
+        },
+        update:function(params,body,success) {
+          var res = getResource(params, body);  
+          return res.update(params,body,success);
+        }
+    };
+    return patientRegistrationKin;
+});
+AppEHR.factory("PatientRegistrationEmployer", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'add_patient_employer', params, {
+            save: {method: 'POST'},
+            update: {method: 'PUT'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        save:function(params,body,success) {
+          var res = getResource(params, body);  
+          return res.save(params,body,success);
+        },
+        update:function(params,body,success) {
+          var res = getResource(params, body);  
+          return res.update(params,body,success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
 AppEHR.factory("Countries", function ($resource) {
     return $resource(serverPath +  'get_countries', {token: '@token'}, {
         get: {method: 'GET'}

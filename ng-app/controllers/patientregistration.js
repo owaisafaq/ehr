@@ -1,8 +1,8 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', 'PatientInformation', 'fileUpload', '$location', '$filter', 'Upload', '$timeout', function ($rootScope, $scope, $window, Countries, States, GetLocalGovermentArea, City, DropDownData, PatientInformation, fileUpload, $location, $filter, Upload, $timeout) {
+AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', 'PatientInformation', 'fileUpload', '$location', '$filter', 'Upload', '$timeout', 'PatientRegistrationAddress', 'PatientRegistrationKin', 'PatientRegistrationEmployer', function ($rootScope, $scope, $window, Countries, States, GetLocalGovermentArea, City, DropDownData, PatientInformation, fileUpload, $location, $filter, Upload, $timeout, PatientRegistrationAddress, PatientRegistrationKin, PatientRegistrationEmployer) {
     $rootScope.pageTitle = "EHR - Patient Registration";
-    $scope.PI = {};
+    $scope.PI = $rootScope.PI;
     $scope.myForm = {};
     $scope.counties = [];
     $scope.contactAddressCountries = [];
@@ -24,11 +24,33 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     $scope.PI.sameAsAbove = true;
     $('.hidePermanentAddress').slideUp(500);
     $scope.dropDownInfo = dropDownInfo;
+    $scope.disabledTabs = "disabled-tabs";
+    $scope.successMessage = false;
+    $scope.errorMessage = false;
+    $scope.successAddressMessage = false;
+    $scope.errorAddressMessage = false;
+    $scope.showSubmitButton = true;
+    $scope.showSubmitButtonAddress = true;
+    $scope.showSubmitButtonKin = true;
+    $scope.successKinMessage = false;
+    $scope.errorKinMessage = false;
+    $scope.showSubmitButtonEmployer = true;
+    $scope.successEmployerMessage = false;
+    $scope.errorEmployerMessage = false;
+    delete $window.sessionStorage.patient_id;
     //$scope.PI.identity_type = dropDownInfo.IdType[0].id;
     //$scope.PI.kin_relationship = dropDownInfo.relationship[0].id;
     //$scope.PI.dependant_relationship = dropDownInfo.relationship[0].id;
     //$scope.PI.principal_relationship = dropDownInfo.relationship[0].id;
     //$scope.PI.nhis_principal_relationship = dropDownInfo.relationship[0].id;
+
+    /*$rootScope.loadView = function(object) {
+    	$scope.PI = {};
+    	$scope.successMessage = false;
+	    $scope.errorMessage = false;
+	    $scope.showSubmitButton = true;
+	    delete $window.sessionStorage.patient_id;
+    }*/
 
     $scope.validateEmail = function (email) { 
         var re = /^(([^<>()[\]\\.,;:+-\s@\"]+(\.[^<>()[\]\\.,;:+-\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -273,55 +295,96 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     	}
     };
 
-    $scope.isDisabledAddress = function(){
-    	if($scope.validateEmail($scope.PI.email) && $scope.PI.phone_number != undefined && $scope.PI.phone_number != '' && $scope.PI.mobile_number != undefined && $scope.PI.mobile_number != '' && $scope.PI.email != undefined && $scope.PI.email != '' && $scope.PI.house_number != undefined && $scope.PI.house_number != '' && $scope.PI.street != undefined && $scope.PI.street != '' && $scope.PI.country != undefined && $scope.PI.country != 'null' && $scope.PI.state != undefined && $scope.PI.state != 'null' && $scope.PI.local_goverment_area != 'null' && $scope.PI.local_goverment_area != undefined && $scope.PI.city != undefined && $scope.PI.city != '' && $scope.PI.postal_code != undefined & $scope.PI.postal_code != ''){
-    		return false;
-    		//$scope.validateClass = "";
-    	}else{
-    		return true;
-    		//$scope.validateClass = "invalid";
-    	}
-    }
-
-    $scope.isDisabledInfo = function(){
-    	if($scope.PI.patient_unit_number != '' && $scope.PI.patient_unit_number != undefined){
-    		return false;
-    	}else{
-    		return true;
-    	}
-    }
-
     $scope.validatePatientInfo = function(PI){
-    	console.log($scope.PI.religion);
+    	console.log($window.sessionStorage.patient_id);
     	if(PI.first_name != undefined && PI.last_name != undefined && PI.date_of_birth != undefined && PI.age != undefined && PI.sex != undefined){
-			PatientInformation.save({
-				token: $window.sessionStorage.token,
-	    		patient_unit_number: $scope.PI.patient_unit_number == undefined ? '' : $scope.PI.patient_unit_number,
-	    		first_name: $scope.PI.first_name == undefined ? '' : $scope.PI.first_name,
-	    		middle_name: $scope.PI.middle_name == undefined ? '' : $scope.PI.middle_name,
-	    		last_name: $scope.PI.last_name == undefined ? '' : $scope.PI.last_name,
-	    		date_of_birth: $scope.PI.date_of_birth == undefined ? '' : $scope.PI.date_of_birth,
-	    		age: $scope.PI.age == undefined ? '' : $scope.PI.age,
-	    		sex: $scope.PI.sex == undefined ? '' : $scope.PI.sex,
-	    		patient_picture: $scope.PI.file == undefined ? '' : $scope.PI.file,
-	    		maritial_status: $scope.PI.maritial_status == undefined ? '' : $scope.PI.maritial_status,
-	    		patient_local_goverment_area: $scope.PI.patient_local_goverment_area == undefined ? '' : $scope.PI.patient_local_goverment_area,
-	    		religion: $scope.PI.religion == undefined ? '' : $scope.PI.religion,
-	    		identity_type: $scope.PI.identity_type == undefined ? '' : $scope.PI.identity_type,
-	    		identity_number: $scope.PI.identity_number == undefined ? '' : $scope.PI.identity_number,
-	    		patient_state: $scope.PI.patient_state == undefined ? '' : $scope.PI.patient_state,
-	    		tribe: $scope.PI.tribe == undefined ? '' : $scope.PI.tribe,
-	    		language: $scope.PI.language == undefined ? '' : $scope.PI.language,
-	    		nationality: $scope.PI.nationality == undefined ? '' : $scope.PI.nationality,
-	    		blood_group: $scope.PI.blood_group == undefined ? '' : $scope.PI.blood_group,
-			}, patientInformationSuccess, patientInformationFailed);
+    		if($window.sessionStorage.patient_id == undefined){
+				PatientInformation.save({
+					token: $window.sessionStorage.token,
+		    		patient_unit_number: $scope.PI.patient_unit_number == undefined ? '' : $scope.PI.patient_unit_number,
+		    		first_name: $scope.PI.first_name == undefined ? '' : $scope.PI.first_name,
+		    		middle_name: $scope.PI.middle_name == undefined ? '' : $scope.PI.middle_name,
+		    		last_name: $scope.PI.last_name == undefined ? '' : $scope.PI.last_name,
+		    		date_of_birth: $scope.PI.date_of_birth == undefined ? '' : $scope.PI.date_of_birth,
+		    		age: $scope.PI.age == undefined ? '' : $scope.PI.age,
+		    		sex: $scope.PI.sex == undefined ? '' : $scope.PI.sex,
+		    		patient_picture: $scope.PI.file == undefined ? '' : $scope.PI.file,
+		    		maritial_status: $scope.PI.maritial_status == undefined ? '' : $scope.PI.maritial_status,
+		    		patient_local_goverment_area: $scope.PI.patient_local_goverment_area == undefined ? '' : $scope.PI.patient_local_goverment_area,
+		    		religion: $scope.PI.religion == undefined ? '' : $scope.PI.religion,
+		    		identity_type: $scope.PI.identity_type == undefined ? '' : $scope.PI.identity_type,
+		    		identity_number: $scope.PI.identity_number == undefined ? '' : $scope.PI.identity_number,
+		    		patient_state: $scope.PI.patient_state == undefined ? '' : $scope.PI.patient_state,
+		    		tribe: $scope.PI.tribe == undefined ? '' : $scope.PI.tribe,
+		    		language: $scope.PI.language == undefined ? '' : $scope.PI.language,
+		    		nationality: $scope.PI.nationality == undefined ? '' : $scope.PI.nationality,
+		    		blood_group: $scope.PI.blood_group == undefined ? '' : $scope.PI.blood_group
+				}, patientInformationSuccess, patientInformationFailed);
+			}else{
+				console.log('else');
+				PatientInformation.update({
+					token: $window.sessionStorage.token,
+		    		patient_unit_number: $scope.PI.patient_unit_number == undefined ? '' : $scope.PI.patient_unit_number,
+		    		first_name: $scope.PI.first_name == undefined ? '' : $scope.PI.first_name,
+		    		middle_name: $scope.PI.middle_name == undefined ? '' : $scope.PI.middle_name,
+		    		last_name: $scope.PI.last_name == undefined ? '' : $scope.PI.last_name,
+		    		date_of_birth: $scope.PI.date_of_birth == undefined ? '' : $scope.PI.date_of_birth,
+		    		age: $scope.PI.age == undefined ? '' : $scope.PI.age,
+		    		sex: $scope.PI.sex == undefined ? '' : $scope.PI.sex,
+		    		patient_picture: $scope.PI.file == undefined ? '' : $scope.PI.file,
+		    		maritial_status: $scope.PI.maritial_status == undefined ? '' : $scope.PI.maritial_status,
+		    		patient_local_goverment_area: $scope.PI.patient_local_goverment_area == undefined ? '' : $scope.PI.patient_local_goverment_area,
+		    		religion: $scope.PI.religion == undefined ? '' : $scope.PI.religion,
+		    		identity_type: $scope.PI.identity_type == undefined ? '' : $scope.PI.identity_type,
+		    		identity_number: $scope.PI.identity_number == undefined ? '' : $scope.PI.identity_number,
+		    		patient_state: $scope.PI.patient_state == undefined ? '' : $scope.PI.patient_state,
+		    		tribe: $scope.PI.tribe == undefined ? '' : $scope.PI.tribe,
+		    		language: $scope.PI.language == undefined ? '' : $scope.PI.language,
+		    		nationality: $scope.PI.nationality == undefined ? '' : $scope.PI.nationality,
+		    		blood_group: $scope.PI.blood_group == undefined ? '' : $scope.PI.blood_group,
+				}, patientInfoUpdateSucess, patientInfoUpdateFailed);
+			}
 			function patientInformationSuccess(res){
 				console.log(res);
 				if(res.status == true){
 					$window.sessionStorage.patient_id = res.patient_id;
+					$scope.PI.patient_ID = "ID" + res.patient_id;
+					$scope.successMessage = true;
+					$scope.showSubmitButton = false;
+					$scope.disabledTabAdress = 'active';
+					$scope.disabledTabInfo = '';
+					timer = $timeout(function () {
+			            $scope.successMessage = false;
+			        }, 5000);
+					$scope.disabledTabs = "";
+				}else{
+					$scope.errorMessage = true;
+					$scope.showSubmitButton = true;
+					timer = $timeout(function () {
+			            $scope.errorMessage = false;
+			        }, 5000);
 				}
 			}
+
 			function patientInformationFailed(error){
+				console.log(error);
+			}
+
+			function patientInfoUpdateSucess(res){
+				console.log(res);
+				if(res.status == true){
+					timer = $timeout(function () {
+			            $scope.successMessage = false;
+			        }, 5000);
+				}else{
+					$scope.showSubmitButton = true;
+					timer = $timeout(function () {
+			            $scope.errorMessage = false;
+			        }, 5000);
+				}
+			}
+
+			function patientInfoUpdateFailed(error){
 				console.log(error);
 			}
 		}
@@ -329,17 +392,269 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
     $scope.validatePatientAddress = function(PI){
     	console.log(PI);
-    	if($scope.validateEmail(PI.email)){
-    		$scope.validateClass = "";
-    	}else{
-    		$scope.validateClass = "invalid";
-    	}
-    	/*if(angular.equals({}, PI)){
-    		console.log(1111);
-    	}else{
-    		console.log(PI);
-    		console.log(angular.equals({}, PI));
-    	}*/
+    	if($scope.address_id == undefined){
+    		console.log('if');
+			PatientRegistrationAddress.save({
+				token: $window.sessionStorage.token,
+				patient_id: $window.sessionStorage.patient_id,
+	    		phone_number: $scope.PI.phone_number == undefined ? '' : $scope.PI.phone_number,
+	    		mobile_number: $scope.PI.mobile_number == undefined ? '' : $scope.PI.mobile_number,
+	    		house_number: $scope.PI.house_number == undefined ? '' : $scope.PI.house_number,
+	    		street: $scope.PI.street == undefined ? '' : $scope.PI.street,
+	    		state: $scope.PI.state == undefined ? '' : $scope.PI.state,
+	    		city: $scope.PI.city == undefined ? '' : $scope.PI.city,
+	    		email: $scope.PI.email == undefined ? '' : $scope.PI.email,
+	    		postal_code: $scope.PI.postal_code == undefined ? '' : $scope.PI.postal_code,
+	    		local_goverment_area: $scope.PI.local_goverment_area == undefined ? '' : $scope.PI.local_goverment_area,
+	    		same_as_above: $scope.PI.same_as_above == undefined ? '' : $scope.PI.same_as_above,
+	    		permanent_phonenumber: $scope.PI.permanent_phonenumber == undefined ? '' : $scope.PI.permanent_phonenumber,
+	    		permanent_mobilenumber: $scope.PI.permanent_mobilenumber == undefined ? '' : $scope.PI.permanent_mobilenumber,
+	    		permanent_email: $scope.PI.permanent_email == undefined ? '' : $scope.PI.permanent_email,
+	    		permanent_housenumber: $scope.PI.permanent_housenumber == undefined ? '' : $scope.PI.permanent_housenumber,
+	    		permanent_street: $scope.PI.permanent_street == undefined ? '' : $scope.PI.permanent_street,
+	    		permanent_country: $scope.PI.permanent_country == undefined ? '' : $scope.PI.permanent_country,
+	    		patient_city: $scope.PI.patient_city == undefined ? '' : $scope.PI.patient_city,
+	    		permanent_state: $scope.PI.permanent_state == undefined ? '' : $scope.PI.permanent_state,
+	    		permanent_postalCode: $scope.PI.permanent_postalCode == undefined ? '' : $scope.PI.permanent_postalCode
+			}, patientAddressSuccess, patientAddressFailed);
+			function patientAddressSuccess(res){
+				console.log(res);
+				if(res.status == true){
+					$window.sessionStorage.patient_id = res.patient_id;
+					$scope.address_id = res.address_id;
+					$scope.successMessage = true;
+					$scope.showSubmitButton = false;
+					$scope.disabledTabKin = 'active';
+					$scope.disabledTabAdress = '';
+					timer = $timeout(function () {
+			            $scope.successMessage = false;
+			        }, 5000);
+					$scope.disabledTabs = "";
+				}else{
+					$scope.errorMessage = true;
+					$scope.showSubmitButton = true;
+					timer = $timeout(function () {
+			            $scope.errorMessage = false;
+			        }, 5000);
+				}
+			}
+
+			function patientAddressFailed(error){
+				console.log(error);
+			}
+		}else{
+			console.log('else');
+			PatientRegistrationAddress.update({
+				token: $window.sessionStorage.token,
+				patient_id: $window.sessionStorage.patient_id,
+				address_id: $window.sessionStorage.address_id,
+	    		phone_number: $scope.PI.phone_number == undefined ? '' : $scope.PI.phone_number,
+	    		mobile_number: $scope.PI.mobile_number == undefined ? '' : $scope.PI.mobile_number,
+	    		house_number: $scope.PI.house_number == undefined ? '' : $scope.PI.house_number,
+	    		street: $scope.PI.street == undefined ? '' : $scope.PI.street,
+	    		state: $scope.PI.state == undefined ? '' : $scope.PI.state,
+	    		city: $scope.PI.city == undefined ? '' : $scope.PI.city,
+	    		email: $scope.PI.email == undefined ? '' : $scope.PI.email,
+	    		postal_code: $scope.PI.postal_code == undefined ? '' : $scope.PI.postal_code,
+	    		local_goverment_area: $scope.PI.local_goverment_area == undefined ? '' : $scope.PI.local_goverment_area,
+	    		same_as_above: $scope.PI.same_as_above == undefined ? '' : $scope.PI.same_as_above,
+	    		permanent_phonenumber: $scope.PI.permanent_phonenumber == undefined ? '' : $scope.PI.permanent_phonenumber,
+	    		permanent_mobilenumber: $scope.PI.permanent_mobilenumber == undefined ? '' : $scope.PI.permanent_mobilenumber,
+	    		permanent_email: $scope.PI.permanent_email == undefined ? '' : $scope.PI.permanent_email,
+	    		permanent_housenumber: $scope.PI.permanent_housenumber == undefined ? '' : $scope.PI.permanent_housenumber,
+	    		permanent_street: $scope.PI.permanent_street == undefined ? '' : $scope.PI.permanent_street,
+	    		permanent_country: $scope.PI.permanent_country == undefined ? '' : $scope.PI.permanent_country,
+	    		patient_city: $scope.PI.patient_city == undefined ? '' : $scope.PI.patient_city,
+	    		permanent_state: $scope.PI.permanent_state == undefined ? '' : $scope.PI.permanent_state,
+	    		permanent_postalCode: $scope.PI.permanent_postalCode == undefined ? '' : $scope.PI.permanent_postalCode
+			}, patientAddressUpdateSucess, patientAddressUpdateFailed);
+			function patientAddressUpdateSucess(res){
+				console.log(res);
+				if(res.status == true){
+					$scope.successAddressMessage = true;
+					$scope.showSubmitButtonAddress = false;
+					timer = $timeout(function () {
+			            $scope.successAddressMessage = false;
+			        }, 5000);
+					$scope.disabledTabs = "";
+				}else{
+					$scope.errorMessage = true;
+					$scope.showSubmitButtonAddress = true;
+					timer = $timeout(function () {
+			            $scope.errorAddressMessage = false;
+			        }, 5000);
+				}
+			}
+
+			function patientAddressUpdateFailed(error){
+				console.log(error);
+			}
+		}
+    }
+
+    $scope.validatePatientKin = function(PI){
+    	alert();
+    	console.log(PI);
+    	if($scope.kin_id == undefined){
+    		console.log('if');
+			PatientRegistrationKin.save({
+				token: $window.sessionStorage.token,
+				patient_id: $window.sessionStorage.patient_id,
+	    		kin_fullname: $scope.PI.kin_fullname == undefined ? '' : $scope.PI.kin_fullname,
+	    		kin_middlename: $scope.PI.kin_middlename == undefined ? '' : $scope.PI.kin_middlename,
+	    		kin_lastname: $scope.PI.kin_lastname == undefined ? '' : $scope.PI.kin_lastname,
+	    		kin_relationship: $scope.PI.kin_relationship == undefined ? '' : $scope.PI.kin_relationship,
+	    		others: $scope.PI.others == undefined ? '' : $scope.PI.others,
+	    		kin_phone_number: $scope.PI.kin_phone_number == undefined ? '' : $scope.PI.kin_phone_number,
+	    		kin_mobile_number: $scope.PI.kin_mobile_number == undefined ? '' : $scope.PI.kin_mobile_number,
+	    		kin_email: $scope.PI.kin_email == undefined ? '' : $scope.PI.kin_email,
+	    		kin_house_number: $scope.PI.kin_house_number == undefined ? '' : $scope.PI.kin_house_number,
+	    		kin_street: $scope.PI.kin_street == undefined ? '' : $scope.PI.kin_street,
+	    		kin_country: $scope.PI.kin_country == undefined ? '' : $scope.PI.kin_country,
+	    		kin_state: $scope.PI.kin_state == undefined ? '' : $scope.PI.kin_state,
+	    		kin_city: $scope.PI.kin_city == undefined ? '' : $scope.PI.kin_city,
+	    		kin_postal_code: $scope.PI.kin_postal_code == undefined ? '' : $scope.PI.kin_postal_code
+			}, patientKinSuccess, patientKinFailed);
+			function patientKinSuccess(res){
+				console.log(res);
+				if(res.status == true){
+					$scope.kin_id = res.kin_id;
+					$scope.showSubmitButtonKin = false;
+					$scope.disabledTabEmployer = 'active';
+					$scope.disabledTabKin = '';
+					//$scope.disabledTabs = "";
+				}else{
+					$scope.errorKinMessage = true;
+					$scope.showSubmitButtonKin = true;
+					timer = $timeout(function () {
+			            $scope.errorKinMessage = false;
+			        }, 5000);
+				}
+			}
+
+			function patientKinFailed(error){
+				console.log(error);
+			}
+		}else{
+			console.log('else');
+			PatientRegistrationKin.update({
+				token: $window.sessionStorage.token,
+				patient_id: $window.sessionStorage.patient_id,
+	    		kin_fullname: $scope.PI.kin_fullname == undefined ? '' : $scope.PI.kin_fullname,
+	    		kin_middlename: $scope.PI.kin_middlename == undefined ? '' : $scope.PI.kin_middlename,
+	    		kin_lastname: $scope.PI.kin_lastname == undefined ? '' : $scope.PI.kin_lastname,
+	    		kin_relationship: $scope.PI.kin_relationship == undefined ? '' : $scope.PI.kin_relationship,
+	    		others: $scope.PI.others == undefined ? '' : $scope.PI.others,
+	    		kin_phone_number: $scope.PI.kin_phone_number == undefined ? '' : $scope.PI.kin_phone_number,
+	    		kin_mobile_number: $scope.PI.kin_mobile_number == undefined ? '' : $scope.PI.kin_mobile_number,
+	    		kin_email: $scope.PI.kin_email == undefined ? '' : $scope.PI.kin_email,
+	    		kin_house_number: $scope.PI.kin_house_number == undefined ? '' : $scope.PI.kin_house_number,
+	    		kin_street: $scope.PI.kin_street == undefined ? '' : $scope.PI.kin_street,
+	    		kin_country: $scope.PI.kin_country == undefined ? '' : $scope.PI.kin_country,
+	    		kin_state: $scope.PI.kin_state == undefined ? '' : $scope.PI.kin_state,
+	    		kin_city: $scope.PI.kin_city == undefined ? '' : $scope.PI.kin_city,
+	    		kin_postal_code: $scope.PI.kin_postal_code == undefined ? '' : $scope.PI.kin_postal_code
+			}, patientKinUpdateSucess, patientKinUpdateFailed);
+			function patientKinUpdateSucess(res){
+				console.log(res);
+				if(res.status == true){
+					$scope.showSubmitButtonAddress = false;
+					$scope.disabledTabs = "";
+				}else{
+					$scope.errorKinMessage = true;
+					$scope.showSubmitButtonKin = true;
+					timer = $timeout(function () {
+			            $scope.errorKinMessage = false;
+			        }, 5000);
+				}
+			}
+
+			function patientKinUpdateFailed(error){
+				console.log(error);
+			}
+		}
+    }
+
+    $scope.validatePatientEmployer = function(PI){
+    	console.log(PI);
+    	if($scope.employer_id == undefined){
+    		console.log('if');
+			PatientRegistrationEmployer.save({
+				token: $window.sessionStorage.token,
+				patient_id: $window.sessionStorage.patient_id,
+	    		kin_fullname: $scope.PI.kin_fullname == undefined ? '' : $scope.PI.kin_fullname,
+	    		kin_middlename: $scope.PI.kin_middlename == undefined ? '' : $scope.PI.kin_middlename,
+	    		kin_lastname: $scope.PI.kin_lastname == undefined ? '' : $scope.PI.kin_lastname,
+	    		kin_relationship: $scope.PI.kin_relationship == undefined ? '' : $scope.PI.kin_relationship,
+	    		others: $scope.PI.others == undefined ? '' : $scope.PI.others,
+	    		kin_phone_number: $scope.PI.kin_phone_number == undefined ? '' : $scope.PI.kin_phone_number,
+	    		kin_mobile_number: $scope.PI.kin_mobile_number == undefined ? '' : $scope.PI.kin_mobile_number,
+	    		kin_email: $scope.PI.kin_email == undefined ? '' : $scope.PI.kin_email,
+	    		kin_house_number: $scope.PI.kin_house_number == undefined ? '' : $scope.PI.kin_house_number,
+	    		kin_street: $scope.PI.kin_street == undefined ? '' : $scope.PI.kin_street,
+	    		kin_country: $scope.PI.kin_country == undefined ? '' : $scope.PI.kin_country,
+	    		kin_state: $scope.PI.kin_state == undefined ? '' : $scope.PI.kin_state,
+	    		kin_city: $scope.PI.kin_city == undefined ? '' : $scope.PI.kin_city,
+	    		kin_postal_code: $scope.PI.kin_postal_code == undefined ? '' : $scope.PI.kin_postal_code
+			}, patientEmployerSuccess, patientEmployerFailed);
+			function patientEmployerSuccess(res){
+				console.log(res);
+				if(res.status == true){
+					$scope.employer_id = res.employer_id;
+					$scope.showSubmitButtonEmployer = false;
+					$scope.disabledTabPatientPlant = 'active';
+					$scope.disabledTabEmployer = '';
+					//$scope.disabledTabs = "";
+				}else{
+					$scope.errorEmployerMessage = true;
+					$scope.showSubmitButtonEmployer = true;
+					timer = $timeout(function () {
+			            $scope.errorEmployerMessage = false;
+			        }, 5000);
+				}
+			}
+
+			function patientEmployerFailed(error){
+				console.log(error);
+			}
+		}else{
+			console.log('else');
+			PatientRegistrationEmployer.update({
+				token: $window.sessionStorage.token,
+				patient_id: $window.sessionStorage.patient_id,
+	    		kin_fullname: $scope.PI.kin_fullname == undefined ? '' : $scope.PI.kin_fullname,
+	    		kin_middlename: $scope.PI.kin_middlename == undefined ? '' : $scope.PI.kin_middlename,
+	    		kin_lastname: $scope.PI.kin_lastname == undefined ? '' : $scope.PI.kin_lastname,
+	    		kin_relationship: $scope.PI.kin_relationship == undefined ? '' : $scope.PI.kin_relationship,
+	    		others: $scope.PI.others == undefined ? '' : $scope.PI.others,
+	    		kin_phone_number: $scope.PI.kin_phone_number == undefined ? '' : $scope.PI.kin_phone_number,
+	    		kin_mobile_number: $scope.PI.kin_mobile_number == undefined ? '' : $scope.PI.kin_mobile_number,
+	    		kin_email: $scope.PI.kin_email == undefined ? '' : $scope.PI.kin_email,
+	    		kin_house_number: $scope.PI.kin_house_number == undefined ? '' : $scope.PI.kin_house_number,
+	    		kin_street: $scope.PI.kin_street == undefined ? '' : $scope.PI.kin_street,
+	    		kin_country: $scope.PI.kin_country == undefined ? '' : $scope.PI.kin_country,
+	    		kin_state: $scope.PI.kin_state == undefined ? '' : $scope.PI.kin_state,
+	    		kin_city: $scope.PI.kin_city == undefined ? '' : $scope.PI.kin_city,
+	    		kin_postal_code: $scope.PI.kin_postal_code == undefined ? '' : $scope.PI.kin_postal_code
+			}, patientKinUpdateSucess, patientKinUpdateFailed);
+			function patientKinUpdateSucess(res){
+				console.log(res);
+				if(res.status == true){
+					$scope.showSubmitButtonAddress = false;
+					$scope.disabledTabs = "";
+				}else{
+					$scope.errorKinMessage = true;
+					$scope.showSubmitButtonKin = true;
+					timer = $timeout(function () {
+			            $scope.errorKinMessage = false;
+			        }, 5000);
+				}
+			}
+
+			function patientKinUpdateFailed(error){
+				console.log(error);
+			}
+		}
     }
 
     $scope.calculateAge = function(birthday) { // birthday is a date
