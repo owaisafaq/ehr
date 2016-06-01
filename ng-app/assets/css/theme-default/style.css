@@ -1915,3 +1915,35 @@ Lab Report Parasitology
 .check-with-field .checkbox-styled:not(ie8) input ~ span:before,.check-with-field .radio-styled:not(ie8) input ~ span:before {
     border: 2px solid #ddecf8;
 }
+/*--------------
+Lab Report Lokoja
+-----------------*/
+.labels-width-con label{
+    width: auto;
+    float: left;
+    font-family: 'SegoeUI-reg';
+}
+.labels-width-con .txt-style-3_a{
+    font-size: 14px;    
+}
+.labels-width-con .col-xs-3{
+    width: 27.5%;
+}
+.labels-width-con input[type=text]{
+    margin-right: 0;
+}
+.labels-width-con > div:first-child {
+    margin-bottom: 10px !important;
+}
+.labels-width-con > div {
+    margin-bottom: 10px !important;
+}
+.spacing-between-field{
+    margin-top: 50px;
+}
+.spacing-between-field > div{
+    margin-bottom: 20px;
+}
+.spacing-between-field .radio-styled{
+    margin-top: 10px !important;
+}
