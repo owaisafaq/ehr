@@ -5,9 +5,9 @@ AppEHR.factory("AUTH", function ($resource) {
         get: {method: 'POST'}
     });
 });
-AppEHR.factory("PatientRegistration", function ($resource) {
+AppEHR.factory("PatientInformation", function ($resource) {
     function getResource(params, body) {
-        var res2 = $resource(serverPath +  'register_patient', params, {
+        var res2 = $resource(serverPath +  'add_patient', params, {
             save: {method: 'POST'}
         });
         return res2;
