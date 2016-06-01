@@ -23,7 +23,7 @@ $api->params->password = "1234";
 $api_arr [] = $api;
 
 
-// Login to app
+// Register User
 $api = new api();
 $api->name = "Register User";
 $api->url = HOST . 'register_user';
@@ -177,7 +177,7 @@ $api->url = HOST . 'add_patient';
 $api->method = "POST";
 $api->description = "Add Patient Address";
 $api->params->same_as_above = "0";
-$api->params->patient_id = "0";
+$api->params->patient_id = "1";
 $api->params->email = "test@test.com";
 $api->params->phone_number = "021212121";
 $api->params->mobile_number = "03335656563";

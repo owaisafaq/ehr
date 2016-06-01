@@ -503,6 +503,96 @@ class ApiController extends Controller
 
     }
 
+
+    public function add_patient_address(Request $request){
+
+
+
+        $patient_id =  $request->input('patient_id');
+
+        $same_as_above = $request->input('same_as_above');
+
+        $email = $request->input('email');
+
+        $phone_number = $request->input('phone_number');
+
+        $mobile_number = $request->input('mobile_number');
+
+        $house_number = $request->input('house_number');
+
+        $street = $request->input('street');
+
+        $city = $request->input('city');
+
+        $state = $request->input('state');
+
+        $country = $request->input('country');
+
+        $local_goverment_area = $request->input('local_goverment_area');
+
+        $postal_code = $request->input('postal_code');
+
+
+        DB::table('patient_address')->insert(
+            ['patient_id' => $patient_id,
+                'email' => $email,
+                'address_type' => 'contact',
+                'phone_number' => $phone_number,
+                'mobile_number' => $mobile_number,
+                'house_number' => $house_number,
+                'street' => $street,
+                'city' => $city,
+                'state' => $state,
+                'country' => $country,
+                'local_goverment_area' => $local_goverment_area,
+                'postal_code' => $postal_code,
+                'created_at' => $currentdatetime
+
+            ]
+        );
+
+
+        if ($same_as_above == 1) {
+
+
+            $permanent_city = $request->input('permanent_city');
+
+            $permanent_country = $request->input('permanent_country');
+
+            $permanent_email = $request->input('permanent_email');
+
+            $permanent_housenumber = $request->input('permanent_housenumber');
+
+            $permanent_mobilenumber = $request->input('permanent_mobilenumber');
+
+            $permanent_phonenumber = $request->input('permanent_phonenumber');
+
+            $permanent_postalCode = $request->input('permanent_postalCode');
+
+
+            DB::table('patient_address')->insert(
+                ['patient_id' => $patient_id,
+                    'email' => $permanent_email,
+                    'address_type' => 'permanent',
+                    'phone_number' => $permanent_phonenumber,
+                    'mobile_number' => $permanent_mobilenumber,
+                    'house_number' => $permanent_housenumber,
+                    'street' => '',
+                    'city' => $permanent_city,
+                    'state' => '',
+                    'country' => $permanent_country,
+                    'local_goverment_area' => '',
+                    'postal_code' => $permanent_postalCode,
+                    'created_at' => $currentdatetime
+
+                ]
+            );
+
+
+        }
+
+    }
+
     public function register_user(Request $request)
     {
 
