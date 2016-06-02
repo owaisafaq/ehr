@@ -2,30 +2,36 @@
     <section>
         <div class="card custom-card no-padding">
             <div class="card-head">
-                <ul class="nav nav-tabs nav-justified custom-tab" data-toggle="tabs">
-                    <li class="active"><a showtab href="#info">patient information</a></li>
-                    <li><a showtab href="#address">address</a></li>
-                    <li><a showtab href="#kin">next of kin</a></li>
-                    <li><a showtab href="#employer">employer</a></li>
-                    <li><a showtab href="#plan">patient plan</a></li>
-                    <li><a showtab href="#archive">archive</a></li>
+                <ul class="nav nav-tabs nav-justified custom-tab " data-toggle="tabs" ng-init="disabledTabInfo='active';disabledTabAdress='disabled-tabs'; disabledTabKin='disabled-tabs'; disabledTabEmployer='disabled-tabs'; disabledTabPatientPlant='disabled-tabs'; disabledTabArchive='disabled-tabs';">
+                    <li class="{{disabledTabInfo}}"><a showtab href="#info">patient information</a></li>
+                    <li class="{{disabledTabAdress}}"><a showtab href="#address">address</a></li>
+                    <li class="{{disabledTabKin}}"><a showtab href="#kin">next of kin</a></li>
+                    <li class="{{disabledTabEmployer}}"><a showtab href="#employer">employer</a></li>
+                    <li class="{{disabledTabPatientPlant}}"><a showtab href="#plan">patient plan</a></li>
+                    <li class="{{disabledTabArchive}}"><a showtab href="#archive">archive</a></li>
                 </ul>
             </div><!--end .card-head -->
             <div class="card-body tab-content">
-                <div class="tab-pane" id="info">
+                <div class="tab-pane {{disabledTabInfo}}" id="info">
+                    <!-- <div class="alert alert-success" role="alert" ng-show="successMessage">
+                        <i class="fa fa-check alert-icon"></i> Patient Successfully Added.
+                    </div>
+                    <div class="alert alert-danger" role="alert" ng-show="errorMessage">
+                        <i class="fa fa-times alert-icon" aria-hidden="true"></i> Failed to Add Patient.
+                    </div> -->
                     <form class="custom-form" name="userForm1" ng-model="myForm" novalidate ng-submit="validatePatientInfo(PI);">
                         <div class="row">
                             <div class="col-lg-3">
                                 <label>Patient ID</label>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" placeholder="ID1234435656" disabled ng-model="PI.patient_ID"/>
+                                <input type="text" numbers-only placeholder="Patient ID" ng-model="PI.patient_ID"/>
                             </div>
                             <div class="col-lg-3">
                                 <label>Unit Number</label>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" numbers-only placeholder="Unit Numbers" name="patient_unit_number" ng-model="myForm.patient_unit_number" required/>
+                                <input type="text" numbers-only placeholder="Unit Numbers" name="patient_unit_number" ng-model="PI.patient_unit_number" required/>
                             </div>
                             <div class="col-lg-3">
                                 <label>Full Name</label>
@@ -198,13 +204,19 @@
                             </div>
                         </div>
                         <div class="clear">
-                            <button type="submit" class="btn btn-default button-style-1 float-right btn-big" ng-click="submitted = true;
-                                    " value="Next">Save</button>
+                            <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-click="submitted=true; " value="Next" ng-show="showSubmitButton">Save</button>
+                            <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-click="submitted=true; " value="Next" ng-hide="showSubmitButton">Update</button>
                         </div>
                     </form>
                 </div>
-                <div class="tab-pane" id="address">
-                    <form class="custom-form" name="userForm" novalidate>
+                <div class="tab-pane {{disabledTabAdress}}" id="address">
+                    <!-- <div class="alert alert-success" role="alert" ng-show="successAddressMessage">
+                        <i class="fa fa-check alert-icon"></i> Patient Address Successfully Added.
+                    </div>
+                    <div class="alert alert-danger" role="alert" ng-show="errorAddressMessage">
+                        <i class="fa fa-times alert-icon" aria-hidden="true"></i> Failed to Add Patient Address.
+                    </div> -->
+                    <form class="custom-form" name="userForm" novalidate ng-submit="validatePatientAddress(PI);">
                         <div class="row">
                             <div class="col-lg-12">
                                 <label class="label-style">Contact Address</label>
@@ -224,11 +236,6 @@
                             <div class="col-lg-3">
                                 <input type="text" numbers-only placeholder="Mobile Number" name="mobile_number" ng-model="PI.mobile_number" my-Maxlength="11" required/>
                             </div>
-                            <div class="col-lg-3" ng-class="{
-                                    'has-error'
-                                            : userForm.email.$invalid && !userForm.email.$pristine }">
-                                <input type="email" placeholder="Email" ng-blur="validatePatientInfo(PI);" name="email" ng-model="PI.email"/> 
-                                <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
                             </div>
 
                             <div class="col-lg-3">
@@ -352,13 +359,20 @@
                             </div>
                         </div>
                         <div class="clear">
-                            <button type="button" class="btn btn-default button-style-1 float-right" ng-click="submitted = true;
-                                    validatePatientInfo(PI);" value="Next" >Next</button>
+                            <div class="col-lg-3">
+                                <input type="email" placeholder="Email" name="email" ng-model="PI.email" required/> 
+                                 
                         </div>
                     </form>
                 </div>
-                <div class="tab-pane" id="kin">
-                    <form class="custom-form">
+                <div class="tab-pane {{disabledTabKin}}" id="kin">
+                    <!-- <div class="alert alert-success" role="alert" ng-show="successMessage">
+                        <i class="fa fa-check alert-icon"></i> Next to Kin Successfully Added.
+                    </div>
+                    <div class="alert alert-danger" role="alert" ng-show="errorMessage">
+                        <i class="fa fa-times alert-icon" aria-hidden="true"></i> Failed to Add Next to Kin.
+                    </div> -->
+                    <form class="custom-form" name="userForm2" novalidate ng-submit="validatePatientKin(PI);">
                         <div class="row">
                             <div class="col-lg-3">
                                 <label>Full Name</label>
@@ -378,16 +392,6 @@
                             </div>
                             <div class="col-lg-3">
                                 <select class="form-control select_searchFields" ng-model="PI.kin_relationship">
-                                    <option>Relationship</option>
-                                    <option ng-repeat="relation in dropDownInfo.relationship" value="{{relation.id}}">
-                                        {{relation.type}}</option>
-                                    <!-- <option>Relationship</option>
-                                    <option vaule="1">Brother</option>
-                                    <option value="2">Father</option>
-                                    <option value="3">Hansband</option>
-                                    <option value="4">Mother</option>
-                                    <option value="5">Sister</option>
-                                    <option value="6">Wife</option> -->
                                 </select>
                             </div>
                             <div class="col-lg-6">
@@ -448,9 +452,13 @@
                             </div>
                         </div>
                     </form>
+                    <div class="clear">
+                        <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-show="showSubmitButtonKin" ng-click="validatePatientKin(PI);">Save</button>
+                        <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" value="Next" ng-hide="showSubmitButtonKin">Update</button>
+                    </div>
                 </div>
-                <div class="tab-pane" id="employer">
-                    <form class="custom-form">
+                <div class="tab-pane {{disabledTabEmployer}}" id="employer">
+                    <form class="custom-form" name="userForm" novalidate ng-submit="validatePatientEmployer(PI);">
                         <div class="row">
                             <div class="col-lg-3">
                                 <label>Employer</label>
@@ -519,8 +527,13 @@
                             </div>
                         </div>
                     </form>
+                    <div class="clear">
+                        <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-show="showSubmitButtonEmployer" ng-click="validatePatientEmployer(PI);">Save</button>
+                        <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" value="Next" ng-hide="showSubmitButtonEmployer">Update</button>
+                    </div>
                 </div>
-                <div class="tab-pane active" id="plan">
+                            <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" value="Next" ng-show="showSubmitButtonAddress">Save</button>
+                            <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" value="Next" ng-hide="showSubmitButtonAddress">Update</button>
                     <form class="custom-form">
                         <div class="col-lg-12 margin-bottom-xxl no-padding">
                             <label class="label-style">Select Plan</label>
@@ -624,7 +637,13 @@
 
                     </form>
                 </div>
-                <div class="tab-pane" id="archive">
+                <div class="tab-pane {{disabledTabArchive}}" id="archive">
+                    <div class="alert alert-success" role="alert" ng-show="successMessage">
+                        <i class="fa fa-check alert-icon"></i> Patient Successfully Added.
+                    </div>
+                    <div class="alert alert-danger" role="alert" ng-show="errorMessage">
+                        <i class="fa fa-times alert-icon" aria-hidden="true"></i> Failed to Add Patient.
+                    </div>
                     <div class="icons_con">
                         <a class="edit button-custom" href=""></a>
                         <a class="delete button-custom" href=""></a>

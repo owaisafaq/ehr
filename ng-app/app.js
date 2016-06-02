@@ -48,7 +48,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/patient-listing.html',
                     controller: 'patientListingController'
                 }).
-                when('/patient-registration', {
+                when('/patient-registration/', {
                     templateUrl: 'views/patient-registration.html',
                     controller: 'patientRegistrationController'
                 }).
@@ -113,19 +113,28 @@ AppEHR.run(function ($rootScope, $location, $window) {
         }
         $rootScope.userName = $window.sessionStorage.name;
         $rootScope.loginCheck = $location.$$path == '/login' || $location.$$path == '/' ? true : false;
-//       if ($window.sessionStorage.email != undefined && $window.sessionStorage.email != 'undefined' && $window.sessionStorage.token != undefined && window.sessionStorage.token != 'undefined' && $window.sessionStorage.role_id != undefined && window.sessionStorage.role_id != 'undefined') {
-//           var path = $location.$$path;
-//           if ((path == "/login" || path == "/") && path != undefined) {
-//               $location.path("patient-registration");
-//           }
-//       } else
-//           $location.path("login");
+      if ($window.sessionStorage.email != undefined && $window.sessionStorage.email != 'undefined' && $window.sessionStorage.token != undefined && window.sessionStorage.token != 'undefined' && $window.sessionStorage.role_id != undefined && window.sessionStorage.role_id != 'undefined') {
+          var path = $location.$$path;
+          if ((path == "/login" || path == "/") && path != undefined) {
+              $location.path("patient-registration");
+          }
+      } else
+          $location.path("login");
     });
 
     $rootScope.logout = function () {
         $window.sessionStorage.clear();
         $window.location.href = '#/login';
     }
+    $rootScope.PI = {};
+
+    /*$rootScope.loadView = function(object) {
+        object = {};
+    }*/
+
+/*    $rootScope.loadView = function() {
+        $window.location.reload();
+    }*/
 
     $rootScope.$on('$viewContentLoaded', function () {
         //$('body').append('<script src="assets/js/libs/bootstrap/bootstrap.min.js"></script><script src="assets/js/libs/spin.js/spin.min.js"></script><script src="assets/js/libs/autosize/jquery.autosize.min.js"></script><script src="assets/js/libs/nanoscroller/jquery.nanoscroller.min.js"></script><script src="assets/js/core/source/App.js"></script><script src="assets/js/core/source/AppNavigation.js"></script><script src="assets/js/core/source/AppOffcanvas.js"></script><script src="assets/js/core/source/AppCard.js"></script><script src="assets/js/core/source/AppForm.js"></script><script src="assets/js/core/source/AppNavSearch.js"></script><script src="assets/js/core/source/AppVendor.js"></script><script src="assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script><script src="assets/js/core/demo/Demo.js"></script><script src="assets/js/core/source/script.js" type="text/javascript"></script><script src="assets/js/libs/select2/select2.min.js" type="text/javascript"></script>');
