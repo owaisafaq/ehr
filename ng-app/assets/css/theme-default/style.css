@@ -1465,6 +1465,12 @@ Patient Plan
     border:1px solid red !important;
     color: #f44336;/*#999;*/
 }
+.error-msg{
+    color: #f44336;
+}
+.error-msg-container{
+    padding: 7px 24px;
+}
 .invalid{
     border: 1px solid #f44336 !important;
 }
