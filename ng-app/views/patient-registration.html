@@ -12,7 +12,7 @@
                 </ul>
             </div><!--end .card-head -->
             <div class="card-body tab-content">
-                <div class="tab-pane active" id="info">
+                <div class="tab-pane" id="info">
                     <form class="custom-form" name="userForm1" ng-model="myForm" novalidate ng-submit="validatePatientInfo(PI);">
                         <div class="row">
                             <div class="col-lg-3">
@@ -31,14 +31,18 @@
                                 <label>Full Name</label>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" ng-class="{true: 'error'}[submitted && userForm1.first_name.$invalid]" alphabets-only placeholder="First Name" name="first_name" ng-model="PI.first_name" required/>
+                                <input type="text" ng-class="{
+                                        true
+                                                : 'error'}[submitted && userForm1.first_name.$invalid]" alphabets-only placeholder="First Name" name="first_name" ng-model="PI.first_name" required/>
                                 <p class="help-block PIValid" ng-show="submitted && userForm1.first_name.$error.required">Required</p>
                             </div>
                             <div class="col-lg-3">
                                 <input type="text" alphabets-only placeholder="Middle Name" name="middle_name" ng-model="PI.middle_name"/>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" ng-class="{true: 'error'}[submitted && userForm1.last_name.$invalid]" alphabets-only placeholder="Last Name" name="last_name" ng-model="PI.last_name" required/>
+                                <input type="text" ng-class="{
+                                        true
+                                                : 'error'}[submitted && userForm1.last_name.$invalid]" alphabets-only placeholder="Last Name" name="last_name" ng-model="PI.last_name" required/>
                                 <p class="help-block PIValid" ng-show="submitted && userForm1.last_name.$error.required">Required</p>
                             </div>
                             <div class="col-lg-3">
@@ -48,9 +52,11 @@
                                 <!--<input type="text" placeholder="Pick Date" />-->
                                 <div class="input-group date select-date">
                                     <div class="input-group-content">
-                                        <input type="text" name="date_of_birth" ng-model="PI.date_of_birth" ng-change="calculateAge(PI.date_of_birth);" ng-class="{true: 'error'}[submitted && userForm1.date_of_birth.$invalid]" class="form-control" required placeholder="Pick Date" />
+                                        <input type="text" name="date_of_birth" ng-model="PI.date_of_birth" ng-change="calculateAge(PI.date_of_birth);" ng-class="{
+                                                true
+                                                        : 'error'}[submitted && userForm1.date_of_birth.$invalid]" class="form-control" required placeholder="Pick Date" />
                                         <p class="help-block PIValid" ng-show="submitted && userForm1.date_of_birth
-                                        .$error.required">Required</p>
+                                                        .$error.required">Required</p>
                                     </div>
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
@@ -87,7 +93,9 @@
                                     </select>
                                 </div>
                                 <div class="col-lg-3" ng-init="PI.sex = undefined">
-                                    <select class="form-control " name="sex" ng-model="PI.sex" ng-class="{true: 'error'}[submitted && userForm1.sex.$invalid]" required>
+                                    <select class="form-control " name="sex" ng-model="PI.sex" ng-class="{
+                                            true
+                                                    : 'error'}[submitted && userForm1.sex.$invalid]" required>
                                         <option selected="true">Gender</option>
                                         <option value="1">Female</option>
                                         <option value="2">Male</option>
@@ -190,7 +198,8 @@
                             </div>
                         </div>
                         <div class="clear">
-                            <button type="submit" class="btn btn-default button-style-1 float-right btn-big" ng-click="submitted=true; " value="Next">Save</button>
+                            <button type="submit" class="btn btn-default button-style-1 float-right btn-big" ng-click="submitted = true;
+                                    " value="Next">Save</button>
                         </div>
                     </form>
                 </div>
@@ -215,9 +224,11 @@
                             <div class="col-lg-3">
                                 <input type="text" numbers-only placeholder="Mobile Number" name="mobile_number" ng-model="PI.mobile_number" my-Maxlength="11" required/>
                             </div>
-                            <div class="col-lg-3" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
+                            <div class="col-lg-3" ng-class="{
+                                    'has-error'
+                                            : userForm.email.$invalid && !userForm.email.$pristine }">
                                 <input type="email" placeholder="Email" ng-blur="validatePatientInfo(PI);" name="email" ng-model="PI.email"/> 
-                                 <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
+                                <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
                             </div>
 
                             <div class="col-lg-3">
@@ -231,7 +242,7 @@
                             <div class="col-lg-9">
                                 <input type="text" placeholder="Street" ng-model="PI.street"/>
                             </div>
-        
+
                             <div class="col-lg-3">
                                 <label>Country/State</label>
                             </div>
@@ -253,11 +264,11 @@
                                     <option ng-repeat="LGA in addresslocalGovtArea" value="{{LGA.id}}">{{LGA.name}}</option>
                                 </select>
                             </div>
-                            
+
                             <div class="col-lg-3">
                                 <label>City</label>  
                             </div>
-                            
+
                             <div class="col-lg-3">
                                 <select class="form-control select_searchFields" ng-model="PI.city">
                                     <option value=null>City</option>
@@ -267,7 +278,7 @@
                             <div class="col-lg-3">
                                 <input type="text" numbers-only placeholder="Post Code" ng-model="PI.postal_code"/> 
                             </div>
-            
+
                             <div class="col-lg-3">
                                 <label></label>
                             </div>
@@ -334,14 +345,15 @@
                                         <option ng-repeat="city in addressPerminentCities" value="{{city.id}}">{{city.name}}</option>
                                     </select>
                                 </div>
-                                
+
                                 <div class="col-lg-3">
                                     <input type="text" numbers-only placeholder="Post Code" ng-model="PI.permanent_postalCode"/> 
                                 </div>
                             </div>
                         </div>
                         <div class="clear">
-                            <button type="button" class="btn btn-default button-style-1 float-right" ng-click="submitted=true; validatePatientInfo(PI);" value="Next" >Next</button>
+                            <button type="button" class="btn btn-default button-style-1 float-right" ng-click="submitted = true;
+                                    validatePatientInfo(PI);" value="Next" >Next</button>
                         </div>
                     </form>
                 </div>
@@ -366,9 +378,9 @@
                             </div>
                             <div class="col-lg-3">
                                 <select class="form-control select_searchFields" ng-model="PI.kin_relationship">
-                                <option>Relationship</option>
-                                <option ng-repeat="relation in dropDownInfo.relationship" value="{{relation.id}}">
-                                {{relation.type}}</option>
+                                    <option>Relationship</option>
+                                    <option ng-repeat="relation in dropDownInfo.relationship" value="{{relation.id}}">
+                                        {{relation.type}}</option>
                                     <!-- <option>Relationship</option>
                                     <option vaule="1">Brother</option>
                                     <option value="2">Father</option>
@@ -508,8 +520,37 @@
                         </div>
                     </form>
                 </div>
-                <div class="tab-pane" id="plan">
+                <div class="tab-pane active" id="plan">
                     <form class="custom-form">
+                        <div class="col-lg-12 margin-bottom-xxl no-padding">
+                            <label class="label-style">Select Plan</label>
+                        </div>
+                        <div class="col-lg-12 radio-style-2-con no-padding margin-bottom-xxl">
+                            <div class="radio radio-styled">
+                                <label>
+                                    <input type="radio" name="checkoutpatient" value="appointment" checked="checked" ng-model="PI.checkoutpatient">
+                                    <span>Self</span>
+                                </label>
+                            </div>
+                            <div class="radio radio-styled">
+                                <label>
+                                    <input type="radio" name="checkoutpatient" value="followup" ng-model="PI.checkoutpatient">
+                                    <span>Company Cover</span>
+                                </label>
+                            </div>
+                            <div class="radio radio-styled">
+                                <label>
+                                    <input type="radio" name="checkoutpatient" value="admit_patient" ng-model="PI.checkoutpatient">
+                                    <span data-toggle="modal" data-target="#nhis">NHIS</span>
+                                </label>
+                            </div>
+                            <div class="radio radio-styled">
+                                <label>
+                                    <input type="radio" name="checkoutpatient" value="dead" ng-model="PI.checkoutpatient">
+                                    <span data-toggle="modal" data-target="#relationship">Relationship</span>
+                                </label>
+                            </div>
+                        </div>
                         <div class="col-lg-12 margin-bottom-xxl no-padding">
                             <label class="label-style" ng-click="submit(PI);">Patient Summary</label>
                         </div>
@@ -580,35 +621,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div class="col-lg-12 margin-bottom-xxl">
-                            <label class="label-style">Select Plan</label>
-                        </div>
-                        <div class="col-lg-12 radio-style-2-con">
-                            <div class="radio radio-styled">
-                                <label>
-                                    <input type="radio" name="checkoutpatient" value="appointment" checked="" ng-model="PI.checkoutpatient">
-                                    <span>Self</span>
-                                </label>
-                            </div>
-                            <div class="radio radio-styled">
-                                <label>
-                                    <input type="radio" name="checkoutpatient" value="followup" ng-model="PI.checkoutpatient">
-                                    <span>Company Cover</span>
-                                </label>
-                            </div>
-                            <div class="radio radio-styled">
-                                <label>
-                                    <input type="radio" name="checkoutpatient" value="admit_patient" ng-model="PI.checkoutpatient">
-                                    <span data-toggle="modal" data-target="#nhis">NHIS</span>
-                                </label>
-                            </div>
-                            <div class="radio radio-styled">
-                                <label>
-                                    <input type="radio" name="checkoutpatient" value="dead" ng-model="PI.checkoutpatient">
-                                    <span data-toggle="modal" data-target="#relationship">Relationship</span>
-                                </label>
-                            </div>
-                        </div>
+
                     </form>
                 </div>
                 <div class="tab-pane" id="archive">
@@ -666,14 +679,17 @@
                     <div class="col-lg-3">
                         <select class="form-control" ng-model="PI.hmo">                                
                             <option>Select</option>
-                            <!--<option ng-repeat="hmo in dropDownData.hmo" value="{{hmo.id}}">{{hmo.name}}</option>-->
+                            <option ng-repeat="hmo in dropDownData.hmo" value="{{hmo.id}}">{{hmo.name}}</option>
                         </select>
                     </div>
                     <div class="col-lg-3">
                         <label>Policies</label>
                     </div>
                     <div class="col-lg-3">
-                        <input type="text" class="form-control" placeholder="Select Policies" ng-model="PI.policies"/>
+                        <select class="form-control" ng-model="PI.policies" ng-options="value.id as value.name for value in dropDownData.policies">
+                            <!--<option value="">Select Policies</option>-->
+                            <!--<option ng-repeat="policies in dropDownCData.policies" value="{{policies.id}}">{{policies.name}}</option>-->
+                        </select>
                     </div>
                     <div class="col-lg-3">
                         <label>Speciality</label>
@@ -714,8 +730,8 @@
 
                         <div class="col-lg-3">
                             <select class="form-control" ng-model="PI.dependant_relationship">
-                            <option>Relationship</option>
-                            <option ng-repeat="relation in dropDownInfo.relationship" value="{{relation.id}}">{{relation.type}}</option>                         
+                                <option>Relationship</option>
+                                <option ng-repeat="relation in dropDownInfo.relationship" value="{{relation.id}}">{{relation.type}}</option>                         
                                 <!-- <option>Select Relationship</option>
                                 <option>2</option>
                                 <option>3</option> -->
@@ -738,8 +754,8 @@
 
                         <div class="col-lg-3">
                             <select class="form-control" ng-model="PI.principal_relationship">
-                            <option>Relationship</option>
-                            <option ng-repeat="relation in dropDownInfo.relationship" value="{{relation.id}}">{{relation.type}}</option>
+                                <option>Relationship</option>
+                                <option ng-repeat="relation in dropDownInfo.relationship" value="{{relation.id}}">{{relation.type}}</option>
                                 <!-- <option value="null">Select Relationship</option>
                                 <option vaule="1">Brother</option>
                                 <option value="2">Father</option>
@@ -816,12 +832,12 @@
                             </label>
                         </div>
                     </div>
-<!--                    <div class="col-lg-3">
-                        <label>Insurance ID</label>
-                    </div>
-                    <div class="col-lg-3">
-                        <input type="text" class="form-control" placeholder="06" />
-                    </div>-->
+                    <!--                    <div class="col-lg-3">
+                                            <label>Insurance ID</label>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <input type="text" class="form-control" placeholder="06" />
+                                        </div>-->
                     <div class="show-on-dependant">
                         <div class="col-lg-12">
                             <div class="header-search col-lg-4">
