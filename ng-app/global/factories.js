@@ -67,7 +67,7 @@ AppEHR.factory("PatientRegistrationKin", function ($resource) {
 });
 AppEHR.factory("PatientRegistrationEmployer", function ($resource) {
     function getResource(params, body) {
-        var res2 = $resource(serverPath +  'add_patient_employer', params, {
+        var res2 = $resource(serverPath +  'add_patient_employees', params, {
             save: {method: 'POST'},
             update: {method: 'PUT'}
         });

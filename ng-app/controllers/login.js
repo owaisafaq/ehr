@@ -4,6 +4,7 @@ AppEHR.controller('loginController', ['$scope', '$window', '$http', 'AUTH', func
 	$scope.pageTitle = "EHR - Login";
 	$window.sessionStorage.clear();
 	$scope.class = "hide";
+	$scope.errorMessage = '';
 	$scope.login = function (email, password){
 		if(email != undefined && password != undefined){
 			AUTH.get({}, {email: email, password: password}, authSuccess, authFailed);
