@@ -4,11 +4,11 @@
             <div class="card-head">
                 <ul class="nav nav-tabs nav-justified custom-tab " data-toggle="tabs" ng-init="disabledTabInfo='active';disabledTabAdress='disabled-tabs'; disabledTabKin='disabled-tabs'; disabledTabEmployer='disabled-tabs'; disabledTabPatientPlant='disabled-tabs'; disabledTabArchive='disabled-tabs';">
                     <li class="{{disabledTabInfo}}"><a showtab href="#info">patient information</a></li>
-                    <li class="{{disabledTabAdress}}"><a showtab href="#address">address</a></li>
-                    <li class="{{disabledTabKin}}"><a showtab href="#kin">next of kin</a></li>
-                    <li class="{{disabledTabEmployer}}"><a showtab href="#employer">employer</a></li>
-                    <li class="{{disabledTabPatientPlant}}"><a showtab href="#plan">patient plan</a></li>
-                    <li class="{{disabledTabArchive}}"><a showtab href="#archive">archive</a></li>
+                    <li class="{{disabledTabAdress-no}}"><a showtab href="#address">address</a></li>
+                    <li class="{{disabledTabKin-no}}"><a showtab href="#kin">next of kin</a></li>
+                    <li class="{{disabledTabEmployer-no}}"><a showtab href="#employer">employer</a></li>
+                    <li class="{{disabledTabPatientPlant-no}}"><a showtab href="#plan">patient plan</a></li>
+                    <li class="{{disabledTabArchive-no}}"><a showtab href="#archive">archive</a></li>
                 </ul>
             </div><!--end .card-head -->
             <div class="card-body tab-content">
@@ -209,7 +209,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="tab-pane {{disabledTabAdress}}" id="address">
+                <div class="tab-pane {{disabledTabAdress-no}}" id="address">
                     <!-- <div class="alert alert-success" role="alert" ng-show="successAddressMessage">
                         <i class="fa fa-check alert-icon"></i> Patient Address Successfully Added.
                     </div>
@@ -367,7 +367,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="tab-pane {{disabledTabKin}}" id="kin">
+                <div class="tab-pane {{disabledTabKin-no}}" id="kin">
                     <!-- <div class="alert alert-success" role="alert" ng-show="successMessage">
                         <i class="fa fa-check alert-icon"></i> Next to Kin Successfully Added.
                     </div>
@@ -462,7 +462,7 @@
                         <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" value="Next" ng-hide="showSubmitButtonKin">Update</button>
                     </div>
                 </div>
-                <div class="tab-pane {{disabledTabEmployer}}" id="employer">
+                <div class="tab-pane {{disabledTabEmployer-no}}" id="employer">
                     <form class="custom-form" name="userForm3" novalidate ng-submit="validatePatientEmployer(PI);">
                         <div class="row">
                             <div class="col-lg-3">
@@ -537,7 +537,7 @@
                         <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" value="Next" ng-hide="showSubmitButtonEmployer">Update</button>
                     </div>
                 </div>
-                <div class="tab-pane {{disabledTabPatientPlant}}" id="plan">
+                <div class="tab-pane {{disabledTabPatientPlant-no}}" id="plan">
                     <form class="custom-form" name="userForm4" novalidate ng-submit="validatePatientPlan(PI.patientPlan);">
                         <div class="col-lg-12 margin-bottom-xxl no-padding">
                             <label class="label-style" ng-click="submit(PI);">Patient Summary</label>
@@ -612,7 +612,7 @@
 
                     </form>
                 </div>
-                <div class="tab-pane {{disabledTabArchive}}" id="archive">
+                <div class="tab-pane {{disabledTabArchive-no}}" id="archive">
                     <div class="alert alert-success" role="alert" ng-show="successMessage">
                         <i class="fa fa-check alert-icon"></i> Patient Successfully Added.
                     </div>
