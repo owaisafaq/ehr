@@ -140,14 +140,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
         //$('body').append('<script src="assets/js/libs/bootstrap/bootstrap.min.js"></script><script src="assets/js/libs/spin.js/spin.min.js"></script><script src="assets/js/libs/autosize/jquery.autosize.min.js"></script><script src="assets/js/libs/nanoscroller/jquery.nanoscroller.min.js"></script><script src="assets/js/core/source/App.js"></script><script src="assets/js/core/source/AppNavigation.js"></script><script src="assets/js/core/source/AppOffcanvas.js"></script><script src="assets/js/core/source/AppCard.js"></script><script src="assets/js/core/source/AppForm.js"></script><script src="assets/js/core/source/AppNavSearch.js"></script><script src="assets/js/core/source/AppVendor.js"></script><script src="assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script><script src="assets/js/core/demo/Demo.js"></script><script src="assets/js/core/source/script.js" type="text/javascript"></script><script src="assets/js/libs/select2/select2.min.js" type="text/javascript"></script>');
         //$rootScope.html = '<div ng-include="\'views/script-file.html\'"></div>';
         $('.select-date').datepicker({autoclose: true, todayHighlight: true, format: 'yyyy-mm-dd'});
-        $('select').not('.select_searchFields').select2({
-            minimumResultsForSearch: Infinity,
-//            placeholder: function () {
-//                $(this).attr('placeholder');
-//            }
-            placeholder: "Select a state"
-//            allowClear: true
-        });
+        $('select').not('.select_searchFields').select2({minimumResultsForSearch: Infinity});
         $('.select_searchFields').select2();
     });
     //$rootScope.html = '<div ng-include="\'utils/script-file.html\'"></div>';

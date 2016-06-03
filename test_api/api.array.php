@@ -36,6 +36,18 @@ $api->params->role_id = "1";
 
 $api_arr [] = $api;
 
+
+// Search Patient
+$api = new api();
+$api->name = "Search Patient";
+$api->url = HOST . 'search_patient';
+$api->method = "POST";
+$api->description = "Search Patient";
+$api->params->name = "owais";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
 /*// Login to app
 $api = new api();
 $api->name = "Register Patient";
@@ -176,7 +188,7 @@ $api->name = "Add Patient Address";
 $api->url = HOST . 'add_patient_address';
 $api->method = "POST";
 $api->description = "Add Patient Address";
-$api->params->same_as_above = "0";
+$api->params->same_as_above = "";
 $api->params->patient_id = "1";
 $api->params->email = "test@test.com";
 $api->params->phone_number = "021212121";
@@ -196,11 +208,28 @@ $api->params->permanent_mobilenumber = "1";
 $api->params->permanent_phonenumber = "1";
 $api->params->permanent_postalCode = "1";
 $api->params->token = "123";
-
-
 $api_arr [] = $api;
 
 
+
+// Add Patient Employees
+$api = new api();
+$api->name = "Add Patient Employees";
+$api->url = HOST . 'add_patient_employees';
+$api->method = "POST";
+$api->description = "Add Patient Employees";
+$api->params->patient_id = "1";
+$api->params->employer_name = "test";
+$api->params->employer_phone_number = "021";
+$api->params->employer_mobile_number = "021";
+$api->params->employer_email = "test@test.com";
+$api->params->employer_house_number = "2090";
+$api->params->employer_street = "11";
+$api->params->employer_city = "igbo";
+$api->params->employer_state = "ABIA";
+$api->params->employer_country = "Nigeria";
+$api->params->token = "123";
+$api_arr [] = $api;
 
 
 // Add Patient Kin
