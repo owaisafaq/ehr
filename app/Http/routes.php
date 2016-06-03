@@ -22,6 +22,7 @@ $app->group(['prefix' => 'api'], function () use ($app) {
 
     $app->post('user_login','App\Http\Controllers\ApiController@user_login');
 
+    $app->post('search_patient', 'App\Http\Controllers\ApiController@search_patient');
 
 
 });
@@ -35,8 +36,6 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->post('register_patient', 'App\Http\Controllers\ApiController@register_patient');
 
     $app->post('add_patient', 'App\Http\Controllers\ApiController@add_patient');
-
-    $app->post('search_patient', 'App\Http\Controllers\ApiController@search_patient');
 
    // $app->put('add_patient', 'App\Http\Controllers\ApiController@add_patient');
 
