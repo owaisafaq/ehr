@@ -6,6 +6,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     $scope.PI.adress = {};
     $scope.PI.kin = {};
     $scope.PI.employer = {};
+    $scope.PI.patientPlan = {};
     $scope.myForm = {};
     $scope.counties = [];
     $scope.contactAddressCountries = [];
@@ -41,23 +42,20 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     $scope.successEmployerMessage = false;
     $scope.errorEmployerMessage = false;
     delete $window.sessionStorage.patient_id;
+    $scope.patientSummary = true;
     //$scope.PI.identity_type = dropDownInfo.IdType[0].id;
     //$scope.PI.kin_relationship = dropDownInfo.relationship[0].id;
     //$scope.PI.dependant_relationship = dropDownInfo.relationship[0].id;
     //$scope.PI.principal_relationship = dropDownInfo.relationship[0].id;
     //$scope.PI.nhis_principal_relationship = dropDownInfo.relationship[0].id;
 
-    /*$rootScope.loadView = function(object) {
+    $rootScope.loadView = function(object) {
     	$scope.PI = {};
     	$scope.successMessage = false;
 	    $scope.errorMessage = false;
 	    $scope.showSubmitButton = true;
+	    $scope.submitted = false;
 	    delete $window.sessionStorage.patient_id;
-    }*/
-
-    $scope.validateEmail = function (email) { 
-        var re = /^(([^<>()[\]\\.,;:+-\s@\"]+(\.[^<>()[\]\\.,;:+-\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(email);
     }
 
     Countries.get({token: $window.sessionStorage.token}, countrySuccess, countryFailed);
@@ -65,10 +63,12 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     function countrySuccess(res){
     	if(res.status ==  true){
     		angular.copy(res.data, $scope.contactAddressCountries);
-    		$scope.PI.countryCode = $scope.contactAddressCountries;
+
+    		$scope.PI.adress.countryCode = $scope.contactAddressCountries;
     		var tempcountry = $scope.contactAddressCountries;
             tempcountry = $filter('filter')(tempcountry, {country_code: 234});
-            $scope.PI.countryCode = tempcountry[0].country_code;
+            $scope.myColor = tempcountry[0].country_code;
+            console.log($scope.myColor);
     		angular.copy(res.data, $scope.permanentAddressCountries);
     		angular.copy(res.data, $scope.nextOfKinCountries);
     		angular.copy(res.data, $scope.employerCountries);
@@ -298,54 +298,45 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     	}
     };
 
+    // patient information API
     $scope.validatePatientInfo = function(PI){
     	console.log($window.sessionStorage.patient_id);
     	if(PI.first_name != undefined && PI.last_name != undefined && PI.date_of_birth != undefined && PI.age != undefined && PI.sex != undefined){
+    		var dataToBeAdded = {
+    			token: $window.sessionStorage.token,
+	    		patient_unit_number: $scope.PI.patient_unit_number == undefined ? '' : $scope.PI.patient_unit_number,
+	    		first_name: $scope.PI.first_name == undefined ? '' : $scope.PI.first_name,
+	    		middle_name: $scope.PI.middle_name == undefined ? '' : $scope.PI.middle_name,
+	    		last_name: $scope.PI.last_name == undefined ? '' : $scope.PI.last_name,
+	    		date_of_birth: $scope.PI.date_of_birth == undefined ? '' : $scope.PI.date_of_birth,
+	    		age: $scope.PI.age == undefined ? '' : $scope.PI.age,
+	    		sex: $scope.PI.sex == undefined ? '' : $scope.PI.sex,
+	    		patient_picture: $scope.PI.file == undefined ? '' : $scope.PI.file,
+	    		marital_status: $scope.PI.maritial_status == undefined ? '' : $scope.PI.maritial_status,
+	    		patient_local_goverment_area: $scope.PI.patient_local_goverment_area == undefined ? '' : $scope.PI.patient_local_goverment_area,
+	    		religion: $scope.PI.religion == undefined ? '' : $scope.PI.religion,
+	    		identity_type: $scope.PI.identity_type == undefined ? '' : $scope.PI.identity_type,
+	    		identity_number: $scope.PI.identity_number == undefined ? '' : $scope.PI.identity_number,
+	    		patient_state: $scope.PI.patient_state == undefined ? '' : $scope.PI.patient_state,
+	    		tribe: $scope.PI.tribe == undefined ? '' : $scope.PI.tribe,
+	    		language: $scope.PI.language == undefined ? '' : $scope.PI.language,
+	    		nationality: $scope.PI.nationality == undefined ? '' : $scope.PI.nationality,
+	    		blood_group: $scope.PI.blood_group == undefined ? '' : $scope.PI.blood_group,
+	    		father_firstname: $scope.PI.father_firstname == undefined ? '' : $scope.PI.father_firstname,
+	    		father_middlename: $scope.PI.father_middlename == undefined ? '' : $scope.PI.father_middlename,
+	    		father_lastname: $scope.PI.father_lastname == undefined ? '' : $scope.PI.father_lastname,
+	    		mother_firstname: $scope.PI.mother_firstname == undefined ? '' : $scope.PI.mother_firstname,
+	    		mother_middlename: $scope.PI.mother_middlename == undefined ? '' : $scope.PI.mother_middlename,
+	    		mother_lastname: $scope.PI.mother_lastname == undefined ? '' : $scope.PI.mother_lastname,
+	    		refered_name: $scope.PI.refered_name == undefined ? '' : $scope.PI.refered_name
+    		};
     		if($window.sessionStorage.patient_id == undefined){
-				PatientInformation.save({
-					token: $window.sessionStorage.token,
-		    		patient_unit_number: $scope.PI.patient_unit_number == undefined ? '' : $scope.PI.patient_unit_number,
-		    		first_name: $scope.PI.first_name == undefined ? '' : $scope.PI.first_name,
-		    		middle_name: $scope.PI.middle_name == undefined ? '' : $scope.PI.middle_name,
-		    		last_name: $scope.PI.last_name == undefined ? '' : $scope.PI.last_name,
-		    		date_of_birth: $scope.PI.date_of_birth == undefined ? '' : $scope.PI.date_of_birth,
-		    		age: $scope.PI.age == undefined ? '' : $scope.PI.age,
-		    		sex: $scope.PI.sex == undefined ? '' : $scope.PI.sex,
-		    		patient_picture: $scope.PI.file == undefined ? '' : $scope.PI.file,
-		    		maritial_status: $scope.PI.maritial_status == undefined ? '' : $scope.PI.maritial_status,
-		    		patient_local_goverment_area: $scope.PI.patient_local_goverment_area == undefined ? '' : $scope.PI.patient_local_goverment_area,
-		    		religion: $scope.PI.religion == undefined ? '' : $scope.PI.religion,
-		    		identity_type: $scope.PI.identity_type == undefined ? '' : $scope.PI.identity_type,
-		    		identity_number: $scope.PI.identity_number == undefined ? '' : $scope.PI.identity_number,
-		    		patient_state: $scope.PI.patient_state == undefined ? '' : $scope.PI.patient_state,
-		    		tribe: $scope.PI.tribe == undefined ? '' : $scope.PI.tribe,
-		    		language: $scope.PI.language == undefined ? '' : $scope.PI.language,
-		    		nationality: $scope.PI.nationality == undefined ? '' : $scope.PI.nationality,
-		    		blood_group: $scope.PI.blood_group == undefined ? '' : $scope.PI.blood_group
-				}, patientInformationSuccess, patientInformationFailed);
+    			console.log(dataToBeAdded);
+				PatientInformation.save(dataToBeAdded, patientInformationSuccess, patientInformationFailed);
 			}else{
 				console.log('else');
-				PatientInformation.update({
-					token: $window.sessionStorage.token,
-		    		patient_unit_number: $scope.PI.patient_unit_number == undefined ? '' : $scope.PI.patient_unit_number,
-		    		first_name: $scope.PI.first_name == undefined ? '' : $scope.PI.first_name,
-		    		middle_name: $scope.PI.middle_name == undefined ? '' : $scope.PI.middle_name,
-		    		last_name: $scope.PI.last_name == undefined ? '' : $scope.PI.last_name,
-		    		date_of_birth: $scope.PI.date_of_birth == undefined ? '' : $scope.PI.date_of_birth,
-		    		age: $scope.PI.age == undefined ? '' : $scope.PI.age,
-		    		sex: $scope.PI.sex == undefined ? '' : $scope.PI.sex,
-		    		patient_picture: $scope.PI.file == undefined ? '' : $scope.PI.file,
-		    		maritial_status: $scope.PI.maritial_status == undefined ? '' : $scope.PI.maritial_status,
-		    		patient_local_goverment_area: $scope.PI.patient_local_goverment_area == undefined ? '' : $scope.PI.patient_local_goverment_area,
-		    		religion: $scope.PI.religion == undefined ? '' : $scope.PI.religion,
-		    		identity_type: $scope.PI.identity_type == undefined ? '' : $scope.PI.identity_type,
-		    		identity_number: $scope.PI.identity_number == undefined ? '' : $scope.PI.identity_number,
-		    		patient_state: $scope.PI.patient_state == undefined ? '' : $scope.PI.patient_state,
-		    		tribe: $scope.PI.tribe == undefined ? '' : $scope.PI.tribe,
-		    		language: $scope.PI.language == undefined ? '' : $scope.PI.language,
-		    		nationality: $scope.PI.nationality == undefined ? '' : $scope.PI.nationality,
-		    		blood_group: $scope.PI.blood_group == undefined ? '' : $scope.PI.blood_group,
-				}, patientInfoUpdateSucess, patientInfoUpdateFailed);
+				dataToBeAdded.patient_id = $window.sessionStorage.patient_id;
+				PatientInformation.save(dataToBeAdded, patientInfoUpdateSucess, patientInfoUpdateFailed);
 			}
 			function patientInformationSuccess(res){
 				console.log(res);
@@ -393,6 +384,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 		}
     }
 
+    // patient address API
     $scope.validatePatientAddress = function(PIAdress){
     	console.log(PIAdress);
     	if(angular.equals({}, PIAdress) == false) {
@@ -416,7 +408,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 	    		permanent_housenumber: $scope.PI.adress.permanent_housenumber == undefined ? '' : $scope.PI.adress.permanent_housenumber,
 	    		permanent_street: $scope.PI.adress.permanent_street == undefined ? '' : $scope.PI.adress.permanent_street,
 	    		permanent_country: $scope.PI.adress.permanent_country == undefined ? '' : $scope.PI.permanent_country,
-	    		patient_city: $scope.PI.adress.patient_city == undefined ? '' : $scope.PI.adress.patient_city,
+	    		city: $scope.PI.adress.city == undefined ? '' : $scope.PI.adress.city,
 	    		permanent_state: $scope.PI.adress.permanent_state == undefined ? '' : $scope.PI.adress.permanent_state,
 	    		permanent_city: $scope.PI.adress.permanent_city == undefined ? '' : $scope.PI.adress.permanent_city,
 	    		permanent_postalCode: $scope.PI.adress.permanent_postalCode == undefined ? '' : $scope.PI.adress.permanent_postalCode
@@ -482,6 +474,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 		}
     }
 
+    // patient kin API
     $scope.validatePatientKin = function(PIKin){
     	console.log(PIKin);
     	if(angular.equals({}, PIKin) == false) {
@@ -530,7 +523,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 			}else{
 				console.log('else');
 				dataToBeAdded.kin_id = $scope.kin_id;
-				PatientRegistrationKin.update(dataToBeAdded, patientKinUpdateSucess, patientKinUpdateFailed);
+				PatientRegistrationKin.save(dataToBeAdded, patientKinUpdateSucess, patientKinUpdateFailed);
 				function patientKinUpdateSucess(res){
 					console.log(res);
 					if(res.status == true){
@@ -553,9 +546,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     		$scope.disabledTabEmployer = 'active';
 			$scope.disabledTabKin = '';
     	}
-    	
     }
 
+    // patient employer API
     $scope.validatePatientEmployer = function(PIEmployer){
     	console.log(PIEmployer);
     	if(angular.equals({}, PIEmployer) == false) {
@@ -600,7 +593,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 			}else{
 				console.log('else');
 				dataToBeAdded.employer_id = $scope.employer_id;
-				PatientRegistrationEmployer.update(dataToBeAdded, patientKinUpdateSucess, patientKinUpdateFailed);
+				PatientRegistrationEmployer.save(dataToBeAdded, patientKinUpdateSucess, patientKinUpdateFailed);
 				function patientKinUpdateSucess(res){
 					console.log(res);
 					if(res.status == true){
@@ -625,6 +618,14 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 		}
     }
 
+    // patient plan
+    $scope.validatePatientPlan = function(PIPlan){
+    	console.log(PIPlan);
+		$scope.disabledTabPatientPlant = 'active';
+		$scope.disabledTabArchive = '';
+    }
+
+    // age calculation with respect to DOB
     $scope.calculateAge = function(birthday) { // birthday is a date
     	var splitDate = birthday.split('-');
     	$scope.birthdate = new Date(splitDate[0],splitDate[1],splitDate[2]);

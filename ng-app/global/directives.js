@@ -165,6 +165,19 @@ AppEHR.directive('myMaxlength', function() {
     }
   }; 
 });
+AppEHR.directive('convertToNumber', function() {
+  return {
+    require: 'ngModel',
+    link: function(scope, element, attrs, ngModel) {
+      ngModel.$parsers.push(function(val) {
+        return parseInt(val, 10);
+      });
+      ngModel.$formatters.push(function(val) {
+        return '' + val;
+      });
+    }
+  };
+});
 AppEHR.directive('phoneNumber', [allowPatternDirective]);
 function allowPatternDirective() {
     return {
@@ -182,4 +195,4 @@ function allowPatternDirective() {
             };
         }
     };
-} 
+}
