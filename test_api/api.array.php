@@ -200,6 +200,7 @@ $api->params->state = "1";
 $api->params->postal_code = "0021";
 $api->params->country = "1";
 $api->params->local_goverment_area = "1";
+$api->params->permanent_street = "1";
 $api->params->permanent_city = "1";
 $api->params->permanent_country = "1";
 $api->params->permanent_email = "test@test.com";
