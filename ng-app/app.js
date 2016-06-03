@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR', [
     'ngRoute', 'ngResource',
-    'ngTouch', 'ui.grid', 'ui.grid.pagination'
+    'ngTouch', 'ui.grid', 'ui.grid.pagination', 'ngFileUpload'
 ]);
 
 AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',

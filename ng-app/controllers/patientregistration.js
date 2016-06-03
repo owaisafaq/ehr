@@ -55,6 +55,8 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 	    $scope.errorMessage = false;
 	    $scope.showSubmitButton = true;
 	    $scope.submitted = false;
+	    $scope.disabledTabInfo = 'active';
+	    $scope.disabledTabAdress = $scope.disabledTabArchive = $scope.disabledTabKin = $scope.disabledTabEmployer = $scope.disabledTabPatientPlant = "disabled-tabs";
 	    delete $window.sessionStorage.patient_id;
     }
 
@@ -63,15 +65,15 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     function countrySuccess(res){
     	if(res.status ==  true){
     		angular.copy(res.data, $scope.contactAddressCountries);
-
-    		$scope.PI.adress.countryCode = $scope.contactAddressCountries;
+    		angular.copy(res.data, $scope.nextOfKinCountries);
+    		angular.copy(res.data, $scope.employerCountries);
+    		$scope.countryCode = $scope.contactAddressCountries;
     		var tempcountry = $scope.contactAddressCountries;
             tempcountry = $filter('filter')(tempcountry, {country_code: 234});
             $scope.myColor = tempcountry[0].country_code;
             console.log($scope.myColor);
     		angular.copy(res.data, $scope.permanentAddressCountries);
-    		angular.copy(res.data, $scope.nextOfKinCountries);
-    		angular.copy(res.data, $scope.employerCountries);
+    		$scope.permanentCountryCode = $scope.permanentAddressCountries
     		//$scope.PI.patient_country = $scope.contactAddressCountries[0].id;
     		//$scope.PI.permanent_country = $scope.permanentAddressCountries[0].id;
     		//$scope.PI.nextOfKinCountries = $scope.nextOfKinCountries[0].id;
@@ -106,9 +108,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 	}
 
     // Address
-    $scope.addressStateByCountry = function(id, flag){
-    	if(id != "null"){
-			States.get({token: $window.sessionStorage.token, country_id: id}, stateSuccess, stateFailed);
+    $scope.addressStateByCountry = function(country, flag){
+    	if(country != "null"){
+			States.get({token: $window.sessionStorage.token, country_id: country.id}, stateSuccess, stateFailed);
     	}else{
 			if(flag){
 				$scope.PI.permanent_country = "null";
@@ -141,10 +143,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     };
 
     $scope.addressLocalGovtAreaByStates = function(state, flag){
-    	console.log(state);
     	if(state != "null"){
-    		GetLocalGovermentArea.get({token: $window.sessionStorage.token, state_id: state}, LGASuccess, LGAFailed);
-    		City.get({token: $window.sessionStorage.token, state_id: state}, citySuccess, cityFailed);
+    		GetLocalGovermentArea.get({token: $window.sessionStorage.token, state_id: state.id}, LGASuccess, LGAFailed);
+    		City.get({token: $window.sessionStorage.token, state_id: state.id}, citySuccess, cityFailed);
     		function LGASuccess(res){
     			if(res.status == true && res.data.length > 0){
     				console.log(res);
@@ -182,9 +183,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     }
 
     // Next of Kin
-    $scope.nextOfKinStateByCountry = function(id){
-    	if(id != "null"){
-			States.get({token: $window.sessionStorage.token, country_id: id}, nextOfKinStateSuccess, nextOfKinStateFailed);
+    $scope.nextOfKinStateByCountry = function(kin){
+    	if(kin != "null"){
+			States.get({token: $window.sessionStorage.token, country_id: kin.id}, nextOfKinStateSuccess, nextOfKinStateFailed);
     	}else{
 			$scope.PI.kin_state = "null";
 			$scope.nextOfKinStates = [];
@@ -204,9 +205,8 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     };
 
     $scope.nextOfKinCityByStates = function(states){
-    	console.log(states);
     	if(states != "null"){
-    		City.get({token: $window.sessionStorage.token, state_id: states}, citySuccess, cityFailed);
+    		City.get({token: $window.sessionStorage.token, state_id: states.id}, citySuccess, cityFailed);
     		function citySuccess(res){
     			if(res.status == true && res.data.length > 0){
     				console.log(res);
@@ -225,9 +225,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     };
 
     // Employer
-    $scope.employerStateByCountry = function(id){
-    	if(id != "null"){
-			States.get({token: $window.sessionStorage.token, country_id: id}, employerStateSuccess, employerStateFailed);
+    $scope.employerStateByCountry = function(employer){
+    	if(employer != "null"){
+			States.get({token: $window.sessionStorage.token, country_id: employer.id}, employerStateSuccess, employerStateFailed);
     	}else{
 			$scope.PI.employer_state = "null";
 			$scope.employerStates = [];
@@ -247,9 +247,8 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     };
 
     $scope.employerCityByStates = function(states){
-    	console.log(states);
     	if(states != "null"){
-    		City.get({token: $window.sessionStorage.token, state_id: states}, citySuccess, cityFailed);
+    		City.get({token: $window.sessionStorage.token, state_id: states.id}, citySuccess, cityFailed);
     		function citySuccess(res){
     			if(res.status == true && res.data.length > 0){
     				console.log(res);
@@ -386,34 +385,33 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
     // patient address API
     $scope.validatePatientAddress = function(PIAdress){
-    	console.log(PIAdress);
     	if(angular.equals({}, PIAdress) == false) {
-    		console.log(angular.equals({}, PIAdress));
+    		console.log($scope.PI.adress.permanent_state.id);
     		var dataToBeAdded = {
     			token: $window.sessionStorage.token,
 				patient_id: $window.sessionStorage.patient_id,
-	    		phone_number: $scope.PI.adress.phone_number == undefined ? '' : $scope.PI.adress.phone_number,
-	    		mobile_number: $scope.PI.adress.mobile_number == undefined ? '' : $scope.PI.adress.mobile_number,
+	    		phone_number: $scope.PI.adress.phone_number == undefined ? '' : $scope.countryCode.country_code + '' + $scope.PI.adress.phone_number,
+	    		mobile_number: $scope.PI.adress.mobile_number == undefined ? '' : $scope.countryCode.country_code + '' +  $scope.PI.adress.mobile_number,
 	    		house_number: $scope.PI.adress.house_number == undefined ? '' : $scope.PI.adress.house_number,
 	    		street: $scope.PI.adress.street == undefined ? '' : $scope.PI.adress.street,
-	    		state: $scope.PI.adress.state == undefined ? '' : $scope.PI.adress.state,
-	    		city: $scope.PI.adress.city == undefined ? '' : $scope.PI.adress.city,
+	    		state: $scope.PI.adress.state == undefined ? '' : $scope.PI.adress.state.id,
+	    		city: $scope.PI.adress.city == undefined ? '' : $scope.PI.adress.city.id,
 	    		email: $scope.PI.adress.email == undefined ? '' : $scope.PI.adress.email,
 	    		postal_code: $scope.PI.adress.postal_code == undefined ? '' : $scope.PI.adress.postal_code,
-	    		local_goverment_area: $scope.PI.adress.local_goverment_area == undefined ? '' : $scope.PI.adress.local_goverment_area,
+	    		local_goverment_area: $scope.PI.adress.local_goverment_area == undefined ? '' : $scope.PI.adress.local_goverment_area.id,
 	    		same_as_above: $scope.PI.adress.sameAsAbove == undefined ? '' : $scope.PI.adress.sameAsAbove,
-	    		permanent_phonenumber: $scope.PI.adress.permanent_phonenumber == undefined ? '' : $scope.PI.adress.permanent_phonenumber,
-	    		permanent_mobilenumber: $scope.PI.adress.permanent_mobilenumber == undefined ? '' : $scope.PI.adress.permanent_mobilenumber,
+	    		permanent_phonenumber: $scope.PI.adress.permanent_phonenumber == undefined ? '' : $scope.permanentCountryCode.country_code + '' +  $scope.PI.adress.permanent_phonenumber,
+	    		permanent_mobilenumber: $scope.PI.adress.permanent_mobilenumber == undefined ? '' : $scope.permanentCountryCode.country_code + '' + $scope.PI.adress.permanent_mobilenumber,
 	    		permanent_email: $scope.PI.adress.permanent_email == undefined ? '' : $scope.PI.adress.permanent_email,
 	    		permanent_housenumber: $scope.PI.adress.permanent_housenumber == undefined ? '' : $scope.PI.adress.permanent_housenumber,
 	    		permanent_street: $scope.PI.adress.permanent_street == undefined ? '' : $scope.PI.adress.permanent_street,
-	    		permanent_country: $scope.PI.adress.permanent_country == undefined ? '' : $scope.PI.permanent_country,
-	    		city: $scope.PI.adress.city == undefined ? '' : $scope.PI.adress.city,
-	    		permanent_state: $scope.PI.adress.permanent_state == undefined ? '' : $scope.PI.adress.permanent_state,
-	    		permanent_city: $scope.PI.adress.permanent_city == undefined ? '' : $scope.PI.adress.permanent_city,
+	    		permanent_country: $scope.PI.adress.permanent_country == undefined ? '' : $scope.PI.adress.permanent_country.id,
+	    		city: $scope.PI.adress.city == undefined ? '' : $scope.PI.adress.city.id,
+	    		permanent_state: $scope.PI.adress.permanent_state == undefined ? '' : $scope.PI.adress.permanent_state.id,
+	    		permanent_city: $scope.PI.adress.permanent_city == undefined ? '' : $scope.PI.adress.permanent_city.id,
 	    		permanent_postalCode: $scope.PI.adress.permanent_postalCode == undefined ? '' : $scope.PI.adress.permanent_postalCode
     		};
-    		console.log($scope.PI.adress.sameAsAbove);
+    		console.log(dataToBeAdded);
 	    	if($scope.address_id == undefined){
 	    		console.log('if');
 				PatientRegistrationAddress.save(dataToBeAdded, patientAddressSuccess, patientAddressFailed);
@@ -476,9 +474,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
     // patient kin API
     $scope.validatePatientKin = function(PIKin){
-    	console.log(PIKin);
+    	//console.log(PIKin);
     	if(angular.equals({}, PIKin) == false) {
-    		console.log(angular.equals({}, PIKin));
+    		//console.log(angular.equals({}, PIKin));
     		var dataToBeAdded = {
     			token: $window.sessionStorage.token,
 				patient_id: $window.sessionStorage.patient_id,
@@ -492,13 +490,13 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 	    		kin_email: $scope.PI.kin.kin_email == undefined ? '' : $scope.PI.kin.kin_email,
 	    		kin_house_number: $scope.PI.kin.kin_house_number == undefined ? '' : $scope.PI.kin.kin_house_number,
 	    		kin_street: $scope.PI.kin.kin_street == undefined ? '' : $scope.PI.kin.kin_street,
-	    		kin_country: $scope.PI.kin.kin_country == undefined ? '' : $scope.PI.kin.kin_country,
-	    		kin_state: $scope.PI.kin.kin_state == undefined ? '' : $scope.PI.kin.kin_state,
-	    		kin_city: $scope.PI.kin.kin_city == undefined ? '' : $scope.PI.kin.kin_city,
+	    		kin_country: $scope.PI.kin.kin_country == undefined ? '' : $scope.PI.kin.kin_country.id,
+	    		kin_state: $scope.PI.kin.kin_state == undefined ? '' : $scope.PI.kin.kin_state.id,
+	    		kin_city: $scope.PI.kin.kin_city == undefined ? '' : $scope.PI.kin.kin_city.id,
 	    		kin_postal_code: $scope.PI.kin.kin_postal_code == undefined ? '' : $scope.PI.kin.kin_postal_code
     		};
     		if($scope.kin_id == undefined){
-	    		console.log('if');
+	    		//console.log('if');
 				PatientRegistrationKin.save(dataToBeAdded, patientKinSuccess, patientKinFailed);
 				function patientKinSuccess(res){
 					console.log(res);
@@ -543,6 +541,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 				}
 			}
     	}else{
+    		console.log(1);
     		$scope.disabledTabEmployer = 'active';
 			$scope.disabledTabKin = '';
     	}
@@ -550,9 +549,8 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
     // patient employer API
     $scope.validatePatientEmployer = function(PIEmployer){
-    	console.log(PIEmployer);
     	if(angular.equals({}, PIEmployer) == false) {
-    		console.log(angular.equals({}, PIEmployer));
+    		console.log($scope.PI.employer.employer_email);
     		var dataToBeAdded = {
     			token: $window.sessionStorage.token,
 				patient_id: $window.sessionStorage.patient_id,
@@ -563,17 +561,18 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 	    		employer_email: $scope.PI.employer.employer_email == undefined ? '' : $scope.PI.employer.employer_email,
 	    		employer_house_number: $scope.PI.employer.employer_house_number == undefined ? '' : $scope.PI.employer.employer_house_number,
 	    		employer_street: $scope.PI.employer.employer_street == undefined ? '' : $scope.PI.employer.employer_street,
-	    		employer_country: $scope.PI.employer.employer_country == undefined ? '' : $scope.PI.employer.employer_country,
-	    		employer_state: $scope.PI.employer.employer_state == undefined ? '' : $scope.PI.employer.employer_state,
-	    		employer_city: $scope.PI.employer.employer_city == undefined ? '' : $scope.PI.employer.employer_city
+	    		employer_country: $scope.PI.employer.employer_country == undefined ? '' : $scope.PI.employer.employer_country.id,
+	    		employer_state: $scope.PI.employer.employer_state == undefined ? '' : $scope.PI.employer.employer_state.id,
+	    		employer_city: $scope.PI.employer.employer_city == undefined ? '' : $scope.PI.employer.employer_city.id
     		};
+    		console.log(dataToBeAdded);
 	    	if($scope.employer_id == undefined){
 	    		console.log('if');
 				PatientRegistrationEmployer.save(dataToBeAdded, patientEmployerSuccess, patientEmployerFailed);
 				function patientEmployerSuccess(res){
 					console.log(res);
 					if(res.status == true){
-						$scope.employer_id = res.employer_id;
+						$scope.employer_id = res.employee_id;
 						$scope.showSubmitButtonEmployer = false;
 						$scope.disabledTabPatientPlant = 'active';
 						$scope.disabledTabEmployer = '';
@@ -592,7 +591,8 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 				}
 			}else{
 				console.log('else');
-				dataToBeAdded.employer_id = $scope.employer_id;
+				dataToBeAdded.employee_id = $scope.employer_id;
+				console.log(dataToBeAdded);
 				PatientRegistrationEmployer.save(dataToBeAdded, patientKinUpdateSucess, patientKinUpdateFailed);
 				function patientKinUpdateSucess(res){
 					console.log(res);
