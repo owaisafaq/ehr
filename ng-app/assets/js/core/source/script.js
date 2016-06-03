@@ -5,7 +5,6 @@ $('.open-custom_pop').click(function () {
     $('.custom_popup').fadeIn();
 })
 $(document).ready(function () {
-//    alert("a")
     $('.checkout_patient_tab_con > div').css('display', 'none');
     var id = $('input:radio[name="checkoutpatient"]').val();
     $('#' + id).show();
