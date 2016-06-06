@@ -202,6 +202,7 @@ $api->params->country = "1";
 $api->params->local_goverment_area = "1";
 $api->params->permanent_street = "1";
 $api->params->permanent_city = "1";
+$api->params->permanent_state = "1";
 $api->params->permanent_country = "1";
 $api->params->permanent_email = "test@test.com";
 $api->params->permanent_housenumber = "1";

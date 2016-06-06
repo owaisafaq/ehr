@@ -317,6 +317,8 @@ class ApiController extends Controller
 
             $permanent_city = $request->input('permanent_city');
 
+            $permanent_state = $request->input('permanent_state');
+
             $permanent_street = $request->input('permanent_street');
 
             $permanent_country = $request->input('permanent_country');
@@ -341,7 +343,7 @@ class ApiController extends Controller
                     'house_number' => $permanent_housenumber,
                     'street' => $permanent_street,
                     'city' => $permanent_city,
-                    'state' => '',
+                    'state' => $permanent_state,
                     'country' => $permanent_country,
                     'local_goverment_area' => '',
                     'postal_code' => $permanent_postalCode,
