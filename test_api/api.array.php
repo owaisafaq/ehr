@@ -375,3 +375,22 @@ $api->params->token = "123";
 
 
 $api_arr [] = $api;
+
+
+// Add Patient Plan
+$api = new api();
+$api->name = "Add Patient Plan";
+$api->url = HOST . 'add_patient_plan';
+$api->method = "POST";
+$api->description = "Add Patient Plan";
+$api->params->patient_id = "1";
+$api->params->plan_id = "1";
+$api->params->is_principal = "1";
+$api->params->is_dependant = "0";
+$api->params->policies = "1";
+$api->params->insurance_id = "1";
+$api->params->description = "Description";
+$api->params->token = "123";
+
+
+$api_arr [] = $api;
