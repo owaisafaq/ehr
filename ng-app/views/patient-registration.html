@@ -2,8 +2,13 @@
     <section>
         <div class="card custom-card no-padding">
             <div class="card-head">
-                <ul class="nav nav-tabs nav-justified custom-tab " data-toggle="tabs" ng-init="disabledTabInfo='active';disabledTabAdress='disabled-tabs'; disabledTabKin='disabled-tabs'; disabledTabEmployer='disabled-tabs'; disabledTabPatientPlant='disabled-tabs'; disabledTabArchive='disabled-tabs';">
-                    <li class="{{disabledTabInfo}}"><a showtab href="#info">patient information</a></li>
+                <ul class="nav nav-tabs nav-justified custom-tab " data-toggle="tabs" ng-init="disabledTabInfo = 'active';
+                            disabledTabAdress = 'disabled-tabs';
+                            disabledTabKin = 'disabled-tabs';
+                            disabledTabEmployer = 'disabled-tabs';
+                            disabledTabPatientPlant = 'disabled-tabs';
+                            disabledTabArchive = 'disabled-tabs';">
+                    <li class="{{disabledTabInfo-no}}"><a showtab href="#info">patient information</a></li>
                     <li class="{{disabledTabAdress-no}}"><a showtab href="#address">address</a></li>
                     <li class="{{disabledTabKin-no}}"><a showtab href="#kin">next of kin</a></li>
                     <li class="{{disabledTabEmployer-no}}"><a showtab href="#employer">employer</a></li>
@@ -12,20 +17,14 @@
                 </ul>
             </div><!--end .card-head -->
             <div class="card-body tab-content">
-                <div class="tab-pane {{disabledTabInfo}}" id="info">
-                    <!-- <div class="alert alert-success" role="alert" ng-show="successMessage">
-                        <i class="fa fa-check alert-icon"></i> Patient Successfully Added.
-                    </div>
-                    <div class="alert alert-danger" role="alert" ng-show="errorMessage">
-                        <i class="fa fa-times alert-icon" aria-hidden="true"></i> Failed to Add Patient.
-                    </div> -->
+                <div class="tab-pane {{disabledTabInfo - no}}" id="info">
                     <form class="custom-form" name="userForm1" ng-model="myForm" novalidate ng-submit="validatePatientInfo(PI);">
                         <div class="row">
                             <div class="col-lg-3">
                                 <label>Patient ID</label>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" numbers-only placeholder="Patient ID" ng-model="PI.patient_ID"/>
+                                <input type="text" numbers-only disabled placeholder="Patient ID" ng-model="PI.patient_ID"/>
                             </div>
                             <div class="col-lg-3">
                                 <label>Unit Number</label>
@@ -37,14 +36,18 @@
                                 <label>Full Name</label>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" ng-class="{true: 'error'}[submitted && userForm1.first_name.$invalid]" alphabets-only placeholder="First Name" name="first_name" ng-model="PI.first_name" required/>
+                                <input type="text" ng-class="{
+                                        true
+                                                : 'error'}[submitted && userForm1.first_name.$invalid]" alphabets-only placeholder="First Name" name="first_name" ng-model="PI.first_name" required/>
                                 <p class="help-block PIValid" ng-show="submitted && userForm1.first_name.$error.required">Required</p>
                             </div>
                             <div class="col-lg-3">
                                 <input type="text" alphabets-only placeholder="Middle Name" name="middle_name" ng-model="PI.middle_name"/>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" ng-class="{true: 'error'}[submitted && userForm1.last_name.$invalid]" alphabets-only placeholder="Last Name" name="last_name" ng-model="PI.last_name" required/>
+                                <input type="text" ng-class="{
+                                        true
+                                                : 'error'}[submitted && userForm1.last_name.$invalid]" alphabets-only placeholder="Last Name" name="last_name" ng-model="PI.last_name" required/>
                                 <p class="help-block PIValid" ng-show="submitted && userForm1.last_name.$error.required">Required</p>
                             </div>
                             <div class="col-lg-3">
@@ -54,9 +57,11 @@
                                 <!--<input type="text" placeholder="Pick Date" />-->
                                 <div class="input-group date select-date">
                                     <div class="input-group-content">
-                                        <input type="text" name="date_of_birth" ng-model="PI.date_of_birth" ng-change="calculateAge(PI.date_of_birth);" ng-class="{true: 'error'}[submitted && userForm1.date_of_birth.$invalid]" class="form-control" required placeholder="Pick Date" />
+                                        <input type="text" name="date_of_birth" ng-model="PI.date_of_birth" ng-change="calculateAge(PI.date_of_birth);" ng-class="{
+                                                true
+                                                        : 'error'}[submitted && userForm1.date_of_birth.$invalid]" class="form-control" required placeholder="Pick Date" />
                                         <p class="help-block PIValid" ng-show="submitted && userForm1.date_of_birth
-                                        .$error.required">Required</p>
+                                                            .$error.required">Required</p>
                                     </div>
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
@@ -71,8 +76,9 @@
                                         <input class="file-path" type="text" placeholder="Upload Image" id="csv">
                                     </div>
                                     <input type="file" ngf-select ng-model="PI.file" name="file" accept="image/*">
-                                    <div class="btn">
-                                        <span>Browse</span>
+                                    <div class="btn-browse">
+                                        <span class="browse">Browse</span>
+                                        <span class="web-cam"></span>
                                     </div>
                                 </div>
                             </div>
@@ -93,7 +99,9 @@
                                     </select>
                                 </div>
                                 <div class="col-lg-3" ng-init="PI.sex = undefined">
-                                    <select class="form-control " name="sex" ng-model="PI.sex" ng-class="{true: 'error'}[submitted && userForm1.sex.$invalid]" required>
+                                    <select class="form-control " name="sex" ng-model="PI.sex" ng-class="{
+                                            true
+                                                    :'error'}[submitted && userForm1.sex.$invalid]" required>
                                         <option selected="true">Gender</option>
                                         <option value="1">Female</option>
                                         <option value="2">Male</option>
@@ -196,18 +204,14 @@
                             </div>
                         </div>
                         <div class="clear">
-                            <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-click="submitted=true; " value="Next" ng-show="showSubmitButton">Save</button>
-                            <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-click="submitted=true; " value="Next" ng-hide="showSubmitButton">Update</button>
+                            <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-click="submitted = true;
+                                    " value="Next" ng-show="showSubmitButton">Save</button>
+                            <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-click="submitted = true;
+                                    " value="Next" ng-hide="showSubmitButton">Update</button>
                         </div>
                     </form>
                 </div>
-                <div class="tab-pane {{disabledTabAdress-no}}" id="address">
-                    <!-- <div class="alert alert-success" role="alert" ng-show="successAddressMessage">
-                        <i class="fa fa-check alert-icon"></i> Patient Address Successfully Added.
-                    </div>
-                    <div class="alert alert-danger" role="alert" ng-show="errorAddressMessage">
-                        <i class="fa fa-times alert-icon" aria-hidden="true"></i> Failed to Add Patient Address.
-                    </div> -->
+                <div class="tab-pane {{disabledTabAdress - no}}" id="address">
                     <form class="custom-form" name="userForm" novalidate ng-submit="validatePatientAddress(PI.adress);">
                         <div class="row">
                             <div class="col-lg-12">
@@ -217,12 +221,12 @@
                                 <label>contact</label>
                             </div>
                             <div class="col-lg-1">
-<select class="form-control" class="contry-code" ng-model="PI.adress.countryCode" ng-options="countryCode.country_code for countryCode in contactAddressCountries track by countryCode.id" ng-selected="countryCode.country_code == countryCode">
-<option value="">Select Code</option>
-</select>
-<!-- <select class="form-control" ng-model="PI.adress.countryCode" ng-options="countryCode.country_code for countryCode in contactAddressCountries track by countryCode.id" ng-selected="countryCode.country_code == countryCode" convert-to-number>
-                                    <option value="">Select Code</option>
-                                </select> -->
+                                <select class="form-control" class="contry-code" ng-model="PI.adress.countryCode" ng-options="countryCode.country_code for countryCode in contactAddressCountries track by countryCode.id" ng-selected="countryCode.country_code == countryCode">
+                                    <option value="">234</option>
+                                </select>
+                                <!-- <select class="form-control" ng-model="PI.adress.countryCode" ng-options="countryCode.country_code for countryCode in contactAddressCountries track by countryCode.id" ng-selected="countryCode.country_code == countryCode" convert-to-number>
+                                                                    <option value="">Select Code</option>
+                                                                </select> -->
                             </div>
                             <div class="col-lg-2">
                                 <input type="text" numbers-only placeholder="Phone Number" name="phone_number" ng-model="PI.adress.phone_number" phone-number="^[d-d]/g"/>
@@ -246,43 +250,39 @@
                             <div class="col-lg-9">
                                 <input type="text" placeholder="Street" ng-model="PI.adress.street"/>
                             </div>
-        
+
                             <div class="col-lg-3">
                                 <label>Country/State</label>
                             </div>
                             <div class="col-lg-3">
-                                <select class="form-control select_searchFields" ng-model="PI.adress.country" ng-change="addressStateByCountry(PI.adress.country, 0);">
-                                    <option value=null>Country</option>
-                                    <option ng-repeat="country in contactAddressCountries" value="{{country.id}}">{{country.name}}</option>
+                                <select class="form-control select_searchFields" data-placeholder="Select Country" ng-model="PI.adress.country" ng-options="country.name for country in contactAddressCountries track by country.id" ng-change="addressStateByCountry(PI.adress.country, 0);">
+                                    <option value=""></option>
                                 </select>
                             </div>
                             <div class="col-lg-3">
-                                <select class="form-control select_searchFields" ng-model="PI.adress.state" ng-change="addressLocalGovtAreaByStates(PI.adress.state, 0);">
-                                    <option value=null>State</option>
-                                    <option ng-repeat="state in contactAddressStates" value="{{state.id}}">{{state.name}}</option>
+                                <select class="form-control select_searchFields" data-placeholder="Select State" ng-model="PI.adress.state" ng-options="state.name for state in contactAddressStates track by state.id" ng-change="addressLocalGovtAreaByStates(PI.adress.state, 0);">
+                                    <option value=""></option>
                                 </select>
                             </div>
                             <div class="col-lg-3">
-                                <select class="form-control select_searchFields" ng-model="PI.adress.local_goverment_area">
-                                    <option value=null>Local Government Area</option>
-                                    <option ng-repeat="LGA in addresslocalGovtArea" value="{{LGA.id}}">{{LGA.name}}</option>
+                                <select class="form-control select_searchFields" data-placeholder="Local Government Area" ng-model="PI.adress.local_goverment_area" ng-options="LGA.name for LGA in addresslocalGovtArea track by LGA.id">
+                                    <option value=""></option>
                                 </select>
                             </div>
-                            
+
                             <div class="col-lg-3">
                                 <label>City</label>  
                             </div>
-                            
+
                             <div class="col-lg-3">
-                                <select class="form-control select_searchFields" ng-model="PI.adress.city">
-                                    <option value=null>City</option>
-                                    <option ng-repeat="city in addressContactCities" value="{{city.id}}">{{city.name}}</option>
+                                <select class="form-control select_searchFields" data-placeholder="Select City" ng-model="PI.adress.city" ng-options="city.name for city in addressContactCities track by city.id">
+                                    <option value=""></option>
                                 </select>
                             </div>
                             <div class="col-lg-3">
                                 <input type="text" numbers-only placeholder="Post Code" ng-model="PI.adress.postal_code"/> 
                             </div>
-            
+
                             <div class="col-lg-3">
                                 <label></label>
                             </div>
@@ -302,7 +302,12 @@
                                 <div class="col-lg-3">
                                     <label>contact</label>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-1">
+                                    <select class="form-control" data-placeholder="Code" ng-model="permanentCountryCode" ng-options="countryCode.country_code for countryCode in contactAddressCountries track by countryCode.id">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2">
                                     <input type="text" numbers-only placeholder="Phone Number" ng-model="PI.adress.permanent_phonenumber"/> 
                                 </div>
                                 <div class="col-lg-3">
@@ -327,15 +332,13 @@
                                     <label>Country/State</label>  
                                 </div>
                                 <div class="col-lg-3">
-                                    <select class="form-control select_searchFields" ng-model="PI.adress.permanent_country" ng-change="addressStateByCountry(PI.adress.permanent_country, 1);">
-                                        <option value=null>Country</option>
-                                        <option ng-repeat="country in permanentAddressCountries" value={{country.id}}>{{country.name}}</option>
+                                    <select class="form-control select_searchFields" data-placeholder="Select Country" ng-model="PI.adress.permanent_country" ng-options="country.name for country in permanentAddressCountries track by country.id" ng-change="addressStateByCountry(PI.adress.permanent_country, 1);">
+                                        <option value=""></option>
                                     </select>
                                 </div>
                                 <div class="col-lg-3">
-                                    <select class="form-control select_searchFields" ng-model="PI.adress.permanent_state" ng-change="addressLocalGovtAreaByStates(PI.adress.permanent_state, 1);">
-                                        <option value=null>State</option>
-                                        <option ng-repeat="states in permanentAddressStates" value="{{states.id}}">{{states.name}}</option>
+                                    <select class="form-control select_searchFields" data-placeholder="Select State" ng-model="PI.adress.permanent_state" ng-options="states.name for states in permanentAddressStates track by states.id" ng-change="addressLocalGovtAreaByStates(PI.adress.permanent_state, 1);">
+                                        <option value=""></option>
                                     </select>
                                 </div>
                                 <div class="col-lg-3">
@@ -345,12 +348,11 @@
                                     <label>City</label>
                                 </div>
                                 <div class="col-lg-3">
-                                    <select class="form-control select_searchFields" ng-model="PI.adress.permanent_city">
-                                        <option value=null>City</option>
-                                        <option ng-repeat="city in addressPerminentCities" value="{{city.id}}">{{city.name}}</option>
+                                    <select class="form-control select_searchFields" data-placeholder="Select City" ng-model="PI.adress.permanent_city" ng-options="city.name for city in addressPerminentCities track by city.id">
+                                        <option value=""></option>
                                     </select>
                                 </div>
-                                
+
                                 <div class="col-lg-3">
                                     <input type="text" numbers-only placeholder="Post Code" ng-model="PI.adress.permanent_postalCode"/> 
                                 </div>
@@ -362,13 +364,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="tab-pane {{disabledTabKin-no}}" id="kin">
-                    <!-- <div class="alert alert-success" role="alert" ng-show="successMessage">
-                        <i class="fa fa-check alert-icon"></i> Next to Kin Successfully Added.
-                    </div>
-                    <div class="alert alert-danger" role="alert" ng-show="errorMessage">
-                        <i class="fa fa-times alert-icon" aria-hidden="true"></i> Failed to Add Next to Kin.
-                    </div> -->
+                <div class="tab-pane {{disabledTabKin - no}}" id="kin">
                     <form class="custom-form" name="userForm2" novalidate ng-submit="validatePatientKin(PI.kin);">
                         <div class="row">
                             <div class="col-lg-3">
@@ -389,9 +385,9 @@
                             </div>
                             <div class="col-lg-3">
                                 <select class="form-control select_searchFields" ng-model="PI.kin.kin_relationship">
-                                <option>Relationship</option>
-                                <option ng-repeat="relation in dropDownInfo.relationship" value="{{relation.id}}">
-                                {{relation.type}}</option>
+                                    <option>Relationship</option>
+                                    <option ng-repeat="relation in dropDownInfo.relationship" value="{{relation.id}}">
+                                        {{relation.type}}</option>
                                 </select>
                             </div>
                             <div class="col-lg-6">
@@ -425,15 +421,21 @@
                                 <label>Country/State</label>  
                             </div>
                             <div class="col-lg-3">
-                                <select class="form-control select_searchFields" ng-model="PI.kin.kin_country" ng-change="nextOfKinStateByCountry(PI.kin.kin_country);">
+                                <!-- <select class="form-control select_searchFields" ng-model="PI.kin.kin_country" ng-change="nextOfKinStateByCountry(PI.kin.kin_country);">
                                     <option value=null>Country</option>
                                     <option ng-repeat="country in nextOfKinCountries" value="{{country.id}}">{{country.name}}</option>
+                                </select> -->
+                                <select class="form-control select_searchFields" data-placeholder="Select Country" ng-model="PI.kin.kin_country" ng-options="country.name for country in nextOfKinCountries track by country.id" ng-change="nextOfKinStateByCountry(PI.kin.kin_country);">
+                                    <option value=""></option>
                                 </select>
                             </div>
                             <div class="col-lg-3">
-                                <select class="form-control select_searchFields" ng-model="PI.kin.kin_state" ng-change="nextOfKinCityByStates(PI.kin.kin_state)">
+                                <!-- <select class="form-control select_searchFields" ng-model="PI.kin.kin_state" ng-change="nextOfKinCityByStates(PI.kin.kin_state)">
                                     <option value=null>State</option>
                                     <option ng-repeat="state in nextOfKinStates" value="{{state.id}}">{{state.name}}</option>
+                                </select> -->
+                                <select class="form-control select_searchFields" data-placeholder="Select State" ng-model="PI.kin.kin_city" ng-options="state.name for state in nextOfKinStates track by state.id" ng-change="nextOfKinCityByStates(PI.kin.kin_city)">
+                                    <option value=""></option>
                                 </select>
                             </div>
                             <div class="col-lg-3">
@@ -443,9 +445,12 @@
                                 <label>City</label>  
                             </div>
                             <div class="col-lg-3">
-                                <select class="form-control select_searchFields" ng-model="PI.kin.kin_city">
+                                <!-- <select class="form-control select_searchFields" ng-model="PI.kin.kin_city">
                                     <option value=null>City</option>
                                     <option ng-repeat="city in nextOfKinCities" value="{{city.id}}">{{city.name}}</option>
+                                </select> -->
+                                <select class="form-control select_searchFields" data-placeholder="Select City" ng-model="PI.kin.kin_city" ng-options="city.name for city in nextOfKinCities track by city.id">
+                                        <option value=""></option>
                                 </select>
                             </div>
                             <div class="col-lg-3">
@@ -455,10 +460,10 @@
                     </form>
                     <div class="clear">
                         <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-show="showSubmitButtonKin" ng-click="validatePatientKin(PI.kin);">Save</button>
-                        <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" value="Next" ng-hide="showSubmitButtonKin">Update</button>
+                        <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" value="Next" ng-hide="showSubmitButtonKin" ng-click="validatePatientKin(PI.kin);">Update</button>
                     </div>
                 </div>
-                <div class="tab-pane {{disabledTabEmployer-no}}" id="employer">
+                <div class="tab-pane {{disabledTabEmployer - no}}" id="employer">
                     <form class="custom-form" name="userForm3" novalidate ng-submit="validatePatientEmployer(PI);">
                         <div class="row">
                             <div class="col-lg-3">
@@ -502,15 +507,13 @@
                                 <label>Country/State</label>  
                             </div>
                             <div class="col-lg-3">
-                                <select class="form-control select_searchFields" ng-model="PI.employer.employer_country" ng-change="employerStateByCountry(PI.employer.employer_country);">
-                                    <option value=null>Country</option>
-                                    <option ng-repeat="country in employerCountries" value="{{country.id}}">{{country.name}}</option>
+                                <select class="form-control select_searchFields" data-placeholder="Select Country" ng-model="PI.employer.employer_country" ng-options="country.name for country in employerCountries track by country.id" ng-change="employerStateByCountry(PI.employer.employer_country);">
+                                        <option value=""></option>
                                 </select>
                             </div>
                             <div class="col-lg-3">
-                                <select class="form-control select_searchFields" ng-model="PI.employer.employer_state" ng-change="employerCityByStates(PI.employer.employer_state);">
-                                    <option value=null>State</option>
-                                    <option ng-repeat="state in employerStates" value="{{state.id}}">{{state.name}}</option>
+                                <select class="form-control select_searchFields" data-placeholder="Select State" ng-model="PI.employer.employer_state" ng-options="state.name for state in employerStates track by state.id" ng-change="employerCityByStates(PI.employer.employer_state)">
+                                    <option value=""></option>
                                 </select>
                             </div>
                             <div class="col-lg-3">
@@ -520,9 +523,8 @@
                                 <label>City</label>
                             </div>
                             <div class="col-lg-3">
-                                <select class="form-control select_searchFields" ng-model="PI.employer.employer_city">
-                                    <option value=null>City</option>
-                                    <option ng-repeat="city in employerCities" value="{{city.id}}">{{city.name}}</option>
+                                <select class="form-control select_searchFields" data-placeholder="Select City" ng-model="PI.employer.employer_city" ng-options="city.name for city in employerCities track by city.id">
+                                        <option value=""></option>
                                 </select>
                             </div>
                             <div class="col-lg-3">
@@ -531,10 +533,10 @@
                     </form>
                     <div class="clear">
                         <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-show="showSubmitButtonEmployer" ng-click="validatePatientEmployer(PI.employer);">Save</button>
-                        <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" value="Next" ng-hide="showSubmitButtonEmployer">Update</button>
+                        <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" value="Next" ng-hide="showSubmitButtonEmployer" ng-click="validatePatientEmployer(PI.employer);">Update</button>
                     </div>
                 </div>
-                <div class="tab-pane {{disabledTabPatientPlant-no}}" id="plan">
+                <div class="tab-pane {{disabledTabPatientPlant - no}} active" id="plan">
                     <form class="custom-form" name="userForm4" novalidate ng-submit="validatePatientPlan(PI.patientPlan);">
                         <div class="col-lg-12 margin-bottom-xxl">
                             <label class="label-style">Select Plan</label>
@@ -542,14 +544,8 @@
                         <div class="col-lg-12 radio-style-2-con">
                             <div class="radio radio-styled">
                                 <label>
-                                    <input type="radio" name="checkoutpatient" value="appointment" checked="" ng-model="PI.patientPlan.checkoutpatient">
+                                    <input type="radio" name="checkoutpatient" value="appointment" ng-checked="true" ng-model="PI.patientPlan.checkoutpatient">
                                     <span>Self</span>
-                                </label>
-                            </div>
-                            <div class="radio radio-styled">
-                                <label>
-                                    <input type="radio" name="checkoutpatient" value="followup" ng-model="PI.patientPlan.checkoutpatient">
-                                    <span>Company Cover</span>
                                 </label>
                             </div>
                             <div class="radio radio-styled">
@@ -561,7 +557,7 @@
                             <div class="radio radio-styled">
                                 <label>
                                     <input type="radio" name="checkoutpatient" value="dead" ng-model="PI.patientPlan.checkoutpatient">
-                                    <span data-toggle="modal" data-target="#relationship">Relationship</span>
+                                    <span data-toggle="modal" data-target="#relationship">Retainership</span>
                                 </label>
                             </div>
                             <div class="clear">
@@ -570,7 +566,7 @@
                         </div>
                         <div ng-hide="patientSummary">
                             <div class="col-lg-12 margin-bottom-xxl no-padding">
-                                <label class="label-style"">Patient Summary</label>
+                                <label class="label-style">Patient Summary</label>
                             </div>
                             <div class="data-table">
                                 <div class="column col-lg-6">
@@ -655,7 +651,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="tab-pane {{disabledTabArchive-no}}" id="archive">
+                <div class="tab-pane {{disabledTabArchive - no}}" id="archive">
                     <div class="alert alert-success" role="alert" ng-show="successMessage">
                         <i class="fa fa-check alert-icon"></i> Patient Successfully Added.
                     </div>
@@ -714,16 +710,21 @@
                         <label>HMO</label>
                     </div>
                     <div class="col-lg-3">
-                        <select class="form-control" ng-model="PI.patientPlan.hmo">                                
-                            <option>Select</option>
-                            <!--<option ng-repeat="hmo in dropDownData.hmo" value="{{hmo.id}}">{{hmo.name}}</option>-->
+                        <!--                        <select class="form-control" ng-model="PI.patientPlan.hmo">                                
+                                                    <option>Select</option>
+                                                    <option ng-repeat="hmo in dropDownData.hmo" value="{{hmo.id}}">{{hmo.name}}</option>
+                                                </select>-->
+                        <select class="form-control" data-placeholder="Select Hmo" ng-model="PI.patientPlan.hmo" ng-options="hmo.name for hmo in dropDownData.hmo track by hmo.id">
+                            <option value=""></option>
                         </select>
                     </div>
                     <div class="col-lg-3">
                         <label>Policies</label>
                     </div>
                     <div class="col-lg-3">
-                        <input type="text" class="form-control" placeholder="Select Policies" ng-model="PI.patientPlan.policies"/>
+                        <select class="form-control" data-placeholder="Select Policy" ng-model="PI.patientPlan.policies" ng-options="policy.name for policy in dropDownData.policies track by policy.id">
+                            <option value=""></option>
+                        </select>
                     </div>
                     <div class="col-lg-3">
                         <label>Speciality</label>
@@ -731,7 +732,7 @@
                     <div class="col-lg-3 select-speciality">
                         <div class="checkbox checkbox-styled col-lg-6">
                             <label>
-                                <input type="radio" name="select-speciality" value="principal" checked ng-model="PI.patientPlan.principal">
+                                <input type="radio" name="select-speciality" value="principal" ng-checked="true" ng-model="PI.patientPlan.principal">
                                 <span>Principal</span>
                             </label>
                         </div>
@@ -751,24 +752,19 @@
                     <div class="show-on-dependant">
                         <div class="col-lg-12">
                             <div class="header-search col-lg-4">
-                                <button type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                                <input class="search_field" type="text" placeholder="Type patient id or name" ng-model="PI.patientPlan.search">
+                                <input id="get_val" type="hidden" class="search-ajax form-control" />
                             </div>
-                            <button type="button" class="btn btn-default button-style-1">add dependant</button>
+                            <button type="button" class="btn btn-default button-style-1 add-dependant">add dependant</button>
+                        </div>
+                        <div class="col-lg-12 dependant_list">
+                            <!--<div class="chip" data-id="1">Khalil Ahmed<i class="md-close"></i></div>-->
                         </div>
                         <div class="col-lg-3">
                             <label>Dependant Relationship</label>
                         </div>
-
                         <div class="col-lg-3">
-                            <select class="form-control" ng-model="PI.patientPlan.dependant_relationship">
-                            <option>Relationship</option>
-                            <option ng-repeat="relation in dropDownInfo.relationship" value="{{relation.id}}">{{relation.type}}</option>                         
-                                <!-- <option>Select Relationship</option>
-                                <option>2</option>
-                                <option>3</option> -->
+                            <select class="form-control" data-placeholder="Select Relationship" ng-model="PI.patientPlan.dependant_relationship" ng-options="relationship.type for relationship in dropDownInfo.relationship track by relationship.id">
+                                <option value=""></option>
                             </select>
                         </div>
                     </div>
@@ -788,8 +784,8 @@
 
                         <div class="col-lg-3">
                             <select class="form-control" ng-model="PI.patientPlan.principal_relationship">
-                            <option>Relationship</option>
-                            <option ng-repeat="relation in dropDownInfo.relationship" value="{{relation.id}}">{{relation.type}}</option>
+                                <option>Relationship</option>
+                                <option ng-repeat="relation in dropDownInfo.relationship" value="{{relation.id}}">{{relation.type}}</option>
                             </select>
                         </div>
                     </div>
@@ -852,12 +848,6 @@
                             </label>
                         </div>
                     </div>
-<!--                    <div class="col-lg-3">
-                        <label>Insurance ID</label>
-                    </div>
-                    <div class="col-lg-3">
-                        <input type="text" class="form-control" placeholder="06" />
-                    </div>-->
                     <div class="show-on-dependant">
                         <div class="col-lg-12">
                             <div class="header-search col-lg-4">
@@ -874,8 +864,8 @@
 
                         <div class="col-lg-3">
                             <select class="form-control" ng-model="PI.patientPlan.dependant_relationship">
-                                <option>Relationship</option>
-                                <option ng-repeat="relation in dropDownInfo.relationship" value="{{relation.id}}">{{relation.type}}</option>
+                                <option value=""></option>
+                                <!--<option ng-repeat="relation in dropDownInfo.relationship" value="{{relation.id}}">{{relation.type}}</option>-->
                             </select>
                         </div>
                     </div>

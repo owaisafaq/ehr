@@ -16,16 +16,21 @@ $(document).ready(function () {
     $('body').on('click', '.select-speciality input[type=radio]', function () {
         if ($(this).val() == "principal")
         {
-            $('.show-on-principal').show();
-            $('.show-on-dependant').hide();
-        }
-        else {
             $('.show-on-principal').hide();
             $('.show-on-dependant').show();
+        }
+        else {
+            $('.show-on-principal').show();
+            $('.show-on-dependant').hide();
         }
     })
     $('body').on('click', '.ulli_2 span', function () {
         $(this).siblings('input[type=text]').show();
-//        alert("a")
+    })
+    $('body').on('click', '.chip i', function () {
+        $(this).parent('.chip').fadeOut(function () {
+            $(this).remove();
+        })
+
     })
 })

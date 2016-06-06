@@ -510,24 +510,33 @@ DropDown Styling
 /*
 file upload custom
 */
-.file-field .btn {
+.file-field .btn-browse {
     position: absolute;
     right: 0;
     top: 0;
-    padding: 0 30px 0 10px;
-    font-size: 11px;
-    background: url(../../img/browse_icn.png) no-repeat right 10px center #ddecf8;
-    box-shadow: none;
-    border-radius: 0;
-    font-size: 14px;
+}
+.file-field .file-path{
+    padding-right: 90px;
+}
+.file-field .btn-browse .browse{
     float: left;
-    height: 100%;
-    line-height: 28px;
     color: #a2a6b9;
     font-family: 'SegoeUI-reg';
     text-transform: capitalize;
+    background: #ddecf8;
+    line-height: 14px;
+    font-size: 12px;
+    padding: 9px;
 }
-
+.file-field .web-cam{
+    background: url(../../img/browse_icn.png) no-repeat center center #ddecf8;
+    width: 10px;
+    height: 10px;
+    float: left;
+    padding: 15px 10px;
+    border:1px solid #a2a6b9;
+    margin-left: 3px;
+}
 .file-field input[type=file] {
     position: absolute;
     top: 0;
@@ -1408,7 +1417,7 @@ Patient Plan
 .modal-body-2{
     padding: 30px 20px;
 }
-.show-on-dependant{
+.show-on-principal{
     display: none;
 }
 /*MUZAMMIL*/
@@ -1952,4 +1961,23 @@ Lab Report Lokoja
 }
 .spacing-between-field .radio-styled{
     margin-top: 10px !important;
+}
+
+.chip {
+    display: inline-block;
+    height: 32px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #313534;
+    line-height: 32px;
+    padding: 0 12px;
+    border-radius: 16px;
+    background-color: #ddecf8;
+}
+.chip i{
+    cursor: pointer;
+    float: right;
+    font-size: 16px;
+    line-height: 38px;
+    padding-left: 8px;
 }
