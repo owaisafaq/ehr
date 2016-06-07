@@ -4,23 +4,23 @@
             <div class="card-head card-head-custom card-color-4">
                 <div class="col-lg-3">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
-                    <span class="txt-style-2 col-lg-12">Elbert Bloggs Woo</span>
+                    <span class="txt-style-2 col-lg-12">{{PI.first_name}} {{PI.middle_name}} {{PI.last_name}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Number</label>
-                    <span class="txt-style-2 col-lg-12">PA-90189191</span>
+                    <span class="txt-style-2 col-lg-12">PA-{{PI.patient_id}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Age</label>
-                    <span class="txt-style-2 col-lg-12">39 Years</span>
+                    <span class="txt-style-2 col-lg-12">{{PI.age}} Years</span>
                 </div>
                 <div class="col-lg-1">
                     <label class="txt-style-1 text-uppercase col-lg-12">Sex</label>
-                    <span class="txt-style-2 col-lg-12">Male</span>
+                    <span class="txt-style-2 col-lg-12">{{PI.sex}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">marital status</label>
-                    <span class="txt-style-2 col-lg-12">Single</span>
+                    <span class="txt-style-2 col-lg-12">{{PI.marital_status}}</span>
                 </div>
                 <div class="col-lg-2">
                     <a href="javascript:;" class="button-style-2">
@@ -119,13 +119,13 @@
             </div>
             <div class="card-head col-lg-9 no-padding card-head-auto">
                 <ul class="nav nav-tabs nav-justified custom-tab custom-tab-with-header" data-toggle="tabs">
-                    <li class="active"><a href="#demographics">demographics</a></li>
-                    <li><a href="#encounter_history">encounters</a></li>
-                    <li><a href="#health_vitals">vitals</a></li>
-                    <li><a href="#medications">medications</a></li>
-                    <li><a href="#supplements">supplements</a></li>
-                    <li><a href="#allergies">allergies</a></li>
-                    <li><a href="#documents">documents</a></li>
+                    <li class="active"><a showtab href="#demographics">demographics</a></li>
+                    <li><a showtab href="#encounter_history">encounters</a></li>
+                    <li><a showtab href="#health_vitals">vitals</a></li>
+                    <li><a showtab href="#medications">medications</a></li>
+                    <li><a showtab href="#supplements">supplements</a></li>
+                    <li><a showtab href="#allergies">allergies</a></li>
+                    <li><a showtab href="#documents">documents</a></li>
                 </ul>
             </div><!--end .card-head -->
             <div class="card-body tab-content col-lg-9 custom-card-body">
@@ -141,27 +141,27 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="col-lg-12">
-                                        <label class="label-style-2">Elton John</label>
+                                        <label class="label-style-2">{{PI.first_name}} {{PI.middle_name}} {{PI.last_name}}</label>
                                     </div>
                                     <div class="col-lg-3">
                                         <label>date of birth</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <label class="txt-style-4">October 10 1981</label>
+                                        <label class="txt-style-4">{{PI.date_of_birth}} October 10 1981</label>
                                     </div>
 
                                     <div class="col-lg-3">
                                         <label>patient id</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <label class="txt-style-4">90189191</label>
+                                        <label class="txt-style-4">{{PI.patient_id}}</label>
                                     </div>
 
                                     <div class="col-lg-3">
                                         <label>age</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <label class="txt-style-4">35</label>
+                                        <label class="txt-style-4">{{PI.age}}</label>
                                     </div>  
 
                                     <div class="col-lg-3">
@@ -175,7 +175,7 @@
                                         <label>Gender</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <label class="txt-style-4">Male</label>
+                                        <label class="txt-style-4">{{PI.sex}}</label>
                                     </div>  
                                 </div>
                             </div>
@@ -185,13 +185,13 @@
                                         <label>marital status</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <label class="txt-style-4">Married</label>
+                                        <label class="txt-style-4">{{PI.marital_status}}</label>
                                     </div>
                                     <div class="col-lg-3">
                                         <label>religion</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <label class="txt-style-4">Islam</label>
+                                        <label class="txt-style-4">{{PI.religion}}</label>
                                     </div>
                                     <div class="col-lg-3">
                                         <label>patient billing</label>
@@ -204,7 +204,7 @@
                                         <label>next of kin</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <label class="txt-style-4">Will Bloggs</label>
+                                        <label class="txt-style-4">{{PI.kin.first_name}} {{PI.kin.middle_name}} {{PI.kin.last_name}}</label>
                                     </div>
                                 </div>
                             </div>
@@ -216,25 +216,25 @@
                                         <label>mobile no</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <label class="txt-style-4">+1 555 555 5555</label>
+                                        <label class="txt-style-4">+{{PI.address.mobile_number}}</label>
                                     </div>
                                     <div class="col-lg-3">
                                         <label>email</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <label class="txt-style-4">abc@xyz.com</label>
+                                        <label class="txt-style-4">{{PI.email}}</label>
                                     </div>
                                     <div class="col-lg-3">
                                         <label>address</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <label class="txt-style-4">ABC Street , XYZ Bulevard</label>
+                                        <label class="txt-style-4">{{PI.address.house_number}}, {{PI.address.street}}</label>
                                     </div>
                                     <div class="col-lg-3">
                                         <label>blood group</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <label class="txt-style-4">A+</label>
+                                        <label class="txt-style-4">{{PI.blood_group}}</label>
                                     </div>
                                 </div>
                             </div>
@@ -255,7 +255,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr ng-repeat="encounter in encounters">
+                                <td>{{encounter.date}}}</td>
+                                <td>{{encounter.id}}}</td>
+                                <td>{{encounter.type}}}</td>
+                                <td>{{encounter.chief}}}</td>
+                                <td>{{encounter.diagnose}}}</td>
+                                <td>{{encounter.consultant}}}</td>
+                                <td>{{encounter.report}}}</td>
+                            </tr>
+                            <!-- <tr>
                                 <td>14/04/2016</td>
                                 <td>90189191</td>
                                 <td>ABc</td>
@@ -272,16 +281,7 @@
                                 <td>Consultation</td>
                                 <td>Outpatient</td>
                                 <td>Outpatient</td>
-                            </tr>
-                            <tr>
-                                <td>14/04/2016</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                                <td>Consultation</td>
-                                <td>Outpatient</td>
-                                <td>Outpatient</td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                     </table>
                 </div>
@@ -300,7 +300,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr ng-repeat="vital in vitals">
+                                <th>{{vital.date}}</th>
+                                <th>{{vital.temeprature}}</th>
+                                <th>{{vital.bp}}</th>
+                                <th>{{vital.pulse}}</th>
+                                <th>{{vital.respiration}}</th>
+                                <th>{{vital.bmi}}</th>
+                            </tr>
+                            <!-- <tr>
                                 <td>14/04/2016 12:00:32</td>
                                 <td>90189191</td>
                                 <td>ABc</td>
@@ -315,15 +323,7 @@
                                 <td>Eye Clinic</td>
                                 <td>Consultation</td>
                                 <td>Outpatient</td>
-                            </tr>
-                            <tr>
-                                <td>14/04/2016 12:00:32</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                                <td>Consultation</td>
-                                <td>Outpatient</td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                     </table>
                 </div>
@@ -340,7 +340,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr ng-repeat="medication in medications">
+                                <td>{{medication.prescription}}</td>
+                                <td>{{medication.date}}</td>
+                                <td>{{medication.toDate}}</td>
+                                <td>{{medication.status}}</td>
+                            </tr>
+                            <!-- <tr>
                                 <td>14/04/2016 12:00:32</td>
                                 <td>90189191</td>
                                 <td>ABc</td>
@@ -351,13 +357,7 @@
                                 <td>90189191</td>
                                 <td>ABc</td>
                                 <td>Eye Clinic</td>
-                            </tr>
-                            <tr>
-                                <td>14/04/2016 12:00:32</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                     </table>
                 </div>
@@ -376,7 +376,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr ng-repeat="supplement in supplements">
+                                <td>{{supplement.supplement}}</td>
+                                <td>{{supplement.dosage}}</td>
+                                <td>{{supplement.frequency}}</td>
+                                <td>{{supplement.type}}</td>
+                                <td>{{supplement.fromDate}}</td>
+                                <td>{{supplement.toDate}}</td>
+                                <td>{{supplement.status}}</td>
+                            </tr>
+                            <!-- <tr>
                                 <td>14/04/2016 12:00:32</td>
                                 <td>90189191</td>
                                 <td>ABc</td>
@@ -394,16 +403,7 @@
                                 <td>Eye Clinic</td>
                                 <td>Eye Clinic</td>
                             </tr>
-                            <tr>
-                                <td>14/04/2016 12:00:32</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                                <td>Eye Clinic</td>
-                                <td>Eye Clinic</td>
-                                <td>Eye Clinic</td>
-                            </tr>
-                        </tbody>
+                        </tbody> -->
                     </table>
                 </div>
                 <div class="tab-pane" id="allergies">
@@ -442,7 +442,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr ng-repeat="allergie in allergies">
+                                <td>{{allergie.name}}</td>
+                                <td>{{allergie.severity}}</td>
+                                <td>{{allergie.observerdon}}</td>
+                                <td>{{allergie.status}}</td>
+                                <td>{{allergie.reaction}}</td>
+                                <td>
+                                    <a class="link-style" href="javascript:;">Edit</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+                                    <a class="link-style" href="javascript:;">Delete</a>
+                                </td>
+                            </tr>
+                            <!-- <tr>
                                 <td>14/04/2016 12:00:32</td>
                                 <td>90189191</td>
                                 <td>ABc</td>
@@ -463,18 +474,7 @@
                                     <a class="link-style" href="javascript:;">Edit</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
                                     <a class="link-style" href="javascript:;">Delete</a>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td>14/04/2016 12:00:32</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                                <td>Eye Clinic</td>
-                                <td>
-                                    <a class="link-style" href="javascript:;">Edit</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-                                    <a class="link-style" href="javascript:;">Delete</a>
-                                </td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                     </table>
                 </div>
@@ -492,7 +492,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr ng-repeat="document in documents">
+                                <td>{{documents.date}}/td>
+                                <td>{{documents.type}}</td>
+                                <td>{{documents.title}}</td>
+                                <td>{{documents.notes}}</td>
+                            </tr>
+                            <!-- <tr>
                                 <td>14/04/2016 12:00:32</td>
                                 <td>90189191</td>
                                 <td>ABc</td>
@@ -503,13 +509,7 @@
                                 <td>90189191</td>
                                 <td>ABc</td>
                                 <td>Eye Clinic</td>
-                            </tr>
-                            <tr>
-                                <td>14/04/2016 12:00:32</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                     </table>
                 </div>

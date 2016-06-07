@@ -51,6 +51,10 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/patient-registration.html',
                     controller: 'patientRegistrationController'
                 }).
+                when('/patient-registration-update/:patientID', {
+                    templateUrl: 'views/patient-registration.html',
+                    controller: 'patientRegistrationController'
+                }).
                 when('/patient-summary-demographics', {
                     templateUrl: 'views/patient-summary-demographics.html',
                     controller: 'patientSummaryDemographicsController'
@@ -125,20 +129,14 @@ AppEHR.run(function ($rootScope, $location, $window) {
         $window.location.href = '#/login';
     }
     $rootScope.PI = {};
-    /*$rootScope.loadView = function(object) {
-     object = {};
-     }*/
-
-    /*    $rootScope.loadView = function() {
-     $window.location.reload();
-     }*/
+    $rootScope.loader = "";
 
     $rootScope.$on('$viewContentLoaded', function () {
-        //$('body').append('<script src="assets/js/libs/bootstrap/bootstrap.min.js"></script><script src="assets/js/libs/spin.js/spin.min.js"></script><script src="assets/js/libs/autosize/jquery.autosize.min.js"></script><script src="assets/js/libs/nanoscroller/jquery.nanoscroller.min.js"></script><script src="assets/js/core/source/App.js"></script><script src="assets/js/core/source/AppNavigation.js"></script><script src="assets/js/core/source/AppOffcanvas.js"></script><script src="assets/js/core/source/AppCard.js"></script><script src="assets/js/core/source/AppForm.js"></script><script src="assets/js/core/source/AppNavSearch.js"></script><script src="assets/js/core/source/AppVendor.js"></script><script src="assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script><script src="assets/js/core/demo/Demo.js"></script><script src="assets/js/core/source/script.js" type="text/javascript"></script><script src="assets/js/libs/select2/select2.min.js" type="text/javascript"></script>');
-        //$rootScope.html = '<div ng-include="\'views/script-file.html\'"></div>';
         $('.select-date').datepicker({autoclose: true, todayHighlight: true, format: 'yyyy-mm-dd'});
         $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
         $('.select_searchFields').select2();
+        $(".maskPhone").inputmask("99-9999999");
+        $(".maskMobile").inputmask("99999999999");
 //        var test = sessionStorage.getItem('token');
         $(".search-ajax").select2({
             placeholder: 'Select Patient',
@@ -198,7 +196,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
 
     });
     //$rootScope.html = '<div ng-include="\'utils/script-file.html\'"></div>';
-    $rootScope.html = '<script src="assets/js/libs/bootstrap/bootstrap.min.js"></script><script src="assets/js/libs/spin.js/spin.min.js"></script><script src="assets/js/libs/autosize/jquery.autosize.min.js"></script><script src="assets/js/libs/nanoscroller/jquery.nanoscroller.min.js"></script><script src="assets/js/core/source/App.js"></script><script src="assets/js/core/source/AppNavigation.js"></script><script src="assets/js/core/source/AppOffcanvas.js"></script><script src="assets/js/core/source/AppCard.js"></script><script src="assets/js/core/source/AppForm.js"></script><script src="assets/js/core/source/AppNavSearch.js"></script><script src="assets/js/core/source/AppVendor.js"></script><script src="assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script><script src="assets/js/core/demo/Demo.js"></script><script src="assets/js/core/source/script.js" type="text/javascript"></script><script src="assets/js/libs/select2/select2.min.js" type="text/javascript"></script>';
+    $rootScope.html = '<script src="assets/js/libs/bootstrap/bootstrap.min.js"></script><script src="assets/js/libs/spin.js/spin.min.js"></script><script src="assets/js/libs/autosize/jquery.autosize.min.js"></script><script src="assets/js/libs/nanoscroller/jquery.nanoscroller.min.js"></script><script src="assets/js/core/source/App.js"></script><script src="assets/js/core/source/AppNavigation.js"></script><script src="assets/js/core/source/AppOffcanvas.js"></script><script src="assets/js/core/source/AppCard.js"></script><script src="assets/js/core/source/AppForm.js"></script><script src="assets/js/core/source/AppNavSearch.js"></script><script src="assets/js/core/source/AppVendor.js"></script><script src="assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script><script src="assets/js/core/demo/Demo.js"></script><script src="assets/js/core/source/script.js" type="text/javascript"></script><script src="assets/js/libs/select2/select2.min.js" type="text/javascript"></script><script src="assets/js/libs/inputmask/jquery.inputmask.bundle.min.js"></script>';
 });
 AppEHR.filter('capitalize', function () {
     return function (input) {

@@ -9,7 +9,8 @@ AppEHR.factory("PatientInformation", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath +  'add_patient', params, {
             save: {method: 'POST'},
-            update: {method: 'PUT'}
+            update: {method: 'PUT'},
+            get: {method: 'GET'}
         });
         return res2;
     }
@@ -21,6 +22,10 @@ AppEHR.factory("PatientInformation", function ($resource) {
         update:function(params,body,success) {
           var res = getResource(params, body);  
           return res.update(params,body,success);
+        },
+        get:function(params,body,success) {
+          var res = getResource(params, body);  
+          return res.get(params,body,success);
         }
     };
     return patientRegistration;
