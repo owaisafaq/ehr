@@ -387,9 +387,13 @@ $api->params->patient_id = "1";
 $api->params->plan_id = "1";
 $api->params->is_principal = "1";
 $api->params->is_dependant = "0";
+$api->params->hmo = "0";
 $api->params->policies = "1";
 $api->params->insurance_id = "1";
 $api->params->description = "Description";
+$api->params->retainership = "1";
+$api->params->category = "1";
+$api->params->notes = "Description";
 $api->params->token = "123";
 
 

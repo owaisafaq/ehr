@@ -961,6 +961,7 @@ class ApiController extends Controller
 
             if ($plan_id == 2) {
 
+
                 $hmo = $request->input('hmo');
 
                 $policies = $request->input('policies');
@@ -968,6 +969,7 @@ class ApiController extends Controller
                 $insurance_id = $request->input('insurance_id');
 
                 $description = $request->input('description');
+
 
                 DB::table('patients')
                     ->where('id', $patient_id)
@@ -988,12 +990,43 @@ class ApiController extends Controller
                     ]
                 );
 
+
                 return response()->json(['status' => true, 'message' => 'Patient Plan added successfully']);
 
 
             }
 
             if ($plan_id == 3) {
+
+
+                $retainership = $request->input('retainership');
+
+                $category = $request->input('category');
+
+                $notes = $request->input('notes');
+
+
+
+                DB::table('patients')
+                       ->where('id', $patient_id)
+                       ->update(array('hospital_plan' => $plan_id, 'updated_at' => $currentdatetime));
+
+
+                   DB::table('plan_details')->insert(
+                       ['plan_id' => $plan_id,
+                           'patient_id' => $patient_id,
+                           'is_principal' => $is_pricipal,
+                           'is_dependant' => $is_dependant,
+                           'retainership' => $retainership,
+                           'category' => $category,
+                           'notes' => $notes,
+                           'created_at' => $currentdatetime
+
+                       ]
+                   );
+
+
+                   return response()->json(['status' => true, 'message' => 'Patient Plan added successfully']);
 
 
             }
