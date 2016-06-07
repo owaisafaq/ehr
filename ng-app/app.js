@@ -175,29 +175,25 @@ AppEHR.run(function ($rootScope, $location, $window) {
             },
             minimumInputLength: 2,
         });
-//        $(".search-ajax").change(function () {
-//            //var theID = $(test).val(); // works
-//            //var theSelection = $(test).filter(':selected').text(); // doesn't work
-////            var theID = $(".search-ajax").select2('data').id;
-////            var theSelection = $(test).select2('data').text;
-//            console.log(theID)
-////            $('#selectedID').text(theID);
-////            $('#selectedText').text(theSelection);
-//        });
-        $(document).on('click', '.add-dependant', function () {
-            var id_chip = $("#get_val").val()
+        $(document).on('click', '.add-principal', function () {
+            var id_chip = $("#get_val_principal").val();
             if (id_chip !== "") {
                 if ($('.chip[data-id="' + id_chip + '"').length == 0) {
-                    $('.dependant_list').append('<div class="chip" data-id="' + id_chip + '">' + $('#s2id_get_val .select2-chosen').html() + '<i class="md-close"></i></div>');
+                    $('.principal_list').append('<div class="chip" data-id="' + id_chip + '">' + $('#s2id_get_val_principal .select2-chosen').html() + '<i class="md-close"></i></div>');
+//                    $("#get_val_principal").val(null).trigger("change");
+                    $("#get_val_principal").select2('data', null);
+                    $('#s2id_get_val_principal').addClass('disable-after-1');
+                    $rootScope.check_length = false;
                 }
-                $("#get_val").val(null).trigger("change");
-                $("#get_val").select2('data', null);
             }
         });
-
-
+        $('body').on('click', '.principal_list .chip i', function () {
+            $(this).parent('.chip').fadeOut(function () {
+                $(this).remove();
+            })
+            $('#s2id_get_val_principal').removeClass('disable-after-1');
+        })
     });
-    //$rootScope.html = '<div ng-include="\'utils/script-file.html\'"></div>';
     $rootScope.html = '<script src="assets/js/libs/bootstrap/bootstrap.min.js"></script><script src="assets/js/libs/spin.js/spin.min.js"></script><script src="assets/js/libs/autosize/jquery.autosize.min.js"></script><script src="assets/js/libs/nanoscroller/jquery.nanoscroller.min.js"></script><script src="assets/js/core/source/App.js"></script><script src="assets/js/core/source/AppNavigation.js"></script><script src="assets/js/core/source/AppOffcanvas.js"></script><script src="assets/js/core/source/AppCard.js"></script><script src="assets/js/core/source/AppForm.js"></script><script src="assets/js/core/source/AppNavSearch.js"></script><script src="assets/js/core/source/AppVendor.js"></script><script src="assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script><script src="assets/js/core/demo/Demo.js"></script><script src="assets/js/core/source/script.js" type="text/javascript"></script><script src="assets/js/libs/select2/select2.min.js" type="text/javascript"></script>';
 });
 AppEHR.filter('capitalize', function () {

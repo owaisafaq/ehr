@@ -476,7 +476,7 @@ DropDown Styling
 }
 .select2-results .select2-highlighted {
     background: #ddecf8;
-    color: #b6bbcc;
+    color: #2f2f2f;
 }
 .select2-results li{
     padding-left: 12px;    
@@ -1474,6 +1474,14 @@ Patient Plan
     border:1px solid red !important;
     color: #f44336;/*#999;*/
 }
+.ajax-dropdown-con{
+    padding: 0;   
+    margin-right: 20px;
+    margin-top: 5px;
+}
+.alignError.PIValid{
+    padding-right: 0;
+}
 .error-msg{
     color: #f44336;
 }
@@ -1980,4 +1988,10 @@ Lab Report Lokoja
     font-size: 16px;
     line-height: 38px;
     padding-left: 8px;
+}
+span.help-block {
+    right: 0;
+}
+.disable-after-1{
+    pointer-events: none;
 }
