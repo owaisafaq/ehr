@@ -898,41 +898,6 @@ class ApiController extends Controller
     }
 
 
-    public function get_patient_plan(Request $request)
-    {
-
-
-        $patient_id = $request->input('patient_id');
-
-        $patient_plan = DB::table('patient_plan')
-            ->select(DB::raw('hmo,policies,insurance_id,principal,depandent'))
-            ->get();
-
-
-        foreach ($patient_plan as $plan) {
-
-
-            if ($plan->principal == 1) {
-
-                $dependants = DB::table('patient_dependants')
-                    ->select(DB::raw('dependant_id'))
-                    ->get();
-
-
-                $plan->dependants = $dependants;
-
-
-            } else {
-
-
-            }
-        }
-
-        return response()->json(['status' => true, 'data' => $plan]);
-
-
-    }
-
 
     public function add_patient_plan(Request $request)
     {
@@ -991,6 +956,26 @@ class ApiController extends Controller
                 );
 
 
+
+                $plan_detail_id = DB::getPdo()->lastInsertId();
+
+                if ($is_dependant == 1){
+
+                    $principal_patient_id = $request->input('principal_patient_id');
+
+                    $relationship = $request->input('relationship');
+
+                    DB::table('patient_dependants')->insert(
+                            ['plan_detail_id' => $plan_detail_id,
+                                'principal_id' => $principal_patient_id,
+                                'dependant_id' => $patient_id,
+                                'relationship' => $relationship,
+                                'created_at' => $currentdatetime
+
+                            ]
+                        );
+                }
+
                 return response()->json(['status' => true, 'message' => 'Patient Plan added successfully']);
 
 
@@ -1024,6 +1009,26 @@ class ApiController extends Controller
 
                        ]
                    );
+
+
+                $plan_detail_id = DB::getPdo()->lastInsertId();
+
+                if ($is_dependant == 1){
+
+                    $principal_patient_id = $request->input('principal_patient_id');
+
+                    $relationship = $request->input('relationship');
+
+                    DB::table('patient_dependants')->insert(
+                            ['plan_detail_id' => $plan_detail_id,
+                                'principal_id' => $principal_patient_id,
+                                'dependant_id' => $patient_id,
+                                'relationship' => $relationship,
+                                'created_at' => $currentdatetime
+
+                            ]
+                        );
+                }
 
 
                    return response()->json(['status' => true, 'message' => 'Patient Plan added successfully']);
