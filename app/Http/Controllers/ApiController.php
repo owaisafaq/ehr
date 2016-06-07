@@ -1041,4 +1041,34 @@ class ApiController extends Controller
     }
 
 
+    public function add_patient_archive(Request $request){
+
+
+
+
+        $patient_id = $request->input('patient_id');
+
+        if ($request->file('patient_archive')) {
+
+            if ($request->file('patient_archive')->isValid()) {
+
+                $destinationPath = base_path() . '/public/patient_archive'; // upload path
+                $extension = $request->file('patient_archive')->getClientOriginalExtension(); // getting image extension
+                $fileName = time() . '.' . $extension; // renameing image
+
+                $request->file('patient_archive')->move($destinationPath, $fileName); // uploading file to given path
+
+            }
+
+        }
+
+
+        return response()->json(['status' => true, 'message' => 'Patient Archive uploaded successfully']);
+
+
+
+    }
+
+
+
 }
