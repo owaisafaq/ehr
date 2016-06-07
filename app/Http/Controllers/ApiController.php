@@ -79,26 +79,23 @@ class ApiController extends Controller
 
         $patients = DB::table('patients')
             ->select(DB::raw('id,first_name,middle_name,last_name'))
-            ->where('first_name','like', "%$name%")
-            ->where('plan_id',1)
+            ->where('first_name', 'like', "%$name%")
+            ->where('plan_id', 1)
             ->get();
 
 
-        if(empty($patients)){
+        if (empty($patients)) {
 
 
             return response()->json(['status' => false, 'message' => "sorry no patients found"]);
 
 
-        }
-
-        else{
+        } else {
 
             return response()->json(['status' => true, 'data' => $patients]);
 
 
         }
-
 
 
     }
@@ -312,10 +309,15 @@ class ApiController extends Controller
             ]
         );
 
+
+        $address_id = DB::getPdo()->lastInsertId();
+
         if ($status == false) {
 
 
             $permanent_city = $request->input('permanent_city');
+
+            $permanent_state = $request->input('permanent_state');
 
             $permanent_street = $request->input('permanent_street');
 
@@ -341,7 +343,7 @@ class ApiController extends Controller
                     'house_number' => $permanent_housenumber,
                     'street' => $permanent_street,
                     'city' => $permanent_city,
-                    'state' => '',
+                    'state' => $permanent_state,
                     'country' => $permanent_country,
                     'local_goverment_area' => '',
                     'postal_code' => $permanent_postalCode,
@@ -351,10 +353,12 @@ class ApiController extends Controller
             );
 
 
+            $address_id = DB::getPdo()->lastInsertId();
+
         }
 
 
-        return response()->json(['status' => true, 'message' => "Patient address registered successfully", "patient_id" => $patient_id]);
+        return response()->json(['status' => true, 'message' => "Patient address registered successfully", "address_id" => $address_id]);
 
 
     }
@@ -514,7 +518,7 @@ class ApiController extends Controller
                 );
 
 
-            $employee_id = DB::getPdo()->lastInsertId();
+            // $employee_id = DB::getPdo()->lastInsertId();
 
 
             return response()->json(['status' => true, 'message' => "Patient Employee updated successfully", "patient_id" => $patient_id, "employee_id" => $employee_id]);
@@ -894,40 +898,177 @@ class ApiController extends Controller
     }
 
 
-    public function get_patient_plan(Request $request)
+
+    public function add_patient_plan(Request $request)
     {
 
 
         $patient_id = $request->input('patient_id');
 
-        $patient_plan = DB::table('patient_plan')
-            ->select(DB::raw('hmo,policies,insurance_id,principal,depandent'))
-            ->get();
+        $plan_id = $request->input('plan_id');
+
+        $is_pricipal = $request->input('is_principal');
+
+        $is_dependant = $request->input('is_dependant');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+        if ($plan_id == 1) {
 
 
-        foreach ($patient_plan as $plan) {
+            DB::table('patients')
+                ->where('id', $patient_id)
+                ->update(array('hospital_plan' => $plan_id, 'updated_at' => $currentdatetime));
+
+            return response()->json(['status' => true, 'message' => 'Patient Plan added successfully']);
+
+        } else {
+
+            if ($plan_id == 2) {
 
 
-            if ($plan->principal == 1) {
+                $hmo = $request->input('hmo');
 
-                $dependants = DB::table('patient_dependants')
-                    ->select(DB::raw('dependant_id'))
-                    ->get();
+                $policies = $request->input('policies');
+
+                $insurance_id = $request->input('insurance_id');
+
+                $description = $request->input('description');
 
 
-                $plan->dependants = $dependants;
+                DB::table('patients')
+                    ->where('id', $patient_id)
+                    ->update(array('hospital_plan' => $plan_id, 'updated_at' => $currentdatetime));
 
 
-            } else {
+                DB::table('plan_details')->insert(
+                    ['plan_id' => $plan_id,
+                        'patient_id' => $patient_id,
+                        'is_principal' => $is_pricipal,
+                        'is_dependant' => $is_dependant,
+                        'hmo' => $hmo,
+                        'policies' => $policies,
+                        'insurance_id' => $insurance_id,
+                        'description' => $description,
+                        'created_at' => $currentdatetime
+
+                    ]
+                );
+
+
+
+                $plan_detail_id = DB::getPdo()->lastInsertId();
+
+                if ($is_dependant == 1){
+
+                    $principal_patient_id = $request->input('principal_patient_id');
+
+                    $relationship = $request->input('relationship');
+
+                    DB::table('patient_dependants')->insert(
+                            ['plan_detail_id' => $plan_detail_id,
+                                'principal_id' => $principal_patient_id,
+                                'dependant_id' => $patient_id,
+                                'relationship' => $relationship,
+                                'created_at' => $currentdatetime
+
+                            ]
+                        );
+                }
+
+                return response()->json(['status' => true, 'message' => 'Patient Plan added successfully']);
 
 
             }
+
+            if ($plan_id == 3) {
+
+
+                $retainership = $request->input('retainership');
+
+                $category = $request->input('category');
+
+                $notes = $request->input('notes');
+
+
+
+                DB::table('patients')
+                       ->where('id', $patient_id)
+                       ->update(array('hospital_plan' => $plan_id, 'updated_at' => $currentdatetime));
+
+
+                   DB::table('plan_details')->insert(
+                       ['plan_id' => $plan_id,
+                           'patient_id' => $patient_id,
+                           'is_principal' => $is_pricipal,
+                           'is_dependant' => $is_dependant,
+                           'retainership' => $retainership,
+                           'category' => $category,
+                           'notes' => $notes,
+                           'created_at' => $currentdatetime
+
+                       ]
+                   );
+
+
+                $plan_detail_id = DB::getPdo()->lastInsertId();
+
+                if ($is_dependant == 1){
+
+                    $principal_patient_id = $request->input('principal_patient_id');
+
+                    $relationship = $request->input('relationship');
+
+                    DB::table('patient_dependants')->insert(
+                            ['plan_detail_id' => $plan_detail_id,
+                                'principal_id' => $principal_patient_id,
+                                'dependant_id' => $patient_id,
+                                'relationship' => $relationship,
+                                'created_at' => $currentdatetime
+
+                            ]
+                        );
+                }
+
+
+                   return response()->json(['status' => true, 'message' => 'Patient Plan added successfully']);
+
+
+            }
+
         }
 
-        return response()->json(['status' => true, 'data' => $plan]);
+    }
+
+
+    public function add_patient_archive(Request $request){
+
+
+
+
+        $patient_id = $request->input('patient_id');
+
+        if ($request->file('patient_archive')) {
+
+            if ($request->file('patient_archive')->isValid()) {
+
+                $destinationPath = base_path() . '/public/patient_archive'; // upload path
+                $extension = $request->file('patient_archive')->getClientOriginalExtension(); // getting image extension
+                $fileName = time() . '.' . $extension; // renameing image
+
+                $request->file('patient_archive')->move($destinationPath, $fileName); // uploading file to given path
+
+            }
+
+        }
+
+
+        return response()->json(['status' => true, 'message' => 'Patient Archive uploaded successfully']);
+
 
 
     }
+
 
 
 }

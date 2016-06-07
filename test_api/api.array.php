@@ -200,7 +200,9 @@ $api->params->state = "1";
 $api->params->postal_code = "0021";
 $api->params->country = "1";
 $api->params->local_goverment_area = "1";
+$api->params->permanent_street = "1";
 $api->params->permanent_city = "1";
+$api->params->permanent_state = "1";
 $api->params->permanent_country = "1";
 $api->params->permanent_email = "test@test.com";
 $api->params->permanent_housenumber = "1";
@@ -373,3 +375,29 @@ $api->params->token = "123";
 
 
 $api_arr [] = $api;
+
+
+// Add Patient Plan
+$api = new api();
+$api->name = "Add Patient Plan";
+$api->url = HOST . 'add_patient_plan';
+$api->method = "POST";
+$api->description = "Add Patient Plan";
+$api->params->patient_id = "1";
+$api->params->plan_id = "1";
+$api->params->is_principal = "1";
+$api->params->is_dependant = "0";
+$api->params->hmo = "0";
+$api->params->policies = "1";
+$api->params->insurance_id = "1";
+$api->params->description = "Description";
+$api->params->retainership = "1";
+$api->params->category = "1";
+$api->params->principal_patient_id = "1";
+$api->params->relationship = "1";
+$api->params->notes = "Description";
+$api->params->token = "123";
+
+
+$api_arr [] = $api;
+
