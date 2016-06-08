@@ -1,5 +1,5 @@
 var AppEHR = angular.module('AppEHR');
-AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', 'PatientInformation', 'fileUpload', '$location', '$filter', 'Upload', '$timeout', 'PatientRegistrationAddress', 'PatientRegistrationKin', 'PatientRegistrationEmployer', function ($rootScope, $scope, $window, Countries, States, GetLocalGovermentArea, City, DropDownData, PatientInformation, fileUpload, $location, $filter, Upload, $timeout, PatientRegistrationAddress, PatientRegistrationKin, PatientRegistrationEmployer) {
+AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', 'PatientInformation', 'fileUpload', '$location', '$filter', 'Upload', '$timeout', 'PatientRegistrationAddress', 'PatientRegistrationKin', 'PatientRegistrationEmployer', '$routeParams', function ($rootScope, $scope, $window, Countries, States, GetLocalGovermentArea, City, DropDownData, PatientInformation, fileUpload, $location, $filter, Upload, $timeout, PatientRegistrationAddress, PatientRegistrationKin, PatientRegistrationEmployer, $routeParams) {
         $rootScope.pageTitle = "EHR - Patient Registration";
         $scope.PI = $rootScope.PI;
         $scope.PI.adress = {};
@@ -43,6 +43,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         $scope.errorEmployerMessage = false;
         delete $window.sessionStorage.patient_id;
         $scope.patientSummary = true;
+        $scope.disabledTabAdress = '';
         //$scope.PI.identity_type = dropDownInfo.IdType[0].id;
         //$scope.PI.kin_relationship = dropDownInfo.relationship[0].id;
         //$scope.PI.dependant_relationship = dropDownInfo.relationship[0].id;
@@ -724,115 +725,30 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     	console.log(error);
     }
 
-}]);
-            /*PatientRegistration.save({
-             token: $window.sessionStorage.token,
-             patient_unit_number: $scope.PI.patient_unit_number, // info tab
-             first_name: $scope.PI.first_name,
-             middle_name: $scope.PI.middle_name,
-             last_name: $scope.PI.last_name,
-             date_of_birth: $scope.PI.date_of_birth,
-             age: $scope.PI.age,
-             sex: $scope.PI.sex,
-             patient_picture: $scope.PI.myFile,
-             maritial_status: $scope.PI.maritial_status,
-             patient_local_goverment_area: $scope.PI.patient_local_goverment_area,
-             religion: $scope.PI.religion,
-             identity_type: $scope.PI.identity_type,
-             identity_number: $scope.PI.identity_number,
-             patient_state: $scope.PI.patient_state,
-             tribe: $scope.PI.tribe,
-             language: $scope.PI.language,
-             nationality: $scope.PI.nationality,
-             blood_group: $scope.PI.blood_group,
-             father_firstname: $scope.PI.father_firstname,
-             father_middlename: $scope.PI.father_middlename,
-             father_lastname: $scope.PI.father_lastname,
-             mother_firstname: $scope.PI.mother_firstname,
-             mother_middlename: $scope.PI.mother_middlename,
-             mother_lastname: $scope.PI.mother_lastname,
-             refered_name: $scope.PI.refered_name,
-             phone_number: $scope.PI.phone_number, // Address tab
-             mobile_number: $scope.PI.mobile_number,
-             patient_email: $scope.PI.patient_email,
-             house_number: $scope.PI.house_number,
-             street: $scope.PI.street,
-             country: $scope.PI.country,
-             state: $scope.PI.state,
-             city: $scope.PI.city,
-             email: $scope.PI.email,
-             postal_code: $scope.PI.postal_code,
-             local_goverment_area: $scope.PI.local_goverment_area,
-             same_as_above: $scope.PI.sameAsAbove,
-             permanent_phonenumber: $scope.PI.permanent_phonenumber, // paremenant address
-             permanent_mobilenumber: $scope.PI.permanent_mobilenumber,
-             permanent_email: $scope.PI.permanent_email,
-             permanent_housenumber: $scope.PI.permanent_housenumber,
-             permanent_street: $scope.PI.permanent_street,
-             permanent_country: $scope.PI.permanent_country,
-             patient_city: $scope.PI.patient_city,
-             permanent_state: $scope.PI.permanent_state,
-             permanent_postalCode: $scope.PI.permanent_postalCode,
-             kin_fullname: $scope.PI.kin_fullname, // Kin tab
-             kin_middlename: $scope.PI.kin_middlename,
-             kin_lastname: $scope.PI.kin_lastname,
-             kin_relationship: $scope.PI.kin_relationship,
-             others: $scope.PI.others,
-             kin_phone_number: $scope.PI.kin_phone_number,
-             kin_mobile_number: $scope.PI.kin_mobile_number,
-             kin_email: $scope.PI.kin_email,
-             kin_house_number: $scope.PI.kin_house_number,
-             kin_street: $scope.PI.kin_street,
-             kin_country: $scope.PI.kin_country,
-             kin_state: $scope.PI.kin_state,
-             kin_city: $scope.PI.kin_city,
-             kin_postal_code: $scope.PI.kin_postal_code,
-             employer_name: $scope.PI.employer_name, // employer tab
-             employer_occupation: $scope.PI.employer_occupation,
-             employer_phone_number: $scope.PI.employer_phone_number,
-             employer_mobile_number: $scope.PI.employer_mobile_number,
-             employer_email: $scope.PI.employer_email,
-             employer_house_number: $scope.PI.employer_house_number,
-             employer_street: $scope.PI.employer_street,
-             employer_country: $scope.PI.employer_country,
-             employer_state: $scope.PI.employer_state,
-             employer_city: $scope.PI.employer_city,
-             }, registrationSuccess, registrationFailed);*/
-            function registrationSuccess(res) {
-                if (res.status == true) {
-                    console.log(res);
-                } else {
-                    console.log(res);
-                }
-            }
-            function registrationFailed(error) {
-                console.log(error);
-            }
-        };
-        $scope.modal_nhis_Data = function (MI) {
+	$scope.modal_nhis_Data = function (MI) {
 
-            console.log($scope.MI.select_speciality);
-            if ($('input[name=select_speciality]:checked').val() == "dependant") {
-                $rootScope.do_valid = true;
-                $rootScope.do_valid_1 = true;
-                if ($('.principal_list .chip').length > 0) {
-                    $rootScope.do_valid = false;
-                }
-            }
+		console.log($scope.MI.select_speciality);
+		if ($('input[name=select_speciality]:checked').val() == "dependant") {
+			$rootScope.do_valid = true;
+			$rootScope.do_valid_1 = true;
+			if ($('.principal_list .chip').length > 0) {
+				$rootScope.do_valid = false;
+			}
+		}
 
-            $scope.dataToBeAdded = {
+		$scope.dataToBeAdded = {
 //                plan_id: $scope.MI.patientPlan.hmo == undefined ? '' : $scope.PI.employer.employer_name,
-                hmo: $scope.MI.hmo == undefined ? '' : $scope.MI.hmo,
-                policies: $scope.MI.policies == undefined ? '' : $scope.MI.policies,
-                is_principal: $scope.MI.select_speciality == "principal" ? $scope.MI.select_speciality : '0',
-                is_dependant: $scope.MI.select_speciality == "dependant" ? $scope.MI.select_speciality : '0',
-                insurance_id: $scope.MI.insurance_id == undefined ? '' : $scope.MI.insurance_id,
-                principal_patient_id: $('.principal_list .chip').data('id') == '' || $('.principal_list .chip').data('id') == undefined ? '0' : $('.principal_list .chip').data('id'),
-                principal_patient_name: $('.principal_list .chip').text() == '' || $('.principal_list .chip').text() == undefined ? '0' : $('.principal_list .chip').text(),
-                relationship: $scope.MI.principal_relationship == undefined ? '' : $scope.MI.principal_relationship,
-                description: $scope.MI.description == undefined ? '' : $scope.MI.description
-            };
-            console.log($scope.dataToBeAdded);
+			hmo: $scope.MI.hmo == undefined ? '' : $scope.MI.hmo,
+			policies: $scope.MI.policies == undefined ? '' : $scope.MI.policies,
+			is_principal: $scope.MI.select_speciality == "principal" ? $scope.MI.select_speciality : '0',
+			is_dependant: $scope.MI.select_speciality == "dependant" ? $scope.MI.select_speciality : '0',
+			insurance_id: $scope.MI.insurance_id == undefined ? '' : $scope.MI.insurance_id,
+			principal_patient_id: $('.principal_list .chip').data('id') == '' || $('.principal_list .chip').data('id') == undefined ? '0' : $('.principal_list .chip').data('id'),
+			principal_patient_name: $('.principal_list .chip').text() == '' || $('.principal_list .chip').text() == undefined ? '0' : $('.principal_list .chip').text(),
+			relationship: $scope.MI.principal_relationship == undefined ? '' : $scope.MI.principal_relationship,
+			description: $scope.MI.description == undefined ? '' : $scope.MI.description
+		};
+		console.log($scope.dataToBeAdded);
 //            if (!angular.equals({}, MI)) {
 //            if (angular.equals({}, $scope.MI) == false) {
 //                $('#nhis').modal('hide')
@@ -840,15 +756,14 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 //            if ($('form [name=form_modal_1]').find('.error').length) {
 //
 //            }
-            if ($('form[name=form_modal_1]').find('.error').length == 0) {
-                $('#nhis').modal('hide');
-                $scope.flag_to_show = "nhis";
-            }
+		if ($('form[name=form_modal_1]').find('.error').length == 0) {
+			$('#nhis').modal('hide');
+			$scope.flag_to_show = "nhis";
+		}
 
 //            $scope.hmo_info = $scope.MI.patientPlan.hmo
 //            $scope.hmo_info = $scope.MI.patientPlan.hmo
 //            $scope.hmo_info = $scope.MI.patientPlan.hmo
+	}
 
-
-        }
-    }]);
+}]);
