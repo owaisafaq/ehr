@@ -70,6 +70,36 @@ AppEHR.factory("PatientRegistrationKin", function ($resource) {
     };
     return patientRegistrationKin;
 });
+AppEHR.factory("AddEncounter", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'add_visit', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var addEncounter = {
+        save:function(params,body,success) {
+          var res = getResource(params, body);  
+          return res.save(params,body,success);
+        }
+    };
+    return addEncounter;
+});
+AppEHR.factory("GetVisits", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'patient_visit_list', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get:function(params,body,success) {
+          var res = getResource(params, body);  
+          return res.get(params,body,success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
 AppEHR.factory("PatientRegistrationEmployer", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath +  'add_patient_employees', params, {

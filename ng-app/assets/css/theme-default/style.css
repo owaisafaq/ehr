@@ -1525,6 +1525,12 @@ Patient Plan
 .show{
     display: block;
 }
+.capitalize{
+    text-transform: capitalize;
+}
+.encounter-loader{
+    width:100px;
+}
 /*-----------
 BED Occupancy
 -----------*/

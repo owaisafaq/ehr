@@ -697,9 +697,7 @@
                         <label>HMO</label>
                     </div>
                     <div class="col-lg-3">
-                        <select class="form-control" ng-class="{
-                                true
-                                        : 'error'}[checkValidate_nhis && form_modal_1.hmo_dropdown.$invalid]"  name="hmo_dropdown" data-placeholder="Select Hmo" ng-model="MI.hmo" ng-options="hmo.name for hmo in dropDownData.hmo track by hmo.id" required>
+                        <select class="form-control" ng-class="{true: 'error'}[checkValidate_nhis && form_modal_1.hmo_dropdown.$invalid]"  name="hmo_dropdown" data-placeholder="Select Hmo" ng-model="MI.hmo" ng-options="hmo.name for hmo in dropDownData.hmo track by hmo.id" required>
                             <option value=""></option>
                         </select>
                         <span class="help-block PIValid" ng-show="checkValidate_nhis && form_modal_1.hmo_dropdown.$error.required">Required</span>
@@ -767,7 +765,7 @@
                             <div class="ajax-dropdown-con col-lg-4" ng-class="{
                                     true
                                             : 'error'}[do_valid && checkValidate_nhis &&  form_modal_1.add_dependant.$invalid]">
-                                <input id="get_val_principal" class="search-ajax form-control" type="text" name="add_dependant" ng-model="MI.add_principal" ng-required="true" />
+                                <input id="get_val_principal search-ajax" class="search-ajax form-control" type="text" name="add_dependant" ng-model="MI.add_principal" ng-required="true" />
                                 <span class="help-block PIValid alignError" ng-show="checkValidate_nhis && do_valid && form_modal_1.add_dependant.$error.required">Required</span>
                             </div>
                             <a class="btn btn-default button-style-1 add-principal">add principal</a>

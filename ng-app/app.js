@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR', [
     'ngRoute', 'ngResource',
-    'ngTouch', 'ui.grid', 'ui.grid.pagination', 'ngFileUpload'
+    'ngTouch', 'ui.grid', 'ui.grid.pagination', 'ui.grid.pagination', 'ngFileUpload'
 ]);
 AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
     function ($httpProvider, $routeProvider, $locationProvider) {
@@ -104,8 +104,6 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                 });
     }]);
 AppEHR.run(function ($rootScope, $location, $window) {
-//    $rootScope.class = "show";
-//    $rootScope.pageTitle = "EHR - " + $location.$$path;
     $rootScope.$on("$routeChangeStart", function (event, next, current) {
         if ($location.$$path != '/login' && $location.$$path != '/') {
             $rootScope.backgroundImg = "";
@@ -124,6 +122,9 @@ AppEHR.run(function ($rootScope, $location, $window) {
         } else
             $location.path("login");
     });
+    $rootScope.loadView = function (object) {
+        $window.location.href = '#/patient-registration';
+    }
     $rootScope.logout = function () {
         $window.sessionStorage.clear();
         $window.location.href = '#/login';
@@ -138,7 +139,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
         $(".maskPhone").inputmask("99-9999999");
         $(".maskMobile").inputmask("99999999999");
 //        var test = sessionStorage.getItem('token');
-        $(".search-ajax").select2({
+        $("#search-ajax").select2({
             placeholder: 'Select Patient',
             ajax: {
                 url: "http://demoz.online/ehr/public/api/search_patient",
