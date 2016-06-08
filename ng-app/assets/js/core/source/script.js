@@ -27,10 +27,5 @@ $(document).ready(function () {
     $('body').on('click', '.ulli_2 span', function () {
         $(this).siblings('input[type=text]').show();
     })
-    $('body').on('click', '.chip i', function () {
-        $(this).parent('.chip').fadeOut(function () {
-            $(this).remove();
-        })
-
-    })
+    
 })

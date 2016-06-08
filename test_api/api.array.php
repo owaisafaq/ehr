@@ -393,8 +393,11 @@ $api->params->insurance_id = "1";
 $api->params->description = "Description";
 $api->params->retainership = "1";
 $api->params->category = "1";
+$api->params->principal_patient_id = "1";
+$api->params->relationship = "1";
 $api->params->notes = "Description";
 $api->params->token = "123";
 
 
 $api_arr [] = $api;
+
