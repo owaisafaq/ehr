@@ -807,19 +807,34 @@ class ApiController extends Controller
 
         $policies = DB::table('policies')
             ->select(DB::raw('id,name'))
+            ->where('status', 1)
             ->get();
 
         $hmo = DB::table('hmo')
             ->select(DB::raw('id,name'))
+            ->where('status', 1)
             ->get();
 
         $relationships = DB::table('relationships')
             ->select(DB::raw('id,name'))
+            ->where('status', 1)
             ->get();
 
 
         $patients = DB::table('patients')
             ->select(DB::raw('id,first_name'))
+            ->where('status', 1)
+            ->get();
+
+
+        $categories = DB::table('categories')
+            ->select(DB::raw('id,name'))
+            ->where('status', 1)
+            ->get();
+
+        $retainership = DB::table('retainership')
+            ->select(DB::raw('id,name'))
+            ->where('status', 1)
             ->get();
 
 
@@ -835,7 +850,10 @@ class ApiController extends Controller
             "policies" => $policies,
             "hmo" => $hmo,
             "relationships" => $relationships,
-            "patients" => $patients
+            "patients" => $patients,
+            "retainership" => $retainership,
+            "categories" => $categories,
+            "doctors" => $doctors
         );
 
         return response()->json(['status' => true, 'data' => $data]);
@@ -898,7 +916,6 @@ class ApiController extends Controller
     }
 
 
-
     public function add_patient_plan(Request $request)
     {
 
@@ -956,24 +973,48 @@ class ApiController extends Controller
                 );
 
 
-
                 $plan_detail_id = DB::getPdo()->lastInsertId();
 
-                if ($is_dependant == 1){
+                if ($is_dependant == 1) {
 
                     $principal_patient_id = $request->input('principal_patient_id');
 
                     $relationship = $request->input('relationship');
 
                     DB::table('patient_dependants')->insert(
+                        ['plan_detail_id' => $plan_detail_id,
+                            'principal_id' => $principal_patient_id,
+                            'dependant_id' => $patient_id,
+                            'relationship' => $relationship,
+                            'created_at' => $currentdatetime
+
+                        ]
+                    );
+                }
+
+
+                if ($is_pricipal == 1) {
+
+                    $dependents = $request->input('dependents');
+
+                    $patient_dependents = json_decode($dependents);
+
+
+                    foreach ($patient_dependents as $dependent) {
+
+                        DB::table('patient_dependants')->insert(
                             ['plan_detail_id' => $plan_detail_id,
-                                'principal_id' => $principal_patient_id,
-                                'dependant_id' => $patient_id,
-                                'relationship' => $relationship,
+                                'principal_id' => $patient_id,
+                                'dependant_id' => $dependent->dependent_id,
+                                'relationship' => $dependent->relationship,
                                 'created_at' => $currentdatetime
 
                             ]
                         );
+
+                    }
+
+
                 }
 
                 return response()->json(['status' => true, 'message' => 'Patient Plan added successfully']);
@@ -991,47 +1032,71 @@ class ApiController extends Controller
                 $notes = $request->input('notes');
 
 
-
                 DB::table('patients')
-                       ->where('id', $patient_id)
-                       ->update(array('hospital_plan' => $plan_id, 'updated_at' => $currentdatetime));
+                    ->where('id', $patient_id)
+                    ->update(array('hospital_plan' => $plan_id, 'updated_at' => $currentdatetime));
 
 
-                   DB::table('plan_details')->insert(
-                       ['plan_id' => $plan_id,
-                           'patient_id' => $patient_id,
-                           'is_principal' => $is_pricipal,
-                           'is_dependant' => $is_dependant,
-                           'retainership' => $retainership,
-                           'category' => $category,
-                           'notes' => $notes,
-                           'created_at' => $currentdatetime
+                DB::table('plan_details')->insert(
+                    ['plan_id' => $plan_id,
+                        'patient_id' => $patient_id,
+                        'is_principal' => $is_pricipal,
+                        'is_dependant' => $is_dependant,
+                        'retainership' => $retainership,
+                        'category' => $category,
+                        'notes' => $notes,
+                        'created_at' => $currentdatetime
 
-                       ]
-                   );
+                    ]
+                );
 
 
                 $plan_detail_id = DB::getPdo()->lastInsertId();
 
-                if ($is_dependant == 1){
+                if ($is_dependant == 1) {
 
                     $principal_patient_id = $request->input('principal_patient_id');
 
                     $relationship = $request->input('relationship');
 
                     DB::table('patient_dependants')->insert(
+                        ['plan_detail_id' => $plan_detail_id,
+                            'principal_id' => $principal_patient_id,
+                            'dependant_id' => $patient_id,
+                            'relationship' => $relationship,
+                            'created_at' => $currentdatetime
+
+                        ]
+                    );
+                }
+
+
+                if ($is_pricipal == 1) {
+
+                    $dependents = $request->input('dependents');
+
+                    $patient_dependents = json_decode($dependents);
+
+
+                    foreach ($patient_dependents as $dependent) {
+
+                        DB::table('patient_dependants')->insert(
                             ['plan_detail_id' => $plan_detail_id,
-                                'principal_id' => $principal_patient_id,
-                                'dependant_id' => $patient_id,
-                                'relationship' => $relationship,
+                                'principal_id' => $patient_id,
+                                'dependant_id' => $dependent->dependent_id,
+                                'relationship' => $dependent->relationship,
                                 'created_at' => $currentdatetime
 
                             ]
                         );
+
+                    }
+
+
                 }
 
 
-                   return response()->json(['status' => true, 'message' => 'Patient Plan added successfully']);
+                return response()->json(['status' => true, 'message' => 'Patient Plan added successfully']);
 
 
             }
@@ -1041,12 +1106,13 @@ class ApiController extends Controller
     }
 
 
-    public function add_patient_archive(Request $request){
-
-
+    public function add_patient_archive(Request $request)
+    {
 
 
         $patient_id = $request->input('patient_id');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
 
         if ($request->file('patient_archive')) {
 
@@ -1060,15 +1126,129 @@ class ApiController extends Controller
 
             }
 
+
+            DB::table('patient_file_access_log')->insert(
+                ['patient_id' => $patient_id,
+                    'file' => $fileName,
+                    'created_at' => $currentdatetime
+
+                ]
+            );
+
+
+        } else {
+
+            return response()->json(['status' => false, 'message' => 'Invalid File']);
+
         }
 
 
         return response()->json(['status' => true, 'message' => 'Patient Archive uploaded successfully']);
 
 
+    }
+
+
+    public function get_patient(Request $request)
+    {
+
+
+        $patient_id = $request->input('patient_id');
+
+        $patients = DB::table('patients')
+            ->select(DB::raw('*'))
+            ->where('id', $patient_id)
+            ->get();
+
+
+        //  dd($patients);
+
+        if ($patients[0]->sex == 1) {
+
+            $patients[0]->sex = 'male';
+        } else {
+
+            $patients[0]->sex = 'female';
+        }
+
+
+        if ($patients[0]->marital_status == 1) {
+
+            $patients[0]->marital_status = 'single';
+        }
+
+        if ($patients[0]->marital_status == 2) {
+
+            $patients[0]->marital_status = 'married';
+        }
+
+        if ($patients[0]->marital_status == 3) {
+
+            $patients[0]->marital_status = 'Divorced';
+        }
+
+
+        return response()->json(['status' => true, 'data' => $patients[0]]);
+
 
     }
 
+
+    public function get_visits()
+    {
+
+
+        $visits = DB::table('visits')
+            ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
+            ->select(DB::raw('patients.id,first_name,middle_name,last_name'))
+            ->where('first_name','!=','null')
+            ->get();
+
+
+        return response()->json(['status' => true, 'data' => $visits]);
+
+    }
+
+
+    public function get_patient_all_data(Request $request)
+    {
+
+        $patient_id = $request->input('patient_id');
+
+        $patient_info = DB::table('patients')
+            ->select(DB::raw('*'))
+            ->where('id', $patient_id)
+            ->get();
+
+        $patient_address = DB::table('patient_address')
+            ->select(DB::raw('*'))
+            ->where('patient_id', $patient_id)
+            ->get();
+
+
+        $patient_kin = DB::table('patient_kin')
+            ->select(DB::raw('*'))
+            ->where('patient_id', $patient_id)
+            ->get();
+
+
+        $patient_employers = DB::table('patient_employers')
+            ->select(DB::raw('*'))
+            ->where('patient_id', $patient_id)
+            ->get();
+
+        $data = array(
+            "patient_info" => $patient_info,
+            "patient_address" => $patient_address,
+            "patient_kin" => $patient_kin,
+            "patient_employeer" => $patient_employers
+
+        );
+
+        return response()->json(['status' => true, 'data' => $data]);
+
+
+    }
 
 
 }

@@ -139,7 +139,16 @@ $api->params->token = "123";
 
 $api_arr [] = $api;*/
 
+// Get Patient
+$api = new api();
+$api->name = "Get Patient Info";
+$api->url = HOST . 'get_patient';
+$api->method = "GET";
+$api->description = "Get Patient Info";
+$api->params->patient_id = "1";
+$api->params->token = "123";
 
+$api_arr [] = $api;
 
 
 
@@ -401,3 +410,28 @@ $api->params->token = "123";
 
 $api_arr [] = $api;
 
+
+// Get Visits
+$api = new api();
+$api->name = "Get Visits";
+$api->url = HOST . 'get_visits';
+$api->method = "GET";
+$api->description = "Get Visits";
+$api->params->token = "123";
+
+
+$api_arr [] = $api;
+
+
+
+// Get All Patent Data
+$api = new api();
+$api->name = "Get All Patent Data";
+$api->url = HOST . 'get_patient_all_data';
+$api->method = "GET";
+$api->description = "Get All Patent Data";
+$api->params->patient_id = "1";
+$api->params->token = "123";
+
+
+$api_arr [] = $api;
