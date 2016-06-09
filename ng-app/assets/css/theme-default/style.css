@@ -476,7 +476,7 @@ DropDown Styling
 }
 .select2-results .select2-highlighted {
     background: #ddecf8;
-    color: #b6bbcc;
+    color: #2f2f2f;
 }
 .select2-results li{
     padding-left: 12px;    
@@ -1474,6 +1474,14 @@ Patient Plan
     border:1px solid red !important;
     color: #f44336;/*#999;*/
 }
+.ajax-dropdown-con{
+    padding: 0;   
+    margin-right: 20px;
+    margin-top: 5px;
+}
+.alignError.PIValid{
+    padding-right: 0;
+}
 .error-msg{
     color: #f44336;
 }
@@ -1992,6 +2000,25 @@ Lab Report Lokoja
     font-size: 16px;
     line-height: 38px;
     padding-left: 8px;
+}
+span.help-block {
+    right: 0;
+}
+.disable-after-1{
+    pointer-events: none;
+}
+.radio-disable-style .radio-styled label{
+    color: #003d51;
+    font-weight: bold;
+}
+.radio-disable-style .radio-styled:not(ie8) input ~ span:before {
+    border-color: #56aeea;
+}
+.radio-disable-style .checkbox-styled:not(ie8).disabled:checked ~ span:before,.radio-disable-style  .radio-styled:not(ie8).disabled:checked ~ span:before,.radio-disable-style  .checkbox-styled:not(ie8) input[disabled]:checked ~ span:before,.radio-disable-style  .radio-styled:not(ie8) input[disabled]:checked ~ span:before,.radio-disable-style  .checkbox-styled:not(ie8) input[readonly]:checked ~ span:before,.radio-disable-style  .radio-styled:not(ie8) input[readonly]:checked ~ span:before{
+    border-color: #56aeea;    
+}
+.radio-disable-style .checkbox-styled:not(ie8).disabled:checked ~ span:after,.radio-disable-style .radio-styled:not(ie8).disabled:checked ~ span:after,.radio-disable-style .checkbox-styled:not(ie8) input[disabled]:checked ~ span:after,.radio-disable-style .radio-styled:not(ie8) input[disabled]:checked ~ span:after,.radio-disable-style .checkbox-styled:not(ie8) input[readonly]:checked ~ span:after,.radio-disable-style .radio-styled:not(ie8) input[readonly]:checked ~ span:after {
+    background-color: #56aeea;
 }
 /*-------
 Waiting Loader

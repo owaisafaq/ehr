@@ -65,4 +65,10 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->post('add_patient_archive','App\Http\Controllers\ApiController@add_patient_archive');
 
+    $app->get('get_patient','App\Http\Controllers\ApiController@get_patient');
+
+    $app->get('get_visits','App\Http\Controllers\ApiController@get_visits');
+
+    $app->get('get_patient_all_data','App\Http\Controllers\ApiController@get_patient_all_data');
+
 });

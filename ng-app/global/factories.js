@@ -50,6 +50,26 @@ AppEHR.factory("PatientRegistrationAddress", function ($resource) {
     };
     return patientRegistrationAddress;
 });
+AppEHR.factory("PatienPlanSaveData", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'add_patient_plan', params, {
+            save: {method: 'POST'},
+            update: {method: 'PUT'}
+        });
+        return res2;
+    }
+    var patientRegistrationAddress = {
+        save:function(params,body,success) {
+          var res = getResource(params, body);  
+          return res.save(params,body,success);
+        },
+        update:function(params,body,success) {
+          var res = getResource(params, body);  
+          return res.update(params,body,success);
+        }
+    };
+    return patientRegistrationAddress;
+});
 AppEHR.factory("PatientRegistrationKin", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath +  'add_patient_kin', params, {
