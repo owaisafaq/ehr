@@ -26,6 +26,7 @@
         <link href="assets/css/theme-default/style.css" rel="stylesheet" type="text/css"/>
         <script src="assets/js/libs/jquery/jquery-1.11.2.min.js"></script>
         <script src="assets/js/libs/jquery/jquery-migrate-1.2.1.min.js"></script>
+        
         <!--END STYLESHEETS--> 
         <!--         HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries 
                 [if lt IE 9]>
@@ -34,7 +35,7 @@
         <![endif]-->
     </head>
     <body class="menubar-hoverable header-fixed">
-        <header id="header" class="{{class}} hide">
+        <header id="header" class="{{class}}">
             <form action="post">
                 <div class="headerbar">
                     <div class="headerbar-left">
@@ -75,7 +76,9 @@
                 </div>
             </form>
         </header>
+        <div class="loader hide {{loader}}"></div>
         <div id="base" class="{{backgroundImg}}">
+
             <div ng-view></div> 
             <!--<div ng-include src="includeTemplate"></div>--> 
             <!-- BEGIN MENUBAR-->
@@ -216,7 +219,6 @@
         <script src="assets/js/libs/grid-js/pdfmake.js"></script>
         <script src="assets/js/libs/grid-js/vfs_fonts.js"></script>
         <script src="assets/js/libs/grid-js/ui-grid.min.js"></script>
-        
         <script src="assets/js/libs/angular/angular-resource.min.js"></script>
         <script src="app.js"></script>
         <script src="global/config.js"></script>
