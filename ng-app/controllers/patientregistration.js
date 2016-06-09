@@ -1,5 +1,5 @@
 var AppEHR = angular.module('AppEHR');
-AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', 'PatientInformation', 'fileUpload', '$location', '$filter', 'Upload', '$timeout', 'PatientRegistrationAddress', 'PatientRegistrationKin', 'PatientRegistrationEmployer', '$routeParams', function ($rootScope, $scope, $window, Countries, States, GetLocalGovermentArea, City, DropDownData, PatientInformation, fileUpload, $location, $filter, Upload, $timeout, PatientRegistrationAddress, PatientRegistrationKin, PatientRegistrationEmployer, $routeParams) {
+AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', 'PatientInformation', 'fileUpload', '$location', '$filter', 'Upload', '$timeout', 'PatientRegistrationAddress', 'PatientRegistrationKin', 'PatientRegistrationEmployer', '$routeParams', 'GetPatientAllData', function ($rootScope, $scope, $window, Countries, States, GetLocalGovermentArea, City, DropDownData, PatientInformation, fileUpload, $location, $filter, Upload, $timeout, PatientRegistrationAddress, PatientRegistrationKin, PatientRegistrationEmployer, $routeParams, GetPatientAllData) {
         $rootScope.pageTitle = "EHR - Patient Registration";
         $scope.PI = $rootScope.PI;
         $scope.PI.adress = {};
@@ -278,12 +278,15 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
     // Permanent Address checkbox
     $scope.isChecked = function(checked){
-    	if(checked){
+    	if(checked && $routeParams.patientID == undefined){
     		$('.hidePermanentAddress').slideUp(500);
     		permanentAddress();
+    	}else if(checked){
+            $('.hidePermanentAddress').slideUp(500);
+            permanentAddress();
     	}else{
-    		$('.hidePermanentAddress').slideDown(500);
-    	}
+            $('.hidePermanentAddress').slideDown(500);
+        }
     };
 
     // patient information API
@@ -624,101 +627,107 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     };
 
     if($routeParams.patientID != undefined){
-    	console.log($routeParams.patientID);
+        $rootScope.loader = 'show';
+        $scope.PI.sameAsAbove = true;
     	$scope.byParams = $routeParams.patientID;
     	$window.sessionStorage.patient_id = $routeParams.patientID;
     	$scope.showSubmitButtonAddress = false;
+
     	$scope.showSubmitButton = false;
     	$scope.showSubmitButtonKin = false;
     	$scope.showSubmitButtonKin = false;
     	$scope.showSubmitButtonEmployer = false;
     	$scope.disabledTabAdress = $scope.disabledTabArchive = $scope.disabledTabKin = $scope.disabledTabEmployer = $scope.disabledTabPatientPlant = "11";
-    	console.log($scope.disabledTabAdress);
-    	/*PatientInformation.get({
+    	//console.log($scope.disabledTabAdress);
+    	GetPatientAllData.get({
     		token: $window.sessionStorage.token,
     		patient_id: $window.sessionStorage.patient_id
-    	}, patientEditSuccess, patientEditFailed);*/
+    	}, patientEditSuccess, patientEditFailed);
     }else{
     	console.log($routeParams.patientID);
     }
 
     function patientEditSuccess(res){
     	if(res.status == true){
-    		console.log(res);
-    		$scope.address_id = res.address_id;
-    		$scope.kin_id = res.kin_id;
-    		$scope.employer_id = res.employee_id;
-    		$scope.PI.patient_ID = res.patient_id;
-    		$scope.PI.patient_unit_number = res.patient_unit_number;
-    		$scope.PI.first_name = res.first_name;
-    		$scope.PI.middle_name = res.middle_name;
-    		$scope.PI.last_name = res.last_name;
-    		$scope.PI.date_of_birth = res.date_of_birth;
-    		$scope.PI.age = res.age;
-    		$scope.PI.file = res.patient_image;
-    		$scope.PI.religion = res.religion;
-    		$scope.PI.maritial_status = res.maritial_status;
-    		$scope.PI.sex = res.sex;
-    		$scope.PI.identity_type = res.identity_type;
-    		$scope.PI.identity_number = res.identity_number;
-    		$scope.PI.patient_origin = res.patient_origin;
-    		$scope.PI.patient_local_goverment_area = res.patient_local_goverment_area;
-    		$scope.PI.tribe = res.tribe;
-    		$scope.PI.language = res.language;
-    		$scope.PI.nationality = res.nationality;
-    		$scope.PI.blood_group = res.blood_group;
-    		$scope.PI.father_firstname = res.father_firstname;
-    		$scope.PI.father_middlename = res.father_middlename;
-    		$scope.PI.father_lastname = res.father_lastname;
-    		$scope.PI.mother_firstname = res.mother_firstname;
-    		$scope.PI.mother_lastname = res.mother_lastname;
-    		$scope.PI.mother_middlename = res.mother_middlename;
-    		$scope.PI.refered_name = res.refered_name;
+            //$scope.PI.sameAsAbove = res.data.patient_address[1].length > 0 ? true : false;
+    		$scope.address_id = res.data.patient_address[0].id;
+    		$scope.kin_id = res.data.patient_kin.id;
+    		$scope.employer_id = res.data.patient_employeer.id;
+    		$scope.PI.patient_ID = res.data.patient_info.id;
+    		$scope.PI.patient_unit_number = res.data.patient_info.patient_unit_number;
+    		$scope.PI.first_name = res.data.patient_info.first_name;
+    		$scope.PI.middle_name = res.data.patient_info.middle_name;
+    		$scope.PI.last_name = res.data.patient_info.last_name;
+    		$scope.PI.date_of_birth = res.data.patient_info.date_of_birth;
+    		$scope.PI.age = res.data.patient_info.age;
+    		$scope.PI.file = res.data.patient_info.patient_image;
+    		$scope.PI.religion = res.data.patient_info.religion;
+    		$scope.PI.maritial_status = res.data.patient_info.maritial_status;
+    		$scope.PI.sex = res.data.patient_info.sex;
+    		$scope.PI.identity_type = res.data.patient_info.identity_type;
+    		$scope.PI.identity_number = res.data.patient_info.identity_number;
+    		$scope.PI.patient_origin = res.data.patient_info.patient_origin;
+    		$scope.PI.patient_local_goverment_area = res.data.patient_info.patient_local_goverment_area;
+    		$scope.PI.tribe = res.data.patient_info.tribe;
+    		$scope.PI.language = res.data.patient_info.language;
+    		$scope.PI.nationality = res.data.patient_info.nationality;
+    		$scope.PI.blood_group = res.data.patient_info.blood_group;
+    		$scope.PI.father_firstname = res.data.patient_info.father_firstname;
+    		$scope.PI.father_middlename = res.data.patient_info.father_middlename;
+    		$scope.PI.father_lastname = res.data.patient_info.father_lastname;
+    		$scope.PI.mother_firstname = res.data.patient_info.mother_firstname;
+    		$scope.PI.mother_lastname = res.data.patient_info.mother_lastname;
+    		$scope.PI.mother_middlename = res.data.patient_info.mother_middlename;
+    		$scope.PI.refered_name = res.data.patient_info.refered_name;
 
-    		$scope.PI.adress.phone_number = res.data.phone_number;
-    		$scope.PI.adress.mobile_number = res.data.mobile_number;
-    		$scope.PI.adress.email = res.data.email;
-    		$scope.PI.adress.street = res.data.street;
-    		$scope.PI.adress.country = res.data.country;
-    		$scope.PI.adress.state = res.data.state;
-    		$scope.PI.adress.local_goverment_area = res.data.local_goverment_area;
-    		$scope.PI.adress.city = res.data.city;
-    		$scope.PI.adress.postal_code = res.data.postal_code;
-    		$scope.PI.adress.permanent_phonenumber = res.data.permanent_phonenumber;
-    		$scope.PI.adress.permanent_mobilenumber = res.data.permanent_mobilenumber;
-    		$scope.PI.adress.permanent_email = res.data.permanent_email;
-    		$scope.PI.adress.permanent_housenumber = res.data.permanent_housenumber;
-    		$scope.PI.adress.permanent_street = res.data.permanent_street;
-    		$scope.PI.adress.permanent_country = res.data.permanent_country;
-    		$scope.PI.adress.permanent_state = res.data.permanent_state;
-    		$scope.PI.adress.permanent_city = res.data.permanent_city;
-    		$scope.PI.adress.permanent_postalCode = res.data.permanent_postalCode;
+    		$scope.PI.adress.phone_number = res.data.patient_address[0].phone_number;
+    		$scope.PI.adress.mobile_number = res.data.patient_address[0].mobile_number;
+            $scope.PI.adress.house_number = res.data.patient_address[0].house_number;
+    		$scope.PI.adress.email = res.data.patient_address[0].email;
+    		$scope.PI.adress.street = res.data.patient_address[0].street;
+    		$scope.PI.adress.country = res.data.patient_address[0].country;
+    		$scope.PI.adress.state = res.data.patient_address[0].state;
+    		$scope.PI.adress.local_goverment_area = res.data.patient_address[0].local_goverment_area;
+    		$scope.PI.adress.city = res.data.patient_address[0].city;
+    		$scope.PI.adress.postal_code = res.data.patient_address[0].postal_code;
+            if(res.data.patient_address[1] != undefined){
+        		$scope.PI.adress.permanent_phonenumber = res.data.patient_address[1].phone_number == undefined ? '' : '';
+        		$scope.PI.adress.permanent_mobilenumber = res.data.patient_address[1].mobile_number;
+        		$scope.PI.adress.permanent_email = res.data.patient_address[1].email;
+        		$scope.PI.adress.permanent_housenumber = res.data.patient_address[1].house_number;
+        		$scope.PI.adress.permanent_street = res.data.patient_address[1].street;
+        		$scope.PI.adress.permanent_country = res.data.patient_address[1].country;
+        		$scope.PI.adress.permanent_state = res.data.patient_address[1].state;
+        		$scope.PI.adress.permanent_city = res.data.patient_address[1].city;
+        		$scope.PI.adress.permanent_postalCode = res.data.patient_address[1].patient_addresspostalCode;
+            }
+    		$scope.PI.kin.kin_fullname = res.data.patient_kin.fullname;
+    		$scope.PI.kin.kin_middlename = res.data.patient_kin.middlename;
+    		$scope.PI.kin.kin_lastname = res.data.patient_kin.lastname;
+    		$scope.PI.kin.kin_relationship = res.data.patient_kin.relationship;
+    		$scope.PI.kin.others = res.data.patient_kin.others;
+    		$scope.PI.kin.kin_phone_number = res.data.patient_kin.phone_number;
+    		$scope.PI.kin.kin_mobile_number = res.data.patient_kin.mobile_number;
+    		$scope.PI.kin.kin_email = res.data.patient_kin.email;
+    		$scope.PI.kin.kin_street = res.data.patient_kin.street;
+    		$scope.PI.kin.kin_house_number = res.data.patient_kin.house_number;
+    		$scope.PI.kin.kin_country = res.data.patient_kin.country;
+    		$scope.PI.kin.kin_city = res.data.patient_kin.city;
+    		$scope.PI.kin.kin_state = res.data.patient_kin.state;
+    		$scope.PI.kin.kin_postal_code = res.data.patient_kin.postal_code;
 
-    		$scope.PI.kin.kin_fullname = res.data.kin_fullname;
-    		$scope.PI.kin.kin_middlename = res.data.kin_middlename;
-    		$scope.PI.kin.kin_lastname = res.data.kin_lastname;
-    		$scope.PI.kin.kin_relationship = res.data.kin_relationship;
-    		$scope.PI.kin.others = res.data.others;
-    		$scope.PI.kin.kin_phone_number = res.data.kin_phone_number;
-    		$scope.PI.kin.kin_mobile_number = res.data.kin_mobile_number;
-    		$scope.PI.kin.kin_email = res.data.kin_email;
-    		$scope.PI.kin.kin_street = res.data.kin_street;
-    		$scope.PI.kin.kin_house_number = res.data.kin_house_number;
-    		$scope.PI.kin.kin_country = res.data.kin_country;
-    		$scope.PI.kin.kin_city = res.data.kin_city;
-    		$scope.PI.kin.kin_state = res.data.kin_state;
-    		$scope.PI.kin.kin_postal_code = res.data.kin_postal_code;
-
-    		$scope.PI.employer.employer_name = res.data.employer_name;
-    		$scope.PI.employer.employer_occupation = res.data.employer_occupation;
-    		$scope.PI.employer.employer_phone_number = res.data.employer_phone_number;
-    		$scope.PI.employer.employer_mobile_number = res.data.employer_mobile_number;
-    		$scope.PI.employer.employer_email = res.data.employer_email;
-    		$scope.PI.employer.employer_house_number = res.data.employer_house_number;
-    		$scope.PI.employer.employer_street = res.data.employer_street;
-    		$scope.PI.employer.employer_country = res.data.employer_country;
-    		$scope.PI.employer.employer_state = res.data.employer_state;
-    		$scope.PI.employer.employer_city = res.data.employer_city;
+    		$scope.PI.employer.employer_name = res.data.patient_employeer.name;
+    		$scope.PI.employer.employer_occupation = res.data.patient_employeer.occupation;
+    		$scope.PI.employer.employer_phone_number = res.data.patient_employeer.phone_number;
+    		$scope.PI.employer.employer_mobile_number = res.data.patient_employeer.mobile_number;
+    		$scope.PI.employer.employer_email = res.data.patient_employeer.email;
+    		$scope.PI.employer.employer_house_number = res.data.patient_employeer.house_number;
+    		$scope.PI.employer.employer_street = res.data.patient_employeer.street;
+    		$scope.PI.employer.employer_country = res.data.patient_employeer.country;
+    		$scope.PI.employer.employer_state = res.data.patient_employeer.state;
+    		$scope.PI.employer.employer_city = res.data.patient_employeer.city;
+            console.log($scope.PI);
+            $rootScope.loader = 'hide';
     	}
     }
     function patientEditFailed(error){
