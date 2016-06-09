@@ -1529,7 +1529,7 @@ Patient Plan
     text-transform: capitalize;
 }
 .encounter-loader{
-    width:100px;
+    width:30px;
 }
 /*-----------
 BED Occupancy

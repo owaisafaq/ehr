@@ -1,13 +1,26 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope', '$window', 'AddEncounter', '$timeout', 'GetVisits', function($scope, $rootScope, $window, AddEncounter, $timeout, GetVisits){
+AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope', '$window', 'AddEncounter', '$timeout', 'GetVisits', '$rootScope', 'GetPatientInfo', 'DropDownData', function($scope, $rootScope, $window, AddEncounter, $timeout, GetVisits, $rootScope, GetPatientInfo, DropDownData){
 	$rootScope.pageTitle = "EHR - New Encounter Patient Search";
 	$scope.addEncounter = {};
 	$scope.allEncounters = [];
 	$scope.displayInfo = {};
 	$scope.closePopUp = true;
 	$scope.patientInfo = false;
-	GetVisits.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id}, dropDownSuccess, dropDownFailed);
+	$scope.hideLoader = "hide";
+	$rootScope.loader = "show";
+	GetVisits.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id}, getVisitsSuccess, getVisitsFailed);
+	DropDownData.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id}, dropDownSuccess, dropDownFailed);
+
+	function dropDownSuccess(res){
+		if(res.status == true){
+			$scope.encountersDropdownData = res.data;
+		}
+	}
+
+	function dropDownFailed(error){
+		console.log(error);
+	}
 	/*$scope.gridOptions = {
         paginationPageSizes: [20, 50, 75],
         paginationPageSize: 20,
@@ -16,7 +29,6 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
         columnDefs: $scope.columns,
         enableColumnMenus: false,
     };*/
-    console.log($window.sessionStorage.patient_id);
     $scope.gridOptions = {
 	    enableFiltering: false,
 	    onRegisterApi: function(gridApi){
@@ -31,40 +43,60 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
     $scope.filter = function() {
 	    $scope.gridApi.grid.refresh();
 	};
-	function dropDownSuccess(res){
+	function getVisitsSuccess(res){
 		if(res.status == true){
 			$scope.allEncounters = res.data;
-			console.log($scope.allEncounters);
+			$rootScope.loader = "hide";
 		}
 	}
 
-	function dropDownFailed(error){
+	function getVisitsFailed(error){
 		console.log(error);
 	}
 
 	$scope.encounterSelected = function(index){
-		console.log($scope.allEncounters[index]);
+		$rootScope.loader = "show";
+		GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: $scope.allEncounters[index].id}, getPatientSuccess, getPatientFailure);
 		$scope.displayInfo = $scope.allEncounters[index];
 		$scope.dataStrip = "custom-card";
+	}
+
+	function getPatientSuccess(res){
+		$scope.patientInfo = true;
+		$rootScope.loader = "hide";
+		if(res.status == true){
+			$scope.displayInfo.first_name = res.data.first_name;
+			$scope.displayInfo.patient_id = res.data.id;
+			$scope.displayInfo.age = res.data.age;
+			$scope.displayInfo.gender = res.data.sex;
+			$scope.displayInfo.marital_status = res.data.marital_status;
+		}
+	}
+
+	function getPatientFailure(error){
+		console.log(error);
 	}
 
 	$scope.openCreateEncounter = function(){
 		$scope.message = false;
 		$scope.closePopUp = false;
-		$scope.addEncounter = {};
+		if(angular.equals({}, $scope.addEncounter) == false){
+			$scope.addEncounter = {};
+		}		
 		/*$scope.addEncounter.department = '';
 		$scope.addEncounter.class = '';
 		$scope.addEncounter.type = '';
 		$scope.addEncounter.wts = '';*/
-		console.log($scope.addEncounter.department);
 	}
 
 	$scope.validateEncounterForm = function(addEncounter){
 		console.log(addEncounter);
 		if(angular.equals({}, addEncounter) == false){
+			$scope.hideLoader = "show";
+			$scope.addEncounterBtn = true;
 			AddEncounter.save({
 				token: $window.sessionStorage.token, 
-				patient_id: $window.sessionStorage.patient_id,
+				patient_id: $scope.displayInfo.patient_id,
 				department_id: addEncounter.department,
 				encounter_class: addEncounter.class,
 				encounter_type: addEncounter.type,
@@ -82,12 +114,16 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 	function encounterSuccess(res){
 		console.log(res);
 		if(res.status == true){
+			$scope.addEncounterBtn = false;
+			$scope.hideLoader = "hide";
 			$scope.messageType = "alert-success";
 			$scope.errorMessage = res.message;
 			$scope.errorSymbol = "fa fa-check";
 			$scope.message = true;
 			$timeout(function(){$scope.closePopUp = true;}, 2000);
 		}else{
+			$scope.hideLoader = "hide";
+			$scope.addEncounterBtn = false;
 			$scope.message = true;
 			$scope.messageType = "alert-danger";
 			$scope.errorMessage = res.message;
@@ -97,6 +133,8 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 	}
 
 	function encounterFailed(error){
+		$scope.addEncounterBtn = false;
+		$scope.hideLoader = "hide";
 		console.log(error);
 	}
 }]);

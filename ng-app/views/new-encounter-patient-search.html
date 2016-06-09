@@ -4,7 +4,7 @@
             <div class="card-head card-head-custom card-color-1" ng-show="patientInfo">
                 <div class="col-lg-3">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
-                    <span class="txt-style-2 col-lg-12">{{displayInfo.first_name}}</span>
+                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.first_name}} {{displayInfo.middle_name}} {{displayInfo.last_name}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Number</label>
@@ -16,11 +16,11 @@
                 </div>
                 <div class="col-lg-1">
                     <label class="txt-style-1 text-uppercase col-lg-12">Sex</label>
-                    <span class="txt-style-2 col-lg-12">{{displayInfo.gender}}</span>
+                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.gender}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">marital status</label>
-                    <span class="txt-style-2 col-lg-12">{{displayInfo.marital_status}}</span>
+                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.marital_status}}</span>
                 </div>
                 <div class="col-lg-2">
                     <a href="javascript:;" class="button-style-2">
@@ -38,7 +38,6 @@
                 <div class="pull-left">
                     <span class="txt-style-3 pull-left text-uppercase">Encounter List</span>
                     <div class="header-search margin-right-0 pull-left">
-                        <img src="assets/img/loader.gif" class="encounter-loader"/>
                         <button type="submit">
                             <i class="fa fa-search"></i>
                         </button>
@@ -62,9 +61,9 @@
                                 <div class="col-lg-6">
                                     <select class="form-control" ng-class="{true: 'error'}[submitted && encounterForm.department.$invalid]" name="department" ng-model="addEncounter.department" placeholder="Select" required>
                                         <option value=""></option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <!-- <option ng-repeat="department in departments" value="{{department.id}}">{{department.name}}</option> -->
+                                        <!-- <option value="1">1</option>
+                                        <option value="2">2</option> -->
+                                        <option ng-repeat="department in encountersDropdownData.departments" value="{{department.id}}">{{department.name}}</option>
                                     </select>
                                     <p class="help-block PIValid" ng-show="submitted && encounterForm.department.$error.required">Required</p>
                                 </div>
@@ -101,17 +100,19 @@
                                 <div class="col-lg-6">
                                     <select class="form-control" ng-class="{true: 'error'}[submitted && encounterForm.wts.$invalid]" name="wts" ng-model="addEncounter.wts" placeholder="Select whom to see" required>
                                         <option value=""></option>
-                                        <!-- <option ng-repeat="wts in whomeToSee" value="{{wts.id}}">{{wts.name}}</option> -->
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
+                                        <option ng-repeat="wts in encountersDropdownData.doctors" value="{{wts.id}}">{{wts.name}}</option>
+                                        <!-- <option value="1">1</option>
+                                        <option value="2">2</option> -->
                                     </select>
                                     <p class="help-block PIValid" ng-show="submitted && encounterForm.wts.$error.required">Required</p>
                                 </div> 
 
                                 <div class="col-lg-12">
+                                <img src="assets/img/loader.gif" class="pull-right encounter-loader {{hideLoader}}"/>
                                     <div class="pull-right">
-                                        <button type="submit" class="btn ink-reaction button-style-1" ng-click="submitted = true;">create encounter</button>
-                                        <button type="button" class="btn ink-reaction button-style-1 button-style-1_a close_custom_pop" ng-click="closeAddEncounter();">Cancel</button>
+                                        
+                                        <button type="submit" class="btn ink-reaction button-style-1" ng-click="submitted = true;" ng-disabled="addEncounterBtn">create encounter</button>
+                                        <button type="button" class="btn ink-reaction button-style-1 button-style-1_a close_custom_pop" ng-click="closeAddEncounter();" ng-disabled="addEncounterBtn">Cancel</button>
                                     </div>
                                 </div>
                             </form>
@@ -141,7 +142,7 @@
                                         </label>
                                     </div>
                                 </td>
-                                <td>{{encounter.id}}</td>
+                                <td>PA-{{encounter.id}}</td>
                                 <td class="capitalize">{{encounter.first_name}}</td>
                             </tr>
                         </tbody>

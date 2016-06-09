@@ -117,13 +117,13 @@ AppEHR.run(function ($rootScope, $location, $window) {
         if ($window.sessionStorage.email != undefined && $window.sessionStorage.email != 'undefined' && $window.sessionStorage.token != undefined && window.sessionStorage.token != 'undefined' && $window.sessionStorage.role_id != undefined && window.sessionStorage.role_id != 'undefined') {
             var path = $location.$$path;
             if ((path == "/login" || path == "/") && path != undefined) {
-                $location.path("patient-registration");
+                $location.path("patient-registration/");
             }
         } else
             $location.path("login");
     });
     $rootScope.loadView = function (object) {
-        $window.location.href = '#/patient-registration';
+        $window.location.href = '#/patient-registration/';
     }
     $rootScope.logout = function () {
         $window.sessionStorage.clear();
