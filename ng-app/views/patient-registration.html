@@ -7,7 +7,7 @@
                     <li class="{{disabledTabAdress}}"><a showtab href="#address">address</a></li>
                     <li class="{{disabledTabKin}}"><a showtab href="#kin">next of kin</a></li>
                     <li class="{{disabledTabEmployer}}"><a showtab href="#employer">employer</a></li>
-                    <li class="{{disabledTabPatientPlant}}"><a showtab href="#plan">patient plan</a></li>
+                    <li class="{{disabledTabPatientPlant-no}}"><a showtab href="#plan">patient plan</a></li>
                     <li class="{{disabledTabArchive}}"><a showtab href="#archive">archive</a></li>
                 </ul>
             </div><!-- end .card-head -->
@@ -521,8 +521,8 @@
                         <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" value="Next" ng-hide="showSubmitButtonEmployer" ng-click="validatePatientEmployer(PI.employer);">Update</button>
                     </div>
                 </div>
-                <div class="tab-pane {{disabledTabPatientPlant}}" id="plan">
-                    <form class="custom-form" name="userForm4" novalidate ng-submit="validatePatientPlan(PI.patientPlan);">
+                  <div class="tab-pane {{disabledTabPatientPlant - no}} active" id="plan">
+                    <form class="custom-form" name="userForm4" novalidate ng-submit="savePlanData(PP);">
                         <div class="col-lg-12 margin-bottom-xxl">
                             <label class="label-style">Select Plan</label>
                         </div>
@@ -683,6 +683,7 @@
                         </div>
                     </form>
                 </div>
+                
                 <div class="tab-pane {{disabledTabArchive}}" id="archive">
                     <div class="alert alert-success" role="alert" ng-show="successMessage">
                         <i class="fa fa-check alert-icon"></i> Patient Successfully Added.
@@ -742,7 +743,9 @@
                         <label>HMO</label>
                     </div>
                     <div class="col-lg-3">
-                        <select class="form-control" ng-class="{true: 'error'}[checkValidate_nhis && form_modal_1.hmo_dropdown.$invalid]"  name="hmo_dropdown" data-placeholder="Select Hmo" ng-model="MI.hmo" ng-options="hmo.name for hmo in dropDownData.hmo track by hmo.id" required>
+                        <select class="form-control" ng-class="{
+                                true
+                                        : 'error'}[checkValidate_nhis && form_modal_1.hmo_dropdown.$invalid]"  name="hmo_dropdown" data-placeholder="Select Hmo" ng-model="MI.hmo" ng-options="hmo.name for hmo in dropDownData.hmo track by hmo.id" required>
                             <option value=""></option>
                         </select>
                         <span class="help-block PIValid" ng-show="checkValidate_nhis && form_modal_1.hmo_dropdown.$error.required">Required</span>
@@ -759,7 +762,7 @@
                         <span class="help-block PIValid" ng-show="checkValidate_nhis && form_modal_1.policy_dropdown.$error.required">Required</span>
                     </div>
                     <div class="col-lg-3">
-                        <label>Status</label>
+                        <label>Speciality</label>
                     </div>
                     <div class="col-lg-3 select-speciality">
                         <div class="checkbox checkbox-styled col-lg-6">
@@ -808,9 +811,9 @@
                         <div class="col-lg-12">
                             <div class="ajax-dropdown-con col-lg-4" ng-class="{
                                     true
-                                            : 'error'}[do_valid && checkValidate_nhis &&  form_modal_1.add_dependant.$invalid]">
-                                <input id="get_val_principal search-ajax" class="search-ajax form-control" type="text" name="add_dependant" ng-model="MI.add_principal" ng-required="true" />
-                                <span class="help-block PIValid alignError" ng-show="checkValidate_nhis && do_valid && form_modal_1.add_dependant.$error.required">Required</span>
+                                            : 'error'}[checkValidate_nhis && MI.select_speciality == 'dependant' && do_valid_nhis]">
+                                <input id="get_val_principal" class="search-ajax form-control" type="text" name="add_dependant" ng-model="MI.add_principal" ng-required="true" />
+                                <span class="help-block PIValid alignError" ng-show="checkValidate_nhis && MI.select_speciality == 'dependant' && do_valid_nhis">Required</span>
                             </div>
                             <a class="btn btn-default button-style-1 add-principal">add principal</a>
                         </div>
@@ -874,7 +877,7 @@
                         </select>
                     </div>
                     <div class="col-lg-3">
-                        <label>Status</label>
+                        <label>Speciality</label>
                     </div>
                     <div class="col-lg-3 select-speciality">
                         <div class="checkbox checkbox-styled col-lg-6">
