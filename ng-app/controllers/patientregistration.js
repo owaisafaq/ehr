@@ -1,5 +1,5 @@
 var AppEHR = angular.module('AppEHR');
-AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', 'PatientInformation', 'fileUpload', '$location', '$filter', 'Upload', '$timeout', 'PatientRegistrationAddress', 'PatientRegistrationKin', 'PatientRegistrationEmployer', function ($rootScope, $scope, $window, Countries, States, GetLocalGovermentArea, City, DropDownData, PatientInformation, fileUpload, $location, $filter, Upload, $timeout, PatientRegistrationAddress, PatientRegistrationKin, PatientRegistrationEmployer) {
+AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', 'PatientInformation', 'fileUpload', '$location', '$filter', 'Upload', '$timeout', 'PatientRegistrationAddress', 'PatientRegistrationKin', 'PatientRegistrationEmployer', 'PatienPlanSaveData', function ($rootScope, $scope, $window, Countries, States, GetLocalGovermentArea, City, DropDownData, PatientInformation, fileUpload, $location, $filter, Upload, $timeout, PatientRegistrationAddress, PatientRegistrationKin, PatientRegistrationEmployer, PatienPlanSaveData) {
         $rootScope.pageTitle = "EHR - Patient Registration";
         $scope.PI = $rootScope.PI;
         $scope.PI.adress = {};
@@ -8,6 +8,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         $scope.PI.patientPlan = {};
         $scope.myForm = {};
         $scope.MI = {};
+        $scope.RI = {};
         $scope.counties = [];
         $scope.contactAddressCountries = [];
         $scope.permanentAddressCountries = [];
@@ -24,6 +25,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         $scope.employerStates = [];
         $scope.employerCities = [];
         $scope.dropDownData = [];
+        $scope.dataToBeAdded_send = {};
         $scope.isDisabled = false;
         $scope.PI.adress.sameAsAbove = true;
         $('.hidePermanentAddress').slideUp(500);
@@ -43,6 +45,8 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         $scope.errorEmployerMessage = false;
         delete $window.sessionStorage.patient_id;
         $scope.patientSummary = true;
+        $scope.dataToBeAdded = {}
+        $scope.PP = {}
         //$scope.PI.identity_type = dropDownInfo.IdType[0].id;
         //$scope.PI.kin_relationship = dropDownInfo.relationship[0].id;
         //$scope.PI.dependant_relationship = dropDownInfo.relationship[0].id;
@@ -753,30 +757,28 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 console.log(error);
             }
         };
+        $rootScope.do_valid = true;
+        $rootScope.do_valid_nhis = true; 
         $scope.modal_nhis_Data = function (MI) {
 
             console.log($scope.MI.select_speciality);
-            if ($('input[name=select_speciality]:checked').val() == "dependant") {
-                $rootScope.do_valid = true;
-                $rootScope.do_valid_1 = true;
-                if ($('.principal_list .chip').length > 0) {
-                    $rootScope.do_valid = false;
+//            console.log($('input[name=select_speciality]:checked').val());
+            var check_val = $('#nhis input[name=select_speciality]:checked').val();
+            if (check_val == "dependant") {
+//                $rootScope.do_valid_nhis = true; 
+                if ($('#nhis .principal_list .chip').length > 0) {
+                    $rootScope.do_valid_nhis = false;
+                    console.log("retainership popup")
                 }
+
+                $scope.dataToBeAdded.principal_patient_id = $('#nhis .principal_list .chip').data('id')
+                $scope.dataToBeAdded.principal_patient_name = $('#nhis .principal_list .chip').text()
+                $scope.dataToBeAdded.relationship = $scope.MI.principal_relationship == undefined ? '' : $scope.MI.principal_relationship
             }
 
-            $scope.dataToBeAdded = {
-//                plan_id: $scope.MI.patientPlan.hmo == undefined ? '' : $scope.PI.employer.employer_name,
-                hmo: $scope.MI.hmo == undefined ? '' : $scope.MI.hmo,
-                policies: $scope.MI.policies == undefined ? '' : $scope.MI.policies,
-                is_principal: $scope.MI.select_speciality == "principal" ? $scope.MI.select_speciality : '0',
-                is_dependant: $scope.MI.select_speciality == "dependant" ? $scope.MI.select_speciality : '0',
-                insurance_id: $scope.MI.insurance_id == undefined ? '' : $scope.MI.insurance_id,
-                principal_patient_id: $('.principal_list .chip').data('id') == '' || $('.principal_list .chip').data('id') == undefined ? '0' : $('.principal_list .chip').data('id'),
-                principal_patient_name: $('.principal_list .chip').text() == '' || $('.principal_list .chip').text() == undefined ? '0' : $('.principal_list .chip').text(),
-                relationship: $scope.MI.principal_relationship == undefined ? '' : $scope.MI.principal_relationship,
-                description: $scope.MI.description == undefined ? '' : $scope.MI.description
-            };
-            console.log($scope.dataToBeAdded);
+
+
+//            console.log($scope.dataToBeAdded);
 //            if (!angular.equals({}, MI)) {
 //            if (angular.equals({}, $scope.MI) == false) {
 //                $('#nhis').modal('hide')
@@ -784,10 +786,26 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 //            if ($('form [name=form_modal_1]').find('.error').length) {
 //
 //            }
+//            console.log($('form[name=form_modal_1]').find('.error').length)
             if ($('form[name=form_modal_1]').find('.error').length == 0) {
+//                $scope.dataToBeAdded = {
+//                plan_id: $scope.MI.patientPlan.hmo == undefined ? '' : $scope.PI.employer.employer_name,
+                $scope.dataToBeAdded.hmo = $scope.MI.hmo == undefined ? '' : $scope.MI.hmo;
+                $scope.dataToBeAdded.policies = $scope.MI.policies == undefined ? '' : $scope.MI.policies;
+                $scope.dataToBeAdded.is_principal = $scope.MI.select_speciality == "principal" ? $scope.MI.select_speciality : '0'
+                $scope.dataToBeAdded.is_dependant = $scope.MI.select_speciality == "dependant" ? $scope.MI.select_speciality : '0'
+                $scope.dataToBeAdded.insurance_id = $scope.MI.insurance_id == undefined ? '' : $scope.MI.insurance_id
+//                principal_patient_id: check_val == "dependant" && $('.principal_list .chip').data('id') == undefined ? '0' : $('.principal_list .chip').data('id') ||  check_val == "dependant" && $('.principal_list .chip').data('id') == '0' ? $('.principal_list .chip').data('id') : '0' ,
+//                $('.principal_list .chip').data('id') == '' || $('.principal_list .chip').data('id') == undefined ? '0' : $('.principal_list .chip').data('id'),
+//                principal_patient_name: check_val == "dependant" || $('.principal_list .chip').data('id') == '0' || $('.principal_list .chip').data('id') == undefined ? '0' : $('.principal_list .chip').data('id') ,
+//                principal_patient_name: $('.principal_list .chip').text() == '' || $('.principal_list .chip').text() == undefined ? '0' : $('.principal_list .chip').text(),
+//                relationship: check_val == "dependant"  || $scope.MI.principal_relationship == undefined ? '' : $scope.MI.principal_relationship,
+                $scope.dataToBeAdded.description = $scope.MI.description == undefined ? '' : $scope.MI.description
+//                };
                 $('#nhis').modal('hide');
                 $scope.flag_to_show = "nhis";
             }
+            //console.log($scope.dataToBeAdded)
 
 //            $scope.hmo_info = $scope.MI.patientPlan.hmo
 //            $scope.hmo_info = $scope.MI.patientPlan.hmo
@@ -795,4 +813,131 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
 
         }
+
+
+        $scope.modal_retainer_Data = function (RI) {
+
+//            console.log($scope.RI.select_speciality);
+//            console.log($('input[name=select_speciality]:checked').val());
+            var check_val = $('#relationship input[name=select_speciality]:checked').val();
+            if (check_val == "dependant") {
+//                console.log("there");
+//                $rootScope.do_valid = true;
+//                $rootScope.do_valid_1 = true;
+//                console.log("in" + $('form[name=form_modal_2]').find('.error').length)
+//                console.log($('#relationship .principal_list .chip').length)
+//                $rootScope.do_valid = true;
+                if ($('#relationship .principal_list .chip').length > 0) {
+
+                    $rootScope.do_valid = false;
+                    console.log("retainership popup")
+                }
+
+                $scope.dataToBeAdded.principal_patient_id = $('#relationship .principal_list .chip').data('id')
+                $scope.dataToBeAdded.principal_patient_name = $('#relationship .principal_list .chip').text()
+                $scope.dataToBeAdded.relationship = $scope.RI.principal_relationship == undefined ? '' : $scope.RI.principal_relationship
+            }
+
+
+
+//            console.log($scope.dataToBeAdded);
+//            if (!angular.equals({}, MI)) {
+//            if (angular.equals({}, $scope.MI) == false) {
+//                $('#nhis').modal('hide')
+//            }
+//            if ($('form [name=form_modal_1]').find('.error').length) {
+//
+//            }
+//            console.log($('form[name=form_modal_1]').find('.error').length)
+            if ($('form[name=form_modal_2]').find('.error').length == 0) {
+//                $scope.dataToBeAdded = {
+//                plan_id: $scope.MI.patientPlan.hmo == undefined ? '' : $scope.PI.employer.employer_name,
+                $scope.dataToBeAdded.retainership = $scope.RI.retainer_data == undefined ? '' : $scope.RI.retainer_data;
+                $scope.dataToBeAdded.category = $scope.RI.category == undefined ? '' : $scope.RI.category;
+                $scope.dataToBeAdded.is_principal = $scope.RI.select_speciality == "principal" ? $scope.RI.select_speciality : '0'
+                $scope.dataToBeAdded.is_dependant = $scope.RI.select_speciality == "dependant" ? $scope.RI.select_speciality : '0'
+//                principal_patient_id: check_val == "dependant" && $('.principal_list .chip').data('id') == undefined ? '0' : $('.principal_list .chip').data('id') ||  check_val == "dependant" && $('.principal_list .chip').data('id') == '0' ? $('.principal_list .chip').data('id') : '0' ,
+//                $('.principal_list .chip').data('id') == '' || $('.principal_list .chip').data('id') == undefined ? '0' : $('.principal_list .chip').data('id'),
+//                principal_patient_name: check_val == "dependant" || $('.principal_list .chip').data('id') == '0' || $('.principal_list .chip').data('id') == undefined ? '0' : $('.principal_list .chip').data('id') ,
+//                principal_patient_name: $('.principal_list .chip').text() == '' || $('.principal_list .chip').text() == undefined ? '0' : $('.principal_list .chip').text(),
+//                relationship: check_val == "dependant"  || $scope.MI.principal_relationship == undefined ? '' : $scope.MI.principal_relationship,
+                $scope.dataToBeAdded.notes = $scope.RI.notes == undefined ? '' : $scope.RI.notes
+//                };
+                $('#relationship').modal('hide');
+                $scope.flag_to_show = "retainer";
+            }
+            console.log($scope.dataToBeAdded)
+
+        }
+
+        $scope.savePlanData = function () {
+            $scope.dataToBeAdded.token = $window.sessionStorage.token
+            $scope.dataToBeAdded.patient_id = 1 //$window.sessionStorage.patient_id
+            $scope.dataToBeAdded.plan_id = $scope.PP.checkoutpatient
+            if ($scope.PP.checkoutpatient == 1)
+            {
+
+                $scope.dataToBeAdded.retainership = '';
+                $scope.dataToBeAdded.category = '';
+                $scope.dataToBeAdded.notes = '';
+                $scope.dataToBeAdded.hmo = '';
+                $scope.dataToBeAdded.policies = '';
+                $scope.dataToBeAdded.is_principal = '';
+                $scope.dataToBeAdded.is_dependant = '';
+                $scope.dataToBeAdded.principal_patient_id = '';
+                $scope.dataToBeAdded.relationship = '';
+                PatienPlanSaveData.save($scope.dataToBeAdded, PlanDataSuccess, PlanDataFailure)
+            }
+            else if ($scope.PP.checkoutpatient == 2)
+            {
+                angular.copy($scope.dataToBeAdded, $scope.dataToBeAdded_send)
+                $scope.dataToBeAdded_send.retainership = '';
+                $scope.dataToBeAdded_send.category = '';
+                $scope.dataToBeAdded_send.notes = '';
+                $scope.dataToBeAdded_send.hmo = $scope.dataToBeAdded.hmo.id;
+                $scope.dataToBeAdded_send.policies = $scope.dataToBeAdded.policies.id;
+                $scope.dataToBeAdded_send.is_principal = $scope.dataToBeAdded.is_principal == "principal" ? "1" : "0";
+                $scope.dataToBeAdded_send.is_dependant = $scope.dataToBeAdded.is_dependant == "dependant" ? "1" : "0";
+                $scope.dataToBeAdded_send.principal_patient_id = $scope.dataToBeAdded.principal_patient_id == undefined || $scope.dataToBeAdded.principal_patient_id == '' ? '0' : $('.principal_list .chip').data('id');
+                $scope.dataToBeAdded_send.relationship = $scope.dataToBeAdded.relationship == undefined || $scope.dataToBeAdded.relationship == '' ? '0' : $scope.MI.principal_relationship;
+//                console.log($scope.dataToBeAdded)
+//                console.log("second")
+                PatienPlanSaveData.save($scope.dataToBeAdded_send, PlanDataSuccess, PlanDataFailure)
+            }
+            else if ($scope.PP.checkoutpatient == 3)
+            {
+                angular.copy($scope.dataToBeAdded, $scope.dataToBeAdded_send)
+                $scope.dataToBeAdded_send.retainership = $scope.dataToBeAdded.retainership.id;
+                $scope.dataToBeAdded_send.category = $scope.dataToBeAdded.category.id;
+                $scope.dataToBeAdded_send.notes = $scope.dataToBeAdded.notes;
+                $scope.dataToBeAdded_send.hmo = '';
+                $scope.dataToBeAdded_send.policies = '';
+                $scope.dataToBeAdded_send.is_principal = $scope.dataToBeAdded.is_principal == "principal" ? "1" : "0";
+                $scope.dataToBeAdded_send.is_dependant = $scope.dataToBeAdded.is_dependant == "dependant" ? "1" : "0";
+                $scope.dataToBeAdded_send.principal_patient_id = $scope.dataToBeAdded.principal_patient_id == undefined || $scope.dataToBeAdded.principal_patient_id == '' ? '0' : $('.principal_list .chip').data('id');
+                $scope.dataToBeAdded_send.relationship = $scope.dataToBeAdded.relationship == undefined || $scope.dataToBeAdded.relationship == '' ? '0' : $scope.dataToBeAdded.relationship.id;
+                console.log($scope.dataToBeAdded_send)
+                console.log("third")
+                PatienPlanSaveData.save($scope.dataToBeAdded_send, PlanDataSuccess, PlanDataFailure)
+            }
+            function PlanDataSuccess(res) {
+                if (res.status == true) {
+                    console.log(res)
+                }
+                else {
+                    console.log("failure")
+                }
+            }
+            function PlanDataFailure(res) {
+                if (res.status == true) {
+                    console.log("failure success")
+                }
+                else {
+                    console.log("failure failure")
+                }
+            }
+        }
+
+
+
     }]);

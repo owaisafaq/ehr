@@ -1995,3 +1995,16 @@ span.help-block {
 .disable-after-1{
     pointer-events: none;
 }
+.radio-disable-style .radio-styled label{
+    color: #003d51;
+    font-weight: bold;
+}
+.radio-disable-style .radio-styled:not(ie8) input ~ span:before {
+    border-color: #56aeea;
+}
+.radio-disable-style .checkbox-styled:not(ie8).disabled:checked ~ span:before,.radio-disable-style  .radio-styled:not(ie8).disabled:checked ~ span:before,.radio-disable-style  .checkbox-styled:not(ie8) input[disabled]:checked ~ span:before,.radio-disable-style  .radio-styled:not(ie8) input[disabled]:checked ~ span:before,.radio-disable-style  .checkbox-styled:not(ie8) input[readonly]:checked ~ span:before,.radio-disable-style  .radio-styled:not(ie8) input[readonly]:checked ~ span:before{
+    border-color: #56aeea;    
+}
+.radio-disable-style .checkbox-styled:not(ie8).disabled:checked ~ span:after,.radio-disable-style .radio-styled:not(ie8).disabled:checked ~ span:after,.radio-disable-style .checkbox-styled:not(ie8) input[disabled]:checked ~ span:after,.radio-disable-style .radio-styled:not(ie8) input[disabled]:checked ~ span:after,.radio-disable-style .checkbox-styled:not(ie8) input[readonly]:checked ~ span:after,.radio-disable-style .radio-styled:not(ie8) input[readonly]:checked ~ span:after {
+    background-color: #56aeea;
+}
