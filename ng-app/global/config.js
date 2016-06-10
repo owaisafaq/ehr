@@ -3,7 +3,8 @@ var serverPath = "http://demoz.online/ehr/public/api/";
 var patientFileUploadPath = "http://demoz.online/ehr/public/uploaded_images/";
 
 var errorMessages = {
-	"authFailed": "Email or Password is Invalid"
+	"authFailed": "Email or Password is Invalid",
+	"fieldRequired": "Fields required"
 };
 
 var dropDownInfo = {

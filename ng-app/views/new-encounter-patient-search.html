@@ -16,7 +16,7 @@
                 </div>
                 <div class="col-lg-1">
                     <label class="txt-style-1 text-uppercase col-lg-12">Sex</label>
-                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.gender}}</span>
+                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.sex}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">marital status</label>
@@ -37,15 +37,15 @@
             <div class="table-header col-lg-12">
                 <div class="pull-left">
                     <span class="txt-style-3 pull-left text-uppercase">Encounter List</span>
-                    <div class="header-search margin-right-0 pull-left">
+                    <!-- <div class="header-search margin-right-0 pull-left">
                         <button type="submit">
                             <i class="fa fa-search"></i>
                         </button>
-                        <input class="search_field search-ajax" type="text" ng-model="search" placeholder="Search for a patient">
-                    </div>
+                        <input class="search_field" type="text" ng-model="search" placeholder="Search for a patient">
+                    </div> -->
                 </div>
                 <div class="create_counter">
-                    <button type="button" ng-click="openCreateEncounter();" class="btn ink-reaction button-style-1 pull-right open-custom_pop">create encounter</button>
+                    <button type="button" ng-click="openCreateEncounter();" class="btn ink-reaction button-style-1 pull-right open-custom_pop" ng-disabled="disabledEncounterButton">create encounter</button>
                     <div class="counter_pop custom_popup" ng-hide="closePopUp">
                         <div class="pop_head col-lg-12">
                             <h2 class="">Create New Encounter</h2> 
@@ -124,7 +124,7 @@
                 <!-- <input ng-model='filterValue'/><button ng-click='filter()'>Filter</button>
                 <div id="grid1" ui-grid="gridOptions" class="grid"></div> -->
                 <div>
-                    <table class="table table-striped no-margin table-custom">
+                    <!-- <table class="table table-striped no-margin table-custom">
                         <thead>
                             <tr>
                                 <th width="5"></th>
@@ -146,7 +146,13 @@
                                 <td class="capitalize">{{encounter.first_name}}</td>
                             </tr>
                         </tbody>
-                    </table>
+                    </table> -->
+                    <div class="header-search">
+                        <button type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        <input class="search_field encounter-search-bar" ng-change="getSearchPatient(search);" type="text" ng-model="search" placeholder="Search for a patient">
+                    </div>
                 </div>
             </div><!--end .card-body -->
         </div><!--end .card -->

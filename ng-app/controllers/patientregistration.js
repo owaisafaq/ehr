@@ -27,7 +27,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         $scope.dropDownData = [];
         $scope.dataToBeAdded_send = {};
         $scope.isDisabled = false;
-        $scope.PI.adress.sameAsAbove = true;
+        $scope.PI.sameAsAbove = true;
         $('.hidePermanentAddress').slideUp(500);
         $scope.dropDownInfo = dropDownInfo;
         $scope.disabledTabs = "disabled-tabs";
@@ -369,7 +369,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
     // patient address API
     $scope.validatePatientAddress = function(PIAdress){
-    	//console.log(PIAdress);
+    	console.log(PIAdress);
     	//console.log(angular.equals({}, PIAdress));
     	if(angular.equals({}, PIAdress) == false) {
     		$rootScope.loader = 'show';
@@ -406,7 +406,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 					if(res.status == true){
 						$rootScope.loader = 'hide';
 						$scope.address_id = res.address_id;
-						//$scope.successMessage = true;
 						$scope.showSubmitButtonAddress = false;
 						$scope.disabledTabKin = 'active';
 						$scope.disabledTabAdress = '';
@@ -444,8 +443,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 				}
 			}
 		}else{
-			/*$scope.disabledTabKin = 'active';
-			$scope.disabledTabAdress = '';*/
+            console.log('else');
+			$scope.disabledTabKin = 'active';
+			$scope.disabledTabAdress = '';
 		}
     }
 
@@ -453,7 +453,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     $scope.validatePatientKin = function(PIKin){
     	//console.log(PIKin);
     	if(angular.equals({}, PIKin) == false) {
-    		//console.log(angular.equals({}, PIKin));
+    		console.log(angular.equals({}, PIKin));
     		$rootScope.loader = 'show';
     		var dataToBeAdded = {
     			token: $window.sessionStorage.token,
@@ -474,6 +474,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 	    		kin_postal_code: $scope.PI.kin.kin_postal_code == undefined ? '' : $scope.PI.kin.kin_postal_code
     		};
     		if($scope.kin_id == undefined){
+                console.log("if");
 				PatientRegistrationKin.save(dataToBeAdded, patientKinSuccess, patientKinFailed);
 				function patientKinSuccess(res){
 					console.log(res);
@@ -481,9 +482,12 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 						$rootScope.loader = 'hide';
 						$scope.kin_id = res.kin_id;
 						$scope.showSubmitButtonKin = false;
-						$scope.disabledTabEmployer = 'active';
-						$scope.disabledTabKin = '';
-						$scope.disabledTabs = "";
+                        if($scope.disabledTabEmployer == "disabled-tabs"){
+                            $scope.disabledTabEmployer = "active";
+                        }
+						$scope.disabledTabEmployer = $scope.disabledTabEmployer != 'active' ? '' : "active";                       
+						$scope.disabledTabKin = "";
+						//$scope.disabledTabs = "";
 					}else{
 						$rootScope.loader = 'hide';
 						$scope.showSubmitButtonKin = true;
@@ -493,7 +497,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 					console.log(error);
 				}
 			}else{
-				console.log('else');
+				console.log('else update');
 				dataToBeAdded.kin_id = $scope.kin_id;
 				PatientRegistrationKin.save(dataToBeAdded, patientKinUpdateSucess, patientKinUpdateFailed);
 				function patientKinUpdateSucess(res){
@@ -513,8 +517,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 				}
 			}
     	}else{
-    		/*$scope.disabledTabEmployer = 'active';
-			$scope.disabledTabKin = '';*/
+            console.log('else');
+    		$scope.disabledTabEmployer = 'active';
+			$scope.disabledTabKin = '';
     	}
     }
 
@@ -576,8 +581,8 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 				}
 			}
 		}else{
-			/*$scope.disabledTabPatientPlant = 'active';
-			$scope.disabledTabEmployer = '';*/
+			$scope.disabledTabPatientPlant = 'active';
+			$scope.disabledTabEmployer = '';
 		}
     }
 
@@ -631,7 +636,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
     if($routeParams.patientID != undefined){
         $rootScope.loader = 'show';
-        $scope.PI.sameAsAbove = true;
+        //$scope.PI.sameAsAbove = true;
     	$scope.byParams = $routeParams.patientID;
     	$window.sessionStorage.patient_id = $routeParams.patientID;
     	$scope.showSubmitButtonAddress = false;
@@ -653,6 +658,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     function patientEditSuccess(res){
     	if(res.status == true){
             //$scope.PI.sameAsAbove = res.data.patient_address[1].length > 0 ? true : false;
+            $scope.PI.sameAsAbove = res.data.patient_address[1] != undefined ? false : true;
     		$scope.address_id = res.data.patient_address[0].id;
     		$scope.kin_id = res.data.patient_kin.id;
     		$scope.employer_id = res.data.patient_employeer.id;
@@ -665,7 +671,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     		$scope.PI.age = res.data.patient_info.age;
     		$scope.PI.file = res.data.patient_info.patient_image;
     		$scope.PI.religion = res.data.patient_info.religion;
-    		$scope.PI.maritial_status = res.data.patient_info.maritial_status;
+    		$scope.PI.maritial_status = res.data.patient_info.marital_status;
     		$scope.PI.sex = res.data.patient_info.sex;
     		$scope.PI.identity_type = res.data.patient_info.identity_type;
     		$scope.PI.identity_number = res.data.patient_info.identity_number;
@@ -703,6 +709,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         		$scope.PI.adress.permanent_state = res.data.patient_address[1].state;
         		$scope.PI.adress.permanent_city = res.data.patient_address[1].city;
         		$scope.PI.adress.permanent_postalCode = res.data.patient_address[1].patient_addresspostalCode;
+                $('.hidePermanentAddress').slideDown(500);
             }
     		$scope.PI.kin.kin_fullname = res.data.patient_kin.fullname;
     		$scope.PI.kin.kin_middlename = res.data.patient_kin.middlename;
@@ -729,7 +736,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     		$scope.PI.employer.employer_country = res.data.patient_employeer.country;
     		$scope.PI.employer.employer_state = res.data.patient_employeer.state;
     		$scope.PI.employer.employer_city = res.data.patient_employeer.city;
-            console.log($scope.PI);
+            console.log(res.data);
             $rootScope.loader = 'hide';
     	}
     }

@@ -170,6 +170,21 @@ AppEHR.factory("GetPatientInfo", function ($resource) {
     };
     return patientRegistrationEmployer;
 });
+AppEHR.factory("GetEncountersByPatients", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'patient_visit_list', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get:function(params,body,success) {
+          var res = getResource(params, body);  
+          return res.get(params,body,success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
 AppEHR.factory("Countries", function ($resource) {
     return $resource(serverPath +  'get_countries', {token: '@token'}, {
         get: {method: 'GET'}

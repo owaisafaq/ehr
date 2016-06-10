@@ -1539,6 +1539,11 @@ Patient Plan
 .encounter-loader{
     width:30px;
 }
+.encounter-search-bar{
+    padding-left:30px;
+    width: 90%!important;
+    margin:0px;
+}
 /*-----------
 BED Occupancy
 -----------*/
