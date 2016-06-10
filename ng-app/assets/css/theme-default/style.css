@@ -476,7 +476,7 @@ DropDown Styling
 }
 .select2-results .select2-highlighted {
     background: #ddecf8;
-    color: #2f2f2f;
+    color: #b6bbcc;
 }
 .select2-results li{
     padding-left: 12px;    
@@ -1474,14 +1474,6 @@ Patient Plan
     border:1px solid red !important;
     color: #f44336;/*#999;*/
 }
-.ajax-dropdown-con{
-    padding: 0;   
-    margin-right: 20px;
-    margin-top: 5px;
-}
-.alignError.PIValid{
-    padding-right: 0;
-}
 .error-msg{
     color: #f44336;
 }
@@ -1526,6 +1518,18 @@ Patient Plan
 .patient-submit-btn{
     padding: 15px 56px;
     font-size: 16px;
+}
+/*.hide{
+    display: none;
+}*/
+.show{
+    display: block;
+}
+.capitalize{
+    text-transform: capitalize;
+}
+.encounter-loader{
+    width:100px;
 }
 /*-----------
 BED Occupancy
@@ -2007,4 +2011,13 @@ span.help-block {
 }
 .radio-disable-style .checkbox-styled:not(ie8).disabled:checked ~ span:after,.radio-disable-style .radio-styled:not(ie8).disabled:checked ~ span:after,.radio-disable-style .checkbox-styled:not(ie8) input[disabled]:checked ~ span:after,.radio-disable-style .radio-styled:not(ie8) input[disabled]:checked ~ span:after,.radio-disable-style .checkbox-styled:not(ie8) input[readonly]:checked ~ span:after,.radio-disable-style .radio-styled:not(ie8) input[readonly]:checked ~ span:after {
     background-color: #56aeea;
+/*-------
+Waiting Loader
+-----------*/
+.loader{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: url("../../img/loader.gif") center center no-repeat rgba(255,255,255,0.7);
+    z-index: 10000;
 }

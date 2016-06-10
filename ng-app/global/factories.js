@@ -9,7 +9,8 @@ AppEHR.factory("PatientInformation", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath +  'add_patient', params, {
             save: {method: 'POST'},
-            update: {method: 'PUT'}
+            update: {method: 'PUT'},
+            get: {method: 'GET'}
         });
         return res2;
     }
@@ -21,6 +22,10 @@ AppEHR.factory("PatientInformation", function ($resource) {
         update:function(params,body,success) {
           var res = getResource(params, body);  
           return res.update(params,body,success);
+        },
+        get:function(params,body,success) {
+          var res = getResource(params, body);  
+          return res.get(params,body,success);
         }
     };
     return patientRegistration;
@@ -84,6 +89,36 @@ AppEHR.factory("PatientRegistrationKin", function ($resource) {
         }
     };
     return patientRegistrationKin;
+});
+AppEHR.factory("AddEncounter", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'add_visit', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var addEncounter = {
+        save:function(params,body,success) {
+          var res = getResource(params, body);  
+          return res.save(params,body,success);
+        }
+    };
+    return addEncounter;
+});
+AppEHR.factory("GetVisits", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'patient_visit_list', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get:function(params,body,success) {
+          var res = getResource(params, body);  
+          return res.get(params,body,success);
+        }
+    };
+    return patientRegistrationEmployer;
 });
 AppEHR.factory("PatientRegistrationEmployer", function ($resource) {
     function getResource(params, body) {
