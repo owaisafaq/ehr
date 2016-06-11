@@ -139,7 +139,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
         $(".maskPhone").inputmask("99-9999999");
         $(".maskMobile").inputmask("99999999999");
 //        var test = sessionStorage.getItem('token');
-         $(".search-ajax").select2({
+        $(".search-ajax").select2({
             placeholder: 'Select Patient',
             ajax: {
                 url: "http://demoz.online/ehr/public/api/search_patient",
@@ -177,7 +177,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
         $(document).on('click', '#nhis .add-principal', function () {
             var id_chip = $("#get_val_principal").val();
             if (id_chip !== "") {
-                if ($('#nhis .chip[data-id="' + id_chip + '"').length == 0) {
+                if ($('#nhis .principal_list .chip[data-id="' + id_chip + '"').length == 0) {
                     $('#nhis .principal_list').append('<div class="chip" data-id="' + id_chip + '">' + $('#s2id_get_val_principal .select2-chosen').html() + '<i class="md-close"></i></div>');
 //                    $("#get_val_principal").val(null).trigger("change");
                     $("#get_val_principal").select2('data', null);
@@ -186,6 +186,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
                 }
             }
         });
+       
 
         $(document).on('click', '#relationship .add-principal', function () {
             var id_chip = $("#get_val_principal_retainer").val();
@@ -213,7 +214,6 @@ AppEHR.run(function ($rootScope, $location, $window) {
             })
             $('#s2id_get_val_principal_retainer').removeClass('disable-after-1');
         })
-
     });
     //$rootScope.html = '<div ng-include="\'utils/script-file.html\'"></div>';
     $rootScope.html = '<script src="assets/js/libs/bootstrap/bootstrap.min.js"></script><script src="assets/js/libs/spin.js/spin.min.js"></script><script src="assets/js/libs/autosize/jquery.autosize.min.js"></script><script src="assets/js/libs/nanoscroller/jquery.nanoscroller.min.js"></script><script src="assets/js/core/source/App.js"></script><script src="assets/js/core/source/AppNavigation.js"></script><script src="assets/js/core/source/AppOffcanvas.js"></script><script src="assets/js/core/source/AppCard.js"></script><script src="assets/js/core/source/AppForm.js"></script><script src="assets/js/core/source/AppNavSearch.js"></script><script src="assets/js/core/source/AppVendor.js"></script><script src="assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script><script src="assets/js/core/demo/Demo.js"></script><script src="assets/js/core/source/script.js" type="text/javascript"></script><script src="assets/js/libs/select2/select2.min.js" type="text/javascript"></script><script src="assets/js/libs/inputmask/jquery.inputmask.bundle.min.js"></script>';

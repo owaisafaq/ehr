@@ -13,11 +13,11 @@ AppEHR.directive('showtab', function () {
 
 AppEHR.directive('modal', function ($window) {
     return {
-         templateUrl: function(elem,attrs) {
-           return "views/" + attrs.templateUrl
-        },     
-        controller : "@",
-        name:"controllerName", 
+        templateUrl: function (elem, attrs) {
+            return "views/" + attrs.templateUrl
+        },
+        controller: "@",
+        name: "controllerName",
         restrict: 'E',
         transclude: true,
         replace: true,
@@ -32,18 +32,18 @@ AppEHR.directive('modal', function ($window) {
                 }
             });
             $(element).on('shown.bs.modal', function () {
-                scope.$$phase || scope.$apply(function(){
+                scope.$$phase || scope.$apply(function () {
                     scope.$parent.$parent[attrs.visible] = true;
                 });
             });
             $(element).on('hidden.bs.modal', function () {
-                scope.$$phase || scope.$apply(function(){
+                scope.$$phase || scope.$apply(function () {
                     var abc = $("body");
                     var bbb = abc.hasClass('modal-open');
                     var child = abc.children();
                     var au = child[1];
                     var bbb2 = au.className;
-                    if(bbb == false && bbb2 == 'modal-backdrop fade'){
+                    if (bbb == false && bbb2 == 'modal-backdrop fade') {
                         child[1].remove();
                     }
                     scope.$parent.$parent[attrs.visible] = false;
@@ -72,13 +72,13 @@ function Modal(templateUrl, controller) {
             });
 
             $(element).on('shown.bs.modal', function () {
-                scope.$$phase || scope.$apply(function(){
+                scope.$$phase || scope.$apply(function () {
                     scope.$parent.$parent[attrs.visible] = true;
                 });
             });
 
             $(element).on('hidden.bs.modal', function () {
-                scope.$$phase || scope.$apply(function(){
+                scope.$$phase || scope.$apply(function () {
                     scope.$parent.$parent[attrs.visible] = false;
                 });
             });
@@ -91,7 +91,8 @@ AppEHR.directive('numbersOnly', function () {
         require: 'ngModel',
         link: function (scope, element, attrs, modelCtrl) {
             modelCtrl.$parsers.push(function (inputValue) {
-                if (inputValue == undefined) return ''
+                if (inputValue == undefined)
+                    return ''
                 var transformedInput = inputValue.replace(/[^0-9]/g, '');
                 if (transformedInput != inputValue) {
                     modelCtrl.$setViewValue(transformedInput);
@@ -108,7 +109,8 @@ AppEHR.directive('alphabetsOnly', function () {
         require: 'ngModel',
         link: function (scope, element, attrs, modelCtrl) {
             modelCtrl.$parsers.push(function (inputValue) {
-                if (inputValue == undefined) return ''
+                if (inputValue == undefined)
+                    return ''
                 var transformedInput = inputValue.replace(/[^a-z A-Z]/g, '');
                 if (transformedInput != inputValue) {
                     modelCtrl.$setViewValue(transformedInput);
@@ -121,70 +123,70 @@ AppEHR.directive('alphabetsOnly', function () {
 });
 
 AppEHR.directive('dynamic', function ($compile) {
-  return {
-    restrict: 'A',
-    replace: true,
-    link: function (scope, ele, attrs) {
-      scope.$watch(attrs.dynamic, function(html) {
-        ele.html(html);
-        $compile(ele.contents())(scope);
-      });
-    }
-  };
-});
-
-AppEHR.directive('fileModel', ['$parse', function ($parse) {
     return {
         restrict: 'A',
-        link: function(scope, element, attrs) {
-            var model = $parse(attrs.fileModel);
-            var modelSetter = model.assign;
-            element.bind('change', function(){
-                scope.$apply(function(){
-                    modelSetter(scope, element[0].files[0]);
-                });
+        replace: true,
+        link: function (scope, ele, attrs) {
+            scope.$watch(attrs.dynamic, function (html) {
+                ele.html(html);
+                $compile(ele.contents())(scope);
             });
         }
     };
-}]);
-AppEHR.directive('myMaxlength', function() {
-  return {
-    require: 'ngModel',
-    link: function (scope, element, attrs, ngModelCtrl) {
-      var maxlength = Number(attrs.myMaxlength);
-      function fromUser(text) {
-          if (text.length > maxlength) {
-            var transformedInput = text.substring(0, maxlength);
-            ngModelCtrl.$setViewValue(transformedInput);
-            ngModelCtrl.$render();
-            return transformedInput;
-          } 
-          return text;
-      }
-      ngModelCtrl.$parsers.push(fromUser);
-    }
-  }; 
 });
-AppEHR.directive('convertToNumber', function() {
-  return {
-    require: 'ngModel',
-    link: function(scope, element, attrs, ngModel) {
-      ngModel.$parsers.push(function(val) {
-        return parseInt(val, 10);
-      });
-      ngModel.$formatters.push(function(val) {
-        return '' + val;
-      });
-    }
-  };
+
+AppEHR.directive('fileModel', ['$parse', function ($parse) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                var model = $parse(attrs.fileModel);
+                var modelSetter = model.assign;
+                element.bind('change', function () {
+                    scope.$apply(function () {
+                        modelSetter(scope, element[0].files[0]);
+                    });
+                });
+            }
+        };
+    }]);
+AppEHR.directive('myMaxlength', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope, element, attrs, ngModelCtrl) {
+            var maxlength = Number(attrs.myMaxlength);
+            function fromUser(text) {
+                if (text.length > maxlength) {
+                    var transformedInput = text.substring(0, maxlength);
+                    ngModelCtrl.$setViewValue(transformedInput);
+                    ngModelCtrl.$render();
+                    return transformedInput;
+                }
+                return text;
+            }
+            ngModelCtrl.$parsers.push(fromUser);
+        }
+    };
+});
+AppEHR.directive('convertToNumber', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope, element, attrs, ngModel) {
+            ngModel.$parsers.push(function (val) {
+                return parseInt(val, 10);
+            });
+            ngModel.$formatters.push(function (val) {
+                return '' + val;
+            });
+        }
+    };
 });
 AppEHR.directive('phoneNumber', [allowPatternDirective]);
 function allowPatternDirective() {
     return {
         restrict: "A",
-        compile: function(tElement, tAttrs) {
-            return function(scope, element, attrs) {
-                element.bind("keypress", function(event) {
+        compile: function (tElement, tAttrs) {
+            return function (scope, element, attrs) {
+                element.bind("keypress", function (event) {
                     var keyCode = event.which || event.keyCode; // I safely get the keyCode pressed from the event.
                     var keyCodeChar = String.fromCharCode(keyCode); // I determine the char from the keyCode.
                     if (!keyCodeChar.match(new RegExp(attrs.allowPattern, "i"))) {
@@ -196,3 +198,5 @@ function allowPatternDirective() {
         }
     };
 }
+
+    

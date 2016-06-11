@@ -1530,7 +1530,7 @@ Patient Plan
 /*.hide{
     display: none;
 }*/
-.show{
+.hide.show{
     display: block;
 }
 .capitalize{
@@ -1993,6 +1993,7 @@ Lab Report Lokoja
     padding: 0 12px;
     border-radius: 16px;
     background-color: #ddecf8;
+    float: left;
 }
 .chip i{
     cursor: pointer;
@@ -2029,4 +2030,7 @@ Waiting Loader
     height: 100%;
     background: url("../../img/loader.gif") center center no-repeat rgba(255,255,255,0.7);
     z-index: 10000;
+}
+.dependant_list > div{
+    margin-bottom: 0 !important;
 }
