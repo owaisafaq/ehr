@@ -461,3 +461,17 @@ $api->params->patient_id = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
+
+
+
+// update visit status
+$api = new api();
+$api->name = "update visit status";
+$api->url = HOST . 'update_visit_status';
+$api->method = "POST";
+$api->description = "update visit status";
+$api->params->visit_id = "1";
+$api->params->status = "checkout";
+$api->params->token = "123";
+
+$api_arr [] = $api;
