@@ -1314,4 +1314,23 @@ class ApiController extends Controller
     }
 
 
+
+
+    public function get_patient_vital_history(Request $request){
+
+
+        $patient_id = $request->input('patient_id');
+
+        $vital_history = DB::table('medical_record_values')
+            ->leftJoin('medical_record_fields', 'medical_record_fields.id', '=', 'medical_record_values.field_id')
+            ->select(DB::raw('medical_record_fields.category,medical_record_fields.name,medical_record_values.value'))
+            ->where('medical_record_values.patient_id', $patient_id)
+            ->where('medical_record_values.status','1')
+            ->get();
+
+
+        return response()->json(['status' => true, 'data' => $vital_history]);
+
+
+    }
 }

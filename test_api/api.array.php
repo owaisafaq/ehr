@@ -449,3 +449,15 @@ $api->params->patient_id = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
+
+
+// Get Patient Vital History
+$api = new api();
+$api->name = "Get Patient Vital History";
+$api->url = HOST . 'get_patient_vital_history';
+$api->method = "GET";
+$api->description = "Get Patient Vital History";
+$api->params->patient_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
