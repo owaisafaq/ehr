@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope', '$window', 'AddEncounter', '$timeout', 'GetVisits', '$rootScope', 'GetPatientInfo', 'DropDownData', function($scope, $rootScope, $window, AddEncounter, $timeout, GetVisits, $rootScope, GetPatientInfo, DropDownData){
+AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope', '$window', 'AddEncounter', '$timeout', 'GetVisits', '$rootScope', 'GetPatientInfo', 'DropDownData', '$http', function($scope, $rootScope, $window, AddEncounter, $timeout, GetVisits, $rootScope, GetPatientInfo, DropDownData, $http){
 	$rootScope.pageTitle = "EHR - New Encounter Patient Search";
 	$scope.addEncounter = {};
 	$scope.allEncounters = [];
@@ -8,8 +8,9 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 	$scope.closePopUp = true;
 	$scope.patientInfo = false;
 	$scope.hideLoader = "hide";
-	$rootScope.loader = "show";
-	GetVisits.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id}, getVisitsSuccess, getVisitsFailed);
+	$scope.disabledEncounterButton = true;
+	//$rootScope.loader = "show";
+	//GetVisits.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id}, getVisitsSuccess, getVisitsFailed);
 	DropDownData.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id}, dropDownSuccess, dropDownFailed);
 
 	function dropDownSuccess(res){
@@ -20,6 +21,30 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 
 	function dropDownFailed(error){
 		console.log(error);
+	}
+
+	// on change
+	$scope.getSearchPatient = function(string){
+		console.log(string);
+		$rootScope.loader = "show";
+		GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: string}, getPatientSuccess, getPatientFailure);
+		function getPatientSuccess(res){
+			console.log(res.data);
+			if(res.status == true){
+				$scope.disabledEncounterButton = false;
+				$scope.patientInfo = true;
+				$rootScope.loader = "hide";
+				$scope.displayInfo.first_name = res.data.first_name;
+				$scope.displayInfo.patient_id = res.data.id;
+				$scope.displayInfo.age = res.data.age;
+				$scope.displayInfo.sex = res.data.sex;
+				$scope.displayInfo.marital_status = res.data.marital_status;
+			}
+		}
+
+		function getPatientFailure(error){
+			console.log(error);
+		}
 	}
 	/*$scope.gridOptions = {
         paginationPageSizes: [20, 50, 75],
@@ -90,7 +115,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 	}
 
 	$scope.validateEncounterForm = function(addEncounter){
-		console.log(addEncounter);
+		console.log($scope.displayInfo.patient_id);
 		if(angular.equals({}, addEncounter) == false){
 			$scope.hideLoader = "show";
 			$scope.addEncounterBtn = true;
@@ -118,9 +143,9 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 			$scope.hideLoader = "hide";
 			$scope.messageType = "alert-success";
 			$scope.errorMessage = res.message;
-			$scope.errorSymbol = "fa fa-check";
+			$scope.errorSymbol = "fa fa-check";// 
 			$scope.message = true;
-			$timeout(function(){$scope.closePopUp = true;}, 2000);
+			$timeout(function(){$scope.closePopUp = true; $window.location.href = '#/new-encounter-encounter-list/'+$scope.displayInfo.patient_id;}, 2000);
 		}else{
 			$scope.hideLoader = "hide";
 			$scope.addEncounterBtn = false;

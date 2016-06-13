@@ -35,7 +35,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/new-encounter-clinical-documentation.html',
                     controller: 'newEncounterClinicalDocumentationController'
                 }).
-                when('/new-encounter-encounter-list', {
+                when('/new-encounter-encounter-list/:patientID', {
                     templateUrl: 'views/new-encounter-encounter-list.html',
                     controller: 'newEncounterEncounterListController'
                 }).
@@ -141,6 +141,41 @@ AppEHR.run(function ($rootScope, $location, $window) {
 //        var test = sessionStorage.getItem('token');
         $(".search-ajax").select2({
             placeholder: 'Select Patient',
+            ajax: {
+                url: "http://demoz.online/ehr/public/api/search_patient",
+                delay: 250,
+                type: "POST",
+                data: function (params, page) {
+                    return {
+                        term: params,
+                        name: params
+                    };
+                },
+                results: function (data, page) {
+                    var myResults = [];
+                    if (data.status == false) {
+                        myResults.push({
+                            'text': "No Result Found"
+                        });
+                    }
+                    else {
+                        $.each(data['data'], function (index, item) {
+                            myResults.push({
+                                'id': item.id,
+                                'text': item.first_name
+                            });
+                        });
+                    }
+                    return {
+                        results: myResults
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 2,
+        });
+         $(".encounter-search-bar").select2({
+            placeholder: 'Search Patient',
             ajax: {
                 url: "http://demoz.online/ehr/public/api/search_patient",
                 delay: 250,

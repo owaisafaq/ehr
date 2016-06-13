@@ -86,9 +86,10 @@
                                     <label>Marital Status</label>
                                 </div>
                                 <div class="col-lg-3">
-                                    <select class="form-control" ng-model="PI.maritial_status" placeholder="Marital Status">
+                                {{PI.maritial_status}}
+                                    <select class="form-control" ng-model="PI.maritial_status" data-placeholder="select">
                                         <option value=""></option>
-                                        <option ng-repeat="maritialStatus in dropDownData.maritial_status" value="{{maritialStatus.id}}">{{maritialStatus.name}}</option>
+                                        <option ng-repeat="maritialStatus in dropDownData.maritial_status" value="{{maritialStatus.id}}" ng-selected="PI.maritial_status == maritialStatus.id">{{maritialStatus.name}}</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-3">
