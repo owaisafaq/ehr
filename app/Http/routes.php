@@ -71,4 +71,6 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->get('get_patient_all_data','App\Http\Controllers\ApiController@get_patient_all_data');
 
+    $app->post('add_patient_vitals','App\Http\Controllers\ApiController@add_patient_vitals');
+
 });

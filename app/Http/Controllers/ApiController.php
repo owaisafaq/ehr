@@ -1220,7 +1220,7 @@ class ApiController extends Controller
         $patient_info = DB::table('patients')
             ->select(DB::raw('*'))
             ->where('id', $patient_id)
-            ->get();
+            ->first();
 
         $patient_address = DB::table('patient_address')
             ->select(DB::raw('*'))
@@ -1231,13 +1231,13 @@ class ApiController extends Controller
         $patient_kin = DB::table('patient_kin')
             ->select(DB::raw('*'))
             ->where('patient_id', $patient_id)
-            ->get();
+            ->first();
 
 
         $patient_employers = DB::table('patient_employers')
             ->select(DB::raw('*'))
             ->where('patient_id', $patient_id)
-            ->get();
+            ->first();
 
         $data = array(
             "patient_info" => $patient_info,
@@ -1248,6 +1248,41 @@ class ApiController extends Controller
         );
 
         return response()->json(['status' => true, 'data' => $data]);
+
+
+    }
+
+
+    public function add_patient_vitals(Request $request){
+
+
+        $patient_id = $request->input('patient_id');
+
+        $vitals = $request->input('vitals');
+        
+        $patient_vitals = json_decode($vitals);
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+        foreach ($patient_vitals as $patient_vital) {
+
+            DB::table('medical_record_values')->insert(
+                ['patient_id' => $patient_id,
+                    'field_id' => $patient_vital->field_id,
+                    'value' => $patient_vital->value,
+                    'created_at' => $currentdatetime
+
+                ]
+            );
+
+        }
+
+
+
+        return response()->json(['status' => true, 'message' => 'Patient Vitals Added Successfully']);
+
+
 
 
     }
