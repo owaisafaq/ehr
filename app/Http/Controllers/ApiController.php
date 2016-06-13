@@ -774,36 +774,44 @@ class ApiController extends Controller
 
         $religion = DB::table('religion')
             ->select(DB::raw('id,name'))
+            ->where('status',1)
             ->get();
 
         $maritial_status = DB::table('maritial_status')
             ->select(DB::raw('id,name'))
+            ->where('status',1)
             ->get();
 
         $nationality = DB::table('nationality')
             ->select(DB::raw('id,name'))
+            ->where('status',1)
             ->get();
 
         $bloodgroup = DB::table('blood_group')
             ->select(DB::raw('id,name'))
+            ->where('status',1)
             ->get();
 
 
         $hospital_plan = DB::table('hospital_plan')
             ->select(DB::raw('id,name'))
+            ->where('status',1)
             ->get();
 
 
         $occupation = DB::table('occupation')
             ->select(DB::raw('id,name'))
+            ->where('status',1)
             ->get();
 
         $departments = DB::table('departments')
             ->select(DB::raw('id,name'))
+            ->where('status',1)
             ->get();
 
         $doctors = DB::table('doctors')
             ->select(DB::raw('id,name'))
+            ->where('status',1)
             ->get();
 
 
@@ -1220,7 +1228,7 @@ class ApiController extends Controller
         $patient_info = DB::table('patients')
             ->select(DB::raw('*'))
             ->where('id', $patient_id)
-            ->get();
+            ->first();
 
         $patient_address = DB::table('patient_address')
             ->select(DB::raw('*'))
@@ -1231,13 +1239,13 @@ class ApiController extends Controller
         $patient_kin = DB::table('patient_kin')
             ->select(DB::raw('*'))
             ->where('patient_id', $patient_id)
-            ->get();
+            ->first();
 
 
         $patient_employers = DB::table('patient_employers')
             ->select(DB::raw('*'))
             ->where('patient_id', $patient_id)
-            ->get();
+            ->first();
 
         $data = array(
             "patient_info" => $patient_info,
@@ -1253,4 +1261,76 @@ class ApiController extends Controller
     }
 
 
+    public function add_patient_vitals(Request $request){
+
+
+        $patient_id = $request->input('patient_id');
+
+        $vitals = $request->input('vitals');
+        
+        $patient_vitals = json_decode($vitals);
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+        foreach ($patient_vitals as $patient_vital) {
+
+            DB::table('medical_record_values')->insert(
+                ['patient_id' => $patient_id,
+                    'field_id' => $patient_vital->field_id,
+                    'value' => $patient_vital->value,
+                    'created_at' => $currentdatetime
+
+                ]
+            );
+
+        }
+
+
+
+        return response()->json(['status' => true, 'message' => 'Patient Vitals Added Successfully']);
+
+
+
+    }
+
+    public function get_patient_visit_history(Request $request){
+
+
+        $patient_id = $request->input('patient_id');
+
+        $visit_history = DB::table('visits')
+            ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
+            ->select(DB::raw('visits.id,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name'))
+            ->where('visits.patient_id', $patient_id)
+            ->orderby('visits.id','desc')
+            ->where('visits.status','1')
+            ->get();
+
+
+        return response()->json(['status' => true, 'data' => $visit_history]);
+
+
+    }
+
+
+
+
+    public function get_patient_vital_history(Request $request){
+
+
+        $patient_id = $request->input('patient_id');
+
+        $vital_history = DB::table('medical_record_values')
+            ->leftJoin('medical_record_fields', 'medical_record_fields.id', '=', 'medical_record_values.field_id')
+            ->select(DB::raw('medical_record_fields.category,medical_record_fields.name,medical_record_values.value'))
+            ->where('medical_record_values.patient_id', $patient_id)
+            ->where('medical_record_values.status','1')
+            ->get();
+
+
+        return response()->json(['status' => true, 'data' => $vital_history]);
+
+
+    }
 }

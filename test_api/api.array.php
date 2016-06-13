@@ -435,3 +435,43 @@ $api->params->token = "123";
 
 
 $api_arr [] = $api;
+
+
+
+
+// Get Patient Visit History
+$api = new api();
+$api->name = "Get Patient Visit History";
+$api->url = HOST . 'get_patient_visit_history';
+$api->method = "GET";
+$api->description = "Get Patient Visit History";
+$api->params->patient_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Get Patient Vital History
+$api = new api();
+$api->name = "Get Patient Vital History";
+$api->url = HOST . 'get_patient_vital_history';
+$api->method = "GET";
+$api->description = "Get Patient Vital History";
+$api->params->patient_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+
+// update visit status
+$api = new api();
+$api->name = "update visit status";
+$api->url = HOST . 'update_visit_status';
+$api->method = "POST";
+$api->description = "update visit status";
+$api->params->visit_id = "1";
+$api->params->status = "checkout";
+$api->params->token = "123";
+
+$api_arr [] = $api;
