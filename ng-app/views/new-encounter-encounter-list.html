@@ -4,23 +4,23 @@
             <div class="card-head card-head-custom card-color-2">
                 <div class="col-lg-3">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
-                    <span class="txt-style-2 col-lg-12">Elbert Bloggs Woo</span>
+                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.first_name}} {{displayInfo.middle_name}} {{displayInfo.last_name}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Number</label>
-                    <span class="txt-style-2 col-lg-12">PA-90189191</span>
+                    <span class="txt-style-2 col-lg-12">PA-{{displayInfo.patient_id}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Age</label>
-                    <span class="txt-style-2 col-lg-12">39 Years</span>
+                    <span class="txt-style-2 col-lg-12">{{displayInfo.age}} Years</span>
                 </div>
                 <div class="col-lg-1">
                     <label class="txt-style-1 text-uppercase col-lg-12">Sex</label>
-                    <span class="txt-style-2 col-lg-12">Male</span>
+                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.sex}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">marital status</label>
-                    <span class="txt-style-2 col-lg-12">Single</span>
+                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.marital_status}}</span>
                 </div>
                 <div class="col-lg-2">
                     <a href="javascript:;" class="button-style-2">
@@ -41,7 +41,7 @@
                         <button type="submit">
                             <i class="fa fa-search"></i>
                         </button>
-                        <input class="search_field" type="text" placeholder="Search for a patient">
+                        <input class="search_field" type="text" ng-model="search" placeholder="Search for a patient">
                     </div>
                 </div> 
                 <button type="button" data-toggle="modal" data-target="#addpatient" class="checkout button-custom pull-right">Checkout</button>
@@ -56,17 +56,41 @@
                         <thead>
                             <tr>
                                 <th>SN</th>
+                                <th>Encounter ID</th>
                                 <th>date & time</th>
                                 <th>patient ID</th>
                                 <th>full name</th>
                                 <th>facility / dept</th>
                                 <th>encounter type</th>
-                                <th>encounter classencounter class</th>
+                                <th>encounter class</th>
                                 <th>whom to see</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr ng-repeat="encounter in allEncounter | filter:search">
+                                <td align="center">
+                                    <!-- <div class="radio radio-styled">
+                                        <label>
+                                            <input type="radio" name="optionsRadios" value="option1">
+                                        </label>
+                                    </div> -->
+                                    <div class="radio radio-styled">
+                                        <label>
+                                            <input type="radio" name="optionsRadios" ng-modal="action[$index]" value="option1" ng-click="encounterSelected($index);">
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>{{encounter.id}}</td>
+                                <td>{{encounter.created_at}}</td>
+                                <td>{{encounter.patient_id}}</td>
+                                <td>{{encounter.first_name}} {{encounter.middle_name}} {{encounter.last_name}}</td>
+                                <td>{{encounter.department_id}}</td>
+                                <td>{{encounter.encounter_type}}</td>
+                                <td>{{encounter.encounter_class}}</td>
+                                <td>{{encounter.whom_to_see}}</td>
+                            </tr>
+                            <!-- <tr>
                                 <td align="center">
                                     <div class="radio radio-styled">
                                         <label>
@@ -97,23 +121,7 @@
                                 <td>Consultation</td>
                                 <td>Outpatient</td>
                                 <td></td>
-                            </tr>
-                            <tr>
-                                <td align="center">
-                                    <div class="radio radio-styled">
-                                        <label>
-                                            <input type="radio" name="optionsRadios" value="option1">
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>14/04/2016    12:00:32</td>
-                                <td>90189191</td>
-                                <td>Joe Bloggs</td>
-                                <td>Eye Clinic</td>
-                                <td>Consultation</td>
-                                <td>Outpatient</td>
-                                <td></td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                     </table>
                 </div>

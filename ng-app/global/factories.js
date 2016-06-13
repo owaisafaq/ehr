@@ -50,6 +50,26 @@ AppEHR.factory("PatientRegistrationAddress", function ($resource) {
     };
     return patientRegistrationAddress;
 });
+AppEHR.factory("PatienPlanSaveData", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'add_patient_plan', params, {
+            save: {method: 'POST'},
+            update: {method: 'PUT'}
+        });
+        return res2;
+    }
+    var patientRegistrationAddress = {
+        save:function(params,body,success) {
+          var res = getResource(params, body);  
+          return res.save(params,body,success);
+        },
+        update:function(params,body,success) {
+          var res = getResource(params, body);  
+          return res.update(params,body,success);
+        }
+    };
+    return patientRegistrationAddress;
+});
 AppEHR.factory("PatientRegistrationKin", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath +  'add_patient_kin', params, {
@@ -87,7 +107,22 @@ AppEHR.factory("AddEncounter", function ($resource) {
 });
 AppEHR.factory("GetVisits", function ($resource) {
     function getResource(params, body) {
-        var res2 = $resource(serverPath +  'patient_visit_list', params, {
+        var res2 = $resource(serverPath +  'get_visits', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get:function(params,body,success) {
+          var res = getResource(params, body);  
+          return res.get(params,body,success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("GetPatientAllData", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'get_patient_all_data', params, {
             get: {method: 'GET'}
         });
         return res2;
@@ -116,6 +151,36 @@ AppEHR.factory("PatientRegistrationEmployer", function ($resource) {
         update:function(params,body,success) {
           var res = getResource(params, body);  
           return res.update(params,body,success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("GetPatientInfo", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'get_patient', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get:function(params,body,success) {
+          var res = getResource(params, body);  
+          return res.get(params,body,success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("GetEncountersByPatients", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'patient_visit_list', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get:function(params,body,success) {
+          var res = getResource(params, body);  
+          return res.get(params,body,success);
         }
     };
     return patientRegistrationEmployer;
