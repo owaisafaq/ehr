@@ -209,42 +209,65 @@ AppEHR.run(function ($rootScope, $location, $window) {
             },
             minimumInputLength: 2,
         });
-        $(document).on('click', '#nhis .add-principal', function () {
-            var id_chip = $("#get_val_principal").val();
-            if (id_chip !== "") {
-                if ($('#nhis .principal_list .chip[data-id="' + id_chip + '"').length == 0) {
-                    $('#nhis .principal_list').append('<div class="chip" data-id="' + id_chip + '">' + $('#s2id_get_val_principal .select2-chosen').html() + '<i class="md-close"></i></div>');
-//                    $("#get_val_principal").val(null).trigger("change");
-                    $("#get_val_principal").select2('data', null);
-                    $('#s2id_get_val_principal').addClass('disable-after-1');
-                    $rootScope.do_valid_nhis = false;
-                }
-            }
-        });
+//        $(document).on('click', '#nhis .add-principal', function () {
+//            var id_chip = $("#get_val_principal").val();
+//            if (id_chip !== "") {
+//                if ($('#nhis .principal_list .chip[data-id="' + id_chip + '"').length == 0) {
+//                    $('#nhis .principal_list').append('<div class="chip" data-id="' + id_chip + '">' + $('#s2id_get_val_principal .select2-chosen').html() + '<i class="md-close"></i></div>');
+////                    $("#get_val_principal").val(null).trigger("change");
+//                    $("#get_val_principal").select2('data', null);
+//                    $('#s2id_get_val_principal').addClass('disable-after-1');
+//                    $rootScope.do_valid_nhis = false;
+//                }
+//            }
+//        });
+//        $(document).on('click', '#nhis .add-dependant', function () {
+//            var id_chip = $("#get_val_dependant_nhis").val();
+//            if (id_chip !== "") {
+//                if ($('#nhis .dependant_list .chip[data-id="' + id_chip + '"').length == 0) {
+//                    $('#nhis .dependant_list').append('<div class="chip" data-id="' + id_chip + '">' + $('#s2id_get_val_dependant_nhis .select2-chosen').html() + '<i class="md-close"></i></div>');
+////                    $("#get_val_principal").val(null).trigger("change");
+//                    $("#get_val_dependant_nhis").select2('data', null);
+////                    $('#s2id_get_val_dependant_nhis').addClass('disable-after-1');
+//                }
+//            }
+//            else{
+//                $rootScope.valid_relationship = false;
+//            }
+//        });
        
 
-        $(document).on('click', '#relationship .add-principal', function () {
-            var id_chip = $("#get_val_principal_retainer").val();
-            if (id_chip !== "") {
-                if ($('#relationship .chip[data-id="' + id_chip + '"').length == 0) {
-                    $('#relationship .principal_list').append('<div class="chip" data-id="' + id_chip + '">' + $('#s2id_get_val_principal_retainer .select2-chosen').html() + '<i class="md-close"></i></div>');
-//                    $("#get_val_principal").val(null).trigger("change");
-                    $("#get_val_principal_retainer").select2('data', null);
-                    $('#s2id_get_val_principal_retainer').addClass('disable-after-1');
-                    $rootScope.do_valid = false;
-                }
-            }
-        });
+//        $(document).on('click', '#relationship .add-principal', function () {
+//            var id_chip = $("#get_val_principal_retainer").val();
+//            if (id_chip !== "") {
+//                if ($('#relationship .chip[data-id="' + id_chip + '"').length == 0) {
+//                    $('#relationship .principal_list').append('<div class="chip" data-id="' + id_chip + '">' + $('#s2id_get_val_principal_retainer .select2-chosen').html() + '<i class="md-close"></i></div>');
+////                    $("#get_val_principal").val(null).trigger("change");
+//                    $("#get_val_principal_retainer").select2('data', null);
+//                    $('#s2id_get_val_principal_retainer').addClass('disable-after-1');
+//                    $rootScope.do_valid = false;
+//                }
+//            }
+//        });
 
         $('body').on('click', '#nhis .principal_list .chip i', function () {
             $(this).parent('.chip').fadeOut(function () {
                 $(this).remove();
+                $rootScope.do_valid_nhis = true;
             })
             $('#s2id_get_val_principal').removeClass('disable-after-1');
         })
 
         $('body').on('click', '#relationship .principal_list .chip i', function () {
             $(this).parent('.chip').fadeOut(function () {
+                $(this).remove();
+                $rootScope.do_valid = true;
+            })
+            $('#s2id_get_val_principal_retainer').removeClass('disable-after-1');
+        })
+        
+        $('body').on('click', '.dependant_list .chip i', function () {
+            $(this).parent('.chip').parent('div').fadeOut(function () {
                 $(this).remove();
             })
             $('#s2id_get_val_principal_retainer').removeClass('disable-after-1');
