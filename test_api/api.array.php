@@ -435,3 +435,17 @@ $api->params->token = "123";
 
 
 $api_arr [] = $api;
+
+
+
+
+// Get Patient Visit History
+$api = new api();
+$api->name = "Get Patient Visit History";
+$api->url = HOST . 'get_patient_visit_history';
+$api->method = "GET";
+$api->description = "Get Patient Visit History";
+$api->params->patient_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
