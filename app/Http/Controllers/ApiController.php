@@ -710,6 +710,54 @@ class ApiController extends Controller
     }
 
 
+    public function update_visit(Request $request)
+    {
+
+
+        $visit_id = $request->input('visit_id');
+
+        $user_id = $request->input('source_id');
+
+        $patient_id = $request->input('patient_id');
+
+        $department_id = $request->input('department_id');
+
+        $encounter_class = $request->input('encounter_class');
+
+        $encounter_type = $request->input('encounter_type');
+
+        $whom_to_see = $request->input('whom_to_see');
+
+        $decscribe_whom_to_see = $request->input('decscribe_whom_to_see');
+
+        $token = $request->input('token');
+
+
+        //here
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+        DB::table('visits')
+            ->where('id',$visit_id)
+            ->update(
+            ['patient_id' => $patient_id,
+                'department_id' => $department_id,
+                'encounter_class' => $encounter_class,
+                'encounter_type' => $encounter_type,
+                'whom_to_see' => $whom_to_see,
+                'decscribe_whom_to_see' => $decscribe_whom_to_see,
+                'updated_at' => $currentdatetime
+
+            ]
+        );
+
+
+        return response()->json(['status' => true, 'message' => 'Visit Updated successfully']);
+
+    }
+
+
     public function get_countries()
     {
 
@@ -1321,6 +1369,7 @@ class ApiController extends Controller
             ->orderby('visits.id','desc')
             ->where('visits.patient_id','!=','null')
             ->where('visits.visit_status','!=','checkout')
+            ->where('visits.status','1')
             ->get();
 
 
@@ -1390,6 +1439,24 @@ class ApiController extends Controller
 
 
         return response()->json(['status' => true, 'data' => $demographics]);
+
+    }
+
+
+
+    public function remove_visit(Request $request){
+
+        $visit_id= $request->input('visit_id');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+        DB::table('visits')
+            ->where('id', $visit_id)
+            ->update(array('status' => 0, 'updated_at' => $currentdatetime));
+
+
+        return response()->json(['status' => true, 'data' => 'visit removed successfully']);
 
     }
 
