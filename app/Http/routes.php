@@ -79,5 +79,7 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->post('update_visit_status','App\Http\Controllers\ApiController@update_visit_status');
 
+    $app->get('get_patient_demographics','App\Http\Controllers\ApiController@get_patient_demographics');
+
 
 });

@@ -475,3 +475,14 @@ $api->params->status = "checkout";
 $api->params->token = "123";
 
 $api_arr [] = $api;
+
+// get Patient Demographics
+$api = new api();
+$api->name = "get Patient Demographics";
+$api->url = HOST . 'get_patient_demographics';
+$api->method = "GET";
+$api->description = "get Patient Demographics";
+$api->params->patient_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
