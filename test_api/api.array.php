@@ -515,3 +515,53 @@ $api->params->visit_id = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
+
+
+// Get Visit Details
+$api = new api();
+$api->name = "Get Visit Details";
+$api->url = HOST . 'visit_details';
+$api->method = "GET";
+$api->description = "Get Visit Details";
+$api->params->visit_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+
+// Get Patient Archives
+$api = new api();
+$api->name = "Get Patient Archives";
+$api->url = HOST . 'patient_archives';
+$api->method = "GET";
+$api->description = "Get Patient Archives";
+$api->params->patient_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+
+// Get Patient Medications
+$api = new api();
+$api->name = "Get Patient Medications";
+$api->url = HOST . 'patient_medications';
+$api->method = "GET";
+$api->description = "Get Patient Medications";
+$api->params->patient_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Get Supplements
+$api = new api();
+$api->name = "Get Supplements";
+$api->url = HOST . 'patient_supplements';
+$api->method = "GET";
+$api->description = "Get Supplements";
+$api->params->patient_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
