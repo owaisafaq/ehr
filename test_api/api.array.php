@@ -565,3 +565,16 @@ $api->params->patient_id = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
+
+
+
+// Get Patient Allergies
+$api = new api();
+$api->name = "Get Patient Allergies";
+$api->url = HOST . 'patient_allergies';
+$api->method = "GET";
+$api->description = "Get Patient Allergies";
+$api->params->patient_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;

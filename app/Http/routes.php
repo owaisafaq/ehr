@@ -85,5 +85,14 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->get('remove_visit','App\Http\Controllers\ApiController@remove_visit');
 
+    $app->get('visit_details','App\Http\Controllers\ApiController@visit_details');
+
+    $app->get('patient_archives','App\Http\Controllers\ApiController@patient_archives');
+
+    $app->get('patient_medications','App\Http\Controllers\ApiController@patient_medications');
+
+    $app->get('patient_supplements','App\Http\Controllers\ApiController@patient_supplements');
+
+    $app->get('patient_allergies','App\Http\Controllers\ApiController@patient_allergies');
 
 });
