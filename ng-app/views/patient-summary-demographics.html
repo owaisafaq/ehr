@@ -8,7 +8,7 @@
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Number</label>
-                    <span class="txt-style-2 col-lg-12">PA-{{PI.patient_id}}</span>
+                    <span class="txt-style-2 col-lg-12">PA-{{PI.id}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Age</label>
@@ -147,14 +147,14 @@
                                         <label>date of birth</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <label class="txt-style-4">{{PI.date_of_birth}} October 10 1981</label>
+                                        <label class="txt-style-4">{{PI.date_of_birth}}</label>
                                     </div>
 
                                     <div class="col-lg-3">
                                         <label>patient id</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <label class="txt-style-4">{{PI.patient_id}}</label>
+                                        <label class="txt-style-4">PA-{{PI.patient_id}}</label>
                                     </div>
 
                                     <div class="col-lg-3">
@@ -204,7 +204,7 @@
                                         <label>next of kin</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <label class="txt-style-4">{{PI.kin.first_name}} {{PI.kin.middle_name}} {{PI.kin.last_name}}</label>
+                                        <label class="txt-style-4">{{PI.next_to_kin | limitTo:15}}</label>
                                     </div>
                                 </div>
                             </div>
@@ -216,19 +216,19 @@
                                         <label>mobile no</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <label class="txt-style-4">+{{PI.address.mobile_number}}</label>
+                                        <label class="txt-style-4">+{{PI.mobile_number}}</label>
                                     </div>
                                     <div class="col-lg-3">
                                         <label>email</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <label class="txt-style-4">{{PI.email}}</label>
+                                        <label class="txt-style-4 capitalize">{{PI.email}}</label>
                                     </div>
                                     <div class="col-lg-3">
                                         <label>address</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <label class="txt-style-4">{{PI.address.house_number}}, {{PI.address.street}}</label>
+                                        <label class="txt-style-4">{{PI.house_number}}, {{PI.street}}</label>
                                     </div>
                                     <div class="col-lg-3">
                                         <label>blood group</label>

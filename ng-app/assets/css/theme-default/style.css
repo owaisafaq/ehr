@@ -1543,7 +1543,21 @@ Patient Plan
     padding-left:30px;
     width: 90%!important;
     margin:0px;
+    background: #f9fafd;
+    height: 30px;
+    border-radius: 15px;
+    padding-left: 35px;
+    border: 1px solid #dfe7f6;
+    font-family: 'SegoeUI-reg';
 }
+.search-btn-icon{
+    color: #000!important;
+}
+.update-encounter{
+    margin-top: 125px;
+}
+/*MUZAMMIL CODE END*/
+
 /*-----------
 BED Occupancy
 -----------*/
