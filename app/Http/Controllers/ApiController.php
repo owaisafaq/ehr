@@ -1466,7 +1466,7 @@ class ApiController extends Controller
                ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
                ->leftJoin('departments', 'departments.id', '=', 'visits.department_id')
                ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
-               ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,visits.created_at'))
+               ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,departments.id as department_id,visits.created_at'))
                ->where('visits.patient_id','!=','null')
                ->where('visits.visit_status','!=','checkout')
                ->where('visits.status','1')
