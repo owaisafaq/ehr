@@ -288,6 +288,23 @@ $api->params->token = "123";
 
 $api_arr [] = $api;
 
+//  Update Visit
+$api = new api();
+$api->name = "Update Visit";
+$api->url = HOST . 'update_visit';
+$api->method = "POST";
+$api->description = "Update Visit";
+$api->params->visit_id = "1";
+$api->params->patient_id = "1";
+$api->params->department_id = "1";
+$api->params->encounter_class = "123";
+$api->params->encounter_type = "123";
+$api->params->whom_to_see = "1";
+$api->params->decscribe_whom_to_see = "123";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
 // Get Countries
 $api = new api();
 $api->name = "Get Countries";
@@ -433,5 +450,68 @@ $api->description = "Get All Patent Data";
 $api->params->patient_id = "1";
 $api->params->token = "123";
 
+
+$api_arr [] = $api;
+
+
+
+
+// Get Patient Visit History
+$api = new api();
+$api->name = "Get Patient Visit History";
+$api->url = HOST . 'get_patient_visit_history';
+$api->method = "GET";
+$api->description = "Get Patient Visit History";
+$api->params->patient_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Get Patient Vital History
+$api = new api();
+$api->name = "Get Patient Vital History";
+$api->url = HOST . 'get_patient_vital_history';
+$api->method = "GET";
+$api->description = "Get Patient Vital History";
+$api->params->patient_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+
+// update visit status
+$api = new api();
+$api->name = "update visit status";
+$api->url = HOST . 'update_visit_status';
+$api->method = "POST";
+$api->description = "update visit status";
+$api->params->visit_id = "1";
+$api->params->status = "checkout";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+// get Patient Demographics
+$api = new api();
+$api->name = "get Patient Demographics";
+$api->url = HOST . 'get_patient_demographics';
+$api->method = "GET";
+$api->description = "get Patient Demographics";
+$api->params->patient_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Remove Visit
+$api = new api();
+$api->name = "Remove Visit";
+$api->url = HOST . 'remove_visit';
+$api->method = "GET";
+$api->description = "Remove Visit";
+$api->params->visit_id = "1";
+$api->params->token = "123";
 
 $api_arr [] = $api;

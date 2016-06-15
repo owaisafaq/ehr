@@ -703,7 +703,57 @@ class ApiController extends Controller
         );
 
 
-        return response()->json(['status' => true, 'message' => 'Visit added successfully']);
+        $visit_id = DB::getPdo()->lastInsertId();
+
+        return response()->json(['status' => true, 'message' => 'Visit added successfully', 'visit_id'=>$visit_id]);
+
+    }
+
+
+    public function update_visit(Request $request)
+    {
+
+
+        $visit_id = $request->input('visit_id');
+
+        $user_id = $request->input('source_id');
+
+        $patient_id = $request->input('patient_id');
+
+        $department_id = $request->input('department_id');
+
+        $encounter_class = $request->input('encounter_class');
+
+        $encounter_type = $request->input('encounter_type');
+
+        $whom_to_see = $request->input('whom_to_see');
+
+        $decscribe_whom_to_see = $request->input('decscribe_whom_to_see');
+
+        $token = $request->input('token');
+
+
+        //here
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+        DB::table('visits')
+            ->where('id',$visit_id)
+            ->update(
+            ['patient_id' => $patient_id,
+                'department_id' => $department_id,
+                'encounter_class' => $encounter_class,
+                'encounter_type' => $encounter_type,
+                'whom_to_see' => $whom_to_see,
+                'decscribe_whom_to_see' => $decscribe_whom_to_see,
+                'updated_at' => $currentdatetime
+
+            ]
+        );
+
+
+        return response()->json(['status' => true, 'message' => 'Visit Updated successfully']);
 
     }
 
@@ -774,36 +824,44 @@ class ApiController extends Controller
 
         $religion = DB::table('religion')
             ->select(DB::raw('id,name'))
+            ->where('status',1)
             ->get();
 
         $maritial_status = DB::table('maritial_status')
             ->select(DB::raw('id,name'))
+            ->where('status',1)
             ->get();
 
         $nationality = DB::table('nationality')
             ->select(DB::raw('id,name'))
+            ->where('status',1)
             ->get();
 
         $bloodgroup = DB::table('blood_group')
             ->select(DB::raw('id,name'))
+            ->where('status',1)
             ->get();
 
 
         $hospital_plan = DB::table('hospital_plan')
             ->select(DB::raw('id,name'))
+            ->where('status',1)
             ->get();
 
 
         $occupation = DB::table('occupation')
             ->select(DB::raw('id,name'))
+            ->where('status',1)
             ->get();
 
         $departments = DB::table('departments')
             ->select(DB::raw('id,name'))
+            ->where('status',1)
             ->get();
 
         $doctors = DB::table('doctors')
             ->select(DB::raw('id,name'))
+            ->where('status',1)
             ->get();
 
 
@@ -1220,7 +1278,7 @@ class ApiController extends Controller
         $patient_info = DB::table('patients')
             ->select(DB::raw('*'))
             ->where('id', $patient_id)
-            ->get();
+            ->first();
 
         $patient_address = DB::table('patient_address')
             ->select(DB::raw('*'))
@@ -1231,13 +1289,13 @@ class ApiController extends Controller
         $patient_kin = DB::table('patient_kin')
             ->select(DB::raw('*'))
             ->where('patient_id', $patient_id)
-            ->get();
+            ->first();
 
 
         $patient_employers = DB::table('patient_employers')
             ->select(DB::raw('*'))
             ->where('patient_id', $patient_id)
-            ->get();
+            ->first();
 
         $data = array(
             "patient_info" => $patient_info,
@@ -1252,5 +1310,154 @@ class ApiController extends Controller
 
     }
 
+
+    public function add_patient_vitals(Request $request){
+
+
+        $patient_id = $request->input('patient_id');
+
+        $vitals = $request->input('vitals');
+        
+        $patient_vitals = json_decode($vitals);
+
+        $notes = $request->input('notes');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+
+        DB::table('medical_record_description')->insert(
+            ['patient_id' => $patient_id,
+                'notes' => $notes,
+                'created_at' => $currentdatetime
+
+            ]
+        );
+
+
+        foreach ($patient_vitals as $patient_vital) {
+
+            DB::table('medical_record_values')->insert(
+                ['patient_id' => $patient_id,
+                    'field_id' => $patient_vital->field_id,
+                    'value' => $patient_vital->value,
+                    'created_at' => $currentdatetime
+
+                ]
+            );
+
+        }
+
+
+
+        return response()->json(['status' => true, 'message' => 'Patient Vitals Added Successfully']);
+
+
+
+    }
+
+    public function get_patient_visit_history(Request $request){
+
+
+        $patient_id = $request->input('patient_id');
+
+        $visit_history = DB::table('visits')
+            ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
+            ->leftJoin('departments', 'departments.id', '=', 'visits.department_id')
+            ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
+            ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,visits.created_at'))
+            ->orderby('visits.id','desc')
+            ->where('visits.patient_id','!=','null')
+            ->where('visits.visit_status','!=','checkout')
+            ->where('visits.status','1')
+            ->get();
+
+
+        return response()->json(['status' => true, 'data' => $visit_history]);
+
+
+    }
+
+
+
+    public function get_patient_vital_history(Request $request){
+
+
+        $patient_id = $request->input('patient_id');
+
+        $vital_history = DB::table('medical_record_values')
+            ->leftJoin('medical_record_fields', 'medical_record_fields.id', '=', 'medical_record_values.field_id')
+            ->select(DB::raw('medical_record_fields.category,medical_record_fields.name,medical_record_values.value'))
+            ->where('medical_record_values.patient_id', $patient_id)
+            ->where('medical_record_values.status','1')
+            ->get();
+
+        return response()->json(['status' => true, 'data' => $vital_history]);
+
+    }
+
+
+
+    public function update_visit_status(Request $request){
+
+        $visit_id= $request->input('visit_id');
+
+        $status=$request->input('status');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+        DB::table('visits')
+            ->where('id', $visit_id)
+            ->update(array('visit_status' => $status, 'updated_at' => $currentdatetime));
+
+
+        return response()->json(['status' => true, 'data' => 'visit updated successfully']);
+    }
+
+
+
+    public function get_patient_demographics(Request $request){
+
+
+
+        $patient_id = $request->input('patient_id');
+
+
+        $demographics = DB::table('patients')
+            ->leftJoin('patient_address', 'patient_address.patient_id', '=', 'patients.id')
+            ->leftJoin('patient_kin', 'patient_kin.patient_id', '=', 'patients.id')
+            ->leftJoin('religion', 'religion.id', '=', 'patients.religion')
+            ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
+            ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.plan_id')
+            ->leftJoin('blood_group', 'blood_group.id', '=', 'patients.blood_group')
+            ->select(DB::raw('patients.id,patients.first_name,patients.middle_name,patients.last_name,patients.date_of_birth,patients.age,patients.patient_image,religion.name as religion,maritial_status.name as marital_status,hospital_plan.name as hospital_plan,patient_address.mobile_number,patient_address.email,patient_kin.fullname as next_to_kin,patient_address.house_number,patient_address.street,blood_group.name as blood_group
+            '))
+            ->where('patients.id', $patient_id)
+            ->where('patient_address.address_type', 'contact')
+            ->first();
+
+
+        return response()->json(['status' => true, 'data' => $demographics]);
+
+    }
+
+
+
+    public function remove_visit(Request $request){
+
+        $visit_id= $request->input('visit_id');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+        DB::table('visits')
+            ->where('id', $visit_id)
+            ->update(array('status' => 0, 'updated_at' => $currentdatetime));
+
+
+        return response()->json(['status' => true, 'data' => 'visit removed successfully']);
+
+    }
 
 }

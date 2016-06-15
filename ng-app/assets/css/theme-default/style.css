@@ -1530,7 +1530,7 @@ Patient Plan
 /*.hide{
     display: none;
 }*/
-.show{
+.hide.show{
     display: block;
 }
 .capitalize{
@@ -2012,6 +2012,7 @@ Lab Report Lokoja
     padding: 0 12px;
     border-radius: 16px;
     background-color: #ddecf8;
+    float: left;
 }
 .chip i{
     cursor: pointer;
@@ -2048,4 +2049,98 @@ Waiting Loader
     height: 100%;
     background: url("../../img/loader.gif") center center no-repeat rgba(255,255,255,0.7);
     z-index: 10000;
+}
+.dependant_list > div{
+    margin-bottom: 0 !important;
+}
+
+/*----------
+Archive Page Styling
+---------------*/
+.file_uploads > div,.folder_create_con > div{
+    margin-bottom: 20px;
+}
+.file_create_con > div,.file_create_con > div input,.folder_create_con > div,.folder_create_con > div input{
+    cursor: pointer;
+}
+.folder_create_con{
+    margin-bottom: 0 !important;
+}
+.file_uploads .folder_create_con > div > div{
+    background: #f9fafb;
+    float: left;
+    padding: 7px 15px 12px;
+    width: 100%;
+}
+.file_uploads .folder_create_con img{
+    float: left;
+    margin-right: 12px;
+    margin-top: 8px;
+}
+.file_uploads .file_preview{
+    background: #f9fafb;
+    text-align: center;
+    height: 170px;
+}
+.file_uploads .file_preview *{
+    max-height: 142px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    max-width: 80%;
+}
+.file_uploads .file_lower{
+    padding: 10px 5px;
+    width: 100%;
+    float: left;
+}
+.file_uploads .file_lower img{
+    float: left;
+    margin-top: 10px;
+}
+.file_uploads .file_lower > div{
+    margin-left: 10px;
+}
+.file_uploads .file_lower input,.folder_create_con input{
+    color: #516e81;
+    font-size: 14px;
+    font-weight: bold;
+    float: left;
+    background: none;
+    border: none;
+}
+.file_uploads .file_date{
+    font-size: 12px;
+    line-height: 12px;
+    color: #abb1c4;
+    display: block;
+}
+.file_create_con > div.active,.folder_create_con > div.active{
+    cursor: default;
+}
+.file_create_con > div.active input,.folder_create_con > div.active input{
+    cursor: text;
+}
+.file_create_con > div.active .file_lower,.folder_create_con > div.active > div{
+    background: #56aeea;
+}
+.file_create_con > div.active .file_lower input,.file_create_con > div.active .file_lower span,.folder_create_con > div.active > div input,.folder_create_con > div.active > div span{
+    color: #fff;
+}
+.done-editing{
+    display: none;
+}
+/*archive Pop up*/
+.select_file_mode a{
+    border: 3px solid #ddecf8;
+    width: 92px;
+    height: 92px;
+    float: left;
+    padding: 11px 18px;
+    margin-right: 20px;
+}
+.select_file_mode a.active{
+    border: 3px solid #56aeea;
 }

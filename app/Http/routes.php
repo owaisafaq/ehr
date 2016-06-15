@@ -45,6 +45,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->post('add_visit' ,'App\Http\Controllers\ApiController@add_visit');
 
+    $app->post('update_visit' ,'App\Http\Controllers\ApiController@update_visit');
+
     $app->get('get_countries' ,'App\Http\Controllers\ApiController@get_countries');
 
     $app->get('get_states' ,'App\Http\Controllers\ApiController@get_states');
@@ -70,5 +72,18 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->get('get_visits','App\Http\Controllers\ApiController@get_visits');
 
     $app->get('get_patient_all_data','App\Http\Controllers\ApiController@get_patient_all_data');
+
+    $app->post('add_patient_vitals','App\Http\Controllers\ApiController@add_patient_vitals');
+
+    $app->get('get_patient_visit_history','App\Http\Controllers\ApiController@get_patient_visit_history');
+
+    $app->get('get_patient_vital_history','App\Http\Controllers\ApiController@get_patient_vital_history');
+
+    $app->post('update_visit_status','App\Http\Controllers\ApiController@update_visit_status');
+
+    $app->get('get_patient_demographics','App\Http\Controllers\ApiController@get_patient_demographics');
+
+    $app->get('remove_visit','App\Http\Controllers\ApiController@remove_visit');
+
 
 });
