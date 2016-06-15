@@ -1,5 +1,5 @@
 var AppEHR = angular.module('AppEHR');
-AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', 'PatientInformation', 'fileUpload', '$location', '$filter', 'Upload', '$timeout', 'PatientRegistrationAddress', 'PatientRegistrationKin', 'PatientRegistrationEmployer', '$routeParams', 'GetPatientAllData', 'PatienPlanSaveData', '$compile', function ($rootScope, $scope, $window, Countries, States, GetLocalGovermentArea, City, DropDownData, PatientInformation, fileUpload, $location, $filter, Upload, $timeout, PatientRegistrationAddress, PatientRegistrationKin, PatientRegistrationEmployer, $routeParams, GetPatientAllData, PatienPlanSaveData, $compile) {
+AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', 'PatientInformation', 'fileUpload', '$location', '$filter', 'Upload', '$timeout', 'PatientRegistrationAddress', 'PatientRegistrationKin', 'PatientRegistrationEmployer', '$routeParams', 'GetPatientAllData', 'PatienPlanSaveData', '$compile', '$http', function ($rootScope, $scope, $window, Countries, States, GetLocalGovermentArea, City, DropDownData, PatientInformation, fileUpload, $location, $filter, Upload, $timeout, PatientRegistrationAddress, PatientRegistrationKin, PatientRegistrationEmployer, $routeParams, GetPatientAllData, PatienPlanSaveData, $compile, $http) {
         $rootScope.pageTitle = "EHR - Patient Registration";
         $scope.PI = $rootScope.PI;
         $scope.PI.adress = {};
@@ -764,7 +764,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             $('#nhis .dependant_list > div').each(function () {
                 var id = $(this).children('.chip').data('id')
                 var chip_name = $(this).children('.chip').text();
-                // depedants_values.push({"dependent_id": ""+id+"", "relationship": $(this).find('select[name=dependant_relationship]').val()})
 
                 depedants_values.push({
                     "dependent_id": "" + id + "",
@@ -777,10 +776,8 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
 
             $rootScope.valid_relationship = false;
-//            console.log($('input[name=select_speciality]:checked').val());
             var check_val = $('#nhis input[name=select_speciality]:checked').val();
             if (check_val == "dependant") {
-//                $rootScope.do_valid_nhis = true; 
                 if ($('#nhis .principal_list .chip').length > 0) {
                     $rootScope.do_valid_nhis = false;
                 }
@@ -802,13 +799,10 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 $scope.dataToBeAdded.is_principal = $scope.MI.select_speciality == "principal" ? $scope.MI.select_speciality : '0'
                 $scope.dataToBeAdded.is_dependant = $scope.MI.select_speciality == "dependant" ? $scope.MI.select_speciality : '0'
                 $scope.dataToBeAdded.insurance_id = $scope.MI.insurance_id == undefined ? '' : $scope.MI.insurance_id
-//                for(var i = 0; i == $scope.dataToBeAdded.dependents.lenght; i++)
                 $scope.dataToBeAdded.dependents = depedants_values_new
                 $scope.dataToBeAdded.description = $scope.MI.description == undefined ? '' : $scope.MI.description
-//                };
                 $('#nhis').modal('hide');
                 $scope.flag_to_show_nhis = true;
-                console.log($scope.dataToBeAdded)
             }
         }
 
@@ -821,7 +815,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     $('#nhis .dependant_list').append($compile('<div class="col-lg-12 no-padding"><div class="chip" data-id="' + id_chip + '">' + $('#s2id_get_val_dependant_nhis .select2-chosen').html() + '<i class="md-close"></i></div><div class="col-lg-3"><select ng-class="{true : \'error\'}[checkValidate_nhis && dependant_model_relationship_' + index_name + ' == 0]" ng-init="dependant_model_relationship_' + index_name + ' = 0" required ng-model="dependant_model_relationship_' + index_name + '" name="dependant_relationship" ng-options="relationships.name for relationships in dropDownData.relationships track by relationships.id" class="form-control" placeholder="Select Relationship"><option value=""></option></select><span class="help-block PIValid alignError" ng-show="checkValidate_nhis && dependant_model_relationship_' + index_name + ' == 0">Required</span></div></div>')($scope));
                     $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
                     $("#get_val_dependant_nhis").select2('data', null);
-//                    $rootScope.valid_relationship = true;
                 }
             }
         }
@@ -831,7 +824,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             if (id_chip !== "") {
                 if ($('#nhis .principal_list .chip[data-id="' + id_chip + '"').length == 0) {
                     $('#nhis .principal_list').append('<div class="chip" data-id="' + id_chip + '">' + $('#s2id_get_val_principal .select2-chosen').html() + '<i class="md-close"></i></div>');
-//                    $("#get_val_principal").val(null).trigger("change");
                     $("#get_val_principal").select2('data', null);
                     $('#s2id_get_val_principal').addClass('disable-after-1');
                     $rootScope.do_valid_nhis = false;
@@ -848,7 +840,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 console.log("thee")
                 var id = $(this).children('.chip').data('id')
                 var chip_name = $(this).children('.chip').text();
-                // depedants_values.push({"dependent_id": ""+id+"", "relationship": $(this).find('select[name=dependant_relationship]').val()})
 
                 depedants_values.push({
                     "dependent_id": "" + id + "",
@@ -891,7 +882,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     $('#relationship .dependant_list').append($compile('<div class="col-lg-12 no-padding"><div class="chip" data-id="' + id_chip + '">' + $('#s2id_get_val_dependant_retainer .select2-chosen').html() + '<i class="md-close"></i></div><div class="col-lg-3"><select ng-class="{true : \'error\'}[checkValidate_retainer && dependant_retainer_model_relationship_' + index_name_retainer + ' == 0]" ng-init="dependant_retainer_model_relationship_' + index_name_retainer + ' = 0" required ng-model="dependant_retainer_model_relationship_' + index_name_retainer + '" name="dependant_relationship" ng-options="relationships.name for relationships in dropDownData.relationships track by relationships.id" class="form-control" placeholder="Select Relationship"><option value=""></option></select><span class="help-block PIValid alignError" ng-show="checkValidate_retainer && dependant_retainer_model_relationship_' + index_name_retainer + ' == 0">Required</span></div></div>')($scope));
                     $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
                     $("#get_val_dependant_retainer").select2('data', null);
-//                    $rootScope.valid_relationship = true;
                 }
             }
         }
@@ -900,7 +890,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             if (id_chip !== "") {
                 if ($('#relationship .principal_list .chip[data-id="' + id_chip + '"').length == 0) {
                     $('#relationship .principal_list').append('<div class="chip" data-id="' + id_chip + '">' + $('#s2id_get_val_principal_retainer .select2-chosen').html() + '<i class="md-close"></i></div>');
-//                    $("#get_val_principal").val(null).trigger("change");
                     $("#get_val_principal_retainer").select2('data', null);
                     $('#s2id_get_val_principal_retainer').addClass('disable-after-1');
                     $rootScope.do_valid = false;
@@ -940,9 +929,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     $scope.dataToBeAdded_send.policies = $scope.dataToBeAdded.policies.id;
                     $scope.dataToBeAdded_send.is_principal = $scope.dataToBeAdded.is_principal == "principal" ? "1" : "0";
                     $scope.dataToBeAdded_send.is_dependant = $scope.dataToBeAdded.is_dependant == "dependant" ? "1" : "0";
-//                $scope.dataToBeAdded_send.principal_patient_id = $scope.dataToBeAdded.principal_patient_id == undefined || $scope.dataToBeAdded.principal_patient_id == '' ? '0' : $('.principal_list .chip').data('id');
-//                $scope.dataToBeAdded_send.relationship = $scope.dataToBeAdded.relationship == undefined || $scope.dataToBeAdded.relationship == '' ? '0' : $scope.MI.principal_relationship.id;
-//                $scope.dataToBeAdded_send.dependents = $scope.dataToBeAdded.dependents;
                     if ($scope.dataToBeAdded_send.is_principal == "1") {
                         $scope.dataToBeAdded_send.dependents = $scope.dataToBeAdded.dependents
                         $scope.dataToBeAdded_send.principal_patient_id = $scope.dataToBeAdded.principal_patient_id = '';
@@ -955,7 +941,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     }
 
                     console.log($scope.dataToBeAdded_send)
-                    console.log("there")
                     $rootScope.loader = 'show';
                     PatienPlanSaveData.save($scope.dataToBeAdded_send, PlanDataSuccess, PlanDataFailure)
                 }
@@ -971,9 +956,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     $scope.dataToBeAdded_send.policies = '';
                     $scope.dataToBeAdded_send.is_principal = $scope.dataToBeAdded.is_principal == "principal" ? "1" : "0";
                     $scope.dataToBeAdded_send.is_dependant = $scope.dataToBeAdded.is_dependant == "dependant" ? "1" : "0";
-//                $scope.dataToBeAdded_send.principal_patient_id = $scope.dataToBeAdded.principal_patient_id == undefined || $scope.dataToBeAdded.principal_patient_id == '' ? '0' : $('.principal_list .chip').data('id');
-//                $scope.dataToBeAdded_send.relationship = $scope.dataToBeAdded.relationship == undefined || $scope.dataToBeAdded.relationship == '' ? '0' : $scope.dataToBeAdded.relationship.id;
-//                $scope.dataToBeAdded_send.dependents = $scope.dataToBeAdded.dependents
                     if ($scope.dataToBeAdded_send.is_principal == "1") {
                         $scope.dataToBeAdded_send.dependents = $scope.dataToBeAdded.dependents
                         $scope.dataToBeAdded_send.principal_patient_id = $scope.dataToBeAdded.principal_patient_id = '';
@@ -984,15 +966,12 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                         $scope.dataToBeAdded_send.principal_patient_id = $scope.dataToBeAdded.principal_patient_id == undefined || $scope.dataToBeAdded.principal_patient_id == '' ? '0' : $('.principal_list .chip').data('id');
                         $scope.dataToBeAdded_send.relationship = $scope.dataToBeAdded.relationship == undefined || $scope.dataToBeAdded.relationship == '' ? '0' : $scope.MI.principal_relationship.id;
                     }
-                    console.log($scope.dataToBeAdded_send)
-                    console.log("third")
                     $rootScope.loader = 'show';
                     PatienPlanSaveData.save($scope.dataToBeAdded_send, PlanDataSuccess, PlanDataFailure)
                 }
             }
             function PlanDataSuccess(res) {
                 if (res.status == true) {
-                    console.log(res)
                     $scope.disabledTabArchive = 'active';
                     $scope.disabledTabPatientPlant = '';
                     $scope.successMessage = true;

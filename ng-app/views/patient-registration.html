@@ -13,11 +13,11 @@
                     <li class="{{disabledTabKin}}"><a showtab href="#kin">next of kin</a></li>
                     <li class="{{disabledTabEmployer}}"><a showtab href="#employer">employer</a></li>
                     <li class="{{disabledTabPatientPlant}}"><a showtab href="#plan">patient plan</a></li>
-                    <li class="{{disabledTabArchive}}"><a showtab href="#archive">archive</a></li>
+                    <li class="{{disabledTabArchive - no}}"><a showtab href="#archive">archive</a></li>
                 </ul>
             </div><!-- end .card-head -->
             <div class="card-body tab-content">
-                <div class="tab-pane {{disabledTabInfo}}" id="info">
+                <div class="tab-pane {{disabledTabInfo - no}}" id="info">
                     <form class="custom-form" name="userForm1" ng-model="myForm" novalidate ng-submit="validatePatientInfo(PI);" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-lg-3">
@@ -548,7 +548,8 @@
                         <div class="col-lg-12 radio-style-2-con">
                             <div class="radio radio-styled">
                                 <label>
-                                    <input ng-click="flag_to_show_retainer = false;flag_to_show_nhis = false;" type="radio" ng-init="PP.checkoutpatient = 1" name="checkoutpatient" value="1" checked ng-checked="true" ng-model="PP.checkoutpatient">
+                                    <input ng-click="flag_to_show_retainer = false;
+                                                flag_to_show_nhis = false;" type="radio" ng-init="PP.checkoutpatient = 1" name="checkoutpatient" value="1" checked ng-checked="true" ng-model="PP.checkoutpatient">
                                     <span>Self</span>
                                 </label>
                             </div>
@@ -731,43 +732,196 @@
                     </form>
                 </div>
 
-                <div class="tab-pane {{disabledTabArchive}}" id="archive">
-                    
-                    <div class="icons_con">
-                        <a class="edit button-custom" href=""></a>
-                        <a class="delete button-custom" href=""></a>
-                        <a class="add button-custom" href=""></a>
+                <div class="tab-pane {{disabledTabArchive - no}} active" id="archive">
+                    <div class="col-xs-12">
+                        <div class="icons_con">
+                            <button class="done-editing button-custom">Save</button>
+                            <button class="edit button-custom">Edit</button>
+                            <button class="delete button-custom">Remove</button>
+                            <button data-toggle="modal" data-target="#fileUploader" class="add button-custom">ADD</button>
+                        </div>
                     </div>
-                    <table class="table table-striped no-margin table-custom">
-                        <thead>
-                            <tr>
-                                <th>Document Name</th>
-                                <th>Type</th>
-                                <th>Comment</th>
-                                <th>Date Uploaded</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Larry</td>
-                                <td>the Bird</td>
-                                <td>@twitter</td>
-                            </tr>
-                        </tbody>
-                    </table>
+
+                    <div class="row file_uploads">
+                        <div class="col-xs-12 folder_create_con no-padding">
+                            <div class="col-xs-2">
+                                <div>
+                                    <img src="assets/img/folder_icon.png" />
+                                    <div class="pull-left">
+                                        <input type="text" value="Document Name" disabled />
+                                        <span class="file_date">June 09, 2016</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <div>
+                                    <img src="assets/img/folder_icon.png" />
+                                    <div class="pull-left">
+                                        <input type="text" value="Document Name" disabled />
+                                        <span class="file_date">June 09, 2016</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <div>
+                                    <img src="assets/img/folder_icon.png" />
+                                    <div class="pull-left">
+                                        <input type="text" value="Document Name" disabled />
+                                        <span class="file_date">June 09, 2016</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <div>
+                                    <img src="assets/img/folder_icon.png" />
+                                    <div class="pull-left">
+                                        <input type="text" value="Document Name" disabled />
+                                        <span class="file_date">June 09, 2016</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <div>
+                                    <img src="assets/img/folder_icon.png" />
+                                    <div class="pull-left">
+                                        <input type="text" value="Document Name" disabled />
+                                        <span class="file_date">June 09, 2016</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <div>
+                                    <img src="assets/img/folder_icon.png" />
+                                    <div class="pull-left">
+                                        <input type="text" value="Document Name" disabled />
+                                        <span class="file_date">June 09, 2016</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <div>
+                                    <img src="assets/img/folder_icon.png" />
+                                    <div class="pull-left">
+                                        <input type="text" value="Document Name" disabled />
+                                        <span class="file_date">June 09, 2016</span>
+                                    </div>
+                                </div>
+                            </div><div class="col-xs-2">
+                                <div>
+                                    <img src="assets/img/folder_icon.png" />
+                                    <div class="pull-left">
+                                        <input type="text" value="Document Name" disabled />
+                                        <span class="file_date">June 09, 2016</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="file_create_con col-xs-12 no-padding">
+                            <div class="col-xs-2">
+                                <div class="file_preview">
+                                    <img src="assets/img/preview_1.jpg" />
+                                </div>
+                                <div class="file_lower">
+                                    <img src="assets/img/pdf_icon.png" />
+                                    <div class="pull-left">
+                                        <input type="text" value="Document Name" disabled />
+                                        <span class="file_date">June 09, 2016</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <div class="file_preview">
+                                    <img src="assets/img/preview_2.jpg" />
+                                </div>
+                                <div class="file_lower">
+                                    <img src="assets/img/pdf_icon.png" />
+                                    <div class="pull-left">
+                                        <input type="text" value="Document Name" disabled />
+                                        <span class="file_date">June 09, 2016</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-2">
+                                <div class="file_preview">
+                                    <img src="assets/img/preview_3.jpg" />
+                                </div>
+                                <div class="file_lower">
+                                    <img src="assets/img/jpg_icon.png" />
+                                    <div class="pull-left">
+                                        <input type="text" value="Document Name" disabled />
+                                        <span class="file_date">June 09, 2016</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-2">
+                                <div class="file_preview">
+                                    <img src="assets/img/preview_2.jpg" />
+                                </div>
+                                <div class="file_lower">
+                                    <img src="assets/img/jpg_icon.png" />
+                                    <div class="pull-left">
+                                        <input type="text" value="Document Name" disabled />
+                                        <span class="file_date">June 09, 2016</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-2">
+                                <div class="file_preview">
+                                    <img src="assets/img/preview_1.jpg" />
+                                </div>
+                                <div class="file_lower">
+                                    <img src="assets/img/jpg_icon.png" />
+                                    <div class="pull-left">
+                                        <input type="text" value="Document Name" disabled />
+                                        <span class="file_date">June 09, 2016</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-2">
+                                <div class="file_preview">
+                                    <img src="assets/img/preview_3.jpg" />
+                                </div>
+                                <div class="file_lower">
+                                    <img src="assets/img/jpg_icon.png" />
+                                    <div class="pull-left">
+                                        <input type="text" value="Document Name" disabled />
+                                        <span class="file_date">June 09, 2016</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-2">
+                                <div class="file_preview">
+                                    <img src="assets/img/preview_2.jpg" />
+                                </div>
+                                <div class="file_lower">
+                                    <img src="assets/img/jpg_icon.png" />
+                                    <div class="pull-left">
+                                        <input type="text" value="Document Name" disabled />
+                                        <span class="file_date">June 09, 2016</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-2">
+                                <div class="file_preview">
+                                    <img src="assets/img/preview_1.jpg" />
+                                </div>
+                                <div class="file_lower">
+                                    <img src="assets/img/jpg_icon.png" />
+                                    <div class="pull-left">
+                                        <input type="text" value="Document Name" disabled />
+                                        <span class="file_date">June 09, 2016</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div><!--end .card-body -->
         </div><!--end .card -->
@@ -983,3 +1137,44 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<div class="modal fade big-modal" id="fileUploader" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>NHIS</h2>
+            </div>
+
+            <div class="modal-body pull-left">
+                <div class="select_file_mode">
+                    <a class="active" href="javascript:;"><img src="assets/img/pdf_big_icon.png" /></a>
+                    <a href="javascript:;"><img src="assets/img/jpg_big_icon.png" /></a>
+                    <a href="javascript:;"><img src="assets/img/folder_icon_big.png" /></a>
+                </div>
+                <div class="show_uploading_format">
+                    <div>
+                    </div>
+                    <!--                        <div class="col-lg-12">
+                                                <label>Upload file</label>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <input type="text" placeholder="Select file" />
+                                                <button></button>
+                                            </div>-->
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-default button-style-1" >SAVE & CLOSE</button>
+                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--<style>
+    /* Hide Angular JS elements before initializing */
+    .ng-cloak {
+        display: none;
+    }
+</style>-->
