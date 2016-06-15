@@ -364,18 +364,6 @@ $api->params->token = "123";
 $api_arr [] = $api;
 
 
-// Get Visit List
-$api = new api();
-$api->name = "Get Visit List";
-$api->url = HOST . 'patient_visit_list';
-$api->method = "GET";
-$api->description = "Get Visit List";
-$api->params->patient_id = "1";
-$api->params->token = "123";
-
-
-$api_arr [] = $api;
-
 
 // Get Patient Vital Fields
 $api = new api();
@@ -575,6 +563,29 @@ $api->url = HOST . 'patient_allergies';
 $api->method = "GET";
 $api->description = "Get Patient Allergies";
 $api->params->patient_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+
+// Add Patient Vitals
+$api = new api();
+$api->name = "Add Patient Vitals";
+$api->url = HOST . 'add_patient_vitals';
+$api->method = "POST";
+$api->description = "Add Patient Vitals";
+$api->params->patient_id = "1";
+$api->params->systolic_mm_hg= "10";
+$api->params->diastolic_mm_hg = "10";
+$api->params->pulse = "10";
+$api->params->respiratory_rate = "10";
+$api->params->temperature_c = "10";
+$api->params->temperature_f = "10";
+$api->params->bmi_result = "100";
+$api->params->bmi_weight = "10";
+$api->params->bmi_height = "10";
+$api->params->notes = "test";
 $api->params->token = "123";
 
 $api_arr [] = $api;

@@ -78,7 +78,7 @@ class ApiController extends Controller
         $name = $request->input('name');
 
         $patients = DB::table('patients')
-            ->select(DB::raw('id,first_name,middle_name,last_name'))
+            ->select(DB::raw('id,first_name,last_name'))
             ->where('first_name', 'like', "%$name%")
             ->where('plan_id', 1)
             ->get();
@@ -922,25 +922,6 @@ class ApiController extends Controller
     }
 
 
-    public function patient_visit_list(Request $request)
-    {
-
-        $patient_id = $request->input('patient_id');
-
-
-        $data = DB::table('visits')
-            ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
-            ->select(DB::raw('*'))
-            ->where('visits.patient_id', $patient_id)
-            ->get();
-
-
-        return response()->json(['status' => true, 'data' => $data]);
-
-
-    }
-
-
     public function get_patient_vitals(Request $request)
     {
 
@@ -1316,37 +1297,45 @@ class ApiController extends Controller
 
         $patient_id = $request->input('patient_id');
 
-        $vitals = $request->input('vitals');
-        
-        $patient_vitals = json_decode($vitals);
+        $systolic_mm_hg = $request->input('systolic_mm_hg');
+
+        $diastolic_mm_hg = $request->input('diastolic_mm_hg');
+
+        $pulse = $request->input('pulse');
+
+        $respiratory_rate= $request->input('respiratory_rate');
+
+        $temperature_c = $request->input('temperature_c');
+
+        $temperature_f = $request->input('temperature_f');
+
+        $bmi_result= $request->input('bmi_result');
+
+        $bmi_weight= $request->input('bmi_weight');
+
+        $bmi_height = $request->input('bmi_height');
 
         $notes = $request->input('notes');
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
 
+        DB::table('patient_vitals')->insert(
+               ['patient_id' => $patient_id,
+                   'systolic_mm_hg' => $systolic_mm_hg,
+                   'diastolic_mm_hg' => $diastolic_mm_hg,
+                   'pulse' => $pulse,
+                   'respiratory_rate' => $respiratory_rate,
+                   'temperature_c' => $temperature_c,
+                   'temperature_f' => $temperature_f,
+                   'bmi_result' => $bmi_result,
+                   'bmi_weight' => $bmi_weight,
+                   'bmi_height' => $bmi_height,
+                   'notes' => $notes,
+                   'created_at' => $currentdatetime
 
-        DB::table('medical_record_description')->insert(
-            ['patient_id' => $patient_id,
-                'notes' => $notes,
-                'created_at' => $currentdatetime
-
-            ]
-        );
-
-
-        foreach ($patient_vitals as $patient_vital) {
-
-            DB::table('medical_record_values')->insert(
-                ['patient_id' => $patient_id,
-                    'field_id' => $patient_vital->field_id,
-                    'value' => $patient_vital->value,
-                    'created_at' => $currentdatetime
-
-                ]
-            );
-
-        }
+               ]
+           );
 
 
 
@@ -1385,58 +1374,11 @@ class ApiController extends Controller
 
         $patient_id = $request->input('patient_id');
 
-        $currentdatetime = date("Y-m-d  H:i:s");
-
-        $bp = DB::table('medical_record_values')
-            ->leftJoin('medical_record_fields', 'medical_record_fields.id', '=', 'medical_record_values.field_id')
-            ->select(DB::raw('medical_record_fields.category,medical_record_fields.name,medical_record_values.value'))
-            ->where('medical_record_values.status','1')
-            ->where('medical_record_fields.category','Blood Pressue(mm HG)')
-            ->where('medical_record_values.patient_id', $patient_id)
-            ->groupby('medical_record_values.field_id')
+        $data = DB::table('patient_vitals')
+            ->select(DB::raw('*'))
+            ->where('patient_id', $patient_id)
+            ->where('status', '1')
             ->get();
-
-
-
-        $pulse = DB::table('medical_record_values')
-            ->leftJoin('medical_record_fields', 'medical_record_fields.id', '=', 'medical_record_values.field_id')
-            ->select(DB::raw('medical_record_fields.category,medical_record_fields.name,medical_record_values.value'))
-            ->where('medical_record_values.status','1')
-            ->where('medical_record_fields.category','Pulse Rate(min/bpm)')
-            ->where('medical_record_values.patient_id', $patient_id)
-            ->groupby('medical_record_values.field_id')
-            ->get();
-
-
-        $respiratory = DB::table('medical_record_values')
-            ->leftJoin('medical_record_fields', 'medical_record_fields.id', '=', 'medical_record_values.field_id')
-            ->select(DB::raw('medical_record_fields.category,medical_record_fields.name,medical_record_values.value'))
-            ->where('medical_record_values.status','1')
-            ->where('medical_record_fields.category','Respiratory Rate(br/min)')
-            ->where('medical_record_values.patient_id', $patient_id)
-            ->groupby('medical_record_values.field_id')
-            ->get();
-
-
-
-        $bmi = DB::table('medical_record_values')
-            ->leftJoin('medical_record_fields', 'medical_record_fields.id', '=', 'medical_record_values.field_id')
-            ->select(DB::raw('medical_record_fields.category,medical_record_fields.name,medical_record_values.value'))
-            ->where('medical_record_values.status','1')
-            ->where('medical_record_fields.category','BMI(kg / m^2)')
-            ->where('medical_record_values.patient_id', $patient_id)
-            ->groupby('medical_record_values.field_id')
-            ->get();
-
-
-        $data = array(
-              "bp" => $bp,
-              "pulse" => $pulse,
-              "respiratory" => $respiratory,
-              "bmi" => $bmi,
-              "date_time" =>$currentdatetime
-          );
-
 
         return response()->json(['status' => true, 'data' => $data]);
 
