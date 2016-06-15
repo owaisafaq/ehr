@@ -28,14 +28,14 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     controller: 'appointmentsListController'
                 }).
                 when('/clinical-documentation-clinic-progress-note', {
-                    templateUrl: 'views/clinicaldocumentationclinicprogressnote.html',
+                    templateUrl: 'views/clinical-documentation-clinic-progress-note.html',
                     controller: 'clinicalDocumentationClinicProgressNote'
                 }).
                 when('/new-encounter-clinical-documentation', {
                     templateUrl: 'views/new-encounter-clinical-documentation.html',
                     controller: 'newEncounterClinicalDocumentationController'
                 }).
-                when('/new-encounter-encounter-list/:patientID', {
+                when('/new-encounter-encounter-list/:encounterID/:patientID', {
                     templateUrl: 'views/new-encounter-encounter-list.html',
                     controller: 'newEncounterEncounterListController'
                 }).
@@ -55,7 +55,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/patient-registration.html',
                     controller: 'patientRegistrationController'
                 }).
-                when('/patient-summary-demographics', {
+                when('/patient-summary-demographics/:patientID', {
                     templateUrl: 'views/patient-summary-demographics.html',
                     controller: 'patientSummaryDemographicsController'
                 }).

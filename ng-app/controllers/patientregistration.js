@@ -53,6 +53,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         //$scope.PI.principal_relationship = dropDownInfo.relationship[0].id;
         //$scope.PI.nhis_principal_relationship = dropDownInfo.relationship[0].id;
 
+
         $rootScope.loadView = function (object) {
             $scope.PI = {};
             $scope.successMessage = false;
@@ -407,7 +408,12 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 						$rootScope.loader = 'hide';
 						$scope.address_id = res.address_id;
 						$scope.showSubmitButtonAddress = false;
-						$scope.disabledTabKin = 'active';
+                        console.log($scope.disabledTabKin);
+						$scope.disabledTabKin = $scope.disabledTabKin == 'disabled-tabs' ? 'active' : '';
+                        if($scope.disabledTabKin == 'disabled-tabs'){
+                            $scope.disabledTabKin = 'active';
+                        }
+                        console.log($scope.disabledTabKin);
 						$scope.disabledTabAdress = '';
 						//$scope.disabledTabs = "";
 					}else{
@@ -443,7 +449,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 				}
 			}
 		}else{
-            console.log('else');
+            console.log('else empty');
 			$scope.disabledTabKin = 'active';
 			$scope.disabledTabAdress = '';
 		}
@@ -635,6 +641,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
     };
 
     if($routeParams.patientID != undefined){
+        /*$('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});*/
         $rootScope.loader = 'show';
         //$scope.PI.sameAsAbove = true;
     	$scope.byParams = $routeParams.patientID;

@@ -76,7 +76,7 @@
                                 </div>
                                 <div class="col-lg-3">
                                 {{PI.maritial_status}}
-                                    <select class="form-control" ng-model="PI.maritial_status" data-placeholder="select">
+                                    <select class="form-control" ng-model="PI.maritial_status" selected="PI.maritial_status">
                                         <option value=""></option>
                                         <option ng-repeat="maritialStatus in dropDownData.maritial_status" value="{{maritialStatus.id}}" ng-selected="PI.maritial_status == maritialStatus.id">{{maritialStatus.name}}</option>
                                     </select>

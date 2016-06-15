@@ -145,7 +145,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 			$scope.errorMessage = res.message;
 			$scope.errorSymbol = "fa fa-check";// 
 			$scope.message = true;
-			$timeout(function(){$scope.closePopUp = true; $window.location.href = '#/new-encounter-encounter-list/'+$scope.displayInfo.patient_id;}, 2000);
+			$timeout(function(){$scope.closePopUp = true; $window.location.href = '#/new-encounter-encounter-list/'+res.visit_id+'/' + $scope.search}, 1000);
 		}else{
 			$scope.hideLoader = "hide";
 			$scope.addEncounterBtn = false;
