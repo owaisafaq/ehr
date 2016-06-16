@@ -1462,6 +1462,7 @@ class ApiController extends Controller
             '))
             ->where('patients.id', $patient_id)
             ->where('patient_address.address_type', 'contact')
+            ->where('patients.status', 1)
             ->first();
 
 
