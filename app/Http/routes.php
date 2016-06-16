@@ -24,6 +24,8 @@ $app->group(['prefix' => 'api'], function () use ($app) {
     
     $app->post('search_patient', 'App\Http\Controllers\ApiController@search_patient');
 
+    $app->post('add_patient_archive','App\Http\Controllers\ApiController@add_patient_archive');
+
 
 });
 
@@ -57,15 +59,11 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->get('get_dropdowndata' ,'App\Http\Controllers\ApiController@get_dropdowndata');
 
-    $app->get('patient_visit_list','App\Http\Controllers\ApiController@patient_visit_list');
-
     $app->get('get_patient_vitals','App\Http\Controllers\ApiController@get_patient_vitals');
 
     $app->get('get_patient_plan','App\Http\Controllers\ApiController@get_patient_plan');
 
     $app->post('add_patient_plan','App\Http\Controllers\ApiController@add_patient_plan');
-
-    $app->post('add_patient_archive','App\Http\Controllers\ApiController@add_patient_archive');
 
     $app->get('get_patient','App\Http\Controllers\ApiController@get_patient');
 
@@ -85,5 +83,14 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->get('remove_visit','App\Http\Controllers\ApiController@remove_visit');
 
+    $app->get('visit_details','App\Http\Controllers\ApiController@visit_details');
+
+    $app->get('patient_archives','App\Http\Controllers\ApiController@patient_archives');
+
+    $app->get('patient_medications','App\Http\Controllers\ApiController@patient_medications');
+
+    $app->get('patient_supplements','App\Http\Controllers\ApiController@patient_supplements');
+
+    $app->get('patient_allergies','App\Http\Controllers\ApiController@patient_allergies');
 
 });

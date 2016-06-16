@@ -752,6 +752,13 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 $scope.PI.employer.employer_city = res.data.patient_employeer.city;
                 console.log(res.data);
                 $rootScope.loader = 'hide';
+//                if ($rootScope.loader == 'hide') {
+                setTimeout(function () {
+                    $('select').trigger('change');
+//                    $('.select_searchFields').select2();
+                },100)
+
+//                }
             }
         }
         function patientEditFailed(error) {

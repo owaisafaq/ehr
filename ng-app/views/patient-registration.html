@@ -2,13 +2,13 @@
     <section>
         <div class="card custom-card no-padding">
             <div class="card-head">
-                <ul class="nav nav-tabs nav-justified custom-tab " data-toggle="tabs" ng-init="disabledTabInfo = 'active';byParams == undefined ? disabledTabAdress = 'disabled-tabs' : byParams;byParams == undefined ? disabledTabKin = 'disabled-tabs' : byParams;byParams == undefined ? disabledTabEmployer = 'disabled-tabs' : '';byParams == undefined ? disabledTabPatientPlant = 'disabled-tabs' : byParams;byParams == undefined ? disabledTabArchive = 'disabled-tabs' : byParams;">
+                <ul class="nav nav-tabs nav-justified custom-tab " data-toggle="tabs" ng-init="disabledTabInfo = 'active';byParams == undefined ? disabledTabAdress = 'disabled-tabs' : byParams; byParams == undefined ? disabledTabKin = 'disabled-tabs':byParams;byParams == undefined ? disabledTabEmployer = 'disabled-tabs': '';byParams == undefined ? disabledTabPatientPlant = 'disabled-tabs' : byParams; byParams == undefined ? disabledTabArchive = 'disabled-tabs' : byParams;">
                     <li class="{{disabledTabInfo}}"><a showtab href="#info">patient information</a></li>
                     <li class="{{disabledTabAdress}}"><a showtab href="#address">address</a></li>
                     <li class="{{disabledTabKin}}"><a showtab href="#kin">next of kin</a></li>
                     <li class="{{disabledTabEmployer}}"><a showtab href="#employer">employer</a></li>
                     <li class="{{disabledTabPatientPlant}}"><a showtab href="#plan">patient plan</a></li>
-                    <li class="{{disabledTabArchive - no}}"><a showtab href="#archive">archive</a></li>
+                    <li class="{{disabledTabArchive}}"><a showtab href="#archive">archive</a></li>
                 </ul>
             </div><!-- end .card-head -->
             <div class="card-body tab-content">
@@ -31,18 +31,14 @@
                                 <label>Full Name</label>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" ng-class="{
-                                        true
-                                                : 'error'}[submitted && userForm1.first_name.$invalid]" alphabets-only placeholder="First Name" name="first_name" ng-model="PI.first_name" required/>
+                                <input type="text" ng-class="{true: 'error'}[submitted && userForm1.first_name.$invalid]" alphabets-only placeholder="First Name" name="first_name" ng-model="PI.first_name" required/>
                                 <p class="help-block PIValid" ng-show="submitted && userForm1.first_name.$error.required">Required</p>
                             </div>
                             <div class="col-lg-3">
                                 <input type="text" alphabets-only placeholder="Middle Name" name="middle_name" ng-model="PI.middle_name"/>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" ng-class="{
-                                        true
-                                                : 'error'}[submitted && userForm1.last_name.$invalid]" alphabets-only placeholder="Last Name" name="last_name" ng-model="PI.last_name" required/>
+                                <input type="text" ng-class="{true: 'error'}[submitted && userForm1.last_name.$invalid]" alphabets-only placeholder="Last Name" name="last_name" ng-model="PI.last_name" required/>
                                 <p class="help-block PIValid" ng-show="submitted && userForm1.last_name.$error.required">Required</p>
                             </div>
                             <div class="col-lg-3">
@@ -52,9 +48,7 @@
                                 <!--<input type="text" placeholder="Pick Date" />-->
                                 <div class="input-group date select-date">
                                     <div class="input-group-content">
-                                        <input type="text" name="date_of_birth" ng-model="PI.date_of_birth" ng-change="calculateAge(PI.date_of_birth);" ng-class="{
-                                                true
-                                                        : 'error'}[submitted && userForm1.date_of_birth.$invalid]" class="form-control" required placeholder="Pick Date" />
+                                        <input type="text" name="date_of_birth" ng-model="PI.date_of_birth" ng-change="calculateAge(PI.date_of_birth);" ng-class="{true: 'error'}[submitted && userForm1.date_of_birth.$invalid]" class="form-control" required placeholder="Pick Date" />
                                         <p class="help-block PIValid" ng-show="submitted && userForm1.date_of_birth.$error.required">Required</p>
                                     </div>
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -93,9 +87,7 @@
                                     </select>
                                 </div>
                                 <div class="col-lg-3" ng-init="PI.sex = undefined">
-                                    <select class="form-control " name="sex" placeholder="Gender" ng-model="PI.sex" ng-class="{
-                                            true
-                                                    :'error'}[submitted && userForm1.sex.$invalid]" required>
+                                    <select class="form-control " name="sex" placeholder="Gender" ng-model="PI.sex" ng-class="{true:'error'}[submitted && userForm1.sex.$invalid]" required>
                                         <option value=""></option>
                                         <option value="1">Female</option>
                                         <option value="2">Male</option>
@@ -248,8 +240,9 @@
                                 <label>Country/State</label>
                             </div>
                             <div class="col-lg-3">
-                                <select class="form-control select_searchFields" data-placeholder="Select Country" ng-model="PI.adress.country" ng-options="country.name for country in contactAddressCountries track by country.id" ng-change="addressStateByCountry(PI.adress.country, 0);">
+                                <select class="form-control select_searchFields" data-placeholder="Select Country" ng-model="PI.adress.country" ng-change="addressStateByCountry(PI.adress.country, 0);">
                                     <option value=""></option>
+                                    <option ng-selected="PI.adress.country == country.id" value="{{country.id}}" ng-repeat="country in contactAddressCountries">{{country.name}}</option>
                                 </select>
                             </div>
                             <div class="col-lg-3">
@@ -721,7 +714,7 @@
                     </form>
                 </div>
 
-                <div class="tab-pane {{disabledTabArchive - no}}" id="archive">
+                <div class="tab-pane {{disabledTabArchive}}" id="archive">
                     <div class="col-xs-12">
                         <div class="icons_con">
                             <button class="done-editing button-custom">Save</button>

@@ -2,7 +2,7 @@
     <section>
         <div class="card custom-card">
             <div class="card-head card-head-custom card-color-2">
-                <div class="col-lg-1">
+                <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Encounter ID</label>
                     <span class="txt-style-2 col-lg-12 capitalize">{{encounterID == undefined ? EID : encounterID}}</span>
                 </div>
@@ -14,7 +14,7 @@
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Number</label>
                     <span class="txt-style-2 col-lg-12">PA-{{displayInfo.patient_id}}</span>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-1">
                     <label class="txt-style-1 text-uppercase col-lg-12">Age</label>
                     <span class="txt-style-2 col-lg-12">{{displayInfo.age}} Years</span>
                 </div>
@@ -152,9 +152,9 @@
             <div class="col-lg-6">
                 <select class="form-control" ng-class="{true: 'error'}[submitted && encounterForm.department.$invalid]" name="department" ng-model="updateEncounter.department" placeholder="Select" required>
                     <option value=""></option>
-                    <!-- <option value="1">1</option>
+<!--                     <option value="1">1</option>
                     <option value="2">2</option> -->
-                    <option ng-repeat="department in encountersDropdownData.departments" value="{{department.id}}">{{department.name}}</option>
+                    <option ng-selected="updateEncounter.department == department" ng-repeat="department in encountersDropdownData.departments" value="{{department.id}}">{{department.name}}</option>
                 </select>
                 <p class="help-block PIValid" ng-show="submitted && encounterForm.department.$error.required">Required</p>
             </div>
@@ -166,7 +166,7 @@
                 <select class="form-control" ng-class="{true: 'error'}[submitted && encounterForm.class.$invalid]" name="class" ng-model="updateEncounter.class" placeholder="Select" required>
                     <option value=""></option>
                     <!-- <option ng-repeat="class in eclass" value="{{class.id}}">{{class.name}}</option> -->
-                    <option value="1">1</option>
+                    <option selected="seleceted" value="1">1</option>
                     <option value="2">2</option>
                 </select>
                 <p class="help-block PIValid" ng-show="submitted && encounterForm.class.$error.required">Required</p>
@@ -180,7 +180,7 @@
                     <option value=""></option>
                     <!-- <option ng-repeat="type in types" value="{{type.id}}">{{type.name}}</option> -->
                     <option value="1">1</option>
-                    <option value="2">2</option>
+                    <option selected="seleceted" value="2">2</option>
                 </select>
                 <p class="help-block PIValid" ng-show="submitted && encounterForm.type.$error.required">Required</p>
             </div>
@@ -191,7 +191,7 @@
             <div class="col-lg-6">
                 <select class="form-control" ng-class="{true: 'error'}[submitted && encounterForm.wts.$invalid]" name="wts" ng-model="updateEncounter.wts" placeholder="Select whom to see" required>
                     <option value=""></option>
-                    <option ng-repeat="wts in encountersDropdownData.doctors" value="{{wts.id}}">{{wts.name}}</option>
+                    <option ng-selected="updateEncounter.wts == wts" ng-repeat="wts in encountersDropdownData.doctors" value="{{wts.id}}">{{wts.name}}</option>
                     <!-- <option value="1">1</option>
                     <option value="2">2</option> -->
                 </select>
@@ -358,3 +358,4 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+</div>
