@@ -247,15 +247,15 @@ AppEHR.factory("UpdateEncounter", function ($resource) {
 });
 AppEHR.factory("GetOneEncounter", function ($resource) {
     function getResource(params, body) {
-        var res2 = $resource(serverPath +  '', params, {
-            save: {method: 'POST'}
+        var res2 = $resource(serverPath +  'visit_details', params, {
+            get: {method: 'GET'}
         });
         return res2;
     }
     var patientRegistrationEmployer = {
-        save:function(params,body,success) {
+        get:function(params,body,success) {
           var res = getResource(params, body);  
-          return res.save(params,body,success);
+          return res.get(params,body,success);
         }
     };
     return patientRegistrationEmployer;
@@ -331,3 +331,18 @@ AppEHR.service('fileUpload', ['$http', function ($http) {
         });
     }
 }]);
+AppEHR.factory("GetPatientMedications", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'patient_medications', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get:function(params,body,success) {
+          var res = getResource(params, body);  
+          return res.get(params,body,success);
+        }
+    };
+    return patientRegistrationEmployer;
+});

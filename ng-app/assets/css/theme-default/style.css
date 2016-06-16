@@ -75,6 +75,9 @@ input[disabled] {
     font-family: 'SegoeUI-reg';
     font-weight: bold;
 }
+.custom-form label.txt-style-4.text-lowercase {
+    text-transform: lowercase;
+}
 .txt-style-2{
     font-size: 18px;
     line-height: 18px;
@@ -2144,3 +2147,25 @@ Archive Page Styling
 .select_file_mode a.active{
     border: 3px solid #56aeea;
 }
+.encounter-search-bar {
+    width: 100% !important;
+    border-radius: 0;
+    padding-left: 15px;
+    font-size: 18px;
+    height: 40px;
+}
+.encounter-search-bar .select2-choice {
+    height: 40px;
+    line-height: 35px;
+}
+.encounter-search-bar .select2-choice .select2-arrow b:before{
+    line-height: 32px;
+    margin-right: 8px;
+}
+div.ng-not-empty .select2-chosen {
+    color: #000 !important;
+}
+
+/*.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #fff;
+}*/
