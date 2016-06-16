@@ -78,7 +78,7 @@ class ApiController extends Controller
         $name = $request->input('name');
 
         $patients = DB::table('patients')
-            ->select(DB::raw('id,first_name,middle_name,last_name'))
+            ->select(DB::raw('id,first_name,last_name'))
             ->where('first_name', 'like', "%$name%")
             ->where('plan_id', 1)
             ->get();
@@ -922,25 +922,6 @@ class ApiController extends Controller
     }
 
 
-    public function patient_visit_list(Request $request)
-    {
-
-        $patient_id = $request->input('patient_id');
-
-
-        $data = DB::table('visits')
-            ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
-            ->select(DB::raw('*'))
-            ->where('visits.patient_id', $patient_id)
-            ->get();
-
-
-        return response()->json(['status' => true, 'data' => $data]);
-
-
-    }
-
-
     public function get_patient_vitals(Request $request)
     {
 
@@ -1316,37 +1297,45 @@ class ApiController extends Controller
 
         $patient_id = $request->input('patient_id');
 
-        $vitals = $request->input('vitals');
-        
-        $patient_vitals = json_decode($vitals);
+        $systolic_mm_hg = $request->input('systolic_mm_hg');
+
+        $diastolic_mm_hg = $request->input('diastolic_mm_hg');
+
+        $pulse = $request->input('pulse');
+
+        $respiratory_rate= $request->input('respiratory_rate');
+
+        $temperature_c = $request->input('temperature_c');
+
+        $temperature_f = $request->input('temperature_f');
+
+        $bmi_result= $request->input('bmi_result');
+
+        $bmi_weight= $request->input('bmi_weight');
+
+        $bmi_height = $request->input('bmi_height');
 
         $notes = $request->input('notes');
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
 
+        DB::table('patient_vitals')->insert(
+               ['patient_id' => $patient_id,
+                   'systolic_mm_hg' => $systolic_mm_hg,
+                   'diastolic_mm_hg' => $diastolic_mm_hg,
+                   'pulse' => $pulse,
+                   'respiratory_rate' => $respiratory_rate,
+                   'temperature_c' => $temperature_c,
+                   'temperature_f' => $temperature_f,
+                   'bmi_result' => $bmi_result,
+                   'bmi_weight' => $bmi_weight,
+                   'bmi_height' => $bmi_height,
+                   'notes' => $notes,
+                   'created_at' => $currentdatetime
 
-        DB::table('medical_record_description')->insert(
-            ['patient_id' => $patient_id,
-                'notes' => $notes,
-                'created_at' => $currentdatetime
-
-            ]
-        );
-
-
-        foreach ($patient_vitals as $patient_vital) {
-
-            DB::table('medical_record_values')->insert(
-                ['patient_id' => $patient_id,
-                    'field_id' => $patient_vital->field_id,
-                    'value' => $patient_vital->value,
-                    'created_at' => $currentdatetime
-
-                ]
-            );
-
-        }
+               ]
+           );
 
 
 
@@ -1385,14 +1374,13 @@ class ApiController extends Controller
 
         $patient_id = $request->input('patient_id');
 
-        $vital_history = DB::table('medical_record_values')
-            ->leftJoin('medical_record_fields', 'medical_record_fields.id', '=', 'medical_record_values.field_id')
-            ->select(DB::raw('medical_record_fields.category,medical_record_fields.name,medical_record_values.value'))
-            ->where('medical_record_values.patient_id', $patient_id)
-            ->where('medical_record_values.status','1')
+        $data = DB::table('patient_vitals')
+            ->select(DB::raw('*'))
+            ->where('patient_id', $patient_id)
+            ->where('status', '1')
             ->get();
 
-        return response()->json(['status' => true, 'data' => $vital_history]);
+        return response()->json(['status' => true, 'data' => $data]);
 
     }
 
@@ -1431,11 +1419,20 @@ class ApiController extends Controller
             ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
             ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.plan_id')
             ->leftJoin('blood_group', 'blood_group.id', '=', 'patients.blood_group')
-            ->select(DB::raw('patients.id,patients.first_name,patients.middle_name,patients.last_name,patients.date_of_birth,patients.age,patients.patient_image,religion.name as religion,maritial_status.name as marital_status,hospital_plan.name as hospital_plan,patient_address.mobile_number,patient_address.email,patient_kin.fullname as next_to_kin,patient_address.house_number,patient_address.street,blood_group.name as blood_group
+            ->select(DB::raw('patients.id,patients.first_name,patients.middle_name,patients.last_name,patients.date_of_birth,patients.sex,patients.age,patients.patient_image,religion.name as religion,maritial_status.name as marital_status,hospital_plan.name as hospital_plan,patient_address.mobile_number,patient_address.email,patient_kin.fullname as next_to_kin,patient_address.house_number,patient_address.street,blood_group.name as blood_group
             '))
             ->where('patients.id', $patient_id)
             ->where('patient_address.address_type', 'contact')
             ->first();
+
+
+        if($demographics->sex ==1){
+
+            $demographics->gender = 'Male';
+        }else{
+
+            $demographics->gender = 'FeMale';
+        }
 
 
         return response()->json(['status' => true, 'data' => $demographics]);
@@ -1460,4 +1457,91 @@ class ApiController extends Controller
 
     }
 
+
+    public function visit_details(Request $request){
+
+        $visit_id= $request->input('visit_id');
+
+        $visit_details = DB::table('visits')
+               ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
+               ->leftJoin('departments', 'departments.id', '=', 'visits.department_id')
+               ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
+               ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,departments.id as department_id,visits.created_at'))
+               ->where('visits.patient_id','!=','null')
+               ->where('visits.visit_status','!=','checkout')
+               ->where('visits.status','1')
+               ->where('visits.id',$visit_id)
+               ->first();
+
+
+           return response()->json(['status' => true, 'data' => $visit_details]);
+
+
+    }
+
+
+
+    public function patient_archives(Request $request){
+
+        $patient_id = $request->input('patient_id');
+
+        $file_archive = url('/') . '/patient_archive/';
+
+        $patient_archives = DB::table('patient_file_access_log')
+            ->select(DB::raw('id,patient_id,file,CONCAT("' . $file_archive . '",file) as file'))
+            ->where('patient_id',$patient_id)
+            ->where('status',1)
+            ->get();
+
+        return response()->json(['status' => true, 'data' => $patient_archives]);
+
+
+    }
+
+
+    public function patient_medications(Request $request){
+
+        $patient_id = $request->input('patient_id');
+
+        $patient_medications = DB::table('medication_shedule')
+            ->select(DB::raw('id,prescriptions,to_date,from_date,status'))
+            ->where('patient_id',$patient_id)
+            ->where('status','inprocess')
+            ->get();
+
+
+        return response()->json(['status' => true, 'data' => $patient_medications]);
+
+    }
+
+    public function patient_supplements(Request $request){
+
+        $patient_id = $request->input('patient_id');
+
+        $patient_supplements = DB::table('medicines')
+            ->select(DB::raw('id,dosage,frequency,intake,from_date,to_date'))
+            ->where('patient_id',$patient_id)
+            ->where('status','1')
+            ->get();
+
+
+        return response()->json(['status' => true, 'data' => $patient_supplements]);
+
+    }
+
+
+
+    public function patient_allergies(Request $request){
+
+        $patient_id = $request->input('patient_id');
+
+        $patient_allergies = DB::table('patient_allergies')
+            ->select(DB::raw('*'))
+            ->where('patient_id',$patient_id)
+            ->get();
+
+
+        return response()->json(['status' => true, 'data' => $patient_allergies]);
+
+    }
 }
