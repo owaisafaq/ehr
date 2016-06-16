@@ -1,5 +1,5 @@
 var AppEHR = angular.module('AppEHR');
-AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', 'PatientInformation', 'fileUpload', '$location', '$filter', 'Upload', '$timeout', 'PatientRegistrationAddress', 'PatientRegistrationKin', 'PatientRegistrationEmployer', '$routeParams', 'GetPatientAllData', 'PatienPlanSaveData', '$compile', '$http', function ($rootScope, $scope, $window, Countries, States, GetLocalGovermentArea, City, DropDownData, PatientInformation, fileUpload, $location, $filter, Upload, $timeout, PatientRegistrationAddress, PatientRegistrationKin, PatientRegistrationEmployer, $routeParams, GetPatientAllData, PatienPlanSaveData, $compile, $http) {
+AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', 'PatientInformation', 'fileUpload', '$location', '$filter', 'Upload', '$timeout', 'PatientRegistrationAddress', 'PatientRegistrationKin', 'PatientRegistrationEmployer', '$routeParams', 'GetPatientAllData', 'PatienPlanSaveData', '$compile', '$http', 'GetArchives', function ($rootScope, $scope, $window, Countries, States, GetLocalGovermentArea, City, DropDownData, PatientInformation, fileUpload, $location, $filter, Upload, $timeout, PatientRegistrationAddress, PatientRegistrationKin, PatientRegistrationEmployer, $routeParams, GetPatientAllData, PatienPlanSaveData, $compile, $http, GetArchives) {
         $rootScope.pageTitle = "EHR - Patient Registration";
         $scope.PI = $rootScope.PI;
         $scope.PI.adress = {};
@@ -561,7 +561,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                                 $scope.disabledTabPatientPlant = 'active';
                             }
                             $scope.disabledTabPatientPlant = $scope.disabledTabPatientPlant != 'active' ? '' : "active";
-//                            $scope.disabledTabPatientPlant = 'active';
+                            // $scope.disabledTabPatientPlant = 'active';
                             $scope.disabledTabEmployer = '';
                         } else {
                             $rootScope.loader = 'hide';
@@ -645,6 +645,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
              fileUpload.uploadFileToUrl(file, uploadUrl);*/
         };
 
+        // EDIT Patient
         if ($routeParams.patientID != undefined) {
             $rootScope.loader = 'show';
             //$scope.PI.sameAsAbove = true;
@@ -662,9 +663,11 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 token: $window.sessionStorage.token,
                 patient_id: $window.sessionStorage.patient_id
             }, patientEditSuccess, patientEditFailed);
+            GetArchives.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID}, archiveSuccess, archiveFailure);
         } else {
             console.log($routeParams.patientID);
         }
+        GetArchives.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID}, archiveSuccess, archiveFailure);
 
         function patientEditSuccess(res) {
             if (res.status == true) {
@@ -754,6 +757,41 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         function patientEditFailed(error) {
             console.log(error);
         }
+
+        function archiveSuccess(res){
+            if(res.status == true){
+                $scope.archives = res.data;
+            }
+        }
+
+        function archiveFailure(error) {
+            console.log(error);
+        }
+
+        $('#file_upload').uploadify({
+            'formData': {'patient_id' : '1', 'patient_archive' : 'abc.jpg'},
+            'removeCompleted' : false,
+            'fileTypeExts' : '*.jpg; *.png; *.pdf;',
+            'method'   : 'POST',
+            'multi'    : false,
+            'auto'     : false,
+            'swf'      : 'assets/css/theme-default/uploadify.swf',
+            'uploader' : serverPath+'add_patient_archive',
+            'script'    : serverPath+'add_patient_archive',
+            'scriptAccess' : 'always',
+            'fileSizeLimit' : '100000KB',
+            'onUploadSuccess' : function(file, data, response) {
+                alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
+            },
+            'onUploadError' : function(file, errorCode, errorMsg, errorString) {
+                console.log(errorString);
+                console.log(errorCode + " " + errorMsg);
+            }/*,
+            'onUploadStart' : function(file) {
+                $('#file_upload').uploadify('settings','formData',{'patient_id' : '1', 'patient_archive' : 'abc.jpg'});
+            }*/
+        });
+        console.log(serverPath+'add_patient_archive');
 
         $rootScope.do_valid = true;
         $rootScope.do_valid_nhis = true;

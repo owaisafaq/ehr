@@ -156,7 +156,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
 		$scope.message = false;
 		var eid = $scope.encounterID == undefined ? $scope.EID : $scope.encounterID;
 		console.log(eid);
-		//GetOneEncounter.get({token: $window.sessionStorage.token, visit_id: eid}, getOneEncounterSuccess, getOneEncounterFailure);
+		GetOneEncounter.get({token: $window.sessionStorage.token, visit_id: eid}, getOneEncounterSuccess, getOneEncounterFailure);
 		$scope.updateEncounterPopUp = true;
 	}
 

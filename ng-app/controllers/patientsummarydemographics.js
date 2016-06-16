@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients' function($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients){
+AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', function($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients){
 	$rootScope.pageTitle = "EHR - Patient Summary Demographics";
 	$scope.PI = {};
 	PatientDemographics.get({

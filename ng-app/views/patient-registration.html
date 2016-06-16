@@ -2,7 +2,7 @@
     <section>
         <div class="card custom-card no-padding">
             <div class="card-head">
-                <ul class="nav nav-tabs nav-justified custom-tab " data-toggle="tabs" ng-init="disabledTabInfo = 'active';byParams == undefined ? disabledTabAdress = 'disabled-tabs' : byParams; byParams == undefined ? disabledTabKin = 'disabled-tabs':byParams;byParams == undefined ? disabledTabEmployer = 'disabled-tabs': '';byParams == undefined ? disabledTabPatientPlant = 'disabled-tabs' : byParams; byParams == undefined ? disabledTabArchive = 'disabled-tabs' : byParams;">
+                <ul class="nav nav-tabs nav-justified custom-tab " data-toggle="tabs" ng-init="disabledTabInfo = 'active';byParams == undefined ? disabledTabAdress = 'disabled-tabs' : byParams;byParams == undefined ? disabledTabKin = 'disabled-tabs' : byParams;byParams == undefined ? disabledTabEmployer = 'disabled-tabs' : '';byParams == undefined ? disabledTabPatientPlant = 'disabled-tabs' : byParams;byParams == undefined ? disabledTabArchive = 'disabled-tabs' : byParams;">
                     <li class="{{disabledTabInfo}}"><a showtab href="#info">patient information</a></li>
                     <li class="{{disabledTabAdress}}"><a showtab href="#address">address</a></li>
                     <li class="{{disabledTabKin}}"><a showtab href="#kin">next of kin</a></li>
@@ -12,7 +12,7 @@
                 </ul>
             </div><!-- end .card-head -->
             <div class="card-body tab-content">
-                <div class="tab-pane {{disabledTabInfo - no}}" id="info">
+                <div class="tab-pane {{disabledTabInfo}}" id="info">
                     <form class="custom-form" name="userForm1" ng-model="myForm" novalidate ng-submit="validatePatientInfo(PI);" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-lg-3">
@@ -31,14 +31,18 @@
                                 <label>Full Name</label>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" ng-class="{true: 'error'}[submitted && userForm1.first_name.$invalid]" alphabets-only placeholder="First Name" name="first_name" ng-model="PI.first_name" required/>
+                                <input type="text" ng-class="{
+                                        true
+                                                : 'error'}[submitted && userForm1.first_name.$invalid]" alphabets-only placeholder="First Name" name="first_name" ng-model="PI.first_name" required/>
                                 <p class="help-block PIValid" ng-show="submitted && userForm1.first_name.$error.required">Required</p>
                             </div>
                             <div class="col-lg-3">
                                 <input type="text" alphabets-only placeholder="Middle Name" name="middle_name" ng-model="PI.middle_name"/>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" ng-class="{true: 'error'}[submitted && userForm1.last_name.$invalid]" alphabets-only placeholder="Last Name" name="last_name" ng-model="PI.last_name" required/>
+                                <input type="text" ng-class="{
+                                        true
+                                                : 'error'}[submitted && userForm1.last_name.$invalid]" alphabets-only placeholder="Last Name" name="last_name" ng-model="PI.last_name" required/>
                                 <p class="help-block PIValid" ng-show="submitted && userForm1.last_name.$error.required">Required</p>
                             </div>
                             <div class="col-lg-3">
@@ -48,7 +52,9 @@
                                 <!--<input type="text" placeholder="Pick Date" />-->
                                 <div class="input-group date select-date">
                                     <div class="input-group-content">
-                                        <input type="text" name="date_of_birth" ng-model="PI.date_of_birth" ng-change="calculateAge(PI.date_of_birth);" ng-class="{true: 'error'}[submitted && userForm1.date_of_birth.$invalid]" class="form-control" required placeholder="Pick Date" />
+                                        <input type="text" name="date_of_birth" ng-model="PI.date_of_birth" ng-change="calculateAge(PI.date_of_birth);" ng-class="{
+                                                true
+                                                        : 'error'}[submitted && userForm1.date_of_birth.$invalid]" class="form-control" required placeholder="Pick Date" />
                                         <p class="help-block PIValid" ng-show="submitted && userForm1.date_of_birth.$error.required">Required</p>
                                     </div>
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -87,7 +93,9 @@
                                     </select>
                                 </div>
                                 <div class="col-lg-3" ng-init="PI.sex = undefined">
-                                    <select class="form-control " name="sex" placeholder="Gender" ng-model="PI.sex" ng-class="{true:'error'}[submitted && userForm1.sex.$invalid]" required>
+                                    <select class="form-control " name="sex" placeholder="Gender" ng-model="PI.sex" ng-class="{
+                                            true
+                                                    :'error'}[submitted && userForm1.sex.$invalid]" required>
                                         <option value=""></option>
                                         <option value="1">Female</option>
                                         <option value="2">Male</option>
@@ -713,7 +721,7 @@
                     </form>
                 </div>
 
-                <div class="tab-pane {{disabledTabArchive - no}} active" id="archive">
+                <div class="tab-pane {{disabledTabArchive - no}}" id="archive">
                     <div class="col-xs-12">
                         <div class="icons_con">
                             <button class="done-editing button-custom">Save</button>
@@ -799,19 +807,33 @@
 
                         </div>
                         <div class="file_create_con col-xs-12 no-padding">
-                            <div class="col-xs-2">
-                                <div class="file_preview">
-                                    <img src="assets/img/preview_1.jpg" />
+                            <div class="col-xs-2" ng-repeat="archive in archives">
+                                <div ng-if="archive.file.slice(-3) == 'pdf'">
+                                    <div class="file_preview">
+                                        <img src="assets/img/preview_1.jpg" />
+                                    </div>
+                                    <div class="file_lower">
+                                        <img src="assets/img/pdf_icon.png" />
+                                        <div class="pull-left">
+                                            <input type="text" value="Document Name" disabled />
+                                            <span class="file_date">June 09, 2016</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="file_lower">
-                                    <img src="assets/img/pdf_icon.png" />
-                                    <div class="pull-left">
-                                        <input type="text" value="Document Name" disabled />
-                                        <span class="file_date">June 09, 2016</span>
+                                <div ng-if="archive.file.slice(-3) == 'jpg' || archive.file.slice(-3) == 'peg' || archive.file.slice(-3) == 'png'">
+                                    <div class="file_preview">
+                                        <img src="assets/img/preview_2.jpg" />
+                                    </div>
+                                    <div class="file_lower">
+                                        <img src="assets/img/jpg_icon.png" />
+                                        <div class="pull-left">
+                                            <input type="text" value="Document Name" disabled />
+                                            <span class="file_date">June 09, 2016</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-2">
+                            <!-- <div class="col-xs-2">
                                 <div class="file_preview">
                                     <img src="assets/img/preview_2.jpg" />
                                 </div>
@@ -900,7 +922,7 @@
                                         <span class="file_date">June 09, 2016</span>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -1043,7 +1065,7 @@
                         <!---->
                         <select class="form-control" ng-class="{
                                 true
-                                : 'error'}[checkValidate_retainer && form_modal_2.category_dropdown.$invalid]" name="category_dropdown" data-placeholder="Select Category" ng-model="RI.category" ng-options="category.name for category in dropDownData.categories track by category.id"  required>
+                                        : 'error'}[checkValidate_retainer && form_modal_2.category_dropdown.$invalid]" name="category_dropdown" data-placeholder="Select Category" ng-model="RI.category" ng-options="category.name for category in dropDownData.categories track by category.id"  required>
                             <option value=""></option>
                         </select>
                         <span class="help-block PIValid" ng-show="checkValidate_retainer && form_modal_2.category_dropdown.$error.required">Required</span>
@@ -1123,9 +1145,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
-                <h2>NHIS</h2>
+                <h2>Add Archive</h2>
             </div>
-
             <div class="modal-body pull-left">
                 <div class="select_file_mode">
                     <a class="active" href="javascript:;"><img src="assets/img/pdf_big_icon.png" /></a>
@@ -1133,16 +1154,11 @@
                     <a href="javascript:;"><img src="assets/img/folder_icon_big.png" /></a>
                 </div>
                 <div class="show_uploading_format">
-                    <div>
+                    <div class="clear">
+                        <input type="file" name="patient_archive" id="file_upload" />
+                        <a href="javascript:$('#file_upload').uploadify('upload','*')">Upload Files</a>
+                        <p></p>
                     </div>
-                    <!--                        <div class="col-lg-12">
-                                                <label>Upload file</label>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <input type="text" placeholder="Select file" />
-                                                <button></button>
-                                            </div>-->
-
                 </div>
             </div>
             <div class="modal-footer">
