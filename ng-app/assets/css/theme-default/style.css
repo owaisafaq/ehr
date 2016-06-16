@@ -253,7 +253,7 @@ Menu styling
 }
 .custom-tab-with-header{
     top: 125px;
-    width: 76.2% !important;
+    width: 100% !important;
 }
 .card-head > .custom-tab > li > a{
     color:#516e81;
@@ -648,6 +648,7 @@ Table Styling
     border: none;
     padding-top: 30px;
     line-height: 13px;
+    border-radius: 0 !important;
 }
 .button-custom:first-child{
     margin-right: 0px;
@@ -903,7 +904,7 @@ Side PopUp
 .modal-body{
     padding: 30px 40px 0;
 }
-.modal-body p{
+.modal-body p:not(.PIValid){
     font-size:20px;
     color: #003d51;
     font-family: 'sgui-bold';
@@ -958,6 +959,9 @@ Accordian
 }
 .custom-accordian .card-head .tools .btn-icon-toggle i{
     line-height: 25px;
+}
+.custom-accordian_2{
+    margin-top: 40px;
 }
 .panel-group .card{
     margin-bottom: 10px;

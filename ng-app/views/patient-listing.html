@@ -36,7 +36,7 @@
             </div>
             <div class="table-header col-lg-12">
                 <div class="col-lg-8">
-                    <span class="txt-style-3 pull-left text-uppercase">fint patient</span>
+                    <span class="txt-style-3 pull-left text-uppercase">find patient</span>
                     <div class="col-lg-2">
                         <select class="form-control">
                             <option>Patient ID</option>
@@ -65,7 +65,7 @@
                     <table class="table table-striped no-margin table-custom">
                         <thead>
                             <tr>
-                                <th></th>
+                                <th width="5px"></th>
                                 <th>patient id</th>
                                 <th>first name</th>
                                 <th>last name</th>
@@ -74,47 +74,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr ng-repeat="patientList in patientLists">
                                 <td align="center">
                                     <div class="radio radio-styled">
                                         <label>
-                                            <input type="radio" name="optionsRadios" value="option1">
+                                            <input type="radio" name="optionsRadios" ng-model="action" ng-click="encounterSelected(encounter.patient_id, encounter.id);" ng-value="{{encounter.id}}" ng-checked="EID == encounter.id">
+                                            <span></span>
                                         </label>
                                     </div>
                                 </td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td align="center">
-                                    <div class="radio radio-styled">
-                                        <label>
-                                            <input type="radio" name="optionsRadios" value="option1">
-                                        </label>
-                                    </div>
-                                </td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td align="center">
-                                    <div class="radio radio-styled">
-                                        <label>
-                                            <input type="radio" name="optionsRadios" value="option1">
-                                        </label>
-                                    </div>
-                                </td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{patientList.id}}</td>
+                                <td>{{patientList.first_name}}</td>
+                                <td>{{patientList.last_name}}</td>
+                                <td>{{patientList.date_of_birth}}</td>
+                                <td>{{patientList.phone_number}}</td>
                             </tr>
                         </tbody>
                     </table>
