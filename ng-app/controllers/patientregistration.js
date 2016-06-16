@@ -1,5 +1,5 @@
 var AppEHR = angular.module('AppEHR');
-AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', 'PatientInformation', 'fileUpload', '$location', '$filter', 'Upload', '$timeout', 'PatientRegistrationAddress', 'PatientRegistrationKin', 'PatientRegistrationEmployer', '$routeParams', 'GetPatientAllData', 'PatienPlanSaveData', '$compile', '$http', function ($rootScope, $scope, $window, Countries, States, GetLocalGovermentArea, City, DropDownData, PatientInformation, fileUpload, $location, $filter, Upload, $timeout, PatientRegistrationAddress, PatientRegistrationKin, PatientRegistrationEmployer, $routeParams, GetPatientAllData, PatienPlanSaveData, $compile, $http) {
+AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', 'PatientInformation', 'fileUpload', '$location', '$filter', 'Upload', '$timeout', 'PatientRegistrationAddress', 'PatientRegistrationKin', 'PatientRegistrationEmployer', '$routeParams', 'GetPatientAllData', 'PatienPlanSaveData', '$compile', '$http', 'GetArchives', 'RemoveArchives', 'EditArchives', function ($rootScope, $scope, $window, Countries, States, GetLocalGovermentArea, City, DropDownData, PatientInformation, fileUpload, $location, $filter, Upload, $timeout, PatientRegistrationAddress, PatientRegistrationKin, PatientRegistrationEmployer, $routeParams, GetPatientAllData, PatienPlanSaveData, $compile, $http, GetArchives, RemoveArchives, EditArchives) {
         $rootScope.pageTitle = "EHR - Patient Registration";
         $scope.PI = $rootScope.PI;
         $scope.PI.adress = {};
@@ -561,7 +561,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                                 $scope.disabledTabPatientPlant = 'active';
                             }
                             $scope.disabledTabPatientPlant = $scope.disabledTabPatientPlant != 'active' ? '' : "active";
-//                            $scope.disabledTabPatientPlant = 'active';
+                            // $scope.disabledTabPatientPlant = 'active';
                             $scope.disabledTabEmployer = '';
                         } else {
                             $rootScope.loader = 'hide';
@@ -645,6 +645,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
              fileUpload.uploadFileToUrl(file, uploadUrl);*/
         };
 
+        // EDIT Patient
         if ($routeParams.patientID != undefined) {
             $rootScope.loader = 'show';
             //$scope.PI.sameAsAbove = true;
@@ -662,9 +663,11 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 token: $window.sessionStorage.token,
                 patient_id: $window.sessionStorage.patient_id
             }, patientEditSuccess, patientEditFailed);
+            GetArchives.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID}, archiveSuccess, archiveFailure);
         } else {
             console.log($routeParams.patientID);
         }
+        GetArchives.get({token: $window.sessionStorage.token, patient_id: '1' /*$window.sessionStorage.patient_id*/}, archiveSuccess, archiveFailure);
 
         function patientEditSuccess(res) {
             if (res.status == true) {
@@ -749,10 +752,110 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 $scope.PI.employer.employer_city = res.data.patient_employeer.city;
                 console.log(res.data);
                 $rootScope.loader = 'hide';
+//                if ($rootScope.loader == 'hide') {
+                setTimeout(function () {
+                    $('select').trigger('change');
+//                    $('.select_searchFields').select2();
+                },100)
+
+//                }
             }
         }
         function patientEditFailed(error) {
             console.log(error);
+        }
+
+        function archiveSuccess(res){
+            if(res.status == true){
+                $scope.archives = res.data;
+                console.log(res.data);
+            }
+        }
+
+        function archiveFailure(error) {
+            console.log(error);
+        }
+
+        $('#file_upload').uploadify({
+            'removeCompleted' : false,
+            'fileTypeExts' : '*.jpg; *.png; *.pdf;',
+            'method'   : 'POST',
+            'multi'    : false,
+            'auto'     : false,
+            'swf'      : 'assets/css/theme-default/uploadify.swf',
+            'uploader' : serverPath+'add_patient_archive',
+            'script'    : serverPath+'add_patient_archive',
+            'scriptAccess' : 'always',
+            'fileSizeLimit' : '100000KB',
+            'onUploadSuccess' : function(file, data, response) {
+                console.log('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
+            },
+            'onUploadError' : function(file, errorCode, errorMsg, errorString) {
+                console.log(errorString);
+                console.log(errorCode + " " + errorMsg);
+            },
+            'onUploadStart' : function(file) {
+                console.log(file.name);
+                $('#file_upload').uploadify('settings','formData',{'patient_id' : '1' /*$window.sessionStorage.patient_id*/, 'patient_archive' : file.name});
+            }
+        });
+
+        $scope.deleteArchive = function(){
+            var removeId = $('.file_uploads .active').data('id');
+            if(removeId != undefined){
+                $rootScope.loader = 'show';
+                RemoveArchives.get({token: $window.sessionStorage.token, patient_id: '1' /*$window.sessionStorage.patient_id*/ , patient_fie_id: removeId}, removeArchiveSuccess, removeArchiveFailure);
+            }
+        }
+
+        function removeArchiveSuccess(res){
+            if(res.status == true){
+                console.log(res);
+                $rootScope.loader = 'hide';
+                GetArchives.get({token: $window.sessionStorage.token, patient_id: '1' /*$window.sessionStorage.patient_id*/}, archiveSuccess, archiveFailure);
+            }
+        }
+
+        function removeArchiveFailure(error){
+            console.log(error);
+            $rootScope.loader == 'hide'
+        }
+
+        // edit archive
+        $scope.editArchive = function(){
+            var filename = $('.file_uploads .active').data('filename');
+            var fileid = $('.file_uploads .active').data('id');
+            console.log(filename);
+            $rootScope.loader = 'show';
+            if(fileid != undefined){
+                EditArchives.save({token: $window.sessionStorage.token, patient_id: '1' /*$window.sessionStorage.patient_id*/ , file_name: filename, file_id: fileid}, editArchiveSuccess, editArchiveFailure);
+            }
+        }
+
+        function editArchiveSuccess(res){
+            if(res.status == true){
+                console.log(res);
+                $rootScope.loader = 'hide';
+                GetArchives.get({token: $window.sessionStorage.token, patient_id: '1' /*$window.sessionStorage.patient_id*/}, archiveSuccess, archiveFailure);
+            }
+        }
+        $scope.saveArchive = function(){
+            var fileid = $('.file_uploads .active').data('id');
+            //var filename = $('.file_uploads .active').data('filename');
+            var filename = $('.file_uploads .active').find('input[type=text]').val();
+            console.log(filename);
+            $rootScope.loader = 'show';
+            if(fileid != undefined){
+                EditArchives.save({token: $window.sessionStorage.token, patient_id: '1', /*$window.sessionStorage.patient_id */ file_name: filename, file_id: fileid}, editArchiveSuccess, editArchiveFailure);
+            }
+        }
+        function editArchiveFailure(error){
+            console.log(error);
+            $rootScope.loader == 'hide'
+        }
+
+        $scope.showPDF = function(link){
+            $window.open(link, '_blank');
         }
 
         $rootScope.do_valid = true;

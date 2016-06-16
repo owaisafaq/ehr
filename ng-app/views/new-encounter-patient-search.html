@@ -1,6 +1,6 @@
 <div id="content">
     <section>
-        <div class="card {{dataStrip}}">
+        <div class="card {{dataStrip}}" ng-class="{true: 'custom-card'}[patientInfo]">
             <div class="card-head card-head-custom card-color-1" ng-show="patientInfo">
                 <div class="col-lg-3">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
@@ -147,12 +147,8 @@
                             </tr>
                         </tbody>
                     </table> -->
-                    <div class="header-search">
-                        <button type="submit" class="search-btn-icon">
-                            <i class="fa fa-search"></i>
-                        </button>
-                        <input class="search_field encounter-search-bar" ng-change="getSearchPatient(search);" type="text" ng-model="search" placeholder="Search for a patient">
-                    </div>
+                        <input class="encounter-search-bar" ng-change="getSearchPatient(search);" type="text" ng-model="search" placeholder="Search for a patient">
+                    
                 </div>
             </div><!--end .card-body -->
         </div><!--end .card -->
