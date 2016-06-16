@@ -1,5 +1,5 @@
 var AppEHR = angular.module('AppEHR');
-AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', 'PatientInformation', 'fileUpload', '$location', '$filter', 'Upload', '$timeout', 'PatientRegistrationAddress', 'PatientRegistrationKin', 'PatientRegistrationEmployer', '$routeParams', 'GetPatientAllData', 'PatienPlanSaveData', '$compile', '$http', 'GetArchives', function ($rootScope, $scope, $window, Countries, States, GetLocalGovermentArea, City, DropDownData, PatientInformation, fileUpload, $location, $filter, Upload, $timeout, PatientRegistrationAddress, PatientRegistrationKin, PatientRegistrationEmployer, $routeParams, GetPatientAllData, PatienPlanSaveData, $compile, $http, GetArchives) {
+AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', 'PatientInformation', 'fileUpload', '$location', '$filter', 'Upload', '$timeout', 'PatientRegistrationAddress', 'PatientRegistrationKin', 'PatientRegistrationEmployer', '$routeParams', 'GetPatientAllData', 'PatienPlanSaveData', '$compile', '$http', 'GetArchives', 'RemoveArchives', 'EditArchives', function ($rootScope, $scope, $window, Countries, States, GetLocalGovermentArea, City, DropDownData, PatientInformation, fileUpload, $location, $filter, Upload, $timeout, PatientRegistrationAddress, PatientRegistrationKin, PatientRegistrationEmployer, $routeParams, GetPatientAllData, PatienPlanSaveData, $compile, $http, GetArchives, RemoveArchives, EditArchives) {
         $rootScope.pageTitle = "EHR - Patient Registration";
         $scope.PI = $rootScope.PI;
         $scope.PI.adress = {};
@@ -667,7 +667,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         } else {
             console.log($routeParams.patientID);
         }
-        GetArchives.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID}, archiveSuccess, archiveFailure);
+        GetArchives.get({token: $window.sessionStorage.token, patient_id: '1' /*$window.sessionStorage.patient_id*/}, archiveSuccess, archiveFailure);
 
         function patientEditSuccess(res) {
             if (res.status == true) {
@@ -768,6 +768,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         function archiveSuccess(res){
             if(res.status == true){
                 $scope.archives = res.data;
+                console.log(res.data);
             }
         }
 
@@ -776,7 +777,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         }
 
         $('#file_upload').uploadify({
-            'formData': {'patient_id' : '1', 'patient_archive' : 'abc.jpg'},
             'removeCompleted' : false,
             'fileTypeExts' : '*.jpg; *.png; *.pdf;',
             'method'   : 'POST',
@@ -788,17 +788,75 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             'scriptAccess' : 'always',
             'fileSizeLimit' : '100000KB',
             'onUploadSuccess' : function(file, data, response) {
-                alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
+                console.log('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
             },
             'onUploadError' : function(file, errorCode, errorMsg, errorString) {
                 console.log(errorString);
                 console.log(errorCode + " " + errorMsg);
-            }/*,
+            },
             'onUploadStart' : function(file) {
-                $('#file_upload').uploadify('settings','formData',{'patient_id' : '1', 'patient_archive' : 'abc.jpg'});
-            }*/
+                console.log(file.name);
+                $('#file_upload').uploadify('settings','formData',{'patient_id' : '1' /*$window.sessionStorage.patient_id*/, 'patient_archive' : file.name});
+            }
         });
-        console.log(serverPath+'add_patient_archive');
+
+        $scope.deleteArchive = function(){
+            var removeId = $('.file_uploads .active').data('id');
+            if(removeId != undefined){
+                $rootScope.loader = 'show';
+                RemoveArchives.get({token: $window.sessionStorage.token, patient_id: '1' /*$window.sessionStorage.patient_id*/ , patient_fie_id: removeId}, removeArchiveSuccess, removeArchiveFailure);
+            }
+        }
+
+        function removeArchiveSuccess(res){
+            if(res.status == true){
+                console.log(res);
+                $rootScope.loader = 'hide';
+                GetArchives.get({token: $window.sessionStorage.token, patient_id: '1' /*$window.sessionStorage.patient_id*/}, archiveSuccess, archiveFailure);
+            }
+        }
+
+        function removeArchiveFailure(error){
+            console.log(error);
+            $rootScope.loader == 'hide'
+        }
+
+        // edit archive
+        $scope.editArchive = function(){
+            var filename = $('.file_uploads .active').data('filename');
+            var fileid = $('.file_uploads .active').data('id');
+            console.log(filename);
+            $rootScope.loader = 'show';
+            if(fileid != undefined){
+                EditArchives.save({token: $window.sessionStorage.token, patient_id: '1' /*$window.sessionStorage.patient_id*/ , file_name: filename, file_id: fileid}, editArchiveSuccess, editArchiveFailure);
+            }
+        }
+
+        function editArchiveSuccess(res){
+            if(res.status == true){
+                console.log(res);
+                $rootScope.loader = 'hide';
+                GetArchives.get({token: $window.sessionStorage.token, patient_id: '1' /*$window.sessionStorage.patient_id*/}, archiveSuccess, archiveFailure);
+            }
+        }
+        $scope.saveArchive = function(){
+            var fileid = $('.file_uploads .active').data('id');
+            //var filename = $('.file_uploads .active').data('filename');
+            var filename = $('.file_uploads .active').find('input[type=text]').val();
+            console.log(filename);
+            $rootScope.loader = 'show';
+            if(fileid != undefined){
+                EditArchives.save({token: $window.sessionStorage.token, patient_id: '1', /*$window.sessionStorage.patient_id */ file_name: filename, file_id: fileid}, editArchiveSuccess, editArchiveFailure);
+            }
+        }
+        function editArchiveFailure(error){
+            console.log(error);
+            $rootScope.loader == 'hide'
+        }
+
+        $scope.showPDF = function(link){
+            $window.open(link, '_blank');
+        }
 
         $rootScope.do_valid = true;
         $rootScope.do_valid_nhis = true;
