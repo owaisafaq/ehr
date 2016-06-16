@@ -530,6 +530,32 @@ $api->params->token = "123";
 $api_arr [] = $api;
 
 
+// Update Patient Archive
+$api = new api();
+$api->name = "Update Patient Archive";
+$api->url = HOST . 'update_patient_archive';
+$api->method = "POST";
+$api->description = "Update Patient Archive";
+$api->params->file_id = "1";
+$api->params->file_name = "sample";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+
+// Remove Patient Archive
+$api = new api();
+$api->name = "Remove Patient Archive";
+$api->url = HOST . 'remove_patient_archive';
+$api->method = "GET";
+$api->description = "Remove Patient Archive";
+$api->params->patient_id = "1";
+$api->params->patient_fie_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
 
 // Get Patient Medications
 $api = new api();
@@ -586,6 +612,58 @@ $api->params->bmi_result = "100";
 $api->params->bmi_weight = "10";
 $api->params->bmi_height = "10";
 $api->params->notes = "test";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+
+
+// Add resources
+$api = new api();
+$api->name = "Add Resources";
+$api->url = HOST . 'add_resources';
+$api->method = "POST";
+$api->description = "Add Resources";
+$api->params->name = "New Folder";
+$api->params->followup_parent_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+
+// Patient Visit List
+$api = new api();
+$api->name = "Patient Visit List";
+$api->url = HOST . 'patient_visit_list';
+$api->method = "GET";
+$api->description = "Patient Visit List";
+$api->params->patient_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Get All Patients
+$api = new api();
+$api->name = "Get All Patients";
+$api->url = HOST . 'get_all_patients';
+$api->method = "GET";
+$api->description = "Get All Patients";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+
+// Get Patient Appointements
+$api = new api();
+$api->name = "Get Patient Appointements";
+$api->url = HOST . 'get_patient_appointments';
+$api->method = "GET";
+$api->description = "Get Patient Appointements";
+$api->params->patient_id = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
