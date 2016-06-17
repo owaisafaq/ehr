@@ -256,6 +256,32 @@ class ApiController extends Controller
     }
 
 
+
+    public function delete_patient(Request $request){
+
+
+        $patient_id = $request->input('patient_id');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+               DB::table('patients')
+                   ->where('id', $patient_id)
+                   ->update(
+                       ['status' => 0,
+                           'updated_at' => $currentdatetime
+
+                       ]
+                   );
+
+
+
+        return response()->json(['status' => true, 'message' => "Patient Deleted successfully"]);
+
+
+    }
+
+
     public function add_patient_address(Request $request)
     {
 
@@ -1161,6 +1187,9 @@ class ApiController extends Controller
         $original_name=$archive->getClientOriginalName();
 
 
+        $folder_id = $request->input('follow_up_parent_id');
+
+
         if ($request->file('patient_archive')) {
 
             if ($request->file('patient_archive')->isValid()) {
@@ -1176,6 +1205,7 @@ class ApiController extends Controller
 
             DB::table('patient_file_access_log')->insert(
                 ['patient_id' => $patient_id,
+                    'follow_up_parent_id'=>$folder_id,
                     'file' => $fileName,
                     'file_name'=>$original_name,
                     'created_at' => $currentdatetime
@@ -1440,7 +1470,7 @@ class ApiController extends Controller
             ->update(array('visit_status' => $status, 'updated_at' => $currentdatetime));
 
 
-        return response()->json(['status' => true, 'data' => 'visit updated successfully']);
+        return response()->json(['status' => true, 'message' => 'visit updated successfully']);
     }
 
 
@@ -1458,8 +1488,7 @@ class ApiController extends Controller
             ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
             ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.plan_id')
             ->leftJoin('blood_group', 'blood_group.id', '=', 'patients.blood_group')
-            ->select(DB::raw('patients.id,patients.first_name,patients.middle_name,patients.last_name,patients.date_of_birth,patients.sex,patients.age,patients.patient_image,religion.name as religion,maritial_status.name as marital_status,hospital_plan.name as hospital_plan,patient_address.mobile_number,patient_address.email,patient_kin.fullname as next_to_kin,patient_address.house_number,patient_address.street,blood_group.name as blood_group
-            '))
+            ->select(DB::raw('patients.id,patients.first_name,patients.middle_name,patients.last_name,patients.date_of_birth,patients.sex,patients.age,patients.patient_image,religion.name as religion,maritial_status.name as marital_status,hospital_plan.name as hospital_plan,patient_address.mobile_number,patient_address.email,patient_kin.fullname as next_to_kin,patient_address.house_number,patient_address.street,blood_group.name as blood_group'))
             ->where('patients.id', $patient_id)
             ->where('patient_address.address_type', 'contact')
             ->where('patients.status', 1)
@@ -1493,7 +1522,7 @@ class ApiController extends Controller
             ->update(array('status' => 0, 'updated_at' => $currentdatetime));
 
 
-        return response()->json(['status' => true, 'data' => 'visit removed successfully']);
+        return response()->json(['status' => true, 'message' => 'visit removed successfully']);
 
     }
 
@@ -1535,6 +1564,81 @@ class ApiController extends Controller
             ->get();
 
         return response()->json(['status' => true, 'data' => $patient_archives]);
+
+
+    }
+
+    public function list_resources(Request $request){
+
+
+        $patient_id = $request->input('patient_id');
+
+        $followup_parent_id = $request->input('followup_parent_id');
+
+        $file_archive = url('/') . '/patient_archive/';
+
+        $patient_archives = DB::table('patient_file_access_log')
+            ->select(DB::raw('id,patient_id,file,CONCAT("' . $file_archive . '",file) as file,file_name,created_at'))
+            ->where('patient_id', $patient_id)
+            ->where('follow_up_parent_id', $followup_parent_id)
+            ->where('status', 1)
+            ->get();
+
+        return response()->json(['status' => true, 'data' => $patient_archives]);
+    }
+
+
+    public function list_patient_resources(Request $request){
+
+
+        $patient_id = $request->input('patient_id');
+
+        $resources = DB::table('resources')
+            ->select(DB::raw('id,patient_id,name,followup_parent_id,created_at'))
+            ->where('patient_id', $patient_id)
+            ->where('status', 1)
+            ->get();
+
+        return response()->json(['status' => true, 'data' => $resources]);
+
+
+    }
+
+    public function update_patient_resources(Request $request){
+
+
+        $resource_id = $request->input('resource_id');
+
+        $name = $request->input('name');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+        DB::table('resources')
+            ->where('id', $resource_id)
+            ->update(array('name' => $name, 'updated_at' => $currentdatetime));
+
+
+        return response()->json(['status' => true, 'message' => 'Folder updated successfully']);
+
+
+    }
+
+
+
+    public function delete_patient_resources(Request $request){
+
+
+
+        $resource_id = $request->input('resource_id');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+        DB::table('resources')
+            ->where('id', $resource_id)
+            ->update(array('status' => 0, 'updated_at' => $currentdatetime));
+
+
+        return response()->json(['status' => true, 'message' => 'Folder removed successfully']);
 
 
     }
@@ -1600,10 +1704,54 @@ class ApiController extends Controller
         $patient_allergies = DB::table('patient_allergies')
             ->select(DB::raw('*'))
             ->where('patient_id', $patient_id)
+            ->where('status', 1)
             ->get();
 
 
         return response()->json(['status' => true, 'data' => $patient_allergies]);
+
+    }
+
+
+    public function update_patient_allergies(Request $request){
+
+        $patient_id = $request->input('patient_id');
+        $allergy_type = $request->input('allergy_type');
+        $allergies = $request->input('allergies');
+        $severity = $request->input('severity');
+        $observed_on = $request->input('observed_on');
+        $allergy_status= $request->input('allergy_status');
+        $reaction = $request->input('reaction');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+
+        DB::table('patient_allergies')
+            ->where('patient_id', $patient_id)
+            ->update(array('allergy_type' => $allergy_type,'allergies'=>$allergies,'observed_on'=>$observed_on,'severity'=>$severity,'allergy_status'=>$allergy_status,'reactions'=>$reaction,'updated_at'=>$currentdatetime));
+
+
+      return response()->json(['status' => true, 'message'=>'Patient Allergies updated successfully']);
+
+
+    }
+
+
+    public function delete_patient_allergies(Request $request){
+
+        $allergy_id = $request->input('allergy_id');
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+
+        DB::table('patient_allergies')
+            ->where('id', $allergy_id)
+            ->update(array('status'=>0,'updated_at'=>$currentdatetime));
+
+
+      return response()->json(['status' => true, 'message'=>'Patient Allergies Deleted successfully']);
+
 
     }
 
@@ -1673,7 +1821,139 @@ class ApiController extends Controller
     }
 
 
+    public function add_patient_appointments(Request $request){
+
+
+        $patient_id = $request->input('patient_id');
+
+        $visit_id = $request->input('visit_id');
+
+        $department_id = $request->input('department');
+
+        $reason= $request->input('reason');
+
+        $date = $request->input('date');
+
+        $start_time= $request->input('start_time');
+
+        $notes= $request->input('notes');
+
+        $doctor = $request->input('doctor');
+
+        $other_reason = $request->input('other_reason');
+
+        $end_time = $request->input('end_time');
+
+        $priority = $request->input('priority');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+        DB::table('appointments')->insert(
+              ['patient_id' => $patient_id,
+                  'visit_id' => $visit_id,
+                  'department_id'=>$department_id,
+                  'reason' => $reason,
+                  'pick_date' => $date,
+                  'start_time' => $start_time,
+                  'notes' => $notes,
+                  'doctor_id' => $doctor,
+                  'other_reasons' => $other_reason,
+                  'end_time' => $end_time,
+                  'priority' => $priority,
+                  'created_at' => $currentdatetime
+
+              ]
+          );
+
+
+          return response()->json(['status' => true, 'message'=>'Appointment Created Successfully']);
+
+
+    }
+
+
+
+    public function update_patient_appointments(Request $request){
+
+
+        $appointment_id = $request->input('appointment_id');
+
+        $patient_id = $request->input('patient_id');
+
+        $visit_id = $request->input('visit_id');
+
+        $department_id = $request->input('department');
+
+        $reason= $request->input('reason');
+
+        $date = $request->input('date');
+
+        $start_time= $request->input('start_time');
+
+        $notes= $request->input('notes');
+
+        $doctor = $request->input('doctor');
+
+        $other_reason = $request->input('other_reason');
+
+        $end_time = $request->input('end_time');
+
+        $priority = $request->input('priority');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+        DB::table('appointments')
+            ->where('id',$appointment_id)
+            ->update(
+              ['patient_id' => $patient_id,
+                  'visit_id' => $visit_id,
+                  'department_id'=>$department_id,
+                  'reason' => $reason,
+                  'pick_date' => $date,
+                  'start_time' => $start_time,
+                  'notes' => $notes,
+                  'doctor_id' => $doctor,
+                  'other_reasons' => $other_reason,
+                  'end_time' => $end_time,
+                  'priority' => $priority,
+                  'updated_at' => $currentdatetime
+
+              ]
+          );
+
+
+          return response()->json(['status' => true, 'message'=>'Appointment Updated Successfully']);
+
+
+    }
+
+
+
+    public function delete_patient_appointments(Request $request){
+
+
+        $appointment_id = $request->input('appointment_id');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+        DB::table('appointments')
+            ->where('id',$appointment_id)
+            ->update(
+              ['status'=>1,'updated_at' => $currentdatetime]
+          );
+
+
+          return response()->json(['status' => true, 'message'=>'Appointment Deleted Successfully']);
+
+
+    }
+
     public function add_resources(Request $request){
+
+        $patient_id = $request->input('patient_id');
 
         $followup_parent_id= $request->input('followup_parent_id');
 
@@ -1683,7 +1963,8 @@ class ApiController extends Controller
 
 
         DB::table('resources')->insert(
-            ['name' => $name,
+            ['patient_id'=>$patient_id,
+                'name' => $name,
                 'followup_parent_id' => $followup_parent_id,
                 'type'=>'folder',
                 'created_at' => $currentdatetime

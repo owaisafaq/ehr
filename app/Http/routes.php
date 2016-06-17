@@ -41,6 +41,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->post('add_patient', 'App\Http\Controllers\ApiController@add_patient');
 
+    $app->post('delete_patient', 'App\Http\Controllers\ApiController@delete_patient');
+
     $app->post('add_patient_address', 'App\Http\Controllers\ApiController@add_patient_address');
 
     $app->post('add_patient_kin', 'App\Http\Controllers\ApiController@add_patient_kin');
@@ -99,12 +101,32 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->get('patient_allergies','App\Http\Controllers\ApiController@patient_allergies');
 
+    $app->post('update_patient_allergies','App\Http\Controllers\ApiController@update_patient_allergies');
+
+    $app->post('delete_patient_allergies','App\Http\Controllers\ApiController@delete_patient_allergies');
+
     $app->get('patient_visit_list','App\Http\Controllers\ApiController@patient_visit_list');
 
     $app->get('get_all_patients','App\Http\Controllers\ApiController@get_all_patients');
 
     $app->get('get_patient_appointments','App\Http\Controllers\ApiController@get_patient_appointments');
 
+    $app->post('add_patient_appointments','App\Http\Controllers\ApiController@add_patient_appointments');
+
+    $app->post('update_patient_appointments','App\Http\Controllers\ApiController@update_patient_appointments');
+
+    $app->post('delete_patient_appointments','App\Http\Controllers\ApiController@delete_patient_appointments');
+
     $app->post('add_resources','App\Http\Controllers\ApiController@add_resources');
+
+    $app->get('list_resources','App\Http\Controllers\ApiController@list_resources');
+
+    $app->get('list_patient_resources','App\Http\Controllers\ApiController@list_patient_resources');
+
+    $app->post('update_patient_resources','App\Http\Controllers\ApiController@update_patient_resources');
+
+    $app->post('delete_patient_resources','App\Http\Controllers\ApiController@delete_patient_resources');
+
+
 
 });
