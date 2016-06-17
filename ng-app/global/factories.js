@@ -90,6 +90,51 @@ AppEHR.factory("PatientRegistrationKin", function ($resource) {
     };
     return patientRegistrationKin;
 });
+AppEHR.factory("GetArchives", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'patient_archives', params, {
+            get: {method: 'GET'},
+        });
+        return res2;
+    }
+    var patientRegistrationKin = {
+        get:function(params,body,success) {
+          var res = getResource(params, body);  
+          return res.get(params,body,success);
+        }
+    };
+    return patientRegistrationKin;
+});
+AppEHR.factory("RemoveArchives", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'remove_patient_archive', params, {
+            get: {method: 'GET'},
+        });
+        return res2;
+    }
+    var patientRegistrationKin = {
+        get:function(params,body,success) {
+          var res = getResource(params, body);  
+          return res.get(params,body,success);
+        }
+    };
+    return patientRegistrationKin;
+});
+AppEHR.factory("EditArchives", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'update_patient_archive', params, {
+            save: {method: 'POST'},
+        });
+        return res2;
+    }
+    var patientRegistrationKin = {
+        save:function(params,body,success) {
+          var res = getResource(params, body);  
+          return res.save(params,body,success);
+        }
+    };
+    return patientRegistrationKin;
+});
 AppEHR.factory("AddEncounter", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath +  'add_visit', params, {
