@@ -2013,4 +2013,44 @@ die;
         return response()->json(['status' => true, 'data' => $fields]);
 
     }
+
+
+    public function add_patient_clinical_notes(Request $request){
+
+
+        $patient_id = $request->input('patient_id');
+
+        $visit_id = $request->input('visit_id');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+        $notes = $request->input('clinical_notes');
+
+        $clinical_notes = json_decode($notes);
+
+
+        foreach($clinical_notes as $patient_clinical_notes){
+
+
+            DB::table('patient_clinical_notes')->insert(
+                ['patient_id'=>$patient_id,
+                    'visit_id' => $visit_id,
+                    'field_id' => $patient_clinical_notes->field_id,
+                    'value'=>$patient_clinical_notes->value,
+                    'created_at' => $currentdatetime
+
+                ]
+            );
+
+
+
+        }
+
+
+
+
+        return response()->json(['status' => true, 'message' => 'Clinical Notes Added Successfully']);
+
+
+    }
 }
