@@ -680,10 +680,10 @@ $api_arr [] = $api;
 
 // List Folder Files
 $api = new api();
-$api->name = "List Resources";
+$api->name = "List Folder Files";
 $api->url = HOST . 'list_resources';
 $api->method = "GET";
-$api->description = "List Resources";
+$api->description = "List Folder Files";
 $api->params->followup_parent_id = "1";
 $api->params->patient_id = "1";
 $api->params->token = "123";
@@ -694,10 +694,10 @@ $api_arr [] = $api;
 
 // List Patient  Folders
 $api = new api();
-$api->name = "List Patient Resources";
+$api->name = "List Patient Folders";
 $api->url = HOST . 'list_patient_resources';
 $api->method = "GET";
-$api->description = "List Patient Resources";
+$api->description = "List Patient Folders";
 $api->params->patient_id = "1";
 $api->params->followup_parent_id = "1";
 $api->params->token = "123";
@@ -844,6 +844,27 @@ $api->url = HOST . 'clinical_progress_note_fields';
 $api->method = "GET";
 $api->description = "Clinical Progress Note Fields";
 $api->params->template_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Checkout Patient
+$api = new api();
+$api->name = "Checkout Patient";
+$api->url = HOST . 'checkout_patient';
+$api->method = "POST";
+$api->description = "Checkout Patient";
+$api->params->patient_id = "1";
+$api->params->visit_id = "1";
+$api->params->reason = "No Appointment";
+$api->params->notes = "reasons for checkout";
+$api->params->pick_date = "2016-06-15";
+$api->params->pick_time = "2:30 P.M";
+$api->params->admit_date = "2016-06-15";
+$api->params->start_time = "2:30 P.M";
+$api->params->department_id = "1";
+$api->params->ward_id = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;

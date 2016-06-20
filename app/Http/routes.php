@@ -133,6 +133,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->post('add_patient_clinical_notes','App\Http\Controllers\ApiController@add_patient_clinical_notes');
 
+    $app->post('checkout_patient','App\Http\Controllers\ApiController@checkout_patient');
+
 
 
 
