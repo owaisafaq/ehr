@@ -615,6 +615,7 @@ $api->url = HOST . 'update_patient_allergies';
 $api->method = "POST";
 $api->description = "Update Patient Allergie";
 $api->params->patient_id = "1";
+$api->params->allergy_id = "1";
 $api->params->allergy_type = "severe";
 $api->params->allergies = "tobaco";
 $api->params->severity = "high";
@@ -633,6 +634,7 @@ $api->url = HOST . 'delete_patient_allergies';
 $api->method = "POST";
 $api->description = "Delete Patient Allergie";
 $api->params->allergy_id = "1";
+$api->params->patient_id = "1";
 $api->params->token = "123";
 $api_arr [] = $api;
 
@@ -697,6 +699,7 @@ $api->url = HOST . 'list_patient_resources';
 $api->method = "GET";
 $api->description = "List Patient Resources";
 $api->params->patient_id = "1";
+$api->params->followup_parent_id = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -817,6 +820,30 @@ $api->url = HOST . 'delete_patient_appointments';
 $api->method = "POST";
 $api->description = "Delete Patient Appointements";
 $api->params->appointment_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Clinical Progress Note Templates
+$api = new api();
+$api->name = "Clinical Progress Note Templates";
+$api->url = HOST . 'clinical_progress_note_templates';
+$api->method = "GET";
+$api->description = "Clinical Progress Note Templates";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+
+// Clinical Progress Note Fields
+$api = new api();
+$api->name = "Clinical Progress Note Fields";
+$api->url = HOST . 'clinical_progress_note_fields';
+$api->method = "GET";
+$api->description = "Clinical Progress Note Fields";
+$api->params->template_id = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;

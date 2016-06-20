@@ -1174,10 +1174,12 @@ class ApiController extends Controller
 
 
     public function add_patient_archive(Request $request)
-    {
+    {	
+	return $request->all();
+die;
+/*    
+    $patient_id = $request->input('patient_id');
 
-
-        $patient_id = $request->input('patient_id');
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
@@ -1189,8 +1191,8 @@ class ApiController extends Controller
 
         $folder_id = $request->input('follow_up_parent_id');
 
-
-        if ($request->file('patient_archive')) {
+	
+        if ($request->hasFile('patient_archive')) {
 
             if ($request->file('patient_archive')->isValid()) {
 
@@ -1221,7 +1223,7 @@ class ApiController extends Controller
         }
 
 
-        return response()->json(['status' => true, 'message' => 'Patient Archive uploaded successfully']);
+        return response()->json(['status' => true, 'message' => 'Patient Archive uploaded successfully']);*/
 
 
     }
@@ -1592,10 +1594,12 @@ class ApiController extends Controller
 
 
         $patient_id = $request->input('patient_id');
+	$followup_parent_id = $request->input('followup_parent_id');
 
         $resources = DB::table('resources')
             ->select(DB::raw('id,patient_id,name,followup_parent_id,created_at'))
             ->where('patient_id', $patient_id)
+	    ->where('followup_parent_id', $followup_parent_id)
             ->where('status', 1)
             ->get();
 
@@ -1716,6 +1720,7 @@ class ApiController extends Controller
     public function update_patient_allergies(Request $request){
 
         $patient_id = $request->input('patient_id');
+	$allergy_id = $request->input('allergy_id');
         $allergy_type = $request->input('allergy_type');
         $allergies = $request->input('allergies');
         $severity = $request->input('severity');
@@ -1729,6 +1734,7 @@ class ApiController extends Controller
 
         DB::table('patient_allergies')
             ->where('patient_id', $patient_id)
+	    ->where('id', $allergy_id)
             ->update(array('allergy_type' => $allergy_type,'allergies'=>$allergies,'observed_on'=>$observed_on,'severity'=>$severity,'allergy_status'=>$allergy_status,'reactions'=>$reaction,'updated_at'=>$currentdatetime));
 
 
@@ -1741,12 +1747,14 @@ class ApiController extends Controller
     public function delete_patient_allergies(Request $request){
 
         $allergy_id = $request->input('allergy_id');
+	$patient_id = $request->input('patient_id');
         $currentdatetime = date("Y-m-d  H:i:s");
 
 
 
         DB::table('patient_allergies')
             ->where('id', $allergy_id)
+	    ->where('patient_id', $patient_id)
             ->update(array('status'=>0,'updated_at'=>$currentdatetime));
 
 
@@ -1975,6 +1983,34 @@ class ApiController extends Controller
 
         return response()->json(['status' => true, 'message'=>'Folder Added Successfully']);
 
+
+    }
+
+
+    public function clinical_progress_note_templates(Request $request){
+
+
+        $templates = DB::table('note_templates')
+            ->select(DB::raw('id,name'))
+            ->where('status',1)
+            ->get();
+
+        return response()->json(['status' => true, 'data' => $templates]);
+
+    }
+
+
+    public function clinical_progress_note_fields(Request $request){
+
+        $template_id = $request->input('template_id');
+
+        $fields = DB::table('clinical_note_questions')
+            ->select(DB::raw('id,name,category'))
+            ->where('template',$template_id)
+            ->where('status',1)
+            ->get();
+
+        return response()->json(['status' => true, 'data' => $fields]);
 
     }
 }

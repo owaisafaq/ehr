@@ -127,6 +127,11 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->post('delete_patient_resources','App\Http\Controllers\ApiController@delete_patient_resources');
 
+    $app->get('clinical_progress_note_templates','App\Http\Controllers\ApiController@clinical_progress_note_templates');
+
+    $app->get('clinical_progress_note_fields','App\Http\Controllers\ApiController@clinical_progress_note_fields');
+
+
 
 
 });
