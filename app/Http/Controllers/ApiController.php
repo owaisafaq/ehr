@@ -1495,6 +1495,7 @@ class ApiController extends Controller
         if ($demographics->sex == 1) {
 
             $demographics->gender = 'Male';
+
         } else {
 
             $demographics->gender = 'FeMale';
@@ -2139,4 +2140,99 @@ class ApiController extends Controller
 
 
     }
+
+
+    public function add_patient_referel(Request $request){
+
+
+        $patient_id = $request->input('patient_id');
+
+        $visit_id = $request->input('visit_id');
+
+        $department_id = $request->input('department_id');
+
+        $doctor_id = $request->input('doctor_id');
+
+        $provisional_diagnosis= $request->input('provisional_diagnosis');
+
+        $reason_referal = $request->input('reason_referal');
+
+        $history = $request->input('history');
+
+        $investigations = $request->input('investigations');
+
+        $allergies = $request->input('allergies');
+
+        $medication_list = $request->input('medication_list');
+
+        $medicines = $request->input('medicines');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+
+        DB::table('visits')
+            ->where('id', $visit_id)
+            ->update(
+                ['visit_status' => 'checkout',
+                    'updated_at' => $currentdatetime
+
+                ]
+            );
+
+
+
+        if ($request->file('refered_file')) {
+
+
+             if ($request->file('refered_file')->isValid()) {
+
+
+                 $destinationPath = base_path() . '/public/refered_patient_files'; // upload path
+                 $extension = $request->file('refered_file')->getClientOriginalExtension(); // getting image extension
+                 $fileName = time() . '.' . $extension; // renameing image
+
+                 $request->file('refered_file')->move($destinationPath, $fileName); // uploading file to given path
+
+
+             } else {
+
+                 $fileName = '';
+
+             }
+
+         } else {
+
+             $fileName = '';
+         }
+
+
+
+        DB::table('patient_referels')->insert(
+            ['patient_id' => $patient_id,
+                'visit_id' => $visit_id,
+                'attachment' => $fileName,
+                'department_id' => $department_id,
+                'doctor' => $doctor_id,
+                'provisional_diagnosis' => $provisional_diagnosis,
+                'reason_referal' => $reason_referal,
+                'history' => $history,
+                'allergies' => $allergies,
+                'investigations' => $investigations,
+                'medication_list' => $medication_list,
+                'medicines' => $medicines,
+                'created_at' => $currentdatetime
+
+            ]
+        );
+
+
+
+
+    return response()->json(['status' => true, 'message' => "Patient Referel Added Successfully"]);
+
+
+
+    }
 }
+

@@ -868,3 +868,24 @@ $api->params->ward_id = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
+
+
+// Add Patient Referels
+$api = new api();
+$api->name = "Add Patient Referel";
+$api->url = HOST . 'add_patient_referel';
+$api->method = "POST";
+$api->description = "Add Patient Referel";
+$api->params->patient_id = "1";
+$api->params->department_id = "1";
+$api->params->doctor_id = "1";
+$api->params->provisional_diagnosis = "";
+$api->params->reason_referal = "";
+$api->params->history = "";
+$api->params->investigations = "";
+$api->params->allergies = "1";
+$api->params->medication_list = "1";
+$api->params->medicines = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;

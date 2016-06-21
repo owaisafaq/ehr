@@ -135,6 +135,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->post('checkout_patient','App\Http\Controllers\ApiController@checkout_patient');
 
+    $app->post('add_patient_referel','App\Http\Controllers\ApiController@add_patient_referel');
+
 
 
 
