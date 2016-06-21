@@ -131,7 +131,6 @@ AppEHR.run(function ($rootScope, $location, $window) {
     }
     $rootScope.PI = {};
     $rootScope.loader = "";
-
     $rootScope.$on('$viewContentLoaded', function () {
         $('.select-date').datepicker({autoclose: true, todayHighlight: true, format: 'yyyy-mm-dd'});
         $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
@@ -174,7 +173,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
             },
             minimumInputLength: 2,
         });
-         $(".encounter-search-bar").select2({
+        $(".encounter-search-bar").select2({
             placeholder: 'Search Patient',
             ajax: {
                 url: "http://demoz.online/ehr/public/api/search_patient",
@@ -209,46 +208,6 @@ AppEHR.run(function ($rootScope, $location, $window) {
             },
             minimumInputLength: 2,
         });
-//        $(document).on('click', '#nhis .add-principal', function () {
-//            var id_chip = $("#get_val_principal").val();
-//            if (id_chip !== "") {
-//                if ($('#nhis .principal_list .chip[data-id="' + id_chip + '"').length == 0) {
-//                    $('#nhis .principal_list').append('<div class="chip" data-id="' + id_chip + '">' + $('#s2id_get_val_principal .select2-chosen').html() + '<i class="md-close"></i></div>');
-////                    $("#get_val_principal").val(null).trigger("change");
-//                    $("#get_val_principal").select2('data', null);
-//                    $('#s2id_get_val_principal').addClass('disable-after-1');
-//                    $rootScope.do_valid_nhis = false;
-//                }
-//            }
-//        });
-//        $(document).on('click', '#nhis .add-dependant', function () {
-//            var id_chip = $("#get_val_dependant_nhis").val();
-//            if (id_chip !== "") {
-//                if ($('#nhis .dependant_list .chip[data-id="' + id_chip + '"').length == 0) {
-//                    $('#nhis .dependant_list').append('<div class="chip" data-id="' + id_chip + '">' + $('#s2id_get_val_dependant_nhis .select2-chosen').html() + '<i class="md-close"></i></div>');
-////                    $("#get_val_principal").val(null).trigger("change");
-//                    $("#get_val_dependant_nhis").select2('data', null);
-////                    $('#s2id_get_val_dependant_nhis').addClass('disable-after-1');
-//                }
-//            }
-//            else{
-//                $rootScope.valid_relationship = false;
-//            }
-//        });
-       
-
-//        $(document).on('click', '#relationship .add-principal', function () {
-//            var id_chip = $("#get_val_principal_retainer").val();
-//            if (id_chip !== "") {
-//                if ($('#relationship .chip[data-id="' + id_chip + '"').length == 0) {
-//                    $('#relationship .principal_list').append('<div class="chip" data-id="' + id_chip + '">' + $('#s2id_get_val_principal_retainer .select2-chosen').html() + '<i class="md-close"></i></div>');
-////                    $("#get_val_principal").val(null).trigger("change");
-//                    $("#get_val_principal_retainer").select2('data', null);
-//                    $('#s2id_get_val_principal_retainer').addClass('disable-after-1');
-//                    $rootScope.do_valid = false;
-//                }
-//            }
-//        });
 
         $('body').on('click', '#nhis .principal_list .chip i', function () {
             $(this).parent('.chip').fadeOut(function () {
@@ -265,7 +224,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
             })
             $('#s2id_get_val_principal_retainer').removeClass('disable-after-1');
         })
-        
+
         $('body').on('click', '.dependant_list .chip i', function () {
             $(this).parent('.chip').parent('div').fadeOut(function () {
                 $(this).remove();
@@ -275,7 +234,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
     });
     //$rootScope.html = '<div ng-include="\'utils/script-file.html\'"></div>';
     $rootScope.html = '<script src="assets/js/libs/bootstrap/bootstrap.min.js"></script><script src="assets/js/libs/spin.js/spin.min.js"></script><script src="assets/js/libs/autosize/jquery.autosize.min.js"></script><script src="assets/js/libs/nanoscroller/jquery.nanoscroller.min.js"></script><script src="assets/js/core/source/App.js"></script><script src="assets/js/core/source/AppNavigation.js"></script><script src="assets/js/core/source/AppOffcanvas.js"></script><script src="assets/js/core/source/AppCard.js"></script><script src="assets/js/core/source/AppForm.js"></script><script src="assets/js/core/source/AppNavSearch.js"></script><script src="assets/js/core/source/AppVendor.js"></script><script src="assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script><script src="assets/js/core/demo/Demo.js"></script><script src="assets/js/core/source/script.js" type="text/javascript"></script><script src="assets/js/libs/select2/select2.min.js" type="text/javascript"></script><script src="assets/js/libs/inputmask/jquery.inputmask.bundle.min.js"></script>';
-    
+
 });
 AppEHR.filter('capitalize', function () {
     return function (input) {

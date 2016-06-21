@@ -407,33 +407,12 @@
                         </tbody> -->
                     </table>
                 </div>
-                <div class="tab-pane" id="allergies">
-                    <div class="pull-left header-checkboxes">
-                        <div class="checkbox checkbox-styled">
-                            <label>
-                                <input type="checkbox" value="">
-                                <span>No Know Drug Allergy</span>
-                            </label>
-                        </div>
-
-                        <div class="checkbox checkbox-styled">
-                            <label>
-                                <input type="checkbox" value="">
-                                <span>No Know Food Allergy</span>
-                            </label>
-                        </div>
-
-                        <div class="checkbox checkbox-styled">
-                            <label>
-                                <input type="checkbox" value="">
-                                <span>No Know Environmental Allergy</span>
-                            </label>
-                        </div>
-
-                    </div>  <button class="btn ink-reaction button-style-1 button-style-1 pull-right margin-bottom-xxl">Add Allergies</button>
-                    <table class="table table-striped no-margin table-custom table-custom_big">
+                <div class="tab-pane" id="allergies"> 
+                    <button class="btn ink-reaction button-style-1 button-style-1 pull-right margin-bottom-xxl">Add Allergies</button>
+                    <table class="table table-striped no-margin table-custom table-custom_big editable_table selectAndDateTable">
                         <thead>
                             <tr>
+                                <th>allergy type</th>
                                 <th>allergies</th>
                                 <th>severity</th>
                                 <th>observed on</th>
@@ -444,14 +423,33 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="allergie in allergies">
-                                <td>{{allergie.allegies}}</td>
-                                <td>{{allergie.severity}}</td>
-                                <td>{{allergie.observed_on}}</td>
-                                <td>{{allergie.status}}</td>
-                                <td>{{allergie.reactions}}</td>
+                                <td><input type="text" ng-model="allergie.allergy_type" ng-init="edit[$index] = false" ng-disabled="edit[$index] == false" /></td>
+                                <td><input type="text" ng-model="allergie.allergies" ng-disabled="edit[$index] == false" /></td>
+                                <td><input type="text" ng-model="allergie.severity" ng-disabled="edit[$index] == false" />
+                                </td>
                                 <td>
-                                    <a class="link-style" href="javascript:;">Edit</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-                                    <a class="link-style" href="javascript:;">Delete</a>
+                                    <div class="input-group date select-date my-date-picker">
+                                        <div class="input-group-content">
+                                            <input type="text" name="date_of_birth" my-date-picker ng-model="allergie.observed_on" class="form-control" required placeholder="Pick Date" ng-disabled="edit[$index] == false" />
+                                        </div>
+                                    </div>
+                                <td>
+                                    <!--ng-options="allergy_detail.name for allergy_detail in dropDownInfo.AllergyType track by allergy_detail.id"-->
+                                    <select my-drop-down class="form-control" ng-model="allergie.allergy_status" placeholder="Select Allergy Status" ng-disabled="edit[$index] == false">
+                                        <!--<option></option>-->
+                                        <option ng-selected="allergie.allergy_status == allergy.name" ng-repeat="allergy in dropDownInfo.AllergyType" value="{{allergy.name}}">{{allergy.name}}</option>
+                                        <!--<option ng-selected="allergie.allergy_status == 'not any more'">Not Any More</option>-->
+                                    </select>
+<!--                                    <select class="form-control select_searchFields" placeholder="ID Type" ng-model="PI.identity_type">
+                                        <option value=""></option>
+                                        <option ng-repeat="idType in dropDownInfo.IdType" value="{{idType.id}}">{{idType.type}}</option>
+                                    </select>-->
+                                </td>
+                                <td><input type="text" ng-model="allergie.reactions" ng-disabled="edit[$index] == false" /></td>
+                                <td>
+                                    <input type="hidden" ng-model="allergie.id" />
+                                    <a ng-show="edit[$index] == false" ng-click="editAllergies($index)" class="link-style" href="javascript:;">Edit</a><a href="javascript:;" ng-show="edit[$index]" ng-click="saveAllergies(allergie, $index)" class="link-style">Save</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+                                    <a class="link-style" data-toggle="modal" data-target="#removeAllergy" href="" ng-click="removeAllergy(allergie)" >Delete</a>
                                 </td>
                             </tr>
                             <!-- <tr>
@@ -479,8 +477,6 @@
                         </tbody>
                     </table>
                 </div>
-
-
                 <div class="tab-pane" id="documents">
                     <button class="btn ink-reaction button-style-1 button-style-1 pull-right margin-bottom-xxl">Add documents</button>
                     <table class="table table-striped no-margin table-custom table-custom_big">
@@ -776,7 +772,7 @@
                 <p>Continue to Add Patient Vitals</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default button-style-1" data-toggle="modal" data-target="#vital-signs" data-dismiss="modal">Ok</button>
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
                 <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
             </div>
         </div><!-- /.modal-content -->
@@ -800,14 +796,18 @@
                                     <label>systolic (mm hg)</label>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" placeholder="systolic (mm hg)"  ng-class="{true: 'error'}[vital.diastolic != undefined && vital.systolic == undefined]" ng-model="vital.systolic" numbers-only required/>
+                                    <input type="text" placeholder="systolic (mm hg)"  ng-class="{
+                                            true
+                                            : 'error'}[vital.diastolic != undefined && vital.systolic == undefined]" ng-model="vital.systolic" numbers-only required/>
                                     <p ng-show="vital.diastolic != undefined && vital.systolic == undefined" class="help-block PIValid">Required</p>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>diastolic (mm hg)</label>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" placeholder="diastolic (mm hg)" ng-class="{true: 'error'}[vital.diastolic == undefined && vital.systolic != undefined]" ng-model="vital.diastolic" numbers-only required/>
+                                    <input type="text" placeholder="diastolic (mm hg)" ng-class="{
+                                            true
+                                            : 'error'}[vital.diastolic == undefined && vital.systolic != undefined]" ng-model="vital.diastolic" numbers-only required/>
                                     <p ng-show="vital.systolic != undefined && vital.diastolic == undefined" class="help-block PIValid">Required</p>
                                 </div>
                             </div>
@@ -841,13 +841,13 @@
                                     <label>temperature (c)</label>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" placeholder="temperature (c)" ng-model="vital.temperaturec" numbers-only/>
+                                    <input type="text" placeholder="temperature (c)" ng-init="vital.temperaturec = ''" ng-model="vital.temperaturec" numbers-only ng-keyup="GetTempcVal()"/>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>temperature (f)</label>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" placeholder="temperature (f)" ng-model="vital.temperaturef" numbers-only/>
+                                    <input type="text" placeholder="temperature (f)" ng-init="vital.temperaturef = ''" ng-model="vital.temperaturef" ng-keyup="GetTempfVal()" numbers-only/>
                                 </div>
                             </div>
                         </div>
@@ -867,13 +867,13 @@
                                 <label>result</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" placeholder="0" ng-model="vital.result" ng-init="vital.result = 0" value="{{vital.weight / ((vital.height/100) * (vital.height/100)) | number:1}}" readonly/>
+                                <input type="text" placeholder="0" ng-model="vital.result" readonly/>
                             </div>
                             <div class="col-lg-6">
                                 <label>weight (kg)</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" ng-class="{true: 'error'}[vital.weight == undefined && vital.height != undefined]" placeholder="weight (kg)" ng-model="vital.weight" numbers-only required/>
+                                <input type="text" ng-class="{true: 'error'}[vital.weight == undefined && vital.height != undefined]" placeholder="weight (kg)" ng-model="vital.weight" numbers-only ng-keyup="Calculatebmi()" required/>
                                 <p ng-show="vital.weight == undefined && vital.height != undefined" class="help-block PIValid">Required</p>
                             </div>
 
@@ -881,7 +881,7 @@
                                 <label>height (cm)</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" ng-class="{true: 'error'}[vital.height == undefined && vital.weight != undefined]" placeholder="height (cm)" ng-model="vital.height" numbers-only required />
+                                <input type="text" ng-class="{true: 'error'}[vital.height == undefined && vital.weight != undefined]" placeholder="height (cm)" ng-model="vital.height" ng-keyup="Calculatebmi()" numbers-only required />
                                 <p ng-show="vital.height == undefined && vital.weight != undefined" class="help-block PIValid">Required</p>
                             </div>
                         </div>
@@ -915,6 +915,24 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-toggle="modal" ng-click="clinicalNote();">Ok</button>
+                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="removeAllergy" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Confirmation</h2>
+            </div>
+            <div class="modal-body">
+                <p>Are you Sure want to delete?</p>
+            </div>
+            <div class="modal-footer">
+                {{deletethis}}
+                <button type="button" class="btn btn-default button-style-1" data-toggle="modal" data-dismiss="modal" ng-click="doDelete()">Ok</button>
                 <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
             </div>
         </div><!-- /.modal-content -->
