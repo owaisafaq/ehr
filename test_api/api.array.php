@@ -849,6 +849,20 @@ $api->params->token = "123";
 $api_arr [] = $api;
 
 
+// Add Patient Clinical Notes
+$api = new api();
+$api->name = "Add Patient Clinical Notes";
+$api->url = HOST . 'add_patient_clinical_notes';
+$api->method = "POST";
+$api->description = "Add Patient Clinical Notes";
+$api->params->patient_id = "1";
+$api->params->visit_id = "1";
+$api->params->clinical_notes = "";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
 // Checkout Patient
 $api = new api();
 $api->name = "Checkout Patient";
