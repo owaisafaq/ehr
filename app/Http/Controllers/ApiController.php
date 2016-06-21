@@ -1174,55 +1174,55 @@ class ApiController extends Controller
 
     public function add_patient_archive(Request $request)
     {
-        return $request->all();
-        die;
-        /*
-            $patient_id = $request->input('patient_id');
+        /* return $request->all();
+         die;*/
+
+        $patient_id = $request->input('patient_id');
 
 
-                $currentdatetime = date("Y-m-d  H:i:s");
+        $currentdatetime = date("Y-m-d  H:i:s");
 
 
-                $archive = $request->file('patient_archive');
+        $archive = $request->file('patient_archive');
 
-                $original_name=$archive->getClientOriginalName();
-
-
-                $folder_id = $request->input('follow_up_parent_id');
+        $original_name = $archive->getClientOriginalName();
 
 
-                if ($request->hasFile('patient_archive')) {
-
-                    if ($request->file('patient_archive')->isValid()) {
-
-                        $destinationPath = base_path() . '/public/patient_archive'; // upload path
-                        $extension = $request->file('patient_archive')->getClientOriginalExtension(); // getting image extension
-                        $fileName = time() . '.' . $extension; // renameing image
-
-                        $request->file('patient_archive')->move($destinationPath, $fileName); // uploading file to given path
-
-                    }
+        $folder_id = $request->input('follow_up_parent_id');
 
 
-                    DB::table('patient_file_access_log')->insert(
-                        ['patient_id' => $patient_id,
-                            'follow_up_parent_id'=>$folder_id,
-                            'file' => $fileName,
-                            'file_name'=>$original_name,
-                            'created_at' => $currentdatetime
+        if ($request->hasFile('patient_archive')) {
 
-                        ]
-                    );
+            if ($request->file('patient_archive')->isValid()) {
 
+                $destinationPath = base_path() . '/public/patient_archive'; // upload path
+                $extension = $request->file('patient_archive')->getClientOriginalExtension(); // getting image extension
+                $fileName = time() . '.' . $extension; // renameing image
 
-                } else {
+                $request->file('patient_archive')->move($destinationPath, $fileName); // uploading file to given path
 
-                    return response()->json(['status' => false, 'message' => 'Invalid File']);
-
-                }
+            }
 
 
-                return response()->json(['status' => true, 'message' => 'Patient Archive uploaded successfully']);*/
+            DB::table('patient_file_access_log')->insert(
+                ['patient_id' => $patient_id,
+                    'follow_up_parent_id' => $folder_id,
+                    'file' => $fileName,
+                    'file_name' => $original_name,
+                    'created_at' => $currentdatetime
+
+                ]
+            );
+
+
+        } else {
+
+            return response()->json(['status' => false, 'message' => 'Invalid File']);
+
+        }
+
+
+        return response()->json(['status' => true, 'message' => 'Patient Archive uploaded successfully']);
 
 
     }
@@ -2020,7 +2020,6 @@ class ApiController extends Controller
     public function add_patient_clinical_notes(Request $request)
     {
 
-
         $patient_id = $request->input('patient_id');
 
         $visit_id = $request->input('visit_id');
@@ -2142,7 +2141,8 @@ class ApiController extends Controller
     }
 
 
-    public function add_patient_referel(Request $request){
+    public function add_patient_referel(Request $request)
+    {
 
 
         $patient_id = $request->input('patient_id');
@@ -2153,7 +2153,7 @@ class ApiController extends Controller
 
         $doctor_id = $request->input('doctor_id');
 
-        $provisional_diagnosis= $request->input('provisional_diagnosis');
+        $provisional_diagnosis = $request->input('provisional_diagnosis');
 
         $reason_referal = $request->input('reason_referal');
 
@@ -2170,7 +2170,6 @@ class ApiController extends Controller
         $currentdatetime = date("Y-m-d  H:i:s");
 
 
-
         DB::table('visits')
             ->where('id', $visit_id)
             ->update(
@@ -2181,31 +2180,29 @@ class ApiController extends Controller
             );
 
 
-
         if ($request->file('refered_file')) {
 
 
-             if ($request->file('refered_file')->isValid()) {
+            if ($request->file('refered_file')->isValid()) {
 
 
-                 $destinationPath = base_path() . '/public/refered_patient_files'; // upload path
-                 $extension = $request->file('refered_file')->getClientOriginalExtension(); // getting image extension
-                 $fileName = time() . '.' . $extension; // renameing image
+                $destinationPath = base_path() . '/public/refered_patient_files'; // upload path
+                $extension = $request->file('refered_file')->getClientOriginalExtension(); // getting image extension
+                $fileName = time() . '.' . $extension; // renameing image
 
-                 $request->file('refered_file')->move($destinationPath, $fileName); // uploading file to given path
+                $request->file('refered_file')->move($destinationPath, $fileName); // uploading file to given path
 
 
-             } else {
+            } else {
 
-                 $fileName = '';
+                $fileName = '';
 
-             }
+            }
 
-         } else {
+        } else {
 
-             $fileName = '';
-         }
-
+            $fileName = '';
+        }
 
 
         DB::table('patient_referels')->insert(
@@ -2227,10 +2224,7 @@ class ApiController extends Controller
         );
 
 
-
-
-    return response()->json(['status' => true, 'message' => "Patient Referel Added Successfully"]);
-
+        return response()->json(['status' => true, 'message' => "Patient Referel Added Successfully"]);
 
 
     }
