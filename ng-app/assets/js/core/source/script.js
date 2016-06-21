@@ -16,7 +16,6 @@ $(document).ready(function () {
     $('body').on('click', '.select-speciality input[type=radio]', function () {
         if ($(this).val() == "principal")
         {
-            console.log($(this))
             $(this).parents('.select-speciality').siblings('.show-on-principal').hide();
             $(this).parents('.select-speciality').siblings('.show-on-dependant').show();
         }
@@ -47,6 +46,14 @@ $(document).ready(function () {
         $(this).hide();
         $(this).siblings('.edit').show();
         $('.file_uploads').find('.active').find('input').attr('disabled', 'disabled');
+    })
+    $('body').on('click', '.file-field .browse', function () {
+        alert($(this).parent().siblings('input[type=file]').val());
+//        $(this).siblings('.edit').show();
+//        $('.file_uploads').find('.active').find('input').attr('disabled', 'disabled');
+    })
+    $('body').on('change', '.file-field input[type=file]', function () {
+        $(".file-path").val(this.files[0].name);
     })
 
 

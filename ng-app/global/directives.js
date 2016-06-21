@@ -199,4 +199,26 @@ function allowPatternDirective() {
     };
 }
 
-    
+
+AppEHR.directive('myDatePicker', ['$timeout', function ($timeout) {
+        return {
+            restrict: 'A',
+            link: function (scope, elem, attrs) {
+                // timeout internals are called once directive rendering is complete
+                $timeout(function () {
+                    $(elem).datepicker({autoclose: true, todayHighlight: true, format: 'yyyy-mm-dd'});
+                });
+            }
+        };
+    }]);
+AppEHR.directive('myDropDown', ['$timeout', function ($timeout) {
+        return {
+            restrict: 'A',
+            link: function (scope, elem, attrs) {
+                // timeout internals are called once directive rendering is complete
+                $timeout(function () {
+                    $(elem).select2({minimumResultsForSearch: Infinity});
+                });
+            }
+        };
+    }]);

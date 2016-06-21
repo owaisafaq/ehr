@@ -1,17 +1,19 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies) {
+AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy) {
         $rootScope.pageTitle = "EHR - Patient Summary Demographics";
 //        $scope.vital = {};
         $scope.PI = {};
+//        $scope.allergyUpdate = {};
         $rootScope.loader = "show";
+        $scope.allergie = {};
+        $scope.dropDownInfo = dropDownInfo;
+        $scope.edit = [];
         PatientDemographics.get({
             token: $window.sessionStorage.token,
             patient_id: $routeParams.patientID
         }, getPatientInfoSuccess, getPatientInfoFailure);
-        console.log($routeParams.patientID);
         function getPatientInfoSuccess(res) {
-            console.log(res.data);
             if (res.status == true) {
                 var dob = new Date(res.data.date_of_birth);
                 var dobArr = dob.toDateString().split(' ');
@@ -48,7 +50,6 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
 
         function getPatientMedicationSuccess(res) {
-            console.log(res.data);
             if (res.status == true) {
                 $scope.medications = res.data;
             }
@@ -59,6 +60,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
 
         $scope.validateVitals = function (vital) {
+            console.log($scope.vital.result)
             if (angular.equals({}, vital) == false) {
                 if ($('form[name=vitalForm]').find('.error').length == 0) {
                     $rootScope.loader = "show";
@@ -76,15 +78,13 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
                         bmi_height: $scope.vital.height == undefined ? '' : $scope.vital.height,
                         token: $window.sessionStorage.token,
                     }
-                    console.log(vitalField);
-//                console.log($routeParams.patientID)
+                    console.log(vitalField)
                     AddVitals.save(vitalField, vitalSuccess, vitalFailure);
                 }
             }
         }
 
         function vitalSuccess(res) {
-            console.log(res);
             if (res.status == true) {
                 $rootScope.loader = "hide";
             }
@@ -100,7 +100,6 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }, getVitalInfoSuccess, getVitalInfoFailure);
 
         function getVitalInfoSuccess(res) {
-            console.log(res);
             if (res.status == true) {
                 $scope.vitals = res.data;
             }
@@ -120,7 +119,6 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }, GetSupplementsSuccess, GetSupplementsFailure);
 
         function GetSupplementsSuccess(res) {
-            console.log(res);
             if (res.status == true) {
                 $scope.supplements = res.data;
             }
@@ -137,9 +135,15 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }, GetAllergiesSuccess, GetAllergiesFailure);
 
         function GetAllergiesSuccess(res) {
-            console.log(res);
             if (res.status == true) {
+//                $scope.allergies = 
                 $scope.allergies = res.data;
+//                $scope.allergy_status = {
+//                    "value": res.data.allergy_status,
+//                    "values": ["Service 1", "Service 2", "Service 3", "Service 4"]
+//                };
+//                $scope.allergie.allergy_status == res.data.allergy_status;
+//                console.log(res.data)
             }
         }
 
@@ -153,15 +157,79 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }, GetEncountersByPatientsSuccess, GetEncountersByPatientsFailure);
 
         function GetEncountersByPatientsSuccess(res) {
-            console.log(res);
             if (res.status == true) {
                 $scope.encounters = res.data;
-                console.log('GetEncountersByPatientsSuccess')
-                console.log($scope.encounters)
+//                console.log('GetEncountersByPatientsSuccess')
+//                console.log($scope.encounters)
             }
         }
 
         function GetEncountersByPatientsFailure(error) {
             console.log(error);
+        }
+
+
+        $scope.editAllergies = function (index) {
+//            $scope.edit = true;
+            console.log($scope.edit[index])
+            $scope.edit[index] = true;
+        }
+        $scope.saveAllergies = function (ED, index) {
+            var AllergyData = {
+                patient_id: $routeParams.patientID,
+                allergy_id: ED.id,
+                allergy_type: ED.allergy_type == undefined ? '' : ED.allergy_type,
+                allergies: ED.allergies == undefined ? '' : ED.allergies,
+                severity: ED.severity == undefined ? '' : ED.severity,
+                observed_on: ED.observed_on == undefined ? '' : ED.observed_on,
+                allergy_status: ED.allergy_status == undefined ? '' : ED.allergy_status,
+                reaction: ED.reactions == undefined ? '' : ED.reactions,
+                token: $window.sessionStorage.token,
+            }
+            UpdateAllergies.save(AllergyData, allergySuccess, allergyFailure);
+            console.log(index)
+            $scope.edit[index] = false;
+        }
+        function allergySuccess(res) {
+            if (res.status == true) {
+                $rootScope.loader = "hide";
+            }
+        }
+        function allergyFailure(error) {
+            console.log(error);
+        }
+        $scope.GetTempcVal = function () {
+            $scope.vital.temperaturef = ($scope.vital.temperaturec - 32) * (5 / 9);
+        }
+        $scope.GetTempfVal = function () {
+            $scope.vital.temperaturec = ($scope.vital.temperaturef * (9 / 5)) + 32
+
+        }
+        $scope.parseFloat = function (val) {
+            return isNaN(parseFloat(val)) ? 0 : parseFloat(val);
+        }
+        $scope.Calculatebmi = function () {
+            $scope.vital.result = ($scope.vital.weight) / (($scope.vital.height / 100) * ($scope.vital.height / 100));
+            console.log("aasdas")
+        }
+        $scope.removeAllergy = function (ED) {
+            console.log("thre")
+            $scope.removeAllergyData = {
+                patient_id: $routeParams.patientID,
+                allergy_id: ED.id,
+                token: $window.sessionStorage.token
+            }
+
+        }
+        $scope.doDelete = function () {
+//            $scope.deletethis = true;
+//            if ($scope.deletethis) {
+            console.log("Oo")
+            RemoveAllergy.save($scope.removeAllergyData, allergySuccess, allergyFailure);
+            GetAllergies.get({
+                token: $window.sessionStorage.token,
+                patient_id: $routeParams.patientID
+            }, GetAllergiesSuccess, GetAllergiesFailure);
+//            }
         }
     }]);
