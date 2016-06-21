@@ -2,8 +2,8 @@
 
 require 'api.class.php';
 //define('HOST', 'http://131.107.100.10/ehr/public/api/');
-//define('HOST', 'http://localhost/ehr/public/api/');
-define('HOST', 'http://demoz.online/ehr/public/api/');
+define('HOST', 'http://localhost/ehr/public/api/');
+//define('HOST', 'http://demoz.online/ehr/public/api/');
 define('APP', '');
 define('ROUTE', '');
 
@@ -903,3 +903,51 @@ $api->params->medicines = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
+
+// Get ALL Inventory Category
+$api = new api();
+$api->name = "Get ALL Inventory Category";
+$api->url = HOST . 'get_inventory_category';
+$api->method = "GET";
+$api->params->token = "";
+$api_arr [] = $api;
+
+// Add Inventory Category
+
+$api = new api();
+$api->name = "Add Inventory Category";
+$api->url = HOST . 'create_inventory_category';
+$api->method = "POST";
+$api->description = "Add Inventory Category";
+$api->params->cat_name = "Cat name";
+$api->params->cat_desc= "Cat Desc";
+$api->params->cat_group = "Cat group";
+$api->params->token = "";
+
+
+$api_arr [] = $api;
+
+// Update Inventory Category
+$api = new api();
+$api->name = "Update Inventory Category";
+$api->url = HOST . 'update_inventory_category';
+$api->method = "POST";
+$api->description = "Update Inventory Category";
+$api->params->cat_id = "1";
+$api->params->cat_name = "Cat name";
+$api->params->cat_desc= "Cat Desc";
+$api->params->cat_group = "Cat group";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+// Delete Inventory Category
+$api = new api();
+$api->name = "Delete Inventory Category";
+$api->url = HOST . 'delete_inventory_category';
+$api->method = "POST";
+$api->params->cat_id = "1";
+$api->params->token = "";
+
+$api_arr [] = $api;
+

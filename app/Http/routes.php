@@ -138,6 +138,10 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->post('add_patient_referel','App\Http\Controllers\ApiController@add_patient_referel');
 
 
-
-
+});
+$app->group(['prefix' => 'api'], function () use ($app) {
+    $app->post('create_inventory_category','App\Http\Controllers\InventoryAPIController@create_category');
+    $app->post('update_inventory_category','App\Http\Controllers\InventoryAPIController@update_category');
+    $app->get('get_inventory_category','App\Http\Controllers\InventoryAPIController@get_category');
+    $app->post('delete_inventory_category','App\Http\Controllers\InventoryAPIController@delete_category');
 });
