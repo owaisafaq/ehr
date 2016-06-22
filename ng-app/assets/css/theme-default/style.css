@@ -699,6 +699,13 @@ Table Styling
 .check-button{
     background: url(../..//img/check_style.png) no-repeat top center;
 }
+.setting-button{
+    background: url(../..//img/setting_icon.png) no-repeat top center;
+    width: 16px;
+    height: 19px;
+    display: inline-block;
+    vertical-align: bottom;
+}
 .icons_con{
     float: right;
     margin-bottom: 20px;
@@ -2198,3 +2205,50 @@ div.ng-not-empty .select2-chosen {
 .selectAndDateTable .select2-container:not(.select2-container-disabled){
     background: #fff;
 }
+.inventory_actions{
+    position: relative;
+}
+.tool-tip_popup{
+    width: 150px;
+    height: 170px;
+    background: #fff;
+    position: absolute;
+    top: -20px;
+    left: auto;
+    right: 107%;
+    z-index: 1;
+    box-shadow: 11px 0 40px 0px rgba(224,232,238,1);
+    padding: 16px 8px;
+    padding-top: 23px;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -o-transition: 0.5s;
+
+    opacity: 1;
+    visibility: visible;
+/*    top: 20px;
+    left: 100%;*/
+}
+.tool-tip_popup:before {
+    position: absolute;
+    right: -10px;
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 24px;
+    content: "\f0d9";
+    top: 10px;
+    color: #fff;
+}
+/*.inventory_actions:hover .tool-tip_popup{
+    opacity: 1;
+    visibility: visible;
+    top: 20px;
+    left: 100%;
+}*/
