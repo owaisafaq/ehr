@@ -51,7 +51,7 @@ body{
     margin-top: 5px;
 }
 .margin-top-10{
-    margin-top: 10px;
+    margin-top: 10px !important;
 }
 input[disabled] {
     background: #ddecf8;
@@ -698,6 +698,13 @@ Table Styling
 }
 .check-button{
     background: url(../..//img/check_style.png) no-repeat top center;
+}
+.setting-button{
+    background: url(../..//img/setting_icon.png) no-repeat top center;
+    width: 16px;
+    height: 19px;
+    display: inline-block;
+    vertical-align: bottom;
 }
 .icons_con{
     float: right;
@@ -2179,6 +2186,8 @@ div.ng-not-empty .select2-chosen {
 }
 .editable_table input {
     padding-left: 5px;
+    width: 100%;
+    text-overflow: ellipsis;
 }
 .selectAndDateTable .input-group{
     display: inline-block;
@@ -2195,4 +2204,74 @@ div.ng-not-empty .select2-chosen {
 }
 .selectAndDateTable .select2-container:not(.select2-container-disabled){
     background: #fff;
+}
+.inventory_actions{
+    position: relative;
+}
+.tool-tip_popup{
+    width: 150px;
+    height: 170px;
+    background: #fff;
+    position: absolute;
+    top: -13px;
+    right: 107%;
+    z-index: 1;
+    box-shadow: 11px 0 40px 0px rgba(224,232,238,1);
+    padding: 16px 8px 0 20px;
+    padding-top: 18px;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -o-transition: 0.5s;
+
+    /*    opacity: 1;
+        visibility: visible;*/
+}
+.tool-tip_popup:before {
+    position: absolute;
+    right: -8px;
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 24px;
+    content: "\f0da";
+    top: 10px;
+    color: #fff;
+}
+.inventory_actions:hover .tool-tip_popup{
+    opacity: 1;
+    visibility: visible;
+    top: -13px;
+    right: 110%;
+}
+.tool-tip_popup a{
+    display: block;
+    color: #516e81;
+    margin-bottom: 2px;
+    font-size: 14px;
+}
+.txt-style-6{
+    font-size: 18px;
+    color: #a2a6b9;
+}
+.heading-bar{
+    background: #f9fafd;
+    border:1px solid #ddecf8;
+    color: #a2a6b9;
+    font-size: 12px;
+    text-transform: uppercase;
+    padding: 7px 10px;
+}
+.box-style{
+    border:1px solid #ddecf8;
+    float: left;
+    padding: 10px 0;
+}
+.border-bottom-0{
+    border-bottom: 0;
 }

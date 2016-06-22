@@ -99,6 +99,10 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/lab-report-haematology-lokoja.html',
                     controller: 'labReportHaematologyLokoja'
                 }).
+                when('/inventory', {
+                    templateUrl: 'views/inventory.html',
+                    controller: 'inventory'
+                }).
                 otherwise({
                     redirectTo: '/error'
                 });
@@ -224,7 +228,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
             })
             $('#s2id_get_val_principal_retainer').removeClass('disable-after-1');
         })
-
+        
         $('body').on('click', '.dependant_list .chip i', function () {
             $(this).parent('.chip').parent('div').fadeOut(function () {
                 $(this).remove();

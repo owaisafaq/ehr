@@ -418,7 +418,7 @@
                                 <th>observed on</th>
                                 <th>status</th>
                                 <th>reactions</th>
-                                <th>actions</th>
+                                <th width="14%">actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -772,7 +772,7 @@
                 <p>Continue to Add Patient Vitals</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
+                <button type="button" class="btn btn-default button-style-1" data-target="#vital-signs" data-toggle="modal" data-dismiss="modal">Ok</button>
                 <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
             </div>
         </div><!-- /.modal-content -->
@@ -841,13 +841,13 @@
                                     <label>temperature (c)</label>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" placeholder="temperature (c)" ng-init="vital.temperaturec = ''" ng-model="vital.temperaturec" numbers-only ng-keyup="GetTempcVal()"/>
+                                    <input type="text" placeholder="temperature (c)" ng-model="vital.temperaturec" numbers-only ng-keyup="GetTempcVal()"/>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>temperature (f)</label>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" placeholder="temperature (f)" ng-init="vital.temperaturef = ''" ng-model="vital.temperaturef" ng-keyup="GetTempfVal()" numbers-only/>
+                                    <input type="text" placeholder="temperature (f)" ng-model="vital.temperaturef" ng-keyup="GetTempfVal()" numbers-only/>
                                 </div>
                             </div>
                         </div>

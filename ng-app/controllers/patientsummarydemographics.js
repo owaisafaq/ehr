@@ -2,7 +2,7 @@ var AppEHR = angular.module('AppEHR');
 
 AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy) {
         $rootScope.pageTitle = "EHR - Patient Summary Demographics";
-//        $scope.vital = {};
+        $scope.vital = {};
         $scope.PI = {};
 //        $scope.allergyUpdate = {};
         $rootScope.loader = "show";
@@ -60,7 +60,6 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
 
         $scope.validateVitals = function (vital) {
-            console.log($scope.vital.result)
             if (angular.equals({}, vital) == false) {
                 if ($('form[name=vitalForm]').find('.error').length == 0) {
                     $rootScope.loader = "show";

@@ -127,6 +127,36 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->post('delete_patient_resources','App\Http\Controllers\ApiController@delete_patient_resources');
 
+    $app->get('clinical_progress_note_templates','App\Http\Controllers\ApiController@clinical_progress_note_templates');
+
+    $app->get('clinical_progress_note_fields','App\Http\Controllers\ApiController@clinical_progress_note_fields');
+
+    $app->post('add_patient_clinical_notes','App\Http\Controllers\ApiController@add_patient_clinical_notes');
+
+    $app->post('checkout_patient','App\Http\Controllers\ApiController@checkout_patient');
+
+    $app->post('add_patient_referel','App\Http\Controllers\ApiController@add_patient_referel');
+
+    $app->get('get_all_lab_orders','App\Http\Controllers\OrderController@get_all_lab_orders');
+
+    $app->get('get_lab_order','App\Http\Controllers\OrderController@get_lab_order');
+
+    $app->post('add_lab_order','App\Http\Controllers\OrderController@add_lab_order');
+
+    $app->post('cancel_lab_order','App\Http\Controllers\OrderController@cancel_lab_order');
+
+
+});
+$app->group(['prefix' => 'api'], function () use ($app) {
+    $app->post('create_inventory_category','App\Http\Controllers\InventoryAPIController@create_category');
+    $app->post('update_inventory_category','App\Http\Controllers\InventoryAPIController@update_category');
+    $app->get('get_inventory_category','App\Http\Controllers\InventoryAPIController@get_categories');
+    $app->post('delete_inventory_category','App\Http\Controllers\InventoryAPIController@delete_category');
+
+    $app->post('create_inventory_supplier','App\Http\Controllers\InventoryAPIController@create_supplier');
+    $app->post('update_inventory_supplier','App\Http\Controllers\InventoryAPIController@update_supplier');
+    $app->get('get_inventory_suppliers','App\Http\Controllers\InventoryAPIController@get_suppliers');
+    $app->post('delete_inventory_supplier','App\Http\Controllers\InventoryAPIController@delete_supplier');
 
 
 });
