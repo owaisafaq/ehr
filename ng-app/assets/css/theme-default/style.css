@@ -2281,3 +2281,13 @@ div.ng-not-empty .select2-chosen {
     font-size: 18px;
     padding-left: 12px;
 }
+/*Inventory Report*/
+.inventory_report_con > .inventory_report > div{
+    background: #f9fafb;
+    box-shadow: 0px 0px 0px 0px;
+}
+.inventory_report_con .white_circle{
+    width: 120px;
+    height: 120px;
+    display: inline-block;
+}
