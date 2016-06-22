@@ -3,9 +3,9 @@
         <div class="card">
             <div class="card-head col-lg-9 no-padding card-head-auto">
                 <ul class="nav nav-tabs nav-justified custom-tab" data-toggle="tabs">
-                    <li><a showtab href="#inventory">Inventory</a></li>
+                    <li class="active"><a showtab href="#inventory">Inventory</a></li>
                     <li><a showtab href="#suppliers">Suppliers</a></li>
-                    <li class="active"><a showtab href="#category">vitals</a></li>
+                    <li ><a showtab href="#category">vitals</a></li>
                     <li><a showtab href="#medications">medications</a></li>
                 </ul>
             </div><!--end .card-head -->
@@ -44,130 +44,128 @@
             </div>
             <div class="card-body tab-content col-lg-12 custom-card-body">
                 <div class="tab-pane active" id="inventory">
-                    <form class="custom-form">
+                    <table class="table table-striped no-margin table-custom table-custom_big">
+                        <thead>
+                            <tr>
+                                <th>product name</th>
+                                <th>category</th>
+                                <th>latest retail price</th>
+                                <th>stock quantity</th>
+                                <th>reorder level</th>
+                                <th>orde quantity</th>
+                                <th>update</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="InventoryList in InventoryLists| filter: search">
+                                <td>{{InventoryList.first_name}}</td>
+                                <td>90189191</td>
+                                <td>ABc</td>
+                                <td>Eye Clinic</td>
+                                <td>Consultation</td>
+                                <td>Outpatient</td>
+                                <td>
+                                    <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
+                                        <div class="tool-tip_popup">
+                                            <a href="javascript:;">Stock Details</a>
+                                            <a href="javascript:;">Edit Product Details</a>
+                                            <a href="javascript:;">Edit Reorder Level</a>
+                                            <a href="javascript:;">Make Inactive</a>
+                                            <a href="javascript:;">Delete Inventory</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
 
+                        </tbody>
+                    </table>
 
-                        <!--                    <table class="table table-striped no-margin table-custom table-custom_big">
-                                                <thead>
-                                                    <tr>
-                                                        <th>product name</th>
-                                                        <th>product name</th>
-                                                        <th>latest retail price</th>
-                                                        <th>stock quantity</th>
-                                                        <th>reorder level</th>
-                                                        <th>orde quantity</th>
-                                                        <th>update</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>14/04/2016</td>
-                                                        <td>90189191</td>
-                                                        <td>ABc</td>
-                                                        <td>Eye Clinic</td>
-                                                        <td>Consultation</td>
-                                                        <td>Outpatient</td>
-                                                        <td>
-                                                            <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
-                                                                <div class="tool-tip_popup">
-                                                                    <a href="javascript:;">Stock Details</a>
-                                                                    <a href="javascript:;">Edit Product Details</a>
-                                                                    <a href="javascript:;">Edit Reorder Level</a>
-                                                                    <a href="javascript:;">Make Inactive</a>
-                                                                    <a href="javascript:;">Delete Inventory</a>    
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>14/04/2016</td>
-                                                        <td>90189191</td>
-                                                        <td>ABc</td>
-                                                        <td>Eye Clinic</td>
-                                                        <td>Consultation</td>
-                                                        <td>Outpatient</td>
-                                                        <td>Outpatient</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>14/04/2016</td>
-                                                        <td>90189191</td>
-                                                        <td>ABc</td>
-                                                        <td>Eye Clinic</td>
-                                                        <td>Consultation</td>
-                                                        <td>Outpatient</td>
-                                                        <td>Outpatient</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>-->
-                        <div class="row">
-                            <div class="heading-bar no-margin border-bottom-0">Product Details</div>
-                            <div class="box-style no-margin border-bottom-0">
-                                <div class="col-lg-2">
-                                    <label>product name</label>
-                                    <span class="txt-style-6">Paracetamal</span>
-                                </div>
-                                <div class="col-lg-2">
-                                    <label>product id</label>
-                                    <span class="txt-style-6">PA5688541</span>
-                                </div>
-                                <div class="col-lg-2">
-                                    <label>trade name</label>
-                                    <span class="txt-style-6">D Cold Total</span>
-                                </div>
-                                <div class="col-lg-2">
-                                    <label>group</label>
-                                    <span class="txt-style-6">Group Name</span>
-                                </div>
-                                <div class="col-lg-2">
-                                    <label>category</label>
-                                    <span class="txt-style-6">Medicine</span>
-                                </div>
-                                <div class="col-lg-2">
-                                    <label>strength</label>
-                                    <span class="txt-style-6">100/Unit</span>
-                                </div>
-                            </div>
-                            <div class="heading-bar col-lg-12 no-margin">Stock Details</div>
-                            <table class="table table-striped no-margin table-custom table-custom_big">
-                                <thead>
-                                    <tr>
-                                        <th>stock received date</th>
-                                        <th>supplier</th>
-                                        <th>batch number</th>
-                                        <th>expiry date</th>
-                                        <th>quantity</th>
-                                        <th>cost price/item</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>14/04/2016</td>
-                                        <td>90189191</td>
-                                        <td>ABc</td>
-                                        <td>Eye Clinic</td>
-                                        <td>Consultation</td>
-                                        <td>Outpatient</td>
-                                    </tr>
-                                    <tr>
-                                        <td>14/04/2016</td>
-                                        <td>90189191</td>
-                                        <td>ABc</td>
-                                        <td>Eye Clinic</td>
-                                        <td>Consultation</td>
-                                        <td>Outpatient</td>
-                                    </tr>
-                                    <tr>
-                                        <td>14/04/2016</td>
-                                        <td>90189191</td>
-                                        <td>ABc</td>
-                                        <td>Eye Clinic</td>
-                                        <td>Consultation</td>
-                                        <td>Outpatient</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </form>
+                </div>
+                <div class="tab-pane" id="encounter_history">
+                    <table class="table table-striped no-margin table-custom table-custom_big">
+                        <thead>
+                            <tr>
+                                <th>date</th>
+                                <th>ID</th>
+                                <th>type</th>
+                                <th>chief / complaint</th>
+                                <th>diagnosis</th>
+                                <th>consultant</th>
+                                <th>report</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>14/04/2016</td>
+                                <td>90189191</td>
+                                <td>ABc</td>
+                                <td>Eye Clinic</td>
+                                <td>Consultation</td>
+                                <td>Outpatient</td>
+                                <td>Outpatient</td>
+                            </tr>
+                            <tr>
+                                <td>14/04/2016</td>
+                                <td>90189191</td>
+                                <td>ABc</td>
+                                <td>Eye Clinic</td>
+                                <td>Consultation</td>
+                                <td>Outpatient</td>
+                                <td>Outpatient</td>
+                            </tr>
+                            <tr>
+                                <td>14/04/2016</td>
+                                <td>90189191</td>
+                                <td>ABc</td>
+                                <td>Eye Clinic</td>
+                                <td>Consultation</td>
+                                <td>Outpatient</td>
+                                <td>Outpatient</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tab-pane" id="health_vitals">
+                    <button class="btn ink-reaction button-style-1 button-style-1 pull-right margin-bottom-xxl">Add Vitals</button>
+                    <table class="table table-striped no-margin table-custom table-custom_big">
+                        <thead>
+                            <tr>
+                                <th>date/time</th>
+                                <th>Temperature</th>
+                                <th>bp</th>
+                                <th>pulse</th>
+                                <th>respiration</th>
+                                <th>bmi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>14/04/2016 12:00:32</td>
+                                <td>90189191</td>
+                                <td>ABc</td>
+                                <td>Eye Clinic</td>
+                                <td>Consultation</td>
+                                <td>Outpatient</td>
+                            </tr>
+                            <tr>
+                                <td>14/04/2016 12:00:32</td>
+                                <td>90189191</td>
+                                <td>ABc</td>
+                                <td>Eye Clinic</td>
+                                <td>Consultation</td>
+                                <td>Outpatient</td>
+                            </tr>
+                            <tr>
+                                <td>14/04/2016 12:00:32</td>
+                                <td>90189191</td>
+                                <td>ABc</td>
+                                <td>Eye Clinic</td>
+                                <td>Consultation</td>
+                                <td>Outpatient</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <div class="tab-pane" id="suppliers">
                     <div class="table-header row background-none">
@@ -199,7 +197,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                            <tr ng-repeat="SupplierList in SuppplierLists| filter: id">
                                     <td>14/04/2016</td>
                                     <td>90189191</td>
                                     <td>ABc</td>
@@ -209,33 +207,14 @@
                                     <td>
                                         <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
                                             <div class="tool-tip_popup">
-                                                <a href="javascript:;">Stock Details</a>
-                                                <a href="javascript:;">Edit Product Details</a>
-                                                <a href="javascript:;">Edit Reorder Level</a>
-                                                <a href="javascript:;">Make Inactive</a>
-                                                <a href="javascript:;">Delete Inventory</a>
+                                                <a href="javascript:;">View Details</a>
+                                                <a href="javascript:;">Edit  </a>
+                                                <a href="javascript:;">Delete </a>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>14/04/2016</td>
-                                    <td>90189191</td>
-                                    <td>ABc</td>
-                                    <td>Eye Clinic</td>
-                                    <td>Consultation</td>
-                                    <td>Outpatient</td>
-                                    <td>Outpatient</td>
-                                </tr>
-                                <tr>
-                                    <td>14/04/2016</td>
-                                    <td>90189191</td>
-                                    <td>ABc</td>
-                                    <td>Eye Clinic</td>
-                                    <td>Consultation</td>
-                                    <td>Outpatient</td>
-                                    <td>Outpatient</td>
-                                </tr>
+
                             </tbody>
                         </table>
                 </div>

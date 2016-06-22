@@ -642,12 +642,28 @@ AppEHR.factory("GetAllInventory", function ($resource) {
     return InventoryLists;
 });
 
+AppEHR.factory("GetAllSuppliers", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_inventory_suppliers', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var SupplierLists = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return SupplierLists;
+});
+
 
 
 
 AppEHR.factory("TestingData", function ($resource) {
         function getResource(params, body) {
-            var res2 = $resource(serverPath + 'get_all_patients', params, {
+            var res2 = $resource(serverPath + 'get_inventory_suppliers', params, {
                 save: {method: 'POST'}
             });
             return res2;

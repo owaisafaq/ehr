@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllInventory', function($scope, $rootScope,$window,$routeParams,GetAllInventory){
+AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllInventory','GetAllSuppliers', function($scope, $rootScope,$window,$routeParams,GetAllInventory,GetAllSuppliers){
 	$rootScope.pageTitle = "EHR - Inventory";
 	$scope.displayInfo = {};
 	GetAllInventory.get({
@@ -17,6 +17,23 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 	}
 
 	function GetAllInventoryFailure(error) {
+		console.log(error);
+	}
+
+	GetAllSuppliers.get({
+		token: $window.sessionStorage.token
+
+	}, GetAllSupplierSuccess, GetAllSupplierFailure);
+
+	function GetAllSupplierSuccess(res) {
+		console.log(res);
+		if (res.status == true) {
+			$scope.SuppplierLists = res.data;
+			console.log($scope.SuppplierLists)
+		}
+	}
+
+	function GetAllSupplierFailure(error) {
 		console.log(error);
 	}
 
