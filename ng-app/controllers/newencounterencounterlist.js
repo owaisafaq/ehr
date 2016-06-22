@@ -38,7 +38,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
         function getPatientEncounters(res) {
             if (res.status == true) {
                 $rootScope.loader = "hide";
-                $scope.allEncounter = res.data;
+                $scope.allEncounter = res.da ta;
                 //console.log($scope.allEncounter);
             }
             DropDownData.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id}, dropDownSuccess, dropDownFailed);

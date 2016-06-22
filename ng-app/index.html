@@ -37,7 +37,7 @@
     </head>
     <body class="menubar-hoverable header-fixed">
         <header id="header" class="hide {{class}}">
-            <form action="post">
+            <form action="#/patient-listing" >
                 <div class="headerbar">
                     <div class="headerbar-left">
                         <a href="javascript:;" ng-click="loadView(PI);" class="white-btn"><img src="assets/img/add_person.png" /></a>
@@ -49,9 +49,9 @@
                         <a class="margin-right-20" href="javascript:;"><img src="assets/img/emergency.png" /></a>
                         <div class="header-search">
                             <button type="submit">
-                                <i class="fa fa-search"></i>
+                                <i class="fa fa-search" ></i>
                             </button>
-                            <input class="search_field" type="text" placeholder="Search for a patient" />
+                            <input name="search_text" class="search_field" type="text" placeholder="Search for a patient" />
                         </div> 
                         <a href="javascript:;" class="button-style-2">
                             <img src="assets/img/admission_icn.png" />
@@ -226,6 +226,7 @@
         <script src="global/factories.js"></script>
         <script src="global/directives.js"></script>
         <script src="controllers/login.js"></script>
+        <script src="controllers/myTesting.js"></script>
         <script src="controllers/patientlisting.js"></script>
         <script src="controllers/appointmentscalenderview.js"></script>
         <script src="controllers/appointmentslist.js"></script>

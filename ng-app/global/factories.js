@@ -486,3 +486,40 @@ AppEHR.factory("GetAllPatients", function ($resource) {
     };
     return patientRegistrationEmployer;
 });
+
+
+AppEHR.factory("UpdateAllergies", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'update_patient_allergies', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+
+AppEHR.factory("TestingData", function ($resource) {
+        function getResource(params, body) {
+            var res2 = $resource(serverPath + 'get_all_patients', params, {
+                save: {method: 'POST'}
+            });
+            return res2;
+        }
+        var myTest = {
+            save: function (params, body, success) {
+                var res = getResource(params, body);
+                return res.save(params, body, success);
+            }
+        };
+        return myTest;
+    }
+
+);
+
+

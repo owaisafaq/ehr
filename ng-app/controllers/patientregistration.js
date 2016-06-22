@@ -12,7 +12,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         $scope.counties = [];
         $scope.contactAddressCountries = [];
         $scope.permanentAddressCountries = [];
-        $scope.addressContactCities = [];
+         $scope.addressContactCities = [];
         $scope.addressPerminentCities = [];
         $scope.nextOfKinCountries = [];
         $scope.contactAddressStates = [];
