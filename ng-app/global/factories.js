@@ -504,6 +504,25 @@ AppEHR.factory("UpdateAllergies", function ($resource) {
     return patientRegistrationEmployer;
 });
 
+AppEHR.factory("GetAllInventory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_all_patients', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var InventoryLists = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return InventoryLists;
+});
+
+
+
+
 AppEHR.factory("TestingData", function ($resource) {
         function getResource(params, body) {
             var res2 = $resource(serverPath + 'get_all_patients', params, {

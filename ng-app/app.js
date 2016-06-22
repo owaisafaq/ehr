@@ -101,7 +101,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                 }).
                 when('/inventory', {
                     templateUrl: 'views/inventory.html',
-                    controller: 'inventory'
+                    controller: 'Inventory'
                 }).
                 when('/my-testing', {
                     templateUrl: 'views/my-testing.html',

@@ -70,7 +70,7 @@
                         <button type="submit">
                             <i class="fa fa-search"></i>
                         </button>
-                        <input class="search_field" type="text" placeholder="Enter product code">
+                        <input class="search_field" type="text" ng-model="search" placeholder="Enter product code">
                     </div>
                 </div> 
 
@@ -90,7 +90,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                        <tr ng-repeat="InventoryList in InventoryLists| filter: search">
                                 <td>14/04/2016</td>
                                 <td>90189191</td>
                                 <td>ABc</td>
@@ -109,24 +109,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>14/04/2016</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                                <td>Consultation</td>
-                                <td>Outpatient</td>
-                                <td>Outpatient</td>
-                            </tr>
-                            <tr>
-                                <td>14/04/2016</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                                <td>Consultation</td>
-                                <td>Outpatient</td>
-                                <td>Outpatient</td>
-                            </tr>
+
                         </tbody>
                     </table>
 
