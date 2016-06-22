@@ -158,7 +158,10 @@ $app->group(['prefix' => 'api'], function () use ($app) {
     $app->post('create_inventory_supplier','App\Http\Controllers\InventoryAPIController@create_supplier');
     $app->post('update_inventory_supplier','App\Http\Controllers\InventoryAPIController@update_supplier');
     $app->get('get_inventory_suppliers','App\Http\Controllers\InventoryAPIController@get_suppliers');
+    $app->get('get_inventory_single_supplier','App\Http\Controllers\InventoryAPIController@get_single_supplier');
     $app->post('delete_inventory_supplier','App\Http\Controllers\InventoryAPIController@delete_supplier');
 
+    $app->get('get_stock','App\Http\Controllers\InventoryAPIController@get_stock');
+    $app->get('get_stock_details','App\Http\Controllers\InventoryAPIController@get_stock_details');
 
 });

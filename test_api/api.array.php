@@ -961,6 +961,16 @@ $api->method = "GET";
 $api->params->token = "";
 $api_arr [] = $api;
 
+
+// Get Single Inventory Suppliers
+$api = new api();
+$api->name = "Get Single Inventory suppliers";
+$api->url = HOST . 'get_inventory_single_supplier';
+$api->method = "GET";
+$api->params->token = "";
+$api->params->supplier_id = "1";
+$api_arr [] = $api;
+
 // Add Inventory Supplier
 
 $api = new api();
@@ -1103,5 +1113,24 @@ $api->description = "Update Order";
 $api->params->order_id = "1";
 $api->params->order_status = "in progress";
 $api->params->token = "123";
+
+$api_arr [] = $api;
+
+// Delete Inventory Supplier
+$api = new api();
+$api->name = "Get Stocks";
+$api->url = HOST . 'get_stock';
+$api->method = "GET";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+// Delete Inventory Supplier
+$api = new api();
+$api->name = "Get Stocks Details";
+$api->url = HOST . 'get_stock_details';
+$api->method = "GET";
+$api->params->product_id = "";
+$api->params->token = "";
 
 $api_arr [] = $api;
