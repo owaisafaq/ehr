@@ -99,6 +99,10 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/lab-report-haematology-lokoja.html',
                     controller: 'labReportHaematologyLokoja'
                 }).
+                when('/inventory', {
+                    templateUrl: 'views/inventory.html',
+                    controller: 'inventory'
+                }).
                 otherwise({
                     redirectTo: '/error'
                 });

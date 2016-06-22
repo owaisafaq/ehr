@@ -146,6 +146,17 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->post('cancel_lab_order','App\Http\Controllers\OrderController@cancel_lab_order');
 
 
+});
+$app->group(['prefix' => 'api'], function () use ($app) {
+    $app->post('create_inventory_category','App\Http\Controllers\InventoryAPIController@create_category');
+    $app->post('update_inventory_category','App\Http\Controllers\InventoryAPIController@update_category');
+    $app->get('get_inventory_category','App\Http\Controllers\InventoryAPIController@get_categories');
+    $app->post('delete_inventory_category','App\Http\Controllers\InventoryAPIController@delete_category');
+
+    $app->post('create_inventory_supplier','App\Http\Controllers\InventoryAPIController@create_supplier');
+    $app->post('update_inventory_supplier','App\Http\Controllers\InventoryAPIController@update_supplier');
+    $app->get('get_inventory_suppliers','App\Http\Controllers\InventoryAPIController@get_suppliers');
+    $app->post('delete_inventory_supplier','App\Http\Controllers\InventoryAPIController@delete_supplier');
 
 
 });

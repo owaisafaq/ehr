@@ -904,6 +904,122 @@ $api->params->token = "123";
 
 $api_arr [] = $api;
 
+// Get ALL Inventory Category
+$api = new api();
+$api->name = "Get ALL Inventory Category";
+$api->url = HOST . 'get_inventory_category';
+$api->method = "GET";
+$api->params->token = "";
+$api_arr [] = $api;
+
+// Add Inventory Category
+
+$api = new api();
+$api->name = "Add Inventory Category";
+$api->url = HOST . 'create_inventory_category';
+$api->method = "POST";
+$api->description = "Add Inventory Category";
+$api->params->cat_name = "Cat name";
+$api->params->cat_desc= "Cat Desc";
+$api->params->cat_group = "Cat group";
+$api->params->token = "";
+
+
+$api_arr [] = $api;
+
+// Update Inventory Category
+$api = new api();
+$api->name = "Update Inventory Category";
+$api->url = HOST . 'update_inventory_category';
+$api->method = "POST";
+$api->description = "Update Inventory Category";
+$api->params->cat_id = "1";
+$api->params->cat_name = "Cat name";
+$api->params->cat_desc= "Cat Desc";
+$api->params->cat_group = "Cat group";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+// Delete Inventory Category
+$api = new api();
+$api->name = "Delete Inventory Category";
+$api->url = HOST . 'delete_inventory_category';
+$api->method = "POST";
+$api->params->cat_id = "1";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+
+
+// Get ALL Inventory Suppliers
+$api = new api();
+$api->name = "Get ALL Inventory suppliers";
+$api->url = HOST . 'get_inventory_suppliers';
+$api->method = "GET";
+$api->params->token = "";
+$api_arr [] = $api;
+
+// Add Inventory Supplier
+
+$api = new api();
+$api->name = "Add Inventory supplier";
+$api->url = HOST . 'create_inventory_supplier';
+$api->method = "POST";
+$api->description = "Add Inventory supplier";
+$api->params->name = "name";
+$api->params->contact_person = "Contact Person";
+$api->params->city = "City";
+$api->params->state = "state";
+$api->params->country = "country";
+$api->params->address_1 = "Address Line 1";
+$api->params->address_2 = "Address Line 2";
+$api->params->email = "email";
+$api->params->work_phone = "Work phone";
+$api->params->mobile = "mobile";
+$api->params->website = "website";
+$api->params->post_code = "post code";
+$api->params->token = "";
+
+
+$api_arr [] = $api;
+
+
+// Update Inventory Supplier
+$api = new api();
+$api->name = "Update Inventory Supplier";
+$api->url = HOST . 'update_inventory_supplier';
+$api->method = "POST";
+$api->description = "Update Inventory supplier";
+$api->params->supplier_id = "1";
+$api->params->name = "name";
+$api->params->contact_person = "Contact Person";
+$api->params->city = "City";
+$api->params->state = "state";
+$api->params->country = "country";
+$api->params->address_1 = "Address Line 1";
+$api->params->address_2 = "Address Line 2";
+$api->params->email = "email";
+$api->params->work_phone = "Work phone";
+$api->params->mobile = "mobile";
+$api->params->website = "website";
+$api->params->post_code = "post code";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+// Delete Inventory Supplier
+$api = new api();
+$api->name = "Delete Inventory supplier";
+$api->url = HOST . 'delete_inventory_supplier';
+$api->method = "POST";
+$api->params->supplier_id = "1";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+
 
 
 // Get All Lab Orders
