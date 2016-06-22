@@ -2226,8 +2226,8 @@ div.ng-not-empty .select2-chosen {
     -moz-transition: 0.5s;
     -o-transition: 0.5s;
 
-/*    opacity: 1;
-    visibility: visible;*/
+    /*    opacity: 1;
+        visibility: visible;*/
 }
 .tool-tip_popup:before {
     position: absolute;
@@ -2254,4 +2254,24 @@ div.ng-not-empty .select2-chosen {
     color: #516e81;
     margin-bottom: 2px;
     font-size: 14px;
+}
+.txt-style-6{
+    font-size: 18px;
+    color: #a2a6b9;
+}
+.heading-bar{
+    background: #f9fafd;
+    border:1px solid #ddecf8;
+    color: #a2a6b9;
+    font-size: 12px;
+    text-transform: uppercase;
+    padding: 7px 10px;
+}
+.box-style{
+    border:1px solid #ddecf8;
+    float: left;
+    padding: 10px 0;
+}
+.border-bottom-0{
+    border-bottom: 0;
 }
