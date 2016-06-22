@@ -1086,9 +1086,22 @@ $api->url = HOST . 'cancel_lab_order';
 $api->method = "POST";
 $api->description = "Cancel Lab Orders";
 $api->params->order_id = "1";
-$api->params->order_status = "canceled";
+$api->params->order_status = "Cancelled";
 $api->params->reason = "Invalid Payment";
 $api->params->notes = "Test";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Update Order
+$api = new api();
+$api->name = "Update Order";
+$api->url = HOST . 'update_order';
+$api->method = "POST";
+$api->description = "Update Order";
+$api->params->order_id = "1";
+$api->params->order_status = "in progress";
 $api->params->token = "123";
 
 $api_arr [] = $api;
