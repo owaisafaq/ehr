@@ -486,3 +486,34 @@ AppEHR.factory("GetAllPatients", function ($resource) {
     };
     return patientRegistrationEmployer;
 });
+AppEHR.factory("GetAllLabOrders", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_all_lab_orders', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var LabOrders = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return LabOrders;
+});
+AppEHR.factory("getLabOrderInfo", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_lab_order', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var LabOrder = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return LabOrder;
+});
+
