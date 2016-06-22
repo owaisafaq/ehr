@@ -948,7 +948,9 @@ class ApiController extends Controller
             "retainership" => $retainership,
             "categories" => $categories,
             "doctors" => $doctors,
-            "labs" => $labs
+            "labs" => $labs,
+            "manufacturer" => $manufacturers
+
         );
 
         return response()->json(['status' => true, 'data' => $data]);
