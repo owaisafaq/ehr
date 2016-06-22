@@ -26,6 +26,8 @@ $app->group(['prefix' => 'api'], function () use ($app) {
 
     $app->post('add_patient_archive','App\Http\Controllers\ApiController@add_patient_archive');
 
+    $app->post('update_patient_archive','App\Http\Controllers\ApiController@update_patient_archive');
+
 
 });
 
@@ -38,6 +40,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->post('register_patient', 'App\Http\Controllers\ApiController@register_patient');
 
     $app->post('add_patient', 'App\Http\Controllers\ApiController@add_patient');
+
+    $app->post('delete_patient', 'App\Http\Controllers\ApiController@delete_patient');
 
     $app->post('add_patient_address', 'App\Http\Controllers\ApiController@add_patient_address');
 
@@ -77,6 +81,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->get('get_patient_vital_history','App\Http\Controllers\ApiController@get_patient_vital_history');
 
+    $app->get('get_patient_vital_history','App\Http\Controllers\ApiController@get_patient_vital_history');
+
     $app->post('update_visit_status','App\Http\Controllers\ApiController@update_visit_status');
 
     $app->get('get_patient_demographics','App\Http\Controllers\ApiController@get_patient_demographics');
@@ -87,10 +93,70 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->get('patient_archives','App\Http\Controllers\ApiController@patient_archives');
 
+    $app->get('remove_patient_archive','App\Http\Controllers\ApiController@remove_patient_archive');
+
     $app->get('patient_medications','App\Http\Controllers\ApiController@patient_medications');
 
     $app->get('patient_supplements','App\Http\Controllers\ApiController@patient_supplements');
 
     $app->get('patient_allergies','App\Http\Controllers\ApiController@patient_allergies');
+
+    $app->post('update_patient_allergies','App\Http\Controllers\ApiController@update_patient_allergies');
+
+    $app->post('delete_patient_allergies','App\Http\Controllers\ApiController@delete_patient_allergies');
+
+    $app->get('patient_visit_list','App\Http\Controllers\ApiController@patient_visit_list');
+
+    $app->get('get_all_patients','App\Http\Controllers\ApiController@get_all_patients');
+
+    $app->get('get_patient_appointments','App\Http\Controllers\ApiController@get_patient_appointments');
+
+    $app->post('add_patient_appointments','App\Http\Controllers\ApiController@add_patient_appointments');
+
+    $app->post('update_patient_appointments','App\Http\Controllers\ApiController@update_patient_appointments');
+
+    $app->post('delete_patient_appointments','App\Http\Controllers\ApiController@delete_patient_appointments');
+
+    $app->post('add_resources','App\Http\Controllers\ApiController@add_resources');
+
+    $app->get('list_resources','App\Http\Controllers\ApiController@list_resources');
+
+    $app->get('list_patient_resources','App\Http\Controllers\ApiController@list_patient_resources');
+
+    $app->post('update_patient_resources','App\Http\Controllers\ApiController@update_patient_resources');
+
+    $app->post('delete_patient_resources','App\Http\Controllers\ApiController@delete_patient_resources');
+
+    $app->get('clinical_progress_note_templates','App\Http\Controllers\ApiController@clinical_progress_note_templates');
+
+    $app->get('clinical_progress_note_fields','App\Http\Controllers\ApiController@clinical_progress_note_fields');
+
+    $app->post('add_patient_clinical_notes','App\Http\Controllers\ApiController@add_patient_clinical_notes');
+
+    $app->post('checkout_patient','App\Http\Controllers\ApiController@checkout_patient');
+
+    $app->post('add_patient_referel','App\Http\Controllers\ApiController@add_patient_referel');
+
+    $app->get('get_all_lab_orders','App\Http\Controllers\OrderController@get_all_lab_orders');
+
+    $app->get('get_lab_order','App\Http\Controllers\OrderController@get_lab_order');
+
+    $app->post('add_lab_order','App\Http\Controllers\OrderController@add_lab_order');
+
+    $app->post('cancel_lab_order','App\Http\Controllers\OrderController@cancel_lab_order');
+
+
+});
+$app->group(['prefix' => 'api'], function () use ($app) {
+    $app->post('create_inventory_category','App\Http\Controllers\InventoryAPIController@create_category');
+    $app->post('update_inventory_category','App\Http\Controllers\InventoryAPIController@update_category');
+    $app->get('get_inventory_category','App\Http\Controllers\InventoryAPIController@get_categories');
+    $app->post('delete_inventory_category','App\Http\Controllers\InventoryAPIController@delete_category');
+
+    $app->post('create_inventory_supplier','App\Http\Controllers\InventoryAPIController@create_supplier');
+    $app->post('update_inventory_supplier','App\Http\Controllers\InventoryAPIController@update_supplier');
+    $app->get('get_inventory_suppliers','App\Http\Controllers\InventoryAPIController@get_suppliers');
+    $app->post('delete_inventory_supplier','App\Http\Controllers\InventoryAPIController@delete_supplier');
+
 
 });

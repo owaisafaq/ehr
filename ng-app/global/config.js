@@ -13,5 +13,9 @@ var dropDownInfo = {
 		{"id": "1", "type": "License"},
 		{"id": "2", "type": "National ID Card"},
 		{"id": "3", "type": "Passport"}
+	],
+        "AllergyType" :[
+		{"name": "still exists"},
+		{"name": "not any more"}
 	]
 };

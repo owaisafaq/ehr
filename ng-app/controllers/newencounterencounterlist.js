@@ -117,27 +117,26 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
         }
 
         $scope.validateVitals = function (vital) {
-            console.log($scope.vital);
             if (angular.equals({}, vital) == false) {
-                $rootScope.loader = "show";
-                var vitalField = [
-                    {"field_id": "1", "value": $scope.vital.systolic == undefined ? '' : $scope.vital.systolic},
-                    {"field_id": "2", "value": $scope.vital.diastolic == undefined ? '' : $scope.vital.diastolic},
-                    {"field_id": "3", "value": $scope.vital.pulse == undefined ? '' : $scope.vital.pulse},
-                    {"field_id": "4", "value": $scope.vital.respiratoryRate == undefined ? '' : $scope.vital.respiratoryRate},
-                    {"field_id": "5", "value": $scope.vital.temperaturec == undefined ? '' : $scope.vital.temperaturec},
-                    {"field_id": "6", "value": $scope.vital.temperaturef == undefined ? '' : $scope.vital.temperaturef},
-                    {"field_id": "7", "value": $scope.vital.result == undefined ? '' : $scope.vital.result},
-                    {"field_id": "8", "value": $scope.vital.weight == undefined ? '' : $scope.vital.weight},
-                    {"field_id": "9", "value": $scope.vital.height == undefined ? '' : $scope.vital.height}
-                ]
-                console.log(JSON.stringify(vitalField));
-                AddVitals.save({
-                    token: $window.sessionStorage.token,
-                    vitals: JSON.stringify(vitalField),
-                    notes: $scope.vital.notes == undefined ? '' : $scope.vital.notes,
-                    patient_id: $scope.displayInfo.patient_id
-                }, vitalSuccess, vitalFailure);
+                if ($('form[name=vitalForm]').find('.error').length == 0) {
+                    $rootScope.loader = "show";
+                    var vitalField = {
+                        patient_id: $routeParams.patientID,
+                        systolic_mm_hg: $scope.vital.systolic == undefined ? '' : $scope.vital.systolic,
+                        diastolic_mm_hg: $scope.vital.diastolic == undefined ? '' : $scope.vital.diastolic,
+                        pulse: $scope.vital.pulse == undefined ? '' : $scope.vital.pulse,
+                        respiratory_rate: $scope.vital.respiratoryRate == undefined ? '' : $scope.vital.respiratoryRate,
+                        temperature_c: $scope.vital.temperaturec == undefined ? '' : $scope.vital.temperaturec,
+                        temperature_f: $scope.vital.temperaturef == undefined ? '' : $scope.vital.temperaturef,
+                        bmi_result: $scope.vital.result == undefined ? '' : $scope.vital.result,
+                        bmi_weight: $scope.vital.weight == undefined ? '' : $scope.vital.weight,
+                        notes: $scope.vital.notes == undefined ? '' : $scope.vital.notes,
+                        bmi_height: $scope.vital.height == undefined ? '' : $scope.vital.height,
+                        token: $window.sessionStorage.token,
+                    }
+                    console.log(vitalField)
+                    AddVitals.save(vitalField, vitalSuccess, vitalFailure);
+                }
             }
         }
 

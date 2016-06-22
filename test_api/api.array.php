@@ -191,6 +191,19 @@ $api_arr [] = $api;
 
 
 
+// Delete Patient
+$api = new api();
+$api->name = "Delete Patient";
+$api->url = HOST . 'delete_patient';
+$api->method = "POST";
+$api->description = "Delete Patient";
+$api->params->patient_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+
 // Add Patient Address
 $api = new api();
 $api->name = "Add Patient Address";
@@ -595,6 +608,37 @@ $api_arr [] = $api;
 
 
 
+// Update Patient Allergies
+$api = new api();
+$api->name = "Update Patient Allergie";
+$api->url = HOST . 'update_patient_allergies';
+$api->method = "POST";
+$api->description = "Update Patient Allergie";
+$api->params->patient_id = "1";
+$api->params->allergy_id = "1";
+$api->params->allergy_type = "severe";
+$api->params->allergies = "tobaco";
+$api->params->severity = "high";
+$api->params->observed_on = "";
+$api->params->allergy_status = "";
+$api->params->reaction = "";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Delete Patient Allergies
+$api = new api();
+$api->name = "Delete Patient Allergie";
+$api->url = HOST . 'delete_patient_allergies';
+$api->method = "POST";
+$api->description = "Delete Patient Allergie";
+$api->params->allergy_id = "1";
+$api->params->patient_id = "1";
+$api->params->token = "123";
+$api_arr [] = $api;
+
+
 // Add Patient Vitals
 $api = new api();
 $api->name = "Add Patient Vitals";
@@ -625,8 +669,62 @@ $api->name = "Add Resources";
 $api->url = HOST . 'add_resources';
 $api->method = "POST";
 $api->description = "Add Resources";
+$api->params->patient_id = "1";
 $api->params->name = "New Folder";
 $api->params->followup_parent_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+
+// List Folder Files
+$api = new api();
+$api->name = "List Folder Files";
+$api->url = HOST . 'list_resources';
+$api->method = "GET";
+$api->description = "List Folder Files";
+$api->params->followup_parent_id = "1";
+$api->params->patient_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+
+// List Patient  Folders
+$api = new api();
+$api->name = "List Patient Folders";
+$api->url = HOST . 'list_patient_resources';
+$api->method = "GET";
+$api->description = "List Patient Folders";
+$api->params->patient_id = "1";
+$api->params->followup_parent_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Update Patient Folders
+$api = new api();
+$api->name = "Update Patient Resources";
+$api->url = HOST . 'update_patient_resources';
+$api->method = "POST";
+$api->description = "Update Patient Resource";
+$api->params->resource_id = "1";
+$api->params->name = "test";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Remove Patient Folders
+$api = new api();
+$api->name = "Remove Patient Resources";
+$api->url = HOST . 'delete_patient_resources';
+$api->method = "POST";
+$api->description = "Remove Patient Resource";
+$api->params->resource_id = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -664,6 +762,333 @@ $api->url = HOST . 'get_patient_appointments';
 $api->method = "GET";
 $api->description = "Get Patient Appointements";
 $api->params->patient_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+
+// Add Patient Appointements
+$api = new api();
+$api->name = "Add Patient Appointements";
+$api->url = HOST . 'add_patient_appointments';
+$api->method = "POST";
+$api->description = "Add Patient Appointements";
+$api->params->patient_id = "1";
+$api->params->visit_id = "1";
+$api->params->department = "1";
+$api->params->reason = "1";
+$api->params->date = "2016-06-15";
+$api->params->start_time = "2:30 P.M";
+$api->params->notes = "sample notes";
+$api->params->doctor = "1";
+$api->params->other_reason = "other";
+$api->params->end_time = "3:30 P.M";
+$api->params->priority = "high";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Update Patient Appointements
+$api = new api();
+$api->name = "Update Patient Appointements";
+$api->url = HOST . 'update_patient_appointments';
+$api->method = "POST";
+$api->description = "Update Patient Appointements";
+$api->params->appointment_id = "1";
+$api->params->patient_id = "1";
+$api->params->visit_id = "1";
+$api->params->department = "1";
+$api->params->reason = "1";
+$api->params->date = "2016-06-15";
+$api->params->start_time = "2:30 P.M";
+$api->params->notes = "sample notes";
+$api->params->doctor = "1";
+$api->params->other_reason = "other";
+$api->params->end_time = "3:30 P.M";
+$api->params->priority = "high";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Delete Patient Appointements
+$api = new api();
+$api->name = "Delete Patient Appointements";
+$api->url = HOST . 'delete_patient_appointments';
+$api->method = "POST";
+$api->description = "Delete Patient Appointements";
+$api->params->appointment_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Clinical Progress Note Templates
+$api = new api();
+$api->name = "Clinical Progress Note Templates";
+$api->url = HOST . 'clinical_progress_note_templates';
+$api->method = "GET";
+$api->description = "Clinical Progress Note Templates";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+
+// Clinical Progress Note Fields
+$api = new api();
+$api->name = "Clinical Progress Note Fields";
+$api->url = HOST . 'clinical_progress_note_fields';
+$api->method = "GET";
+$api->description = "Clinical Progress Note Fields";
+$api->params->template_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Add Patient Clinical Notes
+$api = new api();
+$api->name = "Add Patient Clinical Notes";
+$api->url = HOST . 'add_patient_clinical_notes';
+$api->method = "POST";
+$api->description = "Add Patient Clinical Notes";
+$api->params->patient_id = "1";
+$api->params->visit_id = "1";
+$api->params->clinical_notes = "";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Checkout Patient
+$api = new api();
+$api->name = "Checkout Patient";
+$api->url = HOST . 'checkout_patient';
+$api->method = "POST";
+$api->description = "Checkout Patient";
+$api->params->patient_id = "1";
+$api->params->visit_id = "1";
+$api->params->reason = "No Appointment";
+$api->params->notes = "reasons for checkout";
+$api->params->pick_date = "2016-06-15";
+$api->params->pick_time = "2:30 P.M";
+$api->params->admit_date = "2016-06-15";
+$api->params->start_time = "2:30 P.M";
+$api->params->department_id = "1";
+$api->params->ward_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Add Patient Referels
+$api = new api();
+$api->name = "Add Patient Referel";
+$api->url = HOST . 'add_patient_referel';
+$api->method = "POST";
+$api->description = "Add Patient Referel";
+$api->params->patient_id = "1";
+$api->params->department_id = "1";
+$api->params->doctor_id = "1";
+$api->params->provisional_diagnosis = "";
+$api->params->reason_referal = "";
+$api->params->history = "";
+$api->params->investigations = "";
+$api->params->allergies = "1";
+$api->params->medication_list = "1";
+$api->params->medicines = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+// Get ALL Inventory Category
+$api = new api();
+$api->name = "Get ALL Inventory Category";
+$api->url = HOST . 'get_inventory_category';
+$api->method = "GET";
+$api->params->token = "";
+$api_arr [] = $api;
+
+// Add Inventory Category
+
+$api = new api();
+$api->name = "Add Inventory Category";
+$api->url = HOST . 'create_inventory_category';
+$api->method = "POST";
+$api->description = "Add Inventory Category";
+$api->params->cat_name = "Cat name";
+$api->params->cat_desc= "Cat Desc";
+$api->params->cat_group = "Cat group";
+$api->params->token = "";
+
+
+$api_arr [] = $api;
+
+// Update Inventory Category
+$api = new api();
+$api->name = "Update Inventory Category";
+$api->url = HOST . 'update_inventory_category';
+$api->method = "POST";
+$api->description = "Update Inventory Category";
+$api->params->cat_id = "1";
+$api->params->cat_name = "Cat name";
+$api->params->cat_desc= "Cat Desc";
+$api->params->cat_group = "Cat group";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+// Delete Inventory Category
+$api = new api();
+$api->name = "Delete Inventory Category";
+$api->url = HOST . 'delete_inventory_category';
+$api->method = "POST";
+$api->params->cat_id = "1";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+
+
+// Get ALL Inventory Suppliers
+$api = new api();
+$api->name = "Get ALL Inventory suppliers";
+$api->url = HOST . 'get_inventory_suppliers';
+$api->method = "GET";
+$api->params->token = "";
+$api_arr [] = $api;
+
+// Add Inventory Supplier
+
+$api = new api();
+$api->name = "Add Inventory supplier";
+$api->url = HOST . 'create_inventory_supplier';
+$api->method = "POST";
+$api->description = "Add Inventory supplier";
+$api->params->name = "name";
+$api->params->contact_person = "Contact Person";
+$api->params->city = "City";
+$api->params->state = "state";
+$api->params->country = "country";
+$api->params->address_1 = "Address Line 1";
+$api->params->address_2 = "Address Line 2";
+$api->params->email = "email";
+$api->params->work_phone = "Work phone";
+$api->params->mobile = "mobile";
+$api->params->website = "website";
+$api->params->post_code = "post code";
+$api->params->token = "";
+
+
+$api_arr [] = $api;
+
+
+// Update Inventory Supplier
+$api = new api();
+$api->name = "Update Inventory Supplier";
+$api->url = HOST . 'update_inventory_supplier';
+$api->method = "POST";
+$api->description = "Update Inventory supplier";
+$api->params->supplier_id = "1";
+$api->params->name = "name";
+$api->params->contact_person = "Contact Person";
+$api->params->city = "City";
+$api->params->state = "state";
+$api->params->country = "country";
+$api->params->address_1 = "Address Line 1";
+$api->params->address_2 = "Address Line 2";
+$api->params->email = "email";
+$api->params->work_phone = "Work phone";
+$api->params->mobile = "mobile";
+$api->params->website = "website";
+$api->params->post_code = "post code";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+// Delete Inventory Supplier
+$api = new api();
+$api->name = "Delete Inventory supplier";
+$api->url = HOST . 'delete_inventory_supplier';
+$api->method = "POST";
+$api->params->supplier_id = "1";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+
+
+
+// Get All Lab Orders
+$api = new api();
+$api->name = "Get All Lab Orders";
+$api->url = HOST . 'get_all_lab_orders';
+$api->method = "GET";
+$api->description = "Get All Lab Lab Orders";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Get Lab Order
+$api = new api();
+$api->name = "Get Lab Order";
+$api->url = HOST . 'get_lab_order';
+$api->method = "GET";
+$api->description = "Get Lab Orders";
+$api->params->order_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Add Lab Orders
+$api = new api();
+$api->name = "Add Lab Orders";
+$api->url = HOST . 'add_lab_order';
+$api->method = "POST";
+$api->description = "Add Lab Orders";
+$api->params->patient_id = "1";
+$api->params->lab = "1";
+$api->params->lab_test = "1";
+$api->params->priority = "High";
+$api->params->sample = "Blood";
+$api->params->sample = "Blood";
+$api->params->clinical_information = "test";
+$api->params->diagnosis = "test";
+$api->params->notes = "test";
+$api->params->order_status = "In Process";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+/*// Get  Lab Tests
+$api = new api();
+$api->name = "Get Lab Tests";
+$api->url = HOST . 'get_lab_tests';
+$api->method = "GET";
+$api->description = "Get All Lab Tests";
+$api->params->lab = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;*/
+
+
+
+
+// Cancel Lab Orders
+$api = new api();
+$api->name = "Cancel Lab Orders";
+$api->url = HOST . 'cancel_lab_order';
+$api->method = "POST";
+$api->description = "Cancel Lab Orders";
+$api->params->order_id = "1";
+$api->params->order_status = "canceled";
+$api->params->reason = "Invalid Payment";
+$api->params->notes = "Test";
 $api->params->token = "123";
 
 $api_arr [] = $api;

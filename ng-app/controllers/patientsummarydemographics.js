@@ -1,16 +1,19 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications) {
+AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy) {
         $rootScope.pageTitle = "EHR - Patient Summary Demographics";
         $scope.vital = {};
         $scope.PI = {};
+//        $scope.allergyUpdate = {};
+        $rootScope.loader = "show";
+        $scope.allergie = {};
+        $scope.dropDownInfo = dropDownInfo;
+        $scope.edit = [];
         PatientDemographics.get({
             token: $window.sessionStorage.token,
             patient_id: $routeParams.patientID
         }, getPatientInfoSuccess, getPatientInfoFailure);
-        console.log($routeParams.patientID);
         function getPatientInfoSuccess(res) {
-            console.log(res.data);
             if (res.status == true) {
                 var dob = new Date(res.data.date_of_birth);
                 var dobArr = dob.toDateString().split(' ');
@@ -39,6 +42,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
                 }, getPatientMedicationSuccess, getPatientMedicationFailure);
 
             }
+            $rootScope.loader = "hide";
         }
 
         function getPatientInfoFailure(error) {
@@ -46,9 +50,8 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
 
         function getPatientMedicationSuccess(res) {
-            console.log(res.data);
             if (res.status == true) {
-               $scope.medications = res.data;
+                $scope.medications = res.data;
             }
         }
 
@@ -57,33 +60,30 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
 
         $scope.validateVitals = function (vital) {
-            console.log($scope.vital);
             if (angular.equals({}, vital) == false) {
-                $rootScope.loader = "show";
-                var vitalField = [
-                    {"field_id": "1", "value": $scope.vital.systolic == undefined ? '' : $scope.vital.systolic},
-                    {"field_id": "2", "value": $scope.vital.diastolic == undefined ? '' : $scope.vital.diastolic},
-                    {"field_id": "3", "value": $scope.vital.pulse == undefined ? '' : $scope.vital.pulse},
-                    {"field_id": "4", "value": $scope.vital.respiratoryRate == undefined ? '' : $scope.vital.respiratoryRate},
-                    {"field_id": "5", "value": $scope.vital.temperaturec == undefined ? '' : $scope.vital.temperaturec},
-                    {"field_id": "6", "value": $scope.vital.temperaturef == undefined ? '' : $scope.vital.temperaturef},
-                    {"field_id": "7", "value": $scope.vital.result == undefined ? '' : $scope.vital.result},
-                    {"field_id": "8", "value": $scope.vital.weight == undefined ? '' : $scope.vital.weight},
-                    {"field_id": "9", "value": $scope.vital.height == undefined ? '' : $scope.vital.height}
-                ]
-                console.log(JSON.stringify(vitalField));
-                console.log($routeParams.patientID)
-                AddVitals.save({
-                    token: $window.sessionStorage.token,
-                    vitals: JSON.stringify(vitalField),
-                    notes: $scope.vital.notes == undefined ? '' : $scope.vital.notes,
-                    patient_id: $routeParams.patientID
-                }, vitalSuccess, vitalFailure);
+                if ($('form[name=vitalForm]').find('.error').length == 0) {
+                    $rootScope.loader = "show";
+                    var vitalField = {
+                        patient_id: $routeParams.patientID,
+                        systolic_mm_hg: $scope.vital.systolic == undefined ? '' : $scope.vital.systolic,
+                        diastolic_mm_hg: $scope.vital.diastolic == undefined ? '' : $scope.vital.diastolic,
+                        pulse: $scope.vital.pulse == undefined ? '' : $scope.vital.pulse,
+                        respiratory_rate: $scope.vital.respiratoryRate == undefined ? '' : $scope.vital.respiratoryRate,
+                        temperature_c: $scope.vital.temperaturec == undefined ? '' : $scope.vital.temperaturec,
+                        temperature_f: $scope.vital.temperaturef == undefined ? '' : $scope.vital.temperaturef,
+                        bmi_result: $scope.vital.result == undefined ? '' : $scope.vital.result,
+                        bmi_weight: $scope.vital.weight == undefined ? '' : $scope.vital.weight,
+                        notes: $scope.vital.notes == undefined ? '' : $scope.vital.notes,
+                        bmi_height: $scope.vital.height == undefined ? '' : $scope.vital.height,
+                        token: $window.sessionStorage.token,
+                    }
+                    console.log(vitalField)
+                    AddVitals.save(vitalField, vitalSuccess, vitalFailure);
+                }
             }
         }
 
         function vitalSuccess(res) {
-            console.log(res);
             if (res.status == true) {
                 $rootScope.loader = "hide";
             }
@@ -91,5 +91,144 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         function vitalFailure(error) {
             console.log(error);
+        }
+
+        GetVitalsInfo.get({
+            token: $window.sessionStorage.token,
+            patient_id: $routeParams.patientID
+        }, getVitalInfoSuccess, getVitalInfoFailure);
+
+        function getVitalInfoSuccess(res) {
+            if (res.status == true) {
+                $scope.vitals = res.data;
+            }
+        }
+
+        function getVitalInfoFailure(error) {
+            console.log(error);
+        }
+
+        $scope.clinicalNote = function () {
+            $window.location.href = '#/clinical-documentation-clinic-progress-note';
+        }
+
+        GetSupplements.get({
+            token: $window.sessionStorage.token,
+            patient_id: $routeParams.patientID
+        }, GetSupplementsSuccess, GetSupplementsFailure);
+
+        function GetSupplementsSuccess(res) {
+            if (res.status == true) {
+                $scope.supplements = res.data;
+            }
+        }
+
+        function GetSupplementsFailure(error) {
+            console.log(error);
+        }
+
+
+        GetAllergies.get({
+            token: $window.sessionStorage.token,
+            patient_id: $routeParams.patientID
+        }, GetAllergiesSuccess, GetAllergiesFailure);
+
+        function GetAllergiesSuccess(res) {
+            if (res.status == true) {
+//                $scope.allergies = 
+                $scope.allergies = res.data;
+//                $scope.allergy_status = {
+//                    "value": res.data.allergy_status,
+//                    "values": ["Service 1", "Service 2", "Service 3", "Service 4"]
+//                };
+//                $scope.allergie.allergy_status == res.data.allergy_status;
+//                console.log(res.data)
+            }
+        }
+
+        function GetAllergiesFailure(error) {
+            console.log(error);
+        }
+
+        GetEncountersByPatients.get({
+            token: $window.sessionStorage.token,
+            patient_id: $routeParams.patientID
+        }, GetEncountersByPatientsSuccess, GetEncountersByPatientsFailure);
+
+        function GetEncountersByPatientsSuccess(res) {
+            if (res.status == true) {
+                $scope.encounters = res.data;
+//                console.log('GetEncountersByPatientsSuccess')
+//                console.log($scope.encounters)
+            }
+        }
+
+        function GetEncountersByPatientsFailure(error) {
+            console.log(error);
+        }
+
+
+        $scope.editAllergies = function (index) {
+//            $scope.edit = true;
+            console.log($scope.edit[index])
+            $scope.edit[index] = true;
+        }
+        $scope.saveAllergies = function (ED, index) {
+            var AllergyData = {
+                patient_id: $routeParams.patientID,
+                allergy_id: ED.id,
+                allergy_type: ED.allergy_type == undefined ? '' : ED.allergy_type,
+                allergies: ED.allergies == undefined ? '' : ED.allergies,
+                severity: ED.severity == undefined ? '' : ED.severity,
+                observed_on: ED.observed_on == undefined ? '' : ED.observed_on,
+                allergy_status: ED.allergy_status == undefined ? '' : ED.allergy_status,
+                reaction: ED.reactions == undefined ? '' : ED.reactions,
+                token: $window.sessionStorage.token,
+            }
+            UpdateAllergies.save(AllergyData, allergySuccess, allergyFailure);
+            console.log(index)
+            $scope.edit[index] = false;
+        }
+        function allergySuccess(res) {
+            if (res.status == true) {
+                $rootScope.loader = "hide";
+            }
+        }
+        function allergyFailure(error) {
+            console.log(error);
+        }
+        $scope.GetTempcVal = function () {
+            $scope.vital.temperaturef = ($scope.vital.temperaturec - 32) * (5 / 9);
+        }
+        $scope.GetTempfVal = function () {
+            $scope.vital.temperaturec = ($scope.vital.temperaturef * (9 / 5)) + 32
+
+        }
+        $scope.parseFloat = function (val) {
+            return isNaN(parseFloat(val)) ? 0 : parseFloat(val);
+        }
+        $scope.Calculatebmi = function () {
+            $scope.vital.result = ($scope.vital.weight) / (($scope.vital.height / 100) * ($scope.vital.height / 100));
+            console.log("aasdas")
+        }
+        $scope.removeAllergy = function (ED) {
+            console.log("thre")
+            $scope.removeAllergyData = {
+                patient_id: $routeParams.patientID,
+                allergy_id: ED.id,
+                token: $window.sessionStorage.token
+            }
+
+        }
+        $scope.doDelete = function () {
+//            $scope.deletethis = true;
+//            if ($scope.deletethis) {
+            console.log("Oo")
+            RemoveAllergy.save($scope.removeAllergyData, allergySuccess, allergyFailure);
+            GetAllergies.get({
+                token: $window.sessionStorage.token,
+                patient_id: $routeParams.patientID
+            }, GetAllergiesSuccess, GetAllergiesFailure);
+//            }
         }
     }]);
