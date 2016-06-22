@@ -9,163 +9,6 @@
                     <li><a showtab href="#medications">medications</a></li>
                 </ul>
             </div><!--end .card-head -->
-            <div class="table-header col-lg-12">
-                <div class="col-lg-7">
-                    <span class="txt-style-3 pull-left text-uppercase">category</span>
-                    <div class="col-lg-2">
-                        <select class="form-control">
-                            <option>All</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                    </div>
-                    <span class="txt-style-3 pull-left text-uppercase">status</span>
-                    <div class="col-lg-2">
-                        <select class="form-control">
-                            <option>Active</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="pull-right">
-                    <button class="notes button-custom pull-right">Import inventory</button>
-                    <button class="add button-custom pull-right ">Add Inventory</button>
-                </div>
-                <div class="pull-right">
-                    <div class="header-search pull-left margin-top-10">
-                        <button type="submit">
-                            <i class="fa fa-search"></i>
-                        </button>
-                        <input class="search_field" type="text" placeholder="Enter product code">
-                    </div>
-                </div>
-
-            </div>
-            <div class="card-body tab-content col-lg-12 custom-card-body">
-                <div class="tab-pane active" id="inventory">
-                    <table class="table table-striped no-margin table-custom table-custom_big">
-                        <thead>
-                            <tr>
-                                <th>product name</th>
-                                <th>category</th>
-                                <th>latest retail price</th>
-                                <th>stock quantity</th>
-                                <th>reorder level</th>
-                                <th>orde quantity</th>
-                                <th>update</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="InventoryList in InventoryLists| filter: search">
-                                <td>{{InventoryList.first_name}}</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                                <td>Consultation</td>
-                                <td>Outpatient</td>
-                                <td>
-                                    <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
-                                        <div class="tool-tip_popup">
-                                            <a href="javascript:;">Stock Details</a>
-                                            <a href="javascript:;">Edit Product Details</a>
-                                            <a href="javascript:;">Edit Reorder Level</a>
-                                            <a href="javascript:;">Make Inactive</a>
-                                            <a href="javascript:;">Delete Inventory</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-
-                </div>
-                <div class="tab-pane" id="encounter_history">
-                    <table class="table table-striped no-margin table-custom table-custom_big">
-                        <thead>
-                            <tr>
-                                <th>date</th>
-                                <th>ID</th>
-                                <th>type</th>
-                                <th>chief / complaint</th>
-                                <th>diagnosis</th>
-                                <th>consultant</th>
-                                <th>report</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>14/04/2016</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                                <td>Consultation</td>
-                                <td>Outpatient</td>
-                                <td>Outpatient</td>
-                            </tr>
-                            <tr>
-                                <td>14/04/2016</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                                <td>Consultation</td>
-                                <td>Outpatient</td>
-                                <td>Outpatient</td>
-                            </tr>
-                            <tr>
-                                <td>14/04/2016</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                                <td>Consultation</td>
-                                <td>Outpatient</td>
-                                <td>Outpatient</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="tab-pane" id="health_vitals">
-                    <button class="btn ink-reaction button-style-1 button-style-1 pull-right margin-bottom-xxl">Add Vitals</button>
-                    <table class="table table-striped no-margin table-custom table-custom_big">
-                        <thead>
-                            <tr>
-                                <th>date/time</th>
-                                <th>Temperature</th>
-                                <th>bp</th>
-                                <th>pulse</th>
-                                <th>respiration</th>
-                                <th>bmi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>14/04/2016 12:00:32</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                                <td>Consultation</td>
-                                <td>Outpatient</td>
-                            </tr>
-                            <tr>
-                                <td>14/04/2016 12:00:32</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                                <td>Consultation</td>
-                                <td>Outpatient</td>
-                            </tr>
-                            <tr>
-                                <td>14/04/2016 12:00:32</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                                <td>Consultation</td>
-                                <td>Outpatient</td>
-                            </tr>
-                        </tbody>
-                    </table>
 
             <div class="card-body tab-content col-lg-12 custom-card-body">
                 <div class="tab-pane active" id="inventory">
@@ -325,10 +168,212 @@
                                                     </table>
                                                 </div>-->
                     </form>
-                    <div class="add-drug-supplements">
+                    <!--                                        <div class="add-drug-supplements">
+                                                                <form class="custom-form">
+                                                                    <div class="row">
+                                                                        <h2 class="h2-style_1">Add Inventory (Drug & Supplement)</h2>
+                                                                        <div class="col-lg-12">
+                                                                            <label class="label-style">Product Details</label>
+                                                                        </div>
+                                                                        <div class="row no-margin">
+                                                                            <div class="col-lg-3">
+                                                                                <label>group</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <select class="form-control">
+                                                                                    <option>Select Group</option>
+                                                                                    <option>2</option>
+                                                                                    <option>3</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <label>category</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <select class="form-control">
+                                                                                    <option>Select Category</option>
+                                                                                    <option>2</option>
+                                                                                    <option>3</option>
+                                                                                </select>
+                                                                            </div>
+
+                                                                            <div class="col-lg-3">
+                                                                                <label>product name</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <input type="text" placeholder="" />
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <label>product id</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <input type="text" placeholder="" />
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <label>trade name</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <input type="text" />
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <label>strength</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 no-padding">
+                                                                                <div class="col-lg-6">
+                                                                                    <input type="text" />
+                                                                                </div>
+                                                                                <div class="col-lg-6">
+                                                                                    <select class="form-control">
+                                                                                        <option>Select Unit</option>
+                                                                                        <option>2</option>
+                                                                                        <option>3</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <label>route</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <select class="form-control">
+                                                                                    <option>Select route</option>
+                                                                                    <option>2</option>
+                                                                                    <option>3</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <label>dose from</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <select class="form-control">
+                                                                                    <option>Select Dose Form</option>
+                                                                                    <option>2</option>
+                                                                                    <option>3</option>
+                                                                                </select>
+                                                                            </div>
+
+                                                                            <div class="col-lg-3">
+                                                                                <label>reorder level</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <select class="form-control">
+                                                                                    <option>Select Color</option>
+                                                                                    <option>2</option>
+                                                                                    <option>3</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <label>order quantity</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <input type="text" placeholder="" />
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row no-margin">
+                                                                            <div class="row no-margin">
+                                                                                <div class="col-lg-3"><label class="label-style">Stock Details</label></div>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <label>Stock Received date</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <div class="input-group date select-date">
+                                                                                    <div class="input-group-content">
+                                                                                        <input type="text" class="form-control" placeholder="Pick Date">
+                                                                                    </div>
+                                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <label>supplier</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <select class="form-control">
+                                                                                    <option>Select supplier</option>
+                                                                                    <option>2</option>
+                                                                                    <option>3</option>
+                                                                                </select>
+                                                                            </div>
+
+                                                                            <div class="col-lg-3">
+                                                                                <label>batch number</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <input type="text" placeholder="" />
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <label>expiry date</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <div class="input-group date select-date">
+                                                                                    <div class="input-group-content">
+                                                                                        <input type="text" class="form-control" placeholder="Pick Date">
+                                                                                    </div>
+                                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <label>quantity</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <input type="text" />
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <label>cost Price/item</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <input type="text" />
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <label>manufacturer</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <select class="form-control">
+                                                                                    <option>Select Manufacturer</option>
+                                                                                    <option>2</option>
+                                                                                    <option>3</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <label>Pharmacy</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <select class="form-control">
+                                                                                    <option>Select Pharmacy</option>
+                                                                                    <option>2</option>
+                                                                                    <option>3</option>
+                                                                                </select>
+                                                                            </div>
+
+                                                                            <div class="col-lg-3">
+                                                                                <label>pack</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <select class="form-control">
+                                                                                    <option>Select Pack</option>
+                                                                                    <option>2</option>
+                                                                                    <option>3</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <label>reference number</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <input type="text" placeholder="" />
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <label>tax</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3">
+                                                                                <input type="text" placeholder="" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>-->
+                    <div class="add-drug-others">
                         <form class="custom-form">
                             <div class="row">
-                                <h2 class="h2-style_1">Add Inventory (Drug & Supplement)</h2>
+                                <h2 class="h2-style_1">Add Inventory (Others)</h2>
                                 <div class="col-lg-12">
                                     <label class="label-style">Product Details</label>
                                 </div>
@@ -367,10 +412,9 @@
                                         <input type="text" placeholder="" />
                                     </div>
                                     <div class="col-lg-3">
-                                        <label>trade name</label>
+                                        <label>Description</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <input type="text" />
                                     </div>
                                     <div class="col-lg-3">
                                         <label>strength</label>
@@ -527,7 +571,6 @@
                             </div>
                         </form>
                     </div>
-
                 </div>
                 <div class="tab-pane" id="suppliers">
                     <div class="table-header row background-none">
@@ -541,41 +584,45 @@
                                 </button>
                                 <input class="search_field" type="text" placeholder="Enter supplier">
                             </div>
-                        </div> 
+                        </div>
                     </div>
                     <form class="custom-form">
 
 
                         <table class="table table-striped no-margin table-custom table-custom_big">
                             <thead>
-                                <tr>
-                                    <th>contact person</th>
-                                    <th>address</th>
-                                    <th>email</th>
-                                    <th>mobile</th>
-                                    <th>work phone</th>
-                                    <th>website</th>
-                                    <th>update</th>
-                                </tr>
+                            <tr>
+                                <th>contact person</th>
+                                <th>address</th>
+                                <th>email</th>
+                                <th>mobile</th>
+                                <th>work phone</th>
+                                <th>website</th>
+                                <th>update</th>
+                            </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="SupplierList in SuppplierLists">
-                                    <td>14/04/2016</td>
-                                    <td>90189191</td>
-                                    <td>ABc</td>
-                                    <td>Eye Clinic</td>
-                                    <td>Consultation</td>
-                                    <td>Outpatient</td>
-                                    <td>
-                                        <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
-                                            <div class="tool-tip_popup">
-                                                <a href="javascript:;">View Details</a>
-                                                <a href="javascript:;">Edit  </a>
-                                                <a href="javascript:;">Delete </a>
-                                            </div>
+                            <tr ng-repeat="SupplierList in SuppplierLists| filter: id">
+
+                                <td>{{SupplierList.contact_person}}</td>
+                                <td>{{SupplierList.address_1}}</td>
+                                <td>{{SupplierList.email}}</td>
+                                <td>{{SupplierList.mobile}}</td>
+                                <td>{{SupplierList.work_phone}}</td>
+                                <td>{{SupplierList.website}}</td>
+
+                                <td>
+                                    <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
+                                        <div class="tool-tip_popup">
+                                            <a href="javascript:;">Stock Details</a>
+                                            <a href="javascript:;">Edit Product Details</a>
+                                            <a href="javascript:;">Edit Reorder Level</a>
+                                            <a href="javascript:;">Make Inactive</a>
+                                            <a href="javascript:;">Delete Inventory</a>
                                         </div>
-                                    </td>
-                                </tr>
+                                    </div>
+                                </td>
+                            </tr>
 
                             </tbody>
                         </table>
@@ -609,62 +656,32 @@
 
                         <table class="table table-striped no-margin table-custom table-custom_big">
                             <thead>
-                                <tr>
-                                    <th>Category</th>
-                                    <th>Group</th>
-                                    <th>Description</th>
-                                    <th>Update</th>
-                                </tr>
+                            <tr>
+                                <th>Category</th>
+                                <th>Group</th>
+                                <th>Description</th>
+                                <th>Update</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>14/04/2016</td>
-                                    <td>90189191</td>
-                                    <td>ABc</td>
-                                    <td>
-                                        <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
-                                            <div class="tool-tip_popup">
-                                                <a href="javascript:;">Stock Details</a>
-                                                <a href="javascript:;">Edit Product Details</a>
-                                                <a href="javascript:;">Edit Reorder Level</a>
-                                                <a href="javascript:;">Make Inactive</a>
-                                                <a href="javascript:;">Delete Inventory</a>
-                                            </div>
+                            <tr ng-repeat="CategoryList in CategoryLists">
+                                <td>{{CategoryList.cat_name}}</td>
+                                <td>{{CategoryList.cat_group}}</td>
+                                <td>{{CategoryList.cat_desc}}</td>
+
+                                <td>
+                                    <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
+                                        <div class="tool-tip_popup">
+                                            <a href="javascript:;">Stock Details</a>
+                                            <a href="javascript:;">Edit Product Details</a>
+                                            <a href="javascript:;">Edit Reorder Level</a>
+                                            <a href="javascript:;">Make Inactive</a>
+                                            <a href="javascript:;">Delete Inventory</a>
                                         </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>14/04/2016</td>
-                                    <td>90189191</td>
-                                    <td>ABc</td>
-                                    <td>
-                                        <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
-                                            <div class="tool-tip_popup">
-                                                <a href="javascript:;">Stock Details</a>
-                                                <a href="javascript:;">Edit Product Details</a>
-                                                <a href="javascript:;">Edit Reorder Level</a>
-                                                <a href="javascript:;">Make Inactive</a>
-                                                <a href="javascript:;">Delete Inventory</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>14/04/2016</td>
-                                    <td>90189191</td>
-                                    <td>ABc</td>
-                                    <td>
-                                        <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
-                                            <div class="tool-tip_popup">
-                                                <a href="javascript:;">Stock Details</a>
-                                                <a href="javascript:;">Edit Product Details</a>
-                                                <a href="javascript:;">Edit Reorder Level</a>
-                                                <a href="javascript:;">Make Inactive</a>
-                                                <a href="javascript:;">Delete Inventory</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                    </div>
+                                </td>
+                            </tr>
+
                             </tbody>
                         </table>
                     </form>
@@ -696,7 +713,7 @@
                 <h2>Add Category</h2>
             </div>
             <div class="modal-body">
-                <form class="custom-form">
+                <form class="custom-form" ng-submit="AddCategory(category);">
                     <div class="row">
                         <div class="row no-margin">
                             <div class="col-lg-3">
@@ -706,25 +723,25 @@
                             <!--<div class="col-lg-12 no-padding margin-bottom-xxl">-->
                             <div class="radio radio-styled col-lg-2">
                                 <label>
-                                    <input type="radio" name="checkoutpatient" value="appointment" checked>
+                                    <input type="radio" ng-model="category.cat_group" value="Drugs" checked>
                                     <span>Drug</span>
                                 </label>
                             </div>
                             <div class="radio radio-styled col-lg-2">
                                 <label>
-                                    <input type="radio" name="checkoutpatient" value="followup">
+                                    <input type="radio" ng-model="category.cat_group" value="Supplements">
                                     <span>Supplement</span>
                                 </label>
                             </div>
                             <div class="radio radio-styled col-lg-2">
                                 <label>
-                                    <input type="radio" name="checkoutpatient" value="admit_patient">
+                                    <input type="radio" ng-model="category.cat_group" value="Documents">
                                     <span>Document</span>
                                 </label>
                             </div>
                             <div class="radio radio-styled col-lg-1">
                                 <label>
-                                    <input type="radio" name="checkoutpatient" value="dead">
+                                    <input type="radio" ng-model="category.cat_group" value="Others">
                                     <span>Other</span>
                                 </label>
                             </div>
@@ -743,18 +760,18 @@
                             <label>Category Name</label>
                         </div>
                         <div class="col-lg-9">
-                            <input type="text" placeholder="" name="" required/>
+                            <input type="text" placeholder="" ng-model="category.cat_name" required/>
                         </div>
                         <div class="col-lg-12">
                             <label>Description</label>
                         </div>
                         <div class="col-lg-12">
-                            <textarea></textarea>
+                            <textarea ng-model="category.cat_desc"></textarea>
                         </div>
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default button-style-1">Add</button>
+                        <button type="submit" class="btn btn-default button-style-1">Add</button>
                         <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
                     </div>
                 </form>

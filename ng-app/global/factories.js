@@ -659,6 +659,39 @@ AppEHR.factory("GetAllSuppliers", function ($resource) {
 });
 
 
+AppEHR.factory("GetAllCategories", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_inventory_category', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var CategoryLists = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return CategoryLists;
+});
+
+AppEHR.factory("AddCategory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'create_inventory_category', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var AddCategory = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return AddCategory;
+});
+
+
 
 
 AppEHR.factory("TestingData", function ($resource) {
