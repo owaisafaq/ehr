@@ -1066,7 +1066,6 @@ $api->params->lab = "1";
 $api->params->lab_test = "1";
 $api->params->priority = "High";
 $api->params->sample = "Blood";
-$api->params->sample = "Blood";
 $api->params->clinical_information = "test";
 $api->params->diagnosis = "test";
 $api->params->notes = "test";
