@@ -5,7 +5,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
         $rootScope.loader = "show";
         $scope.allEncounter = [];
         $scope.displayInfo = {};
-//        $scope.vital = {};
+        $scope.vital = {};
         //$scope.showStrip = false;
         $scope.buttonDisabled = false;
         $scope.PID = $routeParams.patientID;
@@ -118,24 +118,25 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
 
         $scope.validateVitals = function (vital) {
             if (angular.equals({}, vital) == false) {
-                $rootScope.loader = "show";
-                var vitalField = {
-                    patient_id: $routeParams.patientID,
-                    systolic_mm_hg: $scope.vital.systolic == undefined ? '' : $scope.vital.systolic,
-                    diastolic_mm_hg: $scope.vital.diastolic == undefined ? '' : $scope.vital.diastolic,
-                    pulse: $scope.vital.pulse == undefined ? '' : $scope.vital.pulse,
-                    respiratory_rate: $scope.vital.respiratoryRate == undefined ? '' : $scope.vital.respiratoryRate,
-                    temperature_c: $scope.vital.temperaturec == undefined ? '' : $scope.vital.temperaturec,
-                    temperature_f: $scope.vital.temperaturef == undefined ? '' : $scope.vital.temperaturef,
-                    bmi_result: $scope.vital.result == undefined ? '' : $scope.vital.result,
-                    bmi_weight: $scope.vital.weight == undefined ? '' : $scope.vital.weight,
-                    notes: $scope.vital.notes == undefined ? '' : $scope.vital.notes,
-                    bmi_height: $scope.vital.height == undefined ? '' : $scope.vital.height,
-                    token: $window.sessionStorage.token,
+                if ($('form[name=vitalForm]').find('.error').length == 0) {
+                    $rootScope.loader = "show";
+                    var vitalField = {
+                        patient_id: $routeParams.patientID,
+                        systolic_mm_hg: $scope.vital.systolic == undefined ? '' : $scope.vital.systolic,
+                        diastolic_mm_hg: $scope.vital.diastolic == undefined ? '' : $scope.vital.diastolic,
+                        pulse: $scope.vital.pulse == undefined ? '' : $scope.vital.pulse,
+                        respiratory_rate: $scope.vital.respiratoryRate == undefined ? '' : $scope.vital.respiratoryRate,
+                        temperature_c: $scope.vital.temperaturec == undefined ? '' : $scope.vital.temperaturec,
+                        temperature_f: $scope.vital.temperaturef == undefined ? '' : $scope.vital.temperaturef,
+                        bmi_result: $scope.vital.result == undefined ? '' : $scope.vital.result,
+                        bmi_weight: $scope.vital.weight == undefined ? '' : $scope.vital.weight,
+                        notes: $scope.vital.notes == undefined ? '' : $scope.vital.notes,
+                        bmi_height: $scope.vital.height == undefined ? '' : $scope.vital.height,
+                        token: $window.sessionStorage.token,
+                    }
+                    console.log(vitalField)
+                    AddVitals.save(vitalField, vitalSuccess, vitalFailure);
                 }
-                console.log(vitalField);
-//                console.log($routeParams.patientID)
-                AddVitals.save(vitalField, vitalSuccess, vitalFailure);
             }
         }
 
