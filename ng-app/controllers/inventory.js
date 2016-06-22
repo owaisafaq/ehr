@@ -28,7 +28,7 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 	function GetAllSupplierSuccess(res) {
 		console.log(res);
 		if (res.status == true) {
-			$scope.SuppplierLists = res.data;
+			$scope.SuppplierLists = res.suppliers;
 			console.log($scope.SuppplierLists)
 		}
 	}
