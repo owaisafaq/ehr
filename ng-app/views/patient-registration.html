@@ -12,7 +12,7 @@
                 </ul>
             </div><!-- end .card-head -->
             <div class="card-body tab-content">
-                <div class="tab-pane {{disabledTabInfo}}" id="info">
+                <div class="tab-pane {{disabledTabInfo-no}}" id="info">
                     <form class="custom-form" name="userForm1" ng-model="myForm" novalidate ng-submit="validatePatientInfo(PI);" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-lg-3">
@@ -715,27 +715,28 @@
                 </div>
 
                 <div class="tab-pane {{disabledTabArchive-no}} active" id="archive">
+                    <a href="javascript:;" ng-if="followupParentId != '0'" ng-hide="backButtonArchive" ng-click="backButton();"><< Back</a>
                     <div class="col-xs-12">
                         <div class="icons_con">
                             <button class="done-editing button-custom" ng-click="saveArchive();">Save</button>
                             <button class="edit button-custom">Edit</button>
-                            <button class="delete button-custom" ng-click="deleteArchive();">Remove</button>
+                            <button class="delete button-custom" data-toggle="modal" data-target="#confirmation">Remove</button>
                             <button data-toggle="modal" data-target="#fileUploader" class="add button-custom">ADD</button>
                         </div>
                     </div>
 
                     <div class="row file_uploads">
                         <div class="col-xs-12 folder_create_con no-padding">
-                            <!-- <div class="col-xs-2">
+                            <div class="col-xs-2" data-id="{{folder.id}}" ng-repeat="folder in foldersArchive" ng-dblclick="openFolder();">
                                 <div>
                                     <img src="assets/img/folder_icon.png" />
                                     <div class="pull-left">
-                                        <input type="text" value="Document Name" disabled />
-                                        <span class="file_date">June 09, 2016</span>
+                                        <input type="text" disabled value="{{folder.name}}"/>
+                                        <span class="file_date">{{folder.created_at}}</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-2">
+                           <!-- <div class="col-xs-2">
                                 <div>
                                     <img src="assets/img/folder_icon.png" />
                                     <div class="pull-left">
@@ -1143,25 +1144,35 @@
             <div class="modal-header pop_head">
                 <h2>Add Archive</h2>
             </div>
-            <div class="modal-body pull-left">
-                <div class="select_file_mode">
-                    <a class="active" href="javascript:;"><img src="assets/img/pdf_big_icon.png" /></a>
-                    <a href="javascript:;"><img src="assets/img/jpg_big_icon.png" /></a>
-                    <a href="javascript:;"><img src="assets/img/folder_icon_big.png" /></a>
-                </div>
-                <div class="show_uploading_format">
-                    <div class="clear">
-                        <input type="file" name="patient_archive" id="file_upload" />
-                        <a href="javascript:$('#file_upload').uploadify('upload','*')">Upload Files</a>
-                        <p></p>
+            <form enctype="multipart/form-data" method="post" ng-submit="submitFiles(patient_archive)">
+                <div class="modal-body pull-left">
+                    <div class="select_file_mode">
+                        <a class="{{areaFileActive1}}" href="javascript:;" ng-click="folderArea = false;fileArea = true;selectType('application/pdf');areaFileActive1 = 'active'; areaFileActive2 = '';areaFileActive3 = ''"><img src="assets/img/pdf_big_icon.png" /></a>
+                        <a class="{{areaFileActive2}}" href="javascript:;" ng-click="folderArea = false;fileArea = true;selectType('image/jpeg, image/png, image/jpg');areaFileActive2 = 'active';areaFileActive1 = '';areaFileActive3 = ''"><img src="assets/img/jpg_big_icon.png" /></a>
+                        <a class="{{areaFileActive3}}" href="javascript:;" ng-click="fileArea = false;folderArea = true; areaFileActive3 = 'active'; areaFileActive1 = ''; areaFileActive2 = '';areaFileActive3 = 'active'"><img src="assets/img/folder_icon_big.png" /></a>
+                    </div>
+                    <div class="show_uploading_format" ng-show="fileArea">
+                        <div class="clear">
+                            <!-- <input type="file" class="abc" file-model="patient_archive" multiple="multiple" accept="{{fileTypes}}" /> -->
+                            <input type="file" id="file" name="file" multiple onchange="angular.element(this).scope().getFileDetails(this)" />
+                            <!-- <a href="javascript:$('#file_upload').uploadify('upload','*')">Upload Files</a>
+                            <p></p> -->
+                            <p>{{fileUploadMessage}}</p>
+                        </div>
+                    </div>
+                    <div class="show_uploading_format" ng-show="folderArea">
+                        <div class="clear">
+                            <input type="text" name="folder_name" ng-model="folderName" />
+                            <button type="button" name="folderButton" ng-click="folderBtn();">Create</button>
+                        </div>
+                        {{archiveSuccessMessage}}
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-default button-style-1" >SAVE & CLOSE</button>
-                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
-            </div>
-
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default button-style-1" >SAVE & CLOSE</button>
+                    <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -1171,3 +1182,19 @@
         display: none;
     }
 </style>-->
+<div class="modal fade" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Confirmation</h2>
+            </div>
+            <div class="modal-body">
+                <p>Do you want to Delete?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-toggle="modal" ng-click="deleteArchive();" data-dismiss="modal">Ok</button>
+                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

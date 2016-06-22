@@ -134,21 +134,78 @@ AppEHR.directive('dynamic', function ($compile) {
         }
     };
 });
-
 AppEHR.directive('fileModel', ['$parse', function ($parse) {
-        return {
-            restrict: 'A',
-            link: function (scope, element, attrs) {
-                var model = $parse(attrs.fileModel);
-                var modelSetter = model.assign;
-                element.bind('change', function () {
-                    scope.$apply(function () {
-                        modelSetter(scope, element[0].files[0]);
-                    });
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+            
+            element.bind('change', function(){
+                scope.$apply(function(){
+                    modelSetter(scope, element[0].files[0]);
                 });
+            });
+        }
+    };
+}]);
+AppEHR.service('fileUpload', ['$http', '$rootScope', '$interval', 'ListFolderArchives', '$window', 'GetResourcesByFolderArchives', function ($http, $rootScope, $interval, ListFolderArchives, $window, GetResourcesByFolderArchives) {
+    this.uploadFileToUrl = function(file, patientID, followUpID, uploadUrl){
+        var fd = new FormData();
+        fd.append('patient_archive[]', file);
+        /*for (var i in file) {
+            console.log(file[i]);
+            fd.append("patient_archive", file[i]);
+            console.log(fd);
+        }*/
+        fd.append('patient_id', patientID);
+        fd.append('follow_up_parent_id', followUpID);
+        
+        
+        $http.post(uploadUrl, fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        })
+        .success(function(res){
+            console.log(res);
+            $rootScope.loader = 'hide';
+            $rootScope.fileUploadMessage = 'File successfully uploaded!';
+            ListFolderArchives.get({token: $window.sessionStorage.token, patient_id: patientID, /*$window.sessionStorage.patient_id*/ followup_parent_id: followUpID}, listFolderSuccess, listFolderFailure);
+            function listFolderSuccess(res){
+                console.log(res);
+                if(res.status == true){
+                    $rootScope.foldersArchive = [];
+                    $rootScope.foldersArchive = res.data;
+                }
             }
-        };
-    }]);
+            function listFolderFailure(error){
+                console.log(error);
+            }
+            GetResourcesByFolderArchives.get({token: $window.sessionStorage.token, patient_id: patientID, /*$window.sessionStorage.patient_id*/ followup_parent_id: followUpID}, nestedFolderSuccess, nestedFolderFailure);
+            function nestedFolderSuccess(res){
+                console.log(res);
+                if(res.status == true){
+                    //$scope.backButtonArchive = false;
+                    //$scope.foldersArchive = [];
+                    $rootScope.archives = [];
+                    $rootScope.archives = res.data;
+                }
+            }
+
+            function nestedFolderFailure(error){
+                console.log(error);
+            }
+            /*$interval(function() {
+                $('#fileUploader').modal('hide');
+            }, 3000);*/
+            
+        })
+        .error(function(){
+            console.log(101);
+            $rootScope.fileUploadMessage = 'Failed to upload';
+        });
+    }
+}]);
 AppEHR.directive('myMaxlength', function () {
     return {
         require: 'ngModel',
@@ -198,5 +255,3 @@ function allowPatternDirective() {
         }
     };
 }
-
-    
