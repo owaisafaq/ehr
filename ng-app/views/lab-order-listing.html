@@ -51,122 +51,49 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr ng-repeat="labOrder in labOrders">
                                 <td align="center">
                                     <div class="radio radio-styled">
                                         <label>
-                                            <input type="radio" name="optionsRadios" value="option1">
+                                            <input type="radio" ng-model="action" ng-click="labSelected(labOrder.id);">
+                                            <span></span>
                                         </label>
                                     </div>
                                 </td>
-                                <td>OR5521</td>
+                                <td>{{ labOrder.id }}</td>
                                 <td>
-                                    <div class="person-detail-box"><span>PA000214</span>
+                                    <div class="person-detail-box"><span>{{ labOrder.patient_id }}</span>
                                         <div class="bed-info person_info">
                                             <div class="col-lg-12">
                                                 <span class="txt-style-4">Name</span>
-                                                <span class="txt-style-3">Elton John Woods</span>
+                                                <span class="txt-style-3">{{ labOrder.patient_name }}</span>
                                             </div>
                                             <div class="col-lg-6">
                                                 <span class="txt-style-4">Sex</span>
-                                                <span class="txt-style-3">Male</span>
+                                                <span class="txt-style-3">{{ labOrder.gender }}</span>
                                             </div>
                                             <div class="col-lg-6">
                                                 <span class="txt-style-4">Age</span>
-                                                <span class="txt-style-3">24</span>
+                                                <span class="txt-style-3">{{ labOrder.age }}</span>
                                             </div>
                                             <div class="col-lg-6">
                                                 <span class="txt-style-4">Id</span>
-                                                <span class="txt-style-3 pull-left">PA000214</span>
+                                                <span class="txt-style-3 pull-left">{{ labOrder.patient_id }}</span>
                                             </div>
                                             <div class="col-lg-6">
                                                 <span class="txt-style-4">Marital Status</span>
-                                                <span class="txt-style-3 pull-left">Single</span>
+                                                <span class="txt-style-3 pull-left">{{ labOrder.marital_status }}</span>
                                             </div>
                                         </div>
                                     </div>
                                 </td>
-                                <td>Elton John Woods</td>
-                                <td>Blood Test</td>
-                                <td>Lab 21</td>
-                                <td>Dr. Smiths</td>
-                                <td>Urgent</td>
-                                <td>In Progress</td>
-                                <td>Asst. John</td>
-                            </tr>
-                            <tr>
-                                <td align="center">
-                                    <div class="radio radio-styled">
-                                        <label>
-                                            <input type="radio" name="optionsRadios" value="option1">
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>OR5521</td>
-                                <td><div class="person-detail-box"><span>PA000214</span>
-                                        <div class="bed-info person_info">
-                                            <div class="col-lg-12">
-                                                <span class="txt-style-4">Name</span>
-                                                <span class="txt-style-3">Elton John Woods</span>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <span class="txt-style-4">Sex</span>
-                                                <span class="txt-style-3">Male</span>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <span class="txt-style-4">DOB</span>
-                                                <span class="txt-style-3">October 10, 1990</span>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <span class="txt-style-4">Expected Discharge Date</span>
-                                                <span class="txt-style-3 pull-left">May 15, 2016</span><span class="txt-style-3 pull-left">4:30 PM</span>
-                                            </div>
-                                        </div>
-                                    </div></td>
-                                <td>Elton John Woods</td>
-                                <td>Blood Test</td>
-                                <td>Lab 21</td>
-                                <td>Dr. Smiths</td>
-                                <td>Urgent</td>
-                                <td>In Progress</td>
-                                <td>Asst. John</td>
-                            </tr>
-                            <tr>
-                                <td align="center">
-                                    <div class="radio radio-styled">
-                                        <label>
-                                            <input type="radio" name="optionsRadios" value="option1">
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>OR5521</td>
-                                <td><div class="person-detail-box"><span>PA000214</span>
-                                        <div class="bed-info person_info">
-                                            <div class="col-lg-12">
-                                                <span class="txt-style-4">Name</span>
-                                                <span class="txt-style-3">Elton John Woods</span>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <span class="txt-style-4">Sex</span>
-                                                <span class="txt-style-3">Male</span>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <span class="txt-style-4">DOB</span>
-                                                <span class="txt-style-3">October 10, 1990</span>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <span class="txt-style-4">Expected Discharge Date</span>
-                                                <span class="txt-style-3 pull-left">May 15, 2016</span><span class="txt-style-3 pull-left">4:30 PM</span>
-                                            </div>
-                                        </div>
-                                    </div></td>
-                                <td>Elton John Woods</td>
-                                <td>Blood Test</td>
-                                <td>Lab 21</td>
-                                <td>Dr. Smiths</td>
-                                <td>Urgent</td>
-                                <td>In Progress</td>
-                                <td>Asst. John</td>
+                                <td>{{ labOrder.patient_name }}</td>
+                                <td>{{ labOrder.test_name }}</td>
+                                <td>{{ labOrder.lab_name }}</td>
+                                <td>{{ labOrder.ordered_by }}</td>
+                                <td>{{ labOrder.priority }}</td>
+                                <td>{{ labOrder.order_status }}</td>
+                                <td>{{ labOrder.handled_by }}</td>
                             </tr>
                         </tbody>
                     </table>

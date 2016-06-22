@@ -123,25 +123,17 @@ class OrderController extends Controller
             ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
             ->where('lab_orders.status', 1)
             ->where('lab_orders.id', $order_id)
-            ->get();
+            ->first();
 
+            if ($orders->sex == 1) {
 
-        foreach ($orders as $lab_orders) {
-
-            $lab_orders->ordered_by = 'Dr Smith';
-            $lab_orders->handled_by = 'James';
-            $lab_orders->test_name = 'Blood Test';
-
-
-            if ($lab_orders->sex == 1) {
-
-                $lab_orders->gender = 'male';
+                $orders->gender = 'male';
             } else {
 
-                $lab_orders->gender = 'female';
+                $orders->gender = 'female';
             }
 
-        }
+
 
 
         return response()->json(['status' => true, 'data' => $orders]);
@@ -211,10 +203,30 @@ class OrderController extends Controller
 
 
         DB::table('lab_order_cancelation')
-            ->insert(array('lab_order' => $order_id,'reason'=>$reason,'notes'=>$notes, 'created_at' => $currentdatetime));
+            ->insert(array('lab_order' => $order_id, 'reason' => $reason, 'notes' => $notes, 'created_at' => $currentdatetime));
 
 
         return response()->json(['status' => true, 'message' => 'Lab Orders Canceled Successfully']);
+
+
+    }
+
+
+    public function update_order(Request $request)
+    {
+
+
+        $order_id = $request->input('order_id');
+        $order_status = $request->input('order_status');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+        DB::table('lab_orders')
+            ->where('id', $order_id)
+            ->update(array('order_status' => $order_status, 'updated_at' => $currentdatetime));
+
+
+        return response()->json(['status' => true, 'message' => 'Lab Orders Updated Successfully']);
 
 
     }

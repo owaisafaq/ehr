@@ -9,10 +9,8 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
         }, GetAllPatientsSuccess, GetAllPatientsFailure);
 
         function GetAllPatientsSuccess(res) {
-            console.log(res);
             if (res.status == true) {
                 $scope.patientLists = res.data;
-                console.log($scope.encounters)
             }
         }
 
