@@ -1066,6 +1066,7 @@ $api->params->lab = "1";
 $api->params->lab_test = "1";
 $api->params->priority = "High";
 $api->params->sample = "Blood";
+$api->params->sample = "Blood";
 $api->params->clinical_information = "test";
 $api->params->diagnosis = "test";
 $api->params->notes = "test";
@@ -1130,6 +1131,16 @@ $api->name = "Get Stocks Details";
 $api->url = HOST . 'get_stock_details';
 $api->method = "GET";
 $api->params->product_id = "";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+
+// Get Lab Test Templates
+$api = new api();
+$api->name = "Get Lab Order Templates";
+$api->url = HOST . 'get_lab_test_templates';
+$api->method = "GET";
 $api->params->token = "";
 
 $api_arr [] = $api;

@@ -25,6 +25,7 @@ $app->group(['prefix' => 'api'], function () use ($app) {
     $app->post('search_patient', 'App\Http\Controllers\ApiController@search_patient');
 
     $app->post('add_patient_archive','App\Http\Controllers\ApiController@add_patient_archive');
+    $app->options('add_patient_archive','App\Http\Controllers\ApiController@optadd_patient_archive');
 
     $app->post('update_patient_archive','App\Http\Controllers\ApiController@update_patient_archive');
 
@@ -146,6 +147,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->post('cancel_lab_order','App\Http\Controllers\OrderController@cancel_lab_order');
 
     $app->post('update_order','App\Http\Controllers\OrderController@update_order');
+
+    $app->get('get_lab_test_templates','App\Http\Controllers\OrderController@get_lab_test_templates');
 
 
 });
