@@ -105,6 +105,51 @@ AppEHR.factory("GetArchives", function ($resource) {
     };
     return patientRegistrationKin;
 });
+AppEHR.factory("SaveFiles", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'add_patient_archive', params, {
+            save: {method: 'POST'},
+        });
+        return res2;
+    }
+    var patientRegistrationKin = {
+        save:function(params,body,success) {
+          var res = getResource(params, body);
+          return res.save(params,body,success);
+        }
+    };
+    return patientRegistrationKin;
+});
+AppEHR.factory("GetResourcesByFolderArchives", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'list_resources', params, {
+            get: {method: 'GET'},
+        });
+        return res2;
+    }
+    var patientRegistrationKin = {
+        get:function(params,body,success) {
+          var res = getResource(params, body);
+          return res.get(params,body,success);
+        }
+    };
+    return patientRegistrationKin;
+});
+AppEHR.factory("DeleteFolderArchives", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'delete_patient_resources', params, {
+            get: {method: 'POST'},
+        });
+        return res2;
+    }
+    var patientRegistrationKin = {
+        get:function(params,body,success) {
+          var res = getResource(params, body);
+          return res.get(params,body,success);
+        }
+    };
+    return patientRegistrationKin;
+});
 AppEHR.factory("RemoveArchives", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'remove_patient_archive', params, {
@@ -131,6 +176,51 @@ AppEHR.factory("EditArchives", function ($resource) {
         save: function (params, body, success) {
             var res = getResource(params, body);
             return res.save(params, body, success);
+        }
+    };
+    return patientRegistrationKin;
+});
+AppEHR.factory("EditFolderArchives", function ($resource) { // edit folder
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'update_patient_resources', params, {
+            save: {method: 'POST'},
+        });
+        return res2;
+    }
+    var patientRegistrationKin = {
+        save:function(params,body,success) {
+          var res = getResource(params, body);
+          return res.save(params,body,success);
+        }
+    };
+    return patientRegistrationKin;
+});
+AppEHR.factory("AddFolderArchives", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'add_resources', params, {
+            save: {method: 'POST'},
+        });
+        return res2;
+    }
+    var patientRegistrationKin = {
+        save:function(params,body,success) {
+          var res = getResource(params, body);
+          return res.save(params,body,success);
+        }
+    };
+    return patientRegistrationKin;
+});
+AppEHR.factory("ListFolderArchives", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'list_patient_resources', params, {
+            get: {method: 'GET'},
+        });
+        return res2;
+    }
+    var patientRegistrationKin = {
+        get:function(params,body,success) {
+          var res = getResource(params, body);
+          return res.get(params,body,success);
         }
     };
     return patientRegistrationKin;
@@ -486,6 +576,38 @@ AppEHR.factory("GetAllPatients", function ($resource) {
     };
     return patientRegistrationEmployer;
 });
+AppEHR.factory("GetAllLabOrders", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_all_lab_orders', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var LabOrders = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return LabOrders;
+});
+AppEHR.factory("getLabOrderInfo", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_lab_order', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var LabOrder = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return LabOrder;
+});
+
+
 
 
 AppEHR.factory("UpdateAllergies", function ($resource) {
