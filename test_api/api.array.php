@@ -2,8 +2,8 @@
 
 require 'api.class.php';
 //define('HOST', 'http://131.107.100.10/ehr/public/api/');
-//define('HOST', 'http://localhost/ehr/public/api/');
-define('HOST', 'http://demoz.online/ehr/public/api/');
+define('HOST', 'http://localhost/ehr/public/api/');
+//define('HOST', 'http://demoz.online/ehr/public/api/');
 define('APP', '');
 define('ROUTE', '');
 
@@ -615,6 +615,7 @@ $api->url = HOST . 'update_patient_allergies';
 $api->method = "POST";
 $api->description = "Update Patient Allergie";
 $api->params->patient_id = "1";
+$api->params->allergy_id = "1";
 $api->params->allergy_type = "severe";
 $api->params->allergies = "tobaco";
 $api->params->severity = "high";
@@ -633,6 +634,7 @@ $api->url = HOST . 'delete_patient_allergies';
 $api->method = "POST";
 $api->description = "Delete Patient Allergie";
 $api->params->allergy_id = "1";
+$api->params->patient_id = "1";
 $api->params->token = "123";
 $api_arr [] = $api;
 
@@ -678,10 +680,10 @@ $api_arr [] = $api;
 
 // List Folder Files
 $api = new api();
-$api->name = "List Resources";
+$api->name = "List Folder Files";
 $api->url = HOST . 'list_resources';
 $api->method = "GET";
-$api->description = "List Resources";
+$api->description = "List Folder Files";
 $api->params->followup_parent_id = "1";
 $api->params->patient_id = "1";
 $api->params->token = "123";
@@ -692,11 +694,12 @@ $api_arr [] = $api;
 
 // List Patient  Folders
 $api = new api();
-$api->name = "List Patient Resources";
+$api->name = "List Patient Folders";
 $api->url = HOST . 'list_patient_resources';
 $api->method = "GET";
-$api->description = "List Patient Resources";
+$api->description = "List Patient Folders";
 $api->params->patient_id = "1";
+$api->params->followup_parent_id = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -820,3 +823,131 @@ $api->params->appointment_id = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
+
+
+// Clinical Progress Note Templates
+$api = new api();
+$api->name = "Clinical Progress Note Templates";
+$api->url = HOST . 'clinical_progress_note_templates';
+$api->method = "GET";
+$api->description = "Clinical Progress Note Templates";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+
+// Clinical Progress Note Fields
+$api = new api();
+$api->name = "Clinical Progress Note Fields";
+$api->url = HOST . 'clinical_progress_note_fields';
+$api->method = "GET";
+$api->description = "Clinical Progress Note Fields";
+$api->params->template_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Add Patient Clinical Notes
+$api = new api();
+$api->name = "Add Patient Clinical Notes";
+$api->url = HOST . 'add_patient_clinical_notes';
+$api->method = "POST";
+$api->description = "Add Patient Clinical Notes";
+$api->params->patient_id = "1";
+$api->params->visit_id = "1";
+$api->params->clinical_notes = "";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Checkout Patient
+$api = new api();
+$api->name = "Checkout Patient";
+$api->url = HOST . 'checkout_patient';
+$api->method = "POST";
+$api->description = "Checkout Patient";
+$api->params->patient_id = "1";
+$api->params->visit_id = "1";
+$api->params->reason = "No Appointment";
+$api->params->notes = "reasons for checkout";
+$api->params->pick_date = "2016-06-15";
+$api->params->pick_time = "2:30 P.M";
+$api->params->admit_date = "2016-06-15";
+$api->params->start_time = "2:30 P.M";
+$api->params->department_id = "1";
+$api->params->ward_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Add Patient Referels
+$api = new api();
+$api->name = "Add Patient Referel";
+$api->url = HOST . 'add_patient_referel';
+$api->method = "POST";
+$api->description = "Add Patient Referel";
+$api->params->patient_id = "1";
+$api->params->department_id = "1";
+$api->params->doctor_id = "1";
+$api->params->provisional_diagnosis = "";
+$api->params->reason_referal = "";
+$api->params->history = "";
+$api->params->investigations = "";
+$api->params->allergies = "1";
+$api->params->medication_list = "1";
+$api->params->medicines = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+// Get ALL Inventory Category
+$api = new api();
+$api->name = "Get ALL Inventory Category";
+$api->url = HOST . 'get_inventory_category';
+$api->method = "GET";
+$api->params->token = "";
+$api_arr [] = $api;
+
+// Add Inventory Category
+
+$api = new api();
+$api->name = "Add Inventory Category";
+$api->url = HOST . 'create_inventory_category';
+$api->method = "POST";
+$api->description = "Add Inventory Category";
+$api->params->cat_name = "Cat name";
+$api->params->cat_desc= "Cat Desc";
+$api->params->cat_group = "Cat group";
+$api->params->token = "";
+
+
+$api_arr [] = $api;
+
+// Update Inventory Category
+$api = new api();
+$api->name = "Update Inventory Category";
+$api->url = HOST . 'update_inventory_category';
+$api->method = "POST";
+$api->description = "Update Inventory Category";
+$api->params->cat_id = "1";
+$api->params->cat_name = "Cat name";
+$api->params->cat_desc= "Cat Desc";
+$api->params->cat_group = "Cat group";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+// Delete Inventory Category
+$api = new api();
+$api->name = "Delete Inventory Category";
+$api->url = HOST . 'delete_inventory_category';
+$api->method = "POST";
+$api->params->cat_id = "1";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
