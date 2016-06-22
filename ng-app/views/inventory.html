@@ -3,47 +3,47 @@
         <div class="card">
             <div class="card-head col-lg-9 no-padding card-head-auto">
                 <ul class="nav nav-tabs nav-justified custom-tab" data-toggle="tabs">
-                    <li class="active"><a href="#inventory">Inventory</a></li>
-                    <li><a href="#encounter_history">encounters</a></li>
-                    <li><a href="#health_vitals">vitals</a></li>
-                    <li><a href="#medications">medications</a></li>
+                    <li><a showtab href="#inventory">Inventory</a></li>
+                    <li><a showtab href="#suppliers">Suppliers</a></li>
+                    <li class="active"><a showtab href="#category">vitals</a></li>
+                    <li><a showtab href="#medications">medications</a></li>
                 </ul>
             </div><!--end .card-head -->
-            <div class="table-header col-lg-12">
-                <div class="col-lg-7">
-                    <span class="txt-style-3 pull-left text-uppercase">category</span>
-                    <div class="col-lg-2">
-                        <select class="form-control">
-                            <option>All</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                    </div>
-                    <span class="txt-style-3 pull-left text-uppercase">status</span>
-                    <div class="col-lg-2">
-                        <select class="form-control">
-                            <option>Active</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="pull-right">
-                    <button class="notes button-custom pull-right">Import inventory</button>
-                    <button class="add button-custom pull-right ">Add Inventory</button>
-                </div>
-                <div class="pull-right">
-                    <div class="header-search pull-left margin-top-10">
-                        <button type="submit">
-                            <i class="fa fa-search"></i>
-                        </button>
-                        <input class="search_field" type="text" placeholder="Enter product code">
-                    </div>
-                </div> 
 
-            </div>
             <div class="card-body tab-content col-lg-12 custom-card-body">
-                <div class="tab-pane active" id="inventory">
+                <div class="tab-pane" id="inventory">
+                    <div class="table-header row background-none">
+                        <div class="col-lg-7">
+                            <span class="txt-style-3 pull-left text-uppercase">category</span>
+                            <div class="col-lg-2">
+                                <select class="form-control">
+                                    <option>All</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                            <span class="txt-style-3 pull-left text-uppercase">status</span>
+                            <div class="col-lg-2">
+                                <select class="form-control">
+                                    <option>Active</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="pull-right">
+                            <button class="notes button-custom pull-right">Import inventory</button>
+                            <button class="add button-custom pull-right ">Add Inventory</button>
+                        </div>
+                        <div class="pull-right">
+                            <div class="header-search pull-left margin-top-10">
+                                <button type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <input class="search_field" type="text" placeholder="Enter product code">
+                            </div>
+                        </div> 
+                    </div>
                     <form class="custom-form">
 
 
@@ -100,7 +100,7 @@
                                                 </tbody>
                                             </table>-->
                         <div class="row">
-                            <div class="heading-bar no-margin border-bottom-0">Product Details</div>
+                            <div class="heading-bar no-margin col-lg-12 border-bottom-0">Product Details</div>
                             <div class="box-style no-margin border-bottom-0">
                                 <div class="col-lg-2">
                                     <label>product name</label>
@@ -169,277 +169,177 @@
                         </div>
                     </form>
                 </div>
-                <div class="tab-pane" id="encounter_history">
-                    <table class="table table-striped no-margin table-custom table-custom_big">
-                        <thead>
-                            <tr>
-                                <th>date</th>
-                                <th>ID</th>
-                                <th>type</th>
-                                <th>chief / complaint</th>
-                                <th>diagnosis</th>
-                                <th>consultant</th>
-                                <th>report</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>14/04/2016</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                                <td>Consultation</td>
-                                <td>Outpatient</td>
-                                <td>Outpatient</td>
-                            </tr>
-                            <tr>
-                                <td>14/04/2016</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                                <td>Consultation</td>
-                                <td>Outpatient</td>
-                                <td>Outpatient</td>
-                            </tr>
-                            <tr>
-                                <td>14/04/2016</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                                <td>Consultation</td>
-                                <td>Outpatient</td>
-                                <td>Outpatient</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="tab-pane" id="suppliers">
+                    <div class="table-header row background-none">
+                        <div class="pull-right">
+                            <button class="add button-custom pull-right ">Add Supplier</button>
+                        </div>
+                        <div class="pull-right">
+                            <div class="header-search pull-left margin-top-10">
+                                <button type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <input class="search_field" type="text" placeholder="Enter supplier">
+                            </div>
+                        </div> 
+                    </div>
+                    <form class="custom-form">
+
+
+                        <table class="table table-striped no-margin table-custom table-custom_big">
+                            <thead>
+                                <tr>
+                                    <th>contact person</th>
+                                    <th>address</th>
+                                    <th>email</th>
+                                    <th>mobile</th>
+                                    <th>work phone</th>
+                                    <th>website</th>
+                                    <th>update</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>14/04/2016</td>
+                                    <td>90189191</td>
+                                    <td>ABc</td>
+                                    <td>Eye Clinic</td>
+                                    <td>Consultation</td>
+                                    <td>Outpatient</td>
+                                    <td>
+                                        <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
+                                            <div class="tool-tip_popup">
+                                                <a href="javascript:;">Stock Details</a>
+                                                <a href="javascript:;">Edit Product Details</a>
+                                                <a href="javascript:;">Edit Reorder Level</a>
+                                                <a href="javascript:;">Make Inactive</a>
+                                                <a href="javascript:;">Delete Inventory</a>    
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>14/04/2016</td>
+                                    <td>90189191</td>
+                                    <td>ABc</td>
+                                    <td>Eye Clinic</td>
+                                    <td>Consultation</td>
+                                    <td>Outpatient</td>
+                                    <td>Outpatient</td>
+                                </tr>
+                                <tr>
+                                    <td>14/04/2016</td>
+                                    <td>90189191</td>
+                                    <td>ABc</td>
+                                    <td>Eye Clinic</td>
+                                    <td>Consultation</td>
+                                    <td>Outpatient</td>
+                                    <td>Outpatient</td>
+                                </tr>
+                            </tbody>
+                        </table>
                 </div>
 
-                <div class="tab-pane" id="health_vitals">
-                    <button class="btn ink-reaction button-style-1 button-style-1 pull-right margin-bottom-xxl">Add Vitals</button>
-                    <table class="table table-striped no-margin table-custom table-custom_big">
-                        <thead>
-                            <tr>
-                                <th>date/time</th>
-                                <th>Temperature</th>
-                                <th>bp</th>
-                                <th>pulse</th>
-                                <th>respiration</th>
-                                <th>bmi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>14/04/2016 12:00:32</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                                <td>Consultation</td>
-                                <td>Outpatient</td>
-                            </tr>
-                            <tr>
-                                <td>14/04/2016 12:00:32</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                                <td>Consultation</td>
-                                <td>Outpatient</td>
-                            </tr>
-                            <tr>
-                                <td>14/04/2016 12:00:32</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                                <td>Consultation</td>
-                                <td>Outpatient</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="tab-pane active" id="category">
+                    <div class="table-header row background-none">
+                        <div class="pull-right">
+                            <button class="add button-custom pull-right ">Add Category</button>
+                        </div>
+                        <span class="txt-style-3 pull-left text-uppercase">category</span>
+                        <div class="col-lg-2">
+                            <select class="form-control">
+                                <option>All</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>
+                        <div class="pull-right">
+                            <div class="header-search pull-left margin-top-10">
+                                <button type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <input class="search_field" type="text" placeholder="Enter supplier">
+                            </div>
+                        </div> 
+                    </div>
+                    <form class="custom-form">
+
+
+                        <table class="table table-striped no-margin table-custom table-custom_big">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Group</th>
+                                    <th>Description</th>
+                                    <th>Update</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>14/04/2016</td>
+                                    <td>90189191</td>
+                                    <td>ABc</td>
+                                    <td>
+                                        <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
+                                            <div class="tool-tip_popup">
+                                                <a href="javascript:;">Stock Details</a>
+                                                <a href="javascript:;">Edit Product Details</a>
+                                                <a href="javascript:;">Edit Reorder Level</a>
+                                                <a href="javascript:;">Make Inactive</a>
+                                                <a href="javascript:;">Delete Inventory</a>    
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>14/04/2016</td>
+                                    <td>90189191</td>
+                                    <td>ABc</td>
+                                    <td>
+                                        <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
+                                            <div class="tool-tip_popup">
+                                                <a href="javascript:;">Stock Details</a>
+                                                <a href="javascript:;">Edit Product Details</a>
+                                                <a href="javascript:;">Edit Reorder Level</a>
+                                                <a href="javascript:;">Make Inactive</a>
+                                                <a href="javascript:;">Delete Inventory</a>    
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>14/04/2016</td>
+                                    <td>90189191</td>
+                                    <td>ABc</td>
+                                    <td>
+                                        <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
+                                            <div class="tool-tip_popup">
+                                                <a href="javascript:;">Stock Details</a>
+                                                <a href="javascript:;">Edit Product Details</a>
+                                                <a href="javascript:;">Edit Reorder Level</a>
+                                                <a href="javascript:;">Make Inactive</a>
+                                                <a href="javascript:;">Delete Inventory</a>    
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                 </div>
 
                 <div class="tab-pane" id="medications">
-                    <button class="btn ink-reaction button-style-1 button-style-1 pull-right margin-bottom-xxl">Add Medications</button>
-                    <table class="table table-striped no-margin table-custom table-custom_big">
-                        <thead>
-                            <tr>
-                                <th>prescription</th>
-                                <th>from date</th>
-                                <th>to date</th>
-                                <th>status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>14/04/2016 12:00:32</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                            </tr>
-                            <tr>
-                                <td>14/04/2016 12:00:32</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                            </tr>
-                            <tr>
-                                <td>14/04/2016 12:00:32</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                            </tr>
-                        </tbody>
-                    </table>
+
                 </div>
                 <div class="tab-pane" id="supplements">
-                    <button class="btn ink-reaction button-style-1 button-style-1 pull-right margin-bottom-xxl">Add Supplements</button>
-                    <table class="table table-striped no-margin table-custom table-custom_big">
-                        <thead>
-                            <tr>
-                                <th>supplements</th>
-                                <th>dosage</th>
-                                <th>frequency</th>
-                                <th>intake type</th>
-                                <th>from date</th>
-                                <th>to date</th>
-                                <th>status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>14/04/2016 12:00:32</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                                <td>Eye Clinic</td>
-                                <td>Eye Clinic</td>
-                                <td>Eye Clinic</td>
-                            </tr>
-                            <tr>
-                                <td>14/04/2016 12:00:32</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                                <td>Eye Clinic</td>
-                                <td>Eye Clinic</td>
-                                <td>Eye Clinic</td>
-                            </tr>
-                            <tr>
-                                <td>14/04/2016 12:00:32</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                                <td>Eye Clinic</td>
-                                <td>Eye Clinic</td>
-                                <td>Eye Clinic</td>
-                            </tr>
-                        </tbody>
-                    </table>
+
                 </div>
                 <div class="tab-pane" id="allergies">
-                    <div class="pull-left header-checkboxes">
-                        <div class="checkbox checkbox-styled">
-                            <label>
-                                <input type="checkbox" value="">
-                                <span>No Know Drug Allergy</span>
-                            </label>
-                        </div>
 
-                        <div class="checkbox checkbox-styled">
-                            <label>
-                                <input type="checkbox" value="">
-                                <span>No Know Food Allergy</span>
-                            </label>
-                        </div>
-
-                        <div class="checkbox checkbox-styled">
-                            <label>
-                                <input type="checkbox" value="">
-                                <span>No Know Environmental Allergy</span>
-                            </label>
-                        </div>
-
-                    </div>  <button class="btn ink-reaction button-style-1 button-style-1 pull-right margin-bottom-xxl">Add Allergies</button>
-                    <table class="table table-striped no-margin table-custom table-custom_big">
-                        <thead>
-                            <tr>
-                                <th>allergies</th>
-                                <th>severity</th>
-                                <th>observed on</th>
-                                <th>status</th>
-                                <th>reactions</th>
-                                <th>actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>14/04/2016 12:00:32</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                                <td>Eye Clinic</td>
-                                <td>
-                                    <a class="link-style" href="javascript:;">Edit</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-                                    <a class="link-style" href="javascript:;">Delete</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>14/04/2016 12:00:32</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                                <td>Eye Clinic</td>
-                                <td>
-                                    <a class="link-style" href="javascript:;">Edit</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-                                    <a class="link-style" href="javascript:;">Delete</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>14/04/2016 12:00:32</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                                <td>Eye Clinic</td>
-                                <td>
-                                    <a class="link-style" href="javascript:;">Edit</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-                                    <a class="link-style" href="javascript:;">Delete</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
 
 
                 <div class="tab-pane" id="documents">
-                    <button class="btn ink-reaction button-style-1 button-style-1 pull-right margin-bottom-xxl">Add documents</button>
-                    <table class="table table-striped no-margin table-custom table-custom_big">
-                        <thead>
-                            <tr>
-                                <th>date</th>
-                                <th>type</th>
-                                <th>title</th>
-                                <th>notes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>14/04/2016 12:00:32</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                            </tr>
-                            <tr>
-                                <td>14/04/2016 12:00:32</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                            </tr>
-                            <tr>
-                                <td>14/04/2016 12:00:32</td>
-                                <td>90189191</td>
-                                <td>ABc</td>
-                                <td>Eye Clinic</td>
-                            </tr>
-                        </tbody>
-                    </table>
+
                 </div>
 
             </div><!--end .card-body -->
