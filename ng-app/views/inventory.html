@@ -39,7 +39,7 @@
                     </a>
                     <a href="javascript:;" class="button-style-2">
                         <img src="assets/img/discharge_icn_blue.png" />
-                    </a>                             
+                    </a>
                 </div>
             </div>
             <div class="table-header col-lg-12">
@@ -81,7 +81,7 @@
                         <thead>
                             <tr>
                                 <th>product name</th>
-                                <th>product name</th>
+                                <th>category</th>
                                 <th>latest retail price</th>
                                 <th>stock quantity</th>
                                 <th>reorder level</th>
@@ -91,7 +91,7 @@
                         </thead>
                         <tbody>
                         <tr ng-repeat="InventoryList in InventoryLists| filter: search">
-                                <td>14/04/2016</td>
+                                <td>{{InventoryList.first_name}}</td>
                                 <td>90189191</td>
                                 <td>ABc</td>
                                 <td>Eye Clinic</td>
