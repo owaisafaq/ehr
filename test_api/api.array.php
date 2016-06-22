@@ -903,3 +903,76 @@ $api->params->medicines = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
+
+
+
+// Get All Lab Orders
+$api = new api();
+$api->name = "Get All Lab Orders";
+$api->url = HOST . 'get_all_lab_orders';
+$api->method = "GET";
+$api->description = "Get All Lab Lab Orders";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Get Lab Order
+$api = new api();
+$api->name = "Get Lab Order";
+$api->url = HOST . 'get_lab_order';
+$api->method = "GET";
+$api->description = "Get Lab Orders";
+$api->params->order_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Add Lab Orders
+$api = new api();
+$api->name = "Add Lab Orders";
+$api->url = HOST . 'add_lab_order';
+$api->method = "POST";
+$api->description = "Add Lab Orders";
+$api->params->patient_id = "1";
+$api->params->lab = "1";
+$api->params->lab_test = "1";
+$api->params->priority = "High";
+$api->params->sample = "Blood";
+$api->params->sample = "Blood";
+$api->params->clinical_information = "test";
+$api->params->diagnosis = "test";
+$api->params->notes = "test";
+$api->params->order_status = "In Process";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+/*// Get  Lab Tests
+$api = new api();
+$api->name = "Get Lab Tests";
+$api->url = HOST . 'get_lab_tests';
+$api->method = "GET";
+$api->description = "Get All Lab Tests";
+$api->params->lab = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;*/
+
+
+
+
+// Cancel Lab Orders
+$api = new api();
+$api->name = "Cancel Lab Orders";
+$api->url = HOST . 'cancel_lab_order';
+$api->method = "POST";
+$api->description = "Cancel Lab Orders";
+$api->params->order_id = "1";
+$api->params->order_status = "canceled";
+$api->params->reason = "Invalid Payment";
+$api->params->notes = "Test";
+$api->params->token = "123";
+
+$api_arr [] = $api;
