@@ -5,7 +5,7 @@
                 <ul class="nav nav-tabs nav-justified custom-tab" data-toggle="tabs">
                     <li><a showtab href="#inventory">Inventory</a></li>
                     <li><a showtab href="#suppliers">Suppliers</a></li>
-                    <li class="active"><a showtab href="#category">vitals</a></li>
+                    <li class="active"><a showtab href="#category">Category</a></li>
                     <li><a showtab href="#medications">medications</a></li>
                 </ul>
             </div><!--end .card-head -->
@@ -238,12 +238,13 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </form>
                 </div>
 
                 <div class="tab-pane active" id="category">
                     <div class="table-header row background-none">
                         <div class="pull-right">
-                            <button class="add button-custom pull-right ">Add Category</button>
+                            <button class="add button-custom pull-right" data-toggle="modal" data-target="#addCategory">Add Category</button>
                         </div>
                         <span class="txt-style-3 pull-left text-uppercase">category</span>
                         <div class="col-lg-2">
@@ -325,6 +326,7 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </form>
                 </div>
 
                 <div class="tab-pane" id="medications">
@@ -346,3 +348,81 @@
         </div><!--end .card -->
     </section>
 </div>
+<div class="modal fade big-modal" id="addCategory" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Add Category</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form">
+                    <div class="row">
+                        <div class="row no-margin">
+                            <div class="col-lg-3">
+                                <label>Group</label>
+                            </div>
+
+                            <!--<div class="col-lg-12 no-padding margin-bottom-xxl">-->
+                            <div class="radio radio-styled col-lg-2">
+                                <label>
+                                    <input type="radio" name="checkoutpatient" value="appointment" checked>
+                                    <span>Drug</span>
+                                </label>
+                            </div>
+                            <div class="radio radio-styled col-lg-2">
+                                <label>
+                                    <input type="radio" name="checkoutpatient" value="followup">
+                                    <span>Supplement</span>
+                                </label>
+                            </div>
+                            <div class="radio radio-styled col-lg-2">
+                                <label>
+                                    <input type="radio" name="checkoutpatient" value="admit_patient">
+                                    <span>Document</span>
+                                </label>
+                            </div>
+                            <div class="radio radio-styled col-lg-1">
+                                <label>
+                                    <input type="radio" name="checkoutpatient" value="dead">
+                                    <span>Other</span>
+                                </label>
+                            </div>
+                        </div>
+                        <!--</div>-->
+                        <!--                        <div class="col-lg-3">
+                                                    <label>Group</label>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <label>Group</label>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <label>Group</label>
+                                                </div>-->
+                        <div class="col-lg-3">
+                            <label>Category Name</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="text" placeholder="" name="" required/>
+                        </div>
+                        <div class="col-lg-12">
+                            <label>Description</label>
+                        </div>
+                        <div class="col-lg-12">
+                            <textarea></textarea>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default button-style-1">Add</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div><!-- /.modal-content -->
+
+
+    </div><!-- /.modal-dialog -->
+
+</div><!-- /.modal -->
