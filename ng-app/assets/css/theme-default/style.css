@@ -2213,13 +2213,12 @@ div.ng-not-empty .select2-chosen {
     height: 170px;
     background: #fff;
     position: absolute;
-    top: -20px;
-    left: auto;
+    top: -13px;
     right: 107%;
     z-index: 1;
     box-shadow: 11px 0 40px 0px rgba(224,232,238,1);
-    padding: 16px 8px;
-    padding-top: 23px;
+    padding: 16px 8px 0 20px;
+    padding-top: 18px;
     opacity: 0;
     visibility: hidden;
     transition: 0.5s;
@@ -2227,14 +2226,12 @@ div.ng-not-empty .select2-chosen {
     -moz-transition: 0.5s;
     -o-transition: 0.5s;
 
-    opacity: 1;
-    visibility: visible;
-/*    top: 20px;
-    left: 100%;*/
+/*    opacity: 1;
+    visibility: visible;*/
 }
 .tool-tip_popup:before {
     position: absolute;
-    right: -10px;
+    right: -8px;
     display: inline-block;
     font: normal normal normal 14px/1 FontAwesome;
     font-size: inherit;
@@ -2242,13 +2239,19 @@ div.ng-not-empty .select2-chosen {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 24px;
-    content: "\f0d9";
+    content: "\f0da";
     top: 10px;
     color: #fff;
 }
-/*.inventory_actions:hover .tool-tip_popup{
+.inventory_actions:hover .tool-tip_popup{
     opacity: 1;
     visibility: visible;
-    top: 20px;
-    left: 100%;
-}*/
+    top: -13px;
+    right: 110%;
+}
+.tool-tip_popup a{
+    display: block;
+    color: #516e81;
+    margin-bottom: 2px;
+    font-size: 14px;
+}
