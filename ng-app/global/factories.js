@@ -165,7 +165,7 @@ AppEHR.factory("RemoveArchives", function ($resource) {
     };
     return patientRegistrationKin;
 });
-AppEHR.factory("EditArchives", function ($resource) {
+AppEHR.factory("EditArchives", function ($resource) { // edit filename
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'update_patient_archive', params, {
             save: {method: 'POST'},
@@ -712,22 +712,18 @@ AppEHR.factory("AddSupplier", function ($resource) {
 
 
 
-AppEHR.factory("TestingData", function ($resource) {
-        function getResource(params, body) {
-            var res2 = $resource(serverPath + 'get_inventory_suppliers', params, {
-                save: {method: 'POST'}
-            });
-            return res2;
-        }
-        var myTest = {
-            save: function (params, body, success) {
-                var res = getResource(params, body);
-                return res.save(params, body, success);
-            }
-        };
-        return myTest;
+AppEHR.factory("cancelLabOrder", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'cancel_lab_order', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
     }
-
-);
-
-
+    var cancelOrder = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return cancelOrder;
+});
