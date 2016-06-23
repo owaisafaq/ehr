@@ -693,6 +693,9 @@ Table Styling
 .print{
     background: url(../..//img/print.png) no-repeat top center;
 }
+.dispense_pharmacy{
+    background: url(../..//img/dispense_pharmacy.png) no-repeat top center;
+}
 .save{
     background: url(../..//img/save.png) no-repeat top center;
 }
@@ -2316,4 +2319,12 @@ div.ng-not-empty .select2-chosen {
     float: left;
     line-height: 18px;
     font-weight: bold;
+}
+.checkbox-styled-table{
+    height: 16px;
+    margin: 0;
+}
+.checkbox-styled-table:not(ie8) input ~ span:before{
+     height: 16px;
+     width: 16px;
 }

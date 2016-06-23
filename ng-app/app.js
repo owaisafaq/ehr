@@ -109,7 +109,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                 }).
                 when('/pharmacy-prescription', {
                     templateUrl: 'views/pharmacy-prescription.html',
-                    controller: 'pharmacy'
+                    controller: 'pharmacyPrescription'
                 }).
                 otherwise({
                     redirectTo: '/error'
