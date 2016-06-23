@@ -912,6 +912,15 @@ $api->method = "GET";
 $api->params->token = "";
 $api_arr [] = $api;
 
+// Get Single Inventory Category
+$api = new api();
+$api->name = "Get Single Inventory Category";
+$api->url = HOST . 'get_inventory_single_category';
+$api->method = "GET";
+$api->params->cat_id = "";
+$api->params->token = "";
+$api_arr [] = $api;
+
 // Add Inventory Category
 
 $api = new api();
@@ -1116,7 +1125,7 @@ $api->params->token = "123";
 
 $api_arr [] = $api;
 
-// Delete Inventory Supplier
+// Get all stocks
 $api = new api();
 $api->name = "Get Stocks";
 $api->url = HOST . 'get_stock';
@@ -1125,12 +1134,96 @@ $api->params->token = "";
 
 $api_arr [] = $api;
 
-// Delete Inventory Supplier
+// Get stock details
 $api = new api();
 $api->name = "Get Stocks Details";
 $api->url = HOST . 'get_stock_details';
 $api->method = "GET";
 $api->params->product_id = "";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+
+// Add Inventory
+$api = new api();
+$api->name = "Add Inventory";
+$api->url = HOST . 'add_inventory';
+$api->method = "POST";
+$api->params->product_id = "";
+$api->params->pharmacy_id = "";
+$api->params->manufacturer_id = "";
+$api->params->dept_id = "";
+$api->params->supplier_id = "";
+$api->params->received_date = "";
+$api->params->batch_no = "";
+$api->params->ref_no = "";
+$api->params->expiry = "";
+$api->params->quantity= "";
+$api->params->cost_per_item= "";
+$api->params->pack= "";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+// Delete Inventory
+$api = new api();
+$api->name = "Delete Inventory Details";
+$api->url = HOST . 'delete_inventory';
+$api->method = "POST";
+$api->params->stock_id = "1";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+// Update Inventory
+$api = new api();
+$api->name = "Update Inventory";
+$api->url = HOST . 'update_inventory';
+$api->method = "POST";
+$api->params->product_id = "";
+$api->params->pharmacy_id = "";
+$api->params->manufacturer_id = "";
+$api->params->dept_id = "";
+$api->params->supplier_id = "";
+$api->params->received_date = "";
+$api->params->batch_no = "";
+$api->params->ref_no = "";
+$api->params->expiry = "";
+$api->params->quantity= "";
+$api->params->cost_per_item= "";
+$api->params->pack= "";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+
+// Update Order level
+$api = new api();
+$api->name = "Update Product order level";
+$api->url = HOST . 'update_reorder_level';
+$api->method = "POST";
+$api->params->product_id = "1";
+$api->params->reorder_level = "1";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+// Get Lab Test Templates
+$api = new api();
+$api->name = "Get Lab Order Templates";
+$api->url = HOST . 'get_lab_test_templates';
+$api->method = "GET";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+
+// Get All Pharmacies
+$api = new api();
+$api->name = "Get All Pharmacies";
+$api->url = HOST . 'get_pharmacies';
+$api->method = "GET";
 $api->params->token = "";
 
 $api_arr [] = $api;

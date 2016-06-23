@@ -1,3 +1,4 @@
 /nbproject *
 .env
 /.idea
+/nbproject/private/
