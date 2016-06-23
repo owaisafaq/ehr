@@ -671,9 +671,11 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             console.log($routeParams.patientID);
         }
 
-        if($scope.foldersArchive.length == 0 && $scope.archives.length == 0){
+        /*if($scope.foldersArchive.length == 0 && $scope.archives.length == 0){
             $scope.disableOptionsArchive = true;
-        }
+        }else{
+            $scope.disableOptionsArchive = false;
+        }*/
         //GetArchives.get({token: $window.sessionStorage.token, patient_id: '1' /*$window.sessionStorage.patient_id*/}, archiveSuccess, archiveFailure);
         GetResourcesByFolderArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, followup_parent_id: '0'}, nestedFolderSuccess, nestedFolderFailure);
 
