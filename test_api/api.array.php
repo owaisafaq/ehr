@@ -1147,7 +1147,7 @@ $api_arr [] = $api;
 
 // Add Inventory
 $api = new api();
-$api->name = "Get Stocks Details";
+$api->name = "Add Inventory";
 $api->url = HOST . 'add_inventory';
 $api->method = "POST";
 $api->params->product_id = "";
@@ -1168,7 +1168,7 @@ $api_arr [] = $api;
 
 // Delete Inventory
 $api = new api();
-$api->name = "Get Stocks Details";
+$api->name = "Delete Inventory Details";
 $api->url = HOST . 'delete_inventory';
 $api->method = "POST";
 $api->params->stock_id = "1";
@@ -1178,7 +1178,7 @@ $api_arr [] = $api;
 
 // Update Inventory
 $api = new api();
-$api->name = "Get Stocks Details";
+$api->name = "Update Inventory";
 $api->url = HOST . 'update_inventory';
 $api->method = "POST";
 $api->params->product_id = "";

@@ -17,7 +17,7 @@ class InventoryAPIController extends Controller
     public function get_categories(){
         $categories = DB::table('inventory_categories')->where('status', 1)->get();
         if($categories){
-            return response()->json(['status' => true, 'message' => "Categories Found.", 'inventory_categories'=>$categories], 200);
+            return response()->json(['status' => true, 'message' => "Categories Found.", 'data'=>$categories], 200);
         }else{
             return response()->json(['status' => false, 'message' => "Categories not found"], 404);
         }

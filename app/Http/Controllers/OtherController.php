@@ -69,8 +69,6 @@ class OtherController extends Controller
         }
         return true;
     }
-
-
     public function get_pharmacies(Request $request){
 
         $pharmacies = DB::table('pharmacy')
@@ -80,8 +78,95 @@ class OtherController extends Controller
 
         return response()->json(['status' => true, 'data' => $pharmacies]);
     }
+    public function get_single_pharmacy(Request $request){
+        $id = $request->input('pharmacy_id');
+        $pharmacies = DB::table('pharmacy')
+            ->select(DB::raw('*'))
+            ->where('status', 1)
+            ->where('id', $id)
+            ->get();
 
+        return response()->json(['status' => true, 'data' => $pharmacies]);
+    }
+    public function create_pharmacy(Request $request){
+        $name = $request->input('name');
+        $contact_person = $request->input('contact_person');
+        $city = $request->input('city');
+        $state = $request->input('state');
+        $country = $request->input('country');
+        $address_1 = $request->input('address_1');
+        $address_2 = $request->input('address_2');
+        $email = $request->input('email');
+        $work_phone = $request->input('work_phone');
+        $website = $request->input('website');
+        $post_code = $request->input('post_code');
 
+        $id = DB::table('pharmacy')->insertGetId(
+            [
+                'name'=>$name,
+                'contact_person'=>$contact_person,
+                'city'=>$city,
+                'state'=>$state,
+                'country'=>$country,
+                'address_1'=>$address_1,
+                'address_2'=>$address_2,
+                'email'=>$email,
+                'work_phone'=>$work_phone,
+                'website'=>$website,
+                'post_code'=>$post_code,
+                'created_at'=>date("Y-m-d  H:i:s")
+            ]
+        );
+        if($id){
+            return response()->json(['status' => true, 'message' => "Pharmacy Added Successfully", 'pharmacy_id'=>$id], 200);
+        }else{
+            return response()->json(['status' => false, 'message' => "Error!"], 404);
+        }
+    }
+    public function update_pharmacy(Request $request){
+        $id = $request->input('pharmacy_id');
+        $name = $request->input('name');
+        $contact_person = $request->input('contact_person');
+        $city = $request->input('city');
+        $state = $request->input('state');
+        $country = $request->input('country');
+        $address_1 = $request->input('address_1');
+        $address_2 = $request->input('address_2');
+        $email = $request->input('email');
+        $work_phone = $request->input('work_phone');
+        $website = $request->input('website');
+        $post_code = $request->input('post_code');
 
+        $count = DB::table('pharmacy')->where('id', $id)->update(
+            [
+                'name'=>$name,
+                'contact_person'=>$contact_person,
+                'city'=>$city,
+                'state'=>$state,
+                'country'=>$country,
+                'address_1'=>$address_1,
+                'address_2'=>$address_2,
+                'email'=>$email,
+                'work_phone'=>$work_phone,
+                'website'=>$website,
+                'post_code'=>$post_code,
+                'updated_at'=>date("Y-m-d  H:i:s")
+            ]
+        );
+        if($count){
+            return response()->json(['status' => true, 'message' => "Pharmacy Updated Successfully"], 200);
+        }else{
+            return response()->json(['status' => false, 'message' => "Error!"], 404);
+        }
+    }
+    public function delete_supplier(Request $request){
+        $id = $request->input('pharmacy_id');
+        $count = DB::table('pharmacy')->where('id', $id)->update(['status'=>0]);
+        if($count){
+            return response()->json(['status' => true, 'message' => "Pharmacy Deleted Successfully"], 200);
+        }else{
+            return response()->json(['status' => false, 'message' => "Error!"], 404);
+        }
+    }
 }
 

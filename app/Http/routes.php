@@ -151,6 +151,11 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->get('get_lab_test_templates','App\Http\Controllers\OrderController@get_lab_test_templates');
 
     $app->get('get_pharmacies','App\Http\Controllers\OtherController@get_pharmacies');
+    $app->get('get_single_pharmacy','App\Http\Controllers\OtherController@get_single_pharmacy');
+    $app->post('create_pharmacy','App\Http\Controllers\InventoryAPIController@create_pharmacy');
+    $app->post('update_pharmacy','App\Http\Controllers\InventoryAPIController@update_pharmacy');
+    $app->post('delete_pharmacy','App\Http\Controllers\InventoryAPIController@delete_pharmacy');
+
 
 
 });
@@ -173,6 +178,5 @@ $app->group(['prefix' => 'api'], function () use ($app) {
     $app->post('delete_inventory','App\Http\Controllers\InventoryAPIController@delete_stock');
     $app->post('update_inventory','App\Http\Controllers\InventoryAPIController@update_stock');
     $app->post('update_reorder_level','App\Http\Controllers\InventoryAPIController@update_order_level');
-
 
 });
