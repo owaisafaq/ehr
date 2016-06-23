@@ -912,6 +912,15 @@ $api->method = "GET";
 $api->params->token = "";
 $api_arr [] = $api;
 
+// Get Single Inventory Category
+$api = new api();
+$api->name = "Get Single Inventory Category";
+$api->url = HOST . 'get_inventory_single_category';
+$api->method = "GET";
+$api->params->cat_id = "";
+$api->params->token = "";
+$api_arr [] = $api;
+
 // Add Inventory Category
 
 $api = new api();
