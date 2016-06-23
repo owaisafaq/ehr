@@ -614,7 +614,7 @@
                                 <td>
                                     <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
                                         <div class="tool-tip_popup">
-                                            <a href="javascript:;">View Details</a>
+                                            <a href="javascript:;" ng-click="SupplierSelected(SupplierList.id)">View Details</a>
                                             <a href="javascript:;">Edit</a>
                                             <a href="javascript:;">Delete</a>
                                         </div>
@@ -663,7 +663,7 @@
                             </thead>
                             <tbody>
                             <tr ng-repeat="CategoryList in CategoryLists|filter:search_category">
-                                <td>{{CategoryList.cat_name}}</td>
+                                <td>{{CategoryList.id}}</td>
                                 <td>{{CategoryList.cat_group}}</td>
                                 <td>{{CategoryList.cat_desc}}</td>
 
@@ -671,7 +671,7 @@
                                     <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
                                         <div class="tool-tip_popup">
 
-                                            <a href="javascript:;">Edit  </a>
+                                            <a href="javascript:;" ng-click="catSelected(CategoryList.id)">Edit  </a>
                                             <a href="javascript:;">Delete </a>
                                         </div>
                                     </div>
@@ -897,3 +897,127 @@
     </div><!-- /.modal-dialog -->
 
 </div><!-- /.modal -->
+
+
+
+<!--
+
+Edit Supplier Modal-->
+
+
+<div class="modal fade big-modal" id="editSupplier" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Edit Supplier</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form" ng-submit="UpdateSupplier(selectedSupplier);">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label>Supplier Name</label>
+                        </div>
+                        <div class="col-lg-3">
+
+                            <input type="text" placeholder=""  name="" ng-model="selectedSupplier.name" required/>
+                        </div>
+                        <div class="col-lg-3">
+                            <label>Contact Person</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" ng-model="selectedSupplier.contact_person"   name="" required/>
+                        </div>
+                        <div class="col-lg-3">
+                            <label>Address Line 1</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" name="" ng-model="selectedSupplier.address_1" />
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Email ID</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" name="" ng-model="selectedSupplier.email"  value="Talhdgdsab" />
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Address Line 2</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" ng-model="selectedSupplier.address_2" name="" />
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Work Phone</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" name="" ng-model="selectedSupplier.work_phone" />
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>City</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" name="" ng-model="selectedSupplier.city" />
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Mobile</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" name="" ng-model="selectedSupplier.mobile" />
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>State</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <select class="form-control" ng-model="supplier.state">
+                                <option>Select State</option>
+                                <option>One</option>
+                                <option>Two</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Website</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" ng-model="selectedSupplier.website" name="" required/>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Country</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <select class="form-control" ng-model="supplier.country">
+                                <option>Select Country</option>
+                                <option>One</option>
+                                <option>Two</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Post Code</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" name="" ng-model="selectedSupplier.post_code" required/>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-default button-style-1">Update</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div><!-- /.modal-content -->
+
+
+    </div><!-- /.modal-dialog -->
+
+</div><!-- /.modal -->
+

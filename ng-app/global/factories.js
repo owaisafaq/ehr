@@ -710,6 +710,61 @@ AppEHR.factory("AddSupplier", function ($resource) {
 });
 
 
+AppEHR.factory("UpdateSupplier", function ($resource) {
+
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'update_inventory_supplier', params,{
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var UpdateSupplier = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return UpdateSupplier;
+});
+
+
+
+AppEHR.factory("GetSingleSupplier", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_inventory_single_supplier', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var Supplier = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return Supplier;
+});
+
+AppEHR.factory("GetSingleCategory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_inventory_single_category', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var Categories = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return Categories;
+});
+
+
+
+
+
 
 
 AppEHR.factory("cancelLabOrder", function ($resource) {
