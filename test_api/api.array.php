@@ -912,6 +912,15 @@ $api->method = "GET";
 $api->params->token = "";
 $api_arr [] = $api;
 
+// Get Single Inventory Category
+$api = new api();
+$api->name = "Get Single Inventory Category";
+$api->url = HOST . 'get_inventory_single_category';
+$api->method = "GET";
+$api->params->cat_id = "";
+$api->params->token = "";
+$api_arr [] = $api;
+
 // Add Inventory Category
 
 $api = new api();
@@ -1131,6 +1140,16 @@ $api->name = "Get Stocks Details";
 $api->url = HOST . 'get_stock_details';
 $api->method = "GET";
 $api->params->product_id = "";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+
+// Get Lab Test Templates
+$api = new api();
+$api->name = "Get Lab Order Templates";
+$api->url = HOST . 'get_lab_test_templates';
+$api->method = "GET";
 $api->params->token = "";
 
 $api_arr [] = $api;

@@ -22,6 +22,15 @@ class InventoryAPIController extends Controller
             return response()->json(['status' => false, 'message' => "Categories not found"], 404);
         }
     }
+    public function get_single_category(Request $request){
+        $id = $request->input('cat_id');
+        $categories = DB::table('inventory_categories')->where(['status'=>1, 'id'=>$id])->first();
+        if($categories){
+            return response()->json(['status' => true, 'message' => "Categories Found.", 'data'=>$categories], 200);
+        }else{
+            return response()->json(['status' => false, 'message' => "Categories not found"], 404);
+        }
+    }
     public function create_category(Request $request){
         $cat_name = $request->input('cat_name');
         $cat_desc = $request->input('cat_desc');
@@ -65,7 +74,7 @@ class InventoryAPIController extends Controller
     public function get_suppliers(){
         $suppliers = DB::table('suppliers')->where('status',1)->get();
         if($suppliers){
-            return response()->json(['status' => true, 'message' => "Suppliers Found.", 'suppliers'=>$suppliers], 200);
+            return response()->json(['status' => true, 'message' => "Suppliers Found.", 'data'=>$suppliers], 200);
         }else{
             return response()->json(['status' => false, 'message' => "Suppliers not found"], 404);
         }
@@ -74,7 +83,7 @@ class InventoryAPIController extends Controller
         $id = $request->input('supplier_id');
         $suppliers = DB::table('suppliers')->where(['status'=>1, 'id'=>$id])->get();
         if($suppliers){
-            return response()->json(['status' => true, 'message' => "Suppliers Found.", 'suppliers'=>$suppliers], 200);
+            return response()->json(['status' => true, 'message' => "Suppliers Found.", 'data'=>$suppliers], 200);
         }else{
             return response()->json(['status' => false, 'message' => "Suppliers not found"], 404);
         }
@@ -175,7 +184,7 @@ class InventoryAPIController extends Controller
             ->where(['stock.status'=>1])
             ->get();
         if($stock){
-            return response()->json(['status' => true, 'message' => "Stock Found.", 'stock'=>$stock], 200);
+            return response()->json(['status' => true, 'message' => "Stock Found.", 'data'=>$stock], 200);
         }else{
             return response()->json(['status' => false, 'message' => "Stock not found"], 404);
         }
@@ -204,7 +213,7 @@ class InventoryAPIController extends Controller
             ->where(['inventory_products.id'=>$product_id])
             ->get();
         if($stock){
-            return response()->json(['status' => true, 'message' => "Stock Found.", 'stock'=>$stock], 200);
+            return response()->json(['status' => true, 'message' => "Stock Found.", 'data'=>$stock], 200);
         }else{
             return response()->json(['status' => false, 'message' => "Stock not found"], 404);
         }

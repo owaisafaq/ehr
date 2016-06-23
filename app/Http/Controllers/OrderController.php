@@ -232,5 +232,17 @@ class OrderController extends Controller
     }
 
 
+    public function get_lab_test_templates(Request $request){
+
+        $lab_templates= DB::table('lab_templates')
+            ->select(DB::raw('id,name'))
+            ->where('status', '1')
+            ->get();
+
+
+        return response()->json(['status' => true, 'data' => $lab_templates]);
+    }
+
+
 }
 
