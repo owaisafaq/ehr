@@ -12,7 +12,7 @@
 
             <div class="card-body tab-content col-lg-12 custom-card-body">
                 <div class="tab-pane active" id="inventory">
-                    <!--                    <div class="table-header row background-none">
+                                        <div class="table-header row background-none inv_header">
                                             <div class="col-lg-7">
                                                 <span class="txt-style-3 pull-left text-uppercase">category</span>
                                                 <div class="col-lg-2">
@@ -33,7 +33,7 @@
                                             </div>
                                             <div class="pull-right">
                                                 <button class="notes button-custom pull-right">Import inventory</button>
-                                                <button class="add button-custom pull-right ">Add Inventory</button>
+                                                <button class="add button-custom pull-right add_inventory">Add Inventory</button>
                                             </div>
                                             <div class="pull-right">
                                                 <div class="header-search pull-left margin-top-10">
@@ -43,34 +43,35 @@
                                                     <input class="search_field" type="text" placeholder="Enter product code">
                                                 </div>
                                             </div>
-                                        </div>-->
+                                        </div>
                     <form class="custom-form">
 
 
-                        <!--                    <table class="table table-striped no-margin table-custom table-custom_big">
+                                           <table class="table table-striped no-margin table-custom table-custom_big inventory_detail">
                                                 <thead>
                                                     <tr>
                                                         <th>product name</th>
-                                                        <th>product name</th>
+                                                        <th>Category</th>
                                                         <th>latest retail price</th>
                                                         <th>stock quantity</th>
                                                         <th>reorder level</th>
                                                         <th>orde quantity</th>
-                                                        <th>update</th>
+                                                        <th class="stock_detail">update</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>14/04/2016</td>
-                                                        <td>90189191</td>
-                                                        <td>ABc</td>
-                                                        <td>Eye Clinic</td>
-                                                        <td>Consultation</td>
-                                                        <td>Outpatient</td>
+                                                    <tr ng-repeat="InventoryList in InventoryLists">
+                                                        <td>{{InventoryList.category_name}}</td>
+                                                        <td>{{InventoryList.category_name}}</td>
+                                                        <td>{{InventoryList.cost_per_item}}</td>
+                                                        <td>{{InventoryList.quantity}}</td>
+                                                        <td>{{InventoryList.quantity}}</td>
+                                                        <td>{{InventoryList.order_quantity}}</td>
+
                                                         <td>
                                                             <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
                                                                 <div class="tool-tip_popup">
-                                                                    <a href="javascript:;">Stock Details</a>
+                                                                    <a class="stock_detail" onclick="">Stock Details</a>
                                                                     <a href="javascript:;">Edit Product Details</a>
                                                                     <a href="javascript:;">Edit Reorder Level</a>
                                                                     <a href="javascript:;">Make Inactive</a>
@@ -79,27 +80,10 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                    <tr>
-                                                        <td>14/04/2016</td>
-                                                        <td>90189191</td>
-                                                        <td>ABc</td>
-                                                        <td>Eye Clinic</td>
-                                                        <td>Consultation</td>
-                                                        <td>Outpatient</td>
-                                                        <td>Outpatient</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>14/04/2016</td>
-                                                        <td>90189191</td>
-                                                        <td>ABc</td>
-                                                        <td>Eye Clinic</td>
-                                                        <td>Consultation</td>
-                                                        <td>Outpatient</td>
-                                                        <td>Outpatient</td>
-                                                    </tr>
+
                                                 </tbody>
-                                            </table>-->
-                        <!--                        <div class="row">
+                                            </table>
+                                             <div class="row" id="stock_det">
                                                     <div class="heading-bar no-margin col-lg-12 border-bottom-0">Product Details</div>
                                                     <div class="box-style no-margin border-bottom-0">
                                                         <div class="col-lg-2">
@@ -166,9 +150,9 @@
                                                             </tr>
                                                         </tbody>
                                                     </table>
-                                                </div>-->
+                                                </div>
                     </form>
-                    <!--                                        <div class="add-drug-supplements">
+                                                          <div class="add-drug-supplements">
                                                                 <form class="custom-form">
                                                                     <div class="row">
                                                                         <h2 class="h2-style_1">Add Inventory (Drug & Supplement)</h2>
@@ -369,7 +353,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </form>
-                                                            </div>-->
+                                                            </div>
                     <div class="add-drug-others">
                         <form class="custom-form">
                             <div class="row">
@@ -1021,3 +1005,25 @@ Edit Supplier Modal-->
 
 </div><!-- /.modal -->
 
+<script>
+    $(document).ready(function(){
+
+        $("#stock_det").hide();
+        $(".add-drug-supplements").hide();
+        $(".add-drug-others").hide();
+
+
+
+    $(".add_inventory").click(function(){
+
+        alert("here");
+        $(".inventory_detail").hide();
+        $(".inv_header").hide();
+        $(".add-drug-supplements").show();
+
+    });
+
+    });
+
+
+</script>

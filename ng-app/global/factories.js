@@ -628,7 +628,7 @@ AppEHR.factory("UpdateAllergies", function ($resource) {
 
 AppEHR.factory("GetAllInventory", function ($resource) {
     function getResource(params, body) {
-        var res2 = $resource(serverPath + 'get_all_patients', params, {
+        var res2 = $resource(serverPath + 'get_stock', params, {
             get: {method: 'GET'}
         });
         return res2;
