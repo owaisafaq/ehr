@@ -927,9 +927,9 @@ class ApiController extends Controller
             ->get();
 
         $labs = DB::table('labs')
-              ->select(DB::raw('id,name'))
-              ->where('status', 1)
-              ->get();
+            ->select(DB::raw('id,name'))
+            ->where('status', 1)
+            ->get();
 
 
         $data = array(
@@ -1182,13 +1182,14 @@ class ApiController extends Controller
         }
 
     }
-    public function optadd_patient_archive(Request $request){
+
+    public function optadd_patient_archive(Request $request)
+    {
         return response()->json(['status' => true, 'message' => 'hello']);
     }
 
     public function add_patient_archive(Request $request)
     {
-
 
 
         $archive = $request->file('patient_archive');
@@ -1209,18 +1210,17 @@ class ApiController extends Controller
 
 
         DB::table('patient_file_access_log')->insert(
-                               ['patient_id' => $patient_id,
-                                   'follow_up_parent_id' => $folder_id,
-                                   'file' => $fileName,
-                                   'file_name' => $original_name,
-                                   'created_at' => $currentdatetime
+            ['patient_id' => $patient_id,
+                'follow_up_parent_id' => $folder_id,
+                'file' => $fileName,
+                'file_name' => $original_name,
+                'created_at' => $currentdatetime
 
-                               ]
-                           );
+            ]
+        );
 
 
         return response()->json(['status' => true, 'message' => 'Files Uploaded']);
-
 
 
     }
