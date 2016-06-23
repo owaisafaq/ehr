@@ -111,9 +111,22 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/pharmacy-prescription.html',
                     controller: 'pharmacy'
                 }).
+                when('/settings-temp', {
+                    templateUrl: 'views/settings-temp.html',
+                    controller: 'settings-temp'
+                }).
+                when('/settings', {
+                    templateUrl: 'views/settings.html',
+                    controller: 'settings'
+                }).
+                when('/billing', {
+                    templateUrl: 'views/billing.html',
+                    controller: 'billing'
+                }).
                 otherwise({
                     redirectTo: '/error'
                 });
+
     }]);
 AppEHR.run(function ($rootScope, $location, $window) {
     $rootScope.$on("$routeChangeStart", function (event, next, current) {
@@ -168,8 +181,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
                         myResults.push({
                             'text': "No Result Found"
                         });
-                    }
-                    else {
+                    } else {
                         $.each(data['data'], function (index, item) {
                             myResults.push({
                                 'id': item.id,
@@ -203,8 +215,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
                         myResults.push({
                             'text': "No Result Found"
                         });
-                    }
-                    else {
+                    } else {
                         $.each(data['data'], function (index, item) {
                             myResults.push({
                                 'id': item.id,
