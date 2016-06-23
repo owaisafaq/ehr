@@ -1227,3 +1227,67 @@ $api->method = "GET";
 $api->params->token = "";
 
 $api_arr [] = $api;
+
+
+
+// Get Single Pharmacy
+$api = new api();
+$api->name = "Get Single Pharmacy";
+$api->url = HOST . 'get_single_pharmacy';
+$api->method = "GET";
+$api->params->pharmacy_id = "1";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+
+// Add Pharmacy
+$api = new api();
+$api->name = "Add Pharmacy";
+$api->url = HOST . 'create_pharmacy';
+$api->method = "POST";
+$api->params->name = "new pharmacy";
+$api->params->contact_person = "james";
+$api->params->city = "test";
+$api->params->state = "test";
+$api->params->country = "test";
+$api->params->address_1 = "test";
+$api->params->address_2 = "test";
+$api->params->email = "admin@test.com";
+$api->params->work_phone = "admin@test.com";
+$api->params->post_code = "0021";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+
+// Update  Pharmacy
+$api = new api();
+$api->name = "Update Pharmacy";
+$api->url = HOST . 'update_pharmacy';
+$api->method = "POST";
+$api->params->pharmacy_id = "1";
+$api->params->name = "new pharmacy";
+$api->params->contact_person = "james";
+$api->params->city = "test";
+$api->params->state = "test";
+$api->params->country = "test";
+$api->params->address_1 = "test";
+$api->params->address_2 = "test";
+$api->params->email = "admin@test.com";
+$api->params->work_phone = "admin@test.com";
+$api->params->post_code = "0021";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+
+// Delete  Pharmacy
+$api = new api();
+$api->name = "Delete Pharmacy";
+$api->url = HOST . 'delete_pharmacy';
+$api->method = "POST";
+$api->params->pharmacy_id = "1";
+$api->params->token = "";
+
+$api_arr [] = $api;

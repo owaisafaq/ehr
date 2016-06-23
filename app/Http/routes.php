@@ -152,9 +152,9 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->get('get_pharmacies','App\Http\Controllers\OtherController@get_pharmacies');
     $app->get('get_single_pharmacy','App\Http\Controllers\OtherController@get_single_pharmacy');
-    $app->post('create_pharmacy','App\Http\Controllers\InventoryAPIController@create_pharmacy');
-    $app->post('update_pharmacy','App\Http\Controllers\InventoryAPIController@update_pharmacy');
-    $app->post('delete_pharmacy','App\Http\Controllers\InventoryAPIController@delete_pharmacy');
+    $app->post('create_pharmacy','App\Http\Controllers\OtherController@create_pharmacy');
+    $app->post('update_pharmacy','App\Http\Controllers\OtherController@update_pharmacy');
+    $app->post('delete_pharmacy','App\Http\Controllers\OtherController@delete_pharmacy');
 
 
 
