@@ -621,3 +621,19 @@ AppEHR.factory("cancelLabOrder", function ($resource) {
     };
     return cancelOrder;
 });
+AppEHR.factory("getPharmacy", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_pharmacies', params, {
+            save: {method: 'GET'}
+        });
+        return res2;
+    }
+
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});

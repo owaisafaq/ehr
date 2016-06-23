@@ -25,24 +25,12 @@
                                 <th>mobile</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td><a class="link-style" href="javascript:;">GOPD Pharmacy</a></td>
-                                <td>23 Wuse Amunu kano</td>
-                                <td>demo@domainname.com</td>
-                                <td>080927726</td>
-                            </tr>
-                            <tr>
-                                <td><a class="link-style" href="javascript:;">GOPD Pharmacy</a></td>
-                                <td>23 Wuse Amunu kano</td>
-                                <td>demo@domainname.com</td>
-                                <td>080927726</td>
-                            </tr>
-                            <tr>
-                                <td><a class="link-style" href="javascript:;">GOPD Pharmacy</a></td>
-                                <td>23 Wuse Amunu kano</td>
-                                <td>demo@domainname.com</td>
-                                <td>080927726</td>
+                        <tbody >
+                            <tr ng-repeat="pharmacyList in pharmacyLists">
+                                <td><a class="link-style" href="javascript:;">{{pharmacyList.name}}</a></td>
+                                <td>{{pharmacyList.address_1}}</td>
+                                <td>{{pharmacyList.email}}</td>
+                                <td>{{pharmacyList.work_phone}}</td>
                             </tr>
                         </tbody>
                     </table>

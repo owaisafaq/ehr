@@ -42,8 +42,7 @@
                 <div class="col-lg-8">
                     <span class="txt-style-3 pull-left text-uppercase">find patient</span>
                     <div class="col-lg-2">
-                        <select ng-model="search.find" class="form-control">
-                            <option></option>
+                        <select  ng-model="find" class="form-control">
                             <option selected="selected" value="id">Patient ID</option>
                             <option value="first_name">Patient Name</option>
                         </select>
@@ -52,7 +51,7 @@
                         <button type="submit">
                             <i class="fa fa-search"></i>
                         </button>
-                        <input ng-model="search.text" class="search_field" type="text" placeholder="Search for a patient">
+                        <input ng-model="searchText[find]" class="search_field" type="text" placeholder="Search for a patient">
                     </div>
                 </div> 
                 <button type="button" data-toggle="modal" data-target="#addpatient" class="btn ink-reaction button-style-1 button-style-1 pull-right">create patient id card</button>
@@ -78,7 +77,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="patientList in patientLists| filter: id">
+                            <tr ng-repeat="patientList in patientLists | filter: searchText">
                                 <td align="center">
                                     <div class="radio radio-styled">
                                         <label>
