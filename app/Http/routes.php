@@ -150,6 +150,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->get('get_lab_test_templates','App\Http\Controllers\OrderController@get_lab_test_templates');
 
+    $app->get('get_pharmacies','App\Http\Controllers\OtherController@get_pharmacies');
+
 
 });
 $app->group(['prefix' => 'api'], function () use ($app) {

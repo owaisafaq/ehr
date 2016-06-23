@@ -1153,3 +1153,13 @@ $api->method = "GET";
 $api->params->token = "";
 
 $api_arr [] = $api;
+
+
+// Get All Pharmacies
+$api = new api();
+$api->name = "Get All Pharmacies";
+$api->url = HOST . 'get_pharmacies';
+$api->method = "GET";
+$api->params->token = "";
+
+$api_arr [] = $api;

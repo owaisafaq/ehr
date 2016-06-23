@@ -75,17 +75,22 @@ class OrderController extends Controller
     {
 
 
+
         $orders = DB::table('lab_orders')
-            ->select(DB::raw('lab_orders.id,lab_orders.patient_id,patients.first_name as patient_name,lab_orders.priority,lab_orders.order_status,labs.name as lab_name,patients.age,patients.marital_status,patients.sex,maritial_status.name as marital_status'))
+            ->select(DB::raw('lab_orders.id,lab_orders.patient_id,patients.first_name as patient_name,lab_orders.order_status,labs.name as lab_name,patients.age,patients.marital_status,patients.sex,maritial_status.name as marital_status'))
             ->leftJoin('patients', 'lab_orders.patient_id', '=', 'patients.id')
             ->leftJoin('labs', 'labs.id', '=', 'lab_orders.lab')
+            ->leftJoin('lab_order_tests', 'lab_order_tests.id', '=', 'lab_orders.lab')
             ->leftJoin('lab_tests', 'lab_tests.id', '=', 'lab_orders.lab_test')
             ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
-            ->where('lab_orders.status', 1)
+            ->where('lab_orders.status',1)
             ->get();
 
 
+dd('here');
+
         foreach ($orders as $lab_orders) {
+
 
             $lab_orders->ordered_by = 'Dr Smith';
             $lab_orders->handled_by = 'James';
@@ -99,6 +104,29 @@ class OrderController extends Controller
 
                 $lab_orders->gender = 'female';
             }
+
+        }
+
+
+
+
+
+        dd($orders);
+
+        foreach ($orders as $key => $order_tests) {
+
+
+            dd($order_tests);
+
+            $tests = DB::table('lab_tests')
+                ->select(DB::raw('lab_tests.name as test_name,lab_tests.cost'))
+                ->leftJoin('lab_order_tests', 'lab_order_tests.lab_test', '=', 'lab_tests.id')
+                ->where('lab_order_tests.lab_order_id', $orders->id)
+                ->get();
+
+            $orders[$key]->tests = $tests;
+            //$apetizer_product_items[]=$product_item;
+
 
         }
 
