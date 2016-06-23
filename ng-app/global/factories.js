@@ -606,5 +606,18 @@ AppEHR.factory("getLabOrderInfo", function ($resource) {
     };
     return LabOrder;
 });
-
-
+AppEHR.factory("cancelLabOrder", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'cancel_lab_order', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var cancelOrder = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return cancelOrder;
+});
