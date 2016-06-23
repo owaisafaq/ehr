@@ -6,7 +6,7 @@
                     <li class="active"><a showtab href="#inventory">Inventory</a></li>
                     <li><a showtab href="#suppliers">Suppliers</a></li>
                     <li><a showtab href="#category">Category</a></li>
-                    <li><a showtab href="#medications">medications</a></li>
+                    <li><a showtab href="#reports">Reports</a></li>
                 </ul>
             </div><!--end .card-head -->
 
@@ -549,7 +549,7 @@
                 <div class="tab-pane" id="suppliers">
                     <div class="table-header row background-none">
                         <div class="pull-right">
-                            <button class="add button-custom pull-right ">Add Supplier</button>
+                            <button class="add button-custom pull-right" data-target="#addSupplier" data-toggle="modal">Add Supplier</button>
                         </div>
                         <div class="pull-right">
                             <div class="header-search pull-left margin-top-10">
@@ -706,21 +706,16 @@
                     </form>
                 </div>
 
-                <div class="tab-pane" id="medications">
+                <div class="tab-pane" id="reports">
+                    <div class="row inventory_report_con">
+                        <div class="col-lg-3 inventory_report">
+                            <div class="col-lg-12">
 
+                            </div>
+                            <div class="white_circle"><img src="" /></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="tab-pane" id="supplements">
-
-                </div>
-                <div class="tab-pane" id="allergies">
-
-                </div>
-
-
-                <div class="tab-pane" id="documents">
-
-                </div>
-
             </div><!--end .card-body -->
         </div><!--end .card -->
     </section>
@@ -786,6 +781,120 @@
                         </div>
                         <div class="col-lg-12">
                             <textarea></textarea>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default button-style-1">Add</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div><!-- /.modal-content -->
+
+
+    </div><!-- /.modal-dialog -->
+
+</div><!-- /.modal -->
+<div class="modal fade big-modal" id="addSupplier" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Add Supplier</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label>Supplier Name</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" name="" required/>
+                        </div>
+                        <div class="col-lg-3">
+                            <label>Contact Person</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" name="" required/>
+                        </div>
+                        <div class="col-lg-3">
+                            <label>Address Line 1</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" name="" required/>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Email ID</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" name="" required/>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Address Line 2</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" name="" required/>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Work Phone</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" name="" required/>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>City</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" name="" required/>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Mobile</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" name="" required/>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>State</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <select class="form-control">
+                                <option>Select State</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Website</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" name="" required/>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Country</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <select class="form-control">
+                                <option>Select Country</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Post Code</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" name="" required/>
                         </div>
 
                     </div>
