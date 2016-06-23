@@ -2226,8 +2226,8 @@ div.ng-not-empty .select2-chosen {
     -moz-transition: 0.5s;
     -o-transition: 0.5s;
 
-/*    opacity: 1;
-    visibility: visible;*/
+    /*    opacity: 1;
+        visibility: visible;*/
 }
 .tool-tip_popup:before {
     position: absolute;
@@ -2254,4 +2254,66 @@ div.ng-not-empty .select2-chosen {
     color: #516e81;
     margin-bottom: 2px;
     font-size: 14px;
+}
+.txt-style-6{
+    font-size: 18px;
+    color: #a2a6b9;
+}
+.heading-bar{
+    background: #f9fafd;
+    border:1px solid #ddecf8;
+    color: #a2a6b9;
+    font-size: 12px;
+    text-transform: uppercase;
+    padding: 7px 10px;
+}
+.box-style{
+    border:1px solid #ddecf8;
+    float: left;
+    padding: 10px 0;
+}
+.border-bottom-0{
+    border-bottom: 0;
+}
+.h2-style_1{
+    margin-top: 11px;
+    color: #a2a6b9;
+    font-size: 18px;
+    padding-left: 12px;
+}
+/*Inventory Report*/
+.inventory_report_con > .inventory_report:nth-child(-n+4){
+    margin-bottom: 20px;
+}
+.inventory_report_con > .inventory_report > div{
+    background: #f9fafb;
+    box-shadow: 0px 0px 0px 0px;
+    text-align: center;
+    padding-top: 45px;
+    padding-bottom: 20px;
+}
+.inventory_report_con .white_circle{
+    width: 120px;
+    height: 120px;
+    display: inline-block;
+    background: #fff;
+    border-radius: 100%;
+    text-align: center;
+    margin-bottom: 40px;
+}
+.inventory_report_con .white_circle img{
+    position: relative;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    top: 50%;
+}
+.inventory_report_con .report_name{
+    font-size: 14px;
+    color: #516e81;
+    text-transform: uppercase;
+    width: 100%;
+    float: left;
+    line-height: 18px;
+    font-weight: bold;
 }

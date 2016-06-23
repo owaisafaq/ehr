@@ -25,6 +25,7 @@ $app->group(['prefix' => 'api'], function () use ($app) {
     $app->post('search_patient', 'App\Http\Controllers\ApiController@search_patient');
 
     $app->post('add_patient_archive','App\Http\Controllers\ApiController@add_patient_archive');
+    $app->options('add_patient_archive','App\Http\Controllers\ApiController@optadd_patient_archive');
 
     $app->post('update_patient_archive','App\Http\Controllers\ApiController@update_patient_archive');
 
@@ -145,18 +146,26 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->post('cancel_lab_order','App\Http\Controllers\OrderController@cancel_lab_order');
 
+    $app->post('update_order','App\Http\Controllers\OrderController@update_order');
+
+    $app->get('get_lab_test_templates','App\Http\Controllers\OrderController@get_lab_test_templates');
+
 
 });
 $app->group(['prefix' => 'api'], function () use ($app) {
     $app->post('create_inventory_category','App\Http\Controllers\InventoryAPIController@create_category');
     $app->post('update_inventory_category','App\Http\Controllers\InventoryAPIController@update_category');
     $app->get('get_inventory_category','App\Http\Controllers\InventoryAPIController@get_categories');
+    $app->get('get_inventory_single_category','App\Http\Controllers\InventoryAPIController@get_single_category');
     $app->post('delete_inventory_category','App\Http\Controllers\InventoryAPIController@delete_category');
 
     $app->post('create_inventory_supplier','App\Http\Controllers\InventoryAPIController@create_supplier');
     $app->post('update_inventory_supplier','App\Http\Controllers\InventoryAPIController@update_supplier');
     $app->get('get_inventory_suppliers','App\Http\Controllers\InventoryAPIController@get_suppliers');
+    $app->get('get_inventory_single_supplier','App\Http\Controllers\InventoryAPIController@get_single_supplier');
     $app->post('delete_inventory_supplier','App\Http\Controllers\InventoryAPIController@delete_supplier');
 
+    $app->get('get_stock','App\Http\Controllers\InventoryAPIController@get_stock');
+    $app->get('get_stock_details','App\Http\Controllers\InventoryAPIController@get_stock_details');
 
 });

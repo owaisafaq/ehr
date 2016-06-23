@@ -912,6 +912,15 @@ $api->method = "GET";
 $api->params->token = "";
 $api_arr [] = $api;
 
+// Get Single Inventory Category
+$api = new api();
+$api->name = "Get Single Inventory Category";
+$api->url = HOST . 'get_inventory_single_category';
+$api->method = "GET";
+$api->params->cat_id = "";
+$api->params->token = "";
+$api_arr [] = $api;
+
 // Add Inventory Category
 
 $api = new api();
@@ -959,6 +968,16 @@ $api->name = "Get ALL Inventory suppliers";
 $api->url = HOST . 'get_inventory_suppliers';
 $api->method = "GET";
 $api->params->token = "";
+$api_arr [] = $api;
+
+
+// Get Single Inventory Suppliers
+$api = new api();
+$api->name = "Get Single Inventory suppliers";
+$api->url = HOST . 'get_inventory_single_supplier';
+$api->method = "GET";
+$api->params->token = "";
+$api->params->supplier_id = "1";
 $api_arr [] = $api;
 
 // Add Inventory Supplier
@@ -1086,9 +1105,51 @@ $api->url = HOST . 'cancel_lab_order';
 $api->method = "POST";
 $api->description = "Cancel Lab Orders";
 $api->params->order_id = "1";
-$api->params->order_status = "canceled";
+$api->params->order_status = "Cancelled";
 $api->params->reason = "Invalid Payment";
 $api->params->notes = "Test";
 $api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Update Order
+$api = new api();
+$api->name = "Update Order";
+$api->url = HOST . 'update_order';
+$api->method = "POST";
+$api->description = "Update Order";
+$api->params->order_id = "1";
+$api->params->order_status = "in progress";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+// Delete Inventory Supplier
+$api = new api();
+$api->name = "Get Stocks";
+$api->url = HOST . 'get_stock';
+$api->method = "GET";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+// Delete Inventory Supplier
+$api = new api();
+$api->name = "Get Stocks Details";
+$api->url = HOST . 'get_stock_details';
+$api->method = "GET";
+$api->params->product_id = "";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+
+// Get Lab Test Templates
+$api = new api();
+$api->name = "Get Lab Order Templates";
+$api->url = HOST . 'get_lab_test_templates';
+$api->method = "GET";
+$api->params->token = "";
 
 $api_arr [] = $api;
