@@ -1073,13 +1073,10 @@ $api->description = "Add Lab Orders";
 $api->params->patient_id = "1";
 $api->params->lab = "1";
 $api->params->lab_test = "1";
-$api->params->priority = "High";
-$api->params->sample = "Blood";
-$api->params->sample = "Blood";
 $api->params->clinical_information = "test";
 $api->params->diagnosis = "test";
+$api->params->lab_test = "";
 $api->params->notes = "test";
-$api->params->order_status = "In Process";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -1113,17 +1110,29 @@ $api->params->token = "123";
 $api_arr [] = $api;
 
 
-// Update Order
+// Update Lab Test
 $api = new api();
-$api->name = "Update Order";
-$api->url = HOST . 'update_order';
+$api->name = "Update Lab Test";
+$api->url = HOST . 'update_lab_test';
 $api->method = "POST";
-$api->description = "Update Order";
-$api->params->order_id = "1";
-$api->params->order_status = "in progress";
+$api->params->lab_test = "1";
+$api->params->status = "in progress";
 $api->params->token = "123";
 
 $api_arr [] = $api;
+
+
+// Get Lab Test Fields
+$api = new api();
+$api->name = "Get Lab Test Fields";
+$api->url = HOST . 'get_lab_test_fields';
+$api->method = "GET";
+$api->params->lab_template = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
 
 // Get all stocks
 $api = new api();

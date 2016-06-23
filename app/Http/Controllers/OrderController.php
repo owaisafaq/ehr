@@ -212,7 +212,7 @@ class OrderController extends Controller
 
 
         $tests = DB::table('lab_tests')
-            ->select(DB::raw('lab_tests.name as test_name,lab_tests.cost,priority'))
+            ->select(DB::raw('lab_tests.id as test_id,lab_tests.name as test_name,lab_tests.cost,priority'))
             ->leftJoin('lab_order_tests', 'lab_order_tests.lab_test', '=', 'lab_tests.id')
             ->where('lab_order_tests.lab_order_id', $orders->id)
             ->get();
@@ -256,11 +256,9 @@ class OrderController extends Controller
 
         $lab = $request->input('lab');
 
-        $lab_test = $request->input('lab_test');
+        $lab_tests = html_entity_decode($request->input('lab_test'));
 
-        $priority = $request->input('priority');
-
-        $sample = $request->input('sample');
+        $lab_test = json_decode($lab_tests);
 
         $clinical_information = $request->input('clinical_information');
 
@@ -268,28 +266,39 @@ class OrderController extends Controller
 
         $notes = $request->input('notes');
 
-        $order_status = $request->input('order_status');
-
         $currentdatetime = date("Y-m-d  H:i:s");
 
 
         DB::table('lab_orders')->insert(
             ['patient_id' => $patient_id,
                 'lab' => $lab,
-                'lab_test' => $lab_test,
-                'priority' => $priority,
-                'sample' => $sample,
                 'clinical_information' => $clinical_information,
                 'diagnosis' => $diagnosis,
                 'notes' => $notes,
-                'order_status' => $order_status,
+                'order_status' => 'created',
                 'created_at' => $currentdatetime
 
             ]
         );
 
 
-        return response()->json(['status' => true, 'message' => 'Lab Orders Added Successfully']);
+        $order_id = DB::getPdo()->lastInsertId();
+
+        foreach($lab_test as $test){
+
+            DB::table('lab_order_tests')->insert(
+                ['lab_order_id' => $order_id,
+                    'lab_test' => $test->lab_test,
+                    'priority' => $test->priority,
+                    'created_at' => $currentdatetime
+
+                ]
+            );
+
+        }
+
+
+        return response()->json(['status' => true, 'message' => 'Lab Orders Added Successfully','order_id'=>$order_id]);
 
     }
 
@@ -319,21 +328,21 @@ class OrderController extends Controller
     }
 
 
-    public function update_order(Request $request)
+    public function update_lab_test(Request $request)
     {
 
 
-        $order_id = $request->input('order_id');
-        $order_status = $request->input('order_status');
+        $lab_id = $request->input('lab_test');
+        $status = $request->input('status');
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
-        DB::table('lab_orders')
-            ->where('id', $order_id)
-            ->update(array('order_status' => $order_status, 'updated_at' => $currentdatetime));
+        DB::table('lab_tests')
+            ->where('id', $lab_id)
+            ->update(array('test_status' => $status, 'updated_at' => $currentdatetime));
 
 
-        return response()->json(['status' => true, 'message' => 'Lab Orders Updated Successfully']);
+        return response()->json(['status' => true, 'message' => 'Lab Test Updated Successfully']);
 
 
     }
