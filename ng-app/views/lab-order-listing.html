@@ -21,10 +21,10 @@
             </div>
             <div class="card-body col-lg-12">
                 <div class="pull-left margin-top-10">
-                    <a class="link-style_2" href="javascript:;">open orders</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                    <a class="link-style_2" href="javascript:;">in progress</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                    <a class="link-style_2" href="javascript:;">closed orders</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                    <a class="link-style_2" href="javascript:;">canceled orders</a>
+                    <a class="link-style_2" href="javascript:;" ng-click="filterLabs.ordered_by = 'Open'">open orders</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                    <a class="link-style_2" href="javascript:;" ng-click="filterLabs.ordered_by = 'In Progress'">in progress</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                    <a class="link-style_2" href="javascript:;" ng-click="filterLabs.ordered_by = 'Closed'">closed orders</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                    <a class="link-style_2" href="javascript:;" ng-click="filterLabs.ordered_by = 'Cancelled'">canceled orders</a>
                 </div>
                 <div class="icons_con">
                     <button data-toggle="modal" data-target="#order-label" class="print button-custom">print order label</button>
@@ -52,7 +52,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="labOrder in labOrders">
+                            <tr ng-repeat="labOrder in labOrders | filter:filterLabs">
                                 <td align="center">
                                     <div class="radio radio-styled">
                                         <label>
