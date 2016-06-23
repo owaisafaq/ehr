@@ -1,3 +1,31 @@
+<style type="text/css">
+    .thumb {
+    width: 24px;
+    height: 24px;
+    float: none;
+    position: relative;
+    top: 7px;
+}
+
+form .progress {
+    line-height: 15px;
+}
+}
+
+.progress {
+    display: inline-block;
+    width: 100px;
+    border: 3px groove #CCC;
+}
+
+.progress div {
+    font-size: smaller;
+    background: #56aeea;
+    width: 0;
+    color: #fff;
+}
+
+</style>
 <div id="content">
     <section>
         <div class="card custom-card no-padding">
@@ -714,13 +742,13 @@
                     </form>
                 </div>
 
-                <div class="tab-pane {{disabledTabArchive-no}} active" id="archive">
+                <div class="tab-pane {{disabledTabArchive}}" id="archive">
                     <a href="javascript:;" ng-if="followupParentId != '0'" ng-hide="backButtonArchive" ng-click="backButton();"><< Back</a>
                     <div class="col-xs-12">
                         <div class="icons_con">
                             <button class="done-editing button-custom" ng-click="saveArchive();">Save</button>
-                            <button class="edit button-custom">Edit</button>
-                            <button class="delete button-custom" data-toggle="modal" data-target="#confirmation">Remove</button>
+                            <button class="edit button-custom" ng-disabled="disableOptionsArchive">Edit</button>
+                            <button class="delete button-custom" data-toggle="modal" data-target="#confirmation" ng-disabled="disableOptionsArchive">Remove</button>
                             <button data-toggle="modal" data-target="#fileUploader" class="add button-custom">ADD</button>
                         </div>
                     </div>
@@ -1144,7 +1172,7 @@
             <div class="modal-header pop_head">
                 <h2>Add Archive</h2>
             </div>
-            <form enctype="multipart/form-data" method="post" ng-submit="submitFiles(patient_archive)">
+            <form enctype="multipart/form-data" method="post">
                 <div class="modal-body pull-left">
                     <div class="select_file_mode">
                         <a class="{{areaFileActive1}}" href="javascript:;" ng-click="folderArea = false;fileArea = true;selectType('application/pdf');areaFileActive1 = 'active'; areaFileActive2 = '';areaFileActive3 = ''"><img src="assets/img/pdf_big_icon.png" /></a>
@@ -1154,9 +1182,19 @@
                     <div class="show_uploading_format" ng-show="fileArea">
                         <div class="clear">
                             <!-- <input type="file" class="abc" file-model="patient_archive" multiple="multiple" accept="{{fileTypes}}" /> -->
-                            <input type="file" id="file" name="file" multiple onchange="angular.element(this).scope().getFileDetails(this)" />
+                            <!-- <input type="file" id="file" name="file" ng-model="files" multiple file-change/> -->
+                            <button ngf-select="uploadFiles($files, $invalidFiles)" multiple accept="{{fileTypes}}" ngf-max-size="5MB">upload</button>
                             <!-- <a href="javascript:$('#file_upload').uploadify('upload','*')">Upload Files</a>
                             <p></p> -->
+                            <ul>
+                                <li ng-repeat="f in files" style="font:smaller">{{f.name}} {{f.$errorParam}}
+                                  <span class="progress" ng-show="f.progress >= 0">
+                                    <div style="width:{{f.progress}}%" ng-bind="f.progress + '%'"></div>
+                                  </span>
+                                </li>
+                                <li ng-repeat="f in errFiles" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
+                                </li> 
+                            </ul>
                             <p>{{fileUploadMessage}}</p>
                         </div>
                     </div>
@@ -1169,7 +1207,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-default button-style-1" >SAVE & CLOSE</button>
+                    <button type="submit" class="btn btn-default button-style-1" ng-click="listAfterUploaded()" data-dismiss="modal">SAVE & CLOSE</button>
                     <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
                 </div>
             </form>

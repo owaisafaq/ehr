@@ -103,14 +103,30 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/inventory.html',
                     controller: 'Inventory'
                 }).
-                when('/my-testing', {
-                    templateUrl: 'views/my-testing.html',
-                    controller: 'myTesting'
+                when('/pharmacy', {
+                    templateUrl: 'views/pharmacy.html',
+                    controller: 'pharmacy'
                 }).
-            
+                when('/pharmacy-prescription', {
+                    templateUrl: 'views/pharmacy-prescription.html',
+                    controller: 'pharmacyPrescription'
+                }).
+                when('/settings-temp', {
+                    templateUrl: 'views/settings-temp.html',
+                    controller: 'settings-temp'
+                }).
+                when('/settings', {
+                    templateUrl: 'views/settings.html',
+                    controller: 'settings'
+                }).
+                when('/billing', {
+                    templateUrl: 'views/billing.html',
+                    controller: 'billing'
+                }).
                 otherwise({
                     redirectTo: '/error'
                 });
+
     }]);
 AppEHR.run(function ($rootScope, $location, $window) {
     $rootScope.$on("$routeChangeStart", function (event, next, current) {
