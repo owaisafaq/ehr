@@ -169,5 +169,9 @@ $app->group(['prefix' => 'api'], function () use ($app) {
 
     $app->get('get_stock','App\Http\Controllers\InventoryAPIController@get_stock');
     $app->get('get_stock_details','App\Http\Controllers\InventoryAPIController@get_stock_details');
+    $app->get('add_inventory','App\Http\Controllers\InventoryAPIController@add_stock');
+    $app->get('delete_inventory','App\Http\Controllers\InventoryAPIController@delete_stock');
+    $app->get('update_inventory','App\Http\Controllers\InventoryAPIController@update_stock');
+
 
 });

@@ -81,7 +81,7 @@ class InventoryAPIController extends Controller
     }
     public function get_single_supplier(Request $request){
         $id = $request->input('supplier_id');
-        $suppliers = DB::table('suppliers')->where(['status'=>1, 'id'=>$id])->get();
+        $suppliers = DB::table('suppliers')->where(['status'=>1, 'id'=>$id])->first();
         if($suppliers){
             return response()->json(['status' => true, 'message' => "Suppliers Found.", 'data'=>$suppliers], 200);
         }else{
@@ -308,7 +308,7 @@ class InventoryAPIController extends Controller
     //Product APIs.
     public function update_order_level(Request $request){
         $product_id = $request->input('product_id');
-        $reorder_level = $request->input('reoder_level');
+        $reorder_level = $request->input('reorder_level');
         $count = DB::table('inventory_products')->where('id', $product_id)->update(
             [
                 'reorder_level'=>$reorder_level,
@@ -321,4 +321,6 @@ class InventoryAPIController extends Controller
             return response()->json(['status' => false, 'message' => "Error!"], 404);
         }
     }
+
+
 }

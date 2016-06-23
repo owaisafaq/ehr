@@ -1125,7 +1125,7 @@ $api->params->token = "123";
 
 $api_arr [] = $api;
 
-// Delete Inventory Supplier
+// Get all stocks
 $api = new api();
 $api->name = "Get Stocks";
 $api->url = HOST . 'get_stock';
@@ -1134,7 +1134,7 @@ $api->params->token = "";
 
 $api_arr [] = $api;
 
-// Delete Inventory Supplier
+// Get stock details
 $api = new api();
 $api->name = "Get Stocks Details";
 $api->url = HOST . 'get_stock_details';
@@ -1144,6 +1144,70 @@ $api->params->token = "";
 
 $api_arr [] = $api;
 
+
+// Add Inventory
+$api = new api();
+$api->name = "Get Stocks Details";
+$api->url = HOST . 'add_inventory';
+$api->method = "GET";
+$api->params->product_id = "";
+$api->params->pharmacy_id = "";
+$api->params->manufacturer_id = "";
+$api->params->dept_id = "";
+$api->params->supplier_id = "";
+$api->params->received_date = "";
+$api->params->batch_no = "";
+$api->params->ref_no = "";
+$api->params->expiry = "";
+$api->params->quantity= "";
+$api->params->cost_per_item= "";
+$api->params->pack= "";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+// Delete Inventory
+$api = new api();
+$api->name = "Get Stocks Details";
+$api->url = HOST . 'delete_inventory';
+$api->method = "GET";
+$api->params->stock_id = "1";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+// Update Inventory
+$api = new api();
+$api->name = "Get Stocks Details";
+$api->url = HOST . 'update_inventory';
+$api->method = "GET";
+$api->params->product_id = "";
+$api->params->pharmacy_id = "";
+$api->params->manufacturer_id = "";
+$api->params->dept_id = "";
+$api->params->supplier_id = "";
+$api->params->received_date = "";
+$api->params->batch_no = "";
+$api->params->ref_no = "";
+$api->params->expiry = "";
+$api->params->quantity= "";
+$api->params->cost_per_item= "";
+$api->params->pack= "";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+
+// Update Order level
+$api = new api();
+$api->name = "Update Product order level";
+$api->url = HOST . 'update_order_level';
+$api->method = "GET";
+$api->params->product_id = "1";
+$api->params->reorder_level = "1";
+$api->params->token = "";
+
+$api_arr [] = $api;
 
 // Get Lab Test Templates
 $api = new api();
