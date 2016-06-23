@@ -575,14 +575,14 @@
                 <div class="tab-pane" id="suppliers">
                     <div class="table-header row background-none">
                         <div class="pull-right">
-                            <button class="add button-custom pull-right ">Add Supplier</button>
+                            <button class="add button-custom pull-right" data-target="#addSupplier" data-toggle="modal">Add Supplier</button>
                         </div>
                         <div class="pull-right">
                             <div class="header-search pull-left margin-top-10">
                                 <button type="submit">
                                     <i class="fa fa-search"></i>
                                 </button>
-                                <input class="search_field" type="text" placeholder="Enter supplier">
+                                <input class="search_field" type="text" placeholder="Enter supplier" ng-model="search_supplier">
                             </div>
                         </div>
                     </div>
@@ -602,7 +602,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="SupplierList in SuppplierLists| filter: id">
+                            <tr ng-repeat="SupplierList in SuppplierLists| filter: search_supplier">
 
                                 <td>{{SupplierList.contact_person}}</td>
                                 <td>{{SupplierList.address_1}}</td>
@@ -614,11 +614,9 @@
                                 <td>
                                     <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
                                         <div class="tool-tip_popup">
-                                            <a href="javascript:;">Stock Details</a>
-                                            <a href="javascript:;">Edit Product Details</a>
-                                            <a href="javascript:;">Edit Reorder Level</a>
-                                            <a href="javascript:;">Make Inactive</a>
-                                            <a href="javascript:;">Delete Inventory</a>
+                                            <a href="javascript:;">View Details</a>
+                                            <a href="javascript:;">Edit</a>
+                                            <a href="javascript:;">Delete</a>
                                         </div>
                                     </div>
                                 </td>
@@ -647,7 +645,7 @@
                                 <button type="submit">
                                     <i class="fa fa-search"></i>
                                 </button>
-                                <input class="search_field" type="text" placeholder="Enter supplier">
+                                <input class="search_field" type="text" placeholder="Enter Catgegory" ng-model="search_category">
                             </div>
                         </div>
                     </div>
@@ -664,7 +662,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="CategoryList in CategoryLists">
+                            <tr ng-repeat="CategoryList in CategoryLists|filter:search_category">
                                 <td>{{CategoryList.cat_name}}</td>
                                 <td>{{CategoryList.cat_group}}</td>
                                 <td>{{CategoryList.cat_desc}}</td>
@@ -672,11 +670,9 @@
                                 <td>
                                     <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
                                         <div class="tool-tip_popup">
-                                            <a href="javascript:;">Stock Details</a>
-                                            <a href="javascript:;">Edit Product Details</a>
-                                            <a href="javascript:;">Edit Reorder Level</a>
-                                            <a href="javascript:;">Make Inactive</a>
-                                            <a href="javascript:;">Delete Inventory</a>
+
+                                            <a href="javascript:;">Edit  </a>
+                                            <a href="javascript:;">Delete </a>
                                         </div>
                                     </div>
                                 </td>
@@ -767,6 +763,123 @@
                         </div>
                         <div class="col-lg-12">
                             <textarea ng-model="category.cat_desc"></textarea>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-default button-style-1">Add</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div><!-- /.modal-content -->
+
+
+    </div><!-- /.modal-dialog -->
+
+</div><!-- /.modal -->
+
+
+
+<div class="modal fade big-modal" id="addSupplier" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Add Supplier</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form" ng-submit="AddSupplier(supplier);">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label>Supplier Name</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" ng-model="supplier.sname" name="" required/>
+                        </div>
+                        <div class="col-lg-3">
+                            <label>Contact Person</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" ng-model="supplier.contact_person" name="" required/>
+                        </div>
+                        <div class="col-lg-3">
+                            <label>Address Line 1</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" name="" ng-model="supplier.address_1" required/>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Email ID</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" name="" ng-model="supplier.email" required/>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Address Line 2</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" ng-model="supplier.address_2" name="" required/>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Work Phone</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" name="" ng-model="supplier.wphone" required/>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>City</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" name="" ng-model="supplier.city" required/>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Mobile</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" name="" ng-model="supplier.mobile" required/>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>State</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <select class="form-control" ng-model="supplier.state">
+                                <option>Select State</option>
+                                <option>One</option>
+                                <option>Two</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Website</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" ng-model="supplier.website" name="" required/>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Country</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <select class="form-control" ng-model="supplier.country">
+                                <option>Select Country</option>
+                                <option>One</option>
+                                <option>Two</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Post Code</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" name="" ng-model="supplier.post_code" required/>
                         </div>
 
                     </div>

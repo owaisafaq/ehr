@@ -693,6 +693,24 @@ AppEHR.factory("AddCategory", function ($resource) {
 
 
 
+AppEHR.factory("AddSupplier", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'create_inventory_supplier', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var AddCategory = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return AddCategory;
+});
+
+
+
 
 AppEHR.factory("TestingData", function ($resource) {
         function getResource(params, body) {
