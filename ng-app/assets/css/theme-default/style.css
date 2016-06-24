@@ -2402,8 +2402,8 @@ table.setting_table_cat > tbody > tr > td:nth-child(2) span{float:left;}
     margin: 0;
 }
 .checkbox-styled-table:not(ie8) input ~ span:before{
-     height: 16px;
-     width: 16px;
+    height: 16px;
+    width: 16px;
 }
 
 
@@ -2438,3 +2438,20 @@ position: absolute;
     z-index: 1;
     width: 80%;
 }
+.margin-top-50{
+    margin-top: 50px;
+}
+.save_Pview_button{
+    margin-top: 44px;
+}
+.accordian-header-info label{
+    font-size: 14px;
+    color: #a2a6b9;
+    text-transform: capitalize;
+    font-weight: bold;
+    margin-right: 10px;
+}
+.accordian-header-info span{
+    margin-right: 30px;
+}
+
