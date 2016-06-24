@@ -127,59 +127,6 @@ class OrderController extends Controller
         }
 
         return response()->json(['status' => true, 'data' => $orders]);
-        $orders = DB::table('lab_orders')
-            ->select(DB::raw('lab_orders.id,lab_orders.patient_id,patients.first_name as patient_name,lab_orders.order_status,labs.name as lab_name,patients.age,patients.marital_status,patients.sex,maritial_status.name as marital_status'))
-            ->leftJoin('patients', 'lab_orders.patient_id', '=', 'patients.id')
-            ->leftJoin('labs', 'labs.id', '=', 'lab_orders.lab')
-            ->leftJoin('lab_order_tests', 'lab_order_tests.lab_order_id', '=', 'lab_orders.id')
-            ->leftJoin('lab_tests', 'lab_tests.id', '=', 'lab_order_tests.lab_test')
-            ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
-            ->where('lab_orders.status', 1)
-            ->groupby('lab_orders.id')
-            ->get();
-
-
-        foreach ($orders as $lab_orders) {
-
-
-            $lab_orders->ordered_by = 'Dr Smith';
-            $lab_orders->handled_by = 'James';
-            $lab_orders->total_cost = 0;
-            //$lab_orders->test_name = 'Blood Test';
-
-
-            if ($lab_orders->sex == 1) {
-
-                $lab_orders->gender = 'male';
-            } else {
-
-                $lab_orders->gender = 'female';
-            }
-
-        }
-        foreach ($orders as $key => $order_tests) {
-            $tests = DB::table('lab_tests')
-                ->select(DB::raw('lab_tests.name as test_name,lab_tests.cost,priority'))
-                ->leftJoin('lab_order_tests', 'lab_order_tests.lab_test', '=', 'lab_tests.id')
-                ->where('lab_order_tests.lab_order_id', $order_tests->id)
-                ->get();
-
-            $test_cost = DB::table('lab_tests')
-                ->select(DB::raw('IFNULL(SUM(lab_tests.cost),0) as cost,count(lab_order_tests.lab_test) as totaltests'))
-                ->leftJoin('lab_order_tests', 'lab_order_tests.lab_test', '=', 'lab_tests.id')
-                ->where('lab_order_tests.lab_order_id', $order_tests->id)
-                ->first();
-
-            $orders[$key]->total_cost = $test_cost->cost;
-            $orders[$key]->total_test = $test_cost->totaltests;
-
-
-            $orders[$key]->lab_tests = $tests;
-
-            //$apetizer_product_items[]=$product_item;
-        }
-
-        return response()->json(['status' => true, 'data' => $orders]);
 
 
     }
@@ -219,28 +166,23 @@ class OrderController extends Controller
 
 
         $test_cost = DB::table('lab_tests')
-                 ->select(DB::raw('IFNULL(SUM(lab_tests.cost),0) as cost,count(lab_order_tests.lab_test) as totaltests'))
-                 ->leftJoin('lab_order_tests', 'lab_order_tests.lab_test', '=', 'lab_tests.id')
-                 ->where('lab_order_tests.lab_order_id', $orders->id)
-                 ->first();
+            ->select(DB::raw('IFNULL(SUM(lab_tests.cost),0) as cost,count(lab_order_tests.lab_test) as totaltests'))
+            ->leftJoin('lab_order_tests', 'lab_order_tests.lab_test', '=', 'lab_tests.id')
+            ->where('lab_order_tests.lab_order_id', $orders->id)
+            ->first();
 
-        if(!empty($test_cost)) {
+        if (!empty($test_cost)) {
 
             $orders->total_cost = $test_cost->cost;
             $orders->total_test = $test_cost->totaltests;
 
-        }
-
-        else{
+        } else {
 
             $orders->total_cost = 0;
             $orders->total_test = 0;
 
         }
         $orders->test = $tests;
-
-
-
 
 
         return response()->json(['status' => true, 'data' => $orders]);
@@ -284,7 +226,7 @@ class OrderController extends Controller
 
         $order_id = DB::getPdo()->lastInsertId();
 
-        foreach($lab_test as $test){
+        foreach ($lab_test as $test) {
 
             DB::table('lab_order_tests')->insert(
                 ['lab_order_id' => $order_id,
@@ -298,7 +240,7 @@ class OrderController extends Controller
         }
 
 
-        return response()->json(['status' => true, 'message' => 'Lab Orders Added Successfully','order_id'=>$order_id]);
+        return response()->json(['status' => true, 'message' => 'Lab Orders Added Successfully', 'order_id' => $order_id]);
 
     }
 
@@ -361,7 +303,8 @@ class OrderController extends Controller
     }
 
 
-    public function get_lab_test_fields(Request $request){
+    public function get_lab_test_fields(Request $request)
+    {
 
         $template_id = $request->input('lab_template');
 
@@ -378,10 +321,12 @@ class OrderController extends Controller
     }
 
 
-    public function add_lab_test_values(Request $request){
+    public function add_lab_test_values(Request $request)
+    {
 
-        $lab_order_id=$request->input('lab_order_id');
-        $lab_test_id=$request->input('lab_test_id');
+        $lab_order_id = $request->input('lab_order_id');
+
+        $lab_test_id = $request->input('lab_test_id');
 
         $lab_test_values = html_entity_decode($request->input('lab_test_values'));
 
@@ -389,7 +334,7 @@ class OrderController extends Controller
 
         $lab_test = json_decode($lab_test_values);
 
-        foreach($lab_test as $report){
+        foreach ($lab_test as $report) {
 
 
             DB::table('lab_test_values')->insert(
@@ -405,7 +350,7 @@ class OrderController extends Controller
         }
 
 
-        return response()->json(['status' => true, 'message'=>'Lab Report Added Sucessfully']);
+        return response()->json(['status' => true, 'message' => 'Lab Report Added Sucessfully']);
 
     }
 
