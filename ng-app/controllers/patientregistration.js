@@ -126,7 +126,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     $scope.disabledDropdown = false;
                 }/*else{
                  
-                 }*/
+                }*/
             }
             function stateFailed(error) {
                 console.log(error);

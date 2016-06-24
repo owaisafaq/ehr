@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR', [
     'ngRoute', 'ngResource',
-    'ngTouch', 'ui.grid', 'ui.grid.pagination', 'ui.grid.pagination', 'ngFileUpload'
+    'ngTouch', 'ui.grid', 'ui.grid.pagination', 'ngFileUpload', 'angular.filter'
 ]);
 AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
     function ($httpProvider, $routeProvider, $locationProvider) {
@@ -27,7 +27,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/ppointments-list.html',
                     controller: 'appointmentsListController'
                 }).
-                when('/clinical-documentation-clinic-progress-note', {
+                when('/clinical-documentation-clinic-progress-note/:patientID', {
                     templateUrl: 'views/clinical-documentation-clinic-progress-note.html',
                     controller: 'clinicalDocumentationClinicProgressNote'
                 }).

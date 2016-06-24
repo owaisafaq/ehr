@@ -2426,6 +2426,18 @@ table.setting_table_cat > tbody > tr > td:nth-child(2) span{float:left;}
 .pending{color:#e74424 !important;font-weight:700;font-size:14px !important;}
 .show_on_others{display: none;}
 .show_on_supplements:not(h2),.show_on_others:not(h2){margin: 0;}
+.show_textarea{
+    position: relative;
+}
+.show_textarea input[type=text]{
+display: none;
+resize: none;
+position: absolute;
+    top: 25px;
+    left: 0;
+    z-index: 1;
+    width: 80%;
+}
 .margin-top-50{
     margin-top: 50px;
 }
