@@ -123,6 +123,14 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/billing.html',
                     controller: 'billing'
                 }).
+                when('/billing-invoice-print', {
+                    templateUrl: 'views/billing-invoice-print.html',
+                    controller: 'billing-invoice-print'
+                }).
+                when('/billing-codes', {
+                    templateUrl: 'views/billing-codes.html',
+                    controller: 'billing-codes'
+                }).
                 otherwise({
                     redirectTo: '/error'
                 });
