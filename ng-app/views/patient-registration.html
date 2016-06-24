@@ -1,5 +1,5 @@
 <style type="text/css">
-    .thumb {
+.thumb {
     width: 24px;
     height: 24px;
     float: none;
@@ -22,7 +22,6 @@ form .progress {
     width: 0;
     color: #fff;
 }
-
 </style>
 <div id="content">
     <section>
@@ -34,7 +33,7 @@ form .progress {
                     <li class="{{disabledTabKin}}"><a showtab href="#kin">next of kin</a></li>
                     <li class="{{disabledTabEmployer}}"><a showtab href="#employer">employer</a></li>
                     <li class="{{disabledTabPatientPlant}}"><a showtab href="#plan">patient plan</a></li>
-                    <li class="{{disabledTabArchive}}"><a showtab href="#archive">archive</a></li>
+                    <li class="{{disabledTabArchive-no}}"><a showtab href="#archive">archive</a></li>
                 </ul>
             </div><!-- end .card-head -->
             <div class="card-body tab-content">
@@ -740,7 +739,7 @@ form .progress {
                     </form>
                 </div>
 
-                <div class="tab-pane {{disabledTabArchive}}" id="archive">
+                <div class="tab-pane {{disabledTabArchive-no}}" id="archive">
                     <!-- <a href="javascript:;" ng-if="followupParentId != '0'" ng-hide="backButtonArchive" ng-click="backButton();"><< Back</a> -->
                     <div class="col-xs-12">
                         <div class="icons_con">

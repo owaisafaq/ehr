@@ -468,21 +468,66 @@ AppEHR.factory("DropDownData", function ($resource) {
     });
 });
 AppEHR.service('fileUpload', ['$http', function ($http) {
-        this.uploadFileToUrl = function (file, uploadUrl) {
-            var fd = new FormData();
-            fd.append('file', file);
-            $http.post(uploadUrl, fd, {
-                transformRequest: angular.identity,
-                headers: {'Content-Type': undefined}
-            })
-                    .success(function () {
-                        console.log("here");
-                    })
-                    .error(function () {
-                        console.log("failed");
-                    });
+    this.uploadFileToUrl = function (file, uploadUrl) {
+        var fd = new FormData();
+        fd.append('file', file);
+        $http.post(uploadUrl, fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        })
+                .success(function () {
+                    console.log("here");
+                })
+                .error(function () {
+                    console.log("failed");
+                });
+    }
+}]);
+AppEHR.factory("ClinicalProgressNotesFields", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'clinical_progress_note_fields', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var clinicalProgressNotesFields = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
         }
-    }]);
+    };
+    return clinicalProgressNotesFields;
+});
+AppEHR.factory("GetTemplatesDropDown", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'clinical_progress_note_templates', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var clinicalProgressNotesFields = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return clinicalProgressNotesFields;
+});
+AppEHR.factory("SetClinicalProgressNotes", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_patient_clinical_notes', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var clinicalProgressNotesFields = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return clinicalProgressNotesFields;
+});
 AppEHR.factory("GetPatientMedications", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'patient_medications', params, {

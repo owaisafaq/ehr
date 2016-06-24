@@ -126,7 +126,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     $scope.disabledDropdown = false;
                 }/*else{
                  
-                 }*/
+                }*/
             }
             function stateFailed(error) {
                 console.log(error);
@@ -677,7 +677,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             $scope.disableOptionsArchive = false;
         }*/
         //GetArchives.get({token: $window.sessionStorage.token, patient_id: '1' /*$window.sessionStorage.patient_id*/}, archiveSuccess, archiveFailure);
-        GetResourcesByFolderArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, followup_parent_id: '0'}, nestedFolderSuccess, nestedFolderFailure);
+        GetResourcesByFolderArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, followup_parent_id: $scope.followupParentId}, nestedFolderSuccess, nestedFolderFailure);
 
         function patientEditSuccess(res) {
             if (res.status == true) {
@@ -1131,7 +1131,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             console.log($scope.followupParentId);
             if($scope.folderName != undefined && $scope.folderName != ''){
                 $rootScope.loader = 'show';
-                AddFolderArchives.save({token: $window.sessionStorage.token, patient_id: $windows.sessionStorage.token, name: $scope.folderName, followup_parent_id: $scope.followupParentId}, folderCreatedSuccess, folderCreatedFailure);
+                AddFolderArchives.save({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, name: $scope.folderName, followup_parent_id: $scope.followupParentId}, folderCreatedSuccess, folderCreatedFailure);
             }
         }
 
