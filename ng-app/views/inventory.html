@@ -56,7 +56,7 @@
                                                         <th>stock quantity</th>
                                                         <th>reorder level</th>
                                                         <th>orde quantity</th>
-                                                        <th class="stock_detail">update</th>
+                                                        <th >update</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -71,7 +71,7 @@
                                                         <td>
                                                             <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
                                                                 <div class="tool-tip_popup">
-                                                                    <a class="stock_detail" onclick="">Stock Details</a>
+                                                                    <a  ng-click="StockSelected(InventoryList.product_id)">Stock Details</a>
                                                                     <a href="javascript:;">Edit Product Details</a>
                                                                     <a href="javascript:;">Edit Reorder Level</a>
                                                                     <a href="javascript:;">Make Inactive</a>
@@ -88,27 +88,27 @@
                                                     <div class="box-style no-margin border-bottom-0">
                                                         <div class="col-lg-2">
                                                             <label>product name</label>
-                                                            <span class="txt-style-6">Paracetamal</span>
+                                                            <span class="txt-style-6">{{selectedStocks[0].product_name}}</span>
                                                         </div>
                                                         <div class="col-lg-2">
-                                                            <label>product id</label>
-                                                            <span class="txt-style-6">PA5688541</span>
+                                                            <label>product ID</label>
+                                                            <span class="txt-style-6">{{selectedStocks[0].product_id}}</span>
                                                         </div>
                                                         <div class="col-lg-2">
                                                             <label>trade name</label>
-                                                            <span class="txt-style-6">D Cold Total</span>
+                                                            <span class="txt-style-6">{{selectedStocks[0].trade_name}}</span>
                                                         </div>
                                                         <div class="col-lg-2">
                                                             <label>group</label>
-                                                            <span class="txt-style-6">Group Name</span>
+                                                            <span class="txt-style-6">{{selectedStocks[0].cat_group}}</span>
                                                         </div>
                                                         <div class="col-lg-2">
                                                             <label>category</label>
-                                                            <span class="txt-style-6">Medicine</span>
+                                                            <span class="txt-style-6">{{selectedStocks[0].category_name}}</span>
                                                         </div>
                                                         <div class="col-lg-2">
                                                             <label>strength</label>
-                                                            <span class="txt-style-6">100/Unit</span>
+                                                            <span class="txt-style-6">{{selectedStocks[0].strength}}</span>
                                                         </div>
                                                     </div>
                                                     <div class="heading-bar col-lg-12 no-margin">Stock Details</div>
@@ -124,36 +124,22 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td>14/04/2016</td>
-                                                                <td>90189191</td>
-                                                                <td>ABc</td>
-                                                                <td>Eye Clinic</td>
-                                                                <td>Consultation</td>
-                                                                <td>Outpatient</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>14/04/2016</td>
-                                                                <td>90189191</td>
-                                                                <td>ABc</td>
-                                                                <td>Eye Clinic</td>
-                                                                <td>Consultation</td>
-                                                                <td>Outpatient</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>14/04/2016</td>
-                                                                <td>90189191</td>
-                                                                <td>ABc</td>
-                                                                <td>Eye Clinic</td>
-                                                                <td>Consultation</td>
-                                                                <td>Outpatient</td>
+
+                                                            <tr ng-repeat="stock in selectedStocks">
+                                                                <td>{{stock.received_date}}</td>
+                                                                <td>{{stock.supplier_name}}</td>
+                                                                <td>{{stock.batch_no}}</td>
+                                                                <td>{{stock.expiry}}</td>
+                                                                <td>{{stock.quantity}}</td>
+                                                                <td>{{stock.cost_per_item}}</td>
+
                                                             </tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
                     </form>
                                                           <div class="add-drug-supplements">
-                                                                <form class="custom-form">
+                                                                <form class="custom-form" ng-submit="AddInventory(inventory);" >
                                                                     <div class="row">
                                                                         <h2 class="h2-style_1">Add Inventory (Drug & Supplement)</h2>
                                                                         <div class="col-lg-12">
@@ -164,20 +150,24 @@
                                                                                 <label>group</label>
                                                                             </div>
                                                                             <div class="col-lg-3">
-                                                                                <select class="form-control">
+                                                                                <select class="form-control group_select" ng-model="inventory.group" >
                                                                                     <option>Select Group</option>
-                                                                                    <option>2</option>
-                                                                                    <option>3</option>
+                                                                                    <option value="Drugs">Drugs</option>
+                                                                                    <option value="Supplements">Supplements</option>
+                                                                                    <option value="Documents">Documents</option>
+                                                                                    <option value="Others">Others</option>
+
                                                                                 </select>
                                                                             </div>
                                                                             <div class="col-lg-3">
                                                                                 <label>category</label>
                                                                             </div>
                                                                             <div class="col-lg-3">
-                                                                                <select class="form-control">
-                                                                                    <option>Select Category</option>
-                                                                                    <option>2</option>
-                                                                                    <option>3</option>
+
+                                                                                <select class="form-control" ng-model="CategoryLists.cat_name" ng-options="category.cat_name for category in CategoryLists" >
+                                                                                    <option>Select Categorys</option>
+
+
                                                                                 </select>
                                                                             </div>
 
@@ -185,29 +175,29 @@
                                                                                 <label>product name</label>
                                                                             </div>
                                                                             <div class="col-lg-3">
-                                                                                <input type="text" placeholder="" />
+                                                                                <input type="text" ng-model="inventory.product_name"  placeholder="" />
                                                                             </div>
                                                                             <div class="col-lg-3">
                                                                                 <label>product id</label>
                                                                             </div>
                                                                             <div class="col-lg-3">
-                                                                                <input type="text" placeholder="" />
+                                                                                <input type="text" placeholder=""  ng-model="inventory.product_id" />
                                                                             </div>
                                                                             <div class="col-lg-3">
                                                                                 <label>trade name</label>
                                                                             </div>
                                                                             <div class="col-lg-3">
-                                                                                <input type="text" />
+                                                                                <input type="text" ng-model="inventory.trade_name"  />
                                                                             </div>
                                                                             <div class="col-lg-3">
                                                                                 <label>strength</label>
                                                                             </div>
                                                                             <div class="col-lg-3 no-padding">
                                                                                 <div class="col-lg-6">
-                                                                                    <input type="text" />
+                                                                                    <input type="text" ng-model="inventory.strength"  />
                                                                                 </div>
                                                                                 <div class="col-lg-6">
-                                                                                    <select class="form-control">
+                                                                                    <select class="form-control" ng-model="inventory.unit" >
                                                                                         <option>Select Unit</option>
                                                                                         <option>2</option>
                                                                                         <option>3</option>
@@ -218,7 +208,7 @@
                                                                                 <label>route</label>
                                                                             </div>
                                                                             <div class="col-lg-3">
-                                                                                <select class="form-control">
+                                                                                <select class="form-control" ng-model="inventory.route" >
                                                                                     <option>Select route</option>
                                                                                     <option>2</option>
                                                                                     <option>3</option>
@@ -227,8 +217,8 @@
                                                                             <div class="col-lg-3">
                                                                                 <label>dose from</label>
                                                                             </div>
-                                                                            <div class="col-lg-3">
-                                                                                <select class="form-control">
+                                                                            <div class="col-lg-3"  >
+                                                                                <select class="form-control" ng-model="inventory.dose">
                                                                                     <option>Select Dose Form</option>
                                                                                     <option>2</option>
                                                                                     <option>3</option>
@@ -239,7 +229,7 @@
                                                                                 <label>reorder level</label>
                                                                             </div>
                                                                             <div class="col-lg-3">
-                                                                                <select class="form-control">
+                                                                                <select class="form-control" ng-model="inventory.reorder">
                                                                                     <option>Select Color</option>
                                                                                     <option>2</option>
                                                                                     <option>3</option>
@@ -249,7 +239,7 @@
                                                                                 <label>order quantity</label>
                                                                             </div>
                                                                             <div class="col-lg-3">
-                                                                                <input type="text" placeholder="" />
+                                                                                <input type="text" placeholder="" ng-model="inventory.order_quantity" />
                                                                             </div>
                                                                         </div>
                                                                         <div class="row no-margin">
@@ -262,7 +252,7 @@
                                                                             <div class="col-lg-3">
                                                                                 <div class="input-group date select-date">
                                                                                     <div class="input-group-content">
-                                                                                        <input type="text" class="form-control" placeholder="Pick Date">
+                                                                                        <input type="text" class="form-control" ng-model="inventory.recvd_date" placeholder="Pick Date">
                                                                                     </div>
                                                                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                                                                 </div>
@@ -271,7 +261,7 @@
                                                                                 <label>supplier</label>
                                                                             </div>
                                                                             <div class="col-lg-3">
-                                                                                <select class="form-control">
+                                                                                <select class="form-control" >
                                                                                     <option>Select supplier</option>
                                                                                     <option>2</option>
                                                                                     <option>3</option>
@@ -282,7 +272,7 @@
                                                                                 <label>batch number</label>
                                                                             </div>
                                                                             <div class="col-lg-3">
-                                                                                <input type="text" placeholder="" />
+                                                                                <input type="text" placeholder="" ng-model="inventory.batch_number" />
                                                                             </div>
                                                                             <div class="col-lg-3">
                                                                                 <label>expiry date</label>
@@ -290,7 +280,7 @@
                                                                             <div class="col-lg-3">
                                                                                 <div class="input-group date select-date">
                                                                                     <div class="input-group-content">
-                                                                                        <input type="text" class="form-control" placeholder="Pick Date">
+                                                                                        <input type="text" class="form-control" ng-model="inventory.expiry_date" placeholder="Pick Date">
                                                                                     </div>
                                                                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                                                                 </div>
@@ -299,13 +289,13 @@
                                                                                 <label>quantity</label>
                                                                             </div>
                                                                             <div class="col-lg-3">
-                                                                                <input type="text" />
+                                                                                <input type="text" ng-model="inventory.quantity" />
                                                                             </div>
                                                                             <div class="col-lg-3">
                                                                                 <label>cost Price/item</label>
                                                                             </div>
                                                                             <div class="col-lg-3">
-                                                                                <input type="text" />
+                                                                                <input type="text"  ng-model="inventory.price"/>
                                                                             </div>
                                                                             <div class="col-lg-3">
                                                                                 <label>manufacturer</label>
@@ -342,20 +332,28 @@
                                                                                 <label>reference number</label>
                                                                             </div>
                                                                             <div class="col-lg-3">
-                                                                                <input type="text" placeholder="" />
+                                                                                <input type="text" ng-model="inventory.ref_no" placeholder="" />
                                                                             </div>
                                                                             <div class="col-lg-3">
                                                                                 <label>tax</label>
                                                                             </div>
-                                                                            <div class="col-lg-3">
-                                                                                <input type="text" placeholder="" />
+                                                                            <div class="col-lg-3" >
+                                                                                <input type="text" ng-model="inventory.tax" placeholder="" />
                                                                             </div>
+
+                                                                            <div class="col-lg-3">
+                                                                                <button type="submit" class="btn btn-default button-style-1">Add</button>
+                                                                                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                                                                            </div>
+
+
                                                                         </div>
+
                                                                     </div>
                                                                 </form>
                                                             </div>
                     <div class="add-drug-others">
-                        <form class="custom-form">
+                        <form class="custom-form"  >
                             <div class="row">
                                 <h2 class="h2-style_1">Add Inventory (Others)</h2>
                                 <div class="col-lg-12">
@@ -600,7 +598,7 @@
                                         <div class="tool-tip_popup">
                                             <a href="javascript:;" ng-click="SupplierSelected(SupplierList.id)">View Details</a>
                                             <a href="javascript:;">Edit</a>
-                                            <a href="javascript:;">Delete</a>
+                                            <a href="javascript:;" ng-click="SupplierDeleted(SupplierList.id)">Delete</a>
                                         </div>
                                     </div>
                                 </td>
@@ -618,10 +616,13 @@
                         </div>
                         <span class="txt-style-3 pull-left text-uppercase">category</span>
                         <div class="col-lg-2">
-                            <select class="form-control">
-                                <option>All</option>
-                                <option>2</option>
-                                <option>3</option>
+                            <select class="form-control" ng-model="groups">
+                                <option value="">All</option>
+                                <option value="Drugs">Drugs</option>
+                                <option value="Supplements">Supplements</option>
+                                <option value="Documents">Documents</option>
+                                <option value="Others">Others</option>
+
                             </select>
                         </div>
                         <div class="pull-right">
@@ -646,8 +647,8 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="CategoryList in CategoryLists|filter:search_category">
-                                <td>{{CategoryList.id}}</td>
+                            <tr ng-repeat="CategoryList in CategoryLists |filter:groups |filter:search_category">
+                                <td>{{CategoryList.cat_name}}</td>
                                 <td>{{CategoryList.cat_group}}</td>
                                 <td>{{CategoryList.cat_desc}}</td>
 
@@ -656,7 +657,7 @@
                                         <div class="tool-tip_popup">
 
                                             <a href="javascript:;" ng-click="catSelected(CategoryList.id)">Edit  </a>
-                                            <a href="javascript:;">Delete </a>
+                                            <a href="javascript:;" ng-click="catDeleted(CategoryList.id)">Delete </a>
                                         </div>
                                     </div>
                                 </td>
@@ -667,7 +668,7 @@
                     </form>
                 </div>
 
-                <div class="tab-pane active" id="reports">
+                <div class="tab-pane" id="reports">
                     <div class="row inventory_report_con">
                         <div class="col-lg-3 inventory_report">
                             <div class="col-lg-12">
@@ -764,16 +765,7 @@
                                 </label>
                             </div>
                         </div>
-                        <!--</div>-->
-                        <!--                        <div class="col-lg-3">
-                                                    <label>Group</label>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <label>Group</label>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <label>Group</label>
-                                                </div>-->
+
                         <div class="col-lg-3">
                             <label>Category Name</label>
                         </div>
@@ -803,6 +795,76 @@
 
 </div><!-- /.modal -->
 
+
+<div class="modal fade big-modal" id="editCategory" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Edit Category</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form" ng-submit="UpdateCategory(selectedCategory);">
+                    <div class="row">
+                        <div class="row no-margin">
+                            <div class="col-lg-3">
+                                <label>Group</label>
+                            </div>
+
+                            <!--<div class="col-lg-12 no-padding margin-bottom-xxl">-->
+                            <div class="radio radio-styled col-lg-2">
+                                <label>
+                                    <input type="radio" ng-model="selectedCategory.cat_group"  ng-checked="Drugs" value="Drugs" >
+                                    <span>Drug</span>
+                                </label>
+                            </div>
+                            <div class="radio radio-styled col-lg-2">
+                                <label>
+                                    <input type="radio" ng-model="selectedCategory.cat_group" ng-checked="Supplements"  value="Supplements">
+                                    <span>Supplement</span>
+                                </label>
+                            </div>
+                            <div class="radio radio-styled col-lg-2">
+                                <label>
+                                    <input type="radio" ng-model="selectedCategory.cat_group" ng-checked="Documents"  value="Documents">
+                                    <span>Document</span>
+                                </label>
+                            </div>
+                            <div class="radio radio-styled col-lg-1">
+                                <label>
+                                    <input type="radio" ng-model="selectedCategory.cat_group" ng-checked="Others" value="Others">
+                                    <span>Other</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Category Name</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="text" placeholder="" ng-model="selectedCategory.cat_name" required/>
+                        </div>
+                        <div class="col-lg-12">
+                            <label>Description</label>
+                        </div>
+                        <div class="col-lg-12">
+                            <textarea ng-model="selectedCategory.cat_desc"></textarea>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-default button-style-1">Update</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div><!-- /.modal-content -->
+
+
+    </div><!-- /.modal-dialog -->
+
+</div><!-- /.modal -->
 
 
 <div class="modal fade big-modal" id="addSupplier" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
@@ -1057,9 +1119,27 @@ Edit Supplier Modal-->
         alert("here");
         $(".inventory_detail").hide();
         $(".inv_header").hide();
+        $("#stock_det").hide();
         $(".add-drug-supplements").show();
 
     });
+
+
+
+        $(".group_select").change(function(){
+
+            alert("here");
+            if($(".group_select option:selected" ).val()=="Others"){
+                $(".inventory_detail").hide();
+                $(".inv_header").hide();
+                $("#stock_det").hide();
+                $(".add-drug-supplements").hide();
+                $(".add-drug-others").show();
+
+            }
+
+
+        });
 
     });
 

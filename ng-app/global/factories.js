@@ -710,7 +710,25 @@ AppEHR.factory("AddSupplier", function ($resource) {
 });
 
 
-AppEHR.factory("UpdateSupplier", function ($resource) {
+AppEHR.factory("AddInventory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_inventory', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var AddInventory = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return AddInventory;
+});
+
+
+
+AppEHR.factory("UpdateSuppliers", function ($resource) {
 
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'update_inventory_supplier', params,{
@@ -726,6 +744,67 @@ AppEHR.factory("UpdateSupplier", function ($resource) {
     };
     return UpdateSupplier;
 });
+
+
+
+AppEHR.factory("updateCategory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'update_inventory_category', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var UpdateCategory = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return UpdateCategory;
+});
+
+AppEHR.factory("DeleteCategory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'delete_inventory_category', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var DeleteCategory = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return DeleteCategory;
+});
+
+
+
+AppEHR.factory("DeleteSupplier", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'delete_inventory_supplier', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var DeleteSupplier = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return DeleteSupplier;
+});
+
+
+
+
+
+
+
+
+
 
 
 
@@ -759,6 +838,22 @@ AppEHR.factory("GetSingleCategory", function ($resource) {
         }
     };
     return Categories;
+});
+
+AppEHR.factory("GetSingleStock", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_stock_details', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var Stocks = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return Stocks;
 });
 
 
