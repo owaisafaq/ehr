@@ -308,6 +308,36 @@ class InventoryAPIController extends Controller
     }
 
     //Product APIs.
+    public function add_product(Request $request){
+        $group = $request->input('group');
+        $product_name = $request->input('product_name');
+        $trade_name = $request->input('trade_name');
+        $route = $request->input('route');
+        $reorder_level = $request->input('reorder_level');
+        $cat_id = $request->input('cat_id');
+        $strength = $request->input('strength');
+        $dose_from = $request->input('dose_from');
+
+        $id = DB::table('inventory_products')->insertGetId(
+            [
+                'group'=>$group,
+                'product_name'=>$product_name,
+                'trade_name'=>$trade_name,
+                'route'=>$route,
+                'reorder_level'=>$reorder_level,
+                'cat_id'=>$cat_id,
+                'strength'=>$strength,
+                'dose_from'=>$dose_from
+            ]
+        );
+        if($id){
+            return response()->json(['status' => true, 'message' => "Product Added Successfully", 'stock_id'=>$id], 200);
+
+        }else{
+            return response()->json(['status' => false, 'message' => "Product Added Successfully", 'stock_id'=>$id], 200);
+
+        }
+    }
     public function update_order_level(Request $request){
         $product_id = $request->input('product_id');
         $reorder_level = $request->input('reorder_level');

@@ -1314,3 +1314,32 @@ $api->params->pharmacy_id = "1";
 $api->params->token = "";
 
 $api_arr [] = $api;
+
+
+
+$group = $request->input('group');
+$product_name = $request->input('product_name');
+$trade_name = $request->input('trade_name');
+$route = $request->input('route');
+$reorder_level = $request->input('reorder_level');
+$cat_id = $request->input('cat_id');
+$strength = $request->input('strength');
+$dose_from = $request->input('dose_from');
+
+
+// Add Product
+$api = new api();
+$api->name = "Add Product";
+$api->url = HOST . 'add_product';
+$api->method = "POST";
+$api->params->group = "1";
+$api->params->product_name = "1";
+$api->params->trade_name = "1";
+$api->params->route = "1";
+$api->params->reorder_level = "1";
+$api->params->cat_id = "1";
+$api->params->strength = "1";
+$api->params->dose_from = "1";
+$api->params->token = "";
+
+$api_arr [] = $api;
