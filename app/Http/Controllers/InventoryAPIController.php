@@ -231,6 +231,7 @@ class InventoryAPIController extends Controller
         $ref_no = $request->input('ref_no');
         $expiry = $request->input('expiry');
         $quantity = $request->input('quantity');
+        $order_quantity = $request->input('order_quantity');
         $cost_per_item = $request->input('cost_per_item');
         $pack = $request->input('pack');
 
@@ -241,11 +242,12 @@ class InventoryAPIController extends Controller
                 'manufacturer_id'=>$manufacturer_id,
                 'dept_id'=>$dept_id,
                 'supplier_id'=>$supplier_id,
-                'received_id'=>$received_date,
+                'received_date'=>$received_date,
                 'batch_no'=>$batch_no,
                 'ref_no'=>$ref_no,
                 'expiry'=>$expiry,
                 'quantity'=>$quantity,
+                'order_quantity'=>$order_quantity,
                 'cost_per_item'=>$cost_per_item,
                 'pack' =>$pack
             ]

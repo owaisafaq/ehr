@@ -1182,6 +1182,7 @@ $api->params->batch_no = "";
 $api->params->ref_no = "";
 $api->params->expiry = "";
 $api->params->quantity= "";
+$api->params->order_quantity= "";
 $api->params->cost_per_item= "";
 $api->params->pack= "";
 $api->params->token = "";
