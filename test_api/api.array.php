@@ -582,6 +582,21 @@ $api->params->token = "123";
 $api_arr [] = $api;
 
 
+// Add Patient Medications
+$api = new api();
+$api->name = "Add Patient Medications";
+$api->url = HOST . 'add_patient_medications';
+$api->method = "POST";
+$api->params->patient_id = "1";
+$api->params->prescriptions = "";
+$api->params->to_date = "2016-06-13";
+$api->params->from_date = "2016-06-22";
+$api->params->medication_status = "inprocess";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
 // Get Supplements
 $api = new api();
 $api->name = "Get Supplements";
@@ -589,6 +604,25 @@ $api->url = HOST . 'patient_supplements';
 $api->method = "GET";
 $api->description = "Get Supplements";
 $api->params->patient_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Add Supplements
+$api = new api();
+$api->name = "Add Supplements";
+$api->url = HOST . 'add_patient_supplements';
+$api->method = "POST";
+$api->description = "Get Supplements";
+$api->params->patient_id = "1";
+$api->params->supplements = "Paracetamol";
+$api->params->dosage = "10";
+$api->params->frequency = "5";
+$api->params->intake = "2";
+$api->params->from_date = "2016-06-22";
+$api->params->medicine_status = "fresh";
+$api->params->to_date = "2016-06-22";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -1038,6 +1072,15 @@ $api->params->token = "";
 
 $api_arr [] = $api;
 
+// Get Lab Tests
+$api = new api();
+$api->name = "Get Lab Tests";
+$api->url = HOST . 'get_lab_tests';
+$api->method = "GET";
+$api->params->lab = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
 
 
 
