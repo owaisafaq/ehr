@@ -1073,13 +1073,10 @@ $api->description = "Add Lab Orders";
 $api->params->patient_id = "1";
 $api->params->lab = "1";
 $api->params->lab_test = "1";
-$api->params->priority = "High";
-$api->params->sample = "Blood";
-$api->params->sample = "Blood";
 $api->params->clinical_information = "test";
 $api->params->diagnosis = "test";
+$api->params->lab_test = "";
 $api->params->notes = "test";
-$api->params->order_status = "In Process";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -1113,19 +1110,44 @@ $api->params->token = "123";
 $api_arr [] = $api;
 
 
-// Update Order
+// Update Lab Test
 $api = new api();
-$api->name = "Update Order";
-$api->url = HOST . 'update_order';
+$api->name = "Update Lab Test";
+$api->url = HOST . 'update_lab_test';
 $api->method = "POST";
-$api->description = "Update Order";
-$api->params->order_id = "1";
-$api->params->order_status = "in progress";
+$api->params->lab_test = "1";
+$api->params->status = "in progress";
 $api->params->token = "123";
 
 $api_arr [] = $api;
 
-// Delete Inventory Supplier
+
+// Get Lab Test Fields
+$api = new api();
+$api->name = "Get Lab Test Fields";
+$api->url = HOST . 'get_lab_test_fields';
+$api->method = "GET";
+$api->params->lab_template = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Add Lab Test Values
+$api = new api();
+$api->name = "Add Lab Test Values";
+$api->url = HOST . 'add_lab_test_values';
+$api->method = "POST";
+$api->params->lab_order_id = "1";
+$api->params->lab_test_id = "1";
+$api->params->lab_test_values = "";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+
+// Get all stocks
 $api = new api();
 $api->name = "Get Stocks";
 $api->url = HOST . 'get_stock';
@@ -1134,7 +1156,7 @@ $api->params->token = "";
 
 $api_arr [] = $api;
 
-// Delete Inventory Supplier
+// Get stock details
 $api = new api();
 $api->name = "Get Stocks Details";
 $api->url = HOST . 'get_stock_details';
@@ -1145,11 +1167,168 @@ $api->params->token = "";
 $api_arr [] = $api;
 
 
+// Add Inventory
+$api = new api();
+$api->name = "Add Inventory";
+$api->url = HOST . 'add_inventory';
+$api->method = "POST";
+$api->params->product_id = "";
+$api->params->pharmacy_id = "";
+$api->params->manufacturer_id = "";
+$api->params->dept_id = "";
+$api->params->supplier_id = "";
+$api->params->received_date = "";
+$api->params->batch_no = "";
+$api->params->ref_no = "";
+$api->params->expiry = "";
+$api->params->quantity= "";
+$api->params->order_quantity= "";
+$api->params->cost_per_item= "";
+$api->params->pack= "";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+// Delete Inventory
+$api = new api();
+$api->name = "Delete Inventory Details";
+$api->url = HOST . 'delete_inventory';
+$api->method = "POST";
+$api->params->stock_id = "1";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+// Update Inventory
+$api = new api();
+$api->name = "Update Inventory";
+$api->url = HOST . 'update_inventory';
+$api->method = "POST";
+$api->params->product_id = "";
+$api->params->pharmacy_id = "";
+$api->params->manufacturer_id = "";
+$api->params->dept_id = "";
+$api->params->supplier_id = "";
+$api->params->received_date = "";
+$api->params->batch_no = "";
+$api->params->ref_no = "";
+$api->params->expiry = "";
+$api->params->quantity= "";
+$api->params->cost_per_item= "";
+$api->params->pack= "";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+
+// Update Order level
+$api = new api();
+$api->name = "Update Product order level";
+$api->url = HOST . 'update_reorder_level';
+$api->method = "POST";
+$api->params->product_id = "1";
+$api->params->reorder_level = "1";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
 // Get Lab Test Templates
 $api = new api();
 $api->name = "Get Lab Order Templates";
 $api->url = HOST . 'get_lab_test_templates';
 $api->method = "GET";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+
+// Get All Pharmacies
+$api = new api();
+$api->name = "Get All Pharmacies";
+$api->url = HOST . 'get_pharmacies';
+$api->method = "GET";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+
+
+// Get Single Pharmacy
+$api = new api();
+$api->name = "Get Single Pharmacy";
+$api->url = HOST . 'get_single_pharmacy';
+$api->method = "GET";
+$api->params->pharmacy_id = "1";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+
+// Add Pharmacy
+$api = new api();
+$api->name = "Add Pharmacy";
+$api->url = HOST . 'create_pharmacy';
+$api->method = "POST";
+$api->params->name = "new pharmacy";
+$api->params->contact_person = "james";
+$api->params->city = "test";
+$api->params->state = "test";
+$api->params->country = "test";
+$api->params->address_1 = "test";
+$api->params->address_2 = "test";
+$api->params->email = "admin@test.com";
+$api->params->work_phone = "admin@test.com";
+$api->params->post_code = "0021";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+
+// Update  Pharmacy
+$api = new api();
+$api->name = "Update Pharmacy";
+$api->url = HOST . 'update_pharmacy';
+$api->method = "POST";
+$api->params->pharmacy_id = "1";
+$api->params->name = "new pharmacy";
+$api->params->contact_person = "james";
+$api->params->city = "test";
+$api->params->state = "test";
+$api->params->country = "test";
+$api->params->address_1 = "test";
+$api->params->address_2 = "test";
+$api->params->email = "admin@test.com";
+$api->params->work_phone = "admin@test.com";
+$api->params->post_code = "0021";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+
+// Delete  Pharmacy
+$api = new api();
+$api->name = "Delete Pharmacy";
+$api->url = HOST . 'delete_pharmacy';
+$api->method = "POST";
+$api->params->pharmacy_id = "1";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+
+// Add Product
+$api = new api();
+$api->name = "Add Product";
+$api->url = HOST . 'add_product';
+$api->method = "POST";
+$api->params->group = "1";
+$api->params->product_name = "1";
+$api->params->trade_name = "1";
+$api->params->route = "1";
+$api->params->reorder_level = "1";
+$api->params->cat_id = "1";
+$api->params->strength = "1";
+$api->params->dose_from = "1";
 $api->params->token = "";
 
 $api_arr [] = $api;

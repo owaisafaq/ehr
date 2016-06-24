@@ -693,6 +693,9 @@ Table Styling
 .print{
     background: url(../..//img/print.png) no-repeat top center;
 }
+.dispense_pharmacy{
+    background: url(../..//img/dispense_pharmacy.png) no-repeat top center;
+}
 .save{
     background: url(../..//img/save.png) no-repeat top center;
 }
@@ -2208,6 +2211,78 @@ div.ng-not-empty .select2-chosen {
 .inventory_actions{
     position: relative;
 }
+.receipt_actions{
+    position: relative;
+    top:3px;
+    cursor:pointer;
+}
+.receipt_actions .setting-button{cursor:pointer;float:right;}
+
+.receipt_actions .tool-tip_popup{
+    width: 150px;
+    height: 165px;
+    background: #fff;
+    position: absolute;
+    top: -13px;
+    right: 0;
+    z-index: 1;
+    box-shadow: 11px 0 40px 0px rgba(224,232,238,1);
+    padding: 16px 8px 0 20px;
+    padding-top: 18px;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -o-transition: 0.5s;
+}
+
+.receipt_actions:hover .tool-tip_popup{
+    opacity: 1;
+    visibility: visible;
+    top: -13px;
+    right: 5%;
+}
+
+
+table.receipt_table > tbody > tr > td:nth-child(9){vertical-align:bottom;}
+table.receipt_table > tbody > tr > td:nth-child(9) span{float:left;}
+
+
+.settings_actions{
+    position: relative;
+    top:3px;
+    cursor:pointer;
+}
+
+.settings_actions .setting-button{cursor:pointer;float:right;}
+table.setting_table > tbody > tr > td:nth-child(4){vertical-align:bottom;}
+table.setting_table > tbody > tr > td:nth-child(4) span{float:left;}
+table.setting_table_cat > tbody > tr > td:nth-child(2){vertical-align:bottom;}
+table.setting_table_cat > tbody > tr > td:nth-child(2) span{float:left;}
+.background-none{background:transparent;}
+
+.settings_actions .tool-tip_popup{
+    width: 150px;
+    height: 115px;
+    background: #fff;
+    position: absolute;
+    top: -13px;
+    right: 0;
+    z-index: 1;
+    box-shadow: 11px 0 40px 0px rgba(224,232,238,1);
+    padding: 16px 8px 0 20px;
+    padding-top: 18px;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -o-transition: 0.5s;
+}
+
+
+
 .tool-tip_popup{
     width: 150px;
     height: 170px;
@@ -2225,9 +2300,6 @@ div.ng-not-empty .select2-chosen {
     -webkit-transition: 0.5s;
     -moz-transition: 0.5s;
     -o-transition: 0.5s;
-
-    /*    opacity: 1;
-        visibility: visible;*/
 }
 .tool-tip_popup:before {
     position: absolute;
@@ -2243,6 +2315,13 @@ div.ng-not-empty .select2-chosen {
     top: 10px;
     color: #fff;
 }
+.settings_actions:hover .tool-tip_popup{
+    opacity: 1;
+    visibility: visible;
+    top: -13px;
+    right: 5%;
+}
+
 .inventory_actions:hover .tool-tip_popup{
     opacity: 1;
     visibility: visible;
@@ -2317,3 +2396,33 @@ div.ng-not-empty .select2-chosen {
     line-height: 18px;
     font-weight: bold;
 }
+
+.checkbox-styled-table{
+    height: 16px;
+    margin: 0;
+}
+.checkbox-styled-table:not(ie8) input ~ span:before{
+     height: 16px;
+     width: 16px;
+}
+
+
+.settings label{color:#56aeea;font-size:16px;font-weight: 700;text-transform:uppercase;}
+.settings a{background-color:#56aeea;color:#fff;padding:14px 8px;}
+.settings a img{vertical-align:top;}
+.setting_box{background-color: #f6f8fa;padding:8px 20px;margin:15px 0px;width: 70%;}
+.setting_box span:nth-child(1){font-size:15px;}
+.setting_box span:nth-child(2){float:right;font-size:20px;line-height:27px;}
+.settings_cont{margin-bottom: 50px;margin-top: 15px;}
+.settings_cont .setting_box:nth-of-type(1){margin-top:25px;}
+.billing{background-color:#c7d8eb;padding:26px 0 !important;height: 102px !important;padding-left:80px !important;}
+.billing .button-style-2{background-color:#003d51;}
+.billing .txt-style-2{font-size:20px}
+.tabs_sec{margin-top:36px;}
+.billing_search{margin-top:0;}
+.billing_period{margin-top:10px !important;}
+.draft{color:#53e9b2 !important;font-weight:700;font-size:14px !important;}
+.paid{color:#56aeea !important;font-weight:700;font-size:14px !important;}
+.pending{color:#e74424 !important;font-weight:700;font-size:14px !important;}
+.show_on_others{display: none;}
+.show_on_supplements:not(h2),.show_on_others:not(h2){margin: 0;}

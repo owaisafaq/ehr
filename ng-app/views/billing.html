@@ -1,0 +1,560 @@
+<div id="content">
+    <section>
+        <div class="card custom-card">
+            <div class="card-head card-head-custom card-color-3 billing">
+                <div class="col-lg-2">
+                    <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
+                    <span class="txt-style-2 col-lg-12 capitalize">Elbert Bloogs Woo</span>
+                </div>
+                <div class="col-lg-2">
+                    <label class="txt-style-1 text-uppercase col-lg-12">Patient Number</label>
+                    <span class="txt-style-2 col-lg-12">PA-9012154</span>
+                </div>
+                <div class="col-lg-2">
+                    <label class="txt-style-1 text-uppercase col-lg-12">Age</label>
+                    <span class="txt-style-2 col-lg-12">39 Years</span>
+                </div>
+                <div class="col-lg-2">
+                    <label class="txt-style-1 text-uppercase col-lg-12">Sex</label>
+                    <span class="txt-style-2 col-lg-12 capitalize">Male</span>
+                </div>
+                <div class="col-lg-2">
+                    <label class="txt-style-1 text-uppercase col-lg-12">marital status</label>
+                    <span class="txt-style-2 col-lg-12 capitalize">Single</span>
+                </div>
+                <div class="col-lg-2">
+                    <a href="javascript:;" class="button-style-2">
+                        <img src="assets/img/content_icn_white.png" />
+                    </a>
+                    <a href="javascript:;" class="button-style-2">
+                        <img src="assets/img/admission_icn_white.png" />
+                    </a>
+                    <a href="javascript:;" class="button-style-2">
+                        <img src="assets/img/discharge_icn_white.png" />
+                    </a>                             
+                </div>
+            </div>
+
+            <div class="card-head col-lg-12 no-padding card-head-auto tabs_sec">
+                <ul class="nav nav-tabs nav-justified custom-tab" data-toggle="tabs">
+                    <li class="active"><a showtab href="#generate">Generate Bills</a></li>
+                    <li><a showtab href="#invoices">Invoices</a></li>
+                    <li><a showtab href="#receipts">Receipts</a></li>
+                    <li><a showtab href="#reports">Reports</a></li>
+                </ul>
+            </div>
+
+
+
+            <div class="card-body tab-content col-lg-12 custom-card-body">
+
+                <div class="table-header row background-none"> 
+                    <div class="col-lg-7"></div>
+                    <div class="col-lg-3">
+                        <div class="col-lg-2">
+                            <span class="txt-style-3 pull-left text-uppercase billing_period">period</span>
+                        </div>
+                        <div class="col-lg-10">
+                            <select class="form-control">
+                                <option>All</option>
+                                <option>Cheque</option>
+                                <option>type 3</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="header-search billing_search pull-left">
+                            <button type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            <input class="search_field" type="text" placeholder="Patient Name or Id">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane active" id="generate">                    
+
+
+                    <div class="table-header row background-none">
+                        <div class="pull-right">
+                            <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Add Credit Note</button>
+                            <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Billing Not Required</button>
+                            <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Process Payment</button>
+                            <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Invoice Without Consultation</button>
+                            <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">New Invoice</button>
+
+                        </div>
+                        <span class="txt-style-3 pull-left text-uppercase">category</span>
+                        <div class="col-lg-2">
+                            <select class="form-control">
+                                <option>Encounter for billing</option>
+                                <option>Cheque</option>
+                                <option>type 3</option>
+                            </select>
+                        </div>
+                        <!--                        <div class="pull-right">
+                                                    <div class="header-search pull-left margin-top-10">
+                                                        <button type="submit">
+                                                            <i class="fa fa-search"></i>
+                                                        </button>
+                                                        <input class="search_field" type="text" placeholder="Search Template">
+                                                    </div>
+                                                </div> -->
+                    </div>
+
+
+                    <form class="custom-form">
+                        <table class="table table-striped no-margin table-custom table-custom_big setting_table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Date</th>
+                                    <th>Encounter No</th>
+                                    <th>patient ID</th>
+                                    <th>patient name</th>
+                                    <th>bill purpose</th>
+                                    <th>patient plan</th>
+                                    <th>status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td align="center">
+                                        <div class="radio radio-styled">
+                                            <label>
+                                                <input type="radio" name="optionsRadios" value="option1"><span></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>14/04/2016    12:00:32</td>
+                                    <td>21245421</td>
+                                    <td>90189191</td>
+                                    <td>Joe Bloggs</td>
+                                    <td>Eye Clinic</td>
+                                    <td>Consultation</td>
+                                    <td>Billed</td>                                   
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <div class="radio radio-styled">
+                                            <label>
+                                                <input type="radio" name="optionsRadios" value="option1"><span></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>14/04/2016    12:00:32</td>
+                                    <td>875415745</td>
+                                    <td>90189191</td>
+                                    <td>Joe Bloggs</td>
+                                    <td>Eye Clinic</td>
+                                    <td>Consultation</td>
+                                    <td>N/A</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <div class="radio radio-styled">
+                                            <label>
+                                                <input type="radio" name="optionsRadios" value="option1"><span></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>14/04/2016    12:00:32</td>
+                                    <td>2454521</td>
+                                    <td>90189191</td>
+                                    <td>Joe Bloggs</td>
+                                    <td>Eye Clinic</td>
+                                    <td>Consultation</td>
+                                    <td>Billed</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+
+                <div class="tab-pane" id="invoices">                    
+
+
+                    <div class="table-header row background-none">
+                        <div class="pull-right">
+                            <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Delete Invoice</button>
+                            <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Edit Invoice</button>
+                            <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Print Invoice</button>
+                            <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Send Invoice</button>
+                        </div>
+                        <span class="txt-style-3 pull-left text-uppercase">category</span>
+                        <div class="col-lg-2">
+                            <select class="form-control">
+                                <option>Encounter for billing</option>
+                                <option>Cheque</option>
+                                <option>type 3</option>
+                            </select>
+                        </div>
+                        <!--                        <div class="pull-right">
+                                                    <div class="header-search pull-left margin-top-10">
+                                                        <button type="submit">
+                                                            <i class="fa fa-search"></i>
+                                                        </button>
+                                                        <input class="search_field" type="text" placeholder="Search Template">
+                                                    </div>
+                                                </div> -->
+                    </div>
+
+
+                    <form class="custom-form">
+                        <table class="table table-striped no-margin table-custom table-custom_big setting_table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Date</th>
+                                    <th>Invoice No</th>
+                                    <th>patient ID</th>
+                                    <th>patient name</th>
+                                    <th>patient plan</th>
+                                    <th>purpose</th>
+                                    <th>amount</th>
+                                    <th>due</th>
+                                    <th>status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td align="center">
+                                        <div class="radio radio-styled">
+                                            <label>
+                                                <input type="radio" name="optionsRadios" value="option1"><span></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>14/04/2016    12:00:32</td>
+                                    <td>21245421</td>
+                                    <td>90189191</td>
+                                    <td>Joe Bloggs</td>
+                                    <td>General</td>
+                                    <td>GODP Consultation</td>
+                                    <td>N500</td>
+                                    <td>--</td>
+                                    <td class="draft">DRAFT</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <div class="radio radio-styled">
+                                            <label>
+                                                <input type="radio" name="optionsRadios" value="option1"><span></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>14/04/2016    12:00:32</td>
+                                    <td>21245421</td>
+                                    <td>90189191</td>
+                                    <td>Joe Bloggs</td>
+                                    <td>NHIS</td>
+                                    <td>Lab Test</td>
+                                    <td>N3500</td>
+                                    <td>--</td>
+                                    <td class="paid">PAID</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <div class="radio radio-styled">
+                                            <label>
+                                                <input type="radio" name="optionsRadios" value="option1"><span></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>14/04/2016    12:00:32</td>
+                                    <td>21245421</td>
+                                    <td>90189191</td>
+                                    <td>Joe Bloggs</td>
+                                    <td>General</td>
+                                    <td>Lab Test</td>
+                                    <td>N2500</td>
+                                    <td>--</td>
+                                    <td class="pending">PENDING</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+
+                <div class="tab-pane" id="receipts">                    
+
+
+                    <div class="table-header row background-none">
+                        <div class="pull-right">
+                            <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Send Receipt</button>
+                            <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Add Payment</button>
+
+
+                        </div>
+                        <span class="txt-style-3 pull-left text-uppercase">category</span>
+                        <div class="col-lg-2">
+                            <select class="form-control">
+                                <option>Encounter for billing</option>
+                                <option>Cheque</option>
+                                <option>type 3</option>
+                            </select>
+                        </div>
+                        <!--                        <div class="pull-right">
+                                                    <div class="header-search pull-left margin-top-10">
+                                                        <button type="submit">
+                                                            <i class="fa fa-search"></i>
+                                                        </button>
+                                                        <input class="search_field" type="text" placeholder="Search Template">
+                                                    </div>
+                                                </div> -->
+                    </div>
+
+
+                    <form class="custom-form">
+                        <table class="table table-striped no-margin table-custom table-custom_big receipt_table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Date</th>
+                                    <th>Invoice No</th>
+                                    <th>receipt no</th>
+                                    <th>patient name</th>
+                                    <th>payment method</th>
+                                    <th>purpose</th>
+                                    <th>amount</th>
+                                    <th>refund amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td align="center">
+                                        <div class="radio radio-styled">
+                                            <label>
+                                                <input type="radio" name="optionsRadios" value="option1"><span></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>14/04/2016  12:00:32</td>
+                                    <td>21245421</td>
+                                    <td>90189191</td>
+                                    <td>Joe Bloggs</td>
+                                    <td>Cash</td>
+                                    <td>GOPD Consultation</td>
+                                    <td>N500</td>
+                                    <td>
+                                        <span>N2000</span>
+                                        <div class="receipt_actions"><a href="javascript:;" class="setting-button"></a>
+                                            <div class="tool-tip_popup">
+                                                <a href="javascript:;">View Details</a>
+                                                <a href="javascript:;">Edit</a>
+                                                <a href="javascript:;">Print</a>    
+                                                <a href="javascript:;">Void</a>
+                                                <a href="javascript:;">Refund</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <div class="radio radio-styled">
+                                            <label>
+                                                <input type="radio" name="optionsRadios" value="option1"><span></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>14/04/2016    12:00:32</td>
+                                    <td>875415745</td>
+                                    <td>90189191</td>
+                                    <td>Joe Bloggs</td>
+                                    <td>Cash</td>
+                                    <td>GOPD Consultation</td>
+                                    <td>N3500</td>
+                                    <td>
+                                        <span>N2000</span>
+                                        <div class="receipt_actions"><a href="javascript:;" class="setting-button"></a>
+                                            <div class="tool-tip_popup">
+                                                <a href="javascript:;">View Details</a>
+                                                <a href="javascript:;">Edit</a>
+                                                <a href="javascript:;">Print</a>    
+                                                <a href="javascript:;">Void</a>
+                                                <a href="javascript:;">Refund</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <div class="radio radio-styled">
+                                            <label>
+                                                <input type="radio" name="optionsRadios" value="option1"><span></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>14/04/2016    12:00:32</td>
+                                    <td>2454521</td>
+                                    <td>90189191</td>
+                                    <td>Joe Bloggs</td>
+                                    <td>Cash</td>
+                                    <td>Lab Test</td>
+                                    <td>N2500</td>
+                                    <td>
+                                        <span>N2000</span>
+                                        <div class="receipt_actions"><a href="javascript:;" class="setting-button"></a>
+                                            <div class="tool-tip_popup">
+                                                <a href="javascript:;">View Details</a>
+                                                <a href="javascript:;">Edit</a>
+                                                <a href="javascript:;">Print</a>    
+                                                <a href="javascript:;">Void</a>
+                                                <a href="javascript:;">Refund</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <!--end .card-body -->
+        </div>
+        <!--        end .card -->
+    </section>
+</div>
+
+<div class="modal fade" id="addpatient" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Add Vitals</h2>
+            </div>
+            <div class="modal-body">
+                <p>Continue to Add Patient Vitals</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-toggle="modal" data-target="#vital-signs" data-dismiss="modal">Ok</button>
+                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade big-modal" id="vital-signs" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Vitals Signs</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form" name="vitalForm" novalidate ng-submit="validateVitals(vital);">
+                    <div class="row">
+                        <div class="row no-margin">
+                            <div class="col-lg-4" >
+                                <div class="col-lg-12">
+                                    <label class="label-style">Blood Pressure (mm Hg)</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>systolic (mm hg)</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" placeholder="systolic (mm hg)"  ng-class="{
+                                            true
+                                            : 'error'}[vital.diastolic != undefined && vital.systolic == undefined]" ng-model="vital.systolic" numbers-only required/>
+                                    <p ng-show="vital.diastolic != undefined && vital.systolic == undefined" class="help-block PIValid">Required</p>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>diastolic (mm hg)</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" placeholder="diastolic (mm hg)" ng-class="{
+                                            true
+                                            : 'error'}[vital.diastolic == undefined && vital.systolic != undefined]" ng-model="vital.diastolic" numbers-only required/>
+                                    <p ng-show="vital.systolic != undefined && vital.diastolic == undefined" class="help-block PIValid">Required</p>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="col-lg-12">
+                                    <label class="label-style">Pulse Rate (min/bpm)</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>pulse</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" placeholder="pulse" ng-model="vital.pulse" numbers-only/>
+                                </div>
+                                <!-- <div class="col-lg-12">
+                                    <label class="label-style">Pulse Rate (min/bpm)</label>
+                                </div> -->
+                                <div class="col-lg-6">
+                                    <label>respiratory rate</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" placeholder="respiratory rate" ng-model="vital.respiratoryRate" numbers-only/>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="col-lg-12">
+                                    <label class="label-style">Respiratory Rate (br/min)</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>temperature (c)</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" placeholder="temperature (c)" ng-model="vital.temperaturec" numbers-only ng-keyup="GetTempcVal()"/>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>temperature (f)</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" placeholder="temperature (f)" ng-model="vital.temperaturef" ng-keyup="GetTempfVal()" numbers-only/>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="row">-->
+                        <div class="col-lg-12">
+                            <label class="col-lg-12 label-style no-margin">BMI (kg / m^2)</label>
+                            <!-- <div class="col-lg-5 pull-right">
+                                <div class="pull-right">
+                                    <a class="txt-style-4" href="javascript:;">Attach</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                                    <a class="txt-style-4" href="javascript:;">Past Notes</a>
+                                </div>
+                            </div> -->
+                        </div>
+                        <!--</div>-->
+                        <div class="col-lg-4">
+                            <div class="col-lg-6">
+                                <label>result</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" placeholder="0" ng-model="vital.result" readonly/>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>weight (kg)</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" ng-class="{true: 'error'}[vital.weight == undefined && vital.height != undefined]" placeholder="weight (kg)" ng-model="vital.weight" numbers-only ng-keyup="Calculatebmi()" required/>
+                                <p ng-show="vital.weight == undefined && vital.height != undefined" class="help-block PIValid">Required</p>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label>height (cm)</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" ng-class="{true: 'error'}[vital.height == undefined && vital.weight != undefined]" placeholder="height (cm)" ng-model="vital.height" ng-keyup="Calculatebmi()" numbers-only required />
+                                <p ng-show="vital.height == undefined && vital.weight != undefined" class="help-block PIValid">Required</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="col-lg-3">
+                                <label>Notes</label>
+                            </div>
+                            <div class="col-lg-9">
+                                <textarea placeholder="Write Your Text Here" ng-model="vital.notes"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;">Save</button>
+                            <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>

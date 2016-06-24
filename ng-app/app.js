@@ -101,7 +101,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                 }).
                 when('/inventory', {
                     templateUrl: 'views/inventory.html',
-                    controller: 'inventory'
+                    controller: 'Inventory'
                 }).
                 when('/pharmacy', {
                     templateUrl: 'views/pharmacy.html',
@@ -109,11 +109,24 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                 }).
                 when('/pharmacy-prescription', {
                     templateUrl: 'views/pharmacy-prescription.html',
-                    controller: 'pharmacy'
+                    controller: 'pharmacyPrescription'
+                }).
+                when('/settings-temp', {
+                    templateUrl: 'views/settings-temp.html',
+                    controller: 'settings-temp'
+                }).
+                when('/settings', {
+                    templateUrl: 'views/settings.html',
+                    controller: 'settings'
+                }).
+                when('/billing', {
+                    templateUrl: 'views/billing.html',
+                    controller: 'billing'
                 }).
                 otherwise({
                     redirectTo: '/error'
                 });
+
     }]);
 AppEHR.run(function ($rootScope, $location, $window) {
     $rootScope.$on("$routeChangeStart", function (event, next, current) {
@@ -236,7 +249,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
             })
             $('#s2id_get_val_principal_retainer').removeClass('disable-after-1');
         })
-
+        
         $('body').on('click', '.dependant_list .chip i', function () {
             $(this).parent('.chip').parent('div').fadeOut(function () {
                 $(this).remove();
