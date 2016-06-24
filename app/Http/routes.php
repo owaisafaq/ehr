@@ -163,7 +163,7 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
 
 });
-$app->group(['prefix' => 'api'], function () use ($app) {
+$app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($app) {
     $app->post('create_inventory_category','App\Http\Controllers\InventoryAPIController@create_category');
     $app->post('update_inventory_category','App\Http\Controllers\InventoryAPIController@update_category');
     $app->get('get_inventory_category','App\Http\Controllers\InventoryAPIController@get_categories');
