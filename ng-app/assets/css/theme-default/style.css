@@ -2402,8 +2402,8 @@ table.setting_table_cat > tbody > tr > td:nth-child(2) span{float:left;}
     margin: 0;
 }
 .checkbox-styled-table:not(ie8) input ~ span:before{
-     height: 16px;
-     width: 16px;
+    height: 16px;
+    width: 16px;
 }
 
 
@@ -2426,3 +2426,20 @@ table.setting_table_cat > tbody > tr > td:nth-child(2) span{float:left;}
 .pending{color:#e74424 !important;font-weight:700;font-size:14px !important;}
 .show_on_others{display: none;}
 .show_on_supplements:not(h2),.show_on_others:not(h2){margin: 0;}
+.margin-top-50{
+    margin-top: 50px;
+}
+.save_Pview_button{
+    margin-top: 44px;
+}
+.accordian-header-info label{
+    font-size: 14px;
+    color: #a2a6b9;
+    text-transform: capitalize;
+    font-weight: bold;
+    margin-right: 10px;
+}
+.accordian-header-info span{
+    margin-right: 30px;
+}
+
