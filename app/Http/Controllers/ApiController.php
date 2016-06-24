@@ -927,9 +927,9 @@ class ApiController extends Controller
             ->get();
 
         $labs = DB::table('labs')
-              ->select(DB::raw('id,name'))
-              ->where('status', 1)
-              ->get();
+            ->select(DB::raw('id,name'))
+            ->where('status', 1)
+            ->get();
 
 
         $data = array(
@@ -948,7 +948,9 @@ class ApiController extends Controller
             "retainership" => $retainership,
             "categories" => $categories,
             "doctors" => $doctors,
-            "labs" => $labs
+            "labs" => $labs,
+            "manufacturer" => $manufacturers
+
         );
 
         return response()->json(['status' => true, 'data' => $data]);
@@ -1181,96 +1183,44 @@ class ApiController extends Controller
 
     }
 
+    public function optadd_patient_archive(Request $request)
+    {
+        return response()->json(['status' => true, 'message' => 'hello']);
+    }
 
     public function add_patient_archive(Request $request)
     {
-        /* return $request->all();
-            die;*/
-
-           $patient_id = $request->input('patient_id');
 
 
-           $currentdatetime = date("Y-m-d  H:i:s");
+        $archive = $request->file('patient_archive');
+        $destinationPath = base_path() . '/public/patient_archive';
+        $original_name = $archive->getClientOriginalName();
+
+        $extension = $archive->getClientOriginalExtension(); // getting image extension
+        $fileName = rand() . time() . '.' . $extension; // renameing image
+        if (!$archive->isValid()) {
+            return response()->json(['status' => false, 'message' => 'Invalid File']);
+        }
 
 
-           $folder_id = $request->input('follow_up_parent_id');
+        $archive->move($destinationPath, $fileName);
+        $patient_id = $request->input('patient_id');
+        $currentdatetime = date("Y-m-d  H:i:s");
+        $folder_id = $request->input('follow_up_parent_id');
 
 
-           /*       if ($request->hasFile('patient_archive')) {
+        DB::table('patient_file_access_log')->insert(
+            ['patient_id' => $patient_id,
+                'follow_up_parent_id' => $folder_id,
+                'file' => $fileName,
+                'file_name' => $original_name,
+                'created_at' => $currentdatetime
 
-                      if ($request->file('patient_archive')->isValid()) {*/
-
-
-        $patient_archive = $request->input('patient_archive');
-
-        $patient_archive = (array)($patient_archive);
-
-        return response()->json(['status' => true, 'data' => $patient_archive]);
-
-        exit;
+            ]
+        );
 
 
-           $destinationPath = base_path() . '/public/patient_archive';
-
-           foreach ($patient_archive as $archive) {
-
-
-               if ($archive->isValid()) {
-
-                   return response()->json(['status' => true, 'message' => 'here']);
-
-
-                   exit;
-
-
-                   $extension = $archive->getClientOriginalExtension(); // getting image extension
-                   $fileName = rand() . time() . '.' . $extension; // renameing image
-
-                   $archive->move($destinationPath, $fileName); // uploading file to given path
-
-
-                   DB::table('patient_file_access_log')->insert(
-                       ['patient_id' => $patient_id,
-                           'follow_up_parent_id' => $folder_id,
-                           'file' => $fileName,
-                           'file_name' => $original_name,
-                           'created_at' => $currentdatetime
-
-                       ]
-                   );
-
-               } else {
-
-                   return response()->json(['status' => false, 'message' => 'Invalid File']);
-
-
-                   exit;
-
-
-               }
-
-           }
-
-
-           /*
-                                   // upload path
-                                   $extension = $request->file('patient_archive')->getClientOriginalExtension(); // getting image extension
-                                   $fileName = time() . '.' . $extension; // renameing image
-
-                                   $request->file('patient_archive')->move($destinationPath, $fileName); // uploading file to given path
-
-                               }*/
-
-
-           /*                }
-                       else {
-
-                               return response()->json(['status' => false, 'message' => 'Invalid File']);
-
-                           }*/
-
-
-           return response()->json(['status' => true, 'message' => 'Patient Archive uploaded successfully']);
+        return response()->json(['status' => true, 'message' => 'Files Uploaded']);
 
 
     }
@@ -1312,8 +1262,9 @@ class ApiController extends Controller
         $patient_id = $request->input('patient_id');
 
         $patients = DB::table('patients')
-            ->select(DB::raw('*'))
-            ->where('id', $patient_id)
+            ->select('patients.*', 'visits.id as encounter_id', 'visits.created_at as visit_created_at')
+            ->leftJoin('visits','patients.id','=','visits.patient_id')
+            ->where('patients.id', $patient_id)
             ->get();
 
 

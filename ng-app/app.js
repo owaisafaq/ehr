@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR', [
     'ngRoute', 'ngResource',
-    'ngTouch', 'ui.grid', 'ui.grid.pagination', 'ui.grid.pagination', 'ngFileUpload'
+    'ngTouch', 'ui.grid', 'ui.grid.pagination', 'ngFileUpload', 'angular.filter'
 ]);
 AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
     function ($httpProvider, $routeProvider, $locationProvider) {
@@ -27,7 +27,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/ppointments-list.html',
                     controller: 'appointmentsListController'
                 }).
-                when('/clinical-documentation-clinic-progress-note', {
+                when('/clinical-documentation-clinic-progress-note/:patientID', {
                     templateUrl: 'views/clinical-documentation-clinic-progress-note.html',
                     controller: 'clinicalDocumentationClinicProgressNote'
                 }).
@@ -105,11 +105,44 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                 }).
                 when('/inventory', {
                     templateUrl: 'views/inventory.html',
-                    controller: 'inventory'
+                    controller: 'Inventory'
+                }).
+                when('/pharmacy', {
+                    templateUrl: 'views/pharmacy.html',
+                    controller: 'pharmacy'
+                }).
+                when('/pharmacy-prescription', {
+                    templateUrl: 'views/pharmacy-prescription.html',
+                    controller: 'pharmacyPrescription'
+                }).
+                when('/settings-temp', {
+                    templateUrl: 'views/settings-temp.html',
+                    controller: 'settings-temp'
+                }).
+                when('/settings', {
+                    templateUrl: 'views/settings.html',
+                    controller: 'settings'
+                }).
+                when('/billing', {
+                    templateUrl: 'views/billing.html',
+                    controller: 'billing'
+                }).
+                        when('/pharmacy-view', {
+                    templateUrl: 'views/pharmacy-view.html',
+                    controller: 'pharmacyView'
+                }).
+                when('/billing-invoice-print', {
+                    templateUrl: 'views/billing-invoice-print.html',
+                    controller: 'billing-invoice-print'
+                }).
+                when('/billing-codes', {
+                    templateUrl: 'views/billing-codes.html',
+                    controller: 'billing-codes'
                 }).
                 otherwise({
                     redirectTo: '/error'
                 });
+
     }]);
 AppEHR.run(function ($rootScope, $location, $window) {
     $rootScope.$on("$routeChangeStart", function (event, next, current) {

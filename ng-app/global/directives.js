@@ -149,30 +149,79 @@ AppEHR.directive('fileModel', ['$parse', function ($parse) {
         }
     };
 }]);
+AppEHR.directive('fileChange', function () {
+
+    var linker = function ($scope, element, attributes) {
+        // onChange, push the files to $scope.files.
+        element.bind('change', function (event) {
+            var files = event.target.files;
+            $scope.$apply(function () {
+                for (var i = 0, length = files.length; i < length; i++) {
+                    $scope.files.push(files[i]);
+                }
+            });
+        });
+    };
+
+    return {
+        restrict: 'A',
+        link: linker
+    };
+});
 AppEHR.service('fileUpload', ['$http', '$rootScope', '$interval', 'ListFolderArchives', '$window', 'GetResourcesByFolderArchives', function ($http, $rootScope, $interval, ListFolderArchives, $window, GetResourcesByFolderArchives) {
     this.uploadFileToUrl = function(file, patientID, followUpID, uploadUrl){
         var fd = new FormData();
-        fd.append('patient_archive[]', file);
-        /*for (var i in file) {
-            console.log(file[i]);
-            fd.append("patient_archive", file[i]);
-            console.log(fd);
+        //fd.append('patient_archive', file);
+        fd.patient_archive = [];
+        for (var i in file) {
+            //console.log(file[i]);
+            fd.patient_archive.push(file[i]);
+            //fd.append("patient_archive", file[i]);
+            //console.log(fd);
+        }
+        fd.patient_id = patientID;
+        fd.follow_up_parent_id = followUpID;
+        console.log(fd);
+        // ADD LISTENERS.
+            /*var objXhr = new XMLHttpRequest();
+            objXhr.addEventListener("progress", updateProgress, false);
+            objXhr.addEventListener("load", transferComplete, false);
+
+            // SEND FILE DETAILS TO THE API.
+            objXhr.open("POST", uploadUrl);
+            objXhr.send(file);
+
+        // UPDATE PROGRESS BAR.
+        function updateProgress(e) {
+            if (e.lengthComputable) {
+                document.getElementById('pro').setAttribute('value', e.loaded);
+                document.getElementById('pro').setAttribute('max', e.total);
+            }
         }*/
-        fd.append('patient_id', patientID);
-        fd.append('follow_up_parent_id', followUpID);
-        
+
+        // CONFIRMATION.
+        function transferComplete(e) {
+            alert("Files uploaded successfully.");
+        }
         
         $http.post(uploadUrl, fd, {
-            transformRequest: angular.identity,
+            transformRequest: function(data) {
+                var formData = new FormData();
+                formData.patient_archive = {};
+                formData.append("patient_archive", angular.toJson(file));
+                for (var i = 0; i < file.length; i++) {
+                    formData.append("patient_archive", file[i]);
+                    //formData.patient_archive.push(file[i]);
+                }
+                return formData; //NOTICE THIS RETURN WHICH WAS MISSING
+            },
             headers: {'Content-Type': undefined}
-        })
-        .success(function(res){
+        }).success(function(res){
             console.log(res);
             $rootScope.loader = 'hide';
             $rootScope.fileUploadMessage = 'File successfully uploaded!';
             ListFolderArchives.get({token: $window.sessionStorage.token, patient_id: patientID, /*$window.sessionStorage.patient_id*/ followup_parent_id: followUpID}, listFolderSuccess, listFolderFailure);
             function listFolderSuccess(res){
-                console.log(res);
                 if(res.status == true){
                     $rootScope.foldersArchive = [];
                     $rootScope.foldersArchive = res.data;
@@ -183,7 +232,6 @@ AppEHR.service('fileUpload', ['$http', '$rootScope', '$interval', 'ListFolderArc
             }
             GetResourcesByFolderArchives.get({token: $window.sessionStorage.token, patient_id: patientID, /*$window.sessionStorage.patient_id*/ followup_parent_id: followUpID}, nestedFolderSuccess, nestedFolderFailure);
             function nestedFolderSuccess(res){
-                console.log(res);
                 if(res.status == true){
                     //$scope.backButtonArchive = false;
                     //$scope.foldersArchive = [];
@@ -199,8 +247,7 @@ AppEHR.service('fileUpload', ['$http', '$rootScope', '$interval', 'ListFolderArc
                 $('#fileUploader').modal('hide');
             }, 3000);*/
             
-        })
-        .error(function(){
+        }).error(function(){
             console.log(101);
             $rootScope.fileUploadMessage = 'Failed to upload';
         });
