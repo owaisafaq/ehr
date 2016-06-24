@@ -1262,8 +1262,9 @@ class ApiController extends Controller
         $patient_id = $request->input('patient_id');
 
         $patients = DB::table('patients')
-            ->select(DB::raw('*'))
-            ->where('id', $patient_id)
+            ->select('patients.*', 'visits.id as encounter_id', 'visits.created_at as visit_created_at')
+            ->leftJoin('visits','patients.id','=','visits.patient_id')
+            ->where('patients.id', $patient_id)
             ->get();
 
 

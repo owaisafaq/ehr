@@ -89,6 +89,8 @@ class OtherController extends Controller
         return response()->json(['status' => true, 'data' => $pharmacies]);
     }
     public function create_pharmacy(Request $request){
+
+
         $name = $request->input('name');
         $contact_person = $request->input('contact_person');
         $city = $request->input('city');
@@ -98,7 +100,6 @@ class OtherController extends Controller
         $address_2 = $request->input('address_2');
         $email = $request->input('email');
         $work_phone = $request->input('work_phone');
-        $website = $request->input('website');
         $post_code = $request->input('post_code');
 
         $id = DB::table('pharmacy')->insertGetId(
@@ -112,7 +113,6 @@ class OtherController extends Controller
                 'address_2'=>$address_2,
                 'email'=>$email,
                 'work_phone'=>$work_phone,
-                'website'=>$website,
                 'post_code'=>$post_code,
                 'created_at'=>date("Y-m-d  H:i:s")
             ]
@@ -134,7 +134,6 @@ class OtherController extends Controller
         $address_2 = $request->input('address_2');
         $email = $request->input('email');
         $work_phone = $request->input('work_phone');
-        $website = $request->input('website');
         $post_code = $request->input('post_code');
 
         $count = DB::table('pharmacy')->where('id', $id)->update(
@@ -148,7 +147,6 @@ class OtherController extends Controller
                 'address_2'=>$address_2,
                 'email'=>$email,
                 'work_phone'=>$work_phone,
-                'website'=>$website,
                 'post_code'=>$post_code,
                 'updated_at'=>date("Y-m-d  H:i:s")
             ]
@@ -159,7 +157,7 @@ class OtherController extends Controller
             return response()->json(['status' => false, 'message' => "Error!"], 404);
         }
     }
-    public function delete_supplier(Request $request){
+    public function delete_pharmacy(Request $request){
         $id = $request->input('pharmacy_id');
         $count = DB::table('pharmacy')->where('id', $id)->update(['status'=>0]);
         if($count){
