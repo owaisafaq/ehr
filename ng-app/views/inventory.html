@@ -12,350 +12,137 @@
 
             <div class="card-body tab-content col-lg-12 custom-card-body">
                 <div class="tab-pane active" id="inventory">
-                                        <div class="table-header row background-none inv_header">
-                                            <div class="col-lg-7">
-                                                <span class="txt-style-3 pull-left text-uppercase">category</span>
-                                                <div class="col-lg-2">
-                                                    <select class="form-control">
-                                                        <option>All</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                    </select>
-                                                </div>
-                                                <span class="txt-style-3 pull-left text-uppercase">status</span>
-                                                <div class="col-lg-2">
-                                                    <select class="form-control">
-                                                        <option>Active</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="pull-right">
-                                                <button class="notes button-custom pull-right">Import inventory</button>
-                                                <button class="add button-custom pull-right add_inventory">Add Inventory</button>
-                                            </div>
-                                            <div class="pull-right">
-                                                <div class="header-search pull-left margin-top-10">
-                                                    <button type="submit">
-                                                        <i class="fa fa-search"></i>
-                                                    </button>
-                                                    <input class="search_field" type="text" placeholder="Enter product code">
-                                                </div>
-                                            </div>
-                                        </div>
+                    <div class="table-header row background-none inv_header">
+                        <div class="col-lg-7">
+                            <span class="txt-style-3 pull-left text-uppercase">category</span>
+                            <div class="col-lg-2">
+                                <select class="form-control">
+                                    <option>All</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                            <span class="txt-style-3 pull-left text-uppercase">status</span>
+                            <div class="col-lg-2">
+                                <select class="form-control">
+                                    <option>Active</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="pull-right">
+                            <button class="notes button-custom pull-right">Import inventory</button>
+                            <button class="add button-custom pull-right add_inventory">Add Inventory</button>
+                        </div>
+                        <div class="pull-right">
+                            <div class="header-search pull-left margin-top-10">
+                                <button type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <input class="search_field" type="text" placeholder="Enter product code">
+                            </div>
+                        </div>
+                    </div>
                     <form class="custom-form">
 
 
-                                           <table class="table table-striped no-margin table-custom table-custom_big inventory_detail">
-                                                <thead>
-                                                    <tr>
-                                                        <th>product name</th>
-                                                        <th>Category</th>
-                                                        <th>latest retail price</th>
-                                                        <th>stock quantity</th>
-                                                        <th>reorder level</th>
-                                                        <th>orde quantity</th>
-                                                        <th >update</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr ng-repeat="InventoryList in InventoryLists">
-                                                        <td>{{InventoryList.category_name}}</td>
-                                                        <td>{{InventoryList.category_name}}</td>
-                                                        <td>{{InventoryList.cost_per_item}}</td>
-                                                        <td>{{InventoryList.quantity}}</td>
-                                                        <td>{{InventoryList.quantity}}</td>
-                                                        <td>{{InventoryList.order_quantity}}</td>
+                        <table class="table table-striped no-margin table-custom table-custom_big inventory_detail">
+                            <thead>
+                                <tr>
+                                    <th>product name</th>
+                                    <th>Category</th>
+                                    <th>latest retail price</th>
+                                    <th>stock quantity</th>
+                                    <th>reorder level</th>
+                                    <th>orde quantity</th>
+                                    <th >update</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="InventoryList in InventoryLists">
+                                    <td>{{InventoryList.category_name}}</td>
+                                    <td>{{InventoryList.category_name}}</td>
+                                    <td>{{InventoryList.cost_per_item}}</td>
+                                    <td>{{InventoryList.quantity}}</td>
+                                    <td>{{InventoryList.quantity}}</td>
+                                    <td>{{InventoryList.order_quantity}}</td>
 
-                                                        <td>
-                                                            <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
-                                                                <div class="tool-tip_popup">
-                                                                    <a  ng-click="StockSelected(InventoryList.product_id)">Stock Details</a>
-                                                                    <a href="javascript:;">Edit Product Details</a>
-                                                                    <a href="javascript:;">Edit Reorder Level</a>
-                                                                    <a href="javascript:;">Make Inactive</a>
-                                                                    <a href="javascript:;">Delete Inventory</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
+                                    <td>
+                                        <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
+                                            <div class="tool-tip_popup">
+                                                <a  ng-click="StockSelected(InventoryList.product_id)">Stock Details</a>
+                                                <a href="javascript:;">Edit Product Details</a>
+                                                <a href="javascript:;">Edit Reorder Level</a>
+                                                <a href="javascript:;">Make Inactive</a>
+                                                <a href="javascript:;">Delete Inventory</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
 
-                                                </tbody>
-                                            </table>
-                                             <div class="row" id="stock_det">
-                                                    <div class="heading-bar no-margin col-lg-12 border-bottom-0">Product Details</div>
-                                                    <div class="box-style no-margin border-bottom-0">
-                                                        <div class="col-lg-2">
-                                                            <label>product name</label>
-                                                            <span class="txt-style-6">{{selectedStocks[0].product_name}}</span>
-                                                        </div>
-                                                        <div class="col-lg-2">
-                                                            <label>product ID</label>
-                                                            <span class="txt-style-6">{{selectedStocks[0].product_id}}</span>
-                                                        </div>
-                                                        <div class="col-lg-2">
-                                                            <label>trade name</label>
-                                                            <span class="txt-style-6">{{selectedStocks[0].trade_name}}</span>
-                                                        </div>
-                                                        <div class="col-lg-2">
-                                                            <label>group</label>
-                                                            <span class="txt-style-6">{{selectedStocks[0].cat_group}}</span>
-                                                        </div>
-                                                        <div class="col-lg-2">
-                                                            <label>category</label>
-                                                            <span class="txt-style-6">{{selectedStocks[0].category_name}}</span>
-                                                        </div>
-                                                        <div class="col-lg-2">
-                                                            <label>strength</label>
-                                                            <span class="txt-style-6">{{selectedStocks[0].strength}}</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="heading-bar col-lg-12 no-margin">Stock Details</div>
-                                                    <table class="table table-striped no-margin table-custom table-custom_big">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>stock received date</th>
-                                                                <th>supplier</th>
-                                                                <th>batch number</th>
-                                                                <th>expiry date</th>
-                                                                <th>quantity</th>
-                                                                <th>cost price/item</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
+                            </tbody>
+                        </table>
+                        <div class="row" id="stock_det">
+                            <div class="heading-bar no-margin col-lg-12 border-bottom-0">Product Details</div>
+                            <div class="box-style no-margin border-bottom-0">
+                                <div class="col-lg-2">
+                                    <label>product name</label>
+                                    <span class="txt-style-6">{{selectedStocks[0].product_name}}</span>
+                                </div>
+                                <div class="col-lg-2">
+                                    <label>product ID</label>
+                                    <span class="txt-style-6">{{selectedStocks[0].product_id}}</span>
+                                </div>
+                                <div class="col-lg-2">
+                                    <label>trade name</label>
+                                    <span class="txt-style-6">{{selectedStocks[0].trade_name}}</span>
+                                </div>
+                                <div class="col-lg-2">
+                                    <label>group</label>
+                                    <span class="txt-style-6">{{selectedStocks[0].cat_group}}</span>
+                                </div>
+                                <div class="col-lg-2">
+                                    <label>category</label>
+                                    <span class="txt-style-6">{{selectedStocks[0].category_name}}</span>
+                                </div>
+                                <div class="col-lg-2">
+                                    <label>strength</label>
+                                    <span class="txt-style-6">{{selectedStocks[0].strength}}</span>
+                                </div>
+                            </div>
+                            <div class="heading-bar col-lg-12 no-margin">Stock Details</div>
+                            <table class="table table-striped no-margin table-custom table-custom_big">
+                                <thead>
+                                    <tr>
+                                        <th>stock received date</th>
+                                        <th>supplier</th>
+                                        <th>batch number</th>
+                                        <th>expiry date</th>
+                                        <th>quantity</th>
+                                        <th>cost price/item</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                                                            <tr ng-repeat="stock in selectedStocks">
-                                                                <td>{{stock.received_date}}</td>
-                                                                <td>{{stock.supplier_name}}</td>
-                                                                <td>{{stock.batch_no}}</td>
-                                                                <td>{{stock.expiry}}</td>
-                                                                <td>{{stock.quantity}}</td>
-                                                                <td>{{stock.cost_per_item}}</td>
+                                    <tr ng-repeat="stock in selectedStocks">
+                                        <td>{{stock.received_date}}</td>
+                                        <td>{{stock.supplier_name}}</td>
+                                        <td>{{stock.batch_no}}</td>
+                                        <td>{{stock.expiry}}</td>
+                                        <td>{{stock.quantity}}</td>
+                                        <td>{{stock.cost_per_item}}</td>
 
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </form>
-                                                          <div class="add-drug-supplements">
-                                                                <form class="custom-form" ng-submit="AddInventory(inventory);" >
-                                                                    <div class="row">
-                                                                        <h2 class="h2-style_1">Add Inventory (Drug & Supplement)</h2>
-                                                                        <div class="col-lg-12">
-                                                                            <label class="label-style">Product Details</label>
-                                                                        </div>
-                                                                        <div class="row no-margin">
-                                                                            <div class="col-lg-3">
-                                                                                <label>group</label>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <select class="form-control group_select" ng-model="inventory.group" >
-                                                                                    <option>Select Group</option>
-                                                                                    <option value="Drugs">Drugs</option>
-                                                                                    <option value="Supplements">Supplements</option>
-                                                                                    <option value="Documents">Documents</option>
-                                                                                    <option value="Others">Others</option>
-
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <label>category</label>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-
-                                                                                <select class="form-control" ng-model="CategoryLists.cat_name" ng-options="category.cat_name for category in CategoryLists" >
-                                                                                    <option>Select Categorys</option>
-
-
-                                                                                </select>
-                                                                            </div>
-
-                                                                            <div class="col-lg-3">
-                                                                                <label>product name</label>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <input type="text" ng-model="inventory.product_name"  placeholder="" />
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <label>product id</label>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <input type="text" placeholder=""  ng-model="inventory.product_id" />
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <label>trade name</label>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <input type="text" ng-model="inventory.trade_name"  />
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <label>strength</label>
-                                                                            </div>
-                                                                            <div class="col-lg-3 no-padding">
-                                                                                <div class="col-lg-6">
-                                                                                    <input type="text" ng-model="inventory.strength"  />
-                                                                                </div>
-                                                                                <div class="col-lg-6">
-                                                                                    <select class="form-control" ng-model="inventory.unit" >
-                                                                                        <option>Select Unit</option>
-                                                                                        <option>2</option>
-                                                                                        <option>3</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <label>route</label>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <select class="form-control" ng-model="inventory.route" >
-                                                                                    <option>Select route</option>
-                                                                                    <option>2</option>
-                                                                                    <option>3</option>
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <label>dose from</label>
-                                                                            </div>
-                                                                            <div class="col-lg-3"  >
-                                                                                <select class="form-control" ng-model="inventory.dose">
-                                                                                    <option>Select Dose Form</option>
-                                                                                    <option>2</option>
-                                                                                    <option>3</option>
-                                                                                </select>
-                                                                            </div>
-
-                                                                            <div class="col-lg-3">
-                                                                                <label>reorder level</label>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <select class="form-control" ng-model="inventory.reorder">
-                                                                                    <option>Select Color</option>
-                                                                                    <option>2</option>
-                                                                                    <option>3</option>
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <label>order quantity</label>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <input type="text" placeholder="" ng-model="inventory.order_quantity" />
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row no-margin">
-                                                                            <div class="row no-margin">
-                                                                                <div class="col-lg-3"><label class="label-style">Stock Details</label></div>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <label>Stock Received date</label>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <div class="input-group date select-date">
-                                                                                    <div class="input-group-content">
-                                                                                        <input type="text" class="form-control" ng-model="inventory.recvd_date" placeholder="Pick Date">
-                                                                                    </div>
-                                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <label>supplier</label>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <select class="form-control" >
-                                                                                    <option>Select supplier</option>
-                                                                                    <option>2</option>
-                                                                                    <option>3</option>
-                                                                                </select>
-                                                                            </div>
-
-                                                                            <div class="col-lg-3">
-                                                                                <label>batch number</label>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <input type="text" placeholder="" ng-model="inventory.batch_number" />
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <label>expiry date</label>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <div class="input-group date select-date">
-                                                                                    <div class="input-group-content">
-                                                                                        <input type="text" class="form-control" ng-model="inventory.expiry_date" placeholder="Pick Date">
-                                                                                    </div>
-                                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <label>quantity</label>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <input type="text" ng-model="inventory.quantity" />
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <label>cost Price/item</label>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <input type="text"  ng-model="inventory.price"/>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <label>manufacturer</label>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <select class="form-control">
-                                                                                    <option>Select Manufacturer</option>
-                                                                                    <option>2</option>
-                                                                                    <option>3</option>
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <label>Pharmacy</label>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <select class="form-control">
-                                                                                    <option>Select Pharmacy</option>
-                                                                                    <option>2</option>
-                                                                                    <option>3</option>
-                                                                                </select>
-                                                                            </div>
-
-                                                                            <div class="col-lg-3">
-                                                                                <label>pack</label>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <select class="form-control">
-                                                                                    <option>Select Pack</option>
-                                                                                    <option>2</option>
-                                                                                    <option>3</option>
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <label>reference number</label>
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <input type="text" ng-model="inventory.ref_no" placeholder="" />
-                                                                            </div>
-                                                                            <div class="col-lg-3">
-                                                                                <label>tax</label>
-                                                                            </div>
-                                                                            <div class="col-lg-3" >
-                                                                                <input type="text" ng-model="inventory.tax" placeholder="" />
-                                                                            </div>
-
-                                                                            <div class="col-lg-3">
-                                                                                <button type="submit" class="btn btn-default button-style-1">Add</button>
-                                                                                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
-                                                                            </div>
-
-
-                                                                        </div>
-
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                    <div class="add-drug-others">
-                        <form class="custom-form"  >
+                    <div class="add-drug-supplements">
+                        <form class="custom-form" ng-submit="AddInventory(inventory);" >
                             <div class="row">
-                                <h2 class="h2-style_1">Add Inventory (Others)</h2>
+                                <h2 class="h2-style_1 show_on_supplements">Add Inventory (Drug & Supplement)</h2>
+                                <h2 class="h2-style_1 show_on_others">Add Inventory (Others)</h2>
                                 <div class="col-lg-12">
                                     <label class="label-style">Product Details</label>
                                 </div>
@@ -364,20 +151,24 @@
                                         <label>group</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <select class="form-control">
-                                            <option>Select Group</option>
-                                            <option>2</option>
-                                            <option>3</option>
+                                        <select class="form-control group_select" ng-model="inventory.group" placeholder="Select Group">
+                                            <option></option>
+                                            <option value="Drugs">Drugs</option>
+                                            <option value="Supplements">Supplements</option>
+                                            <option value="Documents">Documents</option>
+                                            <option value="Others">Others</option>
+
                                         </select>
                                     </div>
                                     <div class="col-lg-3">
                                         <label>category</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <select class="form-control">
-                                            <option>Select Category</option>
-                                            <option>2</option>
-                                            <option>3</option>
+
+                                        <select class="form-control" ng-model="CategoryLists.cat_name" ng-options="category.cat_name for category in CategoryLists" >
+                                            <option>Select Categorys</option>
+
+
                                         </select>
                                     </div>
 
@@ -385,60 +176,70 @@
                                         <label>product name</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <input type="text" placeholder="" />
+                                        <input type="text" ng-model="inventory.product_name"  placeholder="" />
                                     </div>
                                     <div class="col-lg-3">
                                         <label>product id</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <input type="text" placeholder="" />
+                                        <input type="text" placeholder=""  ng-model="inventory.product_id" />
                                     </div>
-                                    <div class="col-lg-3">
-                                        <label>Description</label>
-                                    </div>
-                                    <div class="col-lg-3">
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <label>strength</label>
-                                    </div>
-                                    <div class="col-lg-3 no-padding">
-                                        <div class="col-lg-6">
-                                            <input type="text" />
+                                    <div class="show_on_others row">
+                                        <div class="col-lg-3">
+                                            <label>Description</label>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <select class="form-control">
-                                                <option>Select Unit</option>
+                                        <div class="col-lg-9">
+                                            <textarea></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="show_on_supplements row">
+                                        <div class="col-lg-3">
+                                            <label>trade name</label>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <input type="text" ng-model="inventory.trade_name"  />
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label>strength</label>
+                                        </div>
+                                        <div class="col-lg-3 no-padding">
+                                            <div class="col-lg-6">
+                                                <input type="text" ng-model="inventory.strength"  />
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <select class="form-control" ng-model="inventory.unit" >
+                                                    <option>Select Unit</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label>route</label>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <select class="form-control" ng-model="inventory.route" >
+                                                <option>Select route</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label>dose from</label>
+                                        </div>
+                                        <div class="col-lg-3"  >
+                                            <select class="form-control" ng-model="inventory.dose">
+                                                <option>Select Dose Form</option>
                                                 <option>2</option>
                                                 <option>3</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
-                                        <label>route</label>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <select class="form-control">
-                                            <option>Select route</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <label>dose from</label>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <select class="form-control">
-                                            <option>Select Dose Form</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-lg-3">
                                         <label>reorder level</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <select class="form-control">
+                                        <select class="form-control" ng-model="inventory.reorder">
                                             <option>Select Color</option>
                                             <option>2</option>
                                             <option>3</option>
@@ -448,7 +249,7 @@
                                         <label>order quantity</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <input type="text" placeholder="" />
+                                        <input type="text" placeholder="" ng-model="inventory.order_quantity" />
                                     </div>
                                 </div>
                                 <div class="row no-margin">
@@ -461,7 +262,7 @@
                                     <div class="col-lg-3">
                                         <div class="input-group date select-date">
                                             <div class="input-group-content">
-                                                <input type="text" class="form-control" placeholder="Pick Date">
+                                                <input type="text" class="form-control" ng-model="inventory.recvd_date" placeholder="Pick Date">
                                             </div>
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                         </div>
@@ -470,7 +271,7 @@
                                         <label>supplier</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <select class="form-control">
+                                        <select class="form-control" >
                                             <option>Select supplier</option>
                                             <option>2</option>
                                             <option>3</option>
@@ -481,7 +282,7 @@
                                         <label>batch number</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <input type="text" placeholder="" />
+                                        <input type="text" placeholder="" ng-model="inventory.batch_number" />
                                     </div>
                                     <div class="col-lg-3">
                                         <label>expiry date</label>
@@ -489,7 +290,7 @@
                                     <div class="col-lg-3">
                                         <div class="input-group date select-date">
                                             <div class="input-group-content">
-                                                <input type="text" class="form-control" placeholder="Pick Date">
+                                                <input type="text" class="form-control" ng-model="inventory.expiry_date" placeholder="Pick Date">
                                             </div>
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                         </div>
@@ -498,13 +299,13 @@
                                         <label>quantity</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <input type="text" />
+                                        <input type="text" ng-model="inventory.quantity" />
                                     </div>
                                     <div class="col-lg-3">
                                         <label>cost Price/item</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <input type="text" />
+                                        <input type="text"  ng-model="inventory.price"/>
                                     </div>
                                     <div class="col-lg-3">
                                         <label>manufacturer</label>
@@ -541,18 +342,228 @@
                                         <label>reference number</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <input type="text" placeholder="" />
+                                        <input type="text" ng-model="inventory.ref_no" placeholder="" />
                                     </div>
                                     <div class="col-lg-3">
                                         <label>tax</label>
                                     </div>
-                                    <div class="col-lg-3">
-                                        <input type="text" placeholder="" />
+                                    <div class="col-lg-3" >
+                                        <input type="text" ng-model="inventory.tax" placeholder="" />
                                     </div>
+
+                                    <div class="col-lg-3">
+                                        <button type="submit" class="btn btn-default button-style-1">Add</button>
+                                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                                    </div>
+
+
                                 </div>
+
                             </div>
                         </form>
                     </div>
+                    <!--                    <div class="add-drug-others">
+                                            <form class="custom-form">
+                                                <div class="row">
+                                                    <h2 class="h2-style_1">Add Inventory (Others)</h2>
+                                                    <div class="col-lg-12">
+                                                        <label class="label-style">Product Details</label>
+                                                    </div>
+                                                    <div class="row no-margin">
+                                                        <div class="col-lg-3">
+                                                            <label>group</label>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <select class="form-control">
+                                                                <option>Select Group</option>
+                                                                <option>2</option>
+                                                                <option>3</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <label>category</label>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <select class="form-control">
+                                                                <option>Select Category</option>
+                                                                <option>2</option>
+                                                                <option>3</option>
+                                                            </select>
+                                                        </div>
+                    
+                                                        <div class="col-lg-3">
+                                                            <label>product name</label>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <input type="text" placeholder="" />
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <label>product id</label>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <input type="text" placeholder="" />
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <label>Description</label>
+                                                        </div>
+                                                        <div class="col-lg-9">
+                                                            <textarea></textarea>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <label>strength</label>
+                                                        </div>
+                                                        <div class="col-lg-3 no-padding">
+                                                            <div class="col-lg-6">
+                                                                <input type="text" />
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <select class="form-control">
+                                                                    <option>Select Unit</option>
+                                                                    <option>2</option>
+                                                                    <option>3</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <label>route</label>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <select class="form-control">
+                                                                <option>Select route</option>
+                                                                <option>2</option>
+                                                                <option>3</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <label>dose from</label>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <select class="form-control">
+                                                                <option>Select Dose Form</option>
+                                                                <option>2</option>
+                                                                <option>3</option>
+                                                            </select>
+                                                        </div>
+                    
+                                                        <div class="col-lg-3">
+                                                            <label>reorder level</label>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <select class="form-control">
+                                                                <option>Select Color</option>
+                                                                <option>2</option>
+                                                                <option>3</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <label>order quantity</label>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <input type="text" placeholder="" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="row no-margin">
+                                                        <div class="row no-margin">
+                                                            <div class="col-lg-3"><label class="label-style">Stock Details</label></div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <label>Stock Received date</label>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="input-group date select-date">
+                                                                <div class="input-group-content">
+                                                                    <input type="text" class="form-control" placeholder="Pick Date">
+                                                                </div>
+                                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <label>supplier</label>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <select class="form-control">
+                                                                <option>Select supplier</option>
+                                                                <option>2</option>
+                                                                <option>3</option>
+                                                            </select>
+                                                        </div>
+                    
+                                                        <div class="col-lg-3">
+                                                            <label>batch number</label>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <input type="text" placeholder="" />
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <label>expiry date</label>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="input-group date select-date">
+                                                                <div class="input-group-content">
+                                                                    <input type="text" class="form-control" placeholder="Pick Date">
+                                                                </div>
+                                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <label>quantity</label>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <input type="text" />
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <label>cost Price/item</label>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <input type="text" />
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <label>manufacturer</label>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <select class="form-control">
+                                                                <option>Select Manufacturer</option>
+                                                                <option>2</option>
+                                                                <option>3</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <label>Pharmacy</label>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <select class="form-control">
+                                                                <option>Select Pharmacy</option>
+                                                                <option>2</option>
+                                                                <option>3</option>
+                                                            </select>
+                                                        </div>
+                    
+                                                        <div class="col-lg-3">
+                                                            <label>pack</label>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <select class="form-control">
+                                                                <option>Select Pack</option>
+                                                                <option>2</option>
+                                                                <option>3</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <label>reference number</label>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <input type="text" placeholder="" />
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <label>tax</label>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <input type="text" placeholder="" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>-->
                 </div>
                 <div class="tab-pane" id="suppliers">
                     <div class="table-header row background-none">
@@ -573,36 +584,36 @@
 
                         <table class="table table-striped no-margin table-custom table-custom_big">
                             <thead>
-                            <tr>
-                                <th>contact person</th>
-                                <th>address</th>
-                                <th>email</th>
-                                <th>mobile</th>
-                                <th>work phone</th>
-                                <th>website</th>
-                                <th>update</th>
-                            </tr>
+                                <tr>
+                                    <th>contact person</th>
+                                    <th>address</th>
+                                    <th>email</th>
+                                    <th>mobile</th>
+                                    <th>work phone</th>
+                                    <th>website</th>
+                                    <th>update</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="SupplierList in SuppplierLists| filter: search_supplier">
+                                <tr ng-repeat="SupplierList in SuppplierLists| filter: search_supplier">
 
-                                <td>{{SupplierList.contact_person}}</td>
-                                <td>{{SupplierList.address_1}}</td>
-                                <td>{{SupplierList.email}}</td>
-                                <td>{{SupplierList.mobile}}</td>
-                                <td>{{SupplierList.work_phone}}</td>
-                                <td>{{SupplierList.website}}</td>
+                                    <td>{{SupplierList.contact_person}}</td>
+                                    <td>{{SupplierList.address_1}}</td>
+                                    <td>{{SupplierList.email}}</td>
+                                    <td>{{SupplierList.mobile}}</td>
+                                    <td>{{SupplierList.work_phone}}</td>
+                                    <td>{{SupplierList.website}}</td>
 
-                                <td>
-                                    <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
-                                        <div class="tool-tip_popup">
-                                            <a href="javascript:;" ng-click="SupplierSelected(SupplierList.id)">View Details</a>
-                                            <a href="javascript:;">Edit</a>
-                                            <a href="javascript:;" ng-click="SupplierDeleted(SupplierList.id)">Delete</a>
+                                    <td>
+                                        <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
+                                            <div class="tool-tip_popup">
+                                                <a href="javascript:;" ng-click="SupplierSelected(SupplierList.id)">View Details</a>
+                                                <a href="javascript:;">Edit</a>
+                                                <a href="javascript:;" ng-click="SupplierDeleted(SupplierList.id)">Delete</a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
 
                             </tbody>
                         </table>
@@ -639,29 +650,29 @@
 
                         <table class="table table-striped no-margin table-custom table-custom_big">
                             <thead>
-                            <tr>
-                                <th>Category</th>
-                                <th>Group</th>
-                                <th>Description</th>
-                                <th>Update</th>
-                            </tr>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Group</th>
+                                    <th>Description</th>
+                                    <th>Update</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="CategoryList in CategoryLists |filter:groups |filter:search_category">
-                                <td>{{CategoryList.cat_name}}</td>
-                                <td>{{CategoryList.cat_group}}</td>
-                                <td>{{CategoryList.cat_desc}}</td>
+                                <tr ng-repeat="CategoryList in CategoryLists|filter:groups |filter:search_category">
+                                    <td>{{CategoryList.cat_name}}</td>
+                                    <td>{{CategoryList.cat_group}}</td>
+                                    <td>{{CategoryList.cat_desc}}</td>
 
-                                <td>
-                                    <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
-                                        <div class="tool-tip_popup">
+                                    <td>
+                                        <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
+                                            <div class="tool-tip_popup">
 
-                                            <a href="javascript:;" ng-click="catSelected(CategoryList.id)">Edit  </a>
-                                            <a href="javascript:;" ng-click="catDeleted(CategoryList.id)">Delete </a>
+                                                <a href="javascript:;" ng-click="catSelected(CategoryList.id)">Edit  </a>
+                                                <a href="javascript:;" ng-click="catDeleted(CategoryList.id)">Delete </a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
 
                             </tbody>
                         </table>
@@ -1106,42 +1117,46 @@ Edit Supplier Modal-->
 </div><!-- /.modal -->
 
 <script>
-    $(document).ready(function(){
+            $(document).ready(function () {
 
-        $("#stock_det").hide();
-        $(".add-drug-supplements").hide();
-        $(".add-drug-others").hide();
-
-
-
-    $(".add_inventory").click(function(){
-
-        alert("here");
-        $(".inventory_detail").hide();
-        $(".inv_header").hide();
-        $("#stock_det").hide();
-        $(".add-drug-supplements").show();
-
-    });
-
-
-
-        $(".group_select").change(function(){
-
-            alert("here");
-            if($(".group_select option:selected" ).val()=="Others"){
-                $(".inventory_detail").hide();
-                $(".inv_header").hide();
                 $("#stock_det").hide();
                 $(".add-drug-supplements").hide();
-                $(".add-drug-others").show();
-
-            }
+                $(".add-drug-others").hide();
 
 
-        });
 
-    });
+                $(".add_inventory").click(function () {
+
+                    alert("here");
+                    $(".inventory_detail").hide();
+                    $(".inv_header").hide();
+                    $("#stock_det").hide();
+                    $(".add-drug-supplements").show();
+
+                });
+
+
+
+                $(".group_select").change(function () {
+
+                    alert("here");
+                    if ($(".group_select option:selected").val() == "Others") {
+                        $(".inventory_detail").hide();
+                        $(".inv_header").hide();
+                        $("#stock_det").hide();
+//                $(".add-drug-supplements").hide();
+                        $(".show_on_others").show();
+                        $(".show_on_supplements").hide();
+                    }
+                    else {
+                        $(".show_on_others").hide();
+                        $(".show_on_supplements").show();
+                    }
+
+
+                });
+
+            });
 
 
 </script>
