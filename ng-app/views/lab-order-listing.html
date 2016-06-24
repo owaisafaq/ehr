@@ -15,25 +15,21 @@
                         <button type="submit">
                             <i class="fa fa-search"></i>
                         </button>
-                        <input class="search_field search_field_big" type="text" placeholder="Search with patient order by patient name or id">
+                        <input class="search_field search_field_big" type="text" placeholder="Search with patient order by patient name or id" ng-model="searchLab">
                     </div>
-                </div> 
+                </div>
             </div>
             <div class="card-body col-lg-12">
                 <div class="pull-left margin-top-10">
-                    <a class="link-style_2" href="javascript:;" ng-click="filterLabs.ordered_by = 'Open'">open orders</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                    <a class="link-style_2" href="javascript:;" ng-click="filterLabs.ordered_by = 'In Progress'">in progress</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                    <a class="link-style_2" href="javascript:;" ng-click="filterLabs.ordered_by = 'Closed'">closed orders</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                    <a class="link-style_2" href="javascript:;" ng-click="filterLabs.ordered_by = 'Cancelled'">canceled orders</a>
+                    <a class="link-style_2" href="javascript:;" ng-click="filterLabs.order_status = 'Open'">open orders</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                    <a class="link-style_2" href="javascript:;" ng-click="filterLabs.order_status = 'In Progress'">in progress</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                    <a class="link-style_2" href="javascript:;" ng-click="filterLabs.order_status = 'Closed'">closed orders</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                    <a class="link-style_2" href="javascript:;" ng-click="filterLabs.order_status = 'Cancelled'">cancelled orders</a>
                 </div>
                 <div class="icons_con">
-                    <button data-toggle="modal" data-target="#order-label" class="print button-custom">print order label</button>
                     <button data-toggle="modal" data-target="#neworder" class="new_order button-custom">new order</button>
-                    <button data-toggle="modal" data-target="#cancelOrder2" class="update button-custom" ng-show="orderSelected">update status</button>
+                    <button class="report button-custom" ng-show="orderSelected" ng-click="go('/lab-order-tests')">View Tests</button>
                     <button data-toggle="modal" data-target="#cancelOrder" class="update button-custom" ng-show="orderSelected">Cancel Order</button>
-                    <button class="add-result button-custom">add result</button>
-                    <button class="report button-custom">view report</button>
-                    <button data-toggle="modal" data-target="#signoff" class="add button-custom">sign off</button>
                 </div>
                 <div class="col-lg-12 no-padding">
                     <table class="table table-striped no-margin table-custom">
@@ -43,16 +39,16 @@
                                 <th>order no</th>
                                 <th>patient id</th>
                                 <th>patient name</th>
-                                <th>lab test</th>
                                 <th>lab</th>
                                 <th>ordered by</th>
-                                <th>priority</th>
                                 <th>status</th>
+                                <th>total test</th>
+                                <th>test cost</th>
                                 <th>handling by</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="labOrder in labOrders | filter:filterLabs">
+                            <tr ng-repeat="labOrder in labOrders | filter:filterLabs | filter:search">
                                 <td align="center">
                                     <div class="radio radio-styled">
                                         <label>
@@ -63,37 +59,57 @@
                                 </td>
                                 <td>{{ labOrder.id}}</td>
                                 <td>
-                                    <div class="person-detail-box"><span>{{ labOrder.patient_id}}</span>
+                                    <div class="person-detail-box"><span>{{ labOrder.patient_id }}</span>
                                         <div class="bed-info person_info">
                                             <div class="col-lg-12">
                                                 <span class="txt-style-4">Name</span>
-                                                <span class="txt-style-3">{{ labOrder.patient_name}}</span>
+                                                <span class="txt-style-3">{{ labOrder.patient_name }}</span>
                                             </div>
                                             <div class="col-lg-6">
                                                 <span class="txt-style-4">Sex</span>
-                                                <span class="txt-style-3">{{ labOrder.gender}}</span>
+                                                <span class="txt-style-3">{{ labOrder.gender }}</span>
                                             </div>
                                             <div class="col-lg-6">
                                                 <span class="txt-style-4">Age</span>
-                                                <span class="txt-style-3">{{ labOrder.age}}</span>
+                                                <span class="txt-style-3">{{ labOrder.age }}</span>
                                             </div>
                                             <div class="col-lg-6">
                                                 <span class="txt-style-4">Id</span>
-                                                <span class="txt-style-3 pull-left">{{ labOrder.patient_id}}</span>
+                                                <span class="txt-style-3 pull-left">{{ labOrder.patient_id }}</span>
                                             </div>
                                             <div class="col-lg-6">
                                                 <span class="txt-style-4">Marital Status</span>
-                                                <span class="txt-style-3 pull-left">{{ labOrder.marital_status}}</span>
+                                                <span class="txt-style-3 pull-left">{{ labOrder.marital_status }}</span>
                                             </div>
                                         </div>
                                     </div>
                                 </td>
                                 <td>{{ labOrder.patient_name}}</td>
-                                <td>{{ labOrder.test_name}}</td>
                                 <td>{{ labOrder.lab_name}}</td>
                                 <td>{{ labOrder.ordered_by}}</td>
-                                <td>{{ labOrder.priority}}</td>
                                 <td>{{ labOrder.order_status}}</td>
+                                <td>{{ labOrder.total_test}}</td>
+                                <!--<td>
+                                    <div class="person-detail-box"><span>{{ labOrder.total_test}}</span>
+                                        <div class="bed-info person_info">
+                                            <div class="col-lg-12 no-padding" ng-repeat="lab_test in labOrder.lab_tests">
+                                                <div class="col-lg-4">
+                                                    <span class="txt-style-4">Test</span>
+                                                    <span class="txt-style-3">{{ lab_test.test_name }}</span>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <span class="txt-style-4">Cost</span>
+                                                    <span class="txt-style-3">{{ lab_test.cost }}</span>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <span class="txt-style-4">Priority</span>
+                                                    <span class="txt-style-3"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>-->
+                                <td>${{ labOrder.total_cost}}</td>
                                 <td>{{ labOrder.handled_by}}</td>
                             </tr>
                         </tbody>
@@ -108,34 +124,24 @@
                             <div class="modal-body pull-left">
                                 <form class="custom-form">
                                     <div class="col-lg-12">
-                                        <select class="form-control select_searchFields" ng-model="PI.patient_state" ng-change="addressLocalGovtAreaByStates(PI.patient_origin, 1);" placeholder="Select Patient">
+                                        <select class="form-control select_searchFields" ng-model="PI.patient_id" placeholder="Select Patient">
                                             <option value=""></option>
-                                            <option value="2">1</option>
-                                            <option value="3">2</option>
-                                            <!-- <option ng-repeat="state in stateOfOrigin" value="{{state.id}}">{{state.name}}</option> -->
+                                            <option ng-repeat="patient in patients" value="{{ patient.id }}">{{ patient.first_name + ' ' + patient.last_name }}</option>
                                         </select>
-                                    </div>
-
-                                    <div class="col-lg-2">
-                                        <label>order number</label>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <input type="text" placeholder="ID1234435656" disabled="" ng-model="PI.patient_ID" class="ng-pristine ng-untouched ng-valid ng-empty">
                                     </div>
                                     <div class="col-lg-2">
                                         <label>time order created</label>
                                     </div>
                                     <div class="col-lg-4 margin-bottom-xxl">
-                                        <input type="text" placeholder="May 12, 2016 04:25 PM" disabled="" ng-model="PI.patient_ID" class="ng-pristine ng-untouched ng-valid ng-empty">
+                                        <input type="text" placeholder="{{date | date:'MMM dd, yyyy hh:mm a'}}" disabled="" class="ng-pristine ng-untouched ng-valid ng-empty">
                                     </div>
                                     <div class="col-lg-2">
                                         <label>LAB</label>
                                     </div>
                                     <div class="col-lg-4">
-                                        <select class="form-control" ng-model="">                                
-                                            <option>Select Lab</option>
-                                            <option>2</option>
-                                            <option>3</option>
+                                        <select class="form-control" ng-model="PI.selected_lab" placeholder="Select Lab">
+                                            <option value=""></option>
+                                            <option ng-repeat="lab in labs" value="{{ lab.id }}">{{ lab.name }}</option>
                                         </select>
                                     </div>
                                     <div class="col-lg-3"><label></label></div>
@@ -144,17 +150,14 @@
                                         <label>add lab test</label>
                                     </div>
                                     <div class="col-lg-6">
-                                        <select class="form-control select_searchFields" ng-model="PI.patient_state" ng-change="addressLocalGovtAreaByStates(PI.patient_origin, 1);" placeholder="Search Lab Test">
+                                        <select class="form-control" ng-model="PI.lab_test" placeholder="Search Lab Test">
                                             <option value=""></option>
-                                            <option value="2">1</option>
-                                            <option value="3">2</option>
-                                            <!-- <option ng-repeat="state in stateOfOrigin" value="{{state.id}}">{{state.name}}</option> -->
+                                            <option ng-repeat="labTest in labTests" value="{{ labTest.id }}">{{ labTest.name }}</option>
                                         </select>
                                     </div>
                                     <div class="col-lg-3">
                                         <select class="form-control" ng-model="PI.hmo">
                                             <option>Select Priority</option>
-                                            <option>Urgent</option>
                                             <option>Urgent</option>
                                             <option>Urgent</option>
                                         </select>
@@ -172,7 +175,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr ng-repeat="labOrder in labOrders">
+                                                <tr>
                                                     <td>CBC Blood Test</td>
                                                     <td>$200</td>
                                                     <td>Urgent</td>
@@ -218,25 +221,6 @@
                                     <i class="{{errorSymbol}}"></i> {{errorMessage}}
                                 </div>
                                 <div class="modal-body pull-left modal-body-2">
-                                    <div class="col-lg-6">
-                                        <span class="txt-style-4">Do you want to cancel the order?</span>
-                                    </div>
-                                    <div class="col-lg-3 radio-align">
-                                        <div class="radio radio-styled">
-                                            <label>
-                                                <input type="radio" name="cancel" value="option1" ng-model="cancelOrder.cancel">
-                                                <span>Yes</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 radio-align">
-                                        <div class="radio radio-styled">
-                                            <label>
-                                                <input type="radio" name="cancel" value="option1" checked ng-model="cancelOrder.cancel">
-                                                <span>No</span>
-                                            </label>
-                                        </div>
-                                    </div>
                                     <div class="col-lg-3">
                                         <label>Reason</label>
                                     </div>
@@ -257,350 +241,10 @@
                                         <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal" ng-disabled="cancleOrderBtn">Cancel</button>
                                     </div>
                                 </div>
-
                             </div><!-- /.modal-content -->
                         </form>
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-
-                <div class="modal fade big-modal" id="cancelOrder2" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content pull-left">
-                            <div class="modal-header pop_head">
-                                <h2>Update Status</h2>
-                            </div>
-                            <div class="modal-body pull-left">
-                                <form class="custom-form">
-                                    <div class="col-lg-12">
-                                        <div class="header-search col-lg-3">
-                                            <button type="submit">
-                                                <i class="fa fa-search"></i>
-                                            </button>
-                                            <input class="search_field" type="text" placeholder="Search by  patient id or name" ng-model="PI.search">
-                                        </div>
-                                        <button type="button" class="btn btn-default button-style-1">Add</button>
-                                    </div>
-
-                                    <div class="col-lg-3">
-                                        <label>lab order number</label>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <input type="text" placeholder="ID1234435656" disabled="" ng-model="PI.patient_ID" class="ng-pristine ng-untouched ng-valid ng-empty">
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <label>current status</label>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <input type="text" placeholder="In Progress" disabled="" ng-model="PI.patient_ID" class="ng-pristine ng-untouched ng-valid ng-empty">
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <label>Change Order Status</label>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="radio radio-styled">
-                                            <label>
-                                                <input type="radio" name="cancelOrder" value="option1">
-                                                <span>Yes</span>
-                                            </label>
-                                        </div>
-                                        <!--</div>-->
-                                        <!--<div class="col-lg-3 radio-align">-->
-                                        <div class="radio radio-styled">
-                                            <label>
-                                                <input type="radio" name="cancelOrder" value="option1" checked>
-                                                <span>No</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 form-wizard form-wizard-horizontal">
-                                        <div class="form-wizard-nav">
-                                            <div class="progress" style="width: 85%;"><div class="progress-bar progress-bar-primary" style="width: 40%;"></div></div>
-                                            <ul class="nav nav-justified">
-                                                <li class="done"><a href="javascript:;"><span class="step">1</span> <span class="title">paid</span></a></li>
-                                                <li class="done"><a href="javascript:;"><span class="step">2</span> <span class="title">sample <br />collected</span></a></li>
-                                                <li class="active"><a href="javascript:;"><span class="step">3</span> <span class="title">test in <br />progress</span></a></li>
-                                                <li><a href="javascript:;"><span class="step">4</span> <span class="title">result <br />completed</span></a></li>
-                                                <li><a href="javascript:;"><span class="step">5</span> <span class="title">signed</span></a></li>
-                                                <li><a href="javascript:;"><span class="step">6</span> <span class="title">completed</span></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer col-lg-12">
-                                <button type="button" class="btn btn-default button-style-1">Save</button>
-                                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
-                            </div>
-                        </div><!-- /.modal-content -->
-                    </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->
-
-                <div class="modal fade big-modal" id="signoff" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content col-lg-12 no-padding">
-                            <div class="modal-header pop_head">
-                                <h2>Order Report Sign Off</h2>
-                            </div>
-                            <div class="modal-body col-lg-12 modal-body-2 modal-body-2_a">
-                                <form class="custom-form">
-                                    <div class="col-lg-12">
-                                        <div class="checkbox checkbox-styled pull-left">
-                                            <label>
-                                                <input type="checkbox" value="">
-                                                <span>Dependent</span>
-                                            </label>
-                                        </div>
-                                        <div class="icons_con pull-right no-margin"> 
-                                            <button class="print button-custom">print report</button>
-                                            <button class="update button-custom">update report</button>
-                                        </div>
-                                    </div>
-                                    <div class="patient_summary_2 label-style-con">
-                                        <div class="col-lg-12 margin-bottom-xxl">
-                                            <h2 class="pull-left">Hospital Logo</h2>
-                                            <h2 class="pull-right txt-style-5 hospital-pop-date">May 12, 2016</h2>
-                                        </div>
-                                        <div class="patient_summary col-lg-12">
-                                            <div class="row">
-                                                <div class="col-lg-2 text-center">
-                                                    <img src="assets/img/profile_pic.jpg" />
-                                                </div>
-                                                <div class="col-lg-10">
-                                                    <div class="col-lg-12">
-                                                        <label class="label-style-2">Elton John</label>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <label>patient id</label>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <label class="txt-style-4">90189191</label>
-                                                    </div>
-
-                                                    <div class="col-lg-3">
-                                                        <label>age</label>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <label class="txt-style-4">35</label>
-                                                    </div>  
-
-                                                    <div class="col-lg-3">
-                                                        <label>Gender</label>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <label class="txt-style-4">Male</label>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <label>Marital Status</label>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <label class="txt-style-4">Single</label>
-                                                    </div>
-
-                                                    <div class="col-lg-3">
-                                                        <label>date of birth</label>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <label class="txt-style-4">October 10 1981</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-12 no-padding">
-                                                    <div class="col-lg-3">
-                                                        <label>Report Type</label>
-                                                    </div>
-                                                    <div class="col-lg-9">
-                                                        <label class="txt-style-4">Discharge Letter</label>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <label>Department of Paediatrics</label>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <label class="txt-style-4"><b>Direct Line</b>&nbsp;&nbsp;01942-2644170</label>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <label>Fax Number</label>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <label class="txt-style-4">01942-2644176</label>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <label>Reciever</label>
-                                                    </div>
-                                                    <div class="col-lg-9">
-                                                        <label class="txt-style-4 col-lg-12 no-padding margin-bottom-xl">Dr. Foster, The GP Practice 999 Wigan Lane, WIGAN.</label>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <label>Patient</label>
-                                                    </div>
-                                                    <div class="col-lg-9">
-                                                        <label class="txt-style-4">The House Street ST, Wetherfield,</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="row">
-                                                <div class="col-lg-12 no-padding">
-                                                    <div class="col-lg-3">
-                                                        <label>Admission Details</label>
-                                                    </div>
-                                                    <div class="col-lg-9">
-                                                        <label class="txt-style-4 col-lg-12 no-padding margin-bottom-xl">2/7 ago he was admittd with croup. He came back with fever, coryzeal symptoms anscongested tonsils. He was started on peniccline.</label>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <label>Admission Date/ Time</label>
-                                                    </div>
-                                                    <div class="col-lg-9">
-                                                        <label class="txt-style-4 col-lg-12 no-padding margin-bottom-xl">24/03/2016 from Upper Johnsone Ward, RAEI</label>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <label>Discharge Date</label>
-                                                    </div>
-                                                    <div class="col-lg-9">
-                                                        <label class="txt-style-4 col-lg-12 no-padding margin-bottom-xl">25/03/2016 from Upper Johnsone Ward, RAEI</label>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <label>Discharge Consultant</label>
-                                                    </div>
-                                                    <div class="col-lg-9">
-                                                        <label class="txt-style-4 col-lg-12 no-padding margin-bottom-xl">DR RG Levy</label>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
-
-                                            <div class="row">
-                                                <div class="col-lg-12 no-padding">
-                                                    <div class="col-lg-3">
-                                                        <label>Primary Diagnosis</label>
-                                                    </div>
-                                                    <div class="col-lg-9">
-                                                        <label class="txt-style-4 col-lg-12 no-padding margin-bottom-xl">Acute upper respiratory infection</label>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <label>Secondary Diagnosis</label>
-                                                    </div>
-                                                    <div class="col-lg-9">
-                                                        <label class="txt-style-4 col-lg-12 no-padding margin-bottom-xl"></label>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <label>Discharge Medication</label>
-                                                    </div>
-                                                    <div class="col-lg-9">
-                                                        <label class="txt-style-4 col-lg-12 no-padding margin-bottom-xl">Phenoxymethylpenicillin 125mg/5ml solution 7 day(s) supoly 125m</label>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <label>Follow Up</label>
-                                                    </div>
-                                                    <div class="col-lg-9">
-                                                        <label class="txt-style-4 col-lg-12 no-padding margin-bottom-xl">No Follow Up</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <label class="txt-style-4 col-lg-12">ABC Hospital, XYZ Street, LMN Bulevard, AB 5432</label>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <label class="txt-style-4 pull-right text-right">+1 555 555 5555</label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer col-lg-12">
-                                <div class="pull-left">
-                                    <div class="checkbox checkbox-styled pull-left margin-right-20">
-                                        <label>
-                                            <input type="checkbox" value="">
-                                            <span>Notify Patient</span>
-                                        </label>
-                                    </div>
-                                    <div class="checkbox checkbox-styled pull-left">
-                                        <label>
-                                            <input type="checkbox" value="">
-                                            <span>Notify Doctor</span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="pull-right">
-                                    <button type="button" class="btn btn-default button-style-1">sign off</button>
-                                    <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">cancel report</button>
-                                </div>
-                            </div>
-                        </div><!-- /.modal-content -->
-                    </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->
-
-                <div class="modal fade" id="order-label" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content pull-left">
-                            <div class="modal-header pop_head">
-                                <h2>Lab Order label</h2>
-                            </div>
-                            <div class="modal-body pull-left label-style-con modal-body-2">
-                                <form class="custom-form">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <label>Patient Name</label>
-                                            <label class="txt-style-4">Will Smiths Woods</label>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <label>Patient ID</label>
-                                            <label class="txt-style-4">ID002154</label>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <label>Gender</label>
-                                            <label class="txt-style-4">Male</label>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <label>Order Number</label>
-                                            <label class="txt-style-4">OR685478</label>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <label>Gender</label>
-                                            <label class="txt-style-4">Male</label>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <label>Order Number</label>
-                                            <label class="txt-style-4">OR685478</label>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <label>May 12, 2016
-                                                <br />03:25 PM</label>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <img src="assets/img/bar_code.jpg" alt=""/>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer col-lg-12">
-                                <div class="pull-left">
-                                    <div class="checkbox checkbox-styled pull-left">
-                                        <label>
-                                            <input type="checkbox" value="">
-                                            <span>Insert Barcode</span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="pull-right">
-                                    <button type="button" class="btn btn-default button-style-1">Save</button>
-                                    <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
-                                </div>
-                            </div>
-                        </div><!-- /.modal-content -->
-                    </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->
-
-
             </div><!--end .card-body -->
         </div><!--end .card -->
     </section>

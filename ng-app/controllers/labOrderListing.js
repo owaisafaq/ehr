@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders', '$window', '$routeParams','getLabOrderInfo','cancelLabOrder', '$timeout', function ($scope, $rootScope, GetAllLabOrders, $window, $routeParams,getLabOrderInfo,cancelLabOrder, $timeout) {
+AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders', '$window', '$routeParams','getLabOrderInfo','cancelLabOrder', '$timeout', '$location', 'GetAllPatients', 'DropDownData', function ($scope, $rootScope, GetAllLabOrders, $window, $routeParams,getLabOrderInfo,cancelLabOrder, $timeout, $location, GetAllPatients, DropDownData) {
 	$rootScope.pageTitle = "EHR - Lab Order Listing";
     $scope.action = "";
 	GetAllLabOrders.get({
@@ -76,4 +76,50 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
     function cancelLabOrderFailure(error) {
         console.log(error);
     }
+
+    $scope.search = function(item){
+        if($scope.searchLab == undefined){
+            return true;
+        }else{
+            if(item.patient_id.toLowerCase().indexOf($scope.searchLab.toLowerCase()) != -1 || item.patient_name.toLowerCase().indexOf($scope.searchLab.toLowerCase()) != -1){
+                return true;
+            }
+        }
+    };
+
+    $scope.go = function ( path ) {
+        $location.path( path + '/' + $scope.selectedOrder.id);
+    };
+
+    GetAllPatients.get({
+        token: $window.sessionStorage.token
+    }, GetAllPatientsSuccess, GetAllPatientsFailure);
+
+    function GetAllPatientsSuccess(res) {
+        if (res.status == true) {
+            $scope.patients = res.data;
+        }
+    }
+
+    function GetAllPatientsFailure(error) {
+        console.log(error);
+    }
+
+    DropDownData.get({
+        token: $window.sessionStorage.token
+    }, DropDownDataSuccess, DropDownDataFailure);
+
+    function DropDownDataSuccess(res) {
+        if (res.status == true) {
+            $scope.labs = res.data.labs;
+            console.log($scope.labs);
+        }
+    }
+
+    function DropDownDataFailure(error) {
+        console.log(error);
+    }
+
+    $scope.date = new Date();
+
 }]);
