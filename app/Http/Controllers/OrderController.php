@@ -361,5 +361,53 @@ class OrderController extends Controller
     }
 
 
+    public function get_lab_test_fields(Request $request){
+
+        $template_id = $request->input('lab_template');
+
+        $template_fields = DB::table('lab_test_fields')
+            ->select(DB::raw('id,name'))
+            ->where('status', '1')
+            ->where('lab_template', $template_id)
+            ->get();
+
+
+        return response()->json(['status' => true, 'data' => $template_fields]);
+
+
+    }
+
+
+    public function add_lab_test_values(Request $request){
+
+        $lab_order_id=$request->input('lab_order_id');
+        $lab_test_id=$request->input('lab_test_id');
+
+        $lab_test_values = html_entity_decode($request->input('lab_test_values'));
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+        $lab_test = json_decode($lab_test_values);
+
+        foreach($lab_test as $report){
+
+
+            DB::table('lab_test_values')->insert(
+                ['lab_order_id' => $lab_order_id,
+                    'lab_test' => $lab_test_id,
+                    'field_id' => $report->field_id,
+                    'value' => $report->value,
+                    'created_at' => $currentdatetime
+
+                ]
+            );
+
+        }
+
+
+        return response()->json(['status' => true, 'message'=>'Lab Report Added Sucessfully']);
+
+    }
+
 }
 

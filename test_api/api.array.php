@@ -1133,6 +1133,19 @@ $api->params->token = "123";
 $api_arr [] = $api;
 
 
+// Add Lab Test Values
+$api = new api();
+$api->name = "Add Lab Test Values";
+$api->url = HOST . 'add_lab_test_values';
+$api->method = "POST";
+$api->params->lab_order_id = "1";
+$api->params->lab_test_id = "1";
+$api->params->lab_test_values = "";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
 
 // Get all stocks
 $api = new api();
