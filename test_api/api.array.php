@@ -1316,17 +1316,6 @@ $api->params->token = "";
 $api_arr [] = $api;
 
 
-
-$group = $request->input('group');
-$product_name = $request->input('product_name');
-$trade_name = $request->input('trade_name');
-$route = $request->input('route');
-$reorder_level = $request->input('reorder_level');
-$cat_id = $request->input('cat_id');
-$strength = $request->input('strength');
-$dose_from = $request->input('dose_from');
-
-
 // Add Product
 $api = new api();
 $api->name = "Add Product";
