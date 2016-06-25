@@ -48,32 +48,33 @@
 
             <div class="card-body tab-content col-lg-12 custom-card-body">
 
-                <div class="table-header row background-none"> 
-                    <div class="col-lg-7"></div>
-                    <div class="col-lg-3">
-                        <div class="col-lg-2">
-                            <span class="txt-style-3 pull-left text-uppercase billing_period">period</span>
-                        </div>
-                        <div class="col-lg-10">
-                            <select class="form-control">
-                                <option>All</option>
-                                <option>Cheque</option>
-                                <option>type 3</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-2">
-                        <div class="header-search billing_search pull-left">
-                            <button type="submit">
-                                <i class="fa fa-search"></i>
-                            </button>
-                            <input class="search_field" type="text" placeholder="Patient Name or Id">
-                        </div>
-                    </div>
-                </div>
+
 
                 <div class="tab-pane active" id="generate">                    
 
+                    <div class="table-header row background-none"> 
+                        <div class="col-lg-7"></div>
+                        <div class="col-lg-3">
+                            <div class="col-lg-2">
+                                <span class="txt-style-3 pull-left text-uppercase billing_period">period</span>
+                            </div>
+                            <div class="col-lg-10">
+                                <select class="form-control">
+                                    <option>All</option>
+                                    <option>Cheque</option>
+                                    <option>type 3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="header-search billing_search pull-left">
+                                <button type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <input class="search_field" type="text" placeholder="Patient Name or Id">
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="table-header row background-none">
                         <div class="pull-right">
@@ -171,113 +172,333 @@
                     </form>
                 </div>
 
-                <div class="tab-pane" id="invoices">                    
+                <div class="tab-pane" id="invoices">
+
+                    <div class="invoice_list">
+
+                        <div class="table-header row background-none"> 
+                            <div class="col-lg-7"></div>
+                            <div class="col-lg-3">
+                                <div class="col-lg-2">
+                                    <span class="txt-style-3 pull-left text-uppercase billing_period">period</span>
+                                </div>
+                                <div class="col-lg-10">
+                                    <select class="form-control">
+                                        <option>All</option>
+                                        <option>Cheque</option>
+                                        <option>type 3</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="header-search billing_search pull-left">
+                                    <button type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                    <input class="search_field" type="text" placeholder="Patient Name or Id">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-header row background-none">
+                            <div class="pull-right">
+                                <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Delete Invoice</button>
+                                <button class="add button-custom pull-right btn_edit_invoice">Edit Invoice</button>
+                                <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Print Invoice</button>
+                                <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Send Invoice</button>
+                            </div>
+                            <span class="txt-style-3 pull-left text-uppercase">category</span>
+                            <div class="col-lg-2">
+                                <select class="form-control">
+                                    <option>Encounter for billing</option>
+                                    <option>Cheque</option>
+                                    <option>type 3</option>
+                                </select>
+                            </div>
+                        </div>
 
 
-                    <div class="table-header row background-none">
-                        <div class="pull-right">
-                            <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Delete Invoice</button>
-                            <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Edit Invoice</button>
-                            <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Print Invoice</button>
-                            <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Send Invoice</button>
-                        </div>
-                        <span class="txt-style-3 pull-left text-uppercase">category</span>
-                        <div class="col-lg-2">
-                            <select class="form-control">
-                                <option>Encounter for billing</option>
-                                <option>Cheque</option>
-                                <option>type 3</option>
-                            </select>
-                        </div>
-                        <!--                        <div class="pull-right">
-                                                    <div class="header-search pull-left margin-top-10">
-                                                        <button type="submit">
-                                                            <i class="fa fa-search"></i>
-                                                        </button>
-                                                        <input class="search_field" type="text" placeholder="Search Template">
-                                                    </div>
-                                                </div> -->
+                        <form class="custom-form">
+                            <table class="table table-striped no-margin table-custom table-custom_big setting_table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Date</th>
+                                        <th>Invoice No</th>
+                                        <th>patient ID</th>
+                                        <th>patient name</th>
+                                        <th>patient plan</th>
+                                        <th>purpose</th>
+                                        <th>amount</th>
+                                        <th>due</th>
+                                        <th>status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td align="center">
+                                            <div class="radio radio-styled">
+                                                <label>
+                                                    <input type="radio" name="optionsRadios" value="option1"><span></span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>14/04/2016    12:00:32</td>
+                                        <td>21245421</td>
+                                        <td>90189191</td>
+                                        <td>Joe Bloggs</td>
+                                        <td>General</td>
+                                        <td>GODP Consultation</td>
+                                        <td>N500</td>
+                                        <td>--</td>
+                                        <td class="draft">DRAFT</td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center">
+                                            <div class="radio radio-styled">
+                                                <label>
+                                                    <input type="radio" name="optionsRadios" value="option1"><span></span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>14/04/2016    12:00:32</td>
+                                        <td>21245421</td>
+                                        <td>90189191</td>
+                                        <td>Joe Bloggs</td>
+                                        <td>NHIS</td>
+                                        <td>Lab Test</td>
+                                        <td>N3500</td>
+                                        <td>--</td>
+                                        <td class="paid">PAID</td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center">
+                                            <div class="radio radio-styled">
+                                                <label>
+                                                    <input type="radio" name="optionsRadios" value="option1"><span></span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>14/04/2016    12:00:32</td>
+                                        <td>21245421</td>
+                                        <td>90189191</td>
+                                        <td>Joe Bloggs</td>
+                                        <td>General</td>
+                                        <td>Lab Test</td>
+                                        <td>N2500</td>
+                                        <td>--</td>
+                                        <td class="pending">PENDING</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
                     </div>
 
 
-                    <form class="custom-form">
-                        <table class="table table-striped no-margin table-custom table-custom_big setting_table">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Date</th>
-                                    <th>Invoice No</th>
-                                    <th>patient ID</th>
-                                    <th>patient name</th>
-                                    <th>patient plan</th>
-                                    <th>purpose</th>
-                                    <th>amount</th>
-                                    <th>due</th>
-                                    <th>status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td align="center">
-                                        <div class="radio radio-styled">
-                                            <label>
-                                                <input type="radio" name="optionsRadios" value="option1"><span></span>
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>14/04/2016    12:00:32</td>
-                                    <td>21245421</td>
-                                    <td>90189191</td>
-                                    <td>Joe Bloggs</td>
-                                    <td>General</td>
-                                    <td>GODP Consultation</td>
-                                    <td>N500</td>
-                                    <td>--</td>
-                                    <td class="draft">DRAFT</td>
-                                </tr>
-                                <tr>
-                                    <td align="center">
-                                        <div class="radio radio-styled">
-                                            <label>
-                                                <input type="radio" name="optionsRadios" value="option1"><span></span>
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>14/04/2016    12:00:32</td>
-                                    <td>21245421</td>
-                                    <td>90189191</td>
-                                    <td>Joe Bloggs</td>
-                                    <td>NHIS</td>
-                                    <td>Lab Test</td>
-                                    <td>N3500</td>
-                                    <td>--</td>
-                                    <td class="paid">PAID</td>
-                                </tr>
-                                <tr>
-                                    <td align="center">
-                                        <div class="radio radio-styled">
-                                            <label>
-                                                <input type="radio" name="optionsRadios" value="option1"><span></span>
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>14/04/2016    12:00:32</td>
-                                    <td>21245421</td>
-                                    <td>90189191</td>
-                                    <td>Joe Bloggs</td>
-                                    <td>General</td>
-                                    <td>Lab Test</td>
-                                    <td>N2500</td>
-                                    <td>--</td>
-                                    <td class="pending">PENDING</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </form>
+                    <div class="edit_invoice">
+                        <div class="table-header row background-none">
+                            <div class="pull-right">
+                                <button class="add button-custom pull-right" data-toggle="modal" data-target="#">Add Procedure from master list</button>
+                                <button class="add button-custom pull-right" data-toggle="modal" data-target="#">Add Product from master list</button>
+
+                            </div>
+                            <h2>Invoice Summary</h2>
+                        </div>
+                        <form class="custom-form">
+                            <div class="row edit_inv_row_hdng">
+                                <div class="col-lg-4">
+                                    <span>Description</span>
+                                </div>
+                                <div class="col-lg-1 code_col">
+                                    <span>Code</span>
+                                </div>
+                                <div class="col-lg-2">
+                                    <span>Quality</span>
+                                </div>
+                                <div class="col-lg-2">
+                                    <span>Cost</span>
+                                </div>
+                                <div class="col-lg-2 amount_col">
+                                    <span>Amount</span>
+                                </div>
+                                <div class="col-lg-1 btn_can_col">
+
+                                </div>
+                            </div>
+                            <div class="invoice_row">
+                                <div class="row edit_inv_row">
+                                    <div class="col-lg-4">
+                                        <input type="text" placeholder="" >
+                                    </div>
+                                    <div class="col-lg-1 code_col">
+                                        <input type="text" placeholder="" >
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <input type="text" placeholder="" >
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <input type="text" placeholder="" >
+                                    </div>
+                                    <div class="col-lg-2 amount_col">
+                                        <input type="text" placeholder="" >
+                                    </div>
+                                    <div class="col-lg-1 btn_can_col">
+                                        <span class="remove_invoice_row"><i class="fa fa-close"></i></span>
+                                    </div>
+                                </div>
+                                <div class="row edit_inv_row">
+                                    <div class="col-lg-4">
+                                        <input type="text" placeholder="" >
+                                    </div>
+                                    <div class="col-lg-1 code_col">
+                                        <input type="text" placeholder="" >
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <input type="text" placeholder="" >
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <input type="text" placeholder="" >
+                                    </div>
+                                    <div class="col-lg-2 amount_col">
+                                        <input type="text" placeholder="" >
+                                    </div>
+                                    <div class="col-lg-1 btn_can_col">
+                                        <span class="remove_invoice_row"><i class="fa fa-close"></i></span>
+                                    </div>
+                                </div>
+                                <div class="row edit_inv_row">
+                                    <div class="col-lg-4">
+                                        <input type="text" placeholder="" >
+                                    </div>
+                                    <div class="col-lg-1 code_col">
+                                        <input type="text" placeholder="" >
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <input type="text" placeholder="" >
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <input type="text" placeholder="" >
+                                    </div>
+                                    <div class="col-lg-2 amount_col">
+                                        <input type="text" placeholder="" >
+                                    </div>
+                                    <div class="col-lg-1 btn_can_col">
+                                        <span class="remove_invoice_row"><i class="fa fa-close"></i></span>
+                                    </div>
+                                </div>
+                                <div class="row edit_inv_row">
+                                    <div class="col-lg-4">
+                                        <input type="text" placeholder="" >
+                                    </div>
+                                    <div class="col-lg-1 code_col">
+                                        <input type="text" placeholder="" >
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <input type="text" placeholder="" >
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <input type="text" placeholder="" >
+                                    </div>
+                                    <div class="col-lg-2 amount_col">
+                                        <input type="text" placeholder="" >
+                                    </div>
+                                    <div class="col-lg-1 btn_can_col">
+                                        <span class="remove_invoice_row"><i class="fa fa-close"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <button class="btn btn_add add_invoice_row"><i class="fa fa-plus"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="row price_list">
+                                <div class="col-lg-9">
+                                    <span>Sub Total</span>
+                                </div>
+                                <div class="col-lg-3">
+                                    <span>00.00</span>
+                                </div>
+                                <div class="col-lg-9">
+                                    <span>Discount</span>
+                                </div>
+                                <div class="col-lg-3">
+                                    <span>00.00</span>
+                                </div>
+                                <div class="col-lg-9">
+                                    <span>Tax</span>
+                                </div>
+                                <div class="col-lg-3">
+                                    <span>00.00</span>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="row grand_total">
+                                <div class="col-lg-9">
+                                    <span>Grand Total</span>
+                                </div>
+                                <div class="col-lg-1">
+                                    <span>00.00</span>
+                                </div>
+                                <div class="col-lg-2">
+                                    <span>June 15 2016 | Cash</span>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <div class="row margin-top-30">                       
+
+                                <div class="col-lg-3">
+                                    <label>Notes</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <textarea rows="6"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="row">                       
+
+                                <div class="col-lg-12">
+                                    <span class="pull-left term_cond">Terms & Condition</span>
+                                    <button type="button" class="btn button-style-1 button-style-1_a pull-right">Cancel</button>
+                                    <button type="button" class="btn btn-default button-style-1 pull-right margin-right-10">finish</button>                                    
+                                </div>
+
+                            </div>
+
+                        </form>
+                    </div>
                 </div>
 
                 <div class="tab-pane" id="receipts">                    
 
+                    <div class="table-header row background-none"> 
+                        <div class="col-lg-7"></div>
+                        <div class="col-lg-3">
+                            <div class="col-lg-2">
+                                <span class="txt-style-3 pull-left text-uppercase billing_period">period</span>
+                            </div>
+                            <div class="col-lg-10">
+                                <select class="form-control">
+                                    <option>All</option>
+                                    <option>Cheque</option>
+                                    <option>type 3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="header-search billing_search pull-left">
+                                <button type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <input class="search_field" type="text" placeholder="Patient Name or Id">
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="table-header row background-none">
                         <div class="pull-right">
@@ -409,6 +630,101 @@
                         </table>
                     </form>
                 </div>
+
+                <div class="tab-pane" id="reports">                    
+
+
+                    <div class="table-header row background-none reports_tab">
+                        <div class="pull-right">
+                            <button class="add button-custom pull-right">Print Receipt</button>
+
+                        </div>
+                        <h2 class="reports_hdng">Receipts</h2>
+
+                    </div>
+
+
+                    <form class="custom-form">                            
+
+                        <div class="row patient_info_reports">
+                            <div class="col-lg-2">
+                                <label>Patient Name</label>
+                            </div>
+                            <div class="col-lg-2">
+                                <span>Joe Bloggs</span>
+                            </div>
+                            <div class="col-lg-2">
+                                <label>Patient ID</label>
+                            </div>
+                            <div class="col-lg-2">
+                                <span>ID2012115</span>
+                            </div>
+                            <div class="col-lg-2">
+                                <label>Receipts No</label>
+                            </div>
+                            <div class="col-lg-2">
+                                <span>21241245</span>
+                            </div>
+                            <div class="col-lg-2 clear">
+                                <label>Payment Method</label>
+                            </div>
+                            <div class="col-lg-2">
+                                <span>Cash</span>
+                            </div>
+                            <div class="col-lg-2">
+                                <label>Date</label>
+                            </div>
+                            <div class="col-lg-2">
+                                <span>June 15 2016</span>
+                            </div>
+
+                        </div>
+
+
+
+                        <table class="table no-margin table-custom_big reports_table">
+                            <thead>
+                                <tr>                                   
+                                    <th>Item No</th>
+                                    <th>Description</th>
+                                    <th>Date</th>
+                                    <th>amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>21245421</td>
+                                    <td>Lorem ipsum Lorem</td>
+                                    <td>June 15 2016</td>                                   
+                                    <td>N500</td>
+                                </tr>
+                                <tr>
+                                    <td>21245421</td>
+                                    <td>Lorem ipsum Lorem</td>
+                                    <td>June 15 2016</td>                                   
+                                    <td>N500</td>
+                                </tr>
+                                <tr>
+                                    <td>21245421</td>
+                                    <td>Lorem ipsum Lorem</td>
+                                    <td>June 15 2016</td>                                   
+                                    <td>N500</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <div class="row total_payment">
+                             <div class="col-lg-9">
+                                <span>Total Payment</span>
+                            </div>
+                             <div class="col-lg-3">
+                                <span>00.00</span>
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+
             </div>
             <!--end .card-body -->
         </div>

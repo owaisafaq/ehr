@@ -2510,3 +2510,84 @@ table.setting_table_cat > tbody > tr > td:nth-child(2) span{float:left;}
     text-transform: uppercase;
     font-size: 15px;
 }
+}
+.edit_invoice h2 , .print_invoice h2{color:#003d51;font-weight:700;font-size:26px;}
+.edit_invoice{display:none;}
+.edit_inv_row_hdng{background-color:#003d51;margin:0;color:#fff;text-transform:uppercase;padding: 10px 0;margin-top:15px !important;margin-bottom:20px !important;}
+.edit_inv_row_hdng span{font-weight:700;font-size:14px;}
+
+.custom-form .edit_inv_row_hdng > div , .custom-form .edit_inv_row > div {margin-bottom:0;}
+.edit_inv_row{margin-bottom:10px;}
+.code_col{width: 13%;}
+.amount_col span{padding-left:10px;}
+.amount_col{width:18%;}
+.btn_can_col{width:2%;padding-left:0;padding-right:10px;}
+.btn_can_col span{font-size: 20px;color: red;line-height: 27px;float: right;cursor:pointer;}
+.btn_add{background-color:#43e19c;color:#fff;border-radius:50%;font-size: 20px}
+.btn_add:hover , .btn_add:focus{color:#fff;}
+.margin-0{margin:0;}
+.custom-form .price_list > div{margin-bottom:10px;}
+.custom-form .price_list span{color: #003d51;font-weight: 700;font-size:14px;}
+.custom-form .grand_total span{color:#56aeea;font-weight: 700;font-size:14px;}
+.custom-form .grand_total .col-lg-2 span{color:#003d51;font-weight:normal;}
+.custom-form .grand_total > div{margin-bottom:0;}
+.margin-top-30{margin-top:30px;}
+.margin-top-50{margin-top:50px}
+.print_invoice h2{margin-top:0;margin-bottom:0;text-transform:uppercase;font-size:36px;}
+.invoice_logo span{font-size:18px;color:#9698a7;}
+.invoice_address span{color:#9698a7;}
+.patient_info{background-color:#f6f9fb;padding:15px 5px;margin-top: 35px;}
+.patient_info label{color: #1f2122;font-weight: 700;font-size: 14px;margin-bottom:2px;}
+.patient_info span{color:#7f7f80;}
+.patient_status{font-size: 40px;font-weight: 700;color: #e74424 !important;}
+.term_cond{text-decoration:underline;cursor:pointer;color:#003d51;}
+.reports_hdng{color:#003d51;font-size: 26px;font-weight: 700;}
+.patient_info_reports{background-color:#f6f9fb;padding:15px 5px;margin:30px 0px;}
+.patient_info_reports label{color: #1f2122;font-weight: 700;font-size:14px;margin-bottom:2px;text-transform:none;}
+.custom-form .patient_info_reports > div{margin-bottom:0;}
+table.reports_table thead > tr > th{background-color:#003d51;color:#fff;font-size:14px;font-weight:700;text-transform:uppercase;}
+table.reports_table > tbody > tr > td{border:none;}
+table.reports_table{border-bottom:1px solid #ddecf8;}
+.total_payment span{color:#56aeea;font-weight:700;font-size:16px;}
+.total_payment{margin-top:10px;}
+.billing_hdng{color:#a2a6b9;font-weight:700;margin-bottom:20px;}
+.pdng-0{padding:0;}
+table.billing_table > tbody > tr > td:nth-child(4) span {
+    float: left;
+}
+table.billing_table > tbody > tr > td:nth-child(4){vertical-align:bottom;}
+.billing_actions {
+    position: relative;
+    top: 3px;
+    cursor: pointer;
+}
+.billing_table{margin-top:20px !important;}
+.billing_actions .setting-button {
+    cursor: pointer;
+    float: right;
+}
+.billing_actions .tool-tip_popup {
+    width: 150px;
+    height: 90px;
+    background: #fff;
+    position: absolute;
+    top: -13px;
+    right: 0;
+    z-index: 1;
+    box-shadow: 11px 0 40px 0px rgba(224,232,238,1);
+    padding: 16px 8px 0 20px;
+    padding-top: 18px;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -o-transition: 0.5s;
+}
+.billing_actions:hover .tool-tip_popup{
+    opacity: 1;
+    visibility: visible;
+    top: -13px;
+    right: 5%;
+}
+.margin-bot-70{margin-bottom:70px;}

@@ -18,8 +18,7 @@ $(document).ready(function () {
         {
             $(this).parents('.select-speciality').siblings('.show-on-principal').hide();
             $(this).parents('.select-speciality').siblings('.show-on-dependant').show();
-        }
-        else {
+        } else {
             $(this).parents('.select-speciality').siblings('.show-on-principal').show();
             $(this).parents('.select-speciality').siblings('.show-on-dependant').hide();
         }
@@ -65,4 +64,17 @@ $(document).ready(function () {
 //        var value = $(this).val();
 //        alert(value);
 //    })
-})
+
+    $(document).on('click', '.btn_edit_invoice', function () {
+        $('.invoice_list').hide();
+        $('.edit_invoice').show();
+    });
+    
+    $(document).on('click', '.add_invoice_row', function () {
+        $('.invoice_row').prepend('<div class="row edit_inv_row"><div class="col-lg-4"><input type="text" placeholder="" ></div><div class="col-lg-1 code_col"><input type="text" placeholder="" ></div><div class="col-lg-2"><input type="text" placeholder="" ></div><div class="col-lg-2"><input type="text" placeholder="" ></div><div class="col-lg-2 amount_col"><input type="text" placeholder="" ></div><div class="col-lg-1 btn_can_col"><span class="remove_invoice_row"><i class="fa fa-close"></i></span></div></div>');
+    });
+
+    $(document).on('click', '.remove_invoice_row', function () {
+        $(this).parents('.edit_inv_row').remove();
+    });
+});
