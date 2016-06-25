@@ -790,8 +790,6 @@ AppEHR.factory("UpdateSuppliers", function ($resource) {
     return UpdateSupplier;
 });
 
-
-
 AppEHR.factory("updateCategory", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'update_inventory_category', params, {
@@ -824,8 +822,6 @@ AppEHR.factory("DeleteCategory", function ($resource) {
     return DeleteCategory;
 });
 
-
-
 AppEHR.factory("DeleteSupplier", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'delete_inventory_supplier', params, {
@@ -841,17 +837,6 @@ AppEHR.factory("DeleteSupplier", function ($resource) {
     };
     return DeleteSupplier;
 });
-
-
-
-
-
-
-
-
-
-
-
 
 AppEHR.factory("GetSingleSupplier", function ($resource) {
     function getResource(params, body) {
@@ -900,12 +885,21 @@ AppEHR.factory("GetSingleStock", function ($resource) {
     };
     return Stocks;
 });
-
-
-
-
-
-
+AppEHR.factory("GetLabTests", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_lab_tests', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var LabTests = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return LabTests;
+});
 
 AppEHR.factory("cancelLabOrder", function ($resource) {
     function getResource(params, body) {
@@ -921,4 +915,20 @@ AppEHR.factory("cancelLabOrder", function ($resource) {
         }
     };
     return cancelOrder;
+});
+
+AppEHR.factory("addOrder", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_lab_order', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var Order = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return Order;
 });
