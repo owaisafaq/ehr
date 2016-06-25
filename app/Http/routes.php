@@ -94,7 +94,11 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->get('patient_medications','App\Http\Controllers\ApiController@patient_medications');
 
+    $app->post('add_patient_medications','App\Http\Controllers\ApiController@add_patient_medications');
+
     $app->get('patient_supplements','App\Http\Controllers\ApiController@patient_supplements');
+
+    $app->post('add_patient_supplements','App\Http\Controllers\ApiController@add_patient_supplements');
 
     $app->get('patient_allergies','App\Http\Controllers\ApiController@patient_allergies');
 
@@ -133,6 +137,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->post('checkout_patient','App\Http\Controllers\ApiController@checkout_patient');
 
     $app->post('add_patient_referel','App\Http\Controllers\ApiController@add_patient_referel');
+
+    $app->get('get_lab_tests','App\Http\Controllers\OrderController@get_lab_tests');
 
     $app->get('get_all_lab_orders','App\Http\Controllers\OrderController@get_all_lab_orders');
 
@@ -183,5 +189,7 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->post('update_inventory','App\Http\Controllers\InventoryAPIController@update_stock');
     $app->post('update_reorder_level','App\Http\Controllers\InventoryAPIController@update_order_level');
     $app->post('update_reorder_level','App\Http\Controllers\InventoryAPIController@update_order_level');
+    $app->post('add_product','App\Http\Controllers\InventoryAPIController@add_product');
+    $app->post('add_product_inventory','App\Http\Controllers\InventoryAPIController@add_product_inventory');
 
 });

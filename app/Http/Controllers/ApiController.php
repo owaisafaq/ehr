@@ -1344,11 +1344,19 @@ class ApiController extends Controller
             ->where('patient_id', $patient_id)
             ->first();
 
+
+        $patient_plan= DB::table('hospital_plan')
+                ->leftJoin('patients', 'patients.plan_id', '=', 'hospital_plan.id')
+                ->select(DB::raw('hospital_plan.id,hospital_plan.name'))
+                ->where('patients.id', $patient_id)
+                ->first();
+
         $data = array(
             "patient_info" => $patient_info,
             "patient_address" => $patient_address,
             "patient_kin" => $patient_kin,
-            "patient_employeer" => $patient_employers
+            "patient_employeer" => $patient_employers,
+            "hospital_plan" => $patient_plan
 
         );
 
@@ -1669,13 +1677,46 @@ class ApiController extends Controller
         $patient_id = $request->input('patient_id');
 
         $patient_medications = DB::table('medication_shedule')
-            ->select(DB::raw('id,prescriptions,to_date,from_date,status'))
+            ->select(DB::raw('id,prescriptions,to_date,from_date,medication_status as status'))
             ->where('patient_id', $patient_id)
-            ->where('status', 'inprocess')
+            ->where('status', 1)
             ->get();
 
 
         return response()->json(['status' => true, 'data' => $patient_medications]);
+
+    }
+
+
+    public function add_patient_medications(Request $request){
+
+        $patient_id = $request->input('patient_id');
+
+        $prescriptions = $request->input('prescriptions');
+
+        $to_date = $request->input('to_date');
+
+        $from_date = $request->input('from_date');
+
+        $medication_status = $request->input('medication_status');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+        DB::table('medication_shedule')->insert(
+            ['patient_id' => $patient_id,
+                'prescriptions' => $prescriptions,
+                'to_date' => $to_date,
+                'from_date' => $from_date,
+                'medication_status' => $medication_status,
+                'created_at' => $currentdatetime
+
+            ]
+        );
+
+
+        return response()->json(['status' => true, 'message' => 'Patient Medication Added Successfully']);
+
 
     }
 
@@ -1692,6 +1733,50 @@ class ApiController extends Controller
 
 
         return response()->json(['status' => true, 'data' => $patient_supplements]);
+
+    }
+
+
+    public function add_patient_supplements(Request $request){
+
+
+        $patient_id = $request->input('patient_id');
+
+        $supplements = $request->input('supplements');
+
+        $dosage = $request->input('dosage');
+
+        $frequency = $request->input('frequency');
+
+        $intake = $request->input('intake');
+
+        $from_date= $request->input('from_date');
+
+        $medicine_status =  $request->input('medicine_status');
+
+        $to_date =  $request->input('to_date');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+        DB::table('medicines')->insert(
+            ['patient_id' => $patient_id,
+                'supplements' => $supplements,
+                'dosage' => $dosage,
+                'frequency' => $frequency,
+                'intake' => $intake,
+                'from_date' => $from_date,
+                'medicine_status' => $medicine_status,
+                'to_date' => $to_date,
+                'created_at' => $currentdatetime
+
+            ]
+        );
+
+
+        return response()->json(['status' => true, 'message' => 'Patient Supplemnts Added Successfully']);
+
+
 
     }
 
@@ -2027,13 +2112,16 @@ class ApiController extends Controller
 
         $notes = html_entity_decode($request->input('clinical_notes'));
 
-
         $clinical_notes = json_decode($notes);
+
+        $clinical_notes = (array)$clinical_notes;
+
+
 
         foreach ($clinical_notes as $patient_clinical_notes) {
 
 
-            DB::table('patient_clinical_notes')->insert(
+/*            DB::table('patient_clinical_notes')->insert(
                 ['patient_id' => $patient_id,
                     'visit_id' => $visit_id,
                     'field_id' => $patient_clinical_notes->field_id,
@@ -2041,10 +2129,17 @@ class ApiController extends Controller
                     'created_at' => $currentdatetime
 
                 ]
-            );
+            );*/
+
+
+            echo '<pre>';print_r($patient_clinical_notes);echo '</pre>';
 
 
         }
+
+
+        exit;
+
 
 
         return response()->json(['status' => true, 'message' => 'Clinical Notes Added Successfully']);
