@@ -1344,11 +1344,19 @@ class ApiController extends Controller
             ->where('patient_id', $patient_id)
             ->first();
 
+
+        $patient_plan= DB::table('hospital_plan')
+                ->leftJoin('patients', 'patients.plan_id', '=', 'hospital_plan.id')
+                ->select(DB::raw('hospital_plan.id,hospital_plan.name'))
+                ->where('patients.id', $patient_id)
+                ->first();
+
         $data = array(
             "patient_info" => $patient_info,
             "patient_address" => $patient_address,
             "patient_kin" => $patient_kin,
-            "patient_employeer" => $patient_employers
+            "patient_employeer" => $patient_employers,
+            "hospital_plan" => $patient_plan
 
         );
 
@@ -2104,13 +2112,16 @@ class ApiController extends Controller
 
         $notes = html_entity_decode($request->input('clinical_notes'));
 
-
         $clinical_notes = json_decode($notes);
+
+        $clinical_notes = (array)$clinical_notes;
+
+
 
         foreach ($clinical_notes as $patient_clinical_notes) {
 
 
-            DB::table('patient_clinical_notes')->insert(
+/*            DB::table('patient_clinical_notes')->insert(
                 ['patient_id' => $patient_id,
                     'visit_id' => $visit_id,
                     'field_id' => $patient_clinical_notes->field_id,
@@ -2118,10 +2129,17 @@ class ApiController extends Controller
                     'created_at' => $currentdatetime
 
                 ]
-            );
+            );*/
+
+
+            echo '<pre>';print_r($patient_clinical_notes);echo '</pre>';
 
 
         }
+
+
+        exit;
+
 
 
         return response()->json(['status' => true, 'message' => 'Clinical Notes Added Successfully']);

@@ -1375,3 +1375,33 @@ $api->params->dose_from = "1";
 $api->params->token = "";
 
 $api_arr [] = $api;
+
+
+// Add Product Inventory
+$api = new api();
+$api->name = "Add Product Inventory";
+$api->url = HOST . 'add_product_inventory';
+$api->method = "POST";
+$api->params->group = "1";
+$api->params->product_name = "1";
+$api->params->trade_name = "1";
+$api->params->route = "1";
+$api->params->reorder_level = "1";
+$api->params->cat_id = "1";
+$api->params->strength = "1";
+$api->params->dose_from = "1";
+$api->params->pharmacy_id = "";
+$api->params->manufacturer_id = "";
+$api->params->dept_id = "";
+$api->params->supplier_id = "";
+$api->params->received_date = "";
+$api->params->batch_no = "";
+$api->params->ref_no = "";
+$api->params->expiry = "";
+$api->params->quantity= "";
+$api->params->order_quantity= "";
+$api->params->cost_per_item= "";
+$api->params->pack= "";
+$api->params->token = "";
+
+$api_arr [] = $api;
