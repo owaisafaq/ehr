@@ -2430,9 +2430,9 @@ table.setting_table_cat > tbody > tr > td:nth-child(2) span{float:left;}
     position: relative;
 }
 .show_textarea input[type=text]{
-display: none;
-resize: none;
-position: absolute;
+    display: none;
+    resize: none;
+    position: absolute;
     top: 25px;
     left: 0;
     z-index: 1;
@@ -2456,12 +2456,27 @@ position: absolute;
 }
 /*archive page styling*/
 .UploadBtn{
-    
+    background: #56aeea;
+    border: none;
+    color: #fff;
+    height: 50px;
+    padding: 0 60px;
+    font-size: 17px;
+    margin: 0 auto;
+    margin-top: 20px;
+    display: block;
+}
+.select_file_mode{
+    display: inline-block;
+}
+.fileuploader_con{
+    margin-bottom: 20px;
 }
 .fileuploader_con ul{
     list-style: none;
     font-size: 14px;
     color: #a2a6b9;
+    margin-top: 20px;
 }
 .fileuploader_con .progress{
     width: 100%;
@@ -2473,4 +2488,25 @@ position: absolute;
     text-align: center;
     height: 15px;
     font-size: 12px;
+    margin: 0;
+}
+.progress div{
+    border-radius: 15px;
+}
+.show_uploading_format{
+    margin-top: 20px;
+    text-align: center;
+}
+.show_uploading_format input[type=text]{
+    padding-left: 10px;
+    height: 35px;
+}
+
+.create_button{
+    background: #56aeea;
+    border: none;
+    color: #fff;
+    padding: 5px 14px;
+    text-transform: uppercase;
+    font-size: 15px;
 }
