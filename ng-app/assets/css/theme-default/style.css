@@ -2510,7 +2510,6 @@ table.setting_table_cat > tbody > tr > td:nth-child(2) span{float:left;}
     text-transform: uppercase;
     font-size: 15px;
 }
-}
 .edit_invoice h2 , .print_invoice h2{color:#003d51;font-weight:700;font-size:26px;}
 .edit_invoice{display:none;}
 .edit_inv_row_hdng{background-color:#003d51;margin:0;color:#fff;text-transform:uppercase;padding: 10px 0;margin-top:15px !important;margin-bottom:20px !important;}
