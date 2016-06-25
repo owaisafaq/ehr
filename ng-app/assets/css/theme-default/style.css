@@ -2590,3 +2590,59 @@ table.billing_table > tbody > tr > td:nth-child(4){vertical-align:bottom;}
     right: 5%;
 }
 .margin-bot-70{margin-bottom:70px;}
+.id_card{
+    background: url(../../img/id_card_bg.jpg);
+    width: 525px;
+    height: 297px;
+    padding-top: 30px;
+}
+.id_card > div{
+    padding-left: 27px;
+    margin-bottom: 15px;
+    float: left;
+}
+.id_card h2{
+    font-size: 30px;
+    color: #fff;
+    font-weight: bold;
+    margin: 0;
+    font-family: 'sgui-bold';
+}
+.id_card_img{
+    float: right;
+    margin-right: 40px;
+}
+.id_card label{
+    color:#a2a6b9;
+    font-size: 14px;
+    line-height: 14px;
+    margin: 0;
+}
+.id_card .patinetcard_name{
+    font-size: 24px;
+    color: #516e81;
+    line-height: 24px;
+    margin: 0;
+    margin-bottom: 25px;
+    margin-top: 5px;
+}
+.id_card span{
+    color:#516e81;
+    font-size: 14px;
+    line-height: 14px;
+    margin: 0;
+    font-weight: bold;
+}
+.id_card .row{
+    margin: 0 0 15px 0;
+}
+.idCardInfo{
+    margin-top: 50px;
+}
+.id_card .space{
+    margin-top: 28px;
+}
+.id_card .barCode{
+    display: block;
+    margin: 0 auto;
+}
