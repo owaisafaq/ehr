@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllInventory','GetAllSuppliers','AddCategory','GetAllCategories','AddSupplier','GetSingleSupplier','UpdateSuppliers','GetSingleCategory','GetSingleStock','updateCategory','DeleteCategory','DeleteSupplier','AddInventory','$timeout', function($scope, $rootScope,$window,$routeParams,GetAllInventory,GetAllSuppliers,AddCategory,GetAllCategories,AddSupplier,GetSingleSupplier,UpdateSuppliers,GetSingleCategory,GetSingleStock,updateCategory,DeleteCategory,DeleteSupplier,AddInventory,$timeout){
+AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllInventory','GetAllSuppliers','AddCategory','GetAllCategories','AddSupplier','GetSingleSupplier','UpdateSuppliers','GetSingleCategory','GetSingleStock','updateCategory','DeleteCategory','DeleteSupplier','AddInventory','AddProduct','DeleteInventory','GetSingleProduct','$timeout', function($scope, $rootScope,$window,$routeParams,GetAllInventory,GetAllSuppliers,AddCategory,GetAllCategories,AddSupplier,GetSingleSupplier,UpdateSuppliers,GetSingleCategory,GetSingleStock,updateCategory,DeleteCategory,DeleteSupplier,AddInventory,AddProduct,DeleteInventory,GetSingleProduct,$timeout){
 	$rootScope.pageTitle = "EHR - Inventory";
 	$scope.displayInfo = {};
 	$scope.cat_unique={};
@@ -145,17 +145,17 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 // Add Inventory
 	$scope.AddInventory = function (inventory) {
 
-		if (angular.equals({}, category) == false) {
-			$scope.hideLoader = 'show';
+		if (angular.equals({}, inventory) == false) {
+			$scope.loader = 'show';
 			//$scope.updateEncounterBtn = true;
 			//console.log(inventory);
 			var addInventory={
 				token: $window.sessionStorage.token,
-				product_id	:inventory.product_id,
+				//product_id	:inventory.product_id,
 				pharmacy_id:inventory.pharmacy_id,
 				manufacturer_id:inventory.manufacturer_id,
-				dept_id:inventory.dept_id,
-				supplier_id:inventory.supplier_id,
+				//department_id:inventory.cat_id,
+				supplier_id:inventory.supp_id,
 				received_date:inventory.recvd_date,
 				batch_no:inventory.batch_number,
 				ref_no	:inventory.ref_no,
@@ -164,28 +164,44 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 				order_quantity:inventory.order_quantity,
 				cost_per_item:inventory.price,
 				pack:'pack',
-
-
-			/*	token: $window.sessionStorage.token,
-				 product_id	:1,
-				 pharmacy_id:1,
-				 manufacturer_id:1,
-				 dept_id:1,
-				 supplier_id:1,
-				 received_date:2016-06-06,
-				 batch_no:1200,
-				 ref_no	:1020,
-				 expiry	:2016-06-01,
-				 quantity:1,
-				 order_quantity:1,
-				 cost_per_item:1200,
-				 pack:'pack'
-				*/
+				dept_id:inventory.group,
+				group:inventory.group,
+				product_name:inventory.product_name,
+				trade_name:inventory.trade_name,
+				route:inventory.route,
+				reorder_level:inventory.reorder_level,
+				cat_id:inventory.cat_id,
+				strength:inventory.strength,
+				dose_from:inventory.dose_from
 
 
 			}
+			var addProduct={
+				token:$window.sessionStorage.token,
+				department_id:inventory.group,
+				product_name:inventory.product_name,
+				trade_name:inventory.trade_name,
+				route:inventory.route,
+				reorder_level:inventory.reorder_level,
+				cat_id:inventory.cat_id,
+				strength:inventory.strength,
+				dose_from:inventory.dose_from
+
+
+			}
+
+
+
+
+
+
+
+			console.log("inventory full: "+inventory);
 			console.log(addInventory);
+			//console.log(addProduct);
 			AddInventory.save(addInventory, AddInventorySuccess, AddInventoryFailure);
+			//AddProduct.save(addProduct, AddProductSuccess, AddProductFailure);
+
 
 
 		}
@@ -194,15 +210,23 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 	function AddInventorySuccess(res) {
 	 console.log(res);
 	 if (res.status == true) {
+
 	 $rootScope.loader = "hide";
+
 		 $("#stock_det").hide();
 		 $(".add-drug-supplements").hide();
 		 $(".add-drug-others").hide();
+		 $(".inventory_detail").show();
+		 $(".inv_header").show();
+
+
+		 document.getElementById("addInv").reset();
 
 
 		 GetAllInventory.get({
 			 token: $window.sessionStorage.token,
 		 }, GetAllInventorySuccess, GetAllInventoryFailure);
+
 
 	 }
 	 }
@@ -210,6 +234,38 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 	function AddInventoryFailure(error) {
 		console.log(error);
 	}
+
+	/*function AddProductSuccess(res) {
+		console.log(res);
+		if (res.status == true) {
+			$rootScope.loader = "hide";
+			console.log("in product now");
+
+
+			$("#stock_det").hide();
+			$(".add-drug-supplements").hide();
+			$(".add-drug-others").hide();
+			$(".inventory_detail").show();
+			$(".inv_header").show();
+
+
+			document.getElementById("addInv").reset();
+
+
+			GetAllInventory.get({
+				token: $window.sessionStorage.token,
+			}, GetAllInventorySuccess, GetAllInventoryFailure);
+
+		}
+	}
+
+	function AddProductFailure(error) {
+		console.log(error);
+	}
+*/
+
+
+
 
 
 
@@ -336,6 +392,35 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 
 
 
+	//Delete Inventory
+
+
+
+	$scope.DeleteInventory = function (stockID) {
+		console.log(stockID);
+		$scope.stockID = stockID;
+		$rootScope.loader = "show";
+		DeleteInventory.save({token: $window.sessionStorage.token, stock_id: stockID}, deleteStockInfoSuccess, deleteStockInfoFailure);
+
+		function deleteStockInfoSuccess(res) {
+			if (res.status == true) {
+				$rootScope.loader = "hide";
+				console.log("Deleted");
+				GetAllInventory.get({
+					token: $window.sessionStorage.token,
+				}, GetAllInventorySuccess, GetAllInventoryFailure);
+
+
+			}
+		}
+		function deleteStockInfoFailure(error) {
+			$rootScope.loader = "show";
+			console.log(error);
+		}
+	};
+
+
+
 
 
 // Get Single Category
@@ -442,6 +527,71 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 			}
 		}
 		function getStockInfoFailure(error) {
+			$rootScope.loader = "show";
+			console.log(error);
+		}
+	};
+
+
+	$scope.productDetail = function (productID) {
+		console.log(productID);
+		$scope.productID = productID;
+
+		$(".inventory_detail").hide();
+		$(".inv_header").hide();
+		$("#stock_det").hide();
+		$(".add-drug-supplements").hide();
+		$(".edit_prod").show();
+
+
+
+		$rootScope.loader = "show";
+		GetSingleStock.get({token: $window.sessionStorage.token, product_id: productID}, getProductInfoSuccess, getProductInfoFailure);
+		function getProductInfoSuccess(res) {
+			if (res.status == true) {
+				//console.log(res);
+				$rootScope.loader = "hide";
+				//$scope.SupplierSelected = true;
+				$scope.selectedProduct = res.data;
+				console.log($scope.selectedProduct);
+				/*$(".inventory_detail").hide();
+				$("#stock_det").show();*/
+
+
+			}
+		}
+		function getProductInfoFailure(error) {
+			$rootScope.loader = "show";
+			console.log(error);
+		}
+	};
+
+	$scope.StockSelectedReorder = function (productID) {
+		console.log(productID);
+		$scope.productID = productID;
+
+
+
+
+		//$rootScope.loader = "show";
+		$('#update_reorder').modal('show');
+
+
+			GetSingleProduct.get({token: $window.sessionStorage.token, product_id: productID}, getProductInfoSuccess, getProductInfoFailure);
+		function getProductInfoSuccess(res) {
+			if (res.status == true) {
+				//console.log(res);
+				$rootScope.loader = "hide";
+				//$scope.SupplierSelected = true;
+				$scope.selectedProduct = res.data;
+				console.log($scope.selectedProduct);
+				/*$(".inventory_detail").hide();
+				$("#stock_det").show();*/
+
+
+			}
+		}
+		function getProductInfoFailure(error) {
 			$rootScope.loader = "show";
 			console.log(error);
 		}

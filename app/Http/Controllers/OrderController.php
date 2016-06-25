@@ -71,6 +71,25 @@ class OrderController extends Controller
     }
 
 
+    public function get_lab_tests(Request $request){
+
+
+        $lab= $request->input('lab');
+
+
+        $lab_test = DB::table('lab_tests')
+            ->select(DB::raw('*'))
+            ->where('lab_tests.status', 1)
+            ->where('lab', $lab)
+            ->get();
+
+        return response()->json(['status' => true, 'data' => $lab_test]);
+
+
+
+    }
+
+
     public function get_all_lab_orders(Request $request)
     {
 

@@ -757,7 +757,7 @@ AppEHR.factory("AddSupplier", function ($resource) {
 
 AppEHR.factory("AddInventory", function ($resource) {
     function getResource(params, body) {
-        var res2 = $resource(serverPath + 'add_inventory', params, {
+        var res2 = $resource(serverPath + 'add_product_inventory', params, {
             save: {method: 'POST'}
         });
         return res2;
@@ -769,6 +769,22 @@ AppEHR.factory("AddInventory", function ($resource) {
         }
     };
     return AddInventory;
+});
+
+AppEHR.factory("AddProduct", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_product', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var AddProduct = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return AddProduct;
 });
 
 
@@ -838,6 +854,37 @@ AppEHR.factory("DeleteSupplier", function ($resource) {
     return DeleteSupplier;
 });
 
+
+
+
+
+AppEHR.factory("DeleteInventory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'delete_inventory', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var DeleteInventory = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return DeleteInventory;
+});
+
+
+
+
+
+
+
+
+
+
+
+
 AppEHR.factory("GetSingleSupplier", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'get_inventory_single_supplier', params, {
@@ -900,6 +947,30 @@ AppEHR.factory("GetLabTests", function ($resource) {
     };
     return LabTests;
 });
+
+
+
+AppEHR.factory("GetSingleProduct", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_stock_details', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var Stocks = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return Stocks;
+});
+
+
+
+
+
+
 
 AppEHR.factory("cancelLabOrder", function ($resource) {
     function getResource(params, body) {
