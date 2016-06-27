@@ -79,6 +79,10 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/lab-order-listing.html',
                     controller: 'labOrderListing'
                 }).
+                when('/lab-order-tests/:orderID', {
+                    templateUrl: 'views/lab-order-tests.html',
+                    controller: 'labOrderTests'
+                }).
                 when('/lab-order-history', {
                     templateUrl: 'views/lab-order-history.html',
                     controller: 'labOrderHistory'
