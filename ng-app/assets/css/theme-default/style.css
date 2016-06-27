@@ -2590,6 +2590,8 @@ table.billing_table > tbody > tr > td:nth-child(4){vertical-align:bottom;}
     right: 5%;
 }
 .margin-bot-70{margin-bottom:70px;}
+
+.add_manufacturer{width:100%;}
 .id_card{
     background: url(../../img/id_card_bg.jpg);
     width: 525px;
