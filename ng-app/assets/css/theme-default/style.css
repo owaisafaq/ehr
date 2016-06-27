@@ -2646,3 +2646,26 @@ table.billing_table > tbody > tr > td:nth-child(4){vertical-align:bottom;}
     display: block;
     margin: 0 auto;
 }
+.thumb {
+        width: 24px;
+        height: 24px;
+        float: none;
+        position: relative;
+        top: 7px;
+    }
+
+    form .progress {
+        line-height: 15px;
+    }
+    .progress {
+        display: inline-block;
+        width: 100px;
+        border: 3px groove #CCC;
+    }
+
+    .progress div {
+        font-size: smaller;
+        background: #56aeea;
+        width: 0;
+        color: #fff;
+    }

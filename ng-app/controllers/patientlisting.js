@@ -1,11 +1,13 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPatients', '$window', '$routeParams','GetPatientInfo', function ($scope, $rootScope, GetAllPatients, $window, $routeParams,GetPatientInfo) {
+AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPatients', '$window', '$routeParams', 'GetPatientInfo', function ($scope, $rootScope, GetAllPatients, $window, $routeParams, GetPatientInfo) {
+        $scope.action = '';
         $rootScope.pageTitle = "EHR - Patient Listing";
         $scope.displayInfo = {};
         GetAllPatients.get({
             token: $window.sessionStorage.token,
-            patient_id: $routeParams.patientID
+            offset: 1,
+            limit: 15,
         }, GetAllPatientsSuccess, GetAllPatientsFailure);
 
         function GetAllPatientsSuccess(res) {
@@ -20,10 +22,13 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
 
         $scope.patientSelected = function (patientID) {
             $scope.patientID = patientID;
+            console.log("there")
             $rootScope.loader = "show";
             GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: patientID}, getPatientSuccess, getPatientFailure);
             function getPatientSuccess(res) {
+                console.log(patientID)
                 if (res.status == true) {
+                    console.log(res.data)
                     $rootScope.loader = "hide";
                     $scope.disabledEncounterButton = false;
                     $scope.patientInfo = true;
@@ -34,15 +39,18 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
                     $scope.displayInfo.age = res.data.age;
                     $scope.displayInfo.sex = res.data.sex;
                     $scope.displayInfo.marital_status = res.data.marital_status;
+                    $scope.displayInfo.date_of_birth = res.data.date_of_birth;
+                    $scope.showIdCard = true
                     //$scope.showStrip = true;
                     //$scope.dataStrip = "custom-card";
                 }
             }
 
             function getPatientFailure(error) {
+                console.log("there")
+                console.log(patientID)
                 $rootScope.loader = "show";
                 console.log(error);
             }
         }
-
     }]);
