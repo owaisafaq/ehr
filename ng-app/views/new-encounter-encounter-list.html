@@ -47,14 +47,15 @@
                         </button>
                         <input class="search_field" type="text" ng-model="search" placeholder="Search for a patient">
                     </div>
-                </div><!-- data-toggle="modal" data-target="#addpatient" -->
-                <button type="button"  class="checkout button-custom pull-right" ng-disabled="buttonDisabled" ng-click="checkout(action);">Checkout</button>
+                </div>
+                <!--ng-click="checkout(action);"-->
+                <button type="button"  class="checkout button-custom pull-right" data-toggle="modal" data-target="#checkout" ng-disabled="buttonDisabled">Checkout</button>
 
                 <button type="button" class="delete button-custom pull-right" ng-disabled="buttonDisabled" ng-click="removeEncounter();">remove</button>
 
                 <button type="button" data-toggle="modal" class="edit button-custom pull-right" ng-disabled="buttonDisabled" ng-click="updateEncounters();">UPDATE</button>
 
-                <button type="button" data-toggle="modal" class="notes button-custom pull-right" ng-disabled="buttonDisabled" data-target="#addclinical">Clinical Notes</button>
+                <button type="button" data-toggle="modal" class="notes button-custom pull-right" ng-disabled="buttonDisabled" data-target="#addclinical" ng-click="goToClinicalNotes();">Clinical Notes</button>
 
                 <button type="button" data-toggle="modal" class="add button-custom pull-right" data-target="#addpatient" ng-disabled="buttonDisabled">Add Vitals</button>
             </div>
@@ -75,7 +76,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="encounter in allEncounter | filter: {first_name: search} | limitTo:10">
+                            <tr ng-repeat="encounter in allEncounter | offset: currentPage*itemsPerPage | limitTo: itemsPerPage | filter : {'first_name': search}">
                                 <td align="center">
                                     <!-- <div class="radio radio-styled">
                                         <label>
@@ -98,40 +99,31 @@
                                 <td>{{encounter.encounter_class}}</td>
                                 <td>{{encounter.name}}</td>
                             </tr>
-                            <!-- <tr>
-                                <td align="center">
-                                    <div class="radio radio-styled">
-                                        <label>
-                                            <input type="radio" name="optionsRadios" value="option1">
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>14/04/2016    12:00:32</td>
-                                <td>90189191</td>
-                                <td>Joe Bloggs</td>
-                                <td>Eye Clinic</td>
-                                <td>Consultation</td>
-                                <td>Outpatient</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td align="center">
-                                    <div class="radio radio-styled">
-                                        <label>
-                                            <input type="radio" name="optionsRadios" value="option1">
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>14/04/2016    12:00:32</td>
-                                <td>90189191</td>
-                                <td>Joe Bloggs</td>
-                                <td>Eye Clinic</td>
-                                <td>Consultation</td>
-                                <td>Outpatient</td>
-                                <td></td>
-                            </tr> -->
                         </tbody>
+                        
+                        <!-- <tfoot ng-if="allEncounter > 15">
+                            <td colspan="3">
+                              <div class="pagination">
+                                <ul>
+                                  <li ng-class="prevPageDisabled()">
+                                    <a href ng-click="prevPage()">« Prev</a>
+                                  </li>
+                                  <li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
+                                    <a href="#/new-encounter-encounter-list/{{EID}}/{{PID}}">{{n+1}}</a>
+                                  </li>
+                                  <li ng-class="nextPageDisabled()">
+                                    <a href ng-click="nextPage()">Next »</a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </td>
+                        </tfoot> -->
                     </table>
+                    <pagination data-ng-model="currentPage" total-items="numOfData.length"
+                            items-per-page="numPerPage" data-max-size="maxSize" data-boundary-links="true"
+                            ng-init="begin = (currentPage-1)*numPerPage; end = begin + numPerPage"
+                            data-ng-change="begin = (currentPage-1)*numPerPage; end = begin + numPerPage">
+                        </pagination>
                 </div>
             </div><!--end .card-body -->
         </div><!--end .card -->
@@ -152,8 +144,6 @@
             <div class="col-lg-6">
                 <select class="form-control" ng-class="{true: 'error'}[submitted && encounterForm.department.$invalid]" name="department" ng-model="updateEncounter.department" placeholder="Select" required>
                     <option value=""></option>
-<!--                     <option value="1">1</option>
-                    <option value="2">2</option> -->
                     <option ng-selected="updateEncounter.department == department" ng-repeat="department in encountersDropdownData.departments" value="{{department.id}}">{{department.name}}</option>
                 </select>
                 <p class="help-block PIValid" ng-show="submitted && encounterForm.department.$error.required">Required</p>
@@ -199,9 +189,9 @@
             </div> 
 
             <div class="col-lg-12">
-            <img src="assets/img/loader.gif" class="pull-right encounter-loader {{hideLoader}}"/>
+                <img src="assets/img/loader.gif" class="pull-right encounter-loader {{hideLoader}}"/>
                 <div class="pull-right">
-                    
+
                     <button type="submit" class="btn ink-reaction button-style-1" ng-click="submitted = true;" ng-disabled="updateEncounterBtn">create encounter</button>
                     <button type="button" class="btn ink-reaction button-style-1 button-style-1_a close_custom_pop" ng-click="closeupdateEncounter();" ng-disabled="updateEncounterBtn">Cancel</button>
                 </div>
@@ -351,3 +341,130 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </div>
+<div class="modal fade" id="checkout" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-mid">
+        <form class="custom-form">
+            <div class="modal-content">
+                <div class="modal-header pop_head">
+                    <h2>Check Out Patient</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12 no-padding margin-bottom-xxl">
+                        <div class="radio radio-styled">
+                            <label>
+                                <input type="radio" name="checkoutpatient" value="Noappointment" checked>
+                                <span>No Appointment</span>
+                            </label>
+                        </div>
+                        <div class="radio radio-styled">
+                            <label>
+                                <input type="radio" name="checkoutpatient" value="followUp">
+                                <span>Follow up</span>
+                            </label>
+                        </div>
+                        <div class="radio radio-styled">
+                            <label>
+                                <input type="radio" name="checkoutpatient" value="admitPatient">
+                                <span>Admit Patient</span>
+                            </label>
+                        </div>
+                        <div class="radio radio-styled">
+                            <label>
+                                <input type="radio" name="checkoutpatient" value="dead">
+                                <span>Dead</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="checkout_patient_tab_con">
+                        <div id="Noappointment" class="active">
+                            <label class="margin-bottom-xl">Note</label>
+                            <textarea placeholder="Write Here..."></textarea>
+                        </div>
+                        <div id="followUp" class="row">
+                            <div class="col-lg-2">
+                                <label>DATE</label>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group date select-date col-lg-12">
+                                    <div class="input-group-content">
+                                        <input type="text" class="form-control" placeholder="Select Date">
+                                    </div>
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <label>Time</label>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group bootstrap-timepicker timepicker col-lg-12">
+                                    <input type="text" class="form-control input-small timepicker">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <label class="margin-bottom-xl">Note</label>
+                                <textarea class="margin-bottom-lg" placeholder="Write Here..."></textarea>
+                            </div>
+                        </div>
+                        <div id="admitPatient" class="row">
+                            <div class="col-lg-12">
+                                <span class="txt-style-4">Presenting Complaint: Captured from Clinical Note</span>
+                            </div>
+                            <div class="col-lg-3">
+                                <label>to specialty</label>
+                            </div>
+                            <div class="col-lg-3 select-con">
+                                <select class="form-control">
+                                    <option>Clinic Progress Notes</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3">
+                                <label>admit to ward</label>
+                            </div>
+                            <div class="col-lg-3 select-con select-con_small">
+                                <select class="form-control">
+                                    <option>Select Ward</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                                <button class="ward-button"></button>
+                            </div>
+                            <div class="col-lg-3">
+                                <label>Admitted DATE</label>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="txt-style-4">April 05, 2016</label>
+                            </div>
+                            <div class="col-lg-3">
+                                <label>Estimated Discharge</label>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="input-group bootstrap-timepicker timepicker col-lg-12">
+                                    <input type="text" class="form-control input-small timepicker">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <label class="margin-bottom-xl">Note</label>
+                                <textarea class="margin-bottom-lg" placeholder="Write Here..."></textarea>
+                            </div>
+                        </div>
+                        <div id="dead" class="row">
+                            <div class="col-lg-12">
+                                <label class="margin-bottom-xl">Note</label>
+                                <textarea class="margin-bottom-lg" placeholder="Write Here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer padding-right-0">
+                        <button type="button" class="btn btn-default button-style-1 padding11" ng-click="checkoutPatient()">Save & Close</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </form>
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -2402,8 +2402,8 @@ table.setting_table_cat > tbody > tr > td:nth-child(2) span{float:left;}
     margin: 0;
 }
 .checkbox-styled-table:not(ie8) input ~ span:before{
-     height: 16px;
-     width: 16px;
+    height: 16px;
+    width: 16px;
 }
 
 
@@ -2424,3 +2424,260 @@ table.setting_table_cat > tbody > tr > td:nth-child(2) span{float:left;}
 .draft{color:#53e9b2 !important;font-weight:700;font-size:14px !important;}
 .paid{color:#56aeea !important;font-weight:700;font-size:14px !important;}
 .pending{color:#e74424 !important;font-weight:700;font-size:14px !important;}
+.show_on_others{display: none;}
+.show_on_supplements:not(h2),.show_on_others:not(h2){margin: 0;}
+.show_textarea{
+    position: relative;
+}
+.show_textarea input[type=text]{
+    display: none;
+    resize: none;
+    position: absolute;
+    top: 25px;
+    left: 0;
+    z-index: 1;
+    width: 80%;
+}
+.margin-top-50{
+    margin-top: 50px;
+}
+.save_Pview_button{
+    margin-top: 44px;
+}
+.accordian-header-info label{
+    font-size: 14px;
+    color: #a2a6b9;
+    text-transform: capitalize;
+    font-weight: bold;
+    margin-right: 10px;
+}
+.accordian-header-info span{
+    margin-right: 30px;
+}
+/*archive page styling*/
+.UploadBtn{
+    background: #56aeea;
+    border: none;
+    color: #fff;
+    height: 50px;
+    padding: 0 60px;
+    font-size: 17px;
+    margin: 0 auto;
+    margin-top: 20px;
+    display: block;
+}
+.select_file_mode{
+    display: inline-block;
+}
+.fileuploader_con{
+    margin-bottom: 20px;
+}
+.fileuploader_con ul{
+    list-style: none;
+    font-size: 14px;
+    color: #a2a6b9;
+    margin-top: 20px;
+}
+.fileuploader_con .progress{
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: black;
+    float: left;
+    width: 100%;
+    text-align: center;
+    height: 15px;
+    font-size: 12px;
+    margin: 0;
+}
+.progress div{
+    border-radius: 15px;
+}
+.show_uploading_format{
+    margin-top: 20px;
+    text-align: center;
+}
+.show_uploading_format input[type=text]{
+    padding-left: 10px;
+    height: 35px;
+}
+
+.create_button{
+    background: #56aeea;
+    border: none;
+    color: #fff;
+    padding: 5px 14px;
+    text-transform: uppercase;
+    font-size: 15px;
+}
+.edit_invoice h2 , .print_invoice h2{color:#003d51;font-weight:700;font-size:26px;}
+.edit_invoice{display:none;}
+.edit_inv_row_hdng{background-color:#003d51;margin:0;color:#fff;text-transform:uppercase;padding: 10px 0;margin-top:15px !important;margin-bottom:20px !important;}
+.edit_inv_row_hdng span{font-weight:700;font-size:14px;}
+
+.custom-form .edit_inv_row_hdng > div , .custom-form .edit_inv_row > div {margin-bottom:0;}
+.edit_inv_row{margin-bottom:10px;}
+.code_col{width: 13%;}
+.amount_col span{padding-left:10px;}
+.amount_col{width:18%;}
+.btn_can_col{width:2%;padding-left:0;padding-right:10px;}
+.btn_can_col span{font-size: 20px;color: red;line-height: 27px;float: right;cursor:pointer;}
+.btn_add{background-color:#43e19c;color:#fff;border-radius:50%;font-size: 20px}
+.btn_add:hover , .btn_add:focus{color:#fff;}
+.margin-0{margin:0;}
+.custom-form .price_list > div{margin-bottom:10px;}
+.custom-form .price_list span{color: #003d51;font-weight: 700;font-size:14px;}
+.custom-form .grand_total span{color:#56aeea;font-weight: 700;font-size:14px;}
+.custom-form .grand_total .col-lg-2 span{color:#003d51;font-weight:normal;}
+.custom-form .grand_total > div{margin-bottom:0;}
+.margin-top-30{margin-top:30px;}
+.margin-top-50{margin-top:50px}
+.print_invoice h2{margin-top:0;margin-bottom:0;text-transform:uppercase;font-size:36px;}
+.invoice_logo span{font-size:18px;color:#9698a7;}
+.invoice_address span{color:#9698a7;}
+.patient_info{background-color:#f6f9fb;padding:15px 5px;margin-top: 35px;}
+.patient_info label{color: #1f2122;font-weight: 700;font-size: 14px;margin-bottom:2px;}
+.patient_info span{color:#7f7f80;}
+.patient_status{font-size: 40px;font-weight: 700;color: #e74424 !important;}
+.term_cond{text-decoration:underline;cursor:pointer;color:#003d51;}
+.reports_hdng{color:#003d51;font-size: 26px;font-weight: 700;}
+.patient_info_reports{background-color:#f6f9fb;padding:15px 5px;margin:30px 0px;}
+.patient_info_reports label{color: #1f2122;font-weight: 700;font-size:14px;margin-bottom:2px;text-transform:none;}
+.custom-form .patient_info_reports > div{margin-bottom:0;}
+table.reports_table thead > tr > th{background-color:#003d51;color:#fff;font-size:14px;font-weight:700;text-transform:uppercase;}
+table.reports_table > tbody > tr > td{border:none;}
+table.reports_table{border-bottom:1px solid #ddecf8;}
+.total_payment span{color:#56aeea;font-weight:700;font-size:16px;}
+.total_payment{margin-top:10px;}
+.billing_hdng{color:#a2a6b9;font-weight:700;margin-bottom:20px;}
+.pdng-0{padding:0;}
+table.billing_table > tbody > tr > td:nth-child(4) span {
+    float: left;
+}
+table.billing_table > tbody > tr > td:nth-child(4){vertical-align:bottom;}
+.billing_actions {
+    position: relative;
+    top: 3px;
+    cursor: pointer;
+}
+.billing_table{margin-top:20px !important;}
+.billing_actions .setting-button {
+    cursor: pointer;
+    float: right;
+}
+.billing_actions .tool-tip_popup {
+    width: 150px;
+    height: 90px;
+    background: #fff;
+    position: absolute;
+    top: -13px;
+    right: 0;
+    z-index: 1;
+    box-shadow: 11px 0 40px 0px rgba(224,232,238,1);
+    padding: 16px 8px 0 20px;
+    padding-top: 18px;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -o-transition: 0.5s;
+}
+.billing_actions:hover .tool-tip_popup{
+    opacity: 1;
+    visibility: visible;
+    top: -13px;
+    right: 5%;
+}
+.margin-bot-70{margin-bottom:70px;}
+
+.add_manufacturer{width:100%;}
+.id_card{
+    background: url(../../img/id_card_bg.jpg);
+    width: 525px;
+    height: 297px;
+    padding-top: 30px;
+}
+.id_card > div{
+    padding-left: 27px;
+    margin-bottom: 15px;
+    float: left;
+}
+.id_card h2{
+    font-size: 30px;
+    color: #fff;
+    font-weight: bold;
+    margin: 0;
+    font-family: 'sgui-bold';
+}
+.id_card_img{
+    float: right;
+    margin-right: 40px;
+}
+.id_card label{
+    color:#a2a6b9;
+    font-size: 14px;
+    line-height: 14px;
+    margin: 0;
+}
+.id_card .patinetcard_name{
+    font-size: 24px;
+    color: #516e81;
+    line-height: 24px;
+    margin: 0;
+    margin-bottom: 25px;
+    margin-top: 5px;
+}
+.id_card span{
+    color:#516e81;
+    font-size: 14px;
+    line-height: 14px;
+    margin: 0;
+    font-weight: bold;
+}
+.id_card .row{
+    margin: 0 0 15px 0;
+}
+.idCardInfo{
+    margin-top: 50px;
+}
+.id_card .space{
+    margin-top: 28px;
+}
+.id_card .barCode{
+    display: block;
+    margin: 0 auto;
+}
+.thumb {
+        width: 24px;
+        height: 24px;
+        float: none;
+        position: relative;
+        top: 7px;
+    }
+
+    form .progress {
+        line-height: 15px;
+    }
+    .progress {
+        display: inline-block;
+        width: 100px;
+        border: 3px groove #CCC;
+    }
+
+    .progress div {
+        font-size: smaller;
+        background: #56aeea;
+        width: 0;
+        color: #fff;
+    }
+
+.archive_buttons .edit,.archive_buttons .delete{
+    display: none;   
+}
+.select-date input{
+    text-align: left;
+}
+#Noappointment{
+    display: block;
+}

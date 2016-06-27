@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR', [
     'ngRoute', 'ngResource',
-    'ngTouch', 'ui.grid', 'ui.grid.pagination', 'ui.grid.pagination', 'ngFileUpload'
+    'ngTouch', 'ui.grid', 'ui.grid.pagination', 'ngFileUpload', 'angular.filter', 'ui.bootstrap'
 ]);
 AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
     function ($httpProvider, $routeProvider, $locationProvider) {
@@ -27,7 +27,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/ppointments-list.html',
                     controller: 'appointmentsListController'
                 }).
-                when('/clinical-documentation-clinic-progress-note', {
+                when('/clinical-documentation-clinic-progress-note/:patientID', {
                     templateUrl: 'views/clinical-documentation-clinic-progress-note.html',
                     controller: 'clinicalDocumentationClinicProgressNote'
                 }).
@@ -79,6 +79,10 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/lab-order-listing.html',
                     controller: 'labOrderListing'
                 }).
+                when('/lab-order-tests/:orderID', {
+                    templateUrl: 'views/lab-order-tests.html',
+                    controller: 'labOrderTests'
+                }).
                 when('/lab-order-history', {
                     templateUrl: 'views/lab-order-history.html',
                     controller: 'labOrderHistory'
@@ -101,7 +105,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                 }).
                 when('/inventory', {
                     templateUrl: 'views/inventory.html',
-                    controller: 'inventory'
+                    controller: 'Inventory'
                 }).
                 when('/pharmacy', {
                     templateUrl: 'views/pharmacy.html',
@@ -122,6 +126,18 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                 when('/billing', {
                     templateUrl: 'views/billing.html',
                     controller: 'billing'
+                }).
+                when('/pharmacy-view', {
+                    templateUrl: 'views/pharmacy-view.html',
+                    controller: 'pharmacyView'
+                }).
+                when('/billing-invoice-print', {
+                    templateUrl: 'views/billing-invoice-print.html',
+                    controller: 'billing-invoice-print'
+                }).
+                when('/billing-codes', {
+                    templateUrl: 'views/billing-codes.html',
+                    controller: 'billing-codes'
                 }).
                 otherwise({
                     redirectTo: '/error'
@@ -157,6 +173,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
     $rootScope.PI = {};
     $rootScope.loader = "";
     $rootScope.$on('$viewContentLoaded', function () {
+//        $('#demo-date-range').datepicker({todayHighlight: true});
         $('.select-date').datepicker({autoclose: true, todayHighlight: true, format: 'yyyy-mm-dd'});
         $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
         $('.select_searchFields').select2();
@@ -181,7 +198,8 @@ AppEHR.run(function ($rootScope, $location, $window) {
                         myResults.push({
                             'text': "No Result Found"
                         });
-                    } else {
+                    }
+                    else {
                         $.each(data['data'], function (index, item) {
                             myResults.push({
                                 'id': item.id,
@@ -215,7 +233,8 @@ AppEHR.run(function ($rootScope, $location, $window) {
                         myResults.push({
                             'text': "No Result Found"
                         });
-                    } else {
+                    }
+                    else {
                         $.each(data['data'], function (index, item) {
                             myResults.push({
                                 'id': item.id,
