@@ -312,9 +312,12 @@ class OrderController extends Controller
     public function get_lab_test_templates(Request $request)
     {
 
+        $category_id = $request->input('category_id');
+
         $lab_templates = DB::table('lab_templates')
             ->select(DB::raw('id,name'))
             ->where('status', '1')
+            ->where('category', $category_id)
             ->get();
 
 
@@ -386,6 +389,19 @@ class OrderController extends Controller
         return response()->json(['status' => true, 'data' => $lab_test]);
 
 
+
+    }
+
+
+    public function get_lab_template_categories(Request $request){
+
+
+        $lab_categories = DB::table('template_categories')
+            ->select(DB::raw('id,name'))
+            ->where('template_categories.status', 1)
+            ->get();
+
+        return response()->json(['status' => true, 'data' => $lab_categories]);
 
     }
 

@@ -1302,6 +1302,7 @@ $api = new api();
 $api->name = "Get Lab Order Templates";
 $api->url = HOST . 'get_lab_test_templates';
 $api->method = "GET";
+$api->params->category_id = "1";
 $api->params->token = "";
 
 $api_arr [] = $api;
@@ -1474,5 +1475,13 @@ $api->params->token = "123435";
 $api_arr [] = $api;
 
 
+//Get Template Categories
+$api = new api();
+$api->name = "Get Template Categories";
+$api->url = HOST . 'get_lab_template_categories';
+$api->method = "GET";
+$api->params->token = "123435";
 
+
+$api_arr [] = $api;
 
