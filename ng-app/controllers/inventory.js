@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllInventory','GetAllSuppliers','AddCategory','GetAllCategories','AddSupplier','GetSingleSupplier','UpdateSuppliers','GetSingleCategory','GetSingleStock','updateCategory','DeleteCategory','DeleteSupplier','AddInventory','AddProduct','DeleteInventory','GetSingleProduct','$timeout', function($scope, $rootScope,$window,$routeParams,GetAllInventory,GetAllSuppliers,AddCategory,GetAllCategories,AddSupplier,GetSingleSupplier,UpdateSuppliers,GetSingleCategory,GetSingleStock,updateCategory,DeleteCategory,DeleteSupplier,AddInventory,AddProduct,DeleteInventory,GetSingleProduct,$timeout){
+AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllInventory','GetAllSuppliers','AddCategory','GetAllCategories','AddSupplier','GetSingleSupplier','UpdateSuppliers','GetSingleCategory','GetSingleStock','updateCategory','DeleteCategory','DeleteSupplier','AddInventory','AddProduct','DeleteInventory','GetSingleProduct','GetAllPharmacies','$timeout', function($scope, $rootScope,$window,$routeParams,GetAllInventory,GetAllSuppliers,AddCategory,GetAllCategories,AddSupplier,GetSingleSupplier,UpdateSuppliers,GetSingleCategory,GetSingleStock,updateCategory,DeleteCategory,DeleteSupplier,AddInventory,AddProduct,DeleteInventory,GetSingleProduct,GetAllPharmacies,$timeout){
 	$rootScope.pageTitle = "EHR - Inventory";
 	$scope.displayInfo = {};
 	$scope.cat_unique={};
@@ -96,6 +96,30 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 	function GetAllCategoriesFailure(error) {
 		console.log(error);
 	}
+
+//Get Pharmacies
+
+
+	GetAllPharmacies.get({
+		token: $window.sessionStorage.token
+
+	}, GetAllPharmaciesSuccess, GetAllPharmaciesFailure);
+
+	function GetAllPharmaciesSuccess(res) {
+		console.log(res);
+		if (res.status == true) {
+			$scope.PharmacyLists = res.data;
+			console.log($scope.PharmacyLists)
+		}
+	}
+
+	function GetAllPharmaciesFailure(error) {
+		console.log(error);
+	}
+
+
+
+
 
 // Add Supplier
 	$scope.AddSupplier = function (supplier) {

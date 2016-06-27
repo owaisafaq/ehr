@@ -720,6 +720,24 @@ AppEHR.factory("GetAllCategories", function ($resource) {
     return CategoryLists;
 });
 
+
+AppEHR.factory("GetAllPharmacies", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_pharmacies', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var Pharmacies = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return Pharmacies;
+});
+
+
 AppEHR.factory("AddCategory", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'create_inventory_category', params, {

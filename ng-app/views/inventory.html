@@ -328,11 +328,22 @@
                                         <label>Pharmacy</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <select class="form-control" ng-model="inventory.pharmacy_id">
+
+                                        <select class="form-control" ng-model="inventory.pharmacy_id"  >
+
                                             <option>Select Pharmacy</option>
-                                            <option>2</option>
-                                            <option>3</option>
+                                            <option ng-repeat="pharmacy in PharmacyLists" value="{{pharmacy.id}}">
+                                                {{pharmacy.name}}
+                                            </option>
+
+
+
                                         </select>
+
+
+
+
+
                                     </div>
 
                                     <div class="col-lg-3">
