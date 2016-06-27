@@ -1439,3 +1439,28 @@ $api->params->token = "1";
 
 
 $api_arr [] = $api;
+
+
+
+//Get Frequency
+$api = new api();
+$api->name = "Get Frequency";
+$api->url = HOST . 'get_frequency';
+$api->method = "GET";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+//Get Intake
+$api = new api();
+$api->name = "Get Intake";
+$api->url = HOST . 'get_intake';
+$api->method = "GET";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+
+

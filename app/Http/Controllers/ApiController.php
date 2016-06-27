@@ -2360,5 +2360,30 @@ class ApiController extends Controller
         ]);
         return response()->json(['status' => true, 'message' => "Patient Referel Added Successfully", 'manufacturers_id'=>$id]);
     }
+
+
+    public function get_frequency(Request $request){
+
+
+        $frequency = DB::table('frequency')
+            ->select(DB::raw('id,name'))
+            ->where('status', 1)
+            ->get();
+
+        return response()->json(['status' => true, 'data' => $frequency]);
+
+    }
+
+    public function get_intake(Request $request){
+
+
+        $intake = DB::table('intake')
+            ->select(DB::raw('id,name'))
+            ->where('status', 1)
+            ->get();
+
+        return response()->json(['status' => true, 'data' => $intake]);
+
+    }
 }
 

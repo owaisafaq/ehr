@@ -168,6 +168,10 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->post('add_manufacturer','App\Http\Controllers\ApiController@add_manufacturer');
 
+    $app->get('get_frequency','App\Http\Controllers\ApiController@get_frequency');
+
+    $app->get('get_intake','App\Http\Controllers\ApiController@get_intake');
+
 });
 $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($app) {
     $app->post('create_inventory_category','App\Http\Controllers\InventoryAPIController@create_category');
