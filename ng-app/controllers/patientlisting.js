@@ -4,15 +4,24 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
         $scope.action = '';
         $rootScope.pageTitle = "EHR - Patient Listing";
         $scope.displayInfo = {};
+        $scope.patientLists = [];
+        $rootScope.loader = "show";
+        $scope.itemsPerPage = 15;
+        $scope.offset = 1;
+        $scope.currentPage = 0;
+        $scope.items = [];
         GetAllPatients.get({
             token: $window.sessionStorage.token,
-            offset: 1,
-            limit: 15,
+            offset: $scope.offset,
+            limit: $scope.itemsPerPage
         }, GetAllPatientsSuccess, GetAllPatientsFailure);
 
         function GetAllPatientsSuccess(res) {
+            $rootScope.loader = "hide";
             if (res.status == true) {
                 $scope.patientLists = res.data;
+                console.log(res.count);
+                $scope.numOfData = res.count;
             }
         }
 
@@ -22,13 +31,10 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
 
         $scope.patientSelected = function (patientID) {
             $scope.patientID = patientID;
-            console.log("there")
             $rootScope.loader = "show";
             GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: patientID}, getPatientSuccess, getPatientFailure);
             function getPatientSuccess(res) {
-                console.log(patientID)
                 if (res.status == true) {
-                    console.log(res.data)
                     $rootScope.loader = "hide";
                     $scope.disabledEncounterButton = false;
                     $scope.patientInfo = true;
@@ -40,17 +46,85 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
                     $scope.displayInfo.sex = res.data.sex;
                     $scope.displayInfo.marital_status = res.data.marital_status;
                     $scope.displayInfo.date_of_birth = res.data.date_of_birth;
-                    $scope.showIdCard = true
+                    $scope.showIdCard = true;
                     //$scope.showStrip = true;
                     //$scope.dataStrip = "custom-card";
                 }
             }
 
             function getPatientFailure(error) {
-                console.log("there")
-                console.log(patientID)
                 $rootScope.loader = "show";
                 console.log(error);
             }
         }
+
+        $scope.currentPage = 1;
+        $scope.numPerPage = 15;
+        $scope.maxSize = 5;
+        
+
+          /*for (var i=0; i<$scope.patientLists.length; i++) {
+            $scope.patientLists.push({ id: i, first_name: "name "+ i, last_name: "description " + i });
+          }*/
+
+        $scope.range = function() {
+            var rangeSize = 5;
+            var ret = [];
+            var start;
+
+            start = $scope.currentPage;
+            if ( start > $scope.pageCount()-rangeSize ) {
+              start = $scope.pageCount()-rangeSize+1;
+            }
+
+            for (var i=start; i<start+rangeSize; i++) {
+              ret.push(i);
+            }
+            return ret;
+        };
+
+        $scope.prevPage = function() {
+            if ($scope.currentPage > 0) {
+                console.log(true)
+                $rootScope.loader = "show";
+                $scope.currentPage--;
+                GetAllPatients.get({
+                    token: $window.sessionStorage.token,
+                    offset: $scope.offset - 15,
+                    limit: $scope.itemsPerPage
+                }, GetAllPatientsSuccess, GetAllPatientsFailure);
+            }
+        };
+
+          $scope.prevPageDisabled = function() {
+            return $scope.currentPage === 0 ? "disabled" : "";
+          };
+
+          $scope.pageCount = function() {
+            return Math.ceil($scope.numOfData/$scope.itemsPerPage)-1;
+          };
+
+          $scope.nextPage = function() {
+            if ($scope.currentPage < $scope.pageCount()) {
+              $scope.currentPage++;
+              $rootScope.loader = "show";
+              console.log(true)
+                GetAllPatients.get({
+                    token: $window.sessionStorage.token,
+                    offset: $scope.offset + 15,
+                    limit: $scope.itemsPerPage
+                }, GetAllPatientsSuccess, GetAllPatientsFailure);
+            }
+          };
+
+          $scope.nextPageDisabled = function() {
+            return $scope.currentPage === $scope.pageCount() ? "disabled" : "";
+          };
+
+          $scope.setPage = function(n) {
+            $scope.currentPage = n;
+          };
+
+        
+        
     }]);

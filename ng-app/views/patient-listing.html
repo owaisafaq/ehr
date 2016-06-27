@@ -42,7 +42,7 @@
                 <div class="col-lg-8">
                     <span class="txt-style-3 pull-left text-uppercase">find patient</span>
                     <div class="col-lg-2">
-                        <select ng-model="search.find" class="form-control">
+                        <select ng-model="search1" class="form-control">
                             <option></option>
                             <option selected="selected" value="id">Patient ID</option>
                             <option value="first_name">Patient Name</option>
@@ -52,10 +52,12 @@
                         <button type="submit">
                             <i class="fa fa-search"></i>
                         </button>
-                        <input ng-model="search.text" class="search_field" type="text" placeholder="Search for a patient" value="">
+                        <input ng-model="search" class="search_field" type="text" placeholder="Search for a patient" value="">
                     </div>
                 </div> 
                 <button type="button" data-toggle="modal" data-target="#addpatient" ng-disabled="!showIdCard" class="btn ink-reaction button-style-1 button-style-1 pull-right">create patient id card</button>
+
+                <button type="button" data-toggle="modal" data-target="#addpatient" class="btn ink-reaction button-style-1 button-style-1 pull-right">create patient id card</button>
                 <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10">export</button>
                 <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10">import</button>
             </div>
@@ -77,12 +79,12 @@
                                 <th>phone number</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr ng-repeat="patientList in patientLists| filter: id">
+                        <tbody>{{search1 + search}}
+                            <tr ng-repeat="patientList in (patientLists = (patientLists)).slice(begin, end)">
                                 <td align="center">
                                     <div class="radio radio-styled">
                                         <label>
-                                            <input type="radio" name="optionsRadios" ng-model="action" ng-click="patientSelected(patientList.id)">
+                                            <input type="radio" name="optionsRadios" ng-model="action" ng-click="patientSelected(patientList.id);">
                                             <span></span>
                                         </label>
                                     </div>
@@ -94,10 +96,14 @@
                                 <td>{{patientList.phone_number}}</td>
                             </tr>
                         </tbody>
+                        <pagination data-ng-model="currentPage" total-items="numOfData.length"
+                            items-per-page="numPerPage" data-max-size="maxSize" data-boundary-links="true"
+                            ng-init="begin = (currentPage-1)*numPerPage; end = begin + numPerPage"
+                            data-ng-change="begin = (currentPage-1)*numPerPage; end = begin + numPerPage">
+                        </pagination>
+                        </tfoot>
                     </table>
                 </div>
-
-
             </div><!--end .card-body -->
         </div><!--end .card -->
     </section>
