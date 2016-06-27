@@ -1,5 +1,4 @@
 var AppEHR = angular.module('AppEHR');
-
 AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy) {
         $rootScope.pageTitle = "EHR - Patient Summary Demographics";
         $scope.vital = {};
@@ -9,6 +8,9 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         $scope.allergie = {};
         $scope.dropDownInfo = dropDownInfo;
         $scope.edit = [];
+        $scope.frequencies = frequencies;
+        $scope.intakeTypes = intakeTypes;
+        $scope.supplementData = [];
         PatientDemographics.get({
             token: $window.sessionStorage.token,
             patient_id: $routeParams.patientID
@@ -35,12 +37,10 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
                 $scope.PI.hospital_plan = res.data.hospital_plan;
                 $scope.PI.religion = res.data.religion;
                 $scope.PI.patient_image = res.data.patient_image;
-
                 GetPatientMedications.get({
                     token: $window.sessionStorage.token,
                     patient_id: $routeParams.patientID
                 }, getPatientMedicationSuccess, getPatientMedicationFailure);
-
             }
             $rootScope.loader = "hide";
         }
@@ -77,7 +77,6 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
                         bmi_height: $scope.vital.height == undefined ? '' : $scope.vital.height,
                         token: $window.sessionStorage.token,
                     }
-                    console.log(vitalField)
                     AddVitals.save(vitalField, vitalSuccess, vitalFailure);
                 }
             }
@@ -85,7 +84,20 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         function vitalSuccess(res) {
             if (res.status == true) {
-                $rootScope.loader = "hide";
+                GetVitalsInfo.get({
+                    token: $window.sessionStorage.token,
+                    patient_id: $routeParams.patientID
+                }, getVitalInfoSuccess, getVitalInfoFailure);
+                $scope.vital.systolic = '';
+                $scope.vital.diastolic = '';
+                $scope.vital.pulse = '';
+                $scope.vital.respiratoryRate = '';
+                $scope.vital.temperaturec = '';
+                $scope.vital.temperaturef = '';
+                $scope.vital.result = '';
+                $scope.vital.weight = '';
+                $scope.vital.notes = '';
+                $scope.vital.height = '';
             }
         }
 
@@ -97,9 +109,10 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
             token: $window.sessionStorage.token,
             patient_id: $routeParams.patientID
         }, getVitalInfoSuccess, getVitalInfoFailure);
-
         function getVitalInfoSuccess(res) {
             if (res.status == true) {
+                $rootScope.loader = "hide";
+                $('#vital-signs').modal('hide');
                 $scope.vitals = res.data;
             }
         }
@@ -116,7 +129,6 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
             token: $window.sessionStorage.token,
             patient_id: $routeParams.patientID
         }, GetSupplementsSuccess, GetSupplementsFailure);
-
         function GetSupplementsSuccess(res) {
             if (res.status == true) {
                 $scope.supplements = res.data;
@@ -132,7 +144,6 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
             token: $window.sessionStorage.token,
             patient_id: $routeParams.patientID
         }, GetAllergiesSuccess, GetAllergiesFailure);
-
         function GetAllergiesSuccess(res) {
             if (res.status == true) {
 //                $scope.allergies = 
@@ -154,7 +165,6 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
             token: $window.sessionStorage.token,
             patient_id: $routeParams.patientID
         }, GetEncountersByPatientsSuccess, GetEncountersByPatientsFailure);
-
         function GetEncountersByPatientsSuccess(res) {
             if (res.status == true) {
                 $scope.encounters = res.data;
@@ -230,5 +240,19 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
                 patient_id: $routeParams.patientID
             }, GetAllergiesSuccess, GetAllergiesFailure);
 //            }
+        }
+        DropDownData.get({
+            token: $window.sessionStorage.token,
+            patient_id: $routeParams.patientID
+        }, GetManufacturerSuccess, GetManufacturerFailure);
+        $scope.saveSupplement = function () {
+            console.log($scope.supplementData.manufacturer);
+
+        }
+        function GetManufacturerSuccess(res) {
+            $scope.manufacturer = res.data.manufacturer;
+        }
+        function GetManufacturerFailure(error) {
+            console.log(error)
         }
     }]);

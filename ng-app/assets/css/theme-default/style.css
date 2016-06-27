@@ -2590,6 +2590,8 @@ table.billing_table > tbody > tr > td:nth-child(4){vertical-align:bottom;}
     right: 5%;
 }
 .margin-bot-70{margin-bottom:70px;}
+
+.add_manufacturer{width:100%;}
 .id_card{
     background: url(../../img/id_card_bg.jpg);
     width: 525px;
@@ -2645,4 +2647,37 @@ table.billing_table > tbody > tr > td:nth-child(4){vertical-align:bottom;}
 .id_card .barCode{
     display: block;
     margin: 0 auto;
+}
+.thumb {
+        width: 24px;
+        height: 24px;
+        float: none;
+        position: relative;
+        top: 7px;
+    }
+
+    form .progress {
+        line-height: 15px;
+    }
+    .progress {
+        display: inline-block;
+        width: 100px;
+        border: 3px groove #CCC;
+    }
+
+    .progress div {
+        font-size: smaller;
+        background: #56aeea;
+        width: 0;
+        color: #fff;
+    }
+
+.archive_buttons .edit,.archive_buttons .delete{
+    display: none;   
+}
+.select-date input{
+    text-align: left;
+}
+#Noappointment{
+    display: block;
 }

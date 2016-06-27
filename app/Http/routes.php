@@ -166,7 +166,7 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->post('delete_pharmacy','App\Http\Controllers\OtherController@delete_pharmacy');
 
-
+    $app->post('add_manufacturer','App\Http\Controllers\ApiController@add_manufacturer');
 
 });
 $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($app) {

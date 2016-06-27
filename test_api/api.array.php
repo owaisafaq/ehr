@@ -2,8 +2,8 @@
 
 require 'api.class.php';
 //define('HOST', 'http://131.107.100.10/ehr/public/api/');
-//define('HOST', 'http://localhost/ehr/public/api/');
-define('HOST', 'http://demoz.online/ehr/public/api/');
+define('HOST', 'http://localhost/ehr/public/api/');
+//define('HOST', 'http://demoz.online/ehr/public/api/');
 define('APP', '');
 define('ROUTE', '');
 
@@ -617,6 +617,7 @@ $api->method = "POST";
 $api->description = "Get Supplements";
 $api->params->patient_id = "1";
 $api->params->supplements = "Paracetamol";
+$api->params->manufacturer = "manufacturer";
 $api->params->dosage = "10";
 $api->params->frequency = "5";
 $api->params->intake = "2";
@@ -650,6 +651,25 @@ $api->method = "POST";
 $api->description = "Update Patient Allergie";
 $api->params->patient_id = "1";
 $api->params->allergy_id = "1";
+$api->params->allergy_type = "severe";
+$api->params->allergies = "tobaco";
+$api->params->severity = "high";
+$api->params->observed_on = "";
+$api->params->allergy_status = "";
+$api->params->reaction = "";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+
+// Add Patient Allergies
+$api = new api();
+$api->name = "Add Patient Allergie";
+$api->url = HOST . 'add_patient_allergies';
+$api->method = "POST";
+$api->description = "Add Patient Allergie";
+$api->params->patient_id = "1";
 $api->params->allergy_type = "severe";
 $api->params->allergies = "tobaco";
 $api->params->severity = "high";
@@ -783,6 +803,8 @@ $api->name = "Get All Patients";
 $api->url = HOST . 'get_all_patients';
 $api->method = "GET";
 $api->description = "Get All Patients";
+$api->params->offset = "1";
+$api->params->limit = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -1403,5 +1425,17 @@ $api->params->order_quantity= "";
 $api->params->cost_per_item= "";
 $api->params->pack= "";
 $api->params->token = "";
+
+$api_arr [] = $api;
+
+
+// Add manufacturer
+$api = new api();
+$api->name = "Add manufacturer";
+$api->url = HOST . 'add_manufacturer';
+$api->method = "POST";
+$api->params->manufacturer_name = "1";
+$api->params->token = "1";
+
 
 $api_arr [] = $api;
