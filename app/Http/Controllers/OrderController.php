@@ -373,5 +373,21 @@ class OrderController extends Controller
 
     }
 
+    public function get_lab_test_details(Request $request){
+
+        $lab_test_id = $request->input('lab_test_id');
+
+        $lab_test = DB::table('lab_tests')
+            ->select(DB::raw('*'))
+            ->where('lab_tests.status', 1)
+            ->where('lab_tests.id', $lab_test_id)
+            ->get();
+
+        return response()->json(['status' => true, 'data' => $lab_test]);
+
+
+
+    }
+
 }
 
