@@ -1462,5 +1462,17 @@ $api->params->token = "123435";
 
 $api_arr [] = $api;
 
+//Get Lab Test
+$api = new api();
+$api->name = "Get Lab Test Details";
+$api->url = HOST . 'get_lab_test_details';
+$api->method = "GET";
+$api->params->lab_test_id = "1";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+
 
 

@@ -1263,7 +1263,7 @@ class ApiController extends Controller
 
         $patients = DB::table('patients')
             ->select('patients.*', 'visits.id as encounter_id', 'visits.created_at as visit_created_at')
-            ->leftJoin('visits','patients.id','=','visits.patient_id')
+            ->leftJoin('visits', 'patients.id', '=', 'visits.patient_id')
             ->where('patients.id', $patient_id)
             ->get();
 
@@ -1345,11 +1345,11 @@ class ApiController extends Controller
             ->first();
 
 
-        $patient_plan= DB::table('hospital_plan')
-                ->leftJoin('patients', 'patients.plan_id', '=', 'hospital_plan.id')
-                ->select(DB::raw('hospital_plan.id,hospital_plan.name'))
-                ->where('patients.id', $patient_id)
-                ->first();
+        $patient_plan = DB::table('hospital_plan')
+            ->leftJoin('patients', 'patients.plan_id', '=', 'hospital_plan.id')
+            ->select(DB::raw('hospital_plan.id,hospital_plan.name'))
+            ->where('patients.id', $patient_id)
+            ->first();
 
         $data = array(
             "patient_info" => $patient_info,
@@ -1688,7 +1688,8 @@ class ApiController extends Controller
     }
 
 
-    public function add_patient_medications(Request $request){
+    public function add_patient_medications(Request $request)
+    {
 
         $patient_id = $request->input('patient_id');
 
@@ -1737,7 +1738,8 @@ class ApiController extends Controller
     }
 
 
-    public function add_patient_supplements(Request $request){
+    public function add_patient_supplements(Request $request)
+    {
 
 
         $patient_id = $request->input('patient_id');
@@ -1752,11 +1754,11 @@ class ApiController extends Controller
 
         $intake = $request->input('intake');
 
-        $from_date= $request->input('from_date');
+        $from_date = $request->input('from_date');
 
-        $medicine_status =  $request->input('medicine_status');
+        $medicine_status = $request->input('medicine_status');
 
-        $to_date =  $request->input('to_date');
+        $to_date = $request->input('to_date');
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
@@ -1767,7 +1769,7 @@ class ApiController extends Controller
                 'dosage' => $dosage,
                 'frequency' => $frequency,
                 'intake' => $intake,
-                'manufacturer'=>$manufacturer,
+                'manufacturer' => $manufacturer,
                 'from_date' => $from_date,
                 'medicine_status' => $medicine_status,
                 'to_date' => $to_date,
@@ -1778,7 +1780,6 @@ class ApiController extends Controller
 
 
         return response()->json(['status' => true, 'message' => 'Patient Supplemnts Added Successfully']);
-
 
 
     }
@@ -1826,6 +1827,7 @@ class ApiController extends Controller
 
 
     }
+
     public function add_patient_allergies(Request $request)
     {
 
@@ -1908,15 +1910,29 @@ class ApiController extends Controller
         $limit = $request->input('limit');
         $offset = $request->input('offset');
 
-        $patients = DB::table('patients')
-            ->leftJoin('patient_address', 'patient_address.patient_id', '=', 'patients.id')
-            ->select(DB::raw('patients.id,patients.first_name,patients.middle_name,patients.last_name,patient_address.phone_number,date_of_birth'))
-            ->where('patients.status', 1)
-            ->skip($offset)->take($limit)
-            ->get();
+        if ($limit > 0 ||$offset > 0) {
 
-        $count = DB::table('patients')->count();
-        return response()->json(['status' => true,'count'=> $count, 'data' => $patients]);
+            $patients = DB::table('patients')
+                ->leftJoin('patient_address', 'patient_address.patient_id', '=', 'patients.id')
+                ->select(DB::raw('patients.id,patients.first_name,patients.middle_name,patients.last_name,patient_address.phone_number,date_of_birth'))
+                ->where('patients.status', 1)
+                ->skip($offset)->take($limit)
+                ->get();
+
+            $count = DB::table('patients')->count();
+
+        } else {
+
+            $patients = DB::table('patients')
+                ->leftJoin('patient_address', 'patient_address.patient_id', '=', 'patients.id')
+                ->select(DB::raw('patients.id,patients.first_name,patients.middle_name,patients.last_name,patient_address.phone_number,date_of_birth'))
+                ->where('patients.status', 1)
+                ->get();
+
+            $count = DB::table('patients')->count();
+
+        }
+        return response()->json(['status' => true, 'count' => $count, 'data' => $patients]);
 
     }
 
@@ -2148,16 +2164,14 @@ class ApiController extends Controller
 
         $notes = html_entity_decode($request->input('clinical_notes'));
 
-        $clinical_notes = json_decode($notes,true);
+        $clinical_notes = json_decode($notes, true);
 
 
+        foreach ($clinical_notes as $id => $patient_clinical_notes) {
+            /*            echo "ID: ".$id." --- ";
+                        echo "Val: ".$patient_clinical_notes."<br>";*/
 
-
-        foreach ($clinical_notes as $id=>$patient_clinical_notes) {
-/*            echo "ID: ".$id." --- ";
-            echo "Val: ".$patient_clinical_notes."<br>";*/
-
-           DB::table('patient_clinical_notes')->insert(
+            DB::table('patient_clinical_notes')->insert(
                 ['patient_id' => $patient_id,
                     'visit_id' => $visit_id,
                     'field_id' => $id,
@@ -2168,8 +2182,6 @@ class ApiController extends Controller
             );
 
         }
-
-
 
 
         return response()->json(['status' => true, 'message' => 'Clinical Notes Added Successfully']);
@@ -2352,17 +2364,20 @@ class ApiController extends Controller
 
 
     }
-    public function add_manufacturer(Request $request){
+
+    public function add_manufacturer(Request $request)
+    {
         $name = $request->input('manufacturer_name');
 
         $id = DB::table('manufacturers')->insertGetId([
-            'name'=>$name
+            'name' => $name
         ]);
-        return response()->json(['status' => true, 'message' => "Patient Referel Added Successfully", 'manufacturers_id'=>$id]);
+        return response()->json(['status' => true, 'message' => "Patient Referel Added Successfully", 'manufacturers_id' => $id]);
     }
 
 
-    public function get_frequency(Request $request){
+    public function get_frequency(Request $request)
+    {
 
 
         $frequency = DB::table('frequency')
@@ -2374,7 +2389,8 @@ class ApiController extends Controller
 
     }
 
-    public function get_intake(Request $request){
+    public function get_intake(Request $request)
+    {
 
 
         $intake = DB::table('intake')
