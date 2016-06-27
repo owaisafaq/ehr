@@ -662,6 +662,25 @@ $api->params->token = "123";
 $api_arr [] = $api;
 
 
+
+// Add Patient Allergies
+$api = new api();
+$api->name = "Add Patient Allergie";
+$api->url = HOST . 'add_patient_allergies';
+$api->method = "POST";
+$api->description = "Add Patient Allergie";
+$api->params->patient_id = "1";
+$api->params->allergy_type = "severe";
+$api->params->allergies = "tobaco";
+$api->params->severity = "high";
+$api->params->observed_on = "";
+$api->params->allergy_status = "";
+$api->params->reaction = "";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
 // Delete Patient Allergies
 $api = new api();
 $api->name = "Delete Patient Allergie";
