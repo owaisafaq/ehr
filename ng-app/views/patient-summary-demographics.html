@@ -306,7 +306,7 @@
                 </div>
 
                 <div class="tab-pane" id="medications">
-                    <button class="btn ink-reaction button-style-1 button-style-1 pull-right margin-bottom-xxl">Add Medications</button>
+                    <button class="btn ink-reaction button-style-1 button-style-1 pull-right margin-bottom-xxl" data-toggle="modal" data-target="#addmedication">Add Medications</button>
                     <table class="table table-striped no-margin table-custom table-custom_big">
                         <thead>
                             <tr>
@@ -943,6 +943,361 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default button-style-1">Add</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div><!-- /.modal-content -->
+
+
+    </div><!-- /.modal-dialog -->
+
+</div><!-- /.modal -->
+
+<div class="modal fade big-modal" id="addmedication" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Add Medication</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form">
+                    <div class="row">
+
+                        <div class="col-lg-3">
+                            <label>Medication</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <select class="form-control">
+                                <option>Select Medication</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>                                              
+
+                        <div class="col-lg-3">
+                            <label>SIG</label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input type="text" placeholder="" name=""/>
+                        </div>
+                        <div class="col-lg-1">
+                            <button class="setting-button button-custom pull-right open_sig"></button>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Dispense</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" name=""/>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Refills</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" name=""/>
+                        </div>
+
+                        <div class="col-lg-3"></div>
+                        <div class="col-lg-9">
+                            <div class="checkbox checkbox-styled">
+                                <label>
+                                    <input type="checkbox" value="">
+                                    <span>Add to Medication List</span>
+                                </label>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-3">
+                            <label>Pharmacy</label>
+                        </div>
+                        <div class="col-lg-6">
+                            <select class="form-control">
+                                <option>Select Pharmacy</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3"></div>
+
+                        <div class="col-lg-3 clear">
+                            <label>Note Ot Pharmacy</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="text" placeholder="" name="" required/>
+                        </div>
+
+
+                        <div class="col-lg-3"></div>
+                        <div class="col-lg-9">
+                            <button type="button" class="btn btn-default pull-left button-style-1">Add</button>
+                        </div>
+
+                    </div>
+
+                    <div class="medication_list">
+                        <div class="row med_row">
+                            <div class="col-lg-10">
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label>Medication</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>Amoxicillin oral powder</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Dispense</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>5 Tablet Refills: 1</span>
+                                    </div>
+
+                                    <div class="col-lg-2 clear">
+                                        <label>SIG</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>10 mg QDPA for 5 days null route</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Pharmacy</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>Eye Clinic Pharmacy</span>
+                                    </div>
+
+                                    <div class="col-lg-2 clear">
+                                        <label>Note</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>Lorem ipsum Lorem ipsum</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Refill</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>Lorem Ipsum</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <button class="delete remove_med button-custom pull-right"></button>
+                                <button class="edit button-custom pull-right"></button>                            
+                            </div>
+                        </div>
+
+                        <div class="row med_row">
+                            <div class="col-lg-10">
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label>Medication</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>Amoxicillin oral powder</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Dispense</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>5 Tablet Refills: 1</span>
+                                    </div>
+
+                                    <div class="col-lg-2 clear">
+                                        <label>SIG</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>10 mg QDPA for 5 days null route</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Pharmacy</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>Eye Clinic Pharmacy</span>
+                                    </div>
+
+                                    <div class="col-lg-2 clear">
+                                        <label>Note</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>Lorem ipsum Lorem ipsum</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Refill</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>Lorem Ipsum</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <button class="delete remove_med button-custom pull-right"></button>
+                                <button class="edit button-custom pull-right"></button>                            
+                            </div>
+                        </div>
+
+                        <div class="row med_row">
+                            <div class="col-lg-10">
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label>Medication</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>Amoxicillin oral powder</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Dispense</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>5 Tablet Refills: 1</span>
+                                    </div>
+
+                                    <div class="col-lg-2 clear">
+                                        <label>SIG</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>10 mg QDPA for 5 days null route</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Pharmacy</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>Eye Clinic Pharmacy</span>
+                                    </div>
+
+                                    <div class="col-lg-2 clear">
+                                        <label>Note</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>Lorem ipsum Lorem ipsum</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Refill</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>Lorem Ipsum</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <button class="delete remove_med button-custom pull-right"></button>
+                                <button class="edit button-custom pull-right"></button>                            
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default button-style-1">Send</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div><!-- /.modal-content -->
+
+
+    </div><!-- /.modal-dialog -->
+
+</div><!-- /.modal -->
+
+
+<div class="modal fade big-modal" id="addsig" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Build Instructions</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form">
+                    <div class="row">  
+
+                        <div class="col-lg-6">
+                            <div class="row">
+                                
+                                <div class="col-lg-12">
+                                    <label>Dose</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <select class="form-control">
+                                        <option>Select</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="col-lg-12">
+                                    <label>Route</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <select class="form-control">
+                                        <option>Select</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="col-lg-12">
+                                    <label>Direction</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <select class="form-control">
+                                        <option>Select</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                    </select>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        
+                            <div class="col-lg-6">
+                                <div class="row">
+                                
+                                <div class="col-lg-12">
+                                    <label>Unit</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <select class="form-control">
+                                        <option>Select</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="col-lg-12">
+                                    <label>Frequency</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <select class="form-control">
+                                        <option>Select</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="col-lg-12">
+                                    <label>Duration</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <select class="form-control">
+                                        <option>Select</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                    </select>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default update_sig button-style-1">Update</button>
                         <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
                     </div>
                 </form>

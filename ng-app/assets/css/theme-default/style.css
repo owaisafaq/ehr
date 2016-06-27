@@ -2689,3 +2689,11 @@ table.billing_table > tbody > tr > td:nth-child(4){vertical-align:bottom;}
         width: 0;
         color: #fff;
     }
+
+#addmedication .setting-button{width: 100%;position: relative;top: 5px;}
+#addmedication .edit , #addmedication .delete{width:30px;}
+#addmedication .medication_list .row > div{margin-bottom:0;}
+#addmedication .medication_list label{color: #516E7F;font-size:13px;text-transform: none;}
+#addmedication .medication_list span{color:#b5b6b8;}
+#addmedication .medication_list{border-top:1px solid #b5b6b8;height: 230px;max-height: 230px;overflow-y:auto;overflow-x: hidden;}
+#addmedication .medication_list .med_row{border-bottom:1px solid #b5b6b8;padding: 10px 0px;margin: 0;}
