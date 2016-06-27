@@ -1910,7 +1910,7 @@ class ApiController extends Controller
 
         $patients = DB::table('patients')
             ->leftJoin('patient_address', 'patient_address.patient_id', '=', 'patients.id')
-            ->select(DB::raw('COUNT(*) as count, patients.id,patients.first_name,patients.middle_name,patients.last_name,patient_address.phone_number,date_of_birth'))
+            ->select(DB::raw('patients.id,patients.first_name,patients.middle_name,patients.last_name,patient_address.phone_number,date_of_birth'))
             ->where('patients.status', 1)
             ->skip($offset)->take($limit)
             ->get();
