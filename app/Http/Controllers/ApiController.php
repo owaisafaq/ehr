@@ -1744,6 +1744,8 @@ class ApiController extends Controller
 
         $supplements = $request->input('supplements');
 
+        $manufacturer = $request->input('manufacturer');
+
         $dosage = $request->input('dosage');
 
         $frequency = $request->input('frequency');
@@ -1765,6 +1767,7 @@ class ApiController extends Controller
                 'dosage' => $dosage,
                 'frequency' => $frequency,
                 'intake' => $intake,
+                'manufacturer'=>$manufacturer,
                 'from_date' => $from_date,
                 'medicine_status' => $medicine_status,
                 'to_date' => $to_date,
@@ -1817,6 +1820,35 @@ class ApiController extends Controller
             ->where('patient_id', $patient_id)
             ->where('id', $allergy_id)
             ->update(array('allergy_type' => $allergy_type, 'allergies' => $allergies, 'observed_on' => $observed_on, 'severity' => $severity, 'allergy_status' => $allergy_status, 'reactions' => $reaction, 'updated_at' => $currentdatetime));
+
+
+        return response()->json(['status' => true, 'message' => 'Patient Allergies updated successfully']);
+
+
+    }
+    public function add_patient_allergies(Request $request)
+    {
+
+        $patient_id = $request->input('patient_id');
+        $allergy_type = $request->input('allergy_type');
+        $allergies = $request->input('allergies');
+        $severity = $request->input('severity');
+        $observed_on = $request->input('observed_on');
+        $allergy_status = $request->input('allergy_status');
+        $reaction = $request->input('reaction');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+        DB::table('patient_allergies')->insert([
+            'patient_id' => $patient_id,
+            'allergy_type' => $allergy_type,
+            'allergies' => $allergies,
+            'observed_on' => $observed_on,
+            'severity' => $severity,
+            'allergy_status' => $allergy_status,
+            'reactions' => $reaction,
+            'created_at' => $currentdatetime]);
 
 
         return response()->json(['status' => true, 'message' => 'Patient Allergies updated successfully']);
@@ -1876,16 +1908,15 @@ class ApiController extends Controller
         $limit = $request->input('limit');
         $offset = $request->input('offset');
 
-
         $patients = DB::table('patients')
             ->leftJoin('patient_address', 'patient_address.patient_id', '=', 'patients.id')
-            ->select(DB::raw('patients.id,patients.first_name,patients.middle_name,patients.last_name,patient_address.phone_number,date_of_birth'))
+            ->select(DB::raw('COUNT(*) as count, patients.id,patients.first_name,patients.middle_name,patients.last_name,patient_address.phone_number,date_of_birth'))
             ->where('patients.status', 1)
             ->skip($offset)->take($limit)
             ->get();
 
-
-        return response()->json(['status' => true, 'data' => $patients]);
+        $count = DB::table('patients')->count();
+        return response()->json(['status' => true,'count'=> $count, 'data' => $patients]);
 
     }
 

@@ -617,6 +617,7 @@ $api->method = "POST";
 $api->description = "Get Supplements";
 $api->params->patient_id = "1";
 $api->params->supplements = "Paracetamol";
+$api->params->manufacturer = "manufacturer";
 $api->params->dosage = "10";
 $api->params->frequency = "5";
 $api->params->intake = "2";
