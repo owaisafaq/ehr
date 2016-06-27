@@ -9,6 +9,26 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         $scope.allergie = {};
         $scope.dropDownInfo = dropDownInfo;
         $scope.edit = [];
+        $scope.visitcurrentPage = 1;
+        $scope.visitnumPerPage = 15;
+        $scope.visitmaxSize = 5;
+
+        $scope.vitalscurrentPage = 1;
+        $scope.vitalsnumPerPage = 15;
+        $scope.vitalsmaxSize = 5;
+
+        $scope.medicationscurrentPage = 1;
+        $scope.medicationnumPerPage = 15;
+        $scope.medicationmaxSize = 5;
+
+        $scope.suplimentscurrentPage = 1;
+        $scope.suplimentsnumPerPage = 15;
+        $scope.suplimentsmaxSize = 5;
+
+        $scope.allergycurrentPage = 1;
+        $scope.allergynumPerPage = 15;
+        $scope.allergysmaxSize = 5;
+
         PatientDemographics.get({
             token: $window.sessionStorage.token,
             patient_id: $routeParams.patientID
@@ -101,6 +121,8 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         function getVitalInfoSuccess(res) {
             if (res.status == true) {
                 $scope.vitals = res.data;
+                $scope.visitnumOfData = res.data.length;
+                
             }
         }
 

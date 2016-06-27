@@ -75,7 +75,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="encounter in allEncounter | filter: {first_name: search} | limitTo:10">
+                            <tr ng-repeat="encounter in allEncounter | offset: currentPage*itemsPerPage | limitTo: itemsPerPage">
                                 <td align="center">
                                     <!-- <div class="radio radio-styled">
                                         <label>
@@ -98,39 +98,29 @@
                                 <td>{{encounter.encounter_class}}</td>
                                 <td>{{encounter.name}}</td>
                             </tr>
-                            <!-- <tr>
-                                <td align="center">
-                                    <div class="radio radio-styled">
-                                        <label>
-                                            <input type="radio" name="optionsRadios" value="option1">
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>14/04/2016    12:00:32</td>
-                                <td>90189191</td>
-                                <td>Joe Bloggs</td>
-                                <td>Eye Clinic</td>
-                                <td>Consultation</td>
-                                <td>Outpatient</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td align="center">
-                                    <div class="radio radio-styled">
-                                        <label>
-                                            <input type="radio" name="optionsRadios" value="option1">
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>14/04/2016    12:00:32</td>
-                                <td>90189191</td>
-                                <td>Joe Bloggs</td>
-                                <td>Eye Clinic</td>
-                                <td>Consultation</td>
-                                <td>Outpatient</td>
-                                <td></td>
-                            </tr> -->
                         </tbody>
+                        <pagination data-ng-model="currentPage" total-items="numOfData.length"
+                            items-per-page="numPerPage" data-max-size="maxSize" data-boundary-links="true"
+                            ng-init="begin = (currentPage-1)*numPerPage; end = begin + numPerPage"
+                            data-ng-change="begin = (currentPage-1)*numPerPage; end = begin + numPerPage">
+                        </pagination>
+                        <!-- <tfoot ng-if="allEncounter > 15">
+                            <td colspan="3">
+                              <div class="pagination">
+                                <ul>
+                                  <li ng-class="prevPageDisabled()">
+                                    <a href ng-click="prevPage()">« Prev</a>
+                                  </li>
+                                  <li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
+                                    <a href="#/new-encounter-encounter-list/{{EID}}/{{PID}}">{{n+1}}</a>
+                                  </li>
+                                  <li ng-class="nextPageDisabled()">
+                                    <a href ng-click="nextPage()">Next »</a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </td>
+                        </tfoot> -->
                     </table>
                 </div>
             </div><!--end .card-body -->
@@ -152,8 +142,6 @@
             <div class="col-lg-6">
                 <select class="form-control" ng-class="{true: 'error'}[submitted && encounterForm.department.$invalid]" name="department" ng-model="updateEncounter.department" placeholder="Select" required>
                     <option value=""></option>
-<!--                     <option value="1">1</option>
-                    <option value="2">2</option> -->
                     <option ng-selected="updateEncounter.department == department" ng-repeat="department in encountersDropdownData.departments" value="{{department.id}}">{{department.name}}</option>
                 </select>
                 <p class="help-block PIValid" ng-show="submitted && encounterForm.department.$error.required">Required</p>

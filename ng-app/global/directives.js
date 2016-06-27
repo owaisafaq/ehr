@@ -11,6 +11,13 @@ AppEHR.directive('showtab', function () {
     };
 });
 
+AppEHR.filter('offset', function() {
+  return function(input, start) {
+    start = parseInt(start, 10);
+    return input.slice(start);
+  };
+});
+
 AppEHR.directive('modal', function ($window) {
     return {
         templateUrl: function (elem, attrs) {
