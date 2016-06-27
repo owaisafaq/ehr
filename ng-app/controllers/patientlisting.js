@@ -1,6 +1,7 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPatients', '$window', '$routeParams','GetPatientInfo', function ($scope, $rootScope, GetAllPatients, $window, $routeParams,GetPatientInfo) {
+AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPatients', '$window', '$routeParams', 'GetPatientInfo', function ($scope, $rootScope, GetAllPatients, $window, $routeParams, GetPatientInfo) {
+        $scope.action = '';
         $rootScope.pageTitle = "EHR - Patient Listing";
         $scope.displayInfo = {};
         $scope.patientLists = [];

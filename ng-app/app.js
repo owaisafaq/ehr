@@ -79,6 +79,10 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/lab-order-listing.html',
                     controller: 'labOrderListing'
                 }).
+                when('/lab-order-tests/:orderID', {
+                    templateUrl: 'views/lab-order-tests.html',
+                    controller: 'labOrderTests'
+                }).
                 when('/lab-order-history', {
                     templateUrl: 'views/lab-order-history.html',
                     controller: 'labOrderHistory'
@@ -126,6 +130,14 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                         when('/pharmacy-view', {
                     templateUrl: 'views/pharmacy-view.html',
                     controller: 'pharmacyView'
+                }).
+                when('/billing-invoice-print', {
+                    templateUrl: 'views/billing-invoice-print.html',
+                    controller: 'billing-invoice-print'
+                }).
+                when('/billing-codes', {
+                    templateUrl: 'views/billing-codes.html',
+                    controller: 'billing-codes'
                 }).
                 otherwise({
                     redirectTo: '/error'

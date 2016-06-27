@@ -355,6 +355,7 @@
                                 <td>{{supplement.to_date}}</td>
                                 <td>{{supplement.medicine_status}}</td>
                             </tr>
+                        </tbody>
                     </table>
                     <pagination data-ng-model="suplimentscurrentPage" total-items="supplements.length"
                             items-per-page="suplimentsnumPerPage" data-max-size="suplimentsmaxSize" data-boundary-links="true"
@@ -363,7 +364,7 @@
                     </pagination>
                 </div>
                 <div class="tab-pane" id="allergies"> 
-                    <button class="btn ink-reaction button-style-1 button-style-1 pull-right margin-bottom-xxl">Add Allergies</button>
+                    <button class="btn ink-reaction button-style-1 button-style-1 pull-right margin-bottom-xxl" data-toggle="modal" data-target="#addallergies">Add Allergies</button>
                     <table class="table table-striped no-margin table-custom table-custom_big editable_table selectAndDateTable">
                         <thead>
                             <tr>
@@ -395,10 +396,10 @@
                                         <option ng-selected="allergie.allergy_status == allergy.name" ng-repeat="allergy in dropDownInfo.AllergyType" value="{{allergy.name}}">{{allergy.name}}</option>
                                         <!--<option ng-selected="allergie.allergy_status == 'not any more'">Not Any More</option>-->
                                     </select>
-<!--                                    <select class="form-control select_searchFields" placeholder="ID Type" ng-model="PI.identity_type">
-                                        <option value=""></option>
-                                        <option ng-repeat="idType in dropDownInfo.IdType" value="{{idType.id}}">{{idType.type}}</option>
-                                    </select>-->
+                                    <!--                                    <select class="form-control select_searchFields" placeholder="ID Type" ng-model="PI.identity_type">
+                                                                            <option value=""></option>
+                                                                            <option ng-repeat="idType in dropDownInfo.IdType" value="{{idType.id}}">{{idType.type}}</option>
+                                                                        </select>-->
                                 </td>
                                 <td><input type="text" ng-model="allergie.reactions" ng-disabled="edit[$index] == false" /></td>
                                 <td>
@@ -474,6 +475,8 @@
         </div><!--end .card -->
     </section>
 </div>
+    </section>
+</div>
 <!-- ARCHIVE -->
 <div class="modal fade big-modal" id="fileUploader" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -502,7 +505,7 @@
                                   </span>
                                 </li>
                                 <li ng-repeat="f in errFiles" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
-                                </li> 
+                                </li>
                             </ul>
                             <p>{{fileUploadMessage}}</p>
                         </div>
@@ -715,4 +718,218 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div class="modal fade big-modal" id="addallergies" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Add Allergies</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form">
+                    <div class="row">
+
+                        <div class="col-lg-3">
+                            <label>Type</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <select class="form-control">
+                                <option>Select</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <label>Allergy</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" placeholder="" name="" required/>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Severity</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <select class="form-control">
+                                <option>Select</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <label>Observed On</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="input-group date select-date">
+                                <div class="input-group-content">
+                                    <input type="text" class="form-control ng-pristine ng-valid ng-empty ng-touched" placeholder="Pick Date">
+                                </div>
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-3">
+                            <label>Status</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <select class="form-control">
+                                <option>Select</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <label>Reaction</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" placeholder="" name="" required/>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default button-style-1">Add</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div><!-- /.modal-content -->
+
+
+    </div><!-- /.modal-dialog -->
+
+</div><!-- /.modal -->
+
+<div class="modal fade big-modal" id="addsuplemets" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Add Supplements</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form">
+                    <div class="row">
+
+                        <div class="col-lg-3">
+                            <label>Supplement</label>
+                        </div>
+                        <div class="col-lg-6">
+                            <input type="text" placeholder="" name="" required/>
+                        </div>
+                        <div class="col-lg-3"></div>
+
+                        <div class="col-lg-3 clear">
+                            <label>Manufacturer</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <select class="form-control">
+                                <option>Select</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+
+                        </div>
+                        <div class="col-lg-1">
+                            <button class="add button-custom add_manufacturer"></button>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" placeholder="" name="" required/>
+                        </div>
+                        <div class="col-lg-1">
+                            <button type="button" class="btn btn-default button-style-1 margin-0">Add</button>
+                        </div>
+
+                        <div class="col-lg-3 clear">
+                            <label>From Date</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="input-group date select-date">
+                                <div class="input-group-content">
+                                    <input type="text" class="form-control ng-pristine ng-valid ng-empty ng-touched" placeholder="Pick Date">
+                                </div>
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>To Date</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="input-group date select-date">
+                                <div class="input-group-content">
+                                    <input type="text" class="form-control ng-pristine ng-valid ng-empty ng-touched" placeholder="Pick Date">
+                                </div>
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-3">
+                            <label>Dosage</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" name="" required/>
+                        </div>
+                        <div class="col-lg-3">
+                            <select class="form-control">
+                                <option>Select</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3"></div>
+
+
+                        <div class="col-lg-3 clear">
+                            <label>Frequency</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <select class="form-control">
+                                <option>Select</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3">
+                            <label>Intake Type</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <select class="form-control">
+                                <option>Select</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3"></div>
+
+                        <div class="col-lg-9">
+                            <div class="checkbox checkbox-styled">
+                                <label>
+                                    <input type="checkbox" value="">
+                                    <span>Is Active</span>
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default button-style-1">Add</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div><!-- /.modal-content -->
+
+
+    </div><!-- /.modal-dialog -->
+
 </div><!-- /.modal -->
