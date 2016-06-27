@@ -88,7 +88,7 @@
                         </div>
                     </div><!--end .panel -->
 
-                    <div class="card panel">
+                    <!-- <div class="card panel">
                         <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-5">
                             <header>Procedures & Hospitalization</header>
                             <div class="tools">
@@ -100,9 +100,9 @@
                                 <p>Quod option numquam vel in, et fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Dicant vituperata consequuntur at sea, mazim commodo</p>
                             </div>
                         </div>
-                    </div><!--end .panel -->
+                    </div> --><!--end .panel -->
 
-                    <div class="card panel">
+                    <!-- <div class="card panel">
                         <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-6">
                             <header>Injections</header>
                             <div class="tools">
@@ -114,7 +114,7 @@
                                 <p>Quod option numquam vel in, et fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Dicant vituperata consequuntur at sea, mazim commodo</p>
                             </div>
                         </div>
-                    </div><!--end .panel -->
+                    </div> --><!--end .panel -->
                 </div><!--end .panel-group -->
             </div>
             <div class="card-head col-lg-9 no-padding card-head-auto">
@@ -125,7 +125,7 @@
                     <li><a showtab href="#medications">medications</a></li>
                     <li><a showtab href="#supplements">supplements</a></li>
                     <li><a showtab href="#allergies">allergies</a></li>
-                    <li><a showtab href="#documents">documents</a></li>
+                    <li><a showtab href="#archive">documents</a></li>
                 </ul>
             </div><!--end .card-head -->
             <div class="card-body tab-content col-lg-9 custom-card-body">
@@ -408,6 +408,28 @@
                                     <a class="link-style" data-toggle="modal" data-target="#removeAllergy" href="" ng-click="removeAllergy(allergie)" >Delete</a>
                                 </td>
                             </tr>
+                            <!-- <tr>
+                                <td>14/04/2016 12:00:32</td>
+                                <td>90189191</td>
+                                <td>ABc</td>
+                                <td>Eye Clinic</td>
+                                <td>Eye Clinic</td>
+                                <td>
+                                    <a class="link-style" href="javascript:;">Edit</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+                                    <a class="link-style" href="javascript:;">Delete</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>14/04/2016 12:00:32</td>
+                                <td>90189191</td>
+                                <td>ABc</td>
+                                <td>Eye Clinic</td>
+                                <td>Eye Clinic</td>
+                                <td>
+                                    <a class="link-style" href="javascript:;">Edit</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+                                    <a class="link-style" href="javascript:;">Delete</a>
+                                </td>
+                            </tr> -->
                         </tbody>
                     </table>
                     <pagination data-ng-model="allergycurrentPage" total-items="allergies.length"
@@ -416,10 +438,10 @@
                             data-ng-change="begin = (allergycurrentPage-1)*allergynumPerPage; end = begin + allergynumPerPage">
                     </pagination>
                 </div>
-                <div class="tab-pane" id="documents">
+                <div class="tab-pane" id="archive">
                    <div class="col-xs-12">
                         <div class="icons_con">
-                            <button class="done-editing button-custom" ng-click="saveArchive();">Save</button>
+                            <button class="save done-editing button-custom" ng-click="saveArchive();">Save</button>
                             <button class="edit button-custom" ng-disabled="disableOptionsArchive">Edit</button>
                             <button class="delete button-custom" data-toggle="modal" data-target="#confirmation" ng-disabled="disableOptionsArchive">Remove</button>
                             <button data-toggle="modal" data-target="#fileUploader" class="add button-custom">ADD</button>
@@ -441,19 +463,19 @@
                         <div class="file_create_con col-xs-12 no-padding">
                             <div class="col-xs-2" data-id="{{archive.id}}" ng-repeat="archive in archives">
                                 <!-- <a href="{{archive.file}}"> -->
-                                    <div ng-if="archive.file.slice(-3) == 'pdf'" ng-dblclick="showPDF(archive.file);">
-                                        <div class="file_preview">
-                                            <!-- <img src="assets/img/pdf_icon.png" /> -->
-                                            <object data="{{archive.file}}" type="application/pdf" style="height: 400px;"></object>
-                                        </div>
-                                        <div class="file_lower">
-                                            <img src="assets/img/pdf_icon.png" />
-                                            <div class="pull-left">
-                                                <input type="text" value="{{archive.file_name}}" disabled ng-model="fileRename[$index]"/>
-                                                <span class="file_date">{{archive.created_at}}</span>
-                                            </div>
+                                <div ng-if="archive.file.slice(-3) == 'pdf'" ng-dblclick="showPDF(archive.file);">
+                                    <div class="file_preview">
+                                        <!-- <img src="assets/img/pdf_icon.png" /> -->
+                                        <object data="{{archive.file}}" type="application/pdf" style="height: 400px;"></object>
+                                    </div>
+                                    <div class="file_lower">
+                                        <img src="assets/img/pdf_icon.png" />
+                                        <div class="pull-left">
+                                            <input type="text" value="{{archive.file_name}}" disabled ng-model="fileRename[$index]"/>
+                                            <span class="file_date">{{archive.created_at}}</span>
                                         </div>
                                     </div>
+                                </div>
                                 <!-- </a> -->
                                 <div ng-if="archive.file.slice(-3) == 'jpg' || archive.file.slice(-3) == 'peg' || archive.file.slice(-3) == 'png'">
                                     <div class="file_preview">

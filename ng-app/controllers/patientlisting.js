@@ -46,6 +46,8 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
                     $scope.displayInfo.sex = res.data.sex;
                     $scope.displayInfo.marital_status = res.data.marital_status;
                     $scope.displayInfo.date_of_birth = res.data.date_of_birth;
+                    $scope.showIdCard = true
+                    $scope.displayInfo.date_of_birth = res.data.date_of_birth;
                     $scope.showIdCard = true;
                     //$scope.showStrip = true;
                     //$scope.dataStrip = "custom-card";

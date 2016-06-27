@@ -54,7 +54,7 @@
 
                 <button type="button" data-toggle="modal" class="edit button-custom pull-right" ng-disabled="buttonDisabled" ng-click="updateEncounters();">UPDATE</button>
 
-                <button type="button" data-toggle="modal" class="notes button-custom pull-right" ng-disabled="buttonDisabled" data-target="#addclinical">Clinical Notes</button>
+                <button type="button" data-toggle="modal" class="notes button-custom pull-right" ng-disabled="buttonDisabled" data-target="#addclinical" ng-click="goToClinicalNotes();">Clinical Notes</button>
 
                 <button type="button" data-toggle="modal" class="add button-custom pull-right" data-target="#addpatient" ng-disabled="buttonDisabled">Add Vitals</button>
             </div>
@@ -75,7 +75,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="encounter in allEncounter | offset: currentPage*itemsPerPage | limitTo: itemsPerPage">
+                            <tr ng-repeat="encounter in allEncounter | offset: currentPage*itemsPerPage | limitTo: itemsPerPage | filter : {'first_name': search}">
                                 <td align="center">
                                     <!-- <div class="radio radio-styled">
                                         <label>
@@ -99,11 +99,7 @@
                                 <td>{{encounter.name}}</td>
                             </tr>
                         </tbody>
-                        <pagination data-ng-model="currentPage" total-items="numOfData.length"
-                            items-per-page="numPerPage" data-max-size="maxSize" data-boundary-links="true"
-                            ng-init="begin = (currentPage-1)*numPerPage; end = begin + numPerPage"
-                            data-ng-change="begin = (currentPage-1)*numPerPage; end = begin + numPerPage">
-                        </pagination>
+                        
                         <!-- <tfoot ng-if="allEncounter > 15">
                             <td colspan="3">
                               <div class="pagination">
@@ -122,6 +118,11 @@
                             </td>
                         </tfoot> -->
                     </table>
+                    <pagination data-ng-model="currentPage" total-items="numOfData.length"
+                            items-per-page="numPerPage" data-max-size="maxSize" data-boundary-links="true"
+                            ng-init="begin = (currentPage-1)*numPerPage; end = begin + numPerPage"
+                            data-ng-change="begin = (currentPage-1)*numPerPage; end = begin + numPerPage">
+                        </pagination>
                 </div>
             </div><!--end .card-body -->
         </div><!--end .card -->

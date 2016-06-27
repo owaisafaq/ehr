@@ -61,6 +61,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
         $scope.encounterSelected = function (patientID, encounterID) {
             $scope.encounterID = encounterID;
             $rootScope.loader = "show";
+            $scope.PID = patientID;
             GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: patientID}, getEncountersSuccess, getEncountersFailure);
             function getEncountersSuccess(res) {
                 if (res.status == true) {
@@ -304,5 +305,9 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
           $scope.setPage = function(n) {
             $scope.currentPage = n;
           };
+
+          $scope.goToClinicalNotes = function(){
+            $window.location.href = "#/clinical-documentation-clinic-progress-note/"+$scope.PID;
+          }
 
     }]);
