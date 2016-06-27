@@ -2148,33 +2148,27 @@ class ApiController extends Controller
 
         $notes = html_entity_decode($request->input('clinical_notes'));
 
-        $clinical_notes = json_decode($notes);
-
-        $clinical_notes = (array)$clinical_notes;
+        $clinical_notes = json_decode($notes,true);
 
 
 
-        foreach ($clinical_notes as $patient_clinical_notes) {
 
+        foreach ($clinical_notes as $id=>$patient_clinical_notes) {
+/*            echo "ID: ".$id." --- ";
+            echo "Val: ".$patient_clinical_notes."<br>";*/
 
-/*            DB::table('patient_clinical_notes')->insert(
+           DB::table('patient_clinical_notes')->insert(
                 ['patient_id' => $patient_id,
                     'visit_id' => $visit_id,
-                    'field_id' => $patient_clinical_notes->field_id,
-                    'value' => $patient_clinical_notes->value,
+                    'field_id' => $id,
+                    'value' => $patient_clinical_notes,
                     'created_at' => $currentdatetime
 
                 ]
-            );*/
-
-
-            echo '<pre>';print_r($patient_clinical_notes);echo '</pre>';
-
+            );
 
         }
 
-
-        exit;
 
 
 
