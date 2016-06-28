@@ -1503,6 +1503,15 @@ $api->name = "Update Product";
 $api->url = HOST . 'update_product';
 $api->method = "POST";
 $api->params->product_id = "1";
+$api->params->description = "test";
+$api->params->group = "1";
+$api->params->product_name = "test";
+$api->params->trade_name = "test";
+$api->params->route = "test";
+$api->params->reorder_level = "1";
+$api->params->cat_id = "1";
+$api->params->strength = "test";
+$api->params->dose_from = "2016-06-13";
 $api->params->token = "123435";
 
 

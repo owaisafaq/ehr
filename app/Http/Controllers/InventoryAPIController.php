@@ -356,6 +356,7 @@ class InventoryAPIController extends Controller
         }
     }
     public function get_reorder_level(Request $request){
+
         $product_id = $request->input('product_id');
         $reorder_level = DB::table('inventory_products')->select('reorder_level')->where('id', $product_id)->first();
         if($reorder_level){
@@ -389,6 +390,7 @@ class InventoryAPIController extends Controller
         $cat_id = $request->input('cat_id');
         $strength = $request->input('strength');
         $dose_from = $request->input('dose_from');
+        $description = $request->input('description');
         $currentdatetime = date("Y-m-d  H:i:s");
         $count = DB::table('inventory_products')->where('id', $product_id)->update(
             [
@@ -401,6 +403,7 @@ class InventoryAPIController extends Controller
                 'cat_id'=>$cat_id,
                 'strength'=>$strength,
                 'dose_from'=>$dose_from,
+                'description'=>$description,
                 'updated_at'=>$currentdatetime
             ]
         );
