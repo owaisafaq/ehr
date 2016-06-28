@@ -15,7 +15,7 @@
                         <button type="submit">
                             <i class="fa fa-search"></i>
                         </button>
-                        <input class="search_field search_field_big" type="text" placeholder="Search with test name or test priority" ng-model="searchTest">
+                        <input class="search_field search_field_big" type="text" placeholder="Search with test id or test name" ng-model="searchTest">
                     </div>
                 </div> 
             </div>
@@ -38,11 +38,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="labTest in selectedOrder.test | filter:search">
+                            <tr ng-repeat="labTest in labTests | filter:search">
                                 <td align="center">
                                     <div class="radio radio-styled">
                                         <label>
-                                            <input type="radio" ng-model="action" ng-click="testSelected(labTest.test_id);">
+                                            <input type="radio" ng-model="action" ng-click="testSelected(labTest.id);">
                                             <span></span>
                                         </label>
                                     </div>
