@@ -96,9 +96,9 @@
                         </div><!--end .panel -->
                     </div><!--end .panel-group -->
                     
-                    <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right">finalize report</button>
-                    <button type="button" data-toggle="modal" data-target="#complaint" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10">preview report</button>
-                    <button type="button" data-toggle="modal" data-target="#checkout" class="btn ink-reaction button-style-1 btn-big pull-right margin-right-10" ng-click="saveClinicalNotes(inputFields);">save</button>
+                    <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right" ng-show="selectedRow">finalize report</button>
+                    <button type="button" data-toggle="modal" data-target="#complaint" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10" ng-show="selectedRow">preview report</button>
+                    <button type="button" data-toggle="modal" data-target="#checkout" class="btn ink-reaction button-style-1 btn-big pull-right margin-right-10" ng-click="saveClinicalNotes(inputFields);" ng-show="selectedRow">save</button>
                 </div>
             </div><!--end .card-body -->
         </div><!--end .card -->
@@ -111,7 +111,7 @@ $('body').on('click','.show_textarea span',function(){
 $('body').on('keyup', '.show_textarea input[type=text]' ,function(e){
     if(e.keyCode == 13){
         $(this).trigger("enterKey");
-        $('input[type=text]').hide(); 
+        $(this).hide(); 
     }
 });
 </script>
