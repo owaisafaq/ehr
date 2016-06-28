@@ -61,6 +61,10 @@ AppEHR.factory("CheckoutPatient", function ($resource) {
         save: function (params, body, success) {
             var res = getResource(params, body);
             return res.save(params, body, success);
+        },
+        update: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.update(params, body, success);
         }
     };
     return patientRegistrationAddress;

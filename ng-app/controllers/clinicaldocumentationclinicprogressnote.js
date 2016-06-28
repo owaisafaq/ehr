@@ -7,6 +7,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 	$scope.templateFields = {};
 	$scope.inputFields = {};
 	$scope.items = [];
+	$scope.selectedRow = false;
 	$rootScope.loader = "show";
 	/*{{field = field + 1}}*/
 	GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID}, getPatientSuccess, getPatientFailure);
@@ -21,6 +22,8 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 			$scope.displayInfo.sex = res.data.sex;
 			$scope.displayInfo.marital_status = res.data.marital_status;
 			$scope.displayInfo.visit_created_at = res.data.visit_created_at;
+			$scope.displayInfo.visit_created_at = $scope.displayInfo.visit_created_at.split(' ');
+			$scope.displayInfo.visit_created_at = $scope.displayInfo.visit_created_at[0];
 			$scope.displayInfo.encounter_id = res.data.encounter_id;
 			$rootScope.loader = "hide";
 		}
@@ -45,6 +48,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 	// get templates
 	$scope.getTemplates = function(tempId){
 		$rootScope.loader = "show";
+		$scope.selectedRow = true;
 		ClinicalProgressNotesFields.get({token: $window.sessionStorage.token, template_id: tempId}, getTemplatesSuccess, getTemplatesFailure);
 		function getTemplatesSuccess(res){
 			if(res.status == true){
@@ -64,7 +68,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 	$scope.saveClinicalNotes = function(data){
 		console.log(data);
 		$rootScope.loader = "show";
-		//SetClinicalProgressNotes.save({token: $window.sessionStorage.token, clinical_notes:data}, saveClinicalSuccess, saveClinicalFailure);
+		SetClinicalProgressNotes.save({token: $window.sessionStorage.token, clinical_notes:data, patient_id: $routeParams.patientID, visit_id: $scope.displayInfo.encounter_id}, saveClinicalSuccess, saveClinicalFailure);
 
 		function saveClinicalSuccess(res){
 			console.log(res);

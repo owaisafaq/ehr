@@ -10,7 +10,7 @@ $(document).ready(function () {
     $('#' + id).show();
     $('body').on('click','input:radio[name="checkoutpatient"]', function () {
         $('.checkout_patient_tab_con > div').css('display', 'none');
-        $('.checkout_patient_tab_con > div').removeClass('active');
+        $('.checkout_patient_tab_con > div').remove('active');
         var id = $(this).val();
         $('#' + id).show().addClass('active');
     })

@@ -66,7 +66,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
             function getEncountersSuccess(res) {
                 if (res.status == true) {
                     //console.log(res);
-                    //$scope.buttonDisabled= true;
+                    $scope.buttonDisabled = true;
                     $rootScope.loader = "hide";
                     $scope.disabledEncounterButton = false;
                     $scope.patientInfo = true;
@@ -113,7 +113,6 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
                 department_id: '',
                 ward_id: ''
             }
-            console.log(CheckoutDetails)
             CheckoutPatient.save(CheckoutDetails, checkoutSuccess, checkoutSuccessFailure);
         }
         function checkoutSuccess(res) {
@@ -121,8 +120,10 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
             GetAllEncounters.get({token: $window.sessionStorage.token}, getPatientEncounters, getPatientEncountersFailure);
             $('#checkout').modal('hide');
             $('.checkout_patient_tab_con > div.active textarea').val('');
-            $('input:radio[name="checkoutpatient"]').prop("checked",false);
+            $('input:radio[name="checkoutpatient"]').prop("checked", false);
             $('input:radio[name="checkoutpatient"]').eq(0).trigger("click");
+            $scope.buttonDisabled = false;
+            $('.counter_pop').addClass('ng-hide');
         }
         function  checkoutSuccessFailure(res) {
             console.log(res)
@@ -194,6 +195,11 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
         }
 
         $scope.updateEncounters = function () {
+            $scope.visit_id = '';
+            $scope.department_id = '';
+            $scope.encounter_class = '';
+            $scope.encounter_type = '';
+            $scope.whom_to_see = '';
             console.log('here');
             $scope.message = false;
             var eid = $scope.encounterID == undefined ? $scope.EID : $scope.encounterID;
@@ -204,11 +210,13 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
 
         function getOneEncounterSuccess(res) {
             console.log(res);
+            console.log("adad")
             if (res.status == true) {
                 $scope.updateEncounter.department = res.data.department_id;
                 $scope.updateEncounter.class = res.data.encounter_class;
                 $scope.updateEncounter.type = res.data.encounter_type;
                 $scope.updateEncounter.wts = res.data.whom_to_see;
+
             }
             setTimeout(function () {
                 $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
@@ -298,57 +306,71 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
         $scope.numPerPage = 15;
         $scope.maxSize = 5;
 
-          /*for (var i=0; i<$scope.allEncounter.length; i++) {
-            $scope.allEncounter.push({ id: i, first_name: $scope.allEncounter.first_name, last_name: $scope.allEncounter.last_name });
-          }*/
+        /*for (var i=0; i<$scope.allEncounter.length; i++) {
+         $scope.allEncounter.push({ id: i, first_name: $scope.allEncounter.first_name, last_name: $scope.allEncounter.last_name });
+         }*/
 
-        $scope.range = function() {
+        $scope.range = function () {
             var rangeSize = 5;
             var ret = [];
             var start;
 
             start = $scope.currentPage;
-            if ( start > $scope.pageCount()-rangeSize ) {
-              start = $scope.pageCount()-rangeSize+1;
+            if (start > $scope.pageCount() - rangeSize) {
+                start = $scope.pageCount() - rangeSize + 1;
             }
 
-            for (var i=start; i<start+rangeSize; i++) {
-              ret.push(i);
+            for (var i = start; i < start + rangeSize; i++) {
+                ret.push(i);
             }
             return ret;
         };
 
-        $scope.prevPage = function() {
+        $scope.prevPage = function () {
             if ($scope.currentPage > 0) {
-              $scope.currentPage--;
+                $scope.currentPage--;
             }
         };
 
-          $scope.prevPageDisabled = function() {
+        $scope.prevPageDisabled = function () {
             return $scope.currentPage === 0 ? "disabled" : "";
-          };
+        };
 
-          $scope.pageCount = function() {
+        $scope.pageCount = function () {
             console.log($scope.allEncounter.length);
-            return Math.ceil($scope.allEncounter.length/$scope.itemsPerPage)-1;
-          };
+            return Math.ceil($scope.allEncounter.length / $scope.itemsPerPage) - 1;
+        };
 
-          $scope.nextPage = function() {
+        $scope.nextPage = function () {
             if ($scope.currentPage < $scope.pageCount()) {
-              $scope.currentPage++;
+                $scope.currentPage++;
             }
-          };
+        };
 
-          $scope.nextPageDisabled = function() {
+        $scope.nextPageDisabled = function () {
             return $scope.currentPage === $scope.pageCount() ? "disabled" : "";
-          };
+        };
 
-          $scope.setPage = function(n) {
+        $scope.setPage = function (n) {
             $scope.currentPage = n;
-          };
+        };
 
-          $scope.goToClinicalNotes = function(){
-            $window.location.href = "#/clinical-documentation-clinic-progress-note/"+$scope.PID;
-          }
+        $scope.goToClinicalNotes = function () {
+            $window.location.href = "#/clinical-documentation-clinic-progress-note/" + $scope.PID;
+        }
+        $scope.Calculatebmi = function () {
+            $scope.vital.result = ($scope.vital.weight) / (($scope.vital.height / 100) * ($scope.vital.height / 100));
+            console.log("aasdas")
+        }
+        $scope.GetTempcVal = function () {
+            $scope.vital.temperaturef = ($scope.vital.temperaturec - 32) * (5 / 9);
+        }
+        $scope.GetTempfVal = function () {
+            $scope.vital.temperaturec = ($scope.vital.temperaturef * (9 / 5)) + 32
+
+        }
+        $scope.parseFloat = function (val) {
+            return isNaN(parseFloat(val)) ? 0 : parseFloat(val);
+        }
 
     }]);

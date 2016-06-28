@@ -74,18 +74,19 @@
                 <div class="col-lg-12 pull-right no-padding" ng-init="field = 1">
                     <div class="panel-group custom-accordian" id="accordion3" ng-repeat="(key, value) in templateFields | groupBy: 'category'">
                         <div class="card panel expanded">
-                            <div class="card-head card-head-sm" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-3">
-                                <header>{{ key }}</header>
+                            <div class="card-head card-head-sm" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3{{$index}}">
+                                <header>{{ key}}</header>
                                 <div class="tools">
                                     <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
                                 </div>
                             </div>
-                            <div id="accordion3-3" class="collapse in">
+                            <div id="accordion3{{$index}}" class="collapse in">
                                 <div class="card-body">
                                     <ul class="ulli">
                                         <li ng-repeat="item in value track by $index">
                                             <div class="show_textarea">
-                                                <span>{{ item.name }}</span>
+                                                <span>{{ item.name}}</span>
+                                                <img src="assets/img/checked.png" />
                                                 <input type="text" ng-model="inputFields[item.id]"/>
                                                 <!-- <input type="text" ng-model="inputFields[$parent.$index][$index+1]"/> -->
                                             </div>
@@ -95,23 +96,27 @@
                             </div>
                         </div><!--end .panel -->
                     </div><!--end .panel-group -->
-                    
-                    <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right">finalize report</button>
-                    <button type="button" data-toggle="modal" data-target="#complaint" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10">preview report</button>
-                    <button type="button" data-toggle="modal" data-target="#checkout" class="btn ink-reaction button-style-1 btn-big pull-right margin-right-10" ng-click="saveClinicalNotes(inputFields);">save</button>
+
+                    <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right" ng-show="selectedRow">finalize report</button>
+                    <button type="button" data-toggle="modal" data-target="#complaint" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10" ng-show="selectedRow">preview report</button>
+                    <button type="button" data-toggle="modal" data-target="#checkout" class="btn ink-reaction button-style-1 btn-big pull-right margin-right-10" ng-click="saveClinicalNotes(inputFields);" ng-show="selectedRow">save</button>
                 </div>
             </div><!--end .card-body -->
         </div><!--end .card -->
     </section>
 </div>
 <script type="text/javascript">
-$('body').on('click','.show_textarea span',function(){
-    $(this).siblings('input[type=text]').toggle();    
-});
-$('body').on('keyup', '.show_textarea input[type=text]' ,function(e){
-    if(e.keyCode == 13){
-        $(this).trigger("enterKey");
-        $('input[type=text]').hide(); 
-    }
-});
+            $('body').on('click', '.show_textarea span', function () {
+                $(this).siblings('input[type=text]').toggle();
+                $(this).siblings('input[type=text]').focus();
+            });
+            $('body').on('keyup', '.show_textarea input[type=text]', function (e) {
+                if (e.keyCode == 13) {
+                    if ($(this).val() != "") {
+                        $(this).trigger("enterKey");
+                        $(this).hide();
+                        $(this).siblings('img').show();
+                    }
+                }
+            });
 </script>
