@@ -302,12 +302,12 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="vital in vitals">
-                                <th>{{vital.created_at}}</th>
-                                <th>{{vital.temperature_c}}<span ng-show="vital.temperature_c != ''">&#8451; </span>{{vital.temperature_f}}<span ng-show="vital.temperature_f != ''">&#8457;</span></th>
-                                <th>{{vital.systolic_mm_hg}}<span ng-show="vital.systolic_mm_hg != '' && vital.diastolic_mm_hg != ''">/</span>{{vital.diastolic_mm_hg}}<span ng-show="vital.systolic_mm_hg != '' && vital.diastolic_mm_hg != ''">mmHg</span></th>
-                                <th>{{vital.pulse}}</th>
-                                <th>{{vital.respiratory_rate}}</th>
-                                <th>{{vital.bmi_result}}</th>
+                                <td>{{vital.created_at}}</td>
+                                <td>{{vital.temperature_c}}<span ng-show="vital.temperature_c != ''">&#8451; </span>{{vital.temperature_f}}<span ng-show="vital.temperature_f != ''">&#8457;</span></td>
+                                <td>{{vital.systolic_mm_hg}}<span ng-show="vital.systolic_mm_hg != '' && vital.diastolic_mm_hg != ''">/</span>{{vital.diastolic_mm_hg}}<span ng-show="vital.systolic_mm_hg != '' && vital.diastolic_mm_hg != ''">mmHg</span></td>
+                                <td>{{vital.pulse}}</td>
+                                <td>{{vital.respiratory_rate}}</td>
+                                <td>{{vital.bmi_result}}</td>
                             </tr>
                             <!-- <tr>
                                 <td>14/04/2016 12:00:32</td>
