@@ -63,6 +63,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
 
         function getPatientInfoFailure(error) {
+            alert('Invalid Patient ID');
             console.log(error);
         }
 
@@ -73,6 +74,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
 
         function getPatientMedicationFailure(error) {
+            
             console.log(error);
         }
 
