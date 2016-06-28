@@ -8,19 +8,19 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
         $rootScope.loader = "show";
         $scope.itemsPerPage = 15;
         $scope.offset = 1;
-        $scope.currentPage = 0;
+        //$scope.currentPage = 0;
         $scope.items = [];
+        $scope.idCardDisabledBtn = true;
         GetAllPatients.get({
             token: $window.sessionStorage.token,
-            offset: $scope.offset,
-            limit: $scope.itemsPerPage
+            offset: 0, limit: 0
         }, GetAllPatientsSuccess, GetAllPatientsFailure);
 
         function GetAllPatientsSuccess(res) {
             $rootScope.loader = "hide";
             if (res.status == true) {
                 $scope.patientLists = res.data;
-                console.log(res.count);
+                console.log(res.data);
                 $scope.numOfData = res.count;
             }
         }
@@ -35,6 +35,8 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
             GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: patientID}, getPatientSuccess, getPatientFailure);
             function getPatientSuccess(res) {
                 if (res.status == true) {
+                    $scope.idCardDisabledBtn = false;
+                    console.log(res.data);
                     $rootScope.loader = "hide";
                     $scope.disabledEncounterButton = false;
                     $scope.patientInfo = true;
@@ -58,6 +60,10 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
                 $rootScope.loader = "show";
                 console.log(error);
             }
+        }
+
+        if($scope.patientID != undefined){
+            $scope.idCardDisabledBtn = false;
         }
 
         $scope.currentPage = 1;
