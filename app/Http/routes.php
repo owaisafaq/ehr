@@ -199,5 +199,8 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->post('update_reorder_level','App\Http\Controllers\InventoryAPIController@update_order_level');
     $app->post('add_product','App\Http\Controllers\InventoryAPIController@add_product');
     $app->post('add_product_inventory','App\Http\Controllers\InventoryAPIController@add_product_inventory');
+    $app->post('get_reorder_level','App\Http\Controllers\InventoryAPIController@get_reorder_level');
+    $app->post('update_product','App\Http\Controllers\InventoryAPIController@update_product');
+    $app->post('get_product','App\Http\Controllers\InventoryAPIController@get_product');
 
 });
