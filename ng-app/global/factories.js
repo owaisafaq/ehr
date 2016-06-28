@@ -50,6 +50,21 @@ AppEHR.factory("PatientRegistrationAddress", function ($resource) {
     };
     return patientRegistrationAddress;
 });
+AppEHR.factory("CheckoutPatient", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'checkout_patient', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var patientRegistrationAddress = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return patientRegistrationAddress;
+});
 AppEHR.factory("PatienPlanSaveData", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'add_patient_plan', params, {
@@ -650,6 +665,22 @@ AppEHR.factory("getLabOrderInfo", function ($resource) {
         }
     };
     return LabOrder;
+});
+
+AppEHR.factory("getLabTestInfo", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_lab_test_details', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var LabTest = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return LabTest;
 });
 
 
