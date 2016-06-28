@@ -355,13 +355,23 @@ class InventoryAPIController extends Controller
             return response()->json(['status' => false, 'message' => "Error!"], 404);
         }
     }
+    public function get_reorder_level(Request $request){
+        $product_id = $request->input('product_id');
+        $reorder_level = DB::table('inventory_products')->select('reorder_level')->where('id', $product_id)->first();
+        if($reorder_level){
+            return response()->json(['status' => true, 'message' => "Reorder level found", 'data'=>$reorder_level], 200);
 
+        }else{
+            return response()->json(['status' => false, 'message' => "Reorder level not found"], 200);
+        }
+
+    }
 
 
     public function add_product_inventory(Request $request){
 
 
-        $group = $request->input('group');
+         $group = $request->input('group');
          $product_name = $request->input('product_name');
          $trade_name = $request->input('trade_name');
          $route = $request->input('route');
@@ -372,9 +382,8 @@ class InventoryAPIController extends Controller
 
          $id = DB::table('inventory_products')->insertGetId(
              [
-                // 'group'=>$group,
-                  'department_id'=>$group,
-                 //'product_name'=>$product_name,
+                'group'=>$group,
+                 //'department_id'=>$group,
                  'name'=>$product_name,
                  'trade_name'=>$trade_name,
                  'route'=>$route,
