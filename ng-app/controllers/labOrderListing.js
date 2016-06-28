@@ -166,6 +166,7 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
                 $('#s2id_autogen9 .select2-chosen').text('Select Patient'); // changing place holder back to its original one
                 $('#s2id_autogen3 .select2-chosen').text('Select Lab'); // changing place holder back to its original one
                 $('#neworder').modal('hide');
+                $scope.message = false;
             },500);
             GetAllLabOrders.get({ // Getting all lab orders
                 token: $window.sessionStorage.token

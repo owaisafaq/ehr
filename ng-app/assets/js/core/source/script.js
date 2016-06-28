@@ -42,20 +42,20 @@ $(document).ready(function () {
         $(this).siblings('.done-editing').show();
 //        $(this).select();
 //alert("a")
-    })
+    });
     $('body').on('click', '.done-editing', function () {
         $(this).hide();
         $(this).siblings('.edit').show();
         $('.file_uploads').find('.active').find('input').attr('disabled', 'disabled');
-    })
+    });
     $('body').on('click', '.file-field .browse', function () {
         alert($(this).parent().siblings('input[type=file]').val());
 //        $(this).siblings('.edit').show();
 //        $('.file_uploads').find('.active').find('input').attr('disabled', 'disabled');
-    })
+    });
     $('body').on('change', '.file-field input[type=file]', function () {
         $(".file-path").val(this.files[0].name);
-    })
+    });
 
 
 //    $('body').on('focus', '.file_uploads .active input', function () {
