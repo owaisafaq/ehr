@@ -324,7 +324,6 @@ class ExampleController extends Controller
 
 
     }
-
-
+    
     //
 }

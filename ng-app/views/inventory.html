@@ -16,10 +16,12 @@
                         <div class="col-lg-7">
                             <span class="txt-style-3 pull-left text-uppercase">category</span>
                             <div class="col-lg-2">
-                                <select class="form-control">
-                                    <option>All</option>
-                                    <option>2</option>
-                                    <option>3</option>
+                                <select class="form-control" ng-model="cat_search">
+                                    <option value="">All</option>
+                                    <option ng-repeat="category in CategoryLists" value="{{category.cat_name}}">
+                                        {{category.cat_name}}
+                                    </option>
+
                                 </select>
                             </div>
                             <span class="txt-style-3 pull-left text-uppercase">status</span>
@@ -60,7 +62,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="InventoryList in InventoryLists| filter:search">
+                                <tr ng-repeat="InventoryList in InventoryLists| filter:search |filter:cat_search">
                                     <td>{{InventoryList.product_name}}</td>
                                     <td>{{InventoryList.category_name}}</td>
                                     <td>{{InventoryList.cost_per_item}}</td>
@@ -139,7 +141,7 @@
                         </div>
                     </form>
                     <div class="add-drug-supplements">
-                        <form class="custom-form" id="addInv" ng-submit="AddInventory(inventory);" >
+                        <form class="custom-form" id="addInv" ng-submit="AddInventory(inventory);"  >
                             <div class="row">
                                 <h2 class="h2-style_1 show_on_supplements">Add Inventory (Drug & Supplement)</h2>
                                 <h2 class="h2-style_1 show_on_others">Add Inventory (Others)</h2>
@@ -151,7 +153,7 @@
                                         <label>group</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <select class="form-control group_select" ng-model="inventory.group" placeholder="Select Group">
+                                        <select class="form-control group_select" ng-model="inventory.group" placeholder="Select Group" required >
                                             <option></option>
                                             <option value="Drugs">Drugs</option>
                                             <option value="Supplements">Supplements</option>
@@ -165,7 +167,7 @@
                                     </div>
                                     <div class="col-lg-3">
 
-                                        <select class="form-control" ng-model="inventory.cat_id"  >
+                                        <select class="form-control" ng-model="inventory.cat_id"  required  >
 
                                             <option>Select Category</option>
                                             <option ng-repeat="category in CategoryLists" value="{{category.id}}">
@@ -181,20 +183,20 @@
                                         <label>product name</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <input type="text" ng-model="inventory.product_name"  placeholder="" />
+                                        <input type="text" ng-model="inventory.product_name"  placeholder="" required  />
                                     </div>
                                     <div class="col-lg-3">
                                         <label>product id</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <input type="text" placeholder=""  ng-model="inventory.product_id" />
+                                        <input type="text" placeholder=""  ng-model="inventory.product_id" required  />
                                     </div>
                                     <div class="show_on_others row">
                                         <div class="col-lg-3">
                                             <label>Description</label>
                                         </div>
                                         <div class="col-lg-9">
-                                            <textarea ng-model="inventory.description"></textarea>
+                                            <textarea ng-model="inventory.description" ng-required="show_on_others" ></textarea>
                                         </div>
                                     </div>
                                     <div class="show_on_supplements row">
@@ -202,17 +204,17 @@
                                             <label>trade name</label>
                                         </div>
                                         <div class="col-lg-3">
-                                            <input type="text" ng-model="inventory.trade_name"  />
+                                            <input type="text" ng-model="inventory.trade_name" ng-required="show_on_supplements"   />
                                         </div>
                                         <div class="col-lg-3">
                                             <label>strength</label>
                                         </div>
                                         <div class="col-lg-3 no-padding">
                                             <div class="col-lg-6">
-                                                <input type="text" ng-model="inventory.strength"  />
+                                                <input type="text" ng-model="inventory.strength" ng-required="show_on_supplements"  />
                                             </div>
                                             <div class="col-lg-6">
-                                                <select class="form-control" ng-model="inventory.unit" >
+                                                <select class="form-control" ng-model="inventory.unit" ng-required="show_on_supplements"  >
                                                     <option>Select Unit</option>
                                                     <option>2</option>
                                                     <option>3</option>
@@ -223,14 +225,14 @@
                                             <label>route</label>
                                         </div>
                                         <div class="col-lg-3">
-                                            <input type="text" placeholder="" ng-model="inventory.route" />
+                                            <input type="text" placeholder="" ng-model="inventory.route" ng-required="show_on_supplements" />
 
                                         </div>
                                         <div class="col-lg-3">
                                             <label>dose from</label>
                                         </div>
                                         <div class="col-lg-3">
-                                            <select class="form-control" ng-model="inventory.dose_from">
+                                            <select class="form-control" ng-model="inventory.dose_from" ng-required="show_on_supplements" >
                                                 <option>Select Dose Form</option>
                                                 <option>2</option>
                                                 <option>3</option>
@@ -242,14 +244,14 @@
                                     </div>
                                     <div class="col-lg-3">
 
-                                        <input type="text" placeholder="" ng-model="inventory.reorder_level" />
+                                        <input type="text" placeholder="" ng-model="inventory.reorder_level"  required />
 
                                     </div>
                                     <div class="col-lg-3">
                                         <label>order quantity</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <input type="text" placeholder="" ng-model="inventory.order_quantity" />
+                                        <input type="text" placeholder="" ng-model="inventory.order_quantity" required />
                                     </div>
                                 </div>
                                 <div class="row no-margin">
@@ -262,7 +264,7 @@
                                     <div class="col-lg-3">
                                         <div class="input-group date select-date">
                                             <div class="input-group-content">
-                                                <input type="text" class="form-control" ng-model="inventory.recvd_date" placeholder="Pick Date">
+                                                <input type="text" class="form-control" ng-model="inventory.recvd_date" placeholder="Pick Date" required >
                                             </div>
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                         </div>
@@ -276,7 +278,7 @@
 
 
 
-                                        <select class="form-control" ng-model="inventory.supp_id" >
+                                        <select class="form-control" ng-model="inventory.supp_id" required  >
                                             <option>Select supplier</option>
 
                                             <option ng-repeat="supplier in SuppplierLists" value="{{supplier.id}}">
@@ -289,7 +291,7 @@
                                         <label>batch number</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <input type="text" placeholder="" ng-model="inventory.batch_number" />
+                                        <input type="text" placeholder="" ng-model="inventory.batch_number" required  />
                                     </div>
                                     <div class="col-lg-3">
                                         <label>expiry date</label>
@@ -297,7 +299,7 @@
                                     <div class="col-lg-3">
                                         <div class="input-group date select-date">
                                             <div class="input-group-content">
-                                                <input type="text" class="form-control" ng-model="inventory.expiry_date" placeholder="Pick Date">
+                                                <input type="text" class="form-control" ng-model="inventory.expiry_date" placeholder="Pick Date" required >
                                             </div>
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                         </div>
@@ -306,19 +308,19 @@
                                         <label>quantity</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <input type="text" ng-model="inventory.quantity" />
+                                        <input type="text" ng-model="inventory.quantity" required />
                                     </div>
                                     <div class="col-lg-3">
                                         <label>cost Price/item</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <input type="text"  ng-model="inventory.price"/>
+                                        <input type="text"  ng-model="inventory.price" required />
                                     </div>
                                     <div class="col-lg-3">
                                         <label>manufacturer</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <select class="form-control" ng-model="inventory.manufacturer_id">
+                                        <select class="form-control" ng-model="inventory.manufacturer_id" required >
                                             <option>Select Manufacturer</option>
                                             <option>2</option>
                                             <option>3</option>
@@ -328,18 +330,29 @@
                                         <label>Pharmacy</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <select class="form-control" ng-model="inventory.pharmacy_id">
+
+                                        <select class="form-control" ng-model="inventory.pharmacy_id" required  >
+
                                             <option>Select Pharmacy</option>
-                                            <option>2</option>
-                                            <option>3</option>
+                                            <option ng-repeat="pharmacy in PharmacyLists" value="{{pharmacy.id}}">
+                                                {{pharmacy.name}}
+                                            </option>
+
+
+
                                         </select>
+
+
+
+
+
                                     </div>
 
                                     <div class="col-lg-3">
                                         <label>pack</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <select class="form-control" ng-model="inventory.pack">
+                                        <select class="form-control" ng-model="inventory.pack" required >
                                             <option>Select Pack</option>
                                             <option>2</option>
                                             <option>3</option>
@@ -349,13 +362,13 @@
                                         <label>reference number</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <input type="text" ng-model="inventory.ref_no" placeholder="" />
+                                        <input type="text" ng-model="inventory.ref_no" placeholder=""  required />
                                     </div>
                                     <div class="col-lg-3">
                                         <label>tax</label>
                                     </div>
                                     <div class="col-lg-3" >
-                                        <input type="text" ng-model="inventory.tax" placeholder="" />
+                                        <input type="text" ng-model="inventory.tax" placeholder="" required />
                                     </div>
 
                                     <div class="col-lg-3">
@@ -370,7 +383,7 @@
                         </form>
                     </div>
                                         <div class="edit_prod">
-                                            <form class="custom-form">
+                                            <form class="custom-form" id="editInv" ng-submit="EditInventory(editinventory);"  >
                                                 <div class="row">
                                                     <h2 class="h2-style_1">Edit Product Inventory </h2>
                                                     <div class="col-lg-12">
@@ -395,7 +408,7 @@
                                                         </div>
                                                         <div class="col-lg-3">
 
-                                                            <select class="form-control" ng-model="inventory.cat_id"  >
+                                                            <select class="form-control" ng-model="editinventory.cat_id"  >
 
                                                                 <option>Select Category</option>
                                                                 <option ng-repeat="category in CategoryLists" value="{{category.id}}">
@@ -411,38 +424,38 @@
                                                             <label>product name</label>
                                                         </div>
                                                         <div class="col-lg-3">
-                                                            <input type="text" ng-model="inventory.product_name"  placeholder="" />
+                                                            <input type="text" ng-model="editinventory.product_name"  placeholder="" />
                                                         </div>
                                                         <div class="col-lg-3">
                                                             <label>product id</label>
                                                         </div>
                                                         <div class="col-lg-3">
-                                                            <input type="text" placeholder=""  ng-model="inventory.product_id" />
+                                                            <input type="text" placeholder=""  ng-model="editinventory.product_id" />
                                                         </div>
-                                                        <div class="show_on_others row">
+                                                        <div class="show_on_others_edit row">
                                                             <div class="col-lg-3">
                                                                 <label>Description</label>
                                                             </div>
                                                             <div class="col-lg-9">
-                                                                <textarea ng-model="inventory.description"></textarea>
+                                                                <textarea ng-model="editinventory.description"></textarea>
                                                             </div>
                                                         </div>
-                                                        <div class="show_on_supplements row">
+                                                        <div class="show_on_supplements_edit row">
                                                             <div class="col-lg-3">
                                                                 <label>trade name</label>
                                                             </div>
                                                             <div class="col-lg-3">
-                                                                <input type="text" ng-model="inventory.trade_name"  />
+                                                                <input type="text" ng-model="editinventory.trade_name"  />
                                                             </div>
                                                             <div class="col-lg-3">
                                                                 <label>strength</label>
                                                             </div>
                                                             <div class="col-lg-3 no-padding">
                                                                 <div class="col-lg-6">
-                                                                    <input type="text" ng-model="inventory.strength"  />
+                                                                    <input type="text" ng-model="editinventory.strength"  />
                                                                 </div>
                                                                 <div class="col-lg-6">
-                                                                    <select class="form-control" ng-model="inventory.unit" >
+                                                                    <select class="form-control" ng-model="editinventory.unit" >
                                                                         <option>Select Unit</option>
                                                                         <option>2</option>
                                                                         <option>3</option>
@@ -453,14 +466,14 @@
                                                                 <label>route</label>
                                                             </div>
                                                             <div class="col-lg-3">
-                                                                <input type="text" placeholder="" ng-model="inventory.route" />
+                                                                <input type="text" placeholder="" ng-model="editinventory.route" />
 
                                                             </div>
                                                             <div class="col-lg-3">
                                                                 <label>dose from</label>
                                                             </div>
                                                             <div class="col-lg-3">
-                                                                <select class="form-control" ng-model="inventory.dose_from">
+                                                                <select class="form-control" ng-model="editinventory.dose_from">
                                                                     <option>Select Dose Form</option>
                                                                     <option>2</option>
                                                                     <option>3</option>
@@ -472,14 +485,14 @@
                                                         </div>
                                                         <div class="col-lg-3">
 
-                                                            <input type="text" placeholder="" ng-model="inventory.reorder_level" />
+                                                            <input type="text" placeholder="" ng-model="editinventory.reorder_level" />
 
                                                         </div>
                                                         <div class="col-lg-3">
                                                             <label>order quantity</label>
                                                         </div>
                                                         <div class="col-lg-3">
-                                                            <input type="text" placeholder="" ng-model="inventory.order_quantity" />
+                                                            <input type="text" placeholder="" ng-model="editinventory.order_quantity" />
                                                         </div>
 
                                                         <div class="col-lg-3">
@@ -819,54 +832,54 @@
                             <label>Supplier Name</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder="" ng-model="supplier.sname" name="" required/>
+                            <input type="text" placeholder="" ng-model="supplier.sname" required/>
                         </div>
                         <div class="col-lg-3">
                             <label>Contact Person</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder="" ng-model="supplier.contact_person" name="" required/>
+                            <input type="text" placeholder="" ng-model="supplier.contact_person"  required/>
                         </div>
                         <div class="col-lg-3">
                             <label>Address Line 1</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder="" name="" ng-model="supplier.address_1" required/>
+                            <input type="text" placeholder=""  ng-model="supplier.address_1" required/>
                         </div>
 
                         <div class="col-lg-3">
                             <label>Email ID</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder="" name="" ng-model="supplier.email" required/>
+                            <input type="text" placeholder=""  ng-model="supplier.email" required/>
                         </div>
 
                         <div class="col-lg-3">
                             <label>Address Line 2</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder="" ng-model="supplier.address_2" name="" required/>
+                            <input type="text" placeholder="" ng-model="supplier.address_2"  required/>
                         </div>
 
                         <div class="col-lg-3">
                             <label>Work Phone</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder="" name="" ng-model="supplier.wphone" required/>
+                            <input type="text" placeholder=""  ng-model="supplier.wphone" required/>
                         </div>
 
                         <div class="col-lg-3">
                             <label>City</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder="" name="" ng-model="supplier.city" required/>
+                            <input type="text" placeholder=""  ng-model="supplier.city" required/>
                         </div>
 
                         <div class="col-lg-3">
                             <label>Mobile</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder="" name="" ng-model="supplier.mobile" required/>
+                            <input type="text" placeholder=""  ng-model="supplier.mobile" required/>
                         </div>
 
                         <div class="col-lg-3">
@@ -884,7 +897,7 @@
                             <label>Website</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder="" ng-model="supplier.website" name="" required/>
+                            <input type="text" placeholder="" ng-model="supplier.website"  required/>
                         </div>
 
                         <div class="col-lg-3">
@@ -902,7 +915,7 @@
                             <label>Post Code</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder="" name="" ng-model="supplier.post_code" required/>
+                            <input type="text" placeholder=""  ng-model="supplier.post_code" required/>
                         </div>
 
                     </div>
@@ -942,54 +955,54 @@ Edit Supplier Modal-->
                         </div>
                         <div class="col-lg-3">
 
-                            <input type="text" placeholder=""  name="" ng-model="selectedSupplier.name" required/>
+                            <input type="text" placeholder=""   ng-model="selectedSupplier.name" required/>
                         </div>
                         <div class="col-lg-3">
                             <label>Contact Person</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder="" ng-model="selectedSupplier.contact_person"   name="" required/>
+                            <input type="text" placeholder="" ng-model="selectedSupplier.contact_person"    required/>
                         </div>
                         <div class="col-lg-3">
                             <label>Address Line 1</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder="" name="" ng-model="selectedSupplier.address_1" />
+                            <input type="text" placeholder=""  ng-model="selectedSupplier.address_1" />
                         </div>
 
                         <div class="col-lg-3">
                             <label>Email ID</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder="" name="" ng-model="selectedSupplier.email"  value="Talhdgdsab" />
+                            <input type="text" placeholder=""  ng-model="selectedSupplier.email"  value="Talhdgdsab" />
                         </div>
 
                         <div class="col-lg-3">
                             <label>Address Line 2</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder="" ng-model="selectedSupplier.address_2" name="" />
+                            <input type="text" placeholder="" ng-model="selectedSupplier.address_2"  />
                         </div>
 
                         <div class="col-lg-3">
                             <label>Work Phone</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder="" name="" ng-model="selectedSupplier.work_phone" />
+                            <input type="text" placeholder=""  ng-model="selectedSupplier.work_phone" />
                         </div>
 
                         <div class="col-lg-3">
                             <label>City</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder="" name="" ng-model="selectedSupplier.city" />
+                            <input type="text" placeholder=""  ng-model="selectedSupplier.city" />
                         </div>
 
                         <div class="col-lg-3">
                             <label>Mobile</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder="" name="" ng-model="selectedSupplier.mobile" />
+                            <input type="text" placeholder=""  ng-model="selectedSupplier.mobile" />
                         </div>
 
                         <div class="col-lg-3">
@@ -1007,7 +1020,7 @@ Edit Supplier Modal-->
                             <label>Website</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder="" ng-model="selectedSupplier.website" name="" required/>
+                            <input type="text" placeholder="" ng-model="selectedSupplier.website"  required/>
                         </div>
 
                         <div class="col-lg-3">
@@ -1025,7 +1038,7 @@ Edit Supplier Modal-->
                             <label>Post Code</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder="" name="" ng-model="selectedSupplier.post_code" required/>
+                            <input type="text" placeholder=""  ng-model="selectedSupplier.post_code" required/>
                         </div>
 
                     </div>
@@ -1054,14 +1067,14 @@ Edit Supplier Modal-->
                 <h2>Update Re order Level</h2>
             </div>
             <div class="modal-body">
-                <form class="custom-form" ng-submit="UpdateReorder(selectedInvnetory);">
+                <form class="custom-form" ng-submit="UpdateReorder(selectedInvnetory,productID);">
                     <div class="row">
                         <div class="col-lg-3">
                             <label>Product ID</label>
                         </div>
                         <div class="col-lg-3">
 
-                            <input type="text" placeholder=""  name="" ng-model="selectedInvnetory.product_id" required/>
+                            <input type="text" placeholder=""   value="{{productID}}"  disabled/>
                         </div>
 
 
@@ -1072,8 +1085,10 @@ Edit Supplier Modal-->
                         </div>
                         <div class="col-lg-3">
 
-                            <input type="text" placeholder=""  name="" ng-model="selectedInvnetory.reorder_level" required/>
+                            <input type="text" placeholder=""   ng-model="selectedInvnetory.reorder_level" value="{{selectedReorderProduct.reorder_level}}" required/>
                         </div>
+
+                        <input type="hidden" value="{{productID}}"  ng-model="selectedInvnetory.product_id" />
 
 
                     </div>
@@ -1167,17 +1182,17 @@ Edit Supplier Modal-->
                 $(".group_select_edit").change(function () {
 
                    // alert("here");
-                    if ($(".group_select option:selected").val() == "Others") {
+                    if ($(".group_select_edit option:selected").val() == "Others") {
                         $(".inventory_detail").hide();
                         $(".inv_header").hide();
                         $("#stock_det").hide();
 //                $(".add-drug-supplements").hide();
-                        $(".show_on_others").show();
-                        $(".show_on_supplements").hide();
+                        $(".show_on_others_edit").show();
+                        $(".show_on_supplements_edit").hide();
                     }
                     else {
-                        $(".show_on_others").hide();
-                        $(".show_on_supplements").show();
+                        $(".show_on_others_edit").hide();
+                        $(".show_on_supplements_edit").show();
                     }
 
 

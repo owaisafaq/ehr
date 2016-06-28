@@ -355,13 +355,72 @@ class InventoryAPIController extends Controller
             return response()->json(['status' => false, 'message' => "Error!"], 404);
         }
     }
+    public function get_reorder_level(Request $request){
 
+        $product_id = $request->input('product_id');
+        $reorder_level = DB::table('inventory_products')->select('reorder_level')->where('id', $product_id)->first();
+        if($reorder_level){
+            return response()->json(['status' => true, 'message' => "Reorder level found", 'data'=>$reorder_level], 200);
+
+        }else{
+            return response()->json(['status' => false, 'message' => "Reorder level not found"], 200);
+        }
+
+    }
+    public function get_product(Request $request){
+        $product_id = $request->input('product_id');
+
+        $product = DB::table('inventory_product')->where('id',$product_id)->first();
+
+        if($product){
+            return response()->json(['status' => true, 'message' => "Product Found", 'data'=>$product], 200);
+
+        }else{
+            return response()->json(['status' => false, 'message' => "Reorder level not found"], 200);
+
+        }
+    }
+    public function update_product(Request $request){
+        $product_id = $request->input('product_id');
+        $group = $request->input('group');
+        $product_name = $request->input('product_name');
+        $trade_name = $request->input('trade_name');
+        $route = $request->input('route');
+        $reorder_level = $request->input('reorder_level');
+        $cat_id = $request->input('cat_id');
+        $strength = $request->input('strength');
+        $dose_from = $request->input('dose_from');
+        $description = $request->input('description');
+        $currentdatetime = date("Y-m-d  H:i:s");
+        $count = DB::table('inventory_products')->where('id', $product_id)->update(
+            [
+                'group'=>$group,
+                //'department_id'=>$group,
+                'name'=>$product_name,
+                'trade_name'=>$trade_name,
+                'route'=>$route,
+                'reorder_level'=>$reorder_level,
+                'cat_id'=>$cat_id,
+                'strength'=>$strength,
+                'dose_from'=>$dose_from,
+                'description'=>$description,
+                'updated_at'=>$currentdatetime
+            ]
+        );
+        if($count){
+            return response()->json(['status' => true, 'message' => "Product Updated!"], 200);
+
+        }else{
+            return response()->json(['status' => false, 'message' => "Product update failed"], 200);
+
+        }
+    }
 
 
     public function add_product_inventory(Request $request){
 
 
-        $group = $request->input('group');
+         $group = $request->input('group');
          $product_name = $request->input('product_name');
          $trade_name = $request->input('trade_name');
          $route = $request->input('route');
@@ -372,9 +431,8 @@ class InventoryAPIController extends Controller
 
          $id = DB::table('inventory_products')->insertGetId(
              [
-                // 'group'=>$group,
-                  'department_id'=>$group,
-                 //'product_name'=>$product_name,
+                'group'=>$group,
+                 //'department_id'=>$group,
                  'name'=>$product_name,
                  'trade_name'=>$trade_name,
                  'route'=>$route,

@@ -61,6 +61,10 @@ AppEHR.factory("CheckoutPatient", function ($resource) {
         save: function (params, body, success) {
             var res = getResource(params, body);
             return res.save(params, body, success);
+        },
+        update: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.update(params, body, success);
         }
     };
     return patientRegistrationAddress;
@@ -667,6 +671,21 @@ AppEHR.factory("getLabOrderInfo", function ($resource) {
     return LabOrder;
 });
 
+AppEHR.factory("getLabTestInfo", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_lab_test_details', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var LabTest = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return LabTest;
+});
 
 
 
@@ -734,6 +753,24 @@ AppEHR.factory("GetAllCategories", function ($resource) {
     };
     return CategoryLists;
 });
+
+
+AppEHR.factory("GetAllPharmacies", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_pharmacies', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var Pharmacies = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return Pharmacies;
+});
+
 
 AppEHR.factory("AddCategory", function ($resource) {
     function getResource(params, body) {
@@ -982,7 +1019,37 @@ AppEHR.factory("GetSingleProduct", function ($resource) {
 });
 
 
+AppEHR.factory("GetReorderLevel", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_reorder_level', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var reorder_level = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return reorder_level;
+});
 
+AppEHR.factory("updateReorderLevel", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'update_reorder_level', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var update_reorder_level = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return update_reorder_level;
+});
 
 
 
@@ -1033,4 +1100,20 @@ AppEHR.factory("addOrder", function ($resource) {
         }
     };
     return Order;
+});
+
+AppEHR.factory("updateTestStatus", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'update_lab_test', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var updateTest = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return updateTest;
 });

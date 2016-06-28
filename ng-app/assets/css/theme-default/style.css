@@ -2186,6 +2186,7 @@ div.ng-not-empty .select2-chosen {
 .editable_table input[disabled] {
     background: none;
     border: none;
+    cursor: default;
 }
 .editable_table input {
     padding-left: 5px;
@@ -2426,6 +2427,24 @@ table.setting_table_cat > tbody > tr > td:nth-child(2) span{float:left;}
 .pending{color:#e74424 !important;font-weight:700;font-size:14px !important;}
 .show_on_others{display: none;}
 .show_on_supplements:not(h2),.show_on_others:not(h2){margin: 0;}
+.margin-top-50{
+    margin-top: 50px;
+}
+.save_Pview_button{
+    margin-top: 44px;
+}
+.accordian-header-info label{
+    font-size: 14px;
+    color: #a2a6b9;
+    text-transform: capitalize;
+    font-weight: bold;
+    margin-right: 10px;
+}
+.accordian-header-info span{
+    margin-right: 30px;
+}
+
+
 .show_textarea{
     position: relative;
 }
@@ -2433,12 +2452,21 @@ table.setting_table_cat > tbody > tr > td:nth-child(2) span{float:left;}
     display: none;
     resize: none;
     position: absolute;
-    top: 25px;
+    top: 21px;
     left: 0;
     z-index: 1;
     width: 80%;
+    padding-left: 10px;
+    color: #000;
+    font-family: 'SegoeUI-reg';
+    height: 25px;
+    font-weight: normal;
 }
-.margin-top-50{
+.show_textarea img{
+    margin-top: -3px;
+    display: none;
+}
+.margin-top-50{ 
     margin-top: 50px;
 }
 .save_Pview_button{
@@ -2649,29 +2677,52 @@ table.billing_table > tbody > tr > td:nth-child(4){vertical-align:bottom;}
     margin: 0 auto;
 }
 .thumb {
-        width: 24px;
-        height: 24px;
-        float: none;
-        position: relative;
-        top: 7px;
-    }
+    width: 24px;
+    height: 24px;
+    float: none;
+    position: relative;
+    top: 7px;
+}
 
-    form .progress {
-        line-height: 15px;
-    }
-    .progress {
-        display: inline-block;
-        width: 100px;
-        border: 3px groove #CCC;
-    }
+form .progress {
+    line-height: 15px;
+}
+.progress {
+    display: inline-block;
+    width: 100px;
+    border: 3px groove #CCC;
+}
 
-    .progress div {
-        font-size: smaller;
-        background: #56aeea;
-        width: 0;
-        color: #fff;
-    }
+.progress div {
+    font-size: smaller;
+    background: #56aeea;
+    width: 0;
+    color: #fff;
+}
 
+#addmedication .setting-button{width: 100%;position: relative;top: 5px;}
+#addmedication .edit , #addmedication .delete{width:30px;}
+#addmedication .medication_list .row > div{margin-bottom:0;}
+#addmedication .medication_list label{color: #516E7F;font-size:13px;text-transform: none;}
+#addmedication .medication_list span{color:#b5b6b8;}
+#addmedication .medication_list{border-top:1px solid #b5b6b8;height: 230px;max-height: 230px;overflow-y:auto;overflow-x: hidden;}
+#addmedication .medication_list .med_row{border-bottom:1px solid #b5b6b8;padding: 10px 0px;margin: 0;}
+
+.pagination > li > a, .pagination > li > span{
+    color: #003d51;
+    font-size: 12px;
+    padding: 1px 11px;
+}
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus{
+    background: #c8ddee;
+    border-color: #c8ddee;
+    color: #516e81;
+}
+.pagination > li > a:hover, .pagination > li > span:hover, .pagination > li > a:focus, .pagination > li > span:focus{
+    background: #c8ddee;
+    border-color: #c8ddee;
+    color: #516e81;
+}
 .archive_buttons .edit,.archive_buttons .delete{
     display: none;   
 }
