@@ -2671,3 +2671,13 @@ table.billing_table > tbody > tr > td:nth-child(4){vertical-align:bottom;}
         width: 0;
         color: #fff;
     }
+
+.archive_buttons .edit,.archive_buttons .delete{
+    display: none;   
+}
+.select-date input{
+    text-align: left;
+}
+#Noappointment{
+    display: block;
+}

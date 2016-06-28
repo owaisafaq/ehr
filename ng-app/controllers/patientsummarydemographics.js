@@ -8,6 +8,9 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         $scope.allergie = {};
         $scope.dropDownInfo = dropDownInfo;
         $scope.edit = [];
+        $scope.frequencies = frequencies;
+        $scope.intakeTypes = intakeTypes;
+        $scope.supplementData = [];
         PatientDemographics.get({
             token: $window.sessionStorage.token,
             patient_id: $routeParams.patientID
@@ -237,5 +240,19 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
                 patient_id: $routeParams.patientID
             }, GetAllergiesSuccess, GetAllergiesFailure);
 //            }
+        }
+        DropDownData.get({
+            token: $window.sessionStorage.token,
+            patient_id: $routeParams.patientID
+        }, GetManufacturerSuccess, GetManufacturerFailure);
+        $scope.saveSupplement = function () {
+            console.log($scope.supplementData.manufacturer);
+
+        }
+        function GetManufacturerSuccess(res) {
+            $scope.manufacturer = res.data.manufacturer;
+        }
+        function GetManufacturerFailure(error) {
+            console.log(error)
         }
     }]);
