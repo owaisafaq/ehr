@@ -1316,7 +1316,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     $scope.dataToBeAdded_send.is_principal = $scope.dataToBeAdded.is_principal == "principal" ? "1" : "0";
                     $scope.dataToBeAdded_send.is_dependant = $scope.dataToBeAdded.is_dependant == "dependant" ? "1" : "0";
                     if ($scope.dataToBeAdded_send.is_principal == "1") {
-                        $scope.dataToBeAdded_send.dependents = $scope.dataToBeAdded.dependents ==  '' ? [{}] : $scope.dataToBeAdded.dependents; 
+                        $scope.dataToBeAdded_send.dependents = $scope.dataToBeAdded.dependents
                         $scope.dataToBeAdded_send.principal_patient_id = $scope.dataToBeAdded.principal_patient_id = '';
                         $scope.dataToBeAdded_send.relationship = $scope.dataToBeAdded.relationship = '';
                     }
@@ -1343,7 +1343,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     $scope.dataToBeAdded_send.is_principal = $scope.dataToBeAdded.is_principal == "principal" ? "1" : "0";
                     $scope.dataToBeAdded_send.is_dependant = $scope.dataToBeAdded.is_dependant == "dependant" ? "1" : "0";
                     if ($scope.dataToBeAdded_send.is_principal == "1") {
-                        $scope.dataToBeAdded_send.dependents = $scope.dataToBeAdded.dependents == '' ? [{}] : $scope.dataToBeAdded.dependents
+                        $scope.dataToBeAdded_send.dependents = $scope.dataToBeAdded.dependents
                         $scope.dataToBeAdded_send.principal_patient_id = $scope.dataToBeAdded.principal_patient_id = '';
                         $scope.dataToBeAdded_send.relationship = $scope.dataToBeAdded.relationship = '';
                     }
@@ -1358,7 +1358,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             }
             function PlanDataSuccess(res) {
                 if (res.status == true) {
-                    console.log("working")
                     $scope.disabledTabArchive = 'active';
                     $scope.disabledTabPatientPlant = '';
                     $scope.successMessage = true;
@@ -1371,7 +1370,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             function PlanDataFailure(res) {
                 $scope.errorMessage = true;
                 $rootScope.loader = 'hide';
-                console.log(res)
+                console.log(res + "failure failure")
 
             }
         }

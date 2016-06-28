@@ -8,11 +8,10 @@ $(document).ready(function () {
     $('.checkout_patient_tab_con > div').css('display', 'none');
     var id = $('input:radio[name="checkoutpatient"]').val();
     $('#' + id).show();
-    $('body').on('click','input:radio[name="checkoutpatient"]', function () {
+    $('input:radio[name="checkoutpatient"]').click(function () {
         $('.checkout_patient_tab_con > div').css('display', 'none');
-        $('.checkout_patient_tab_con > div').removeClass('active');
         var id = $(this).val();
-        $('#' + id).show().addClass('active');
+        $('#' + id).show();
     })
     $('body').on('click', '.select-speciality input[type=radio]', function () {
         if ($(this).val() == "principal")
@@ -28,7 +27,6 @@ $(document).ready(function () {
         $(this).siblings('input[type=text]').show();
     })
     $('body').on('click', '.file_create_con > div:not(.active),.folder_create_con > div:not(.active)', function () {
-        $('.archive_buttons .edit,.archive_buttons .delete').css('display','inline-block')
         $('.file_create_con > div,.folder_create_con > div').removeClass('active');
         $('.file_uploads').find('input').not($(this).find('input')).attr('disabled', 'disabled');
         $('.edit').show();

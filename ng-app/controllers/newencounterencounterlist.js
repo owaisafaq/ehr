@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope', '$routeParams', '$window', 'GetPatientInfo', 'GetAllEncounters', 'AddVitals', 'UpdateEncounter', 'DropDownData', '$timeout', 'GetOneEncounter', 'RemoveEncounter', 'CheckoutPatient', function ($scope, $rootScope, $routeParams, $window, GetPatientInfo, GetAllEncounters, AddVitals, UpdateEncounter, DropDownData, $timeout, GetOneEncounter, RemoveEncounter, CheckoutPatient) {
+AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope', '$routeParams', '$window', 'GetPatientInfo', 'GetAllEncounters', 'CheckOut', 'AddVitals', 'UpdateEncounter', 'DropDownData', '$timeout', 'GetOneEncounter', 'RemoveEncounter', function ($scope, $rootScope, $routeParams, $window, GetPatientInfo, GetAllEncounters, CheckOut, AddVitals, UpdateEncounter, DropDownData, $timeout, GetOneEncounter, RemoveEncounter) {
         $rootScope.pageTitle = "EHR - new Encounter Clinical Documentation Controller";
         $rootScope.loader = "show";
         $scope.allEncounter = [];
@@ -92,41 +92,11 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
          console.log('here');
          }*/
 
-//        $scope.checkout = function (action) {
-//            $rootScope.loader = "show";
-//            CheckOut.save({token: $window.sessionStorage.token, status: 'checkout', visit_id: $scope.encounterID == undefined ? action : $scope.encounterID}, addVitalSuccess, addVitalFailure);
-//        }
-        $scope.checkoutPatient = function () {
-            console.log($('input:radio[name="checkoutpatient"]:checked').val())
-            console.log($('.checkout_patient_tab_con > div.active textarea').val())
-//            CheckOut.save({token: $window.sessionStorage.token, status: 'checkout', visit_id: $scope.encounterID == undefined ? action : $scope.encounterID}, addVitalSuccess, addVitalFailure);
-            var CheckoutDetails = {
-                token: $window.sessionStorage.token,
-                visit_id: $scope.encounterID == undefined ? $scope.action : $scope.encounterID,
-                patient_id: $routeParams.patientID,
-                reason: $('input:radio[name="checkoutpatient"]:checked').val(),
-                notes: $('.checkout_patient_tab_con > div.active textarea').val() == undefined ? '' : $('.checkout_patient_tab_con > div.active textarea').val(),
-                pick_date: '',
-                pick_time: '',
-                admit_date: '',
-                start_time: '',
-                department_id: '',
-                ward_id: ''
-            }
-            console.log(CheckoutDetails)
-            CheckoutPatient.save(CheckoutDetails, checkoutSuccess, checkoutSuccessFailure);
+        $scope.checkout = function (action) {
+            $rootScope.loader = "show";
+            CheckOut.save({token: $window.sessionStorage.token, status: 'checkout', visit_id: $scope.encounterID == undefined ? action : $scope.encounterID}, addVitalSuccess, addVitalFailure);
         }
-        function checkoutSuccess(res) {
-            console.log(res)
-            GetAllEncounters.get({token: $window.sessionStorage.token}, getPatientEncounters, getPatientEncountersFailure);
-            $('#checkout').modal('hide');
-            $('.checkout_patient_tab_con > div.active textarea').val('');
-            $('input:radio[name="checkoutpatient"]').prop("checked",false);
-            $('input:radio[name="checkoutpatient"]').eq(0).trigger("click");
-        }
-        function  checkoutSuccessFailure(res) {
-            console.log(res)
-        }
+
         function addVitalSuccess(res) {
             console.log(res);
             if (res.status == true) {
@@ -174,18 +144,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
         function vitalSuccess(res) {
             console.log(res);
             if (res.status == true) {
-                $('#vital-signs').modal('hide');
                 $rootScope.loader = "hide";
-                $scope.vital.systolic = '';
-                $scope.vital.diastolic = '';
-                $scope.vital.pulse = '';
-                $scope.vital.respiratoryRate = '';
-                $scope.vital.temperaturec = '';
-                $scope.vital.temperaturef = '';
-                $scope.vital.result = '';
-                $scope.vital.weight = '';
-                $scope.vital.notes = '';
-                $scope.vital.height = '';
             }
         }
 

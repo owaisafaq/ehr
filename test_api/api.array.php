@@ -2,8 +2,8 @@
 
 require 'api.class.php';
 //define('HOST', 'http://131.107.100.10/ehr/public/api/');
-define('HOST', 'http://localhost/ehr/public/api/');
-//define('HOST', 'http://demoz.online/ehr/public/api/');
+//define('HOST', 'http://localhost/ehr/public/api/');
+define('HOST', 'http://demoz.online/ehr/public/api/');
 define('APP', '');
 define('ROUTE', '');
 
@@ -1302,6 +1302,7 @@ $api = new api();
 $api->name = "Get Lab Order Templates";
 $api->url = HOST . 'get_lab_test_templates';
 $api->method = "GET";
+$api->params->category_id = "1";
 $api->params->token = "";
 
 $api_arr [] = $api;
@@ -1436,6 +1437,95 @@ $api->url = HOST . 'add_manufacturer';
 $api->method = "POST";
 $api->params->manufacturer_name = "1";
 $api->params->token = "1";
+
+
+$api_arr [] = $api;
+
+
+
+//Get Frequency
+$api = new api();
+$api->name = "Get Frequency";
+$api->url = HOST . 'get_frequency';
+$api->method = "GET";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+//Get Intake
+$api = new api();
+$api->name = "Get Intake";
+$api->url = HOST . 'get_intake';
+$api->method = "GET";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+//Get Lab Test
+$api = new api();
+$api->name = "Get Lab Test Details";
+$api->url = HOST . 'get_lab_test_details';
+$api->method = "GET";
+$api->params->lab_test_id = "1";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+
+//Get Template Categories
+$api = new api();
+$api->name = "Get Template Categories";
+$api->url = HOST . 'get_lab_template_categories';
+$api->method = "GET";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+//Get Reorderlevel
+$api = new api();
+$api->name = "Get Reorderlevel";
+$api->url = HOST . 'get_reorder_level';
+$api->method = "POST";
+$api->params->product_id = "1";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+
+//Update Product
+$api = new api();
+$api->name = "Update Product";
+$api->url = HOST . 'update_product';
+$api->method = "POST";
+$api->params->product_id = "1";
+$api->params->description = "test";
+$api->params->group = "1";
+$api->params->product_name = "test";
+$api->params->trade_name = "test";
+$api->params->route = "test";
+$api->params->reorder_level = "1";
+$api->params->cat_id = "1";
+$api->params->strength = "test";
+$api->params->dose_from = "2016-06-13";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+
+
+//Get Product
+$api = new api();
+$api->name = "Get Product";
+$api->url = HOST . 'get_product';
+$api->method = "POST";
+$api->params->product_id = "1";
+$api->params->token = "123435";
 
 
 $api_arr [] = $api;
