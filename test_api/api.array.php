@@ -1485,3 +1485,38 @@ $api->params->token = "123435";
 
 $api_arr [] = $api;
 
+//Get Reorderlevel
+$api = new api();
+$api->name = "Get Reorderlevel";
+$api->url = HOST . 'get_reorder_level';
+$api->method = "POST";
+$api->params->product_id = "1";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+
+//Update Product
+$api = new api();
+$api->name = "Update Product";
+$api->url = HOST . 'update_product';
+$api->method = "POST";
+$api->params->product_id = "1";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+
+
+//Get Product
+$api = new api();
+$api->name = "Get Product";
+$api->url = HOST . 'get_product';
+$api->method = "POST";
+$api->params->product_id = "1";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;

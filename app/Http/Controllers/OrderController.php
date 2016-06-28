@@ -384,7 +384,7 @@ class OrderController extends Controller
             ->select(DB::raw('*'))
             ->where('lab_tests.status', 1)
             ->where('lab_tests.id', $lab_test_id)
-            ->get();
+            ->first();
 
         return response()->json(['status' => true, 'data' => $lab_test]);
 

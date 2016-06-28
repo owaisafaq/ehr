@@ -389,6 +389,7 @@ class InventoryAPIController extends Controller
         $cat_id = $request->input('cat_id');
         $strength = $request->input('strength');
         $dose_from = $request->input('dose_from');
+        $currentdatetime = date("Y-m-d  H:i:s");
         $count = DB::table('inventory_products')->where('id', $product_id)->update(
             [
                 'group'=>$group,
@@ -399,7 +400,8 @@ class InventoryAPIController extends Controller
                 'reorder_level'=>$reorder_level,
                 'cat_id'=>$cat_id,
                 'strength'=>$strength,
-                'dose_from'=>$dose_from
+                'dose_from'=>$dose_from,
+                'updated_at'=>$currentdatetime
             ]
         );
         if($count){
