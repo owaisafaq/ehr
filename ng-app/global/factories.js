@@ -667,6 +667,22 @@ AppEHR.factory("getLabOrderInfo", function ($resource) {
     return LabOrder;
 });
 
+AppEHR.factory("getLabTestInfo", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_lab_test_details', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var LabTest = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return LabTest;
+});
+
 
 
 

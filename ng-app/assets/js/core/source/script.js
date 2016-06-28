@@ -88,7 +88,7 @@ $(document).ready(function () {
         $('#addsig').modal('show');
         $('#addmedication').modal('hide');
     });
-    
+
     $(document).on('click','.update_sig',function (){
         $('#addsig').modal('hide');
         $('#addmedication').modal('show');
