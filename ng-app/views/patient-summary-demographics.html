@@ -783,10 +783,9 @@
                             <label>Manufacturer</label>
                         </div>
                         <div class="col-lg-3">
-                            <select class="form-control">
-                                <option>Select</option>
-                                <option>2</option>
-                                <option>3</option>
+                            <select class="form-control" ng-model="supplementData.manufacturer" placeholder="Select Manufacturer">
+                                <option value=""></option>
+                                <option value="{{manufacture.name}}" ng-repeat="manufacture in manufacturer">{{manufacture.name}}</option>
                             </select>
 
                         </div>
@@ -799,28 +798,18 @@
                         <div class="col-lg-1">
                             <button type="button" class="btn btn-default button-style-1 margin-0">Add</button>
                         </div>
-
-                        <div class="col-lg-3 clear">
-                            <label>From Date</label>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="input-group date select-date">
-                                <div class="input-group-content">
-                                    <input type="text" class="form-control ng-pristine ng-valid ng-empty ng-touched" placeholder="Pick Date">
-                                </div>
-                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <div class="input-daterange input-group col-lg-12 select-date">
+                            <div class="col-lg-3 clear">
+                                <label>From Date</label>
                             </div>
-                        </div>
-
-                        <div class="col-lg-3">
-                            <label>To Date</label>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="input-group date select-date">
-                                <div class="input-group-content">
-                                    <input type="text" class="form-control ng-pristine ng-valid ng-empty ng-touched" placeholder="Pick Date">
-                                </div>
-                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            <div class="col-lg-3">
+                                <input type="text" ng-model="supplementData.fromDate" class="form-control" name="start" placeholder="Pick Start Date" />
+                            </div>
+                            <div class="col-lg-3">
+                                <label>To Date</label>
+                            </div>
+                            <div class="col-lg-3">
+                                <input type="text" ng-model="supplementData.toDate" class="form-control" name="end" placeholder="Pick End Date" />
                             </div>
                         </div>
 
@@ -845,20 +834,18 @@
                             <label>Frequency</label>
                         </div>
                         <div class="col-lg-3">
-                            <select class="form-control">
-                                <option>Select</option>
-                                <option>2</option>
-                                <option>3</option>
+                            <select class="form-control" placeholder="Select Frequency">
+                                <option></option>
+                                <option value="{{frequency.id}}" ng-repeat="frequency in  frequencies">{{frequency.name}}</option>
                             </select>
                         </div>
                         <div class="col-lg-3">
                             <label>Intake Type</label>
                         </div>
                         <div class="col-lg-3">
-                            <select class="form-control">
-                                <option>Select</option>
-                                <option>2</option>
-                                <option>3</option>
+                            <select class="form-control" placeholder="Select Intake Type">
+                                <option></option>
+                                <option value="{{intakeType.id}}" ng-repeat="intakeType in  intakeTypes">{{intakeType.name}}</option>
                             </select>
                         </div>
                         <div class="col-lg-3"></div>
@@ -874,7 +861,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default button-style-1">Add</button>
+                        <button type="button" ng-click="saveSupplement()" class="btn btn-default button-style-1">Add</button>
                         <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
                     </div>
                 </form>

@@ -1,5 +1,5 @@
 var AppEHR = angular.module('AppEHR');
-AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy) {
+AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', 'DropDownData', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy, DropDownData) {
         $rootScope.pageTitle = "EHR - Patient Summary Demographics";
         $scope.vital = {};
         $scope.PI = {};
@@ -8,6 +8,9 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         $scope.allergie = {};
         $scope.dropDownInfo = dropDownInfo;
         $scope.edit = [];
+        $scope.frequencies = frequencies;
+        $scope.intakeTypes = intakeTypes;
+        $scope.supplementData = [];
         PatientDemographics.get({
             token: $window.sessionStorage.token,
             patient_id: $routeParams.patientID
@@ -228,14 +231,25 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         }
         $scope.doDelete = function () {
-//            $scope.deletethis = true;
-//            if ($scope.deletethis) {
-            console.log("Oo")
             RemoveAllergy.save($scope.removeAllergyData, allergySuccess, allergyFailure);
             GetAllergies.get({
                 token: $window.sessionStorage.token,
                 patient_id: $routeParams.patientID
             }, GetAllergiesSuccess, GetAllergiesFailure);
 //            }
+        }
+        DropDownData.get({
+            token: $window.sessionStorage.token,
+            patient_id: $routeParams.patientID
+        }, GetManufacturerSuccess, GetManufacturerFailure);
+        $scope.saveSupplement = function () {
+            console.log($scope.supplementData.manufacturer);
+
+        }
+        function GetManufacturerSuccess(res) {
+            $scope.manufacturer = res.data.manufacturer;
+        }
+        function GetManufacturerFailure(error) {
+            console.log(error)
         }
     }]);
