@@ -39,7 +39,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
             if (res.status == true) {
                 $rootScope.loader = "hide";
                 $scope.allEncounter = res.data;
-                //console.log($scope.allEncounter);
+                console.log($scope.allEncounter);
             }
             DropDownData.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id}, dropDownSuccess, dropDownFailed);
         }
@@ -61,6 +61,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
         $scope.encounterSelected = function (patientID, encounterID) {
             $scope.encounterID = encounterID;
             $rootScope.loader = "show";
+            $scope.PID = patientID;
             GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: patientID}, getEncountersSuccess, getEncountersFailure);
             function getEncountersSuccess(res) {
                 if (res.status == true) {
@@ -291,6 +292,63 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
             $rootScope.loader = "hide";
         }
 
-        CheckoutPatient
+        /*PAGINATION*/
+
+        $scope.currentPage = 1;
+        $scope.numPerPage = 15;
+        $scope.maxSize = 5;
+
+          /*for (var i=0; i<$scope.allEncounter.length; i++) {
+            $scope.allEncounter.push({ id: i, first_name: $scope.allEncounter.first_name, last_name: $scope.allEncounter.last_name });
+          }*/
+
+        $scope.range = function() {
+            var rangeSize = 5;
+            var ret = [];
+            var start;
+
+            start = $scope.currentPage;
+            if ( start > $scope.pageCount()-rangeSize ) {
+              start = $scope.pageCount()-rangeSize+1;
+            }
+
+            for (var i=start; i<start+rangeSize; i++) {
+              ret.push(i);
+            }
+            return ret;
+        };
+
+        $scope.prevPage = function() {
+            if ($scope.currentPage > 0) {
+              $scope.currentPage--;
+            }
+        };
+
+          $scope.prevPageDisabled = function() {
+            return $scope.currentPage === 0 ? "disabled" : "";
+          };
+
+          $scope.pageCount = function() {
+            console.log($scope.allEncounter.length);
+            return Math.ceil($scope.allEncounter.length/$scope.itemsPerPage)-1;
+          };
+
+          $scope.nextPage = function() {
+            if ($scope.currentPage < $scope.pageCount()) {
+              $scope.currentPage++;
+            }
+          };
+
+          $scope.nextPageDisabled = function() {
+            return $scope.currentPage === $scope.pageCount() ? "disabled" : "";
+          };
+
+          $scope.setPage = function(n) {
+            $scope.currentPage = n;
+          };
+
+          $scope.goToClinicalNotes = function(){
+            $window.location.href = "#/clinical-documentation-clinic-progress-note/"+$scope.PID;
+          }
 
     }]);

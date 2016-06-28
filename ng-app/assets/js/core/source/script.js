@@ -79,4 +79,19 @@ $(document).ready(function () {
     $(document).on('click', '.remove_invoice_row', function () {
         $(this).parents('.edit_inv_row').remove();
     });
+    
+    $(document).on('click','.remove_med',function (){
+        $(this).parents('.med_row').remove();
+    });
+    
+    $(document).on('click','.open_sig',function (){
+        $('#addsig').modal('show');
+        $('#addmedication').modal('hide');
+    });
+    
+    $(document).on('click','.update_sig',function (){
+        $('#addsig').modal('hide');
+        $('#addmedication').modal('show');
+    });
+        
 });

@@ -1427,3 +1427,15 @@ $api->params->pack= "";
 $api->params->token = "";
 
 $api_arr [] = $api;
+
+
+// Add manufacturer
+$api = new api();
+$api->name = "Add manufacturer";
+$api->url = HOST . 'add_manufacturer';
+$api->method = "POST";
+$api->params->manufacturer_name = "1";
+$api->params->token = "1";
+
+
+$api_arr [] = $api;

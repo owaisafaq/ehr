@@ -5,7 +5,8 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 	$scope.displayInfo = {};
 	$scope.templates = {};
 	$scope.templateFields = {};
-	$scope.inputFields = [];
+	$scope.inputFields = {};
+	$scope.items = [];
 	$rootScope.loader = "show";
 	/*{{field = field + 1}}*/
 	GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID}, getPatientSuccess, getPatientFailure);
@@ -63,7 +64,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 	$scope.saveClinicalNotes = function(data){
 		console.log(data);
 		$rootScope.loader = "show";
-		SetClinicalProgressNotes.save({token: $window.sessionStorage.token, clinical_notes:data}, saveClinicalSuccess, saveClinicalFailure);
+		//SetClinicalProgressNotes.save({token: $window.sessionStorage.token, clinical_notes:data}, saveClinicalSuccess, saveClinicalFailure);
 
 		function saveClinicalSuccess(res){
 			console.log(res);

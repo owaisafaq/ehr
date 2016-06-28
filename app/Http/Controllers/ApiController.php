@@ -2358,5 +2358,13 @@ class ApiController extends Controller
 
 
     }
+    public function add_manufacturer(Request $request){
+        $name = $request->input('manufacturer_name');
+
+        $id = DB::table('manufacturers')->insertGetId([
+            'name'=>$name
+        ]);
+        return response()->json(['status' => true, 'message' => "Patient Referel Added Successfully", 'manufacturers_id'=>$id]);
+    }
 }
 
