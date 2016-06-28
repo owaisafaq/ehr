@@ -2698,3 +2698,19 @@ form .progress {
 #addmedication .medication_list span{color:#b5b6b8;}
 #addmedication .medication_list{border-top:1px solid #b5b6b8;height: 230px;max-height: 230px;overflow-y:auto;overflow-x: hidden;}
 #addmedication .medication_list .med_row{border-bottom:1px solid #b5b6b8;padding: 10px 0px;margin: 0;}
+
+.pagination > li > a, .pagination > li > span{
+    color: #003d51;
+    font-size: 12px;
+    padding: 1px 11px;
+}
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus{
+    background: #c8ddee;
+    border-color: #c8ddee;
+    color: #516e81;
+}
+.pagination > li > a:hover, .pagination > li > span:hover, .pagination > li > a:focus, .pagination > li > span:focus{
+    background: #c8ddee;
+    border-color: #c8ddee;
+    color: #516e81;
+}

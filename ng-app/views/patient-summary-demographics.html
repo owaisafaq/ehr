@@ -239,6 +239,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <a href="#/patient-registration-update/{{PID}}" class="btn ink-reaction button-style-1 button-style-1 margin-top-30">UPDATE PATIENT DETAILS</a>
                         </div>
                     </form>
                 </div>
@@ -285,16 +286,16 @@
                                 <th>pulse</th>
                                 <th>respiration</th>
                                 <th>bmi</th>
-                            </tr>
+                            </tr>a
                         </thead>
                         <tbody>
                             <tr data-ng-repeat="vital in vitals.slice(vitalbegin, vitalend)">
-                                <th>{{vital.created_at}}</th>
-                                <th>{{vital.temperature_c}}<span ng-show="vital.temperature_c != ''">&#8451; </span>{{vital.temperature_f}}<span ng-show="vital.temperature_f != ''">&#8457;</span></th>
-                                <th>{{vital.systolic_mm_hg}}<span ng-show="vital.systolic_mm_hg != '' && vital.diastolic_mm_hg != ''">/</span>{{vital.diastolic_mm_hg}}<span ng-show="vital.systolic_mm_hg != '' && vital.diastolic_mm_hg != ''">mmHg</span></th>
-                                <th>{{vital.pulse}}</th>
-                                <th>{{vital.respiratory_rate}}</th>
-                                <th>{{vital.bmi_result}}</th>
+                                <td>{{vital.created_at}}</td>
+                                <td>{{vital.temperature_c}}<span ng-show="vital.temperature_c != ''">&#8451; </span>{{vital.temperature_f}}<span ng-show="vital.temperature_f != ''">&#8457;</span></td>
+                                <td>{{vital.systolic_mm_hg}}<span ng-show="vital.systolic_mm_hg != '' && vital.diastolic_mm_hg != ''">/</span>{{vital.diastolic_mm_hg}}<span ng-show="vital.systolic_mm_hg != '' && vital.diastolic_mm_hg != ''">mmHg</span></td>
+                                <td>{{vital.pulse}}</td>
+                                <td>{{vital.respiratory_rate}}</td>
+                                <td>{{vital.bmi_result}}</td>
                             </tr>
                         </tbody>
                     </table>

@@ -100,17 +100,22 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         // Address
         $scope.addressStateByCountry = function (country, flag) {
             console.log(country);
+            console.log("yes");
             $scope.disabledDropdown = true;
-            if (country != "null") {
+            if (country != null) {
+                
                 States.get({token: $window.sessionStorage.token, country_id: country.id}, stateSuccess, stateFailed);
             } else {
+                
                 if (flag) {
+                    
                     $scope.PI.permanent_country = "";
                     $scope.PI.permanent_state = "";
                     $scope.permanentAddressStates = [];
                     $scope.addressPerminentCities = [];
                     $scope.PI.permanent_city = '';
                 } else {
+                    
                     $scope.addressContactCities = [];
                     $scope.PI.city = "";
                     $scope.PI.state = "";
@@ -120,6 +125,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 }
             }
             function stateSuccess(res) {
+                console.log(res);
                 if (res.status == true && res.data.length > 0) {
                     angular.copy(res.data, $scope.contactAddressStates);
                     angular.copy(res.data, $scope.permanentAddressStates);
@@ -138,6 +144,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         $scope.addressLocalGovtAreaByStates = function (state, flag) {
             console.log(state);
             console.log(flag);
+            console.log("yes");
             $scope.disabledDropdown = true;
             if (state != null) {
                 GetLocalGovermentArea.get({token: $window.sessionStorage.token, state_id: state.id}, LGASuccess, LGAFailed);
@@ -230,7 +237,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
         // Employer
         $scope.employerStateByCountry = function (employer) {
-            if (employer != "null") {
+            if (employer != null) {
                 States.get({token: $window.sessionStorage.token, country_id: employer.id}, employerStateSuccess, employerStateFailed);
             } else {
                 $scope.PI.employer_state = "null";
@@ -251,7 +258,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         };
 
         $scope.employerCityByStates = function (states) {
-            if (states != "null") {
+            console.log("thereavdv")
+            console.log(states)
+            if (states != null) {
                 City.get({token: $window.sessionStorage.token, state_id: states.id}, citySuccess, cityFailed);
                 function citySuccess(res) {
                     if (res.status == true && res.data.length > 0) {
@@ -912,43 +921,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
              });*/
             fileUpload.uploadFileToUrl(filesToBeUploaded, '1', $scope.followupParentId, serverPath + "add_patient_archive");
         }
-
-        $('#file_upload').uploadify({
-            //'formData' : {'patient_id' : 1, 'follow_up_parent_id': $scope.followupParentId},
-            //'formData'      : {'patient_id' : '1', 'follow_up_parent_id': $scope.followupParentId},
-            'removeCompleted': false,
-            'fileTypeExts': '*.jpg; *.png; *.pdf;',
-            'method': 'POST',
-            'multi': false,
-            'auto': false,
-            'contentType': 'multipart/form-data',
-            'swf': 'assets/css/theme-default/uploadify.swf',
-            'uploader': serverPath + 'add_patient_archive',
-            //'uploader' : 'http://localhost/ehr/uploadify.php',
-            // /'script'    : serverPath+'add_patient_archive',
-            'scriptAccess': 'always',
-            //'fileSizeLimit' : '100000KB',
-            'onUploadSuccess': function (file, data, response) {
-                console.log('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
-            },
-            'onUploadError': function (file, errorCode, errorMsg, errorString) {
-                console.log(file);
-                console.log(errorString);
-                console.log(errorCode + " " + errorMsg);
-            },
-            'onUploadStart': function (file) {
-                console.log({'patient_id': '1', 'patient_archive': file, 'follow_up_parent_id': $scope.followupParentId});
-                var folder = $("#file_upload").val()
-
-                console.log(file)
-                console.log(file.name)
-                console.log(file.type)
-                console.log(file.tmp_name)
-                console.log(file.size)
-                //$('#file_upload').uploadify('settings','patient_archive', 'file'/*{'patient_id' : '1', 'patient_archive' : file, 'follow_up_parent_id' : $scope.followupParentId}*/);
-                $('#file_upload').uploadify('settings', 'formData', {'patient_id': '1', 'patient_archive': file, 'follow_up_parent_id': $scope.followupParentId});
-            }
-        });
 
         $scope.listAfterUploaded = function () {
             GetResourcesByFolderArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, followup_parent_id: $scope.followupParentId}, nestedFolderSuccess, nestedFolderFailure);

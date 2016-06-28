@@ -19,3 +19,11 @@ var dropDownInfo = {
 		{"name": "not any more"}
 	]
 };
+var frequencies = [
+    {"id": "1", "name": "abc"},
+    {"id": "2", "name": "cde"}
+];
+var intakeTypes = [
+    {"id": "1", "name": "Intake"},
+    {"id": "2", "name": "Type"}
+];

@@ -1,5 +1,5 @@
 var AppEHR = angular.module('AppEHR');
-AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy','DropDownData', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy,DropDownData) {
+AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', 'GetResourcesByFolderArchives', 'ListFolderArchives', 'EditFolderArchives', 'DeleteFolderArchives', 'RemoveArchives', 'Upload', 'SaveFiles', '$timeout','DropDownData', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy, GetResourcesByFolderArchives, ListFolderArchives, EditFolderArchives, DeleteFolderArchives, RemoveArchives, Upload, SaveFiles, $timeout, DropDownData) {
         $rootScope.pageTitle = "EHR - Patient Summary Demographics";
         $scope.vital = {};
         $scope.PI = {};
@@ -10,8 +10,29 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         $scope.edit = [];
         $scope.frequencies = frequencies;
         $scope.intakeTypes = intakeTypes;
-        
+
         $scope.supplementData = [];
+
+        $scope.visitcurrentPage = 1;
+        $scope.visitnumPerPage = 15;
+        $scope.visitmaxSize = 5;
+
+        $scope.vitalscurrentPage = 1;
+        $scope.vitalsnumPerPage = 15;
+        $scope.vitalsmaxSize = 5;
+
+        $scope.medicationscurrentPage = 1;
+        $scope.medicationnumPerPage = 15;
+        $scope.medicationmaxSize = 5;
+
+        $scope.suplimentscurrentPage = 1;
+        $scope.suplimentsnumPerPage = 15;
+        $scope.suplimentsmaxSize = 5;
+
+        $scope.allergycurrentPage = 1;
+        $scope.allergynumPerPage = 15;
+        $scope.allergysmaxSize = 5;
+        $scope.PID = $routeParams.patientID
         PatientDemographics.get({
             token: $window.sessionStorage.token,
             patient_id: $routeParams.patientID
@@ -58,7 +79,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
 
         function getPatientMedicationFailure(error) {
-            
+
             console.log(error);
         }
 
@@ -118,7 +139,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
                 $('#vital-signs').modal('hide');
                 $scope.vitals = res.data;
                 $scope.visitnumOfData = res.data.length;
-                
+
             }
         }
 
@@ -127,7 +148,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
 
         $scope.clinicalNote = function () {
-            $window.location.href = '#/clinical-documentation-clinic-progress-note/'+$routeParams.patientID;
+            $window.location.href = '#/clinical-documentation-clinic-progress-note/' + $routeParams.patientID;
         }
 
         GetSupplements.get({
@@ -245,7 +266,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
 
         /*ARCHIVE*/
-        
+
         function archiveSuccess(res) {
             if (res.status == true) {
                 $scope.archives = res.data;
@@ -425,16 +446,16 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         ListFolderArchives.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID, followup_parent_id: $scope.followupParentId}, listFolderSuccess, listFolderFailure);
         /*function listFolderSuccess(res) {
-            console.log(res);
-            console.log("there aasd");
-            if (res.status == true) {
-                $rootScope.foldersArchive = [];
-                $rootScope.foldersArchive = res.data;
-            }
-        }
-        function listFolderFailure(error) {
-            console.log(error);
-        }*/
+         console.log(res);
+         console.log("there aasd");
+         if (res.status == true) {
+         $rootScope.foldersArchive = [];
+         $rootScope.foldersArchive = res.data;
+         }
+         }
+         function listFolderFailure(error) {
+         console.log(error);
+         }*/
 
         function listFolderSuccess(res) {
             if (res.status == true) {
@@ -489,7 +510,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         $scope.backButton = function () {
             console.log($scope.followupParentId);
             GetResourcesByFolderArchives.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID, followup_parent_id: $scope.backLinkID}, nestedFolderSuccess, nestedFolderFailure);
-           
+
             ListFolderArchives.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID, followup_parent_id: $scope.backLinkID}, listFolderSuccess, listFolderFailure);
         }
 
