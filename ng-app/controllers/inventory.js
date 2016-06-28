@@ -315,6 +315,30 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 		}
 	}
 
+
+
+//// Update Invenbtory
+	$scope.EditInventory = function (editInv) {
+
+		if (angular.equals({}, category) == false) {
+			$scope.hideLoader = 'show';
+
+			console.log(editInv);
+			/*var CategoryUpdate={
+				token: $window.sessionStorage.token,
+				cat_id:category.id,
+				cat_name:category.cat_name,
+				cat_desc:category.cat_desc,
+				cat_group:category.cat_group
+
+
+			}
+			console.log(updateCategory);
+			updateCategory.save(CategoryUpdate, UpdateCategorySuccess, UpdateCategoryFailure);*/
+
+		}
+	}
+
 	function UpdateCategorySuccess(res) {
 		console.log(res);
 		console.log(res);
