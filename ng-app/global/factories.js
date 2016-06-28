@@ -1004,7 +1004,37 @@ AppEHR.factory("GetSingleProduct", function ($resource) {
 });
 
 
+AppEHR.factory("GetReorderLevel", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_reorder_level', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var reorder_level = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return reorder_level;
+});
 
+AppEHR.factory("updateReorderLevel", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'update_reorder_level', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var update_reorder_level = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return update_reorder_level;
+});
 
 
 

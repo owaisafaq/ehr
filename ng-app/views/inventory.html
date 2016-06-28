@@ -1067,14 +1067,14 @@ Edit Supplier Modal-->
                 <h2>Update Re order Level</h2>
             </div>
             <div class="modal-body">
-                <form class="custom-form" ng-submit="UpdateReorder(selectedInvnetory);">
+                <form class="custom-form" ng-submit="UpdateReorder(selectedInvnetory,productID);">
                     <div class="row">
                         <div class="col-lg-3">
                             <label>Product ID</label>
                         </div>
                         <div class="col-lg-3">
 
-                            <input type="text" placeholder=""   ng-model="selectedInvnetory.product_id" required/>
+                            <input type="text" placeholder=""   value="{{productID}}"  disabled/>
                         </div>
 
 
@@ -1085,8 +1085,10 @@ Edit Supplier Modal-->
                         </div>
                         <div class="col-lg-3">
 
-                            <input type="text" placeholder=""   ng-model="selectedInvnetory.reorder_level" required/>
+                            <input type="text" placeholder=""   ng-model="selectedInvnetory.reorder_level" value="{{selectedReorderProduct.reorder_level}}" required/>
                         </div>
+
+                        <input type="hidden" value="{{productID}}"  ng-model="selectedInvnetory.product_id" />
 
 
                     </div>

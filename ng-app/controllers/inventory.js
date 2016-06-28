@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllInventory','GetAllSuppliers','AddCategory','GetAllCategories','AddSupplier','GetSingleSupplier','UpdateSuppliers','GetSingleCategory','GetSingleStock','updateCategory','DeleteCategory','DeleteSupplier','AddInventory','AddProduct','DeleteInventory','GetSingleProduct','GetAllPharmacies','$timeout', function($scope, $rootScope,$window,$routeParams,GetAllInventory,GetAllSuppliers,AddCategory,GetAllCategories,AddSupplier,GetSingleSupplier,UpdateSuppliers,GetSingleCategory,GetSingleStock,updateCategory,DeleteCategory,DeleteSupplier,AddInventory,AddProduct,DeleteInventory,GetSingleProduct,GetAllPharmacies,$timeout){
+AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllInventory','GetAllSuppliers','AddCategory','GetAllCategories','AddSupplier','GetSingleSupplier','UpdateSuppliers','GetSingleCategory','GetSingleStock','updateCategory','DeleteCategory','DeleteSupplier','AddInventory','AddProduct','DeleteInventory','GetSingleProduct','GetAllPharmacies','GetReorderLevel','updateReorderLevel','$timeout', function($scope, $rootScope,$window,$routeParams,GetAllInventory,GetAllSuppliers,AddCategory,GetAllCategories,AddSupplier,GetSingleSupplier,UpdateSuppliers,GetSingleCategory,GetSingleStock,updateCategory,DeleteCategory,DeleteSupplier,AddInventory,AddProduct,DeleteInventory,GetSingleProduct,GetAllPharmacies,GetReorderLevel,updateReorderLevel,$timeout){
 	$rootScope.pageTitle = "EHR - Inventory";
 	$scope.displayInfo = {};
 	$scope.cat_unique={};
@@ -614,6 +614,10 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 		}
 	};
 
+
+// Get Product ReorderLevel
+
+
 	$scope.StockSelectedReorder = function (productID) {
 		console.log(productID);
 		$scope.productID = productID;
@@ -622,25 +626,62 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 
 
 		//$rootScope.loader = "show";
-		$('#update_reorder').modal('show');
 
 
-			GetSingleProduct.get({token: $window.sessionStorage.token, product_id: productID}, getProductInfoSuccess, getProductInfoFailure);
-		function getProductInfoSuccess(res) {
+
+		GetReorderLevel.get({token: $window.sessionStorage.token, product_id: productID}, getReorderInfoSuccess, getReorderInfoFailure);
+		function getReorderInfoSuccess(res) {
 			if (res.status == true) {
 				//console.log(res);
 				$rootScope.loader = "hide";
 				//$scope.SupplierSelected = true;
-				$scope.selectedProduct = res.data;
-				console.log($scope.selectedProduct);
+				$scope.selectedReorderProduct = res.data;
+				console.log($scope.selectedReorderProduct);
+				$('#update_reorder').modal('show');
 				/*$(".inventory_detail").hide();
 				$("#stock_det").show();*/
 
 
 			}
 		}
-		function getProductInfoFailure(error) {
+		function getReorderInfoFailure(error) {
 			$rootScope.loader = "show";
+			console.log(error);
+		}
+	};
+
+
+// Update Product ReorderLevel
+
+
+	$scope.UpdateReorder = function (selectedInvnetory,productID) {
+		console.log(productID);
+
+			var ReorderUpdate={
+				token: $window.sessionStorage.token,
+				product_id:productID,
+				reorder_level:selectedInvnetory.reorder_level
+			}
+			console.log(ReorderUpdate);
+			updateReorderLevel.save(ReorderUpdate, ReorderUpdateSuccess, ReorderUpdateFailure);
+
+
+		function ReorderUpdateSuccess(res) {
+			console.log(res);
+			console.log(res);
+			if (res.status == true) {
+				$rootScope.loader = "hide";
+				$timeout(function () {
+					$('#update_reorder').modal('hide');
+				},500);
+				GetAllInventory.get({
+					token: $window.sessionStorage.token,
+				}, GetAllInventorySuccess, GetAllInventoryFailure);
+
+			}
+		}
+
+		function ReorderUpdateFailure(error) {
 			console.log(error);
 		}
 	};
