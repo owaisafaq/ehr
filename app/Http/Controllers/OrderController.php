@@ -540,7 +540,7 @@ class OrderController extends Controller
 
     }
     public function add_lab_template_types(Request $request){
-        $name = $request->input('template_name');
+        $name = $request->input('type_name');
         $desc = $request->input('description');
         $currentdatetime = date('Y-m-d H:i:s');
         $id = DB::table('template_types')->insertGetId(['name'=>$name,'description'=>$desc, 'created_at'=>$currentdatetime]);
