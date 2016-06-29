@@ -38,8 +38,4 @@ class BillingController extends Controller
             return response()->json(['status' => false, 'message' => 'Bills not found']);
         }
     }
-    public function edit_invoice(Request $request){
-        $invoice_id = $request->input('invoice_id');
-        
-    }
 }
