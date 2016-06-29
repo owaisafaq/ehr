@@ -170,7 +170,6 @@ class OrderController extends Controller
 
             $lab_orders->ordered_by = 'Dr Smith';
             $lab_orders->handled_by = 'James';
-            $lab_orders->total_cost = 0;
             //$lab_orders->test_name = 'Blood Test';
 
 
@@ -183,31 +182,7 @@ class OrderController extends Controller
             }
 
         }
-        foreach ($orders as $key => $order_tests) {
-            $tests = DB::table('lab_tests')
-                ->select(DB::raw('lab_tests.name as test_name,lab_tests.cost,priority'))
-                ->leftJoin('lab_order_tests', 'lab_order_tests.lab_test', '=', 'lab_tests.id')
-                ->where('lab_order_tests.lab_order_id', $order_tests->id)
-                ->get();
-
-            $test_cost = DB::table('lab_tests')
-                ->select(DB::raw('IFNULL(SUM(lab_tests.cost),0) as cost,count(lab_order_tests.lab_test) as totaltests'))
-                ->leftJoin('lab_order_tests', 'lab_order_tests.lab_test', '=', 'lab_tests.id')
-                ->where('lab_order_tests.lab_order_id', $order_tests->id)
-                ->first();
-
-            $orders[$key]->total_cost = $test_cost->cost;
-            $orders[$key]->total_test = $test_cost->totaltests;
-
-
-            $orders[$key]->lab_tests = $tests;
-
-            //$apetizer_product_items[]=$product_item;
-        }
-
         return response()->json(['status' => true, 'data' => $orders]);
-
-
     }
 
 
