@@ -1322,6 +1322,40 @@ $api->params->token = "";
 
 $api_arr [] = $api;
 
+// Add Lab Test Templates
+$api = new api();
+$api->name = "Add Lab Order Templates";
+$api->url = HOST . 'add_lab_test_templates';
+$api->method = "POST";
+$api->params->cat_id = "1";
+$api->params->type_id = "1";
+$api->params->template_name = "test";
+$api->params->description = "test";
+$api->params->token = "";
+$api_arr [] = $api;
+
+// Update Lab Test Templates
+$api = new api();
+$api->name = "Update Lab Order Templates";
+$api->url = HOST . 'update_lab_test_templates';
+$api->method = "POST";
+$api->params->template_id = "1";
+$api->params->cat_id = "1";
+$api->params->type_id = "1";
+$api->params->template_name = "test";
+$api->params->description = "test";
+$api->params->token = "";
+
+// Delete Lab Test Templates
+$api = new api();
+$api->name = "Delete Lab Order Templates";
+$api->url = HOST . 'delete_lab_test_templates';
+$api->method = "POST";
+$api->params->template_id = "1";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
 
 // Get All Pharmacies
 $api = new api();
@@ -1496,6 +1530,133 @@ $api->name = "Get Template Categories";
 $api->url = HOST . 'get_lab_template_categories';
 $api->method = "GET";
 $api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+
+//Get Template Category
+$api = new api();
+$api->name = "Get Template Category";
+$api->url = HOST . 'get_lab_template_category';
+$api->method = "POST";
+$api->params->cat_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Add Template Categories
+$api = new api();
+$api->name = "Add Template Categories";
+$api->url = HOST . 'add_lab_template_category';
+$api->method = "POST";
+$api->params->category_name = "test";
+$api->params->description = "test";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+//Update Template Categories
+$api = new api();
+$api->name = "Update Template Categories";
+$api->url = HOST . 'update_lab_template_category';
+$api->method = "POST";
+$api->params->cat_id = "1";
+$api->params->category_name = "test";
+$api->params->description = "test";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+//Delete Template Categories
+$api = new api();
+$api->name = "Delete  Template Categories";
+$api->url = HOST . 'delete_lab_template_category';
+$api->method = "POST";
+$api->params->cat_id = "1";
+$api->params->token = "123435";
+
+
+
+
+
+
+
+
+
+//Get Template Types
+$api = new api();
+$api->name = "Get Template Categories";
+$api->url = HOST . 'get_lab_template_types';
+$api->method = "GET";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+
+//Get Template Type
+$api = new api();
+$api->name = "Get Template Category";
+$api->url = HOST . 'get_lab_template_type';
+$api->method = "POST";
+$api->params->type_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Add Template Type
+$api = new api();
+$api->name = "Add Template Categories";
+$api->url = HOST . 'add_lab_template_types';
+$api->method = "POST";
+$api->params->type_name = "test";
+$api->params->description = "test";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+//Update Template Categories
+$api = new api();
+$api->name = "Update Template Categories";
+$api->url = HOST . 'update_lab_template_types';
+$api->method = "POST";
+$api->params->type_id = "1";
+$api->params->type_name = "test";
+$api->params->description = "test";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+//Delete Template Categories
+$api = new api();
+$api->name = "Delete  Template Categories";
+$api->url = HOST . 'delete_lab_template_types';
+$api->method = "POST";
+$api->params->type_id = "1";
+$api->params->token = "123435";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 $api_arr [] = $api;

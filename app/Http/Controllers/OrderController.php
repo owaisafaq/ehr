@@ -358,7 +358,7 @@ class OrderController extends Controller
 
         return response()->json(['status' => true, 'data' => $lab_templates]);
     }
-    public function add_lab_test_template(Request $request){
+    public function add_lab_test_templates(Request $request){
         $name = $request->input('template_name');
         $cat_id = $request->input('cat_id');
         $type_id = $request->input('type_id');
@@ -375,7 +375,7 @@ class OrderController extends Controller
         return response()->json(['status' => true, 'data' =>'Template Added.', 'id'=>$id]);
 
     }
-    public function update_lab_test_template(Request $request){
+    public function update_lab_test_templates(Request $request){
         $template_id = $request->input('template_id');
         $name = $request->input('template_name');
         $cat_id = $request->input('cat_id');
@@ -395,7 +395,7 @@ class OrderController extends Controller
         return response()->json(['status' => true, 'data' =>'Template Updated.']);
 
     }
-    public function delete_lab_test_template(Request $request){
+    public function delete_lab_test_templates(Request $request){
         $template_id = $request->input('template_id');
 
         DB::table('lab_templates')
@@ -487,6 +487,16 @@ class OrderController extends Controller
         return response()->json(['status' => true, 'data' => $lab_categories]);
 
     }
+    public function get_lab_template_category(Request $request){
+        $id = $request->input('cat_id');
+        $lab_categories = DB::table('template_categories')
+            ->select(DB::raw('id,name'))
+            ->where('template_categories.id', $id)
+            ->where('template_categories.status', 1)
+            ->get();
+
+        return response()->json(['status' => true, 'data' => $lab_categories]);
+    }
     public function add_lab_template_category(Request $request){
         $name = $request->input('category_name');
         $desc = $request->input('description');
@@ -520,6 +530,12 @@ class OrderController extends Controller
     public function get_lab_template_types(){
         $types = DB::table('template_types')->where('status',1)->get();
 
+        return response()->json(['status' => true, 'data' => $types]);
+
+    }
+    public function get_lab_template_type(Request $request){
+        $id = $request->input('type_id');
+        $types = DB::table('template_types')->where('id',$id)->where('status',1)->get();
         return response()->json(['status' => true, 'data' => $types]);
 
     }
