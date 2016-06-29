@@ -109,64 +109,36 @@
                             <thead>
                                 <tr>
                                     <th></th>
+                                    <th>Bill ID</th>
                                     <th>Date</th>
                                     <th>Encounter No</th>
                                     <th>patient ID</th>
                                     <th>patient name</th>
                                     <th>bill purpose</th>
                                     <th>patient plan</th>
-                                    <th>status</th>
+
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr ng-repeat="Bill in BillListings">
                                     <td align="center">
                                         <div class="radio radio-styled">
                                             <label>
-                                                <input type="radio" name="optionsRadios" value="option1"><span></span>
+                                                <input type="radio" ng-click="SelectedPatient(Bill.patient_id)" name="optionsRadios" value="option1"><span></span>
                                             </label>
                                         </div>
                                     </td>
-                                    <td>14/04/2016    12:00:32</td>
-                                    <td>21245421</td>
-                                    <td>90189191</td>
-                                    <td>Joe Bloggs</td>
-                                    <td>Eye Clinic</td>
-                                    <td>Consultation</td>
-                                    <td>Billed</td>                                   
+                                    <td>{{Bill.id}}</td>
+                                    <td>{{Bill.created_at}}</td>
+                                    <td>{{Bill.encounter_id}}</td>
+                                    <td>{{Bill.patient_id}}</td>
+                                    <td>{{Bill.first_name}}</td>
+                                    <td>{{Bill.purpose}}</td>
+                                    <td>{{Bill.purpose}}</td>
+
+
                                 </tr>
-                                <tr>
-                                    <td align="center">
-                                        <div class="radio radio-styled">
-                                            <label>
-                                                <input type="radio" name="optionsRadios" value="option1"><span></span>
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>14/04/2016    12:00:32</td>
-                                    <td>875415745</td>
-                                    <td>90189191</td>
-                                    <td>Joe Bloggs</td>
-                                    <td>Eye Clinic</td>
-                                    <td>Consultation</td>
-                                    <td>N/A</td>
-                                </tr>
-                                <tr>
-                                    <td align="center">
-                                        <div class="radio radio-styled">
-                                            <label>
-                                                <input type="radio" name="optionsRadios" value="option1"><span></span>
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>14/04/2016    12:00:32</td>
-                                    <td>2454521</td>
-                                    <td>90189191</td>
-                                    <td>Joe Bloggs</td>
-                                    <td>Eye Clinic</td>
-                                    <td>Consultation</td>
-                                    <td>Billed</td>
-                                </tr>
+
                             </tbody>
                         </table>
                     </form>

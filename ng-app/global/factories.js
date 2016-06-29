@@ -974,15 +974,6 @@ AppEHR.factory("DeleteInventory", function ($resource) {
 
 
 
-
-
-
-
-
-
-
-
-
 AppEHR.factory("GetSingleSupplier", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'get_inventory_single_supplier', params, {
@@ -1179,4 +1170,23 @@ AppEHR.factory("updateTestStatus", function ($resource) {
         }
     };
     return updateTest;
+});
+
+
+
+
+AppEHR.factory("GetAllBills", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_all_bills', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var Bills = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return Bills;
 });
