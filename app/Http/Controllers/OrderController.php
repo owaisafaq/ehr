@@ -358,6 +358,54 @@ class OrderController extends Controller
 
         return response()->json(['status' => true, 'data' => $lab_templates]);
     }
+    public function add_lab_test_template(Request $request){
+        $name = $request->input('template_name');
+        $cat_id = $request->input('cat_id');
+        $type_id = $request->input('type_id');
+        $desc = $request->input('description');
+        $currentdatetime = date('Y-m-d H:i:s');
+
+        $id = DB::table('lab_templates')->insertGetId([
+            'name'=>$name,
+            'category'=>$cat_id,
+            'type'=>$type_id,
+            'description'=>$desc,
+            'created_at'=>$currentdatetime
+        ]);
+        return response()->json(['status' => true, 'data' =>'Template Added.', 'id'=>$id]);
+
+    }
+    public function update_lab_test_template(Request $request){
+        $template_id = $request->input('template_id');
+        $name = $request->input('template_name');
+        $cat_id = $request->input('cat_id');
+        $type_id = $request->input('type_id');
+        $desc = $request->input('description');
+        $currentdatetime = date('Y-m-d H:i:s');
+
+        DB::table('lab_templates')
+            ->where('id', $template_id)
+            ->update([
+            'name'=>$name,
+            'category'=>$cat_id,
+            'type'=>$type_id,
+            'description'=>$desc,
+            'updated_at'=>$currentdatetime
+        ]);
+        return response()->json(['status' => true, 'data' =>'Template Updated.']);
+
+    }
+    public function delete_lab_test_template(Request $request){
+        $template_id = $request->input('template_id');
+
+        DB::table('lab_templates')
+            ->where('id', $template_id)
+            ->update([
+                'status'=>0
+            ]);
+        return response()->json(['status' => true, 'data' =>'Template Deleted.']);
+
+    }
 
 
     public function get_lab_test_fields(Request $request)
@@ -427,7 +475,7 @@ class OrderController extends Controller
 
     }
 
-
+    // LAB Template Category
     public function get_lab_template_categories(Request $request){
 
 
@@ -438,6 +486,67 @@ class OrderController extends Controller
 
         return response()->json(['status' => true, 'data' => $lab_categories]);
 
+    }
+    public function add_lab_template_category(Request $request){
+        $name = $request->input('category_name');
+        $desc = $request->input('description');
+        $currentdatetime = date('Y-m-d H:i:s');
+        $id = DB::table('template_categories')->insertGetId(['name'=>$name,'description'=>$desc, 'created_at'=>$currentdatetime]);
+
+        return response()->json(['status'=>true, 'data'=>'Category Created.', 'data'=>$id]);
+    }
+    public function update_lab_template_category(Request $request){
+        $cat_id = $request->input('cat_id');
+        $desc = $request->input('description');
+        $name = $request->input('category_name');
+        $currentdatetime = date('Y-m-d H:i:s');
+        DB::table('template_categories')
+            ->where('id', $cat_id)
+            ->update(['name'=>$name, 'description'=>$desc,'updated_at'=>$currentdatetime]);
+
+        return response()->json(['status'=>true, 'data'=>'Category Updated.']);
+    }
+    public function delete_lab_template_category(Request $request){
+        $cat_id = $request->input('cat_id');
+
+        DB::table('template_categories')
+            ->where('id', $cat_id)
+            ->update(['status'=>0]);
+
+        return response()->json(['status'=>true, 'data'=>'Category Deleted.']);
+    }
+
+    // LAB Template Types
+    public function get_lab_template_types(){
+        $types = DB::table('template_types')->where('status',1)->get();
+
+        return response()->json(['status' => true, 'data' => $types]);
+
+    }
+    public function add_lab_template_types(Request $request){
+        $name = $request->input('template_name');
+        $desc = $request->input('description');
+        $currentdatetime = date('Y-m-d H:i:s');
+        $id = DB::table('template_types')->insertGetId(['name'=>$name,'description'=>$desc, 'created_at'=>$currentdatetime]);
+        return response()->json(['status'=>true, 'data'=>'Category Created.', 'id'=>$id]);
+
+    }
+    public function update_lab_template_types(Request $request){
+        $type_id = $request->input('type_id');
+        $name = $request->input('type_name');
+        $desc = $request->input('description');
+        $currentdatetime = date('Y-m-d H:i:s');
+        DB::table('template_types')->where('id',$type_id)->update(['name'=>$name,'description'=>$desc, 'updated_at'=>$currentdatetime]);
+        return response()->json(['status'=>true, 'data'=>'Category Updated.']);
+    }
+    public function delete_lab_template_types(Request $request){
+        $type_id = $request->input('type_id');
+
+        DB::table('template_types')
+            ->where('id', $type_id)
+            ->update(['status'=>0]);
+
+        return response()->json(['status'=>true, 'data'=>'Category Deleted.']);
     }
 
 }
