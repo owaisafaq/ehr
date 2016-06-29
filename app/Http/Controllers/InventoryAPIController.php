@@ -356,7 +356,6 @@ class InventoryAPIController extends Controller
         }
     }
     public function get_reorder_level(Request $request){
-
         $product_id = $request->input('product_id');
         $reorder_level = DB::table('inventory_products')->select('reorder_level')->where('id', $product_id)->first();
         if($reorder_level){
@@ -370,7 +369,7 @@ class InventoryAPIController extends Controller
     public function get_product(Request $request){
         $product_id = $request->input('product_id');
 
-        $product = DB::table('inventory_product')->where('id',$product_id)->first();
+        $product = DB::table('inventory_products')->where('id',$product_id)->first();
 
         if($product){
             return response()->json(['status' => true, 'message' => "Product Found", 'data'=>$product], 200);

@@ -754,6 +754,24 @@ AppEHR.factory("GetAllCategories", function ($resource) {
     return CategoryLists;
 });
 
+
+AppEHR.factory("GetAllPharmacies", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_pharmacies', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var Pharmacies = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return Pharmacies;
+});
+
+
 AppEHR.factory("AddCategory", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'create_inventory_category', params, {
@@ -999,6 +1017,42 @@ AppEHR.factory("GetSingleProduct", function ($resource) {
     };
     return Stocks;
 });
+
+
+AppEHR.factory("GetReorderLevel", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_reorder_level', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var reorder_level = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return reorder_level;
+});
+
+AppEHR.factory("updateReorderLevel", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'update_reorder_level', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var update_reorder_level = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return update_reorder_level;
+});
+
+
+
 
 AppEHR.factory("cancelLabOrder", function ($resource) {
     function getResource(params, body) {
