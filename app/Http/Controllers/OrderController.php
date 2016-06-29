@@ -153,7 +153,7 @@ class OrderController extends Controller
     {
 
         $orders = DB::table('lab_orders')
-            ->select(DB::raw('lab_orders.id,lab_orders.patient_id,patients.first_name as patient_name,lab_orders.order_status,labs.name as lab_name,patients.age,patients.marital_status,patients.sex,maritial_status.name as marital_status'))
+            ->select(DB::raw('lab_orders.id,lab_orders.patient_id,patients.first_name as patient_name,lab_orders.order_status,labs.name as lab_name,patients.age,patients.marital_status,patients.sex,maritial_status.name as marital_status, lab_orders.created_at,lab_orders.updated_at'))
             ->leftJoin('patients', 'lab_orders.patient_id', '=', 'patients.id')
             ->leftJoin('labs', 'labs.id', '=', 'lab_orders.lab')
             ->leftJoin('lab_order_tests', 'lab_order_tests.lab_order_id', '=', 'lab_orders.id')
