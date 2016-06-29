@@ -720,6 +720,37 @@ AppEHR.factory("UpdateAllergies", function ($resource) {
     return patientRegistrationEmployer;
 });
 
+AppEHR.factory("ADDSupplements", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_patient_supplements', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("ADDAllergy", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_patient_allergies', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+
 AppEHR.factory("GetAllInventory", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'get_stock', params, {

@@ -333,7 +333,7 @@
                     </pagination>
                 </div>
                 <div class="tab-pane" id="supplements">
-                    <button class="btn ink-reaction button-style-1 button-style-1 pull-right margin-bottom-xxl">Add Supplements</button>
+                    <button data-toggle="modal" data-target="#addsuplemets" class="btn ink-reaction button-style-1 button-style-1 pull-right margin-bottom-xxl">Add Supplements</button>
                     <table class="table table-striped no-margin table-custom table-custom_big">
                         <thead>
                             <tr>
@@ -671,7 +671,7 @@
                                 <label>result</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" placeholder="0" ng-model="vital.result | number : 1" readonly/>
+                                <input type="text" placeholder="0" ng-model="vital.result" readonly/>
                             </div>
                             <div class="col-lg-6">
                                 <label>weight (kg)</label>
@@ -750,14 +750,14 @@
                 <h2>Add Allergies</h2>
             </div>
             <div class="modal-body">
-                <form class="custom-form">
+                <form class="custom-form" ng-submit="addAllergy(allergie)">
                     <div class="row">
 
                         <div class="col-lg-3">
                             <label>Type</label>
                         </div>
                         <div class="col-lg-3">
-                            <select class="form-control">
+                            <select ng-model="allergie.allergyType" class="form-control">
                                 <option>Select</option>
                                 <option>2</option>
                                 <option>3</option>
@@ -768,14 +768,14 @@
                             <label>Allergy</label>
                         </div>
                         <div class="col-lg-4">
-                            <input type="text" placeholder="" name="" required/>
+                            <input ng-model="allergie.allergy" type="text" placeholder="" name="" required/>
                         </div>
 
                         <div class="col-lg-3">
                             <label>Severity</label>
                         </div>
                         <div class="col-lg-3">
-                            <select class="form-control">
+                            <select ng-model="allergie.severity" class="form-control">
                                 <option>Select</option>
                                 <option>2</option>
                                 <option>3</option>
@@ -788,7 +788,7 @@
                         <div class="col-lg-4">
                             <div class="input-group date select-date">
                                 <div class="input-group-content">
-                                    <input type="text" class="form-control ng-pristine ng-valid ng-empty ng-touched" placeholder="Pick Date">
+                                    <input ng-model="allergie.observed_on" type="text" class="form-control ng-pristine ng-valid ng-empty ng-touched" placeholder="Pick Date">
                                 </div>
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                             </div>
@@ -799,10 +799,9 @@
                             <label>Status</label>
                         </div>
                         <div class="col-lg-3">
-                            <select class="form-control">
-                                <option>Select</option>
-                                <option>2</option>
-                                <option>3</option>
+                            <select ng-model="allergie.status" class="form-control">
+                                <option>High</option>
+                                <option>Low</option>
                             </select>
                         </div>
 
@@ -810,12 +809,12 @@
                             <label>Reaction</label>
                         </div>
                         <div class="col-lg-4">
-                            <input type="text" placeholder="" name="" required/>
+                            <input ng-model="allergie.reaction" type="text" placeholder="" name="" required/>
                         </div>
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default button-style-1">Add</button>
+                        <button type="submit" class="btn btn-default button-style-1">Add</button>
                         <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
                     </div>
                 </form>
@@ -836,14 +835,14 @@
                 <h2>Add Supplements</h2>
             </div>
             <div class="modal-body">
-                <form class="custom-form">
+                <form class="custom-form" ng-submit="addSupplements(addSupplement)">
                     <div class="row">
 
                         <div class="col-lg-3">
                             <label>Supplement</label>
                         </div>
                         <div class="col-lg-6">
-                            <input type="text" placeholder="" name="" required/>
+                            <input type="text" placeholder="" name="" required ng-model="addSupplement.supplementName"/>
                         </div>
                         <div class="col-lg-3"></div>
 
@@ -851,10 +850,10 @@
                             <label>Manufacturer</label>
                         </div>
                         <div class="col-lg-3">
-                            <select class="form-control">
+                            <select class="form-control" ng-model="addSupplement.manufacturer">
                                 <option>Select</option>
-                                <option>2</option>
-                                <option>3</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
                             </select>
 
                         </div>
@@ -862,7 +861,7 @@
                             <button class="add button-custom add_manufacturer"></button>
                         </div>
                         <div class="col-lg-4">
-                            <input type="text" placeholder="" name="" required/>
+                            <input type="text" placeholder="" name="" required ng-model="addSupplement.addmanu"/>
                         </div>
                         <div class="col-lg-1">
                             <button type="button" class="btn btn-default button-style-1 margin-0">Add</button>
@@ -874,7 +873,7 @@
                         <div class="col-lg-3">
                             <div class="input-group date select-date">
                                 <div class="input-group-content">
-                                    <input type="text" class="form-control ng-pristine ng-valid ng-empty ng-touched" placeholder="Pick Date">
+                                    <input type="text" class="form-control ng-pristine ng-valid ng-empty ng-touched" placeholder="Pick Date" ng-model="addSupplement.fromdate">
                                 </div>
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                             </div>
@@ -886,7 +885,7 @@
                         <div class="col-lg-3">
                             <div class="input-group date select-date">
                                 <div class="input-group-content">
-                                    <input type="text" class="form-control ng-pristine ng-valid ng-empty ng-touched" placeholder="Pick Date">
+                                    <input type="text" class="form-control ng-pristine ng-valid ng-empty ng-touched" placeholder="Pick Date" ng-model="addSupplement.todate">
                                 </div>
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                             </div>
@@ -897,13 +896,13 @@
                             <label>Dosage</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder="" name="" required/>
+                            <input type="text" placeholder="" name="" required ng-model="addSupplement.dosage1"/>
                         </div>
                         <div class="col-lg-3">
-                            <select class="form-control">
+                            <select class="form-control" ng-model="addSupplement.dosage2">
                                 <option>Select</option>
-                                <option>2</option>
-                                <option>3</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
                             </select>
                         </div>
                         <div class="col-lg-3"></div>
@@ -913,20 +912,20 @@
                             <label>Frequency</label>
                         </div>
                         <div class="col-lg-3">
-                            <select class="form-control">
+                            <select class="form-control" ng-model="addSupplement.frequency">
                                 <option>Select</option>
-                                <option>2</option>
-                                <option>3</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
                             </select>
                         </div>
                         <div class="col-lg-3">
                             <label>Intake Type</label>
                         </div>
                         <div class="col-lg-3">
-                            <select class="form-control">
+                            <select class="form-control" ng-model="addSupplement.intake">
                                 <option>Select</option>
-                                <option>2</option>
-                                <option>3</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
                             </select>
                         </div>
                         <div class="col-lg-3"></div>
@@ -934,7 +933,7 @@
                         <div class="col-lg-9">
                             <div class="checkbox checkbox-styled">
                                 <label>
-                                    <input type="checkbox" value="">
+                                    <input type="checkbox" value="" ng-model="addSupplement.status">
                                     <span>Is Active</span>
                                 </label>
                             </div>
@@ -942,7 +941,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default button-style-1">Add</button>
+                        <button type="submit" class="btn btn-default button-style-1">Add</button>
                         <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
                     </div>
                 </form>
