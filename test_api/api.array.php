@@ -1114,6 +1114,21 @@ $api->method = "GET";
 $api->description = "Get All Lab Lab Orders";
 $api->params->token = "123";
 
+
+
+
+$api_arr [] = $api;
+
+
+
+// Get All Lab Orders History
+$api = new api();
+$api->name = "Get All Lab Orders History";
+$api->url = HOST . 'get_lab_order_history';
+$api->method = "GET";
+$api->description = "Get All Lab Lab Orders History";
+$api->params->token = "123";
+
 $api_arr [] = $api;
 
 
