@@ -722,7 +722,7 @@
                             <button class="done-editing save button-custom" ng-click="saveArchive();">Save</button>
                             <button class="edit button-custom" ng-disabled="disableOptionsArchive">Edit</button>
                             <button class="delete button-custom" data-toggle="modal" data-target="#confirmation" ng-disabled="disableOptionsArchive">Remove</button>
-                            <button data-toggle="modal" data-target="#fileUploader" class="add button-custom">ADD</button>
+                            <button ng-click="saveAndClose = true;" data-toggle="modal" data-target="#fileUploader" class="add button-custom">ADD</button>
                         </div>
                     </div>
 
@@ -990,7 +990,7 @@
             <div class="modal-header pop_head">
                 <h2>Add Archive</h2>
             </div>
-            <form enctype="multipart/form-data" method="post">
+            <form enctype="multipart/form-data" method="post" name="ArmyForm">
                 <div class="modal-body">
                     <div class="row text-center">
                         <div class="select_file_mode">
@@ -1018,9 +1018,10 @@
                         <div class="clear fileuploader_con">
                             <!-- <input type="file" class="abc" file-model="patient_archive" multiple="multiple" accept="{{fileTypes}}" /> -->
                             <!-- <input type="file" id="file" name="file" ng-model="files" multiple file-change/> -->
-                            <button class="UploadBtn" ngf-select="uploadFiles($files, $invalidFiles)" multiple accept="{{fileTypes}}" ngf-max-size="5MB">Upload Files</button>
+                            <button class="UploadBtn" ngf-select="uploadFiles($files, $invalidFiles)" multiple accept="{{fileTypes}}" type="file" ngf-max-size="1MB">Upload Files</button>
                             <!-- <a href="javascript:$('#file_upload').uploadify('upload','*')">Upload Files</a>
                             <p></p> -->
+                             <i ng-show="ArmyForm.file.$error.maxSize">File too large {{errorFile.size / 5000|number:1}}MB: max 2M</i>
                             <ul>
                                 <li ng-repeat="f in files" style="font:smaller">{{f.name}} {{f.$errorParam}}
                                     <span class="progress" ng-show="f.progress >= 0">
@@ -1042,8 +1043,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" ng-show="fileArea || folderArea" class="btn btn-default button-style-1" ng-click="listAfterUploaded()" data-dismiss="modal">SAVE & CLOSE</button>
-                    <button type="button" ng-show="fileArea || folderArea" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    <button type="submit" ng-show="fileArea || folderArea" class="btn btn-default button-style-1" ng-click="listAfterUploaded()" data-dismiss="modal" ng-disabled="saveAndClose">Done</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->

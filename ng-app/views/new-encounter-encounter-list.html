@@ -1,7 +1,7 @@
 <div id="content">
     <section>
-        <div class="card custom-card">
-            <div class="card-head card-head-custom card-color-2">
+        <div class="card" ng-class="{true:'custom-card'}[patientInfo]">
+            <div class="card-head card-head-custom card-color-2" ng-show="patientInfo">
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Encounter ID</label>
                     <span class="txt-style-2 col-lg-12 capitalize">{{encounterID == undefined ? EID : encounterID}}</span>
