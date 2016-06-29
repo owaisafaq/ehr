@@ -2452,12 +2452,21 @@ table.setting_table_cat > tbody > tr > td:nth-child(2) span{float:left;}
     display: none;
     resize: none;
     position: absolute;
-    top: 25px;
+    top: 21px;
     left: 0;
     z-index: 1;
     width: 80%;
+    padding-left: 10px;
+    color: #000;
+    font-family: 'SegoeUI-reg';
+    height: 25px;
+    font-weight: normal;
 }
-.margin-top-50{
+.show_textarea img{
+    margin-top: -3px;
+    display: none;
+}
+.margin-top-50{ 
     margin-top: 50px;
 }
 .save_Pview_button{
@@ -2713,4 +2722,13 @@ form .progress {
     background: #c8ddee;
     border-color: #c8ddee;
     color: #516e81;
+}
+.archive_buttons .edit,.archive_buttons .delete{
+    display: none;   
+}
+.select-date input{
+    text-align: left;
+}
+#Noappointment{
+    display: block;
 }

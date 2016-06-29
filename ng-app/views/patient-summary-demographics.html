@@ -671,7 +671,7 @@
                                 <label>result</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" placeholder="0" ng-model="vital.result" readonly/>
+                                <input type="text" placeholder="0" ng-model="vital.result | number : 1" readonly/>
                             </div>
                             <div class="col-lg-6">
                                 <label>weight (kg)</label>
@@ -735,7 +735,6 @@
                 <p>Are you Sure want to delete?</p>
             </div>
             <div class="modal-footer">
-                {{deletethis}}
                 <button type="button" class="btn btn-default button-style-1" data-toggle="modal" data-dismiss="modal" ng-click="doDelete()">Ok</button>
                 <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
             </div>
