@@ -1,26 +1,26 @@
 <div id="content">
     <section>
         <div class="card custom-card">
-            <div class="card-head card-head-custom card-color-3">
+            <div class="card-head card-head-custom card-color-3" ng-show="orderSelected">
                 <div class="col-lg-3">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
-                    <span class="txt-style-2 col-lg-12">Elbert Bloggs Woo</span>
+                    <span class="txt-style-2 col-lg-12">{{ selectedOrder.patient_name }}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Number</label>
-                    <span class="txt-style-2 col-lg-12">PA-90189191</span>
+                    <span class="txt-style-2 col-lg-12">{{ selectedOrder.patient_id }}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Age</label>
-                    <span class="txt-style-2 col-lg-12">39 Years</span>
+                    <span class="txt-style-2 col-lg-12">{{ selectedOrder.age }}</span>
                 </div>
                 <div class="col-lg-1">
                     <label class="txt-style-1 text-uppercase col-lg-12">Sex</label>
-                    <span class="txt-style-2 col-lg-12">Male</span>
+                    <span class="txt-style-2 col-lg-12">{{ selectedOrder.gender }}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">marital status</label>
-                    <span class="txt-style-2 col-lg-12">Single</span>
+                    <span class="txt-style-2 col-lg-12">{{ selectedOrder.marital_status }}</span>
                 </div>
                 <div class="col-lg-2">
                     <a href="javascript:;" class="button-style-2">
@@ -54,81 +54,43 @@
                                 <th width="10px"></th>
                                 <th>date</th>
                                 <th>Order no</th>
-                                <th>lab test name</th>
-                                <th>loinic code</th>
+                                <!--<th>lab test name</th>
+                                <th>loinic code</th>-->
                                 <th>lab</th>
                                 <th>ordered by</th>
                                 <th>report</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr ng-repeat="labOrder in labOrders">
                                 <td align="center">
                                     <div class="radio radio-styled">
                                         <label>
-                                            <input type="radio" name="optionsRadios" value="option1">
+                                            <input type="radio" ng-model="action" ng-click="labSelected(labOrder.id);">
+                                            <span></span>
                                         </label>
                                     </div>
                                 </td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{ labOrder.created_at | cmdate:'MMM dd, yyyy hh:mm a' }}</td>
+                                <td>{{ labOrder.id }}</td>
+                                <!--<td></td>
+                                <td></td>-->
+                                <td>{{ labOrder.lab_name }}</td>
+                                <td>{{ labOrder.ordered_by }}</td>
                                 <td><a href="javascript:;" class="link-style">View</a></td>
-                            </tr>
-                            <tr>
-                                <td align="center">
-                                    <div class="radio radio-styled">
-                                        <label>
-                                            <input type="radio" name="optionsRadios" value="option1">
-                                        </label>
-                                    </div>
-                                </td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td align="center">
-                                    <div class="radio radio-styled">
-                                        <label>
-                                            <input type="radio" name="optionsRadios" value="option1">
-                                        </label>
-                                    </div>
-                                </td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-
-
             </div><!--end .card-body -->
         </div><!--end .card -->
-
-
-
         <div id="menubar" class="menubar-inverse ">
             <div class="site_name">
                 ERH
             </div>
             <div class="menubar-scroll-panel">
-
                 <!-- BEGIN MAIN MENU -->
                 <ul id="main-menu" class="gui-controls">
-
                     <!-- BEGIN DASHBOARD -->
                     <li>
                         <a href="../../html/dashboards/dashboard.html" >
@@ -137,7 +99,6 @@
                         </a>
                     </li><!--end /menu-li -->
                     <!-- END DASHBOARD -->
-
                     <!-- BEGIN EMAIL -->
                     <li class="gui-folder">
                         <a>
@@ -153,7 +114,6 @@
                         </ul><!--end /submenu -->
                     </li><!--end /menu-li -->
                     <!-- END EMAIL -->
-
                     <!-- BEGIN DASHBOARD -->
                     <li>
                         <a href="../../html/layouts/builder.html" >
@@ -162,7 +122,6 @@
                         </a>
                     </li><!--end /menu-li -->
                     <!-- END DASHBOARD -->
-
                     <!-- BEGIN UI -->
                     <li class="gui-folder">
                         <a>
@@ -196,7 +155,6 @@
                         </ul><!--end /submenu -->
                     </li><!--end /menu-li -->
                     <!-- END UI -->
-
                     <!-- BEGIN TABLES -->
                     <li class="gui-folder">
                         <a>
@@ -211,7 +169,6 @@
                         </ul><!--end /submenu -->
                     </li><!--end /menu-li -->
                     <!-- END TABLES -->
-
                     <!-- BEGIN FORMS -->
                     <li class="gui-folder">
                         <a>
@@ -229,7 +186,6 @@
                         </ul><!--end /submenu -->
                     </li><!--end /menu-li -->
                     <!-- END FORMS -->
-
                     <!-- BEGIN PAGES -->
                     <li class="gui-folder">
                         <a>
@@ -292,7 +248,6 @@
                         </ul><!--end /submenu -->
                     </li><!--end /menu-li -->
                     <!-- END FORMS -->
-
                     <!-- BEGIN CHARTS -->
                     <li>
                         <a href="../../html/charts/charts.html" >
@@ -301,7 +256,6 @@
                         </a>
                     </li><!--end /menu-li -->
                     <!-- END CHARTS -->
-
                     <!-- BEGIN LEVELS -->
                     <li class="gui-folder">
                         <a>
@@ -353,10 +307,8 @@
                         </ul><!--end /submenu -->
                     </li><!--end /menu-li -->
                     <!-- END LEVELS -->
-
                 </ul><!--end .main-menu -->
                 <!-- END MAIN MENU -->
-
                 <div class="menubar-foot-panel">
                     <small class="no-linebreak hidden-folded">
                         <span class="opacity-75">Copyright &copy; 2014</span> <strong>CodeCovers</strong>

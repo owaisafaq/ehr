@@ -655,6 +655,21 @@ AppEHR.factory("GetAllLabOrders", function ($resource) {
     };
     return LabOrders;
 });
+AppEHR.factory("GetLabOrdersHistory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_lab_order_history', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var LabOrdersHistory = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return LabOrdersHistory;
+});
 AppEHR.factory("getLabOrderInfo", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'get_lab_order', params, {
@@ -692,6 +707,37 @@ AppEHR.factory("getLabTestInfo", function ($resource) {
 AppEHR.factory("UpdateAllergies", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'update_patient_allergies', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+
+AppEHR.factory("ADDSupplements", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_patient_supplements', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("ADDAllergy", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_patient_allergies', params, {
             save: {method: 'POST'}
         });
         return res2;

@@ -1534,8 +1534,11 @@ a.text-success:hover {
   border-top: 1px solid rgba(12, 12, 12, 0.07);
   padding: 16px;
 }
-.menubar-visible #menubar {
+/*.menubar-visible #menubar {
   width: 240px;
+}*/
+#menubar:hover {
+    width: 240px;
 }
 #menubar.animate {
   -webkit-transition: width 0.5s cubic-bezier(0.15, 0.99, 0.18, 1.01);
