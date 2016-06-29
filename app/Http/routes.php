@@ -191,9 +191,9 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->get('get_lab_template_types','App\Http\Controllers\OrderController@get_lab_template_types');
     $app->post('get_lab_template_type','App\Http\Controllers\OrderController@get_lab_template_type');
-    $app->post('update_lab_template_type','App\Http\Controllers\OrderController@update_lab_template_type');
-    $app->post('add_lab_template_type','App\Http\Controllers\OrderController@add_lab_template_type');
-    $app->post('delete_lab_template_type','App\Http\Controllers\OrderController@delete_lab_template_type');
+    $app->post('update_lab_template_types','App\Http\Controllers\OrderController@update_lab_template_types');
+    $app->post('add_lab_template_types','App\Http\Controllers\OrderController@add_lab_template_types');
+    $app->post('delete_lab_template_types','App\Http\Controllers\OrderController@delete_lab_template_types');
 
 });
 $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($app) {

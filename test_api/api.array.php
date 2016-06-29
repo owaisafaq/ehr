@@ -1580,16 +1580,9 @@ $api->params->cat_id = "1";
 $api->params->token = "123435";
 
 
-
-
-
-
-
-
-
 //Get Template Types
 $api = new api();
-$api->name = "Get Template Categories";
+$api->name = "Get Template Types";
 $api->url = HOST . 'get_lab_template_types';
 $api->method = "GET";
 $api->params->token = "123435";
@@ -1600,7 +1593,7 @@ $api_arr [] = $api;
 
 //Get Template Type
 $api = new api();
-$api->name = "Get Template Category";
+$api->name = "Get Template Types";
 $api->url = HOST . 'get_lab_template_type';
 $api->method = "POST";
 $api->params->type_id = "1";
@@ -1611,7 +1604,7 @@ $api_arr [] = $api;
 
 //Add Template Type
 $api = new api();
-$api->name = "Add Template Categories";
+$api->name = "Add Template Types";
 $api->url = HOST . 'add_lab_template_types';
 $api->method = "POST";
 $api->params->type_name = "test";
@@ -1623,7 +1616,7 @@ $api_arr [] = $api;
 
 //Update Template Categories
 $api = new api();
-$api->name = "Update Template Categories";
+$api->name = "Update Template Types";
 $api->url = HOST . 'update_lab_template_types';
 $api->method = "POST";
 $api->params->type_id = "1";
@@ -1636,28 +1629,11 @@ $api_arr [] = $api;
 
 //Delete Template Categories
 $api = new api();
-$api->name = "Delete  Template Categories";
+$api->name = "Delete  Template Types";
 $api->url = HOST . 'delete_lab_template_types';
 $api->method = "POST";
 $api->params->type_id = "1";
 $api->params->token = "123435";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 $api_arr [] = $api;
 

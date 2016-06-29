@@ -544,7 +544,7 @@ class OrderController extends Controller
         $desc = $request->input('description');
         $currentdatetime = date('Y-m-d H:i:s');
         $id = DB::table('template_types')->insertGetId(['name'=>$name,'description'=>$desc, 'created_at'=>$currentdatetime]);
-        return response()->json(['status'=>true, 'data'=>'Category Created.', 'id'=>$id]);
+        return response()->json(['status'=>true, 'data'=>'Type Created.', 'id'=>$id]);
 
     }
     public function update_lab_template_types(Request $request){
@@ -553,7 +553,7 @@ class OrderController extends Controller
         $desc = $request->input('description');
         $currentdatetime = date('Y-m-d H:i:s');
         DB::table('template_types')->where('id',$type_id)->update(['name'=>$name,'description'=>$desc, 'updated_at'=>$currentdatetime]);
-        return response()->json(['status'=>true, 'data'=>'Category Updated.']);
+        return response()->json(['status'=>true, 'data'=>'Type Updated.']);
     }
     public function delete_lab_template_types(Request $request){
         $type_id = $request->input('type_id');
@@ -562,7 +562,7 @@ class OrderController extends Controller
             ->where('id', $type_id)
             ->update(['status'=>0]);
 
-        return response()->json(['status'=>true, 'data'=>'Category Deleted.']);
+        return response()->json(['status'=>true, 'data'=>'Type Deleted.']);
     }
 
 }
