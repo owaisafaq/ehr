@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllInventory','GetAllSuppliers','AddCategory','GetAllCategories','AddSupplier','GetSingleSupplier','UpdateSuppliers','GetSingleCategory','GetSingleStock','updateCategory','DeleteCategory','DeleteSupplier','AddInventory','AddProduct','DeleteInventory','GetSingleProduct','GetAllPharmacies','GetReorderLevel','updateReorderLevel','$timeout', function($scope, $rootScope,$window,$routeParams,GetAllInventory,GetAllSuppliers,AddCategory,GetAllCategories,AddSupplier,GetSingleSupplier,UpdateSuppliers,GetSingleCategory,GetSingleStock,updateCategory,DeleteCategory,DeleteSupplier,AddInventory,AddProduct,DeleteInventory,GetSingleProduct,GetAllPharmacies,GetReorderLevel,updateReorderLevel,$timeout){
+AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllInventory','GetAllSuppliers','AddCategory','GetAllCategories','AddSupplier','GetSingleSupplier','UpdateSuppliers','GetSingleCategory','GetSingleStock','updateCategory','DeleteCategory','DeleteSupplier','AddInventory','AddProduct','DeleteInventory','GetSingleProduct','GetAllPharmacies','GetReorderLevel','updateReorderLevel','GetProduct','ProductUpdate','$timeout', function($scope, $rootScope,$window,$routeParams,GetAllInventory,GetAllSuppliers,AddCategory,GetAllCategories,AddSupplier,GetSingleSupplier,UpdateSuppliers,GetSingleCategory,GetSingleStock,updateCategory,DeleteCategory,DeleteSupplier,AddInventory,AddProduct,DeleteInventory,GetSingleProduct,GetAllPharmacies,GetReorderLevel,updateReorderLevel,GetProduct,ProductUpdate,$timeout){
 	$rootScope.pageTitle = "EHR - Inventory";
 	$scope.displayInfo = {};
 	$scope.cat_unique={};
@@ -400,6 +400,13 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 			$timeout(function () {
 				$('#editSupplier').modal('hide');
 			},500);
+
+			GetAllSuppliers.get({
+				token: $window.sessionStorage.token
+
+			}, GetAllSupplierSuccess, GetAllSupplierFailure);
+
+
 		}
 	}
 
@@ -594,14 +601,14 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 
 
 		$rootScope.loader = "show";
-		GetSingleStock.get({token: $window.sessionStorage.token, product_id: productID}, getProductInfoSuccess, getProductInfoFailure);
+		GetProduct.get({token: $window.sessionStorage.token, product_id: productID}, getProductInfoSuccess, getProductInfoFailure);
 		function getProductInfoSuccess(res) {
 			if (res.status == true) {
 				//console.log(res);
 				$rootScope.loader = "hide";
 				//$scope.SupplierSelected = true;
-				$scope.selectedProduct = res.data;
-				console.log($scope.selectedProduct);
+				$scope.editinventory = res.data;
+				console.log($scope.editinventory);
 				/*$(".inventory_detail").hide();
 				$("#stock_det").show();*/
 
@@ -684,6 +691,58 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 		function ReorderUpdateFailure(error) {
 			console.log(error);
 		}
+	};
+
+// Update Product
+
+
+	$scope.EditProduct = function (editinventory) {
+		console.log(editinventory);
+
+			var updateProduct={
+ token:$window.sessionStorage.token,
+ product_id:editinventory.id,
+ description:editinventory.description,
+ group:editinventory.group,
+ department_id:editinventory.department_id,
+ product_name:editinventory.name,
+ trade_name:editinventory.trade_name,
+ route:editinventory.route,
+ reorder_level:editinventory.reorder_level,
+ cat_id:editinventory.cat_id,
+ strength:editinventory.strength,
+ dose_from:editinventory.dose_from
+
+				
+			}
+			console.log(updateProduct);
+		ProductUpdate.save(updateProduct, ProductUpdateSuccess, ProductUpdateFailure);
+
+
+		function ProductUpdateSuccess(res) {
+			console.log(res);
+			console.log(res);
+			if (res.status == true) {
+				$rootScope.loader = "hide";
+
+				$(".inventory_detail").show();
+				$(".inv_header").show();
+				//$("#stock_det").hide();
+				//$(".add-drug-supplements").hide();
+				$(".edit_prod").hide();
+				
+				
+				GetAllInventory.get({
+					token: $window.sessionStorage.token,
+				}, GetAllInventorySuccess, GetAllInventoryFailure);
+
+			}
+		}
+
+		function ProductUpdateFailure(error) {
+			console.log(error);
+		}
+
 	};
 
 
