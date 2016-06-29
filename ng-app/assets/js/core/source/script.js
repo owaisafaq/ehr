@@ -93,5 +93,15 @@ $(document).ready(function () {
         $('#addsig').modal('hide');
         $('#addmedication').modal('show');
     });
-        
+
+    $(document).on('click','#cancelOrder2 .form-wizard-horizontal li',function(){
+        $('#cancelOrder2 .form-wizard-horizontal li').removeClass('active');
+        $('#cancelOrder2 .form-wizard-horizontal li').removeClass('done');
+        $(this).prevAll().addClass('done');
+        $(this).addClass('active');
+        var index = $('#cancelOrder2 .form-wizard-horizontal li').index(this);
+        var length = $('#cancelOrder2 .form-wizard-horizontal li').length;
+        var width = index / (length - 1) * 100;
+        $('#cancelOrder2 .form-wizard-horizontal .progress .progress-bar-primary').css('width',width+'%');
+    });
 });

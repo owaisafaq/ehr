@@ -32,6 +32,7 @@ AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routePar
                 $rootScope.loader = "hide";
                 $scope.testIsSelected = true;
                 $scope.selectedTest = res.data;
+                $scope.selectedTest.updated_at = new Date($scope.selectedTest.updated_at); // date property for current date
             }
         }
         function getLabTestInfoFailure(error) { // on failure
@@ -57,8 +58,9 @@ AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routePar
             updateTestStatus.save({ // sending data over updateTestStatus factory which will update Test Status
                 token: $window.sessionStorage.token,
                 lab_test: $scope.selectedTest.id,
-                status: $scope.selectedTest.test_status
+                status: $('#cancelOrder2 .form-wizard-horizontal li.active .title').data('val')
             }, updateTestStatusSuccess, updateTestStatusFailure);
+            $scope.testSelected($scope.selectedTest.id);
         //}
     };
 
