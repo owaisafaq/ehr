@@ -174,6 +174,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->get('get_intake','App\Http\Controllers\ApiController@get_intake');
 
+    $app->get('get_lab_order_history','App\Http\Controllers\OrderController@get_lab_order_history');
+
     $app->get('get_lab_template_categories','App\Http\Controllers\OrderController@get_lab_template_categories');
 
 });
