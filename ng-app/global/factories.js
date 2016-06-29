@@ -655,6 +655,21 @@ AppEHR.factory("GetAllLabOrders", function ($resource) {
     };
     return LabOrders;
 });
+AppEHR.factory("GetLabOrdersHistory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_lab_order_history', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var LabOrdersHistory = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return LabOrdersHistory;
+});
 AppEHR.factory("getLabOrderInfo", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'get_lab_order', params, {
