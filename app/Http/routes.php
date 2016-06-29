@@ -174,6 +174,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->get('get_intake','App\Http\Controllers\ApiController@get_intake');
 
+    $app->get('get_lab_order_history','App\Http\Controllers\OrderController@get_lab_order_history');
+
     $app->get('get_lab_template_categories','App\Http\Controllers\OrderController@get_lab_template_categories');
 
 });
@@ -202,5 +204,8 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->post('get_reorder_level','App\Http\Controllers\InventoryAPIController@get_reorder_level');
     $app->post('update_product','App\Http\Controllers\InventoryAPIController@update_product');
     $app->post('get_product','App\Http\Controllers\InventoryAPIController@get_product');
+
+    $app->get('get_all_bills','App\Http\Controllers\BillingController@get_all_bills');
+    $app->get('get_all_invoices','App\Http\Controllers\BillingController@get_all_invoices');
 
 });

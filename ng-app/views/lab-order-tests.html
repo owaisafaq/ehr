@@ -15,12 +15,12 @@
                         <button type="submit">
                             <i class="fa fa-search"></i>
                         </button>
-                        <input class="search_field search_field_big" type="text" placeholder="Search with test id or test name" ng-model="searchTest">
+                        <input class="search_field search_field_big" type="text" placeholder="Search with test name or test priority" ng-model="searchTest">
                     </div>
-                </div> 
+                </div>
             </div>
             <div class="card-body col-lg-12">
-                <div class="icons_con">
+                <div class="icons_con" ng-show="testIsSelected">
                     <button data-toggle="modal" data-target="#order-label" class="print button-custom">print test label</button>
                     <button data-toggle="modal" data-target="#cancelOrder2" class="update button-custom">update status</button>
                     <button class="add-result button-custom">add result</button>
@@ -30,39 +30,42 @@
                 <div class="col-lg-12 no-padding">
                     <table class="table table-striped no-margin table-custom">
                         <thead>
-                            <tr>
-                                <th width='10px'></th>
-                                <th>test name</th>
-                                <th>priority</th>
-                                <th>cost</th>
-                            </tr>
+                        <tr>
+                            <th width='10px'></th>
+                            <th>test name</th>
+                            <th>priority</th>
+                            <th>cost</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="labTest in labTests | filter:search">
-                                <td align="center">
-                                    <div class="radio radio-styled">
-                                        <label>
-                                            <input type="radio" ng-model="action" ng-click="testSelected(labTest.id);">
-                                            <span></span>
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>{{ labTest.test_name }}</td>
-                                <td>{{ labTest.priority }}</td>
-                                <td>{{ labTest.cost }}</td>
-                            </tr>
+                        <tr ng-repeat="labTest in selectedOrder.test | filter:search">
+                            <td align="center">
+                                <div class="radio radio-styled">
+                                    <label>
+                                        <input type="radio" ng-click="testSelected(labTest.test_id);">
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td>{{ labTest.test_name }}</td>
+                            <td>{{ labTest.priority }}</td>
+                            <td>${{ labTest.cost }}</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="modal fade big-modal" id="cancelOrder2" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
-                        <div class="modal-content pull-left">
-                            <div class="modal-header pop_head">
-                                <h2>Update Status</h2>
-                            </div>
-                            <div class="modal-body pull-left">
-                                <form class="custom-form">
-                                    <div class="col-lg-12">
+                        <form class="custom-form" name="updateForm" ng-model="myForm" novalidate ng-submit="updateTestForm();">
+                            <div class="modal-content pull-left">
+                                <div class="modal-header pop_head">
+                                    <h2>Update Status</h2>
+                                </div>
+                                <div class="alert {{messageType}}" role="alert" ng-show="message">
+                                    <i class="{{errorSymbol}}"></i> {{errorMessage}}
+                                </div>
+                                <div class="modal-body pull-left">
+                                    <!--<div class="col-lg-12">
                                         <div class="header-search col-lg-3">
                                             <button type="submit">
                                                 <i class="fa fa-search"></i>
@@ -70,21 +73,20 @@
                                             <input class="search_field" type="text" placeholder="Search by patient id or name" ng-model="PI.search">
                                         </div>
                                         <button type="button" class="btn btn-default button-style-1">Add</button>
-                                    </div>
-
+                                    </div>-->
                                     <div class="col-lg-3">
                                         <label>lab order number</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <input type="text" placeholder="ID1234435656" disabled="" ng-model="PI.patient_ID" class="ng-pristine ng-untouched ng-valid ng-empty">
+                                        <input type="text" placeholder="{{ selectedTest.id }}" disabled="" class="ng-pristine ng-untouched ng-valid ng-empty">
                                     </div>
                                     <div class="col-lg-3">
                                         <label>current status</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <input type="text" placeholder="In Progress" disabled="" ng-model="PI.patient_ID" class="ng-pristine ng-untouched ng-valid ng-empty">
+                                        <input type="text" placeholder="{{ selectedTest.test_status }}" disabled="" class="ng-pristine ng-untouched ng-valid ng-empty">
                                     </div>
-                                    <div class="col-lg-3">
+                                    <!--<div class="col-lg-3">
                                         <label>Change Order Status</label>
                                     </div>
                                     <div class="col-lg-3">
@@ -94,35 +96,33 @@
                                                 <span>Yes</span>
                                             </label>
                                         </div>
-                                        <!--</div>-->
-                                        <!--<div class="col-lg-3 radio-align">-->
                                         <div class="radio radio-styled">
                                             <label>
                                                 <input type="radio" name="cancelOrder" value="option1" checked>
                                                 <span>No</span>
                                             </label>
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <div class="col-lg-12 form-wizard form-wizard-horizontal">
                                         <div class="form-wizard-nav">
-                                            <div class="progress" style="width: 85%;"><div class="progress-bar progress-bar-primary" style="width: 40%;"></div></div>
+                                            <div class="progress" style="width: 85%;"><div class="progress-bar progress-bar-primary" style="width: 0%;"></div></div>
                                             <ul class="nav nav-justified">
-                                                <li class="done"><a href="javascript:;"><span class="step">1</span> <span class="title">paid</span></a></li>
-                                                <li class="done"><a href="javascript:;"><span class="step">2</span> <span class="title">sample <br />collected</span></a></li>
-                                                <li class="active"><a href="javascript:;"><span class="step">3</span> <span class="title">test in <br />progress</span></a></li>
-                                                <li><a href="javascript:;"><span class="step">4</span> <span class="title">result <br />completed</span></a></li>
-                                                <li><a href="javascript:;"><span class="step">5</span> <span class="title">signed</span></a></li>
-                                                <li><a href="javascript:;"><span class="step">6</span> <span class="title">completed</span></a></li>
+                                                <li class="active"><a href="javascript:;"><span class="step">1</span> <span class="title" data-val="paid">paid</span></a></li>
+                                                <li><a href="javascript:;"><span class="step">2</span> <span class="title" data-val="sample collected">sample <br />collected</span></a></li>
+                                                <li><a href="javascript:;"><span class="step">3</span> <span class="title" data-val="in progress">test in <br />progress</span></a></li>
+                                                <li><a href="javascript:;"><span class="step">4</span> <span class="title" data-val="result completed">result <br />completed</span></a></li>
+                                                <li><a href="javascript:;"><span class="step">5</span> <span class="title" data-val="signed">signed</span></a></li>
+                                                <li><a href="javascript:;"><span class="step">6</span> <span class="title" data-val="completed">completed</span></a></li>
                                             </ul>
                                         </div>
                                     </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer col-lg-12">
-                                <button type="button" class="btn btn-default button-style-1">Save</button>
-                                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
-                            </div>
-                        </div><!-- /.modal-content -->
+                                </div>
+                                <div class="modal-footer col-lg-12">
+                                    <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;" ng-disabled="updateTestBtn">Save</button>
+                                    <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal" ng-disabled="updateTestBtn">Cancel</button>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </form>
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
                 <div class="modal fade big-modal" id="signoff" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
@@ -140,7 +140,7 @@
                                                 <span>Dependent</span>
                                             </label>
                                         </div>
-                                        <div class="icons_con pull-right no-margin"> 
+                                        <div class="icons_con pull-right no-margin">
                                             <button class="print button-custom">print report</button>
                                             <button class="update button-custom">update report</button>
                                         </div>
@@ -171,7 +171,7 @@
                                                     </div>
                                                     <div class="col-lg-3">
                                                         <label class="txt-style-4">35</label>
-                                                    </div>  
+                                                    </div>
 
                                                     <div class="col-lg-3">
                                                         <label>Gender</label>
@@ -330,34 +330,31 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <label>Patient Name</label>
-                                            <label class="txt-style-4">Will Smiths Woods</label>
+                                            <label class="txt-style-4">{{ selectedOrder.patient_name }}</label>
                                         </div>
                                         <div class="col-lg-6">
                                             <label>Patient ID</label>
-                                            <label class="txt-style-4">ID002154</label>
+                                            <label class="txt-style-4">{{ selectedOrder.patient_id }}</label>
                                         </div>
 
                                         <div class="col-lg-6">
                                             <label>Gender</label>
-                                            <label class="txt-style-4">Male</label>
+                                            <label class="txt-style-4">{{ selectedOrder.gender }}</label>
                                         </div>
                                         <div class="col-lg-6">
                                             <label>Order Number</label>
-                                            <label class="txt-style-4">OR685478</label>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <label>Gender</label>
-                                            <label class="txt-style-4">Male</label>
+                                            <label class="txt-style-4">{{ selectedOrder.id }}</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label>Order Number</label>
-                                            <label class="txt-style-4">OR685478</label>
+                                            <label>Test ID</label>
+                                            <label class="txt-style-4">{{ selectedTest.id }}</label>
                                         </div>
-
                                         <div class="col-lg-6">
-                                            <label>May 12, 2016
-                                                <br />03:25 PM</label>
+                                            <label>Test</label>
+                                            <label class="txt-style-4">{{ selectedTest.name }}</label>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label>{{selectedTest.updated_at | date:'MMM dd, yyyy hh:mm a'}}</label>
                                         </div>
                                         <div class="col-lg-6">
                                             <img src="assets/img/bar_code.jpg" alt=""/>

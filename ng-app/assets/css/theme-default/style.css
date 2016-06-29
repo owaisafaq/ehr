@@ -2732,3 +2732,10 @@ form .progress {
 #Noappointment{
     display: block;
 }
+/* Added by Hashim Suriya */
+.form-wizard.form-wizard-horizontal .nav a:focus {
+    background: none;
+}
+.form-wizard-nav .progress{
+    border: none;
+}

@@ -128,9 +128,11 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
 
     $scope.lab_tests = []; // lab tests property
     $scope.lab_tests_td = []; // lab tests row data
+    $scope.lab_test_total = 0; // lab tests total cost
     $scope.addTest = function (){ // adding test for order
         $scope.lab_tests.push({ 'lab_test' : $scope.Order.lab_test.id , 'priority' : $scope.Order.priority}); // update lab test object with new test
         $scope.lab_tests_td.push({'name' : $scope.Order.lab_test.name, 'cost':$scope.Order.lab_test.cost, 'priority' : $scope.Order.priority}); // updating new test row for order
+        $scope.lab_test_total = parseFloat($scope.lab_test_total) + parseFloat($scope.Order.lab_test.cost);
         $scope.Order.priority = undefined; // unsetting priority dropdown
         $scope.Order.lab_test = undefined; // unsetting test dropdown
         $('#s2id_priority .select2-chosen').text('Select Priority'); // changing place holder back to its original one
@@ -163,9 +165,11 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
                 $scope.Order = {}; // resetting order object
                 $scope.lab_tests = []; // resetting lab tests object
                 $scope.lab_tests_td = []; // clearing all test rows
+                $scope.lab_test_total = 0; // setting total cost of tests to 0
                 $('#s2id_autogen9 .select2-chosen').text('Select Patient'); // changing place holder back to its original one
                 $('#s2id_autogen3 .select2-chosen').text('Select Lab'); // changing place holder back to its original one
                 $('#neworder').modal('hide');
+                $scope.message = false;
             },500);
             GetAllLabOrders.get({ // Getting all lab orders
                 token: $window.sessionStorage.token

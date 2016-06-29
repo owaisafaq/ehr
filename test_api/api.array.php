@@ -1114,6 +1114,21 @@ $api->method = "GET";
 $api->description = "Get All Lab Lab Orders";
 $api->params->token = "123";
 
+
+
+
+$api_arr [] = $api;
+
+
+
+// Get All Lab Orders History
+$api = new api();
+$api->name = "Get All Lab Orders History";
+$api->url = HOST . 'get_lab_order_history';
+$api->method = "GET";
+$api->description = "Get All Lab Lab Orders History";
+$api->params->token = "123";
+
 $api_arr [] = $api;
 
 
@@ -1525,6 +1540,26 @@ $api->name = "Get Product";
 $api->url = HOST . 'get_product';
 $api->method = "POST";
 $api->params->product_id = "1";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+
+//Get All Bills
+$api = new api();
+$api->name = "Get All Bills";
+$api->url = HOST . 'get_all_bills';
+$api->method = "GET";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+//Get All Invoices
+$api = new api();
+$api->name = "Get All Invoices";
+$api->url = HOST . 'get_all_invoices';
+$api->method = "GET";
 $api->params->token = "123435";
 
 

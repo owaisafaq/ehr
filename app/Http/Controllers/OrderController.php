@@ -149,6 +149,41 @@ class OrderController extends Controller
 
 
     }
+    public function get_lab_order_history(Request $request)
+    {
+
+        $orders = DB::table('lab_orders')
+            ->select(DB::raw('lab_orders.id,lab_orders.patient_id,patients.first_name as patient_name,lab_orders.order_status,labs.name as lab_name,patients.age,patients.marital_status,patients.sex,maritial_status.name as marital_status, lab_orders.created_at,lab_orders.updated_at'))
+            ->leftJoin('patients', 'lab_orders.patient_id', '=', 'patients.id')
+            ->leftJoin('labs', 'labs.id', '=', 'lab_orders.lab')
+            ->leftJoin('lab_order_tests', 'lab_order_tests.lab_order_id', '=', 'lab_orders.id')
+            ->leftJoin('lab_tests', 'lab_tests.id', '=', 'lab_order_tests.lab_test')
+            ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
+            ->where('lab_orders.status', 1)
+            ->whereIn('order_status',['completed', 'cancelled'])
+            ->groupby('lab_orders.id')
+            ->get();
+
+
+        foreach ($orders as $lab_orders) {
+
+
+            $lab_orders->ordered_by = 'Dr Smith';
+            $lab_orders->handled_by = 'James';
+            //$lab_orders->test_name = 'Blood Test';
+
+
+            if ($lab_orders->sex == 1) {
+
+                $lab_orders->gender = 'male';
+            } else {
+
+                $lab_orders->gender = 'female';
+            }
+
+        }
+        return response()->json(['status' => true, 'data' => $orders]);
+    }
 
 
     public function get_lab_order(Request $request)
