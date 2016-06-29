@@ -205,4 +205,7 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->post('update_product','App\Http\Controllers\InventoryAPIController@update_product');
     $app->post('get_product','App\Http\Controllers\InventoryAPIController@get_product');
 
+    $app->get('get_all_bills','App\Http\Controllers\BillingController@get_all_bills');
+    $app->get('get_all_invoices','App\Http\Controllers\BillingController@get_all_invoices');
+
 });

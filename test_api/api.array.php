@@ -2,8 +2,8 @@
 
 require 'api.class.php';
 //define('HOST', 'http://131.107.100.10/ehr/public/api/');
-//define('HOST', 'http://localhost/ehr/public/api/');
-define('HOST', 'http://demoz.online/ehr/public/api/');
+define('HOST', 'http://localhost/ehr/public/api/');
+//define('HOST', 'http://demoz.online/ehr/public/api/');
 define('APP', '');
 define('ROUTE', '');
 
@@ -1540,6 +1540,26 @@ $api->name = "Get Product";
 $api->url = HOST . 'get_product';
 $api->method = "POST";
 $api->params->product_id = "1";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+
+//Get All Bills
+$api = new api();
+$api->name = "Get All Bills";
+$api->url = HOST . 'get_all_bills';
+$api->method = "GET";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+//Get All Invoices
+$api = new api();
+$api->name = "Get All Invoices";
+$api->url = HOST . 'get_all_invoices';
+$api->method = "GET";
 $api->params->token = "123435";
 
 
