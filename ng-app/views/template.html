@@ -11,50 +11,50 @@
             <div class="card-body tab-content col-lg-12 custom-card-body">
                 <div class="tab-pane active" id="template">
                     <div class="main_templates">
-                    <div class="table-header row background-none margin-bot-70">
+                        <div class="table-header row background-none margin-bot-70">
 
-                        <div class="pull-right">
-                            <button class="add button-custom pull-right templates">New Template</button>
-                        </div>
+                            <div class="pull-right">
+                                <button class="add button-custom pull-right templates">New Template</button>
+                            </div>
 
-                        <div class="pull-right">
-                            <div class="header-search pull-left margin-top-10">
-                                <button type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                                <input class="search_field" type="text" name="search"  ng-model="search" placeholder="Search Template">
+                            <div class="pull-right">
+                                <div class="header-search pull-left margin-top-10">
+                                    <button type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                    <input class="search_field" type="text" name="search"  ng-model="search" placeholder="Search Template">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <form class="custom-form">
+                        <form class="custom-form">
 
 
-                        <table class="table table-striped no-margin table-custom table-custom_big billing_table">
-                            <thead>
-                            <tr>
-                                <th>Template Name</th>
-                                <th>Category</th>
-                                <th>Description</th>
+                            <table class="table table-striped no-margin table-custom table-custom_big billing_table">
+                                <thead>
+                                    <tr>
+                                        <th>Template Name</th>
+                                        <th>Category</th>
+                                        <th>Description</th>
 
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="templateList in templateLists | filter: search">
-                                <td>{{templateList.name}}</td>
-                                <td>{{templateList.category}}</td>
-                                <td>
-                                    <span>{{templateList.description}}</span>
-                                    <div class="billing_actions"><a href="javascript:;" class="setting-button"></a>
-                                        <div class="tool-tip_popup">
-                                            <a href="javascript:;">Edit</a>
-                                            <a href="javascript:;">Delete</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </form>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="templateList in templateLists| filter: search">
+                                        <td>{{templateList.name}}</td>
+                                        <td>{{templateList.category}}</td>
+                                        <td>
+                                            <span>{{templateList.description}}</span>
+                                            <div class="billing_actions"><a href="javascript:;" class="setting-button"></a>
+                                                <div class="tool-tip_popup">
+                                                    <a href="javascript:;">Edit</a>
+                                                    <a href="javascript:;">Delete</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
                     </div>
                     <div class="addtemplates">
                         <div class="table-header row background-none margin-bot-70">
@@ -73,17 +73,38 @@
                             </div>
                         </div>
 
-                        <div>
-                            Template Name : <input type="text" name="template_name" id="template_name"  ng-model="template_name"> <br >
-                            Description : <input type="text" name="description" id="description" ng-model="template_description"> <br >
-                            Category :
-                            <select class="form-control" name="categories"  ng-model="template_cat_id">
-                                <option>Select Category</option>
-                                <option ng-repeat='category in categories' value='{{category.id}}'>{{category.name}}</option>
-                            </select>
-                            <div fg-tabs class="needs-some-more-space">
+                        <div class="custom-form">
+                            <div class="row">
 
-                                <div fg-tabs-pane="Schema Editor">
+                                <div class="col-lg-3">
+                                    <label>Template Name</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" name="template_name" id="template_name"  ng-model="template_name">
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <label>Description</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" name="description" id="description" ng-model="template_description">
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <label>Category</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <select class="form-control" name="categories"  ng-model="template_cat_id">
+                                        <option>Select Category</option>
+                                        <option ng-repeat='category in categories' value='{{category.id}}'>{{category.name}}</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div fg-tabs class="needs-some-more-space custom_template">
+                                
+                                <div fg-tabs-pane="Schema Editor" class="scehme">
                                     <form class="form-horizontal" name="myForm.$state">
 
                                         <div fg-edit
@@ -92,7 +113,7 @@
                                     </form>
                                 </div>
 
-                                <div fg-tabs-pane="Form Preview">
+                                <div fg-tabs-pane="Form Preview" class="f_preview">
                                     <form novalidate class="form-horizontal" name="previewForm" ng-init="myForm.$data = {}">
 
                                         <fieldset>
@@ -114,9 +135,9 @@
                                 </div>
 
                             </div>
-                            <div >
-                                <input type="button" name="saveForm" value="Save" ng-click="saveForm()" >
-                                <input type="button" name="cancel_addtemplate" id="cancel_addtemplate" value="Cancel" >
+                            <div class="margin-top-30">                                
+                                <input type="button" class="btn button-style-1 button-style-1_a pull-right" name="cancel_addtemplate" id="cancel_addtemplate" value="Cancel" >
+                                <input type="button" class="btn btn-default button-style-1 pull-right margin-right-10" name="saveForm" value="Save" ng-click="saveForm()" >
                             </div>
 
                         </div>
@@ -145,25 +166,25 @@
 
                         <table class="table table-striped no-margin table-custom table-custom_big setting_table_cat">
                             <thead>
-                            <tr>
-                                <th>Category</th>
-                                <th>Description</th>
-                            </tr>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Description</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="category in categories | filter: search_cat">
-                                <td>{{category.name}}</td>
-                                <td>
-                                    <span>{{category.description}}</span>
-                                    <div class="settings_actions"><a href="javascript:;" class="setting-button"></a>
-                                        <div class="tool-tip_popup">
-                                            <a href="javascript:;">View</a>
-                                            <a href="javascript:;">Edit</a>
-                                            <a href="javascript:;">Delete</a>
+                                <tr ng-repeat="category in categories| filter: search_cat">
+                                    <td>{{category.name}}</td>
+                                    <td>
+                                        <span>{{category.description}}</span>
+                                        <div class="settings_actions"><a href="javascript:;" class="setting-button"></a>
+                                            <div class="tool-tip_popup">
+                                                <a href="javascript:;">View</a>
+                                                <a href="javascript:;">Edit</a>
+                                                <a href="javascript:;">Delete</a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </form>
@@ -215,19 +236,19 @@
 
 <script>
 
-    $(document).ready(function () {
-        $(".addtemplates").hide();
-        $(".templates").click(function(){
-            $(".main_templates").hide();
-            $(".addtemplates").show();
-        });
+            $(document).ready(function () {
+                $(".addtemplates").hide();
+                $(".templates").click(function () {
+                    $(".main_templates").hide();
+                    $(".addtemplates").show();
+                });
 
-        $("#cancel_addtemplate").click(function(){
-            $("#template_name").val('');
-            $("#description").val('');
-            $(".addtemplates").hide();
-            $(".main_templates").show();
-        });
+                $("#cancel_addtemplate").click(function () {
+                    $("#template_name").val('');
+                    $("#description").val('');
+                    $(".addtemplates").hide();
+                    $(".main_templates").show();
+                });
 
-    });
+            });
 </script>
