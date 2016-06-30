@@ -110,7 +110,7 @@ class BillingController extends Controller
         $data = DB::table('invoice')
             ->leftJoin('patients', 'invoice.patient_id', '=', 'patients.id')
             ->leftJoin('patient_address', 'patient_address.patient_id', '=', 'patients.id')
-            ->select(DB::raw('patients.id as patient_id,patients.first_name,patients.middle_name,patients.last_name,patients.age,patient_address.house_number,patient_address.street,invoice.id as invoice_id,invoice.created_at as invoice_date,invoice.due,invoice.amount,invoice.invoice_status,patients.sex'))
+            ->select(DB::raw('patients.id as patient_id,patients.first_name,patients.middle_name,patients.last_name,patients.age,patient_address.house_number,patient_address.street,invoice.id as invoice_id,invoice.created_at as invoice_date,invoice.due,invoice.amount,invoice.invoice_status,patients.sex,invoice.description as purpose'))
             ->where('invoice.status', 1)
             ->where('invoice.id', $invoice_id)
             ->groupby('patients.id')
