@@ -1,22 +1,22 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('labTestReport', ['$scope', '$rootScope', '$routeParams', '$window', 'getTemplateCategories', 'getTemplates', 'getLabTestInfo', 'getTemplateData', function($scope, $rootScope, $routeParams, $window, getTemplateCategories, getTemplates, getLabTestInfo, getTemplateData){
+AppEHR.controller('labTestReport', ['$scope', '$rootScope', '$routeParams', '$window', 'getTemplateCategories', 'getTemplates', 'getLabTestInfo', 'getTemplateData','mySchema', function($scope, $rootScope, $routeParams, $window, getTemplateCategories, getTemplates, getLabTestInfo, getTemplateData, mySchema){
 	$rootScope.pageTitle = "EHR - Lab Order Reporting";
-
-    getLabTestInfo.get({
+    $scope.mySchema = mySchema;
+    getLabTestInfo.get({ // Getting All Information about Test
         token : $window.sessionStorage.token,
         lab_test_id : $routeParams.testID
     },getLabOrderInfoSuccess,getLabOrderInfoFailure);
 
-    function getLabOrderInfoSuccess(res){
+    function getLabOrderInfoSuccess(res){ // on success
         $scope.labTest = res.data;
     }
 
-    function getLabOrderInfoFailure(error){
+    function getLabOrderInfoFailure(error){ // on failure
         console.log(error);
     }
 
-    getTemplateCategories.get({
+    getTemplateCategories.get({ // Getting all templates
         token : $window.sessionStorage.token
     },getTemplateCategoriesSuccess,getTemplateCategoriesFailure);
     function getTemplateCategoriesSuccess(res){ // on success
@@ -50,7 +50,8 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', '$routeParams', '$wi
         $scope.templateSelected = true;
     };
     function getTemplateDataSuccess(res){ // on success
-        console.log(res);
+        //console.log(res);
+        AppEHR.value('mySchema',res.data.template);
     }
     function getTemplateDataFailure(error){ // on failure
         console.log(error);
