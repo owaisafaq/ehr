@@ -1345,11 +1345,39 @@ class ApiController extends Controller
             ->first();
 
 
+        /*       $patient_plan = DB::table('hospital_plan')
+                   ->leftJoin('patients', 'patients.plan_id', '=', 'hospital_plan.id')
+                   ->select(DB::raw('hospital_plan.id,hospital_plan.name'))
+                   ->where('patients.id', $patient_id)
+                   ->first();*/
+
+
         $patient_plan = DB::table('hospital_plan')
-            ->leftJoin('patients', 'patients.plan_id', '=', 'hospital_plan.id')
-            ->select(DB::raw('hospital_plan.id,hospital_plan.name'))
+            ->leftJoin('plan_details', 'plan_details.plan_id', '=', 'hospital_plan.id')
+            ->leftJoin('patients', 'patients.hospital_plan', '=', 'hospital_plan.id')
+            ->select(DB::raw('hospital_plan.name,plan_details.is_principal,plan_details.is_dependant,plan_details.id as plan_id'))
+            ->where('patients.status', 1)
             ->where('patients.id', $patient_id)
+            ->groupby('patients.id')
             ->first();
+
+        if ($patient_plan != 'self' || $patient_plan!='null') {
+
+            if ($patient_plan->is_principal == 1) {
+
+                $dependents = DB::table('patient_dependants')
+                    ->leftJoin('patients', 'patients.id', '=','patient_dependants.dependant_id')
+                    ->select(DB::raw('patient_dependants.plan_detail_id,patient_dependants.dependant_id,patient_dependants.relationship,patients.first_name,patients.last_name'))
+                    ->where('patient_dependants.status',1)
+                    ->where('plan_detail_id', $patient_plan->plan_id)
+                    ->get();
+
+            $patient_plan->dependents=$dependents;
+
+            }
+
+
+        }
 
         $data = array(
             "patient_info" => $patient_info,
@@ -2682,12 +2710,17 @@ class ApiController extends Controller
         $patient_id = $request->input('patient_id');
 
         $patient_plan = DB::table('hospital_plan')
-            ->select(DB::raw('id,name'))
-            ->leftJoin('plan_details', 'plan_details.plan_id', '=', 'hospital_plan,id')
-            ->leftJoin('patients', 'patients.hospital_plan', '=', 'hospital_plan,id')
-            ->where('status', 1)
+            ->leftJoin('plan_details', 'plan_details.plan_id', '=', 'hospital_plan.id')
+            ->leftJoin('patients', 'patients.hospital_plan', '=', 'hospital_plan.id')
+            ->select(DB::raw('hospital_plan.name,plan_details.is_principal,plan_details.is_dependant'))
+            ->where('patients.status', 1)
             ->where('patients.id', $patient_id)
             ->get();
+
+
+        return response()->json(['status' => true, 'data' => $patient_plan]);
+
+
     }
 
 }
