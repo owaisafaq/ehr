@@ -71,6 +71,23 @@ $(document).ready(function () {
         $('.invoice_list').hide();
         $('.edit_invoice').show();
     });
+    $(document).on('click', '.hide_edit_inovice', function () {
+        $('.invoice_list').show();
+        $('.edit_invoice').hide();
+    });
+    
+    $(document).on('click', '.btn_print_invoice', function () {
+        $('.invoice_list').hide();
+        $('.print_invoice').show();
+        $('.custom-tab').hide();
+        window.print();
+    });
+    $(document).on('click', '.hide_print_inovice', function () {
+        $('.invoice_list').show();
+        $('.print_invoice').hide();
+        $('.custom-tab').show();
+    });
+    
     
     $(document).on('click', '.add_invoice_row', function () {
         $('.invoice_row').prepend('<div class="row edit_inv_row"><div class="col-lg-4"><input type="text" placeholder="" ></div><div class="col-lg-1 code_col"><input type="text" placeholder="" ></div><div class="col-lg-2"><input type="text" placeholder="" ></div><div class="col-lg-2"><input type="text" placeholder="" ></div><div class="col-lg-2 amount_col"><input type="text" placeholder="" ></div><div class="col-lg-1 btn_can_col"><span class="remove_invoice_row"><i class="fa fa-close"></i></span></div></div>');
