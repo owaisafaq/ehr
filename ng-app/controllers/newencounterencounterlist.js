@@ -20,6 +20,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
 
         function patientInfoSuccess(res) {
             if (res.status == true) {
+                $scope.buttonDisabled = true;
                 $scope.displayInfo.first_name = res.data.first_name;
                 $scope.displayInfo.middle_name = res.data.middle_name;
                 $scope.displayInfo.last_name = res.data.last_name;
@@ -27,7 +28,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
                 $scope.displayInfo.age = res.data.age;
                 $scope.displayInfo.sex = res.data.sex;
                 $scope.displayInfo.marital_status = res.data.marital_status;
-                //console.log($scope.allEncounter);
+                $scope.patientInfo = true;
             }
         }
 
@@ -124,6 +125,8 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
             $('input:radio[name="checkoutpatient"]').eq(0).trigger("click");
             $scope.buttonDisabled = false;
             $('.counter_pop').addClass('ng-hide');
+            $scope.buttonDisabled = false;
+            $scope.patientInfo = false;
         }
         function  checkoutSuccessFailure(res) {
             console.log(res)
@@ -279,9 +282,12 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
         }
 
         $scope.removeEncounter = function () {
+            $scope.buttonDisabled = false;
             var dltID = $scope.encounterID == undefined ? $scope.EID : $scope.encounterID;
             console.log(dltID);
             $rootScope.loader = "show";
+            $scope.buttonDisabled = false;
+            $scope.patientInfo = false;
             RemoveEncounter.get({token: $window.sessionStorage.token, visit_id: dltID}, encounterDeleteSuccess, encounterDeletefailure);
         }
 

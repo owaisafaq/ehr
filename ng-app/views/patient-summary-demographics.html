@@ -269,9 +269,11 @@
                         </tbody>
                     </table>
                     <pagination data-ng-model="visitcurrentPage" total-items="encounters.length"
-                            items-per-page="visitnumPerPage" data-max-size="visitmaxSize" data-boundary-links="true"
-                            ng-init="begin = (visitcurrentPage-1)*visitnumPerPage; end = begin + visitnumPerPage"
-                            data-ng-change="begin = (visitcurrentPage-1)*visitnumPerPage; end = begin + visitnumPerPage">
+                                items-per-page="visitnumPerPage" data-max-size="visitmaxSize" data-boundary-links="true"
+                                ng-init="begin = (visitcurrentPage - 1) * visitnumPerPage;
+                                                    end = begin + visitnumPerPage"
+                                data-ng-change="begin = (visitcurrentPage - 1) * visitnumPerPage;
+                                                    end = begin + visitnumPerPage">
                     </pagination>
                 </div>
 
@@ -300,9 +302,11 @@
                         </tbody>
                     </table>
                     <pagination data-ng-model="vitalscurrentPage" total-items="vitals.length"
-                            items-per-page="vitalsnumPerPage" data-max-size="vitalsmaxSize" data-boundary-links="true"
-                            ng-init="vitalbegin = (vitalscurrentPage-1)*vitalsnumPerPage; vitalend = vitalbegin + vitalsnumPerPage"
-                            data-ng-change="vitalbegin = (vitalscurrentPage-1)*vitalsnumPerPage; vitalend = vitalbegin + vitalsnumPerPage">
+                                items-per-page="vitalsnumPerPage" data-max-size="vitalsmaxSize" data-boundary-links="true"
+                                ng-init="vitalbegin = (vitalscurrentPage - 1) * vitalsnumPerPage;
+                                                    vitalend = vitalbegin + vitalsnumPerPage"
+                                data-ng-change="vitalbegin = (vitalscurrentPage - 1) * vitalsnumPerPage;
+                                                    vitalend = vitalbegin + vitalsnumPerPage">
                     </pagination>
                 </div>
 
@@ -327,9 +331,11 @@
                         </tbody>
                     </table>
                     <pagination data-ng-model="medicationscurrentPage" total-items="medications.length"
-                            items-per-page="medicationnumPerPage" data-max-size="medicationmaxSize" data-boundary-links="true"
-                            ng-init="medicationbegin = (medicationscurrentPage-1)*medicationnumPerPage; medicationend = medicationbegin + medicationnumPerPage"
-                            data-ng-change="medicationbegin = (medicationscurrentPage-1)*medicationnumPerPage; medicationend = medicationbegin + medicationnumPerPage">
+                                items-per-page="medicationnumPerPage" data-max-size="medicationmaxSize" data-boundary-links="true"
+                                ng-init="medicationbegin = (medicationscurrentPage - 1) * medicationnumPerPage;
+                                                    medicationend = medicationbegin + medicationnumPerPage"
+                                data-ng-change="medicationbegin = (medicationscurrentPage - 1) * medicationnumPerPage;
+                                                    medicationend = medicationbegin + medicationnumPerPage">
                     </pagination>
                 </div>
                 <div class="tab-pane" id="supplements">
@@ -359,9 +365,11 @@
                         </tbody>
                     </table>
                     <pagination data-ng-model="suplimentscurrentPage" total-items="supplements.length"
-                            items-per-page="suplimentsnumPerPage" data-max-size="suplimentsmaxSize" data-boundary-links="true"
-                            ng-init="supplementbegin = (suplimentscurrentPage-1)*suplimentsnumPerPage; supplementend = supplementbegin + suplimentsnumPerPage"
-                            data-ng-change="supplementbegin = (suplimentscurrentPage-1)*suplimentsnumPerPage; supplementend = supplementbegin + suplimentsnumPerPage">
+                                items-per-page="suplimentsnumPerPage" data-max-size="suplimentsmaxSize" data-boundary-links="true"
+                                ng-init="supplementbegin = (suplimentscurrentPage - 1) * suplimentsnumPerPage;
+                                                    supplementend = supplementbegin + suplimentsnumPerPage"
+                                data-ng-change="supplementbegin = (suplimentscurrentPage - 1) * suplimentsnumPerPage;
+                                                    supplementend = supplementbegin + suplimentsnumPerPage">
                     </pagination>
                 </div>
                 <div class="tab-pane" id="allergies"> 
@@ -434,14 +442,16 @@
                         </tbody>
                     </table>
                     <pagination data-ng-model="allergycurrentPage" total-items="allergies.length"
-                            items-per-page="allergynumPerPage" data-max-size="allergysmaxSize" data-boundary-links="true"
-                            ng-init="begin = (allergycurrentPage-1)*allergynumPerPage; end = begin + allergynumPerPage"
-                            data-ng-change="begin = (allergycurrentPage-1)*allergynumPerPage; end = begin + allergynumPerPage">
+                                items-per-page="allergynumPerPage" data-max-size="allergysmaxSize" data-boundary-links="true"
+                                ng-init="begin = (allergycurrentPage - 1) * allergynumPerPage;
+                                                    end = begin + allergynumPerPage"
+                                data-ng-change="begin = (allergycurrentPage - 1) * allergynumPerPage;
+                                                    end = begin + allergynumPerPage">
                     </pagination>
                 </div>
                 <div class="tab-pane" id="archive">
-                   <div class="col-xs-12">
-                        <div class="icons_con">
+                    <div class="col-xs-12">
+                        <div class="icons_con archive_buttons">
                             <button class="save done-editing button-custom" ng-click="saveArchive();">Save</button>
                             <button class="edit button-custom" ng-disabled="disableOptionsArchive">Edit</button>
                             <button class="delete button-custom" data-toggle="modal" data-target="#confirmation" ng-disabled="disableOptionsArchive">Remove</button>
@@ -498,37 +508,55 @@
         </div><!--end .card -->
     </section>
 </div>
-    </section>
+</section>
 </div>
 <!-- ARCHIVE -->
-<div class="modal fade big-modal" id="fileUploader" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade" id="fileUploader" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Add Archive</h2>
             </div>
-            <form enctype="multipart/form-data" method="post">
-                <div class="modal-body pull-left">
-                    <div class="select_file_mode">
-                        <a class="{{areaFileActive1}}" href="javascript:;" ng-click="folderArea = false;fileArea = true;selectType('application/pdf');areaFileActive1 = 'active'; areaFileActive2 = '';areaFileActive3 = ''"><img src="assets/img/pdf_big_icon.png" /></a>
-                        <a class="{{areaFileActive2}}" href="javascript:;" ng-click="folderArea = false;fileArea = true;selectType('image/jpeg, image/png, image/jpg');areaFileActive2 = 'active';areaFileActive1 = '';areaFileActive3 = ''"><img src="assets/img/jpg_big_icon.png" /></a>
-                        <a class="{{areaFileActive3}}" href="javascript:;" ng-click="fileArea = false;folderArea = true; areaFileActive3 = 'active'; areaFileActive1 = ''; areaFileActive2 = '';areaFileActive3 = 'active'"><img src="assets/img/folder_icon_big.png" /></a>
+            <form enctype="multipart/form-data" method="post" name="ArmyForm">
+                <div class="modal-body">
+                    <div class="row text-center">
+                        <div class="select_file_mode">
+                            <a class="{{areaFileActive1}}" href="javascript:;" ng-click="folderArea = false;
+                                            fileArea = true;
+                                            selectType('application/pdf');
+                                            areaFileActive1 = 'active';
+                                            areaFileActive2 = '';
+                                            areaFileActive3 = ''"><img src="assets/img/pdf_big_icon.png" /></a>
+                            <a class="{{areaFileActive2}}" href="javascript:;" ng-click="folderArea = false;
+                                            fileArea = true;
+                                            selectType('image/jpeg, image/png, image/jpg');
+                                            areaFileActive2 = 'active';
+                                            areaFileActive1 = '';
+                                            areaFileActive3 = ''"><img src="assets/img/jpg_big_icon.png" /></a>
+                            <a class="{{areaFileActive3}}" href="javascript:;" ng-click="fileArea = false;
+                                            folderArea = true;
+                                            areaFileActive3 = 'active';
+                                            areaFileActive1 = '';
+                                            areaFileActive2 = '';
+                                            areaFileActive3 = 'active'"><img src="assets/img/folder_icon_big.png" /></a>
+                        </div>
                     </div>
                     <div class="show_uploading_format" ng-show="fileArea">
-                        <div class="clear">
+                        <div class="clear fileuploader_con">
                             <!-- <input type="file" class="abc" file-model="patient_archive" multiple="multiple" accept="{{fileTypes}}" /> -->
                             <!-- <input type="file" id="file" name="file" ng-model="files" multiple file-change/> -->
-                            <button ngf-select="uploadFiles($files, $invalidFiles)" multiple accept="{{fileTypes}}" ngf-max-size="5MB">upload</button>
+                            <button class="UploadBtn" ngf-select="uploadFiles($files, $invalidFiles)" multiple accept="{{fileTypes}}" type="file" ngf-max-size="1MB">Upload Files</button>
                             <!-- <a href="javascript:$('#file_upload').uploadify('upload','*')">Upload Files</a>
                             <p></p> -->
+                            <i ng-show="ArmyForm.file.$error.maxSize">File too large {{errorFile.size / 5000|number:1}}MB: max 2M</i>
                             <ul>
                                 <li ng-repeat="f in files" style="font:smaller">{{f.name}} {{f.$errorParam}}
-                                  <span class="progress" ng-show="f.progress >= 0">
-                                    <div style="width:{{f.progress}}%" ng-bind="f.progress + '%'"></div>
-                                  </span>
+                                    <span class="progress" ng-show="f.progress >= 0">
+                                        <div style="width:{{f.progress}}%" ng-bind="f.progress + '%'"></div>
+                                    </span>
                                 </li>
                                 <li ng-repeat="f in errFiles" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
-                                </li>
+                                </li> 
                             </ul>
                             <p>{{fileUploadMessage}}</p>
                         </div>
@@ -536,14 +564,13 @@
                     <div class="show_uploading_format" ng-show="folderArea">
                         <div class="clear">
                             <input type="text" name="folder_name" ng-model="folderName" />
-                            <button type="button" name="folderButton" ng-click="folderBtn();">Create</button>
+                            <button type="button" name="folderButton" class="create_button" ng-click="folderBtn();">Create</button>
                         </div>
                         {{archiveSuccessMessage}}
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-default button-style-1" ng-click="listAfterUploaded()" data-dismiss="modal">SAVE & CLOSE</button>
-                    <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    <button type="submit" ng-show="fileArea || folderArea" class="btn btn-default button-style-1" ng-click="listAfterUploaded()" data-dismiss="modal" ng-disabled="saveAndClose">Done</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -750,15 +777,15 @@
                 <h2>Add Allergies</h2>
             </div>
             <div class="modal-body">
-                <form class="custom-form" ng-submit="addAllergy(allergie)">
+                <form class="custom-form" novalidate ng-submit="addAllergy(allergie)">
                     <div class="row">
 
                         <div class="col-lg-3">
                             <label>Type</label>
                         </div>
                         <div class="col-lg-3">
-                            <select ng-model="allergie.allergyType" class="form-control">
-                                <option>Select</option>
+                            <select ng-model="allergie.allergyType" class="form-control" placeholder="Select Type">
+                                <option></option>
                                 <option>2</option>
                                 <option>3</option>
                             </select>
@@ -775,8 +802,8 @@
                             <label>Severity</label>
                         </div>
                         <div class="col-lg-3">
-                            <select ng-model="allergie.severity" class="form-control">
-                                <option>Select</option>
+                            <select ng-model="allergie.severity" class="form-control" placeholder="Select Severity">
+                                <option></option>
                                 <option>2</option>
                                 <option>3</option>
                             </select>
@@ -799,9 +826,10 @@
                             <label>Status</label>
                         </div>
                         <div class="col-lg-3">
-                            <select ng-model="allergie.status" class="form-control">
-                                <option>High</option>
+                            <select ng-model="allergie.status" class="form-control" placeholder="Select Status">
+                                <option></option>
                                 <option>Low</option>
+                                <option>High</option>
                             </select>
                         </div>
 
@@ -835,7 +863,7 @@
                 <h2>Add Supplements</h2>
             </div>
             <div class="modal-body">
-                <form class="custom-form" ng-submit="addSupplements(addSupplement)">
+                <form class="custom-form" novalidate ng-submit="addSupplements(addSupplement)">
                     <div class="row">
 
                         <div class="col-lg-3">
@@ -850,8 +878,8 @@
                             <label>Manufacturer</label>
                         </div>
                         <div class="col-lg-3">
-                            <select class="form-control" ng-model="addSupplement.manufacturer">
-                                <option>Select</option>
+                            <select class="form-control" ng-model="addSupplement.manufacturer" placeholder="Select Manufacturer">
+                                <option></option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                             </select>
@@ -899,8 +927,8 @@
                             <input type="text" placeholder="" name="" required ng-model="addSupplement.dosage1"/>
                         </div>
                         <div class="col-lg-3">
-                            <select class="form-control" ng-model="addSupplement.dosage2">
-                                <option>Select</option>
+                            <select class="form-control" ng-model="addSupplement.dosage2" placeholder="Select Dosage">
+                                <option></option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                             </select>
@@ -912,8 +940,8 @@
                             <label>Frequency</label>
                         </div>
                         <div class="col-lg-3">
-                            <select class="form-control" ng-model="addSupplement.frequency">
-                                <option>Select</option>
+                            <select class="form-control" ng-model="addSupplement.frequency" placeholder="Select Frequency">
+                                <option></option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                             </select>
@@ -922,8 +950,8 @@
                             <label>Intake Type</label>
                         </div>
                         <div class="col-lg-3">
-                            <select class="form-control" ng-model="addSupplement.intake">
-                                <option>Select</option>
+                            <select class="form-control" ng-model="addSupplement.intake" placeholder="Select Intake">
+                                <option></option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                             </select>
@@ -1218,7 +1246,7 @@
 
                         <div class="col-lg-6">
                             <div class="row">
-                                
+
                                 <div class="col-lg-12">
                                     <label>Dose</label>
                                 </div>
@@ -1229,7 +1257,7 @@
                                         <option>3</option>
                                     </select>
                                 </div>
-                                
+
                                 <div class="col-lg-12">
                                     <label>Route</label>
                                 </div>
@@ -1240,7 +1268,7 @@
                                         <option>3</option>
                                     </select>
                                 </div>
-                                
+
                                 <div class="col-lg-12">
                                     <label>Direction</label>
                                 </div>
@@ -1251,13 +1279,13 @@
                                         <option>3</option>
                                     </select>
                                 </div>
-                                
+
                             </div>
                         </div>
-                        
-                            <div class="col-lg-6">
-                                <div class="row">
-                                
+
+                        <div class="col-lg-6">
+                            <div class="row">
+
                                 <div class="col-lg-12">
                                     <label>Unit</label>
                                 </div>
@@ -1268,7 +1296,7 @@
                                         <option>3</option>
                                     </select>
                                 </div>
-                                
+
                                 <div class="col-lg-12">
                                     <label>Frequency</label>
                                 </div>
@@ -1279,7 +1307,7 @@
                                         <option>3</option>
                                     </select>
                                 </div>
-                                
+
                                 <div class="col-lg-12">
                                     <label>Duration</label>
                                 </div>
@@ -1290,7 +1318,7 @@
                                         <option>3</option>
                                     </select>
                                 </div>
-                                
+
                             </div>
                         </div>
 

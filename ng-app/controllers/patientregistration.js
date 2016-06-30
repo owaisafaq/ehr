@@ -50,6 +50,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         $scope.followupParentId = '0';
         $scope.foldersArchive = [];
         $scope.archives = [];
+        $scope.showSubmitButtonPatientPlan = true;
         //$scope.PI.identity_type = dropDownInfo.IdType[0].id;
         //$scope.PI.kin_relationship = dropDownInfo.relationship[0].id;
         //$scope.PI.dependant_relationship = dropDownInfo.relationship[0].id;
@@ -811,9 +812,11 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         };
         $scope.files = [];
         $scope.patient_archive = [];
+        $scope.saveAndClose = true;
         $scope.uploadFiles = function (files, errFiles) {
             $scope.files = files;
             $scope.errFiles = errFiles;
+            var i = 1;
             angular.forEach(files, function (file) {
                 file.upload = Upload.upload({
                     url: serverPath + "add_patient_archive",
@@ -824,13 +827,21 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 file.upload.then(function (response) {
                     $timeout(function () {
                         file.result = response.data;
+                        console.log(response);
+                        if(files.length == i){
+                            console.log(i);
+                            $scope.saveAndClose = false;
+                        }
+                        i++;
                     });
                 }, function (response) {
                     if (response.status > 0)
                         $scope.errorMsg = response.status + ': ' + response.data;
+                    console.log($scope.errorMsg);
                 }, function (evt) {
                     file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
                 });
+                
             });
         }
         $scope.listAfterUploaded = function () {
@@ -852,14 +863,19 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     DeleteFolderArchives.get({token: $window.sessionStorage.token, /*$window.sessionStorage.patient_id*/ resource_id: removeId}, deleteFolderSuccess, deleteFolderFailure);
                 } else {
                     $rootScope.loader = 'show';
+                    console.log('file delete ' + removeId);
+                    console.log($window.sessionStorage.patient_id);
                     RemoveArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, patient_fie_id: removeId}, removeArchiveSuccess, removeArchiveFailure);
                 }
             }
         }
 
         function removeArchiveSuccess(res) {
+            console.log('delete service');
+            console.log(res);
             if (res.status == true) {
-                $scope.followupParentId = $scope.removeItemId;
+                $('.archive_buttons .edit,.archive_buttons .delete').css('display','none')
+                //$scope.followupParentId = $scope.removeItemId;
                 $rootScope.loader = 'hide';
                 //GetArchives.get({token: $window.sessionStorage.token, patient_id: '1' /*$window.sessionStorage.patient_id*/}, archiveSuccess, archiveFailure);
                 GetResourcesByFolderArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, followup_parent_id: $scope.followupParentId}, nestedFolderSuccess, nestedFolderFailure);
@@ -876,8 +892,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         function deleteFolderSuccess(res) {
             if (res.status == true) {
                 $rootScope.loader = 'hide';
-                GetResourcesByFolderArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, followup_parent_id: '0'}, nestedFolderSuccess, nestedFolderFailure);
-                ListFolderArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, followup_parent_id: '0'}, listFolderSuccess, listFolderFailure);
+                $('.archive_buttons .edit,.archive_buttons .delete').css('display','none')
+                GetResourcesByFolderArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, followup_parent_id: $scope.followupParentId}, nestedFolderSuccess, nestedFolderFailure);
+                ListFolderArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, followup_parent_id: $scope.followupParentId}, listFolderSuccess, listFolderFailure);
             }
         }
 
@@ -918,7 +935,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
         function saveFolderNameSuccess(res) {
             if (res.status == true) {
-                ListFolderArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, followup_parent_id: '0'}, listFolderSuccess, listFolderFailure);
+                $('.archive_buttons .edit,.archive_buttons .delete').css('display','none')
+                console.log(res)
+                ListFolderArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, followup_parent_id: $scope.followupParentId}, listFolderSuccess, listFolderFailure);
             }
         }
 
@@ -929,7 +948,10 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
         function saveFileNameSuccess(res) {
             if (res.status == true) {
-                GetResourcesByFolderArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, followup_parent_id: '0'}, nestedFolderSuccess, nestedFolderFailure);
+                $('.archive_buttons .edit,.archive_buttons .delete').css('display','none')
+                console.log("success get all")
+                console.log($scope.followup_parent_id);
+                GetResourcesByFolderArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, followup_parent_id: $scope.followupParentId}, nestedFolderSuccess, nestedFolderFailure);
             }
         }
         function editFileArchiveFailure(error) {
@@ -945,7 +967,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         $scope.backButtonArchive = true;
         $scope.folderParentId = '0';
 
-        ListFolderArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, followup_parent_id: '0'}, listFolderSuccess, listFolderFailure);
+        ListFolderArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, followup_parent_id: $scope.followupParentId}, listFolderSuccess, listFolderFailure);
         function listFolderSuccess(res) {
             console.log(res)
             if (res.status == true) {
@@ -985,6 +1007,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         }
 
         function nestedFolderSuccess(res) {
+            console.log("res")
             console.log(res)
             if (res.status == true) {
                 $scope.backButtonArchive = false;
@@ -1016,6 +1039,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         function folderCreatedSuccess(res) {
             if (res.status == true) {
                 console.log(res);
+                $scope.saveAndClose = false;
                 $scope.folderName = '';
                 $scope.archiveSuccessMessage = res.message;
                 $rootScope.loader = 'hide';
