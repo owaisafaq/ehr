@@ -2784,7 +2784,15 @@ class ApiController extends Controller
             ->get();
 
 
-        return response()->json(['status' => true, 'data'=>$prescriptions]);
+
+        foreach($prescriptions as $prescription_notes){
+
+
+            $prescription_notes->notes='test';
+            $prescription_notes->cost='50';
+        }
+
+        return response()->json(['status' => true, 'data'=>$prescriptions,'notes'=>$prescription_notes->notes]);
 
 
 
