@@ -1910,7 +1910,7 @@ class ApiController extends Controller
         $limit = $request->input('limit');
         $offset = $request->input('offset');
 
-        if ($limit > 0 ||$offset > 0) {
+        if ($limit > 0 || $offset > 0) {
 
             $patients = DB::table('patients')
                 ->leftJoin('patient_address', 'patient_address.patient_id', '=', 'patients.id')
@@ -2127,10 +2127,26 @@ class ApiController extends Controller
     {
 
 
-        $templates = DB::table('note_templates')
-            ->select(DB::raw('id,name'))
-            ->where('status', 1)
-            ->get();
+        $limit = $request->input('limit');
+        $offset = $request->input('offset');
+
+        if ($limit > 0 || $offset > 0) {
+
+            $templates = DB::table('note_templates')
+                ->select(DB::raw('id,name'))
+                ->where('status', 1)
+                ->skip($offset)->take($limit)
+                ->get();
+
+
+        } else {
+
+            $templates = DB::table('note_templates')
+                ->select(DB::raw('id,name'))
+                ->where('status', 1)
+                ->get();
+
+        }
 
         return response()->json(['status' => true, 'data' => $templates]);
 
@@ -2142,11 +2158,28 @@ class ApiController extends Controller
 
         $template_id = $request->input('template_id');
 
-        $fields = DB::table('clinical_note_questions')
-            ->select(DB::raw('id,name,category'))
-            ->where('template', $template_id)
-            ->where('status', 1)
-            ->get();
+        $limit = $request->input('limit');
+        $offset = $request->input('offset');
+
+        if ($limit > 0 || $offset > 0) {
+
+            $fields = DB::table('clinical_note_questions')
+                ->select(DB::raw('id,name,category'))
+                ->where('template', $template_id)
+                ->where('status', 1)
+                ->skip($offset)->take($limit)
+                ->get();
+
+        } else {
+
+
+            $fields = DB::table('clinical_note_questions')
+                ->select(DB::raw('id,name,category'))
+                ->where('template', $template_id)
+                ->where('status', 1)
+                ->get();
+
+        }
 
         return response()->json(['status' => true, 'data' => $fields]);
 
@@ -2401,5 +2434,124 @@ class ApiController extends Controller
         return response()->json(['status' => true, 'data' => $intake]);
 
     }
+
+
+    public function get_templates(Request $request)
+    {
+
+        $templates = DB::table('templates')
+            ->leftJoin('template_categories', 'template_categories.id', '=', 'templates.category_id')
+            ->select(DB::raw('templates.id,templates.name,templates.description,templates.template,template_categories.name as category'))
+            ->where('templates.status', 1)
+            ->get();
+
+        return response()->json(['status' => true, 'data' => $templates]);
+
+    }
+
+
+    public function delete_template(Request $request)
+    {
+
+
+        $template_id = $request->input('template_id');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+        DB::table('templates')
+            ->where('id', $template_id)
+            ->update(
+                ['status' => 0,
+                    'updated_at' => $currentdatetime
+
+                ]
+            );
+        return response()->json(['status' => true, 'message' => 'Template Deleted Successfully']);
+
+    }
+
+    public function add_template(Request $request)
+    {
+
+
+        $name = $request->input('name');
+        $category_id = $request->input('category_id');
+        $description = $request->input('description');
+        $template = $request->input('template');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+        DB::table('templates')
+            ->insert(
+                ['name' => $name,
+                    'category_id' => $category_id,
+                    'description' => $description,
+                    'template' => $template,
+                    'created_at' => $currentdatetime
+
+                ]
+            );
+        return response()->json(['status' => true, 'message' => 'Template Added Successfully']);
+
+
+    }
+
+
+    public function get_templates_categories(Request $request)
+    {
+
+        $categories = DB::table('template_categories')
+            ->select(DB::raw('id,name,description'))
+            ->where('status', 1)
+            ->get();
+
+        return response()->json(['status' => true, 'data' => $categories]);
+
+    }
+
+
+    public function delete_template_category(Request $request)
+    {
+
+
+        $category_id = $request->input('category_id');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+        DB::table('template_categories')
+            ->where('id', $category_id)
+            ->update(
+                ['status' => 0,
+                    'updated_at' => $currentdatetime
+
+                ]
+            );
+        return response()->json(['status' => true, 'message' => 'Category Deleted Successfully']);
+
+    }
+
+
+    public function add_template_category(Request $request)
+    {
+
+
+        $name = $request->input('name');
+        $description = $request->input('description');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+        DB::table('template_categories')
+            ->insert(
+                ['name' => $name,
+                    'description' => $description,
+                    'created_at' => $currentdatetime
+
+                ]
+            );
+        return response()->json(['status' => true, 'message' => 'Category Added Successfully']);
+
+
+    }
+
 }
 

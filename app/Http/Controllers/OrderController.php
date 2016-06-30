@@ -350,7 +350,7 @@ class OrderController extends Controller
         $category_id = $request->input('category_id');
 
         $lab_templates = DB::table('lab_templates')
-            ->select(DB::raw('id,name'))
+            ->select(DB::raw('id,name,url'))
             ->where('status', '1')
             ->where('category', $category_id)
             ->get();
@@ -442,7 +442,7 @@ class OrderController extends Controller
         foreach ($lab_test as $report) {
 
 
-            DB::table('lab_test_values')->insert(
+            DB::table('patient_lab_test_values')->insert(
                 ['lab_order_id' => $lab_order_id,
                     'lab_test' => $lab_test_id,
                     'field_id' => $report->field_id,

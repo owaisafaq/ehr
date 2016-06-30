@@ -887,6 +887,8 @@ $api->name = "Clinical Progress Note Templates";
 $api->url = HOST . 'clinical_progress_note_templates';
 $api->method = "GET";
 $api->description = "Clinical Progress Note Templates";
+$api->params->limit = "0";
+$api->params->offset = "0";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -900,6 +902,8 @@ $api->url = HOST . 'clinical_progress_note_fields';
 $api->method = "GET";
 $api->description = "Clinical Progress Note Fields";
 $api->params->template_id = "1";
+$api->params->limit = "0";
+$api->params->offset = "0";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -1593,7 +1597,7 @@ $api_arr [] = $api;
 
 //Get Template Type
 $api = new api();
-$api->name = "Get Template Types";
+$api->name = "Get Template Type";
 $api->url = HOST . 'get_lab_template_type';
 $api->method = "POST";
 $api->params->type_id = "1";
@@ -1699,5 +1703,91 @@ $api->url = HOST . 'get_all_invoices';
 $api->method = "GET";
 $api->params->token = "123435";
 
+
+$api_arr [] = $api;
+
+//Get Templates
+$api = new api();
+$api->name = "Get Templates";
+$api->url = HOST . 'get_templates';
+$api->method = "GET";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+
+//Delete Template
+$api = new api();
+$api->name = "Delete Template";
+$api->url = HOST . 'delete_template';
+$api->method = "POST";
+$api->params->template_id = "1";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+
+
+//Add Template
+$api = new api();
+$api->name = "Add Template";
+$api->url = HOST . 'add_template';
+$api->method = "POST";
+$api->params->name = "test";
+$api->params->category_id = "1";
+$api->params->description = "test";
+$api->params->template = "Lab";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+
+//Get Templates Categories
+$api = new api();
+$api->name = "Get Templates Categories";
+$api->url = HOST . 'get_templates_categories';
+$api->method = "GET";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+
+//Delete Template Category
+$api = new api();
+$api->name = "Delete Template Category";
+$api->url = HOST . 'delete_template_category';
+$api->method = "POST";
+$api->params->category_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+
+//Add Template Category
+$api = new api();
+$api->name = "Add Template Category";
+$api->url = HOST . 'add_template_category';
+$api->method = "POST";
+$api->params->name = "test";
+$api->params->description = "test";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+
+//Update Invoice
+$api = new api();
+$api->name = "Update Invoice";
+$api->url = HOST . 'update_invoice';
+$api->method = "POST";
+$api->params->invoice_id = "1";
+$api->params->amount_paid = "100";
+$api->params->token = "123435";
 
 $api_arr [] = $api;

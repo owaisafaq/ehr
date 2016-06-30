@@ -102,6 +102,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->get('patient_allergies','App\Http\Controllers\ApiController@patient_allergies');
 
+    $app->post('add_patient_allergies','App\Http\Controllers\ApiController@add_patient_allergies');
+    
     $app->post('update_patient_allergies','App\Http\Controllers\ApiController@update_patient_allergies');
 
     $app->post('delete_patient_allergies','App\Http\Controllers\ApiController@delete_patient_allergies');
@@ -194,7 +196,12 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->post('update_lab_template_types','App\Http\Controllers\OrderController@update_lab_template_types');
     $app->post('add_lab_template_types','App\Http\Controllers\OrderController@add_lab_template_types');
     $app->post('delete_lab_template_types','App\Http\Controllers\OrderController@delete_lab_template_types');
-
+    $app->get('get_templates','App\Http\Controllers\ApiController@get_templates');
+    $app->post('delete_template','App\Http\Controllers\ApiController@delete_template');
+    $app->post('add_template','App\Http\Controllers\ApiController@add_template');
+    $app->get('get_templates_categories','App\Http\Controllers\ApiController@get_templates_categories');
+    $app->post('delete_template_category','App\Http\Controllers\ApiController@delete_template_category');
+    $app->post('add_template_category','App\Http\Controllers\ApiController@add_template_category');
 });
 $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($app) {
     $app->post('create_inventory_category','App\Http\Controllers\InventoryAPIController@create_category');
@@ -224,5 +231,6 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
 
     $app->get('get_all_bills','App\Http\Controllers\BillingController@get_all_bills');
     $app->get('get_all_invoices','App\Http\Controllers\BillingController@get_all_invoices');
+    $app->post('update_invoice','App\Http\Controllers\BillingController@update_invoice');
 
 });
