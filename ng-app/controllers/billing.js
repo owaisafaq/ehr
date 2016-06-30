@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment){
+AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData){
 	$rootScope.pageTitle = "EHR - Billing";
 	$scope.BillListings={};
 	$scope.selectedPatient = {};
@@ -157,12 +157,31 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	};
 
 
+//Send Invoice Modal
+	$scope.SendInvoiceModal=function(invoice_id){
+
+		if(invoice_id==null){
+			return false;
+		}
+		else{
+
+			$('#send_invoice').modal('show');
+
+		}
+
+		/*console.log("Amount: "+AmountPaid.amount_paid);
+		console.log("Invoice:"+invoice_id);*/
+		//console.log(sendData);
+
+	};
+
 //Send Invoice
 	$scope.SendInvoice=function(sendData,pid,pname){
 
 		/*console.log("Amount: "+AmountPaid.amount_paid);
 		console.log("Invoice:"+invoice_id);*/
-		console.log(sendData);
+		console.log('here');
+		$('#send_invoice').modal('hide');
 
 	};
 
@@ -192,17 +211,45 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 		}
 	};
 
+$scope.PrintInvoice = function(invoice_id){
+
+		/*console.log(patient_id);
+		$scope.patient_id = patient_id;
+		//$scope.invoice_id = invoice_id;*/
+	var invoice=invoice_id ;
+
+	if(invoice==null){
+		return false;
+	}
+	else{
+
+		$rootScope.loader = "show";
+	InvoiceData.get({token: $window.sessionStorage.token, invoice_id: invoice_id}, getInvoiceSuccess, getInvoiceFailure);
+		function getInvoiceSuccess(res) {
+			if (res.status == true) {
+				$rootScope.loader = "hide";
+				$scope.selectedInvoice = res.data;
+				console.log($scope.selectedInvoice);
+				//$(".billing").show();
+
+				$('.invoice_list').hide();
+				$('.print_invoice').show();
+				$('.custom-tab').hide();
+				
 
 
-	$scope.go = function ( path ) { // method for routing on button click
-		//$location.path( path + '/' + $scope.invoice_id);
 
-		console.log(path+ '/' + $scope.invoice_id);
+			}
+		}
+		function getInvoiceFailure(error) {
+			$rootScope.loader = "show";
+			console.log(error);
+		}
 
-	};
 
+	}
 
-
+};
 
 
 

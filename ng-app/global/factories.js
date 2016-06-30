@@ -1239,3 +1239,19 @@ AppEHR.factory("InvoiecStatus", function ($resource) {
     };
     return get_status;
 });
+
+AppEHR.factory("InvoiceData", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_invoice_data', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var get_invoice = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return get_invoice;
+});

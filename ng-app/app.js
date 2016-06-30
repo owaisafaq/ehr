@@ -131,7 +131,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/pharmacy-view.html',
                     controller: 'pharmacyView'
                 }).
-                when('/billing-invoice-print', {
+                when('/billing-invoice-print/:invoiceID', {
                     templateUrl: 'views/billing-invoice-print.html',
                     controller: 'billing-invoice-print'
                 }).
