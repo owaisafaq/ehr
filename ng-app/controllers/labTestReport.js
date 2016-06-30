@@ -1,22 +1,23 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('labTestReport', ['$scope', '$rootScope', '$routeParams', '$window', 'getTemplateCategories', 'getTemplates', 'getLabTestInfo', 'getTemplateData', function($scope, $rootScope, $routeParams, $window, getTemplateCategories, getTemplates, getLabTestInfo, getTemplateData){
+AppEHR.controller('labTestReport', ['$scope', '$rootScope', 'mySchema', '$routeParams', '$window', 'getTemplateCategories', 'getTemplates', 'getLabTestInfo', 'getTemplateData','saveTemplateValues', '$timeout', function($scope, $rootScope, mySchema, $routeParams, $window, getTemplateCategories, getTemplates, getLabTestInfo, getTemplateData, saveTemplateValues, $timeout){
 	$rootScope.pageTitle = "EHR - Lab Order Reporting";
-
-    getLabTestInfo.get({
+    $scope.myFormData = {}; // Something to store the input at.
+    $scope.mySchema = {}; // Expose the schema on the scope.
+    getLabTestInfo.get({ // Getting All Information about Test
         token : $window.sessionStorage.token,
         lab_test_id : $routeParams.testID
     },getLabOrderInfoSuccess,getLabOrderInfoFailure);
 
-    function getLabOrderInfoSuccess(res){
+    function getLabOrderInfoSuccess(res){ // on success
         $scope.labTest = res.data;
     }
 
-    function getLabOrderInfoFailure(error){
+    function getLabOrderInfoFailure(error){ // on failure
         console.log(error);
     }
 
-    getTemplateCategories.get({
+    getTemplateCategories.get({ // Getting all templates
         token : $window.sessionStorage.token
     },getTemplateCategoriesSuccess,getTemplateCategoriesFailure);
     function getTemplateCategoriesSuccess(res){ // on success
@@ -50,10 +51,45 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', '$routeParams', '$wi
         $scope.templateSelected = true;
     };
     function getTemplateDataSuccess(res){ // on success
-        console.log(res);
+        $scope.selectedTemplate = res.data;
+        $scope.mySchema = JSON.parse(res.data.template);
     }
     function getTemplateDataFailure(error){ // on failure
         console.log(error);
     }
 
+    $scope.SaveTemplateValues = function (){ // Saving Template Values
+        $scope.hideLoader = 'show';
+        saveTemplateValues.save({ // sending data over saveTemplateValues factories
+            token : $window.sessionStorage.token,
+            lab_order_id : $scope.labTest.lab_order_id,
+            lab_test_id : $scope.selectedTemplate.id,
+            lab_test_values: $scope.myFormData
+        },saveTemplateValuesSuccess,saveTemplateValuesFailure)
+    };
+    function saveTemplateValuesSuccess(res){ // on success
+        if (res.status == true) {
+            $scope.hideLoader = 'hide';
+            $scope.message = true;
+            $scope.cancleOrderBtn = false;
+            $scope.errorMessage = res.message;
+            $scope.messageType = 'alert-success';
+            $scope.errorSymbol = 'fa fa-check';
+            $scope.myFormData = {};
+            $timeout(function(){
+                $scope.message = false;
+                $scope.errorMessage = "";
+            },1500);
+        } else {
+            $scope.hideLoader = "hide";
+            $scope.cancleOrderBtn = false;
+            $scope.message = true;
+            $scope.messageType = "alert-danger";
+            $scope.errorMessage = res.message;
+            $scope.errorSymbol = "fa fa-times";
+        }
+    }
+    function saveTemplateValuesFailure(error){ // on failure
+        console.log(error);
+    }
 }]);

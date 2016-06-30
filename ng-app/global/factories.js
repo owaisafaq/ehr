@@ -1382,3 +1382,19 @@ AppEHR.factory("AddTemplateCategory", function ($resource) {
     };
     return AddCategory;
 });
+
+AppEHR.factory("saveTemplateValues", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_lab_test_values', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var AddTestValues = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return AddTestValues;
+});
