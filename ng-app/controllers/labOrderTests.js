@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 // Lab Order Tests Listing
-AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routeParams','getLabOrderInfo','getLabTestInfo','updateTestStatus','$timeout', function ($scope, $rootScope, $window, $routeParams, getLabOrderInfo,getLabTestInfo,updateTestStatus,$timeout) {
+AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routeParams','getLabOrderInfo','getLabTestInfo','updateTestStatus','$timeout','$location', function ($scope, $rootScope, $window, $routeParams, getLabOrderInfo,getLabTestInfo,updateTestStatus,$timeout,$location) {
     $rootScope.pageTitle = "EHR - Lab Order Test";
     $scope.action = "";
     getLabOrderInfo.get({ // Getting all tests along with order info
@@ -88,4 +88,8 @@ AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routePar
     function updateTestStatusFailure(error){ // on failure
         console.log(error);
     }
+
+    $scope.go = function ( path ) { // method for routing on button click
+        $location.path( path + '/' + $scope.selectedTest.id);
+    };
 }]);

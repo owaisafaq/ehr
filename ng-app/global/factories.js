@@ -1082,22 +1082,6 @@ AppEHR.factory("GetProduct", function ($resource) {
 });
 
 
-AppEHR.factory("GetReorderLevel", function ($resource) {
-    function getResource(params, body) {
-        var res2 = $resource(serverPath + 'get_reorder_level', params, {
-            get: {method: 'POST'}
-        });
-        return res2;
-    }
-    var reorder_level = {
-        get: function (params, body, success) {
-            var res = getResource(params, body);
-            return res.get(params, body, success);
-        }
-    };
-    return reorder_level;
-});
-
 AppEHR.factory("updateReorderLevel", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'update_reorder_level', params, {
@@ -1130,9 +1114,6 @@ AppEHR.factory("ProductUpdate", function ($resource) {
     return update_product;
 });
 
-
-
-
 AppEHR.factory("cancelLabOrder", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'cancel_lab_order', params, {
@@ -1148,6 +1129,9 @@ AppEHR.factory("cancelLabOrder", function ($resource) {
     };
     return cancelOrder;
 });
+
+
+
 
 AppEHR.factory("addOrder", function ($resource) {
     function getResource(params, body) {
@@ -1179,4 +1163,65 @@ AppEHR.factory("updateTestStatus", function ($resource) {
         }
     };
     return updateTest;
+});
+
+AppEHR.factory("GetReorderLevel", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_reorder_level', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var reorder_level = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return reorder_level;
+});
+AppEHR.factory("getTemplateCategories", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_lab_template_categories', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var template_categories = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return template_categories;
+});
+AppEHR.factory("getTemplates", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_lab_test_templates', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var template_categories = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return template_categories;
+});
+AppEHR.factory("getTemplateData", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_template_details', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var template_data = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return template_data;
 });

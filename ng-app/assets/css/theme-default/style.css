@@ -2724,7 +2724,7 @@ form .progress {
     color: #516e81;
 }
 .archive_buttons .edit,.archive_buttons .delete{
-    display: none;   
+    display: none;
 }
 .select-date input{
     text-align: left;
@@ -2738,4 +2738,7 @@ form .progress {
 }
 .form-wizard-nav .progress{
     border: none;
+}
+.check-box-label label{
+    width:auto;
 }
