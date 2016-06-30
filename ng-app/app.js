@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR', [
     'ngRoute', 'ngResource',
-    'ngTouch', 'ui.grid', 'ui.grid.pagination', 'ngFileUpload', 'angular.filter', 'ui.bootstrap'
+    'ngTouch', 'ui.grid', 'ui.grid.pagination', 'ngFileUpload', 'angular.filter', 'ui.bootstrap','fg', 'ngSanitize', 'markdown'
 ]);
 AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
     function ($httpProvider, $routeProvider, $locationProvider) {
@@ -87,9 +87,13 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/lab-order-history.html',
                     controller: 'labOrderHistory'
                 }).
-                    when('/lab-order-reporting', {
+                when('/lab-order-reporting', {
                     templateUrl: 'views/lab-order-reporting.html',
                     controller: 'labOrderReporting'
+                }).
+                    when('/lab-test-report/:testID', {
+                    templateUrl: 'views/lab-test-report.html',
+                    controller: 'labTestReport'
                 }).
                 when('/lab-report-parasitology', {
                     templateUrl: 'views/lab-report-parasitology.html',
@@ -127,17 +131,21 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/billing.html',
                     controller: 'billing'
                 }).
-                        when('/pharmacy-view', {
+                when('/pharmacy-view', {
                     templateUrl: 'views/pharmacy-view.html',
                     controller: 'pharmacyView'
                 }).
-                when('/billing-invoice-print', {
+                when('/billing-invoice-print/:invoiceID', {
                     templateUrl: 'views/billing-invoice-print.html',
                     controller: 'billing-invoice-print'
                 }).
                 when('/billing-codes', {
                     templateUrl: 'views/billing-codes.html',
                     controller: 'billing-codes'
+                }).
+                when('/templates', {
+                    templateUrl: 'views/template.html',
+                    controller: 'templates'
                 }).
                 otherwise({
                     redirectTo: '/error'
@@ -265,7 +273,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
             })
             $('#s2id_get_val_principal_retainer').removeClass('disable-after-1');
         })
-        
+
         $('body').on('click', '.dependant_list .chip i', function () {
             $(this).parent('.chip').parent('div').fadeOut(function () {
                 $(this).remove();

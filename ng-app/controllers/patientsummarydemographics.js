@@ -525,6 +525,10 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         $scope.backButton = function () {
             console.log($scope.followupParentId);
+            if ($scope.backLinkID == '0') {
+                $scope.followupParentId = $scope.backLinkID;
+                console.log($scope.followupParentId + "--followupParentId");
+            }
             GetResourcesByFolderArchives.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID, followup_parent_id: $scope.backLinkID}, nestedFolderSuccess, nestedFolderFailure);
 
             ListFolderArchives.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID, followup_parent_id: $scope.backLinkID}, listFolderSuccess, listFolderFailure);

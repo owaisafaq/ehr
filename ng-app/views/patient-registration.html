@@ -527,11 +527,10 @@
                         <div class="col-lg-12 margin-bottom-xxl">
                             <label class="label-style">Select Plan</label>
                         </div>
-                        <div class="col-lg-12 radio-style-2-con">
+                        <div class="col-lg-12 radio-style-2-con" ng-hide="patientPlantRadios">
                             <div class="radio radio-styled">
                                 <label>
-                                    <input ng-click="flag_to_show_retainer = false;
-                                            flag_to_show_nhis = false;" type="radio" ng-init="PP.checkoutpatient = 1" name="checkoutpatient" value="1" checked ng-checked="true" ng-model="PP.checkoutpatient">
+                                    <input ng-click="flag_to_show_retainer = false; flag_to_show_nhis = false;" type="radio" ng-init="PP.checkoutpatient = 1" name="checkoutpatient" value="1" checked ng-checked="true" ng-model="PP.checkoutpatient">
                                     <span>Self</span>
                                 </label>
                             </div>
@@ -552,6 +551,32 @@
                                <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-hide="showSubmitButtonPatientPlan" >Update</button>
                             </div>
                         </div>
+                        <div class="col-lg-12 radio-style-2-con" ng-show="patientPlantRadios">
+                            {{PI.patient_plan.hospital_plan.name}}
+                            <div class="radio radio-styled">
+                                <label>
+                                    <input ng-click="flag_to_show_retainer_update = false; flag_to_show_nhis_update = false;" type="radio" ng-init="PP.checkoutpatient = 1" name="checkoutpatient" value="1" checked ng-checked="PI.patient_plan.hospital_plan.plan_id == '1'" ng-model="PP.checkoutpatient">
+                                    <span>Self</span>
+                                </label>
+                            </div>
+                            <div class="radio radio-styled">
+                                <label>
+                                    <input ng-click="flag_to_show_retainer_update = false; flag_to_show_nhis_update = true;" type="radio" name="checkoutpatient" value="2" ng-model="PP.checkoutpatient" ng-checked="PI.patient_plan.hospital_plan.plan_id == '2'">
+                                    <span data-toggle="modal" data-target="#nhis">NHIS</span>
+                                </label>
+                            </div>
+                            <div class="radio radio-styled">
+                                <label>
+                                    <input ng-click="flag_to_show_nhis_update = false; flag_to_show_retainer_update = true;" type="radio" name="checkoutpatient" value="3" ng-model="PP.checkoutpatient" ng-checked="PI.patient_plan.hospital_plan.plan_id == '3'">
+                                    <span data-toggle="modal" data-target="#relationship">Retainership</span>
+                                </label>
+                            </div>
+                            <div class="clear">
+                                <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-show="showSubmitButtonPatientPlan" >Save</button>
+                               <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-hide="showSubmitButtonPatientPlan" >Update</button>
+                            </div>
+                        </div>
+
                         <div ng-if="flag_to_show_nhis">
                             <div class="col-lg-12 margin-bottom-xxl no-padding">
                                 <label class="label-style">Patient Summary</label>
@@ -603,6 +628,90 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <label class="txt-style-4">{{dataToBeAdded.insurance_id}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <table ng-show="MI.select_speciality == 'dependant'" class="table table-striped table-custom margin-bottom-xxl">
+                                <thead>
+                                    <tr>
+                                        <th width="50%">patient id</th>
+                                        <th>Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{dataToBeAdded.principal_patient_id}}</td>
+                                        <td>{{dataToBeAdded.principal_patient_name}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table ng-show="MI.select_speciality == 'principal' && depedants_values_with_name.length > 0" class="table table-striped table-custom margin-bottom-xxl">
+                                <thead>
+                                    <tr>
+                                        <th width="50%">patient id</th>
+                                        <th>Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="(key, value) in depedants_values_with_name">
+                                        <td>{{value.dependent_id}}</td>
+                                        <td>{{value.dependent_name}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div ng-if="flag_to_show_nhis_update">
+                            <div class="col-lg-12 margin-bottom-xxl no-padding">
+                                <label class="label-style">Patient Summary</label>
+                            </div>
+                            <div class="data-table">
+                                <div class="column col-lg-6">
+                                    <div class="col-lg-6">
+                                        <label>HMO</label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label class="txt-style-4">{{dataToBeAdded.updatePatientPlan.hmo}}</label>
+                                    </div>
+                                </div>
+                                <div class="column col-lg-6">
+                                    <div class="col-lg-6">
+                                        <label>Policies</label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label class="txt-style-4">{{dataToBeAdded.updatePatientPlan.policies}}</label>
+                                    </div>
+                                </div>
+                                <div class="column col-lg-6">
+                                    <div class="col-lg-6">
+                                        <label>Select Status</label>
+                                    </div>
+                                    <div class="col-lg-6 radio-disable-style">
+                                        <div class="radio radio-styled">
+                                            <label>
+                                                <!---->
+                                                <input ng-checked="dataToBeAdded.updatePatientPlan.is_principal == '1'" disabled type="radio" name="aaa">
+                                                <span>Principal</span>
+                                            </label>
+                                        </div>
+                                        <div class="radio radio-styled">
+                                            <label>
+                                                <!---->
+                                                <input ng-checked="dataToBeAdded.updatePatientPlan.is_dependant == '1'" disabled type="radio" name="aaa">
+                                                <span>Dependant</span>
+                                            </label>
+                                        </div>
+                                        <!-- div class="radio-inline radio-styled col-lg-6">
+                                            
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <div class="column col-lg-6">
+                                    <div class="col-lg-6">
+                                        <label>Insurance ID</label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label class="txt-style-4">{{dataToBeAdded.updatePatientPlan.insurance_id}}</label>
                                     </div>
                                 </div>
                             </div>
@@ -712,11 +821,87 @@
                                 </tbody>
                             </table>
                         </div>
+
+                        <div ng-if="flag_to_show_retainer_update">
+                            <div class="col-lg-12 margin-bottom-xxl no-padding">
+                                <label class="label-style">Patient Summary</label>
+                            </div>
+                            <div class="data-table">
+                                <div class="column col-lg-6">
+                                    <div class="col-lg-6">
+                                        <label>Retainer Ship</label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label class="txt-style-4">{{dataToBeAdded.updatePatientPlan.retainership}}</label>
+                                    </div>
+                                </div>
+                                <div class="column col-lg-6">
+                                    <div class="col-lg-6">
+                                        <label>CATEGORY</label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label class="txt-style-4">{{dataToBeAdded.updatePatientPlan.category}}</label>
+                                    </div>
+                                </div>
+                                <div class="column col-lg-6">
+                                    <div class="col-lg-6">
+                                        <label>Select Status</label>
+                                    </div>
+                                    <div class="col-lg-6 radio-disable-style">
+                                        <div class="radio radio-styled">
+                                            <label>
+                                                <!---->
+                                                <input ng-checked="dataToBeAdded.updatePatientPlan.is_principal == '1'" type="radio" name="aaa" disabled>
+                                                <span>Principal</span>
+                                            </label>
+                                        </div>
+                                        <div class="radio radio-styled">
+                                            <label>
+                                                <!---->
+                                                <input ng-checked="dataToBeAdded.updatePatientPlan.is_dependant == '1'" type="radio" name="aaa" disabled>
+                                                <span>Dependant</span>
+                                            </label>
+                                        </div>
+                                        <!-- div class="radio-inline radio-styled col-lg-6">
+                                            
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <div class="column col-lg-6"></div>
+                            </div>
+                            <table ng-show="RI.select_speciality == 'dependant'" class="table table-striped table-custom margin-bottom-xxl">
+                                <thead>
+                                    <tr>
+                                        <th width="50%">patient id</th>
+                                        <th>Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{dataToBeAdded.principal_patient_id}}</td>
+                                        <td>{{dataToBeAdded.principal_patient_name}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table ng-show="RI.select_speciality == 'principal' && depedants_values_with_name.length > 0" class="table table-striped table-custom margin-bottom-xxl">
+                                <thead>
+                                    <tr>
+                                        <th width="50%">patient id</th>
+                                        <th>Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="(key, value) in depedants_values_with_name">
+                                        <td>{{value.dependent_id}}</td>
+                                        <td>{{value.dependent_name}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </form>
                 </div>
-
                 <div class="tab-pane {{disabledTabArchive}}" id="archive">
-                    <!-- <a href="javascript:;" ng-if="followupParentId != '0'" ng-hide="backButtonArchive" ng-click="backButton();"><< Back</a> -->
+                    <a href="javascript:;" ng-if="followupParentId != '0'" ng-hide="backButtonArchive" ng-click="backButton();"><< Back</a>
                     <div class="col-xs-12">
                         <div class="icons_con archive_buttons">
                             <button class="done-editing save button-custom" ng-click="saveArchive();">Save</button>
