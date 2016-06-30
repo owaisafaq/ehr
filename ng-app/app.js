@@ -91,6 +91,10 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/lab-order-reporting.html',
                     controller: 'labOrderReporting'
                 }).
+                    when('/lab-test-report/:testID', {
+                    templateUrl: 'views/lab-test-report.html',
+                    controller: 'labTestReport'
+                }).
                 when('/lab-report-parasitology', {
                     templateUrl: 'views/lab-report-parasitology.html',
                     controller: 'labReportParasitology'
