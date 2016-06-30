@@ -1241,7 +1241,6 @@ AppEHR.factory("getTemplateData", function ($resource) {
     };
     return template_data;
 });
-});
 
 AppEHR.factory("getTemplates", function ($resource) {
     function getResource(params, body) {
