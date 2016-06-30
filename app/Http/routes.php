@@ -202,6 +202,11 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->get('get_templates_categories','App\Http\Controllers\ApiController@get_templates_categories');
     $app->post('delete_template_category','App\Http\Controllers\ApiController@delete_template_category');
     $app->post('add_template_category','App\Http\Controllers\ApiController@add_template_category');
+
+
+    $app->get('get_template_details','App\Http\Controllers\OrderController@get_template_details');
+
+
 });
 $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($app) {
     $app->post('create_inventory_category','App\Http\Controllers\InventoryAPIController@create_category');

@@ -349,10 +349,10 @@ class OrderController extends Controller
 
         $category_id = $request->input('category_id');
 
-        $lab_templates = DB::table('lab_templates')
-            ->select(DB::raw('id,name,url'))
+        $lab_templates = DB::table('templates')
+            ->select(DB::raw('id,name'))
             ->where('status', '1')
-            ->where('category', $category_id)
+            ->where('category_id', $category_id)
             ->get();
 
 
@@ -563,6 +563,21 @@ class OrderController extends Controller
             ->update(['status'=>0]);
 
         return response()->json(['status'=>true, 'data'=>'Type Deleted.']);
+    }
+
+
+    public function get_template_details(Request $request){
+
+        $template_id = $request->input('template_id');
+
+        $details = DB::table('templates')
+                ->select(DB::raw('*'))
+                ->where('templates.id', $template_id)
+                ->where('status', 1)
+                ->first();
+
+            return response()->json(['status' => true, 'data' => $details]);
+
     }
 
 }

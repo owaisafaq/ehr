@@ -464,6 +464,8 @@ $api->url = HOST . 'get_patient_visit_history';
 $api->method = "GET";
 $api->description = "Get Patient Visit History";
 $api->params->patient_id = "1";
+$api->params->offset = "1";
+$api->params->limit = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -476,6 +478,8 @@ $api->url = HOST . 'get_patient_vital_history';
 $api->method = "GET";
 $api->description = "Get Patient Vital History";
 $api->params->patient_id = "1";
+$api->params->offset = "1";
+$api->params->limit = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -577,6 +581,8 @@ $api->url = HOST . 'patient_medications';
 $api->method = "GET";
 $api->description = "Get Patient Medications";
 $api->params->patient_id = "1";
+$api->params->offset = "1";
+$api->params->limit = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -604,6 +610,8 @@ $api->url = HOST . 'patient_supplements';
 $api->method = "GET";
 $api->description = "Get Supplements";
 $api->params->patient_id = "1";
+$api->params->offset = "1";
+$api->params->limit = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -637,6 +645,8 @@ $api->url = HOST . 'patient_allergies';
 $api->method = "GET";
 $api->description = "Get Patient Allergies";
 $api->params->patient_id = "1";
+$api->params->offset = "1";
+$api->params->limit = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -1822,6 +1832,28 @@ $api->name = "Get Billing Data";
 $api->url = HOST . 'get_billing_data';
 $api->method = "GET";
 $api->params->bill_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Get Patient Plan
+$api = new api();
+$api->name = "Get Patient Plan";
+$api->url = HOST . 'get_patient_plan';
+$api->method = "GET";
+$api->params->patient_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Get Template Details
+$api = new api();
+$api->name = "Get Template Details";
+$api->url = HOST . 'get_template_details';
+$api->method = "GET";
+$api->params->template_id = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
