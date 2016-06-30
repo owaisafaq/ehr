@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR', [
     'ngRoute', 'ngResource',
-    'ngTouch', 'ui.grid', 'ui.grid.pagination', 'ngFileUpload', 'angular.filter', 'ui.bootstrap'
+    'ngTouch', 'ui.grid', 'ui.grid.pagination', 'ngFileUpload', 'angular.filter', 'ui.bootstrap','fg', 'ngSanitize', 'markdown'
 ]);
 AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
     function ($httpProvider, $routeProvider, $locationProvider) {
@@ -131,17 +131,21 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/billing.html',
                     controller: 'billing'
                 }).
-                        when('/pharmacy-view', {
+                when('/pharmacy-view', {
                     templateUrl: 'views/pharmacy-view.html',
                     controller: 'pharmacyView'
                 }).
-                when('/billing-invoice-print', {
+                when('/billing-invoice-print/:invoiceID', {
                     templateUrl: 'views/billing-invoice-print.html',
                     controller: 'billing-invoice-print'
                 }).
                 when('/billing-codes', {
                     templateUrl: 'views/billing-codes.html',
                     controller: 'billing-codes'
+                }).
+                when('/templates', {
+                    templateUrl: 'views/template.html',
+                    controller: 'templates'
                 }).
                 otherwise({
                     redirectTo: '/error'

@@ -76,11 +76,10 @@ $(document).ready(function () {
         $('.edit_invoice').hide();
     });
     
-    $(document).on('click', '.btn_print_invoice', function () {
-        $('.invoice_list').hide();
-        $('.print_invoice').show();
-        $('.custom-tab').hide();
+    $(document).on('click', '.btn_print', function () {
+        $('.foot_invoice').hide();
         window.print();
+        
     });
     $(document).on('click', '.hide_print_inovice', function () {
         $('.invoice_list').show();

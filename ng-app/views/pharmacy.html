@@ -25,24 +25,12 @@
                                 <th>mobile</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td><a class="link-style" href="javascript:;">GOPD Pharmacy</a></td>
-                                <td>23 Wuse Amunu kano</td>
-                                <td>demo@domainname.com</td>
-                                <td>080927726</td>
-                            </tr>
-                            <tr>
-                                <td><a class="link-style" href="javascript:;">GOPD Pharmacy</a></td>
-                                <td>23 Wuse Amunu kano</td>
-                                <td>demo@domainname.com</td>
-                                <td>080927726</td>
-                            </tr>
-                            <tr>
-                                <td><a class="link-style" href="javascript:;">GOPD Pharmacy</a></td>
-                                <td>23 Wuse Amunu kano</td>
-                                <td>demo@domainname.com</td>
-                                <td>080927726</td>
+                        <tbody >
+                            <tr ng-repeat="pharmacyList in pharmacyLists">
+                                <td><a class="link-style" href="javascript:;">{{pharmacyList.name}}</a></td>
+                                <td>{{pharmacyList.address_1}}</td>
+                                <td>{{pharmacyList.email}}</td>
+                                <td>{{pharmacyList.work_phone}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -61,32 +49,38 @@
                 <h2>Create Pharmacy</h2>
             </div>
             <div class="modal-body">
-                <form class="custom-form">
+                <form class="custom-form" name="userForm1" ng-model="myForm" novalidate ng-submit="validatePatientInfo(PI);" class="custom-form">
                     <div class="row">
                         <div class="col-lg-3">
                             <label>pharmacy name</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder="" name="" required/>
+                            <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm1.name.$invalid]"  name="name" required  ng-model="PI.name" />
+                            <p class="help-block PIValid" ng-show="submitted && userForm1.name.$error.required">Required</p>
                         </div>
                         <div class="col-lg-3">
                             <label>Contact Person</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder="" name="" required/>
+                            <input type="text" placeholder="" name="contact_person" ng-class="{true: 'error'}[submitted && userForm1.contact_person.$invalid]"  ng-model="PI.contact_person"  alphabets-only  required/>
+                            <p class="help-block PIValid" ng-show="submitted && userForm1.contact_person.$error.required">Required</p>
                         </div>
                         <div class="col-lg-3">
                             <label>Address Line 1</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder="" name="" required/>
+                            <input type="text" placeholder="" name="address_1" ng-class="{true: 'error'}[submitted && userForm1.address_1.$invalid]" ng-model="PI.address_1"   required/>
+                            <p class="help-block PIValid" ng-show="submitted && userForm1.address_1.$error.required">Required</p>
+
                         </div>
 
                         <div class="col-lg-3">
                             <label>Email ID</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder="" name="" required/>
+                            <input type="email" placeholder="" name="email"  ng-pattern="emailFormat" ng-class="{true: 'error'}[submitted && userForm1.email.$invalid]" ng-model="PI.email"  required/>
+                            <p class="help-block PIValid" ng-show="submitted && userForm1.email.$error.required">Required</p>
+                            <p class="help-block PIValid" ng-show="submitted && userForm1.email.$error.pattern">Invalid Format</p>
                         </div>
 
                         <div class="col-lg-3">
@@ -104,32 +98,31 @@
                         </div>
 
                         <div class="col-lg-3">
-                            <label>City</label>
+                            <label>Country</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder="" name="" required/>
+                            <select class="form-control" name="countries"  ng-model="PI.countries" ng-change="addressStateByCountry(PI.countries);">
+                                <option>Select Country</option>
+                                <option ng-repeat='country in countries' value='{{country.id}}'>{{country.name}}</option>
+                            </select>
                         </div>
 
                         <div class="col-lg-3">
                             <label>State</label>
                         </div>
                         <div class="col-lg-3">
-                            <select class="form-control">
+                            <select class="form-control" name="state" ng-model="PI.state" ng-options="state.name for state in state track by state.id">
                                 <option>Select State</option>
-                                <option>2</option>
-                                <option>3</option>
+
                             </select>
                         </div>
 
+
                         <div class="col-lg-3">
-                            <label>Country</label>
+                            <label>City</label>
                         </div>
                         <div class="col-lg-3">
-                            <select class="form-control">
-                                <option>Select Country</option>
-                                <option>2</option>
-                                <option>3</option>
-                            </select>
+                            <input type="text" placeholder="" name="" required/>
                         </div>
 
                         <div class="col-lg-3">
@@ -141,13 +134,12 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default button-style-1">Create</button>
+                        <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;">Create</button>
                         <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
                     </div>
                 </form>
 
             </div>
-
         </div><!-- /.modal-content -->
 
 
