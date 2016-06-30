@@ -974,15 +974,6 @@ AppEHR.factory("DeleteInventory", function ($resource) {
 
 
 
-
-
-
-
-
-
-
-
-
 AppEHR.factory("GetSingleSupplier", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'get_inventory_single_supplier', params, {
@@ -1242,6 +1233,90 @@ AppEHR.factory("getTemplateData", function ($resource) {
     return template_data;
 });
 
+
+
+
+
+AppEHR.factory("GetAllBills", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_all_bills', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var Bills = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return Bills;
+});
+
+
+AppEHR.factory("GetAllInvoices", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_all_invoices', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var Invoices = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return Invoices;
+});
+
+AppEHR.factory("ProcessPayment", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'update_invoice', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var update_inv = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return update_inv;
+});
+
+AppEHR.factory("InvoiecStatus", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_invoice_status', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var get_status = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return get_status;
+});
+
+AppEHR.factory("InvoiceData", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_invoice_data', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var get_invoice = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return get_invoice;
+});
 AppEHR.factory("getTemplates", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'get_templates', params, {

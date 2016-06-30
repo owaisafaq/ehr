@@ -720,7 +720,7 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 
 
 		function ProductUpdateSuccess(res) {
-			console.log(res);
+			
 			console.log(res);
 			if (res.status == true) {
 				$rootScope.loader = "hide";
