@@ -72,7 +72,7 @@
                                 <button type="submit">
                                     <i class="fa fa-search"></i>
                                 </button>
-                                <input class="search_field" type="text" placeholder="Patient Name or Id">
+                                <input class="search_field" type="text" placeholder="Patient Name or Id" ng-model="search_all">
                             </div>
                         </div>
                     </div>
@@ -88,10 +88,10 @@
                         </div>
                         <span class="txt-style-3 pull-left text-uppercase">Plan</span>
                         <div class="col-lg-2">
-                            <select class="form-control">
-                                <option>Encounter for billing</option>
-                                <option>Cheque</option>
-                                <option>type 3</option>
+                            <select class="form-control" ng-model="search_plan">
+                                <option selected >Self</option>
+                                <option>NHIS</option>
+                                <option>Retainers</option>
                             </select>
                         </div>
                         <!--                        <div class="pull-right">
@@ -121,7 +121,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="Bill in BillListings">
+                                <tr ng-repeat="Bill in BillListings |filter:search_all |filter:search_plan">
                                     <td align="center">
                                         <div class="radio radio-styled">
                                             <label>
@@ -179,7 +179,7 @@
                                 <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Delete Invoice</button>
                                <!-- <button class="add button-custom pull-right btn_edit_invoice">Edit Invoice</button>-->
                                 <button class="add button-custom pull-right" data-toggle="modal" ng-click="prcessingPaymentClick(invoice_id)">Process Payment</button>
-                                <button class="add button-custom pull-right print_invoice" >Print Invoice</button>
+                                <button class="add button-custom pull-right" ng-click="go('/billing-invoice-print')" >Print Invoice</button>
                                 <button class="add button-custom pull-right" data-toggle="modal" data-target="#send_invoice">Send Invoice</button>
                             </div>
                             <span class="txt-style-3 pull-left text-uppercase">Plan</span>
@@ -415,6 +415,14 @@
                         </form>
                     </div>
                 </div>
+
+
+
+
+
+
+
+
 
                 <div class="tab-pane" id="receipts">                    
 
@@ -996,7 +1004,7 @@
 <script>
     $(document).ready(function () {
 
-        $(".billing").hide();
+       // $(".billing").hide();
     });
 
 

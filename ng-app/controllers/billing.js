@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment', function($scope, $rootScope,$window,$routeParams,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment){
+AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment){
 	$rootScope.pageTitle = "EHR - Billing";
 	$scope.BillListings={};
 	$scope.selectedPatient = {};
@@ -180,7 +180,9 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','G
 				$rootScope.loader = "hide";
 				$scope.selectedPatient = res.data;
 				console.log($scope.selectedPatient);
-				$(".billing").show();
+				//$(".billing").show();
+
+				$scope.patientInfo = true;
 
 			}
 		}
@@ -192,6 +194,12 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','G
 
 
 
+	$scope.go = function ( path ) { // method for routing on button click
+		//$location.path( path + '/' + $scope.invoice_id);
+
+		console.log(path+ '/' + $scope.invoice_id);
+
+	};
 
 
 
