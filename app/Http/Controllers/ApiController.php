@@ -1032,6 +1032,7 @@ class ApiController extends Controller
             if ($plan_id == 2) {
 
 
+
                 $hmo = $request->input('hmo');
 
                 $policies = $request->input('policies');
@@ -1059,6 +1060,7 @@ class ApiController extends Controller
 
                     ]
                 );
+
 
 
                 $plan_detail_id = DB::getPdo()->lastInsertId();
