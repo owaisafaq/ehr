@@ -1117,3 +1117,69 @@ AppEHR.factory("updateTestStatus", function ($resource) {
     };
     return updateTest;
 });
+
+AppEHR.factory("getTemplates", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_templates', params, {
+            save: {method: 'GET'}
+        });
+        return res2;
+    }
+
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+
+AppEHR.factory("AddTemplate", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_template', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var AddCategory = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return AddCategory;
+});
+
+AppEHR.factory("getTemplateCategory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_templates_categories', params, {
+            save: {method: 'GET'}
+        });
+        return res2;
+    }
+
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+
+AppEHR.factory("AddTemplateCategory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_template_category', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var AddCategory = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return AddCategory;
+});
