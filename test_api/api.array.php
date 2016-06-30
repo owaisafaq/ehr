@@ -1812,3 +1812,14 @@ $api->params->invoice_id = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+
+//Get Billing Data
+$api = new api();
+$api->name = "Get Billing Data";
+$api->url = HOST . 'get_billing_data';
+$api->method = "GET";
+$api->params->bill_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;

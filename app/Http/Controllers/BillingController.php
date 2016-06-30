@@ -68,7 +68,7 @@ class BillingController extends Controller
             DB::table('invoice')
                 ->where('id', $invoice_id)
                 ->update(
-                    ['due' => $invoice_amount,'invoice_status'=>$status]);
+                    ['due' => $invoice_amount, 'invoice_status' => $status]);
 
             return response()->json(['status' => true, 'message' => 'Invoice Updated successfully']);
 
@@ -97,13 +97,13 @@ class BillingController extends Controller
             return response()->json(['status' => true, 'message' => 'Invoice Updated successfully']);
 
 
-
         }
 
 
     }
 
-    public function get_invoice_data(Request $request){
+    public function get_invoice_data(Request $request)
+    {
 
         $invoice_id = $request->input('invoice_id');
 
@@ -117,11 +117,11 @@ class BillingController extends Controller
             ->first();
 
 
-        if($data->sex==1){
+        if ($data->sex == 1) {
 
-            $data->gender='Male';
-        }else{
-            $data->gender='FeMale';
+            $data->gender = 'Male';
+        } else {
+            $data->gender = 'FeMale';
 
         }
 
@@ -133,7 +133,8 @@ class BillingController extends Controller
     }
 
 
-    public function get_invoice_status(Request $request){
+    public function get_invoice_status(Request $request)
+    {
 
         $invoice_id = $request->input('invoice_id');
 
@@ -145,6 +146,35 @@ class BillingController extends Controller
 
 
         return response()->json(['status' => true, 'data' => $data]);
+
+    }
+
+
+    public function get_billing_data(Request $request)
+    {
+
+
+        $bill_id = $request->input('bill_id');
+
+        $data = DB::table('billing')
+            ->leftJoin('patients', 'billing.patient_id', '=', 'patients.id')
+            ->select(DB::raw('patients.id as patient_id,patients.first_name,patients.middle_name,patients.last_name,patients.age,billing.id as recipent_no,billing.created_at as date'))
+            ->where('billing.status', 1)
+            ->where('billing.id', $bill_id)
+            ->first();
+
+
+        $bill_invoices = DB::table('invoice')
+            ->select(DB::raw('*'))
+            ->where('status', 1)
+            ->where('bill_id', $bill_id)
+            ->get();
+
+
+        $data->invoices = $bill_invoices;
+
+        return response()->json(['status' => true, 'data' => $data]);
+
 
     }
 }
