@@ -1,7 +1,7 @@
 <div id="content">
     <section>
         <div class="card custom-card">
-            <div class="card-head card-head-custom card-color-3 billing">
+          <!--  <div class="card-head card-head-custom card-color-3 billing">
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
                     <span class="txt-style-2 col-lg-12 capitalize">Elbert Bloogs Woo</span>
@@ -33,7 +33,7 @@
                         <img src="assets/img/discharge_icn_white.png" />
                     </a>                             
                 </div>
-            </div>
+            </div>-->
 
             <div class="card-body tab-content col-lg-12 custom-card-body">
 
@@ -115,14 +115,14 @@
                         </div>
                     </div>
 
-                    <div class="table-header row background-none">
+                  <!--  <div class="table-header row background-none">
                         <div class="pull-right">
                             <button class="add button-custom pull-right" data-toggle="modal" data-target="#">Add Procedure from master list</button>
                             <button class="add button-custom pull-right" data-toggle="modal" data-target="#">Add Product from master list</button>
 
                         </div>
 
-                    </div>
+                    </div>-->
                     <form class="custom-form">
                         <div class="row edit_inv_row_hdng">
                             <div class="col-lg-4">
@@ -281,11 +281,11 @@
 
                         <div class="row">                       
 
-                            <div class="col-lg-12">
+                           <!-- <div class="col-lg-12">
                                 <span class="pull-left term_cond">Terms & Condition</span>
                                 <button type="button" class="btn button-style-1 button-style-1_a pull-right">Cancel</button>
                                 <button type="button" class="btn btn-default button-style-1 pull-right margin-right-10">finish</button>                                    
-                            </div>
+                            </div>-->
 
                         </div>
 
@@ -441,3 +441,21 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </div>
+
+<style>
+    @media print {
+        body #content {
+            width: 90%; max-width: 1048px;
+        }
+    }
+
+
+</style>
+<script>
+    $(document).ready(function () {
+
+        $(".headerbar").hide();
+        window.print();
+    });
+</script>
+

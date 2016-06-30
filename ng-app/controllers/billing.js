@@ -131,7 +131,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 
 				
 
-/*
+
 
 				GetAllInvoices.get({
 					token: $window.sessionStorage.token,
@@ -139,7 +139,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 
 
 
-				$('#radio-2').prop("checked", true);
+				/*				$('#radio-2').prop("checked", true);
 */
 
 
