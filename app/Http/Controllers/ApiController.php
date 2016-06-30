@@ -1884,14 +1884,39 @@ class ApiController extends Controller
 
 
         $patient_id = $request->input('patient_id');
+        $limit = $request->input('limit');
+        $offset = $request->input('offset');
 
-        $visits = DB::table('visits')
-            ->select(DB::raw('visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name'))
-            ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
-            ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
-            ->where('visits.patient_id', $patient_id)
-            ->get();
 
+        if ($limit > 0 || $offset > 0) {
+
+
+            $visits = DB::table('visits')
+                ->select(DB::raw('visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name'))
+                ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
+                ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
+                ->where('visits.patient_id', $patient_id)
+                ->skip($offset)->take($limit)
+                ->get();
+
+            $count = DB::table('visits')
+                ->select(DB::raw('visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name'))
+                ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
+                ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
+                ->where('visits.patient_id', $patient_id)->count();
+
+        } else {
+
+            $visits = DB::table('visits')
+                ->select(DB::raw('visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name'))
+                ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
+                ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
+                ->where('visits.patient_id', $patient_id)
+                ->get();
+
+            $count = count($visits);
+
+        }
 
         foreach ($visits as $visit) {
 
@@ -1899,7 +1924,7 @@ class ApiController extends Controller
             $visit->diagosis = '';
         }
 
-        return response()->json(['status' => true, 'data' => $visits]);
+        return response()->json(['status' => true, 'data' => $visits, 'count' => $count]);
 
     }
 
@@ -2126,27 +2151,10 @@ class ApiController extends Controller
     public function clinical_progress_note_templates(Request $request)
     {
 
-
-        $limit = $request->input('limit');
-        $offset = $request->input('offset');
-
-        if ($limit > 0 || $offset > 0) {
-
-            $templates = DB::table('note_templates')
-                ->select(DB::raw('id,name'))
-                ->where('status', 1)
-                ->skip($offset)->take($limit)
-                ->get();
-
-
-        } else {
-
-            $templates = DB::table('note_templates')
-                ->select(DB::raw('id,name'))
-                ->where('status', 1)
-                ->get();
-
-        }
+        $templates = DB::table('note_templates')
+            ->select(DB::raw('id,name'))
+            ->where('status', 1)
+            ->get();
 
         return response()->json(['status' => true, 'data' => $templates]);
 
@@ -2158,28 +2166,12 @@ class ApiController extends Controller
 
         $template_id = $request->input('template_id');
 
-        $limit = $request->input('limit');
-        $offset = $request->input('offset');
+        $fields = DB::table('clinical_note_questions')
+            ->select(DB::raw('id,name,category'))
+            ->where('template', $template_id)
+            ->where('status', 1)
+            ->get();
 
-        if ($limit > 0 || $offset > 0) {
-
-            $fields = DB::table('clinical_note_questions')
-                ->select(DB::raw('id,name,category'))
-                ->where('template', $template_id)
-                ->where('status', 1)
-                ->skip($offset)->take($limit)
-                ->get();
-
-        } else {
-
-
-            $fields = DB::table('clinical_note_questions')
-                ->select(DB::raw('id,name,category'))
-                ->where('template', $template_id)
-                ->where('status', 1)
-                ->get();
-
-        }
 
         return response()->json(['status' => true, 'data' => $fields]);
 

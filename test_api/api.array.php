@@ -792,6 +792,8 @@ $api->url = HOST . 'patient_visit_list';
 $api->method = "GET";
 $api->description = "Patient Visit List";
 $api->params->patient_id = "1";
+$api->params->offset = "1";
+$api->params->limit = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
