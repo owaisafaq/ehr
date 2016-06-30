@@ -2,7 +2,6 @@
     <section>
         <div class="card custom-card">
             <div class="card-head card-head-custom card-color-3 billing" >
-            <div class="card-head card-head-custom card-color-3 billing hidden-print">
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
                     <span class="txt-style-2 col-lg-12 capitalize">{{selectedPatient.first_name}}</span>
@@ -33,15 +32,15 @@
                     </a>
                     <a href="javascript:;" class="button-style-2">
                         <img src="assets/img/discharge_icn_white.png" />
-                    </a>                             
+                    </a>
                 </div>
             </div>
 
-            <div class="card-head col-lg-12 no-padding card-head-auto tabs_sec hidden-print">
+            <div class="card-head col-lg-12 no-padding card-head-auto tabs_sec">
                 <ul class="nav nav-tabs nav-justified custom-tab" data-toggle="tabs">
                     <li class="active"><a showtab href="#generate">Generate Bills</a></li>
                     <li><a showtab href="#invoices">Invoices</a></li>
-<!--                    <li><a showtab href="#receipts">Receipts</a></li>-->
+                    <!--   <li><a showtab href="#receipts">Receipts</a></li>-->
                     <li><a showtab href="#reports">Reports</a></li>
                 </ul>
             </div>
@@ -52,9 +51,9 @@
 
 
 
-                <div class="tab-pane active" id="generate">                    
+                <div class="tab-pane active" id="generate">
 
-                    <div class="table-header row background-none"> 
+                    <div class="table-header row background-none">
                         <div class="col-lg-7"></div>
                         <div class="col-lg-3">
                             <div class="col-lg-2">
@@ -80,12 +79,12 @@
 
                     <div class="table-header row background-none">
                         <div class="pull-right">
-                          <!--  <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Add Credit Note</button>
-                            <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Billing Not Required</button>
+                            <!--  <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Add Credit Note</button>
+                              <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Billing Not Required</button>
 
-                            <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Invoice Without Consultation</button>
-                            <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">New Invoice</button>
--->
+                              <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Invoice Without Consultation</button>
+                              <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">New Invoice</button>
+  -->
                         </div>
                         <span class="txt-style-3 pull-left text-uppercase">Plan</span>
                         <div class="col-lg-2">
@@ -109,37 +108,37 @@
                     <form class="custom-form">
                         <table class="table table-striped no-margin table-custom table-custom_big setting_table">
                             <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Bill ID</th>
-                                    <th>Date</th>
-                                    <th>Encounter No</th>
-                                    <th>patient ID</th>
-                                    <th>patient name</th>
-                                    <th>bill purpose</th>
-                                    <th>patient plan</th>
+                            <tr>
+                                <th></th>
+                                <th>Bill ID</th>
+                                <th>Date</th>
+                                <th>Encounter No</th>
+                                <th>patient ID</th>
+                                <th>patient name</th>
+                                <th>bill purpose</th>
+                                <th>patient plan</th>
 
-                                </tr>
+                            </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="Bill in BillListings |filter:search_all |filter:search_plan">
-                                    <td align="center">
-                                        <div class="radio radio-styled">
-                                            <label>
-                                                <input type="radio" ng-click="SelectedPatient(Bill.patient_id)" name="optionsRadios" value="option1"><span></span>
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>{{Bill.id}}</td>
-                                    <td>{{Bill.created_at}}</td>
-                                    <td>{{Bill.encounter_id}}</td>
-                                    <td>{{Bill.patient_id}}</td>
-                                    <td>{{Bill.first_name}}</td>
-                                    <td>{{Bill.purpose}}</td>
-                                    <td>{{Bill.purpose}}</td>
+                            <tr ng-repeat="Bill in BillListings |filter:search_all |filter:search_plan">
+                                <td align="center">
+                                    <div class="radio radio-styled">
+                                        <label>
+                                            <input type="radio" ng-click="SelectedPatient(Bill.patient_id)" name="optionsRadios" value="option1"><span></span>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>{{Bill.id}}</td>
+                                <td>{{Bill.created_at}}</td>
+                                <td>{{Bill.encounter_id}}</td>
+                                <td>{{Bill.patient_id}}</td>
+                                <td>{{Bill.first_name}}</td>
+                                <td>{{Bill.purpose}}</td>
+                                <td>{{Bill.purpose}}</td>
 
 
-                                </tr>
+                            </tr>
 
                             </tbody>
                         </table>
@@ -150,7 +149,7 @@
 
                     <div class="invoice_list">
 
-                        <div class="table-header row background-none"> 
+                        <div class="table-header row background-none">
                             <div class="col-lg-7"></div>
                             <div class="col-lg-3">
                                 <div class="col-lg-2">
@@ -178,13 +177,10 @@
                         <div class="table-header row background-none">
                             <div class="pull-right">
                                 <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Delete Invoice</button>
-                               <!-- <button class="add button-custom pull-right btn_edit_invoice">Edit Invoice</button>-->
+                                <!-- <button class="add button-custom pull-right btn_edit_invoice">Edit Invoice</button>-->
                                 <button class="add button-custom pull-right" data-toggle="modal" ng-click="prcessingPaymentClick(invoice_id)">Process Payment</button>
                                 <button class="add button-custom pull-right" ng-click="go('/billing-invoice-print')" >Print Invoice</button>
                                 <button class="add button-custom pull-right" data-toggle="modal" data-target="#send_invoice">Send Invoice</button>
-                                <button class="add button-custom pull-right btn_edit_invoice">Edit Invoice</button>
-                                <button class="add button-custom pull-right btn_print_invoice">Print Invoice</button>
-                                <button class="add button-custom pull-right">Send Invoice</button>
                             </div>
                             <span class="txt-style-3 pull-left text-uppercase">Plan</span>
                             <div class="col-lg-2">
@@ -200,40 +196,40 @@
                         <form class="custom-form">
                             <table class="table table-striped no-margin table-custom table-custom_big setting_table">
                                 <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Date</th>
-                                        <th>Invoice No</th>
-                                        <th>patient ID</th>
-                                        <th>patient name</th>
-                                        <th>patient plan</th>
-                                        <th>purpose</th>
-                                        <th>amount</th>
-                                        <th>due</th>
-                                        <th>status</th>
-                                    </tr>
+                                <tr>
+                                    <th></th>
+                                    <th>Date</th>
+                                    <th>Invoice No</th>
+                                    <th>patient ID</th>
+                                    <th>patient name</th>
+                                    <th>patient plan</th>
+                                    <th>purpose</th>
+                                    <th>amount</th>
+                                    <th>due</th>
+                                    <th>status</th>
+                                </tr>
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="Invoice in InvoiceListings |filter:search_all |filter:search_plan |filter:search_status">
-                                        <td align="center">
-                                            <div class="radio radio-styled">
-                                                <label>
-                                                    <input type="radio" id="radio-{{Invoice.id}}" ng-click="SelectedPatientWithInvoice(Invoice.patient_id,Invoice.id)" name="optionsRadios"><span></span>
-                                                </label>
-                                            </div>
-                                        </td>
+                                    <td align="center">
+                                        <div class="radio radio-styled">
+                                            <label>
+                                                <input type="radio" id="radio-{{Invoice.id}}" ng-click="SelectedPatientWithInvoice(Invoice.patient_id,Invoice.id)" name="optionsRadios"><span></span>
+                                            </label>
+                                        </div>
+                                    </td>
                                     <td>{{Invoice.created_at}}</td>
                                     <td>{{Invoice.id}}</td>
                                     <td>{{Invoice.patient_id}}</td>
                                     <td>{{Invoice.patient_name}}</td>
                                     <td>{{Invoice.plan_name}}</td>
                                     <td>{{Invoice.description}}</td>
-                                        <td>{{Invoice.amount}}</td>
-                                        <td>{{Invoice.due}}</td>
-                                        <td class="{{Invoice.invoice_status}}">{{Invoice.invoice_status | capitalize}}</td>
+                                    <td>{{Invoice.amount}}</td>
+                                    <td>{{Invoice.due}}</td>
+                                    <td class="{{Invoice.invoice_status}}">{{Invoice.invoice_status | capitalize}}</td>
 
 
-                                    </tr>
+                                </tr>
 
                                 </tbody>
                             </table>
@@ -396,7 +392,7 @@
                             </div>
                             <hr>
 
-                            <div class="row margin-top-30">                       
+                            <div class="row margin-top-30">
 
                                 <div class="col-lg-3">
                                     <label>Notes</label>
@@ -406,11 +402,11 @@
                                 </div>
                             </div>
 
-                            <div class="row">                       
+                            <div class="row">
 
                                 <div class="col-lg-12">
                                     <span class="pull-left term_cond">Terms & Condition</span>
-                                    <button type="button" class="btn button-style-1 button-style-1_a pull-right hide_edit_inovice">Cancel</button>
+                                    <button type="button" class="btn button-style-1 button-style-1_a pull-right">Cancel</button>
                                     <button type="button" class="btn btn-default button-style-1 pull-right margin-right-10">finish</button>
                                 </div>
 
@@ -418,9 +414,10 @@
 
                         </form>
                     </div>
+                </div>
 
 
-                    <div class="print_invoice">
+                <div class="print_invoice">
                     <div class="row margin-top-50">
                         <div class="col-lg-6 invoice_logo">
                             <h2>Logo</h2>
@@ -498,14 +495,14 @@
                         </div>
                     </div>
 
-                    <div class="table-header row background-none">
-                        <div class="pull-right">
-                            <button class="add button-custom pull-right" data-toggle="modal" data-target="#">Add Procedure from master list</button>
-                            <button class="add button-custom pull-right" data-toggle="modal" data-target="#">Add Product from master list</button>
+                    <!--  <div class="table-header row background-none">
+                          <div class="pull-right">
+                              <button class="add button-custom pull-right" data-toggle="modal" data-target="#">Add Procedure from master list</button>
+                              <button class="add button-custom pull-right" data-toggle="modal" data-target="#">Add Product from master list</button>
 
-                        </div>
+                          </div>
 
-                    </div>
+                      </div>-->
                     <form class="custom-form">
                         <div class="row edit_inv_row_hdng">
                             <div class="col-lg-4">
@@ -664,20 +661,16 @@
 
                         <div class="row">
 
-                            <div class="col-lg-12">
-                                <span class="pull-left term_cond">Terms & Condition</span>
-                                <button type="button" class="btn button-style-1 button-style-1_a pull-right hide_print_inovice">Cancel</button>
-                                <button type="button" class="btn btn-default button-style-1 pull-right margin-right-10">finish</button>
-                            </div>
+                            <!-- <div class="col-lg-12">
+                                 <span class="pull-left term_cond">Terms & Condition</span>
+                                 <button type="button" class="btn button-style-1 button-style-1_a pull-right">Cancel</button>
+                                 <button type="button" class="btn btn-default button-style-1 pull-right margin-right-10">finish</button>
+                             </div>-->
 
                         </div>
 
                     </form>
                 </div>
-
-                </div>
-
-
 
 
 
@@ -687,7 +680,7 @@
 
                 <div class="tab-pane" id="receipts">
 
-                    <div class="table-header row background-none"> 
+                    <div class="table-header row background-none">
                         <div class="col-lg-7"></div>
                         <div class="col-lg-3">
                             <div class="col-lg-2">
@@ -740,109 +733,109 @@
                     <form class="custom-form">
                         <table class="table table-striped no-margin table-custom table-custom_big receipt_table">
                             <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Date</th>
-                                    <th>Invoice No</th>
-                                    <th>receipt no</th>
-                                    <th>patient name</th>
-                                    <th>payment method</th>
-                                    <th>purpose</th>
-                                    <th>amount</th>
-                                    <th>refund amount</th>
-                                </tr>
+                            <tr>
+                                <th></th>
+                                <th>Date</th>
+                                <th>Invoice No</th>
+                                <th>receipt no</th>
+                                <th>patient name</th>
+                                <th>payment method</th>
+                                <th>purpose</th>
+                                <th>amount</th>
+                                <th>refund amount</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td align="center">
-                                        <div class="radio radio-styled">
-                                            <label>
-                                                <input type="radio" name="optionsRadios" value="option1"><span></span>
-                                            </label>
+                            <tr>
+                                <td align="center">
+                                    <div class="radio radio-styled">
+                                        <label>
+                                            <input type="radio" name="optionsRadios" value="option1"><span></span>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>14/04/2016  12:00:32</td>
+                                <td>21245421</td>
+                                <td>90189191</td>
+                                <td>Joe Bloggs</td>
+                                <td>Cash</td>
+                                <td>GOPD Consultation</td>
+                                <td>N500</td>
+                                <td>
+                                    <span>N2000</span>
+                                    <div class="receipt_actions"><a href="javascript:;" class="setting-button"></a>
+                                        <div class="tool-tip_popup">
+                                            <a href="javascript:;">View Details</a>
+                                            <a href="javascript:;">Edit</a>
+                                            <a href="javascript:;">Print</a>
+                                            <a href="javascript:;">Void</a>
+                                            <a href="javascript:;">Refund</a>
                                         </div>
-                                    </td>
-                                    <td>14/04/2016  12:00:32</td>
-                                    <td>21245421</td>
-                                    <td>90189191</td>
-                                    <td>Joe Bloggs</td>
-                                    <td>Cash</td>
-                                    <td>GOPD Consultation</td>
-                                    <td>N500</td>
-                                    <td>
-                                        <span>N2000</span>
-                                        <div class="receipt_actions"><a href="javascript:;" class="setting-button"></a>
-                                            <div class="tool-tip_popup">
-                                                <a href="javascript:;">View Details</a>
-                                                <a href="javascript:;">Edit</a>
-                                                <a href="javascript:;">Print</a>    
-                                                <a href="javascript:;">Void</a>
-                                                <a href="javascript:;">Refund</a>
-                                            </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <div class="radio radio-styled">
+                                        <label>
+                                            <input type="radio" name="optionsRadios" value="option1"><span></span>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>14/04/2016    12:00:32</td>
+                                <td>875415745</td>
+                                <td>90189191</td>
+                                <td>Joe Bloggs</td>
+                                <td>Cash</td>
+                                <td>GOPD Consultation</td>
+                                <td>N3500</td>
+                                <td>
+                                    <span>N2000</span>
+                                    <div class="receipt_actions"><a href="javascript:;" class="setting-button"></a>
+                                        <div class="tool-tip_popup">
+                                            <a href="javascript:;">View Details</a>
+                                            <a href="javascript:;">Edit</a>
+                                            <a href="javascript:;">Print</a>
+                                            <a href="javascript:;">Void</a>
+                                            <a href="javascript:;">Refund</a>
                                         </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="center">
-                                        <div class="radio radio-styled">
-                                            <label>
-                                                <input type="radio" name="optionsRadios" value="option1"><span></span>
-                                            </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <div class="radio radio-styled">
+                                        <label>
+                                            <input type="radio" name="optionsRadios" value="option1"><span></span>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>14/04/2016    12:00:32</td>
+                                <td>2454521</td>
+                                <td>90189191</td>
+                                <td>Joe Bloggs</td>
+                                <td>Cash</td>
+                                <td>Lab Test</td>
+                                <td>N2500</td>
+                                <td>
+                                    <span>N2000</span>
+                                    <div class="receipt_actions"><a href="javascript:;" class="setting-button"></a>
+                                        <div class="tool-tip_popup">
+                                            <a href="javascript:;">View Details</a>
+                                            <a href="javascript:;">Edit</a>
+                                            <a href="javascript:;">Print</a>
+                                            <a href="javascript:;">Void</a>
+                                            <a href="javascript:;">Refund</a>
                                         </div>
-                                    </td>
-                                    <td>14/04/2016    12:00:32</td>
-                                    <td>875415745</td>
-                                    <td>90189191</td>
-                                    <td>Joe Bloggs</td>
-                                    <td>Cash</td>
-                                    <td>GOPD Consultation</td>
-                                    <td>N3500</td>
-                                    <td>
-                                        <span>N2000</span>
-                                        <div class="receipt_actions"><a href="javascript:;" class="setting-button"></a>
-                                            <div class="tool-tip_popup">
-                                                <a href="javascript:;">View Details</a>
-                                                <a href="javascript:;">Edit</a>
-                                                <a href="javascript:;">Print</a>    
-                                                <a href="javascript:;">Void</a>
-                                                <a href="javascript:;">Refund</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="center">
-                                        <div class="radio radio-styled">
-                                            <label>
-                                                <input type="radio" name="optionsRadios" value="option1"><span></span>
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>14/04/2016    12:00:32</td>
-                                    <td>2454521</td>
-                                    <td>90189191</td>
-                                    <td>Joe Bloggs</td>
-                                    <td>Cash</td>
-                                    <td>Lab Test</td>
-                                    <td>N2500</td>
-                                    <td>
-                                        <span>N2000</span>
-                                        <div class="receipt_actions"><a href="javascript:;" class="setting-button"></a>
-                                            <div class="tool-tip_popup">
-                                                <a href="javascript:;">View Details</a>
-                                                <a href="javascript:;">Edit</a>
-                                                <a href="javascript:;">Print</a>    
-                                                <a href="javascript:;">Void</a>
-                                                <a href="javascript:;">Refund</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                    </div>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </form>
                 </div>
 
-                <div class="tab-pane" id="reports">                    
+                <div class="tab-pane" id="reports">
 
 
                     <div class="table-header row background-none reports_tab">
@@ -855,7 +848,7 @@
                     </div>
 
 
-                    <form class="custom-form">                            
+                    <form class="custom-form">
 
                         <div class="row patient_info_reports">
                             <div class="col-lg-2">
@@ -895,44 +888,44 @@
 
                         <table class="table no-margin table-custom_big reports_table">
                             <thead>
-                                <tr>                                   
-                                    <th>Item No</th>
-                                    <th>Description</th>
-                                    <th>Date</th>
-                                    <th>amount</th>
-                                </tr>
+                            <tr>
+                                <th>Item No</th>
+                                <th>Description</th>
+                                <th>Date</th>
+                                <th>amount</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>21245421</td>
-                                    <td>Lorem ipsum Lorem</td>
-                                    <td>June 15 2016</td>                                   
-                                    <td>N500</td>
-                                </tr>
-                                <tr>
-                                    <td>21245421</td>
-                                    <td>Lorem ipsum Lorem</td>
-                                    <td>June 15 2016</td>                                   
-                                    <td>N500</td>
-                                </tr>
-                                <tr>
-                                    <td>21245421</td>
-                                    <td>Lorem ipsum Lorem</td>
-                                    <td>June 15 2016</td>                                   
-                                    <td>N500</td>
-                                </tr>
+                            <tr>
+                                <td>21245421</td>
+                                <td>Lorem ipsum Lorem</td>
+                                <td>June 15 2016</td>
+                                <td>N500</td>
+                            </tr>
+                            <tr>
+                                <td>21245421</td>
+                                <td>Lorem ipsum Lorem</td>
+                                <td>June 15 2016</td>
+                                <td>N500</td>
+                            </tr>
+                            <tr>
+                                <td>21245421</td>
+                                <td>Lorem ipsum Lorem</td>
+                                <td>June 15 2016</td>
+                                <td>N500</td>
+                            </tr>
                             </tbody>
                         </table>
-                        
+
                         <div class="row total_payment">
-                             <div class="col-lg-9">
+                            <div class="col-lg-9">
                                 <span>Total Payment</span>
                             </div>
-                             <div class="col-lg-3">
+                            <div class="col-lg-3">
                                 <span>00.00</span>
                             </div>
                         </div>
-                        
+
                     </form>
                 </div>
 
@@ -1265,7 +1258,7 @@
 <script>
     $(document).ready(function () {
 
-       // $(".billing").hide();
+        // $(".billing").hide();
     });
 
 
