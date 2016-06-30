@@ -1,8 +1,9 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('labTestReport', ['$scope', '$rootScope', '$routeParams', '$window', 'getTemplateCategories', 'getTemplates', 'getLabTestInfo', 'getTemplateData','mySchema', function($scope, $rootScope, $routeParams, $window, getTemplateCategories, getTemplates, getLabTestInfo, getTemplateData, mySchema){
+AppEHR.controller('labTestReport', ['$scope', '$rootScope', 'mySchema', '$routeParams', '$window', 'getTemplateCategories', 'getTemplates', 'getLabTestInfo', 'getTemplateData','saveTemplateValues', '$timeout', function($scope, $rootScope, mySchema, $routeParams, $window, getTemplateCategories, getTemplates, getLabTestInfo, getTemplateData, saveTemplateValues, $timeout){
 	$rootScope.pageTitle = "EHR - Lab Order Reporting";
-    $scope.mySchema = mySchema;
+    $scope.myFormData = {}; // Something to store the input at.
+    $scope.mySchema = {}; // Expose the schema on the scope.
     getLabTestInfo.get({ // Getting All Information about Test
         token : $window.sessionStorage.token,
         lab_test_id : $routeParams.testID
@@ -50,11 +51,45 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', '$routeParams', '$wi
         $scope.templateSelected = true;
     };
     function getTemplateDataSuccess(res){ // on success
-        //console.log(res);
-        AppEHR.value('mySchema',res.data.template);
+        $scope.selectedTemplate = res.data;
+        $scope.mySchema = JSON.parse(res.data.template);
     }
     function getTemplateDataFailure(error){ // on failure
         console.log(error);
     }
 
+    $scope.SaveTemplateValues = function (){ // Saving Template Values
+        $scope.hideLoader = 'show';
+        saveTemplateValues.save({ // sending data over saveTemplateValues factories
+            token : $window.sessionStorage.token,
+            lab_order_id : $scope.labTest.lab_order_id,
+            lab_test_id : $scope.selectedTemplate.id,
+            lab_test_values: $scope.myFormData
+        },saveTemplateValuesSuccess,saveTemplateValuesFailure)
+    };
+    function saveTemplateValuesSuccess(res){ // on success
+        if (res.status == true) {
+            $scope.hideLoader = 'hide';
+            $scope.message = true;
+            $scope.cancleOrderBtn = false;
+            $scope.errorMessage = res.message;
+            $scope.messageType = 'alert-success';
+            $scope.errorSymbol = 'fa fa-check';
+            $scope.myFormData = {};
+            $timeout(function(){
+                $scope.message = false;
+                $scope.errorMessage = "";
+            },1500);
+        } else {
+            $scope.hideLoader = "hide";
+            $scope.cancleOrderBtn = false;
+            $scope.message = true;
+            $scope.messageType = "alert-danger";
+            $scope.errorMessage = res.message;
+            $scope.errorSymbol = "fa fa-times";
+        }
+    }
+    function saveTemplateValuesFailure(error){ // on failure
+        console.log(error);
+    }
 }]);
