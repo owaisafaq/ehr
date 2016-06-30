@@ -1,26 +1,27 @@
 <div id="content">
     <section>
         <div class="card custom-card">
-            <div class="card-head card-head-custom card-color-3 billing">
+            <div class="card-head card-head-custom card-color-3 billing" >
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
-                    <span class="txt-style-2 col-lg-12 capitalize">Elbert Bloogs Woo</span>
+                    <span class="txt-style-2 col-lg-12 capitalize">{{selectedPatient.first_name}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Number</label>
-                    <span class="txt-style-2 col-lg-12">PA-9012154</span>
+                    <span class="txt-style-2 col-lg-12">{{selectedPatient.id}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Age</label>
-                    <span class="txt-style-2 col-lg-12">39 Years</span>
+                    <span class="txt-style-2 col-lg-12">{{selectedPatient.age}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Sex</label>
-                    <span class="txt-style-2 col-lg-12 capitalize">Male</span>
+                    <span class="txt-style-2 col-lg-12 capitalize">{{selectedPatient.sex}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">marital status</label>
-                    <span class="txt-style-2 col-lg-12 capitalize">Single</span>
+                    <span class="txt-style-2 col-lg-12 capitalize">{{selectedPatient.marital_status}}</span>
+
                 </div>
                 <div class="col-lg-2">
                     <a href="javascript:;" class="button-style-2">
@@ -78,14 +79,14 @@
 
                     <div class="table-header row background-none">
                         <div class="pull-right">
-                            <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Add Credit Note</button>
+                          <!--  <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Add Credit Note</button>
                             <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Billing Not Required</button>
-                            <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Process Payment</button>
+
                             <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Invoice Without Consultation</button>
                             <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">New Invoice</button>
-
+-->
                         </div>
-                        <span class="txt-style-3 pull-left text-uppercase">category</span>
+                        <span class="txt-style-3 pull-left text-uppercase">Plan</span>
                         <div class="col-lg-2">
                             <select class="form-control">
                                 <option>Encounter for billing</option>
@@ -152,13 +153,14 @@
                             <div class="col-lg-7"></div>
                             <div class="col-lg-3">
                                 <div class="col-lg-2">
-                                    <span class="txt-style-3 pull-left text-uppercase billing_period">period</span>
+                                    <span class="txt-style-3 pull-left text-uppercase billing_period">Status</span>
                                 </div>
                                 <div class="col-lg-10">
-                                    <select class="form-control">
-                                        <option>All</option>
-                                        <option>Cheque</option>
-                                        <option>type 3</option>
+                                    <select class="form-control" ng-model="search_status" >
+                                        <option value="">All</option>
+                                        <option>Draft</option>
+                                        <option>Paid</option>
+                                        <option>Pending</option>
                                     </select>
                                 </div>
                             </div>
@@ -167,7 +169,7 @@
                                     <button type="submit">
                                         <i class="fa fa-search"></i>
                                     </button>
-                                    <input class="search_field" type="text" placeholder="Patient Name or Id">
+                                    <input class="search_field" type="text" placeholder="Patient Name or Id" ng-model="search_all">
                                 </div>
                             </div>
                         </div>
@@ -175,16 +177,17 @@
                         <div class="table-header row background-none">
                             <div class="pull-right">
                                 <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Delete Invoice</button>
-                                <button class="add button-custom pull-right btn_edit_invoice">Edit Invoice</button>
-                                <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Print Invoice</button>
-                                <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Send Invoice</button>
+                               <!-- <button class="add button-custom pull-right btn_edit_invoice">Edit Invoice</button>-->
+                                <button class="add button-custom pull-right" data-toggle="modal" ng-click="prcessingPaymentClick(invoice_id)">Process Payment</button>
+                                <button class="add button-custom pull-right print_invoice" >Print Invoice</button>
+                                <button class="add button-custom pull-right" data-toggle="modal" data-target="#send_invoice">Send Invoice</button>
                             </div>
-                            <span class="txt-style-3 pull-left text-uppercase">category</span>
+                            <span class="txt-style-3 pull-left text-uppercase">Plan</span>
                             <div class="col-lg-2">
-                                <select class="form-control">
-                                    <option>Encounter for billing</option>
-                                    <option>Cheque</option>
-                                    <option>type 3</option>
+                                <select class="form-control" ng-model="search_plan">
+                                    <option selected >Self</option>
+                                    <option>NHIS</option>
+                                    <option>Retainers</option>
                                 </select>
                             </div>
                         </div>
@@ -207,60 +210,27 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                <tr ng-repeat="Invoice in InvoiceListings |filter:search_all |filter:search_plan |filter:search_status">
                                         <td align="center">
                                             <div class="radio radio-styled">
                                                 <label>
-                                                    <input type="radio" name="optionsRadios" value="option1"><span></span>
+                                                    <input type="radio" id="radio-{{Invoice.id}}" ng-click="SelectedPatientWithInvoice(Invoice.patient_id,Invoice.id)" name="optionsRadios"><span></span>
                                                 </label>
                                             </div>
                                         </td>
-                                        <td>14/04/2016    12:00:32</td>
-                                        <td>21245421</td>
-                                        <td>90189191</td>
-                                        <td>Joe Bloggs</td>
-                                        <td>General</td>
-                                        <td>GODP Consultation</td>
-                                        <td>N500</td>
-                                        <td>--</td>
-                                        <td class="draft">DRAFT</td>
+                                    <td>{{Invoice.created_at}}</td>
+                                    <td>{{Invoice.id}}</td>
+                                    <td>{{Invoice.patient_id}}</td>
+                                    <td>{{Invoice.patient_name}}</td>
+                                    <td>{{Invoice.plan_name}}</td>
+                                    <td>{{Invoice.description}}</td>
+                                        <td>{{Invoice.amount}}</td>
+                                        <td>{{Invoice.due}}</td>
+                                        <td class="{{Invoice.invoice_status}}">{{Invoice.invoice_status | capitalize}}</td>
+
+
                                     </tr>
-                                    <tr>
-                                        <td align="center">
-                                            <div class="radio radio-styled">
-                                                <label>
-                                                    <input type="radio" name="optionsRadios" value="option1"><span></span>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>14/04/2016    12:00:32</td>
-                                        <td>21245421</td>
-                                        <td>90189191</td>
-                                        <td>Joe Bloggs</td>
-                                        <td>NHIS</td>
-                                        <td>Lab Test</td>
-                                        <td>N3500</td>
-                                        <td>--</td>
-                                        <td class="paid">PAID</td>
-                                    </tr>
-                                    <tr>
-                                        <td align="center">
-                                            <div class="radio radio-styled">
-                                                <label>
-                                                    <input type="radio" name="optionsRadios" value="option1"><span></span>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>14/04/2016    12:00:32</td>
-                                        <td>21245421</td>
-                                        <td>90189191</td>
-                                        <td>Joe Bloggs</td>
-                                        <td>General</td>
-                                        <td>Lab Test</td>
-                                        <td>N2500</td>
-                                        <td>--</td>
-                                        <td class="pending">PENDING</td>
-                                    </tr>
+
                                 </tbody>
                             </table>
                         </form>
@@ -704,6 +674,181 @@
     </section>
 </div>
 
+
+
+<div class="modal fade big-modal" id="process_payment" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Process Payment</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form" ng-submit="ProcessingPayment(AmountPaid,invoice_id);">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label>Invoice ID</label>
+                        </div>
+                        <div class="col-lg-3">
+
+                            <input type="text" placeholder="" ng-model="AmountPaid.inv_id"  value="{{invoice_id}}"  readonly/>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label>Amount Paid</label>
+                        </div>
+                        <div class="col-lg-3">
+
+                            <input type="text" placeholder=""   ng-model="AmountPaid.amount_paid"  required/>
+                        </div>
+
+
+
+
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-default button-style-1">Mark as Paid</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div><!-- /.modal-content -->
+
+
+    </div><!-- /.modal-dialog -->
+
+</div><!-- /.modal -->
+
+
+<div class="modal fade big-modal" id="paid_modal" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Paid </h2>
+            </div>
+            <div class="modal-body">
+
+
+                <form class="custom-form" ng-submit="ProcessingPayment(AmountPaid,invoice_id);">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label>Invoice ID</label>
+                        </div>
+                        <div class="col-lg-3">
+
+                            <input type="text" placeholder="" ng-model="AmountPaid.inv_id"  value="{{invoice_id}}"  readonly/>
+                        </div>
+
+
+                    </div>
+
+                    <div class="row">
+                        <h2>Your Invoice Has Been Paid </h2>
+
+
+                    </div>
+
+
+
+
+
+
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">OK</button>
+
+                    </div>
+                </form>
+
+
+            </div>
+
+        </div><!-- /.modal-content -->
+
+
+    </div><!-- /.modal-dialog -->
+
+</div><!-- /.modal -->
+
+
+<div class="modal fade big-modal" id="send_invoice" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Process Payment</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form" ng-submit="SendInvoice(sendData,selectedPatient.id,selectedPatient.first_name);">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label>Patient ID</label>
+                        </div>
+                        <div class="col-lg-3">
+
+                            <input type="text" placeholder="" ng-model="sendData.inv_id"  value="{{selectedPatient.id}}"  readonly/>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label>Patient Name</label>
+                        </div>
+                        <div class="col-lg-3">
+
+                            <input type="text" placeholder=""   ng-model="sendData.amount_paid" value="{{selectedPatient.first_name}}"  readonly/>
+                        </div>
+
+
+
+
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label>Email </label>
+                        </div>
+                        <div class="col-lg-3">
+
+                            <input type="email" placeholder=""   ng-model="sendData.email"   />
+                        </div>
+
+
+
+
+                    </div>
+
+
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-default button-style-1">Send Email</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div><!-- /.modal-content -->
+
+
+    </div><!-- /.modal-dialog -->
+
+</div><!-- /.modal -->
+
+
+
+
+
+
+
+
 <div class="modal fade" id="addpatient" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -846,3 +991,28 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </div>
+
+
+<script>
+    $(document).ready(function () {
+
+        $(".billing").hide();
+    });
+
+
+
+
+    $(".print_invoice").click(function () {
+
+        // alert("here");
+
+        //$('div:not(.edit_invoice)').hide();
+        $('.invoices').hide();
+
+
+
+
+    });
+
+
+</script>

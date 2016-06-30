@@ -1190,3 +1190,52 @@ AppEHR.factory("GetAllBills", function ($resource) {
     };
     return Bills;
 });
+
+
+AppEHR.factory("GetAllInvoices", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_all_invoices', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var Invoices = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return Invoices;
+});
+
+AppEHR.factory("ProcessPayment", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'update_invoice', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var update_inv = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return update_inv;
+});
+
+AppEHR.factory("InvoiecStatus", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_invoice_status', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var get_status = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return get_status;
+});
