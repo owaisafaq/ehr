@@ -439,20 +439,17 @@ class OrderController extends Controller
 
         $lab_test = json_decode($lab_test_values);
 
-        foreach ($lab_test as $report) {
-
 
             DB::table('patient_lab_test_values')->insert(
                 ['lab_order_id' => $lab_order_id,
                     'lab_test' => $lab_test_id,
-                    'field_id' => $report->field_id,
-                    'value' => $report->value,
+                    'template_values' => $lab_test_values,
                     'created_at' => $currentdatetime
 
                 ]
             );
 
-        }
+
 
 
         return response()->json(['status' => true, 'message' => 'Lab Report Added Sucessfully']);

@@ -1011,14 +1011,14 @@ class ApiController extends Controller
 
         $patient_plan_id = $request->input('patient_plan_id');
 
-
         if($patient_plan_id > 0){
 
-            DB::table('plan_details ')->where('id', '=', $patient_plan_id)->delete();
+            DB::table('plan_details')->where('id', '=', $patient_plan_id)->delete();
 
         }
 
-        if ($plan_id == 1) {
+
+        if ($plan_id==1) {
 
 
             DB::table('patients')
@@ -1365,11 +1365,13 @@ class ApiController extends Controller
         $patient_plan = DB::table('hospital_plan')
             ->leftJoin('plan_details', 'plan_details.plan_id', '=', 'hospital_plan.id')
             ->leftJoin('patients', 'patients.hospital_plan', '=', 'hospital_plan.id')
-            ->select(DB::raw('hospital_plan.name,plan_details.is_principal,plan_details.is_dependant,plan_details.id as plan_id'))
+            ->select(DB::raw('hospital_plan.name,plan_details.is_principal,plan_details.is_dependant,plan_details.id as plan_id,plan_details.hmo,plan_details.policies,plan_details.insurance_id,plan_details.description,plan_details.notes'))
             ->where('patients.status', 1)
             ->where('patients.id', $patient_id)
             ->groupby('patients.id')
             ->first();
+
+
 
         if ($patient_plan != 'self' || $patient_plan!='null') {
 
@@ -2733,5 +2735,57 @@ class ApiController extends Controller
 
     }
 
+    public function add_patient_prescription(Request $request){
+
+        $patient_id = $request->input('patient_id');
+        $medication = $request->input('medication');
+        $sig = $request->input('sig');
+        $dispense= $request->input('dispense');
+        $reffills= $request->input('reffills');
+        $pharmacy = $request->input('pharmacy');
+        $note_of_pharmacy = $request->input('note_of_pharmacy');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+        DB::table('patient_prescription')
+            ->insert(
+                ['patient_id' => $patient_id,
+                    'medication' => $medication,
+                    'sig' => $sig,
+                    'dispense' => $dispense,
+                    'reffills' => $reffills,
+                    'pharmacy' => $pharmacy,
+                    'note_of_pharmacy' => $note_of_pharmacy,
+                    'created_at' => $currentdatetime
+
+                ]
+            );
+
+        return response()->json(['status' => true, 'message' => 'Prescrpition Added Successfully']);
+
+
+
+    }
+
+
+
+
+    public function get_all_prescription(Request $request){
+
+        $patient_id = $request->input('patient_id');
+
+
+        $prescriptions = DB::table('patient_prescription')
+            ->select(DB::raw('*'))
+            ->where('status',1)
+            ->where('patient_id', $patient_id)
+            ->get();
+
+
+        return response()->json(['status' => true, 'data'=>$prescriptions]);
+
+
+
+    }
 }
 
