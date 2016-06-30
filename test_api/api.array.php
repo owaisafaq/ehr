@@ -1791,3 +1791,24 @@ $api->params->amount_paid = "100";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+
+//Get Invoice Data
+$api = new api();
+$api->name = "Get Invoice Data";
+$api->url = HOST . 'get_invoice_data';
+$api->method = "GET";
+$api->params->invoice_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Get Invoice Status
+$api = new api();
+$api->name = "Get Invoice Status";
+$api->url = HOST . 'get_invoice_status';
+$api->method = "GET";
+$api->params->invoice_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;

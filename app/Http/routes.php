@@ -232,5 +232,7 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->get('get_all_bills','App\Http\Controllers\BillingController@get_all_bills');
     $app->get('get_all_invoices','App\Http\Controllers\BillingController@get_all_invoices');
     $app->post('update_invoice','App\Http\Controllers\BillingController@update_invoice');
+    $app->get('get_invoice_data','App\Http\Controllers\BillingController@get_invoice_data');
+    $app->get('get_invoice_status','App\Http\Controllers\BillingController@get_invoice_status');
 
 });

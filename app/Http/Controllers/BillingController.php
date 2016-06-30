@@ -102,4 +102,49 @@ class BillingController extends Controller
 
 
     }
+
+    public function get_invoice_data(Request $request){
+
+        $invoice_id = $request->input('invoice_id');
+
+        $data = DB::table('invoice')
+            ->leftJoin('patients', 'invoice.patient_id', '=', 'patients.id')
+            ->leftJoin('patient_address', 'patient_address.patient_id', '=', 'patients.id')
+            ->select(DB::raw('patients.id as patient_id,patients.first_name,patients.middle_name,patients.last_name,patients.age,patient_address.house_number,patient_address.street,invoice.id as invoice_id,invoice.created_at as invoice_date,invoice.due,invoice.amount,invoice.invoice_status,patients.sex'))
+            ->where('invoice.status', 1)
+            ->where('invoice.id', $invoice_id)
+            ->groupby('patients.id')
+            ->first();
+
+
+        if($data->sex==1){
+
+            $data->gender='Male';
+        }else{
+            $data->gender='FeMale';
+
+        }
+
+
+        $data->provider = 'Doctor James';
+
+        return response()->json(['status' => true, 'data' => $data]);
+
+    }
+
+
+    public function get_invoice_status(Request $request){
+
+        $invoice_id = $request->input('invoice_id');
+
+        $data = DB::table('invoice')
+            ->select(DB::raw('invoice_status'))
+            ->where('invoice.status', 1)
+            ->where('invoice.id', $invoice_id)
+            ->first();
+
+
+        return response()->json(['status' => true, 'data' => $data]);
+
+    }
 }
