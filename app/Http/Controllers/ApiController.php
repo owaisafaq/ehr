@@ -1008,6 +1008,16 @@ class ApiController extends Controller
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
+
+        $patient_plan_id = $request->input('patient_plan_id');
+
+
+        if($patient_plan_id > 0){
+
+            DB::table('plan_details ')->where('id', '=', $patient_plan_id)->delete();
+
+        }
+
         if ($plan_id == 1) {
 
 

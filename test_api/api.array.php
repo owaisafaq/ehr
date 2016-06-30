@@ -411,6 +411,7 @@ $api->url = HOST . 'add_patient_plan';
 $api->method = "POST";
 $api->description = "Add Patient Plan";
 $api->params->patient_id = "1";
+$api->params->patient_plan_id = "0";
 $api->params->plan_id = "1";
 $api->params->is_principal = "1";
 $api->params->is_dependant = "0";
