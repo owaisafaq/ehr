@@ -158,6 +158,13 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->get('get_lab_test_templates','App\Http\Controllers\OrderController@get_lab_test_templates');
 
+    $app->post('add_lab_test_templates','App\Http\Controllers\OrderController@add_lab_test_templates');
+
+    $app->post('update_lab_test_templates','App\Http\Controllers\OrderController@update_lab_test_templates');
+
+    $app->post('delete_lab_test_templates','App\Http\Controllers\OrderController@delete_lab_test_templates');
+
+
     $app->get('get_pharmacies','App\Http\Controllers\OtherController@get_pharmacies');
 
     $app->get('get_single_pharmacy','App\Http\Controllers\OtherController@get_single_pharmacy');
@@ -174,7 +181,19 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->get('get_intake','App\Http\Controllers\ApiController@get_intake');
 
+    $app->get('get_lab_order_history','App\Http\Controllers\OrderController@get_lab_order_history');
+
     $app->get('get_lab_template_categories','App\Http\Controllers\OrderController@get_lab_template_categories');
+    $app->post('get_lab_template_category','App\Http\Controllers\OrderController@get_lab_template_category');
+    $app->post('add_lab_template_category','App\Http\Controllers\OrderController@add_lab_template_category');
+    $app->post('update_lab_template_category','App\Http\Controllers\OrderController@update_lab_template_category');
+    $app->post('delete_lab_template_category','App\Http\Controllers\OrderController@delete_lab_template_category');
+
+    $app->get('get_lab_template_types','App\Http\Controllers\OrderController@get_lab_template_types');
+    $app->post('get_lab_template_type','App\Http\Controllers\OrderController@get_lab_template_type');
+    $app->post('update_lab_template_types','App\Http\Controllers\OrderController@update_lab_template_types');
+    $app->post('add_lab_template_types','App\Http\Controllers\OrderController@add_lab_template_types');
+    $app->post('delete_lab_template_types','App\Http\Controllers\OrderController@delete_lab_template_types');
 
 });
 $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($app) {
@@ -202,5 +221,8 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->post('get_reorder_level','App\Http\Controllers\InventoryAPIController@get_reorder_level');
     $app->post('update_product','App\Http\Controllers\InventoryAPIController@update_product');
     $app->post('get_product','App\Http\Controllers\InventoryAPIController@get_product');
+
+    $app->get('get_all_bills','App\Http\Controllers\BillingController@get_all_bills');
+    $app->get('get_all_invoices','App\Http\Controllers\BillingController@get_all_invoices');
 
 });

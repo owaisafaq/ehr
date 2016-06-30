@@ -383,7 +383,7 @@
                         </form>
                     </div>
                                         <div class="edit_prod">
-                                            <form class="custom-form" id="editInv" ng-submit="EditInventory(editinventory);"  >
+                                            <form class="custom-form" id="editInv" ng-submit="EditProduct(editinventory);"  >
                                                 <div class="row">
                                                     <h2 class="h2-style_1">Edit Product Inventory </h2>
                                                     <div class="col-lg-12">
@@ -410,8 +410,8 @@
 
                                                             <select class="form-control" ng-model="editinventory.cat_id"  >
 
-                                                                <option>Select Category</option>
-                                                                <option ng-repeat="category in CategoryLists" value="{{category.id}}">
+
+                                                                <option  ng-repeat="category in CategoryLists" value="{{category.id}}" >
                                                                     {{category.cat_name}}
                                                                 </option>
 
@@ -424,13 +424,13 @@
                                                             <label>product name</label>
                                                         </div>
                                                         <div class="col-lg-3">
-                                                            <input type="text" ng-model="editinventory.product_name"  placeholder="" />
+                                                            <input type="text" ng-model="editinventory.name"   placeholder="" />
                                                         </div>
                                                         <div class="col-lg-3">
                                                             <label>product id</label>
                                                         </div>
                                                         <div class="col-lg-3">
-                                                            <input type="text" placeholder=""  ng-model="editinventory.product_id" />
+                                                            <input type="text" placeholder=""  ng-model="editinventory.id" />
                                                         </div>
                                                         <div class="show_on_others_edit row">
                                                             <div class="col-lg-3">
@@ -548,8 +548,7 @@
                                     <td>
                                         <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
                                             <div class="tool-tip_popup">
-                                                <a href="javascript:;" ng-click="SupplierSelected(SupplierList.id)">View Details</a>
-                                                <a href="javascript:;">Edit</a>
+                                                <a href="javascript:;" ng-click="SupplierSelected(SupplierList.id)">Edit</a>
                                                 <a href="javascript:;" ng-click="SupplierDeleted(SupplierList.id)">Delete</a>
                                             </div>
                                         </div>

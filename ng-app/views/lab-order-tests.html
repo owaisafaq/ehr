@@ -24,7 +24,7 @@
                     <button data-toggle="modal" data-target="#order-label" class="print button-custom">print test label</button>
                     <button data-toggle="modal" data-target="#cancelOrder2" class="update button-custom">update status</button>
                     <button class="add-result button-custom">add result</button>
-                    <button class="report button-custom">view report</button>
+                    <button class="report button-custom" ng-click="go('/lab-test-report')">view report</button>
                     <button data-toggle="modal" data-target="#signoff" class="add button-custom">sign off</button>
                 </div>
                 <div class="col-lg-12 no-padding">
@@ -42,7 +42,7 @@
                             <td align="center">
                                 <div class="radio radio-styled">
                                     <label>
-                                        <input type="radio" ng-model="action" ng-click="testSelected(labTest.test_id);">
+                                        <input type="radio" name="checked" ng-click="testSelected(labTest.test_id);">
                                         <span></span>
                                     </label>
                                 </div>
@@ -105,14 +105,14 @@
                                     </div>-->
                                     <div class="col-lg-12 form-wizard form-wizard-horizontal">
                                         <div class="form-wizard-nav">
-                                            <div class="progress" style="width: 85%;"><div class="progress-bar progress-bar-primary" style="width: 40%;"></div></div>
+                                            <div class="progress" style="width: 85%;"><div class="progress-bar progress-bar-primary" style="width: 0%;"></div></div>
                                             <ul class="nav nav-justified">
-                                                <li class="done"><a href="javascript:;"><span class="step">1</span> <span class="title">paid</span></a></li>
-                                                <li class="done"><a href="javascript:;"><span class="step">2</span> <span class="title">sample <br />collected</span></a></li>
-                                                <li class="active"><a href="javascript:;"><span class="step">3</span> <span class="title">test in <br />progress</span></a></li>
-                                                <li><a href="javascript:;"><span class="step">4</span> <span class="title">result <br />completed</span></a></li>
-                                                <li><a href="javascript:;"><span class="step">5</span> <span class="title">signed</span></a></li>
-                                                <li><a href="javascript:;"><span class="step">6</span> <span class="title">completed</span></a></li>
+                                                <li class="active"><a href="javascript:;"><span class="step">1</span> <span class="title" data-val="paid">paid</span></a></li>
+                                                <li><a href="javascript:;"><span class="step">2</span> <span class="title" data-val="sample collected">sample <br />collected</span></a></li>
+                                                <li><a href="javascript:;"><span class="step">3</span> <span class="title" data-val="in progress">test in <br />progress</span></a></li>
+                                                <li><a href="javascript:;"><span class="step">4</span> <span class="title" data-val="result completed">result <br />completed</span></a></li>
+                                                <li><a href="javascript:;"><span class="step">5</span> <span class="title" data-val="signed">signed</span></a></li>
+                                                <li><a href="javascript:;"><span class="step">6</span> <span class="title" data-val="completed">completed</span></a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -330,34 +330,31 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <label>Patient Name</label>
-                                            <label class="txt-style-4">Will Smiths Woods</label>
+                                            <label class="txt-style-4">{{ selectedOrder.patient_name }}</label>
                                         </div>
                                         <div class="col-lg-6">
                                             <label>Patient ID</label>
-                                            <label class="txt-style-4">ID002154</label>
+                                            <label class="txt-style-4">{{ selectedOrder.patient_id }}</label>
                                         </div>
 
                                         <div class="col-lg-6">
                                             <label>Gender</label>
-                                            <label class="txt-style-4">Male</label>
+                                            <label class="txt-style-4">{{ selectedOrder.gender }}</label>
                                         </div>
                                         <div class="col-lg-6">
                                             <label>Order Number</label>
-                                            <label class="txt-style-4">OR685478</label>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <label>Gender</label>
-                                            <label class="txt-style-4">Male</label>
+                                            <label class="txt-style-4">{{ selectedOrder.id }}</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label>Order Number</label>
-                                            <label class="txt-style-4">OR685478</label>
+                                            <label>Test ID</label>
+                                            <label class="txt-style-4">{{ selectedTest.id }}</label>
                                         </div>
-
                                         <div class="col-lg-6">
-                                            <label>May 12, 2016
-                                                <br />03:25 PM</label>
+                                            <label>Test</label>
+                                            <label class="txt-style-4">{{ selectedTest.name }}</label>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label>{{selectedTest.updated_at | date:'MMM dd, yyyy hh:mm a'}}</label>
                                         </div>
                                         <div class="col-lg-6">
                                             <img src="assets/img/bar_code.jpg" alt=""/>

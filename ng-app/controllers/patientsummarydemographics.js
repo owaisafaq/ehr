@@ -1,5 +1,5 @@
 var AppEHR = angular.module('AppEHR');
-AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', 'GetResourcesByFolderArchives', 'ListFolderArchives', 'EditFolderArchives', 'DeleteFolderArchives', 'RemoveArchives', 'Upload', 'SaveFiles', '$timeout','DropDownData', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy, GetResourcesByFolderArchives, ListFolderArchives, EditFolderArchives, DeleteFolderArchives, RemoveArchives, Upload, SaveFiles, $timeout, DropDownData) {
+AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', 'GetResourcesByFolderArchives', 'ListFolderArchives', 'EditFolderArchives', 'DeleteFolderArchives', 'RemoveArchives', 'Upload', 'SaveFiles', '$timeout', 'DropDownData', 'ADDSupplements', 'ADDAllergy', 'AddFolderArchives', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy, GetResourcesByFolderArchives, ListFolderArchives, EditFolderArchives, DeleteFolderArchives, RemoveArchives, Upload, SaveFiles, $timeout, DropDownData, ADDSupplements, ADDAllergy, AddFolderArchives) {
         $rootScope.pageTitle = "EHR - Patient Summary Demographics";
         $scope.vital = {};
         $scope.PI = {};
@@ -8,6 +8,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         $scope.allergie = {};
         $scope.dropDownInfo = dropDownInfo;
         $scope.edit = [];
+        $scope.addSupplement = {};
         $scope.frequencies = frequencies;
         $scope.intakeTypes = intakeTypes;
 
@@ -156,6 +157,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
             patient_id: $routeParams.patientID
         }, GetSupplementsSuccess, GetSupplementsFailure);
         function GetSupplementsSuccess(res) {
+            console.log(res);
             if (res.status == true) {
                 $scope.supplements = res.data;
             }
@@ -280,6 +282,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         $scope.getFileDetails = function (e) {
             $scope.files = [];
+
             $scope.$apply(function () {
 
                 // STORE THE FILE OBJECT IN AN ARRAY.
@@ -290,27 +293,37 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
             });
         };
         $scope.files = [];
+        $scope.saveAndClose = true;
         $scope.patient_archive = [];
         $scope.uploadFiles = function (files, errFiles) {
             $scope.files = files;
             $scope.errFiles = errFiles;
+            var i = 1;
             angular.forEach(files, function (file) {
                 file.upload = Upload.upload({
                     url: serverPath + "add_patient_archive",
                     method: 'POST',
-                    data: {patient_archive: file, patient_id: $routeParams.patientID, follow_up_parent_id: $scope.followupParentId}
+                    data: {patient_archive: file, patient_id: $window.sessionStorage.patient_id, follow_up_parent_id: $scope.followupParentId}
                 });
 
                 file.upload.then(function (response) {
                     $timeout(function () {
                         file.result = response.data;
+                        console.log(response);
+                        if (files.length == i) {
+                            console.log(i);
+                            $scope.saveAndClose = false;
+                        }
+                        i++;
                     });
                 }, function (response) {
                     if (response.status > 0)
                         $scope.errorMsg = response.status + ': ' + response.data;
+                    console.log($scope.errorMsg);
                 }, function (evt) {
                     file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
                 });
+
             });
         }
 
@@ -343,6 +356,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
             if (res.status == true) {
                 //$scope.followupParentId = $scope.removeItemId;
                 $rootScope.loader = 'hide';
+                $('.archive_buttons .edit,.archive_buttons .delete').css('display', 'none')
                 //GetArchives.get({token: $window.sessionStorage.token, patient_id: '1' /*$window.sessionStorage.patient_id*/}, archiveSuccess, archiveFailure);
                 GetResourcesByFolderArchives.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID, followup_parent_id: $scope.followupParentId}, nestedFolderSuccess, nestedFolderFailure);
 
@@ -358,6 +372,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         function deleteFolderSuccess(res) {
             if (res.status == true) {
                 $rootScope.loader = 'hide';
+                $('.archive_buttons .edit,.archive_buttons .delete').css('display', 'none')
                 GetResourcesByFolderArchives.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID, followup_parent_id: $scope.followupParentId}, nestedFolderSuccess, nestedFolderFailure);
                 ListFolderArchives.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID, followup_parent_id: $scope.followupParentId}, listFolderSuccess, listFolderFailure);
             }
@@ -400,6 +415,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         function saveFolderNameSuccess(res) {
             if (res.status == true) {
+                $('.archive_buttons .edit,.archive_buttons .delete').css('display', 'none')
                 ListFolderArchives.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID, followup_parent_id: '0'}, listFolderSuccess, listFolderFailure);
             }
         }
@@ -525,6 +541,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         function folderCreatedSuccess(res) {
             if (res.status == true) {
                 console.log(res);
+                $scope.saveAndClose = false;
                 $scope.folderName = '';
                 $scope.archiveSuccessMessage = res.message;
                 $rootScope.loader = 'hide';
@@ -534,6 +551,73 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
 
         function folderCreatedFailure(error) {
+            console.log(error);
+        }
+        $scope.addSupplements = function (dataToBeAdded) {
+            if (angular.equals({}, dataToBeAdded) == false) {
+                console.log(dataToBeAdded.status);
+                ADDSupplements.save({
+                    token: $window.sessionStorage.token,
+                    patient_id: $routeParams.patientID,
+                    supplements: dataToBeAdded.supplementName,
+                    manufacturer: dataToBeAdded.manufacturer,
+                    dosage: dataToBeAdded.dosage1 + " " + dataToBeAdded.dosage2,
+                    frequency: dataToBeAdded.frequency,
+                    intake: dataToBeAdded.intake,
+                    from_date: dataToBeAdded.fromdate,
+                    medicine_status: dataToBeAdded.status == false ? 'Inactive' : 'Active',
+                    to_date: dataToBeAdded.todate
+                }, addSupplementsSuccess, addSupplementsFailure);
+            }
+        }
+
+        function addSupplementsSuccess(res) {
+            console.log(res);
+            if (res.status == true) {
+                $scope.addSupplement = {};
+                $('#addsuplemets').modal('hide');
+                GetSupplements.get({
+                    token: $window.sessionStorage.token,
+                    patient_id: $routeParams.patientID
+                }, GetSupplementsSuccess, GetSupplementsFailure);
+            }
+        }
+
+        function addSupplementsFailure(error) {
+            console.log(error);
+        }
+
+        $scope.addAllergy = function (dataToBeAdded) {
+            if (angular.equals({}, dataToBeAdded) == false) {
+                console.log(dataToBeAdded)
+                $scope.addallergyData = {
+                    token: $window.sessionStorage.token,
+                    patient_id: $routeParams.patientID,
+                    allergy_type: dataToBeAdded.allergyType,
+                    allergies: dataToBeAdded.allergy,
+                    severity: dataToBeAdded.severity,
+                    observed_on: dataToBeAdded.observed_on,
+                    allergy_status: dataToBeAdded.status,
+                    reaction: dataToBeAdded.reaction,
+                }
+                ADDAllergy.save($scope.addallergyData, addAllergySuccess, addAllergyFailure);
+                console.log($scope.addallergyData)
+            }
+        }
+
+        function addAllergySuccess(res) {
+            console.log(res);
+            if (res.status == true) {
+                $scope.addAllergy = {};
+                $('#addallergies').modal('hide');
+                GetAllergies.get({
+                    token: $window.sessionStorage.token,
+                    patient_id: $routeParams.patientID
+                }, GetAllergiesSuccess, GetAllergiesFailure);
+            }
+        }
+
+        function addAllergyFailure(error) {
             console.log(error);
         }
     }]);

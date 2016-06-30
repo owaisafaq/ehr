@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 // Lab Order Tests Listing
-AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routeParams','getLabOrderInfo','getLabTestInfo','updateTestStatus','$timeout', function ($scope, $rootScope, $window, $routeParams, getLabOrderInfo,getLabTestInfo,updateTestStatus,$timeout) {
+AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routeParams','getLabOrderInfo','getLabTestInfo','updateTestStatus','$timeout','$location', function ($scope, $rootScope, $window, $routeParams, getLabOrderInfo,getLabTestInfo,updateTestStatus,$timeout,$location) {
     $rootScope.pageTitle = "EHR - Lab Order Test";
     $scope.action = "";
     getLabOrderInfo.get({ // Getting all tests along with order info
@@ -32,6 +32,7 @@ AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routePar
                 $rootScope.loader = "hide";
                 $scope.testIsSelected = true;
                 $scope.selectedTest = res.data;
+                $scope.selectedTest.updated_at = new Date($scope.selectedTest.updated_at); // date property for current date
             }
         }
         function getLabTestInfoFailure(error) { // on failure
@@ -57,8 +58,9 @@ AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routePar
             updateTestStatus.save({ // sending data over updateTestStatus factory which will update Test Status
                 token: $window.sessionStorage.token,
                 lab_test: $scope.selectedTest.id,
-                status: $scope.selectedTest.test_status
+                status: $('#cancelOrder2 .form-wizard-horizontal li.active .title').data('val')
             }, updateTestStatusSuccess, updateTestStatusFailure);
+            $scope.testSelected($scope.selectedTest.id);
         //}
     };
 
@@ -86,4 +88,8 @@ AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routePar
     function updateTestStatusFailure(error){ // on failure
         console.log(error);
     }
+
+    $scope.go = function ( path ) { // method for routing on button click
+        $location.path( path + '/' + $scope.selectedTest.id);
+    };
 }]);
