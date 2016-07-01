@@ -177,4 +177,19 @@ class BillingController extends Controller
 
 
     }
+
+    public function delete_invoice(Request $request){
+
+        $invoice_id = $request->input('invoice_id');
+
+        DB::table('invoice')
+                ->where('id', $invoice_id)
+                ->update(
+                    ['status' => 0]);
+
+            return response()->json(['status' => true, 'message' => 'Invoice Deleted successfully']);
+
+
+    }
+
 }

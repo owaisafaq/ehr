@@ -1901,3 +1901,14 @@ $api->method = "GET";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+
+//Delete Invoice
+$api = new api();
+$api->name = "Delete Invoice";
+$api->url = HOST . 'delete_invoice';
+$api->method = "GET";
+$api->params->invoice_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;

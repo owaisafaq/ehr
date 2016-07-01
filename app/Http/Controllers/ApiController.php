@@ -2621,6 +2621,18 @@ class ApiController extends Controller
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
+
+        $templates = DB::table('patient_lab_test_values')
+            ->select(DB::raw('id'))
+            ->where('template_id', $template_id)
+            ->get();
+
+        if (count($templates)>0){
+
+            return response()->json(['status' => false, 'message' => 'This Template is used by various Orders']);
+
+        }
+
         DB::table('templates')
             ->where('id', $template_id)
             ->update(
@@ -2679,6 +2691,19 @@ class ApiController extends Controller
         $category_id = $request->input('category_id');
 
         $currentdatetime = date("Y-m-d  H:i:s");
+
+        $templates = DB::table('templates')
+            ->select(DB::raw('id'))
+            ->where('category_id', $category_id)
+            ->get();
+
+        if (count($templates)>0){
+
+            return response()->json(['status' => false, 'message' => 'This Category is used by various templates']);
+
+        }
+
+
 
         DB::table('template_categories')
             ->where('id', $category_id)
