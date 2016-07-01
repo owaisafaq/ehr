@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData){
+AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData','deleteInvoice', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData,deleteInvoice){
 	$rootScope.pageTitle = "EHR - Billing";
 	$scope.BillListings={};
 	$scope.selectedPatient = {};
@@ -252,7 +252,20 @@ $scope.PrintInvoice = function(invoice_id){
 };
 
 
+	$scope.deletingInvoice = function (invoice_id){
+		deleteInvoice.save({
+			token : $window.sessionStorage.token,
+			invoice_id : invoice_id
+		},deleteInvoiceSuccess,deleteInvoiceFailure);
+	};
 
-
+	function deleteInvoiceSuccess(res){
+		GetAllInvoices.get({
+			token: $window.sessionStorage.token,
+		}, GetAllInvoicesSuccess, GetAllInvoicesFailure);
+	}
+	function deleteInvoiceFailure(error){
+		console.log(error);
+	}
 
 }]);

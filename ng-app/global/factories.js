@@ -1430,3 +1430,68 @@ AppEHR.factory("saveTemplateValues", function ($resource) {
     };
     return AddTestValues;
 });
+
+AppEHR.factory("addPharmacy", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'create_pharmacy', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var addPharmacy = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return addPharmacy;
+});
+AppEHR.factory("deleteInvoice", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'delete_invoice', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var deletedInvoice = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return deletedInvoice;
+});
+
+
+AppEHR.factory("DeleteTempCategory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'delete_template_category', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var DeleteInventory = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return DeleteInventory;
+});
+
+AppEHR.factory("DeleteTemplate", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'delete_template', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var DeleteInventory = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return DeleteInventory;
+});
+

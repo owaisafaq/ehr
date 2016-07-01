@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllInventory','GetAllSuppliers','AddCategory','GetAllCategories','AddSupplier','GetSingleSupplier','UpdateSuppliers','GetSingleCategory','GetSingleStock','updateCategory','DeleteCategory','DeleteSupplier','AddInventory','AddProduct','DeleteInventory','GetSingleProduct','GetAllPharmacies','GetReorderLevel','updateReorderLevel','GetProduct','ProductUpdate','$timeout', function($scope, $rootScope,$window,$routeParams,GetAllInventory,GetAllSuppliers,AddCategory,GetAllCategories,AddSupplier,GetSingleSupplier,UpdateSuppliers,GetSingleCategory,GetSingleStock,updateCategory,DeleteCategory,DeleteSupplier,AddInventory,AddProduct,DeleteInventory,GetSingleProduct,GetAllPharmacies,GetReorderLevel,updateReorderLevel,GetProduct,ProductUpdate,$timeout){
+AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllInventory','GetAllSuppliers','AddCategory','GetAllCategories','AddSupplier','GetSingleSupplier','UpdateSuppliers','GetSingleCategory','GetSingleStock','updateCategory','DeleteCategory','DeleteSupplier','AddInventory','AddProduct','DeleteInventory','GetSingleProduct','GetAllPharmacies','GetReorderLevel','updateReorderLevel','GetProduct','ProductUpdate','Countries','States','City','$timeout', function($scope, $rootScope,$window,$routeParams,GetAllInventory,GetAllSuppliers,AddCategory,GetAllCategories,AddSupplier,GetSingleSupplier,UpdateSuppliers,GetSingleCategory,GetSingleStock,updateCategory,DeleteCategory,DeleteSupplier,AddInventory,AddProduct,DeleteInventory,GetSingleProduct,GetAllPharmacies,GetReorderLevel,updateReorderLevel,GetProduct,ProductUpdate,Countries,States,City,$timeout){
 	$rootScope.pageTitle = "EHR - Inventory";
 	$scope.displayInfo = {};
 	$scope.cat_unique={};
@@ -745,8 +745,75 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 
 	};
 
+	Countries.get({
+		token: $window.sessionStorage.token,
+	}, GetAllCountriesSuccess, GetAllCountriesFailure);
 
 
+	function GetAllCountriesSuccess(res) {
+		if (res.status == true) {
+
+			$scope.Countries = res.data;
+			console.log($scope.Countries);
+
+		}
+	}
+	function GetAllCountriesFailure(error) {
+		//$rootScope.loader = "show";
+		console.log(error);
+	}
+
+
+
+	$scope.getStatesfromCountry= function(country_id){
+
+		console.log(country_id);
+
+		States.get({
+			token: $window.sessionStorage.token,country_id:country_id,
+		}, GetAllStatesSuccess, GetAllStatesFailure);
+
+		function GetAllStatesSuccess(res) {
+			if (res.status == true) {
+
+				$scope.States = res.data;
+				console.log($scope.States);
+
+			}
+		}
+		function GetAllStatesFailure(error) {
+			//$rootScope.loader = "show";
+			console.log(error);
+		}
+
+
+
+	};
+
+	$scope.getCitiesfromStates= function(state_id){
+
+		console.log(state_id);
+
+		City.get({
+			token: $window.sessionStorage.token,state_id:state_id,
+		}, GetAllCitiesSuccess, GetAllCitiesFailure);
+
+		function GetAllCitiesSuccess(res) {
+			if (res.status == true) {
+
+				$scope.Cities = res.data;
+				console.log($scope.Cities);
+
+			}
+		}
+		function GetAllCitiesFailure(error) {
+			//$rootScope.loader = "show";
+			console.log(error);
+		}
+
+
+
+	};
 
 
 
