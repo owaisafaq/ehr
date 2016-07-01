@@ -1363,11 +1363,12 @@ class ApiController extends Controller
 
 
         $patient_plan = DB::table('hospital_plan')
-            ->leftJoin('plan_details', 'plan_details.plan_id', '=', 'hospital_plan.id')
             ->leftJoin('patients', 'patients.hospital_plan', '=', 'hospital_plan.id')
+            ->leftJoin('plan_details', 'plan_details.plan_id', '=', 'hospital_plan.id')
             ->select(DB::raw('hospital_plan.name,plan_details.is_principal,plan_details.is_dependant,plan_details.id as plan_id,plan_details.hmo,plan_details.policies,plan_details.insurance_id,plan_details.description,plan_details.notes'))
             ->where('patients.status', 1)
             ->where('plan_details.patient_id', $patient_id)
+            ->where('plan_details.status',1)
             ->groupby('patients.id')
             ->first();
 
@@ -1378,9 +1379,11 @@ class ApiController extends Controller
 
                 $dependents = DB::table('patient_dependants')
                     ->leftJoin('patients', 'patients.id', '=', 'patient_dependants.dependant_id')
-                    ->select(DB::raw('patient_dependants.plan_detail_id,patient_dependants.dependant_id,patient_dependants.relationship,patients.first_name,patients.last_name'))
+                    ->leftJoin('relationships', 'patient_dependants.relationship', '=', 'relationships.id')
+                    ->select(DB::raw('patient_dependants.plan_detail_id,patient_dependants.dependant_id,patient_dependants.relationship,patients.first_name,patients.middle_name,patients.last_name,relationships.name as dependent_relationship'))
                     ->where('patient_dependants.status', 1)
                     ->where('plan_detail_id', $patient_plan->plan_id)
+                    ->where('patient_dependants.principal_id', $patient_id)
                     ->get();
 
                 $patient_plan->dependents = $dependents;
@@ -1782,7 +1785,7 @@ class ApiController extends Controller
 
             $patient_medications = DB::table('medication_shedule')
                 ->leftJoin('patient_prescription', 'patient_prescription.medication', '=', 'medication_shedule.id')
-                ->leftJoin('visits', 'medication_shedule.patient_id', '=', 'visits.patient_id')
+		->leftJoin('visits', 'medication_shedule.patient_id', '=', 'visits.patient_id')
                 ->select(DB::raw('medication_shedule.id as prescription,visits.id as encounter_id, prescriptions,to_date,from_date,medication_status as status'))
                 ->where('medication_shedule.patient_id', $patient_id)
                 ->where('medication_shedule.status', 1)
@@ -1800,7 +1803,7 @@ class ApiController extends Controller
 
             $patient_medications = DB::table('medication_shedule')
                 ->leftJoin('patient_prescription', 'patient_prescription.medication', '=', 'medication_shedule.id')
-                ->leftJoin('visits', 'medication_shedule.patient_id', '=', 'visits.patient_id')
+		->leftJoin('visits', 'medication_shedule.patient_id', '=', 'visits.patient_id')
                 ->select(DB::raw('medication_shedule.id as prescription,,prescriptions,to_date,from_date,medication_status as status'))
                 ->where('medication_shedule.patient_id', $patient_id)
                 ->where('medication_shedule.status', 1)
@@ -2848,3 +2851,4 @@ class ApiController extends Controller
     }
 
 }
+
