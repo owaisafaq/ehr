@@ -460,6 +460,7 @@
                     </div>
 
                     <div class="row file_uploads">
+                     <a href="javascript:;" ng-if="followupParentId != '0'" ng-hide="backButtonArchive" ng-click="backButton();"><< Back</a>
                         <div class="col-xs-12 folder_create_con no-padding">
                             <div class="col-xs-2" data-id="{{folder.id}}" ng-repeat="folder in foldersArchive" ng-dblclick="openFolder();">
                                 <div>
@@ -826,11 +827,11 @@
                             <label>Status</label>
                         </div>
                         <div class="col-lg-3">
-                            <select ng-model="allergie.status" class="form-control" placeholder="Select Status">
-                                <option></option>
-                                <option>Low</option>
-                                <option>High</option>
-                            </select>
+                           <select ng-model="allergie.status" class="form-control" placeholder="Select Status">
+                               <option></option>
+                               <option value="still exists">still exists</option>
+                               <option value="not any more">not any more</option>
+                           </select>
                         </div>
 
                         <div class="col-lg-2">

@@ -53,7 +53,7 @@ body{
 .margin-top-10{
     margin-top: 10px !important;
 }
-input[disabled] {
+input[disabled],textarea[disabled] {
     background: #ddecf8;
 }
 .txt-style-1{
@@ -2705,7 +2705,7 @@ form .progress {
 #addmedication .medication_list .row > div{margin-bottom:0;}
 #addmedication .medication_list label{color: #516E7F;font-size:13px;text-transform: none;}
 #addmedication .medication_list span{color:#b5b6b8;}
-#addmedication .medication_list{border-top:1px solid #b5b6b8;height: 230px;max-height: 230px;overflow-y:auto;overflow-x: hidden;}
+#addmedication .medication_list{border-top:1px solid #b5b6b8;max-height: 230px;min-height: 230px;overflow-y:auto;overflow-x: hidden;}
 #addmedication .medication_list .med_row{border-bottom:1px solid #b5b6b8;padding: 10px 0px;margin: 0;}
 
 .pagination > li > a, .pagination > li > span{

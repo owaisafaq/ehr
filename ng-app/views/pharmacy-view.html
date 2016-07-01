@@ -54,10 +54,10 @@
                                     <button type="button" class="notes button-custom pull-right" data-target="#prescription-query" data-toggle="modal">prescription query</button>
                                     <button type="button" class="print button-custom pull-right" data-target="#print-prescription" data-toggle="modal">print prescription</button>
                                     <button type="button" class="delete button-custom pull-right">remove prescription</button>
-                                    <button type="button" class="update button-custom pull-right">update pharmacy</button>
-                                    <button class="add button-custom pull-right">add prescription</button>
+                                    <button type="button" ng-click="updateDispense()" class="update button-custom pull-right">update pharmacy</button>
+                                    <button data-toggle="modal" data-target="#addmedication" class="add button-custom pull-right">add prescription</button>
                                 </div>
-                                <table class="table table-striped no-margin table-custom table-custom_big">
+                                <table class="table table-striped no-margin table-custom table-custom_big editable_table">
                                     <thead>
                                         <tr>
                                             <th width="5px"></th>
@@ -68,57 +68,23 @@
                                             <th>total dispensed</th>
                                             <th>balance</th>
                                             <th>cost</th>
-                                            <th>statuss</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                        <tr ng-repeat="PrescriptionView in PrescriptionViews">
                                             <td><div class="radio radio-styled">
                                                     <label>
-                                                        <input type="radio" name="optionsRadios">
+                                                        <input ng-model="PrescriptionView.id" type="radio" name="optionsRadios">
                                                         <span></span>
                                                     </label>
                                                 </div></td>
-                                            <td><a class="link-style" href="javascript:;">Amoxicllin oral powder</a></td>
-                                            <td>5mg 3 times a day after a meal for 5 days oral route</td>
-                                            <td>15</td>
-                                            <td>1</td>
-                                            <td>15</td>
-                                            <td>0</td>
-                                            <td>N2500</td>
-                                            <td>Dispensed</td>
-                                        </tr>
-                                        <tr>
-                                            <td><div class="radio radio-styled">
-                                                    <label>
-                                                        <input type="radio" name="optionsRadios">
-                                                        <span></span>
-                                                    </label>
-                                                </div></td>
-                                            <td><a class="link-style" href="javascript:;">Amoxicllin oral powder</a></td>
-                                            <td>5mg 3 times a day after a meal for 5 days oral route</td>
-                                            <td>15</td>
-                                            <td>1</td>
-                                            <td>15</td>
-                                            <td>0</td>
-                                            <td>N2500</td>
-                                            <td>Dispensed</td>
-                                        </tr>
-                                        <tr>
-                                            <td><div class="radio radio-styled">
-                                                    <label>
-                                                        <input type="radio" name="optionsRadios">
-                                                        <span></span>
-                                                    </label>
-                                                </div></td>
-                                            <td><a class="link-style" href="javascript:;">Amoxicllin oral powder</a></td>
-                                            <td>5mg 3 times a day after a meal for 5 days oral route</td>
-                                            <td>15</td>
-                                            <td>1</td>
-                                            <td>15</td>
-                                            <td>0</td>
-                                            <td>N2500</td>
-                                            <td>Dispensed</td>
+                                            <td><a class="link-style" href="javascript:;">{{PrescriptionView.medication}}</a></td>
+                                            <td>{{PrescriptionView.sig}}</td>
+                                            <td>{{PrescriptionView.dispense}}</td>
+                                            <td>{{PrescriptionView.reffills}}</td>
+                                            <td><input type="text" ng-keyup="calculateBalance(PrescriptionView.dispense,PrescriptionView.total_dispensed,$index)" ng-model="PrescriptionView.total_dispensed" value="15" disabled class="editDispensed" /></td>
+                                            <td>{{PrescriptionView.balance}}</td>
+                                            <td><span ng-if="PrescriptionView.total_dispensed != undefined && PrescriptionView.total_dispensed != ''">N{{PrescriptionView.cost * PrescriptionView.total_dispensed}}</span></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -128,7 +94,7 @@
                                             <label>notes from physician</label>
                                         </div>
                                         <div class="col-lg-12">
-                                            <textarea placeholder="Please ensure patient has no conflicting"></textarea>
+                                            <textarea ng-model="Prescription.notes" disabled></textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 no-padding">
@@ -136,27 +102,12 @@
                                             <label>pharmacy note</label>
                                         </div>
                                         <div class="col-lg-12">
-                                            <textarea placeholder="We have run out of paracetamol"></textarea>
+                                            <textarea ng-model="PrescriptionViews.prescriptionPharmacyNotes" placeholder="We have run out of paracetamol"></textarea>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 no-padding margin-top-10">
-                                        <div class="col-lg-6">
-                                            <label>Allergies</label>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <input type="text" value="Procaine Penicillin" disabled />
-                                        </div>
-
-                                        <div class="col-lg-6 margin-top-10">
-                                            <label>Active Medications</label>
-                                        </div>
-                                        <div class="col-lg-6 margin-top-10">
-                                            <input type="text" value="Medications goes here" disabled />
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 no-padding save_Pview_button">
+                                    <div class="col-lg-12 no-padding save_Pview_button">
                                         <button type="button" class="btn ink-reaction button-style-1 btn-big button-style-1_a pull-right patient-submit-btn">cancel</button>
-                                        <button type="button" class="btn ink-reaction button-style-1 btn-big pull-right btn-default patient-submit-btn margin-right-10">save</button>
+                                        <button type="button" class="btn ink-reaction button-style-1 btn-big pull-right btn-default patient-submit-btn margin-right-10" ng-click="savePharmacy()">save</button>
                                     </div>
                                 </form>
                             </div>
@@ -242,6 +193,241 @@
                 </div>
 
             </form>
+        </div><!-- /.modal-content -->
+
+
+    </div><!-- /.modal-dialog -->
+
+</div><!-- /.modal -->
+<div class="modal fade big-modal" id="addmedication" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Add Medication</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form" novalidate>
+                    <div class="row">
+
+                        <div class="col-lg-3">
+                            <label>Medication</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <select ng-model="MedicationData.medicationDropDown" class="form-control" placeholder="Select Medication">
+                                <option></option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>                                              
+
+                        <div class="col-lg-3">
+                            <label>SIG</label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input ng-model="MedicationData.sig" type="text" placeholder="" />
+                        </div>
+                        <div class="col-lg-1">
+                            <button class="setting-button button-custom pull-right open_sig"></button>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Dispense</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input ng-model="MedicationData.dispense" type="text" placeholder="" />
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Refills</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input ng-model="MedicationData.refills" type="text" placeholder="" />
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Pharmacy</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <select ng-model="MedicationData.pharmacy" class="form-control" placeholder="Select Pharmacy">
+                                <option></option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3 clear">
+                            <label>Note Of Pharmacy</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input ng-model="MedicationData.pharmacyNote" type="text" placeholder="" required/>
+                        </div>
+
+
+                        <div class="col-lg-3"></div>
+                        <div class="col-lg-9">
+                            <button type="button" ng-click="addMedication(MedicationData)" class="btn btn-default pull-left button-style-1">Add</button>
+                        </div>
+
+                    </div>
+
+                    <div class="medication_list">
+                        <div class="row med_row" ng-repeat="medicationDataPush in medicationsDataPush">
+                            <div class="col-lg-10">
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label>Medication</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>{{medicationDataPush.medication}}</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Dispense</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>{{medicationDataPush.dispense}}</span>
+                                    </div>
+
+                                    <div class="col-lg-2 clear">
+                                        <label>SIG</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>{{medicationDataPush.sig}}</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Pharmacy</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>{{medicationDataPush.pharmacy}}</span>
+                                    </div>
+
+                                    <div class="col-lg-2 clear">
+                                        <label>Note</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>{{medicationDataPush.note_of_pharmacy}}</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Refill</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>{{medicationDataPush.refills}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <button class="delete remove_med button-custom pull-right"></button>
+                                <button class="edit button-custom pull-right"></button>                            
+                            </div>
+                        </div>
+
+<!--                        <div class="row med_row">
+                            <div class="col-lg-10">
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label>Medication</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>Amoxicillin oral powder</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Dispense</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>5 Tablet Refills: 1</span>
+                                    </div>
+
+                                    <div class="col-lg-2 clear">
+                                        <label>SIG</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>10 mg QDPA for 5 days null route</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Pharmacy</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>Eye Clinic Pharmacy</span>
+                                    </div>
+
+                                    <div class="col-lg-2 clear">
+                                        <label>Note</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>Lorem ipsum Lorem ipsum</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Refill</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>Lorem Ipsum</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <button class="delete remove_med button-custom pull-right"></button>
+                                <button class="edit button-custom pull-right"></button>                            
+                            </div>
+                        </div>
+
+                        <div class="row med_row">
+                            <div class="col-lg-10">
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label>Medication</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>Amoxicillin oral powder</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Dispense</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>5 Tablet Refills: 1</span>
+                                    </div>
+
+                                    <div class="col-lg-2 clear">
+                                        <label>SIG</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>10 mg QDPA for 5 days null route</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Pharmacy</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>Eye Clinic Pharmacy</span>
+                                    </div>
+
+                                    <div class="col-lg-2 clear">
+                                        <label>Note</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>Lorem ipsum Lorem ipsum</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Refill</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>Lorem Ipsum</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <button class="delete remove_med button-custom pull-right"></button>
+                                <button class="edit button-custom pull-right"></button>                            
+                            </div>
+                        </div>-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default button-style-1">Send</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+
+            </div>
+
         </div><!-- /.modal-content -->
 
 

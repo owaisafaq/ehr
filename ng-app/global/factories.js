@@ -139,6 +139,22 @@ AppEHR.factory("SaveFiles", function ($resource) {
     };
     return patientRegistrationKin;
 });
+AppEHR.factory("PatienPrescription", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'add_patient_prescription', params, {
+            save: {method: 'POST'},
+        });
+        return res2;
+    }
+    var patientRegistrationKin = {
+        save:function(params,body,success) {
+          var res = getResource(params, body);
+          return res.save(params,body,success);
+        }
+    };
+    return patientRegistrationKin;
+});
+
 AppEHR.factory("GetResourcesByFolderArchives", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath +  'list_resources', params, {
@@ -154,6 +170,22 @@ AppEHR.factory("GetResourcesByFolderArchives", function ($resource) {
     };
     return patientRegistrationKin;
 });
+AppEHR.factory("GetAllPrescription", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'get_all_prescription', params, {
+            get: {method: 'POST'},
+        });
+        return res2;
+    }
+    var patientRegistrationKin = {
+        get:function(params,body,success) {
+          var res = getResource(params, body);
+          return res.get(params,body,success);
+        }
+    };
+    return patientRegistrationKin;
+});
+
 AppEHR.factory("DeleteFolderArchives", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath +  'delete_patient_resources', params, {
