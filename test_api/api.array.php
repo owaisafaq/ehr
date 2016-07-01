@@ -411,6 +411,7 @@ $api->url = HOST . 'add_patient_plan';
 $api->method = "POST";
 $api->description = "Add Patient Plan";
 $api->params->patient_id = "1";
+$api->params->patient_plan_id = "0";
 $api->params->plan_id = "1";
 $api->params->is_principal = "1";
 $api->params->is_dependant = "0";
@@ -464,6 +465,8 @@ $api->url = HOST . 'get_patient_visit_history';
 $api->method = "GET";
 $api->description = "Get Patient Visit History";
 $api->params->patient_id = "1";
+$api->params->offset = "1";
+$api->params->limit = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -476,6 +479,8 @@ $api->url = HOST . 'get_patient_vital_history';
 $api->method = "GET";
 $api->description = "Get Patient Vital History";
 $api->params->patient_id = "1";
+$api->params->offset = "1";
+$api->params->limit = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -577,6 +582,8 @@ $api->url = HOST . 'patient_medications';
 $api->method = "GET";
 $api->description = "Get Patient Medications";
 $api->params->patient_id = "1";
+$api->params->offset = "1";
+$api->params->limit = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -604,6 +611,8 @@ $api->url = HOST . 'patient_supplements';
 $api->method = "GET";
 $api->description = "Get Supplements";
 $api->params->patient_id = "1";
+$api->params->offset = "1";
+$api->params->limit = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -637,6 +646,8 @@ $api->url = HOST . 'patient_allergies';
 $api->method = "GET";
 $api->description = "Get Patient Allergies";
 $api->params->patient_id = "1";
+$api->params->offset = "1";
+$api->params->limit = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -792,6 +803,8 @@ $api->url = HOST . 'patient_visit_list';
 $api->method = "GET";
 $api->description = "Patient Visit List";
 $api->params->patient_id = "1";
+$api->params->offset = "1";
+$api->params->limit = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -887,6 +900,8 @@ $api->name = "Clinical Progress Note Templates";
 $api->url = HOST . 'clinical_progress_note_templates';
 $api->method = "GET";
 $api->description = "Clinical Progress Note Templates";
+$api->params->limit = "0";
+$api->params->offset = "0";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -900,6 +915,8 @@ $api->url = HOST . 'clinical_progress_note_fields';
 $api->method = "GET";
 $api->description = "Clinical Progress Note Fields";
 $api->params->template_id = "1";
+$api->params->limit = "0";
+$api->params->offset = "0";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -1593,7 +1610,7 @@ $api_arr [] = $api;
 
 //Get Template Type
 $api = new api();
-$api->name = "Get Template Types";
+$api->name = "Get Template Type";
 $api->url = HOST . 'get_lab_template_type';
 $api->method = "POST";
 $api->params->type_id = "1";
@@ -1699,5 +1716,187 @@ $api->url = HOST . 'get_all_invoices';
 $api->method = "GET";
 $api->params->token = "123435";
 
+
+$api_arr [] = $api;
+
+//Get Templates
+$api = new api();
+$api->name = "Get Templates";
+$api->url = HOST . 'get_templates';
+$api->method = "GET";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+
+//Delete Template
+$api = new api();
+$api->name = "Delete Template";
+$api->url = HOST . 'delete_template';
+$api->method = "POST";
+$api->params->template_id = "1";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+
+
+//Add Template
+$api = new api();
+$api->name = "Add Template";
+$api->url = HOST . 'add_template';
+$api->method = "POST";
+$api->params->name = "test";
+$api->params->category_id = "1";
+$api->params->description = "test";
+$api->params->template = "Lab";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+
+//Get Templates Categories
+$api = new api();
+$api->name = "Get Templates Categories";
+$api->url = HOST . 'get_templates_categories';
+$api->method = "GET";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
+
+//Delete Template Category
+$api = new api();
+$api->name = "Delete Template Category";
+$api->url = HOST . 'delete_template_category';
+$api->method = "POST";
+$api->params->category_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+
+//Add Template Category
+$api = new api();
+$api->name = "Add Template Category";
+$api->url = HOST . 'add_template_category';
+$api->method = "POST";
+$api->params->name = "test";
+$api->params->description = "test";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+
+//Update Invoice
+$api = new api();
+$api->name = "Update Invoice";
+$api->url = HOST . 'update_invoice';
+$api->method = "POST";
+$api->params->invoice_id = "1";
+$api->params->amount_paid = "100";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Get Invoice Data
+$api = new api();
+$api->name = "Get Invoice Data";
+$api->url = HOST . 'get_invoice_data';
+$api->method = "GET";
+$api->params->invoice_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Get Invoice Status
+$api = new api();
+$api->name = "Get Invoice Status";
+$api->url = HOST . 'get_invoice_status';
+$api->method = "GET";
+$api->params->invoice_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Get Billing Data
+$api = new api();
+$api->name = "Get Billing Data";
+$api->url = HOST . 'get_billing_data';
+$api->method = "GET";
+$api->params->bill_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Get Patient Plan
+$api = new api();
+$api->name = "Get Patient Plan";
+$api->url = HOST . 'get_patient_plan';
+$api->method = "GET";
+$api->params->patient_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Get Template Details
+$api = new api();
+$api->name = "Get Template Details";
+$api->url = HOST . 'get_template_details';
+$api->method = "GET";
+$api->params->template_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+
+//Add Patient Prescription
+$api = new api();
+$api->name = "Add Patient Prescription";
+$api->url = HOST . 'add_patient_prescription';
+$api->method = "POST";
+$api->params->patient_id = "1";
+$api->params->prescription = "1";
+/*$api->params->medication = "1";
+$api->params->sig = "test";
+$api->params->dispense = "1";
+$api->params->reffills = "test";
+$api->params->pharmacy = "1";
+$api->params->note_of_pharmacy = "test";*/
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Get All Prescription
+$api = new api();
+$api->name = "Get All Prescription";
+$api->url = HOST . 'get_all_prescription';
+$api->method = "POST";
+$api->params->patient_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+
+
+//Get Prescription List
+$api = new api();
+$api->name = "Get Prescription List";
+$api->url = HOST . 'get_prescription_list';
+$api->method = "GET";
+$api->params->token = "123435";
 
 $api_arr [] = $api;
