@@ -1868,6 +1868,7 @@ $api->url = HOST . 'add_patient_prescription';
 $api->method = "POST";
 $api->params->patient_id = "1";
 $api->params->prescription = "1";
+$api->params->visit_id = "1";
 /*$api->params->medication = "1";
 $api->params->sig = "test";
 $api->params->dispense = "1";
