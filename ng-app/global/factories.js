@@ -1446,3 +1446,18 @@ AppEHR.factory("addPharmacy", function ($resource) {
     };
     return addPharmacy;
 });
+AppEHR.factory("deleteInvoice", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'delete_invoice', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var deletedInvoice = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return deletedInvoice;
+});
