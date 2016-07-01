@@ -1913,3 +1913,14 @@ $api->params->invoice_id = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+
+//Get Lab test pdf
+$api = new api();
+$api->name = "Get Lab Test PDF";
+$api->url = HOST . 'get_lab_test_pdf';
+$api->method = "GET";
+$api->params->lab_test_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
