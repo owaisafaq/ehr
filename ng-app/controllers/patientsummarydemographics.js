@@ -11,6 +11,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         $scope.addSupplement = {};
         $scope.frequencies = frequencies;
         $scope.intakeTypes = intakeTypes;
+        $scope.immunizations = immunizations;
 
         $scope.supplementData = [];
 
@@ -303,7 +304,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
                 file.upload = Upload.upload({
                     url: serverPath + "add_patient_archive",
                     method: 'POST',
-                    data: {patient_archive: file, patient_id: $window.sessionStorage.patient_id, follow_up_parent_id: $scope.followupParentId}
+                    data: {patient_archive: file, patient_id: $routeParams.patientID, follow_up_parent_id: $scope.followupParentId}
                 });
 
                 file.upload.then(function (response) {
@@ -623,5 +624,11 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         function addAllergyFailure(error) {
             console.log(error);
+        }
+
+        $scope.addImmunizations = function(name){
+            $scope.immunizations.push({id: immunizations.length+1, name: name});
+            $scope.immunizationName = '';
+            console.log($scope.immunizations);
         }
     }]);

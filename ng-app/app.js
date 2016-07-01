@@ -20,7 +20,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     controller: 'loginController'
                 }).
                 when('/appointments-calander-view', {
-                    templateUrl: 'views/appointments-calander-view.html',
+                    templateUrl: 'views/appointments-calender-view.html',
                     controller: 'appointmentsCalenderController'
                 }).
                 when('/appointments-list', {

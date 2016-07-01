@@ -549,6 +549,21 @@ AppEHR.factory("ClinicalProgressNotesFields", function ($resource) {
     };
     return clinicalProgressNotesFields;
 });
+AppEHR.factory("PharmacyPrescription", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_prescription_list', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var clinicalProgressNotesFields = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return clinicalProgressNotesFields;
+});
 AppEHR.factory("GetTemplatesDropDown", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'clinical_progress_note_templates', params, {

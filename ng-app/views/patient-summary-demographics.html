@@ -56,7 +56,16 @@
                             </div>
                         </div>
                         <div id="accordion3-3" class="collapse">
-                            <div class="card-body"><p>Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Dicant vituperata consequuntur.</p>
+                            <div class="card-body">
+                                <textarea ng-model="immunizationName" placeholder="Immunization"></textarea>
+                                <button ng-click="addImmunizations(immunizationName);">Add</button>
+                            <ul>
+                                <li ng-repeat="immunization in immunizations">
+                                    {{immunization.name}}
+                                    <span class="delete-icon" ng-click="immunizations.splice($index,1)"><img src="assets/img/cross.png" /></span>
+                                </li>
+                            </ul>
+                            <!-- <p>Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Dicant vituperata consequuntur.</p> -->
                             </div>
                         </div>
                     </div><!--end .panel -->

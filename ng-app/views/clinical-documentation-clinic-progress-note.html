@@ -75,7 +75,7 @@
                     <div class="panel-group custom-accordian" id="accordion3" ng-repeat="(key, value) in templateFields | groupBy: 'category'">
                         <div class="card panel expanded">
                             <div class="card-head card-head-sm" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3{{$index}}">
-                                <header>{{ key}}</header>
+                                <header>{{key}}</header>
                                 <div class="tools">
                                     <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
                                 </div>
@@ -111,7 +111,7 @@
                                             <a href="#/lab-order-listing">Lab order</a>
                                         </li>
                                         <li>
-                                            <a href="#/lab-order-listing">Prescription</a> 
+                                            <a href="!#" data-toggle="modal" data-target="#addmedication">Prescription</a> 
                                         </li>
                                     </ul>
                                 </div>
@@ -127,18 +127,152 @@
         </div><!--end .card -->
     </section>
 </div>
+<div class="modal fade big-modal" id="addmedication" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Add Medication</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form" novalidate ng-submit="savePharmacyPopUp()">
+                    <div class="row">
+
+                        <div class="col-lg-3">
+                            <label>Medication</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <select ng-model="MedicationData.medication" class="form-control" placeholder="Select Medication">
+                                <option></option>
+                                <option ng-selected="MedicationData.medication == medicationDropData.id" value="{{medicationDropData.id}}" ng-repeat="medicationDropData in medicationDropDowns">{{medicationDropData.name}}</option>
+                            </select>
+                        </div>                                              
+
+                        <div class="col-lg-3">
+                            <label>SIG</label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input ng-model="MedicationData.sig" type="text" placeholder="" />
+                        </div>
+                        <div class="col-lg-1">
+                            <!--open_sig-->
+                            <a href="javascript:;" class="setting-button button-custom pull-right"></a>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Dispense</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input ng-model="MedicationData.dispense" type="text" placeholder="" />
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Refills</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input ng-model="MedicationData.reffills" type="text" placeholder="" />
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Pharmacy</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <select ng-model="MedicationData.pharmacy" class="form-control" placeholder="Select Pharmacy">
+                                <option></option>
+                                <option ng-selected="MedicationData.pharmacy == pharmacyDataDrop.id" value="{{pharmacyDataDrop.id}}" ng-repeat="pharmacyDataDrop in pharmacyDataDropDown">{{pharmacyDataDrop.name}}</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3 clear">
+                            <label>Note Of Pharmacy</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input ng-model="MedicationData.note_of_pharmacy" type="text" placeholder="" required/>
+                        </div>
+
+
+                        <div class="col-lg-3"></div>
+                        <div class="col-lg-9">
+                            <button ng-hide="showUpdate" type="button" ng-click="addMedication()" class="btn btn-default pull-left button-style-1">Add</button>
+                            <button type="button" ng-show="showUpdate" ng-click="addMedication(1)" class="btn btn-default pull-left button-style-1">Update</button>
+                        </div>
+
+                    </div>
+
+                    <div class="medication_list">
+                        <div class="row med_row" ng-repeat="medicationDataPush in medicationsDataPush">
+                            <div class="col-lg-10">
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label>Medication</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>{{medicationDataPush.medication}}</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Dispense</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>{{medicationDataPush.dispense}}</span>
+                                    </div>
+
+                                    <div class="col-lg-2 clear">
+                                        <label>SIG</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>{{medicationDataPush.sig}}</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Pharmacy</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>{{medicationDataPush.pharmacy}}</span>
+                                    </div>
+
+                                    <div class="col-lg-2 clear">
+                                        <label>Note</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>{{medicationDataPush.note_of_pharmacy}}</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Refill</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>{{medicationDataPush.reffills}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <a ng-click="medicationsDataPush.splice($index,1)" href="javascript:;" class="delete remove_med button-custom pull-right"></a>
+                                <a href="javascript:;" ng-click="editMedication($index);" class="edit button-custom pull-right"></a>                            
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-default button-style-1" ng-show="medicationsDataPush != ''">Send</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div><!-- /.modal-content -->
+
+
+    </div><!-- /.modal-dialog -->
+
+</div><!-- /.modal -->
 <script type="text/javascript">
-            $('body').on('click', '.show_textarea span', function () {
-                $(this).siblings('input[type=text]').toggle();
-                $(this).siblings('input[type=text]').focus();
-            });
-            $('body').on('keyup', '.show_textarea input[type=text]', function (e) {
-                if (e.keyCode == 13) {
-                    if ($(this).val() != "") {
-                        $(this).trigger("enterKey");
-                        $(this).hide();
-                        $(this).siblings('img').show();
-                    }
-                }
-            });
+    $('body').on('click', '.show_textarea span', function () {
+        $(this).siblings('input[type=text]').toggle();
+        $(this).siblings('input[type=text]').focus();
+    });
+    $('body').on('keyup', '.show_textarea input[type=text]', function (e) {
+        if (e.keyCode == 13) {
+            if ($(this).val() != "") {
+                $(this).trigger("enterKey");
+                $(this).hide();
+                $(this).siblings('img').show();
+            }
+        }
+    });
 </script>
