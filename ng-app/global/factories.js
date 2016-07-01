@@ -1430,3 +1430,19 @@ AppEHR.factory("saveTemplateValues", function ($resource) {
     };
     return AddTestValues;
 });
+
+AppEHR.factory("addPharmacy", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'create_pharmacy', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var addPharmacy = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return addPharmacy;
+});
