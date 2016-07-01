@@ -1924,3 +1924,34 @@ $api->params->lab_test_id = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+
+
+//Get Prescription
+$api = new api();
+$api->name = "Get Prescription";
+$api->url = HOST . 'get_prescription';
+$api->method = "GET";
+$api->params->precription_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+
+//Update Prescription
+$api = new api();
+$api->name = "Update Prescription";
+$api->url = HOST . 'update_prescription';
+$api->method = "POST";
+$api->params->precription_id = "1";
+$api->params->medication = "1";
+$api->params->sig = "test";
+$api->params->dispense = "test";
+$api->params->reffills = "test";
+$api->params->pharmacy = "1";
+$api->params->note_of_pharmacy = "test";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+

@@ -208,6 +208,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->post('add_patient_prescription','App\Http\Controllers\ApiController@add_patient_prescription');
     $app->post('get_all_prescription','App\Http\Controllers\ApiController@get_all_prescription');
     $app->get('get_prescription_list','App\Http\Controllers\ApiController@get_prescription_list');
+    $app->get('get_prescription','App\Http\Controllers\ApiController@get_prescription');
+    $app->post('update_prescription','App\Http\Controllers\ApiController@update_prescription');
 
 
 });
@@ -246,4 +248,5 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->post('delete_invoice','App\Http\Controllers\BillingController@delete_invoice');
 
     $app->get('get_lab_test_pdf','App\Http\Controllers\PDFController@get_lab_test_pdf');
+
 });

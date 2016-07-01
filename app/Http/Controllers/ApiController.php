@@ -2850,5 +2850,57 @@ class ApiController extends Controller
 
     }
 
+
+    public function get_prescription(Request $request){
+
+        $prescription_id = $request->input('precription_id');
+
+
+        $prescriptions = DB::table('patient_prescription')
+            ->select(DB::raw('*'))
+            ->where('id',$prescription_id)
+            ->where('status', 1)
+            ->first();
+
+
+        return response()->json(['status' => true, 'data' => $prescriptions]);
+
+
+
+    }
+
+
+    public function update_prescription(Request $request){
+
+
+        $prescription_id = $request->input('precription_id');
+        $medication = $request->input('medication');
+        $sig = $request->input('sig');
+        $dispense= $request->input('dispense');
+        $reffills= $request->input('reffills');
+        $pharmacy= $request->input('pharmacy');
+        $note_of_pharmacy= $request->input('note_of_pharmacy');
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+        DB::table('patient_prescription')
+            ->where('id',$prescription_id)
+            ->update(
+                ['medication' => $medication,
+                    'sig' => $sig,
+                    'dispense' =>$dispense,
+                    'reffills' => $reffills,
+                    'pharmacy' => $pharmacy,
+                    'note_of_pharmacy' =>$note_of_pharmacy,
+                    'updated_at' => $currentdatetime
+
+                ]
+            );
+
+
+    return response()->json(['status' => true, 'message' => 'Prescrpition Updated Successfully']);
+
+    }
+
 }
 
