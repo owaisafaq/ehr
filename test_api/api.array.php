@@ -1238,6 +1238,7 @@ $api->method = "POST";
 $api->params->lab_order_id = "1";
 $api->params->lab_test_id = "1";
 $api->params->lab_test_values = "";
+$api->params->template_id = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
