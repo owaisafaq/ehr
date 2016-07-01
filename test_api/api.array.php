@@ -1867,12 +1867,13 @@ $api->name = "Add Patient Prescription";
 $api->url = HOST . 'add_patient_prescription';
 $api->method = "POST";
 $api->params->patient_id = "1";
-$api->params->medication = "1";
+$api->params->prescription = "1";
+/*$api->params->medication = "1";
 $api->params->sig = "test";
 $api->params->dispense = "1";
 $api->params->reffills = "test";
 $api->params->pharmacy = "1";
-$api->params->note_of_pharmacy = "test";
+$api->params->note_of_pharmacy = "test";*/
 $api->params->token = "123435";
 
 $api_arr [] = $api;
@@ -1884,6 +1885,18 @@ $api->name = "Get All Prescription";
 $api->url = HOST . 'get_all_prescription';
 $api->method = "POST";
 $api->params->patient_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+
+
+//Get Prescription List
+$api = new api();
+$api->name = "Get Prescription List";
+$api->url = HOST . 'get_prescription_list';
+$api->method = "GET";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
