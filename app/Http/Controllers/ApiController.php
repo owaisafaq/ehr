@@ -2811,7 +2811,7 @@ class ApiController extends Controller
 
 
         $prescriptions = DB::table('patient_prescription')
-            ->select(DB::raw('patient_id,medication,sig,dispense,reffills,pharmacy'))
+            ->select(DB::raw('patient_id,medication,sig,dispense,reffills,pharmacy,created_at'))
             ->where('status', 1)
             ->where('patient_id', $patient_id)
             ->get();
