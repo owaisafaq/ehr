@@ -2539,7 +2539,7 @@ table.setting_table_cat > tbody > tr > td:nth-child(2) span{float:left;}
     font-size: 15px;
 }
 .edit_invoice h2 , .print_invoice h2{color:#003d51;font-weight:700;font-size:26px;}
-.edit_invoice{display:none;}
+.edit_invoice , .print_invoice{display:none;}
 .edit_inv_row_hdng{background-color:#003d51;margin:0;color:#fff;text-transform:uppercase;padding: 10px 0;margin-top:15px !important;margin-bottom:20px !important;}
 .edit_inv_row_hdng span{font-weight:700;font-size:14px;}
 
@@ -2739,3 +2739,79 @@ form .progress {
 .form-wizard-nav .progress{
     border: none;
 }
+
+@media print {
+    .hidden-print {
+        display: none !important;
+    }
+}
+.check-box-label label{
+    width:auto;
+}
+.custom_template > .tabbable > ul.nav-tabs > li > a {
+    line-height:normal;
+    display:flex;
+    justify-content:center;
+    align-content:center;
+    flex-direction:column;
+    float:left;
+    width:100%;
+    font-size:12px;
+    background-color:#c8ddee;
+    color:#003d51;
+    opacity:1;
+    font-weight:700;
+    letter-spacing:1px;
+}
+
+.custom_template > .tabbable > ul.nav-tabs > li.active > a, .custom_template > .tabbable > ul.nav-tabs > li.active > a:hover, .custom_template > .tabbable > ul.nav-tabs > li.active > a:focus
+{
+    border: none;
+    background-color: #fff;
+    color: #003d51;
+}
+.custom_template .dropdown-menu > .active > a, .custom_template .dropdown-menu > .active > a:hover,.custom_template .dropdown-menu > .active > a:focus {
+    color: #ffffff;
+    text-decoration: none;
+    outline: 0;
+    background-color: #56aeea;
+}
+
+.custom_template .btn-primary{
+     color: #ffffff;
+    background-color: #56aeea;
+    border-color: #56aeea;
+}
+.custom_template .btn-primary:hover,.custom_template .btn-primary:focus, .custom_template .open .dropdown-toggle.btn-primary{
+    color: #ffffff;
+    background-color: #56aeea;
+    border-color: #56aeea;
+}
+
+#template .nav-tabs > li > a {
+    line-height:normal;
+    display:flex;
+    justify-content:center;
+    align-content:center;
+    flex-direction:column;
+    float:left;
+    width:100%;
+    font-size:12px;
+    background-color:#c8ddee;
+    color:#003d51;
+    opacity:1;
+    font-weight:700;
+    letter-spacing:1px;
+}
+
+#template .nav-tabs > li.active > a, #template .nav-tabs > li.active > a:hover, #template .nav-tabs > li.active > a:focus
+{
+    border: none;
+    background-color: #fff;
+    color: #003d51;
+}
+#template .custom-form .row > div .input-group{position:relative;}
+#template .custom-form .row > div .input-group .form-control{width:93.3%;}
+#template .custom-form .row > div .input-group .input-group-btn .btn-default{position:absolute;right: 1px;height: 32px;border: 0;}
+#template .custom-form .row > div .input-group .input-group-btn .btn-default .caret{position: relative;top: -4px;}
+#template .custom-form  .fg-field-overlay .btn-toolbar .btn[disabled]{color:#313534;}

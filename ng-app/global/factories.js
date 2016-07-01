@@ -1006,15 +1006,6 @@ AppEHR.factory("DeleteInventory", function ($resource) {
 
 
 
-
-
-
-
-
-
-
-
-
 AppEHR.factory("GetSingleSupplier", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'get_inventory_single_supplier', params, {
@@ -1114,22 +1105,6 @@ AppEHR.factory("GetProduct", function ($resource) {
 });
 
 
-AppEHR.factory("GetReorderLevel", function ($resource) {
-    function getResource(params, body) {
-        var res2 = $resource(serverPath + 'get_reorder_level', params, {
-            get: {method: 'POST'}
-        });
-        return res2;
-    }
-    var reorder_level = {
-        get: function (params, body, success) {
-            var res = getResource(params, body);
-            return res.get(params, body, success);
-        }
-    };
-    return reorder_level;
-});
-
 AppEHR.factory("updateReorderLevel", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'update_reorder_level', params, {
@@ -1162,9 +1137,6 @@ AppEHR.factory("ProductUpdate", function ($resource) {
     return update_product;
 });
 
-
-
-
 AppEHR.factory("cancelLabOrder", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'cancel_lab_order', params, {
@@ -1179,6 +1151,25 @@ AppEHR.factory("cancelLabOrder", function ($resource) {
         }
     };
     return cancelOrder;
+});
+AppEHR.factory("getPharmacy", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_pharmacies', params, {
+            save: {method: 'GET'}
+        });
+        return res2;
+    }
+
+
+
+
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
 });
 
 AppEHR.factory("addOrder", function ($resource) {
@@ -1211,4 +1202,231 @@ AppEHR.factory("updateTestStatus", function ($resource) {
         }
     };
     return updateTest;
+});
+
+AppEHR.factory("GetReorderLevel", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_reorder_level', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var reorder_level = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return reorder_level;
+});
+AppEHR.factory("getTemplateCategories", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_lab_template_categories', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var template_categories = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return template_categories;
+});
+AppEHR.factory("getTemplates", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_lab_test_templates', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var template_categories = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return template_categories;
+});
+AppEHR.factory("getTemplateData", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_template_details', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var template_data = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return template_data;
+});
+
+
+
+
+
+AppEHR.factory("GetAllBills", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_all_bills', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var Bills = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return Bills;
+});
+
+
+AppEHR.factory("GetAllInvoices", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_all_invoices', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var Invoices = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return Invoices;
+});
+
+AppEHR.factory("ProcessPayment", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'update_invoice', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var update_inv = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return update_inv;
+});
+
+AppEHR.factory("InvoiecStatus", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_invoice_status', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var get_status = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return get_status;
+});
+
+AppEHR.factory("InvoiceData", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_invoice_data', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var get_invoice = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return get_invoice;
+});
+AppEHR.factory("getTemplates", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_templates', params, {
+            save: {method: 'GET'}
+        });
+        return res2;
+    }
+
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+
+AppEHR.factory("AddTemplate", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_template', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var AddCategory = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return AddCategory;
+});
+
+AppEHR.factory("getTemplateCategory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_templates_categories', params, {
+            save: {method: 'GET'}
+        });
+        return res2;
+    }
+
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+
+AppEHR.factory("AddTemplateCategory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_template_category', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var AddCategory = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return AddCategory;
+});
+
+AppEHR.factory("saveTemplateValues", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_lab_test_values', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var AddTestValues = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return AddTestValues;
 });
