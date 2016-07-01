@@ -10,7 +10,7 @@ AppEHR.controller('templates', ['$scope', '$rootScope', function($scope, $rootSc
 }]);*/
 
 
-AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', 'getTemplates' ,'AddTemplate', 'getTemplateCategory', 'AddTemplateCategory','$timeout', function($scope, $rootScope, mySchema, $window, getTemplates, AddTemplate, getTemplateCategory, AddTemplateCategory,$timeout){
+AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', 'getTemplates' ,'AddTemplate', 'getTemplateCategory', 'AddTemplateCategory','$timeout', 'DeleteTempCategory' , 'DeleteTemplate', function($scope, $rootScope, mySchema, $window, getTemplates, AddTemplate, getTemplateCategory, AddTemplateCategory,$timeout, DeleteTempCategory, DeleteTemplate){
     $scope.myForm = {
         schema: mySchema
     };
@@ -128,6 +128,60 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
     function CategoryFailure(error) {
         console.log(error);
     }
+
+
+
+    $scope.catDeleted = function (catID) {
+        console.log(catID);
+        if ( window.confirm("Are you Sure you want to delete?") ) {
+            DeleteTempCategory.save({token: $window.sessionStorage.token, category_id: catID}, deleteCategoryInfoSuccess, deleteCategoryInfoFailure);
+
+            function deleteCategoryInfoSuccess(res) {
+                if (res.status == true) {
+                    $rootScope.loader = "hide";
+                    getTemplateCategory.get({token: $window.sessionStorage.token}, TemplateCategorySuccess, TemplateCategoryFailed);
+
+
+
+                }else{
+                   alert(res.message);
+                }
+            }
+            function deleteCategoryInfoFailure(error) {
+                $rootScope.loader = "show";
+                console.log(error);
+            }
+
+        }
+    }
+
+    $scope.templateDeleted = function (tempID) {
+
+        if ( window.confirm("Are you Sure you want to delete?") ) {
+            DeleteTemplate.save({token: $window.sessionStorage.token, template_id: tempID}, deleteTemplateInfoSuccess, deleteTemplateInfoFailure);
+
+            function deleteTemplateInfoSuccess(res) {
+                if (res.status == true) {
+                    $rootScope.loader = "hide";
+                    getTemplates.get({
+                        token: $window.sessionStorage.token
+                    }, getTemplateSuccess, getTemplateFailure);
+
+
+
+                }else{
+                    alert(res.message);
+                }
+            }
+            function deleteTemplateInfoFailure(error) {
+                $rootScope.loader = "show";
+                console.log(error);
+            }
+
+        }
+    }
+
+
 
 }]);
 

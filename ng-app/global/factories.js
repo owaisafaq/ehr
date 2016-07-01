@@ -1461,3 +1461,37 @@ AppEHR.factory("deleteInvoice", function ($resource) {
     };
     return deletedInvoice;
 });
+
+
+AppEHR.factory("DeleteTempCategory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'delete_template_category', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var DeleteInventory = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return DeleteInventory;
+});
+
+AppEHR.factory("DeleteTemplate", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'delete_template', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var DeleteInventory = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return DeleteInventory;
+});
+
