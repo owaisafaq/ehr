@@ -2,4 +2,5 @@
 .env
 /.idea
 composer.phar
+/vendor
 /nbproject/private/
