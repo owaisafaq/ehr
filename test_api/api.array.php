@@ -1238,6 +1238,7 @@ $api->method = "POST";
 $api->params->lab_order_id = "1";
 $api->params->lab_test_id = "1";
 $api->params->lab_test_values = "";
+$api->params->template_id = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -1868,6 +1869,7 @@ $api->url = HOST . 'add_patient_prescription';
 $api->method = "POST";
 $api->params->patient_id = "1";
 $api->params->prescription = "1";
+$api->params->visit_id = "1";
 /*$api->params->medication = "1";
 $api->params->sig = "test";
 $api->params->dispense = "1";
@@ -1897,6 +1899,17 @@ $api = new api();
 $api->name = "Get Prescription List";
 $api->url = HOST . 'get_prescription_list';
 $api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Delete Invoice
+$api = new api();
+$api->name = "Delete Invoice";
+$api->url = HOST . 'delete_invoice';
+$api->method = "POST";
+$api->params->invoice_id = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;

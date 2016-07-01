@@ -35,12 +35,10 @@ class BillingController extends Controller
             ->leftJoin('patients', 'patients.id', '=', 'invoice.patient_id')
             ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.plan_id')
             ->where('invoice.status', 1)->get();
-        if ($bills) {
+
             return response()->json(['status' => true, 'message' => 'Invoices found', 'data' => $bills]);
 
-        } else {
-            return response()->json(['status' => false, 'message' => 'Bills not found']);
-        }
+
     }
 
     public function update_invoice(Request $request)
@@ -177,4 +175,19 @@ class BillingController extends Controller
 
 
     }
+
+    public function delete_invoice(Request $request){
+
+        $invoice_id = $request->input('invoice_id');
+
+        DB::table('invoice')
+                ->where('id', $invoice_id)
+                ->update(
+                    ['status' => 0]);
+
+            return response()->json(['status' => true, 'message' => 'Invoice Deleted successfully']);
+
+
+    }
+
 }

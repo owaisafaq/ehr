@@ -243,5 +243,6 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->get('get_invoice_data','App\Http\Controllers\BillingController@get_invoice_data');
     $app->get('get_invoice_status','App\Http\Controllers\BillingController@get_invoice_status');
     $app->get('get_billing_data','App\Http\Controllers\BillingController@get_billing_data');
+    $app->post('delete_invoice','App\Http\Controllers\BillingController@delete_invoice');
 
 });

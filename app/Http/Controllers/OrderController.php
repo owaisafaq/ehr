@@ -433,6 +433,8 @@ class OrderController extends Controller
 
         $lab_test_id = $request->input('lab_test_id');
 
+        $template_id= $request->input('template_id');
+
         $lab_test_values = html_entity_decode($request->input('lab_test_values'));
 
         $currentdatetime = date("Y-m-d  H:i:s");
@@ -444,6 +446,7 @@ class OrderController extends Controller
                 ['lab_order_id' => $lab_order_id,
                     'lab_test' => $lab_test_id,
                     'template_values' => $lab_test_values,
+                    'template_id' => $template_id,
                     'created_at' => $currentdatetime
 
                 ]
