@@ -1908,7 +1908,7 @@ $api_arr [] = $api;
 $api = new api();
 $api->name = "Delete Invoice";
 $api->url = HOST . 'delete_invoice';
-$api->method = "GET";
+$api->method = "POST";
 $api->params->invoice_id = "1";
 $api->params->token = "123435";
 

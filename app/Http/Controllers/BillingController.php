@@ -35,12 +35,10 @@ class BillingController extends Controller
             ->leftJoin('patients', 'patients.id', '=', 'invoice.patient_id')
             ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.plan_id')
             ->where('invoice.status', 1)->get();
-        if ($bills) {
+
             return response()->json(['status' => true, 'message' => 'Invoices found', 'data' => $bills]);
 
-        } else {
-            return response()->json(['status' => false, 'message' => 'Bills not found']);
-        }
+
     }
 
     public function update_invoice(Request $request)
