@@ -1367,7 +1367,7 @@ class ApiController extends Controller
             ->leftJoin('patients', 'patients.hospital_plan', '=', 'hospital_plan.id')
             ->select(DB::raw('hospital_plan.name,plan_details.is_principal,plan_details.is_dependant,plan_details.id as plan_id,plan_details.hmo,plan_details.policies,plan_details.insurance_id,plan_details.description,plan_details.notes'))
             ->where('patients.status', 1)
-            ->where('patients.id', $patient_id)
+            ->where('plan_details.patient_id', $patient_id)
             ->groupby('patients.id')
             ->first();
 
@@ -1782,7 +1782,8 @@ class ApiController extends Controller
 
             $patient_medications = DB::table('medication_shedule')
                 ->leftJoin('patient_prescription', 'patient_prescription.medication', '=', 'medication_shedule.id')
-                ->select(DB::raw('medication_shedule.id as prescription,prescriptions,to_date,from_date,medication_status as status'))
+                ->leftJoin('visits', 'medication_shedule.patient_id', '=', 'visits.patient_id')
+                ->select(DB::raw('medication_shedule.id as prescription,visits.id as encounter_id, prescriptions,to_date,from_date,medication_status as status'))
                 ->where('medication_shedule.patient_id', $patient_id)
                 ->where('medication_shedule.status', 1)
                 ->skip($offset)->take($limit)
@@ -1799,7 +1800,8 @@ class ApiController extends Controller
 
             $patient_medications = DB::table('medication_shedule')
                 ->leftJoin('patient_prescription', 'patient_prescription.medication', '=', 'medication_shedule.id')
-                ->select(DB::raw('medication_shedule.id as prescription,prescriptions,to_date,from_date,medication_status as status'))
+                ->leftJoin('visits', 'medication_shedule.patient_id', '=', 'visits.patient_id')
+                ->select(DB::raw('medication_shedule.id as prescription,,prescriptions,to_date,from_date,medication_status as status'))
                 ->where('medication_shedule.patient_id', $patient_id)
                 ->where('medication_shedule.status', 1)
                 ->get();
@@ -2809,7 +2811,7 @@ class ApiController extends Controller
 
 
         $prescriptions = DB::table('patient_prescription')
-            ->select(DB::raw('patient_id,medication,sig,dispense,reffills,pharmacy'))
+            ->select(DB::raw('patient_id,medication,sig,dispense,reffills,pharmacy,created_at'))
             ->where('status', 1)
             ->where('patient_id', $patient_id)
             ->get();
@@ -2846,4 +2848,3 @@ class ApiController extends Controller
     }
 
 }
-
