@@ -637,7 +637,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         $scope.addImmunizations = function (name) {
             if (name != undefined) {
                 $scope.immunizations.push({id: immunizations.length + 1, name: name});
-                $scope.immunizationName = '';
+                $scope.immunizationName = undefined;
             }
         }
 
