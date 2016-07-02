@@ -216,8 +216,8 @@
                                             <div class="col-lg-6">
                                                 <select class="form-control" ng-model="inventory.unit" ng-required="show_on_supplements"  >
                                                     <option>Select Unit</option>
-                                                    <option>2</option>
-                                                    <option>3</option>
+                                                    <option>mg</option>
+                                                    <option>ml</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -321,9 +321,13 @@
                                     </div>
                                     <div class="col-lg-3">
                                         <select class="form-control" ng-model="inventory.manufacturer_id" required >
-                                            <option>Select Manufacturer</option>
-                                            <option>2</option>
-                                            <option>3</option>
+                                            <option value="">Select Manufacturer</option>
+                                            <option value="1">Manufacturer 1</option>
+                                            <option value="2">Manufacturer 2</option>
+                                            <option value="3">Manufacturer 3</option>
+                                            <option value="4">Manufacturer 4</option>
+                                            <option value="5">Manufacturer 5</option>
+
                                         </select>
                                     </div>
                                     <div class="col-lg-3">
@@ -354,8 +358,11 @@
                                     <div class="col-lg-3">
                                         <select class="form-control" ng-model="inventory.pack" required >
                                             <option>Select Pack</option>
-                                            <option>2</option>
-                                            <option>3</option>
+                                            <option>Pack 1</option>
+                                            <option>Pack 2</option>
+                                            <option>Pack 3</option>
+                                            <option>Pack 4</option>
+
                                         </select>
                                     </div>
                                     <div class="col-lg-3">
@@ -457,8 +464,8 @@
                                                                 <div class="col-lg-6">
                                                                     <select class="form-control" ng-model="editinventory.unit" >
                                                                         <option>Select Unit</option>
-                                                                        <option>2</option>
-                                                                        <option>3</option>
+                                                                        <option>mg</option>
+                                                                        <option>ml</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -871,7 +878,19 @@
                             <label>City</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder=""  ng-model="supplier.city" required/>
+
+                            <select class="form-control" ng-model="supplier.city" required>
+                                <option>Select City</option>
+                                <option ng-repeat="city in Cities" value="{{city.id}}" >
+
+                                    {{city.name}}
+                                </option>
+
+
+                            </select>
+
+
+
                         </div>
 
                         <div class="col-lg-3">
@@ -885,10 +904,13 @@
                             <label>State</label>
                         </div>
                         <div class="col-lg-3">
-                            <select class="form-control" ng-model="supplier.state">
+                            <select class="form-control" ng-model="supplier.state" ng-change="getCitiesfromStates(supplier.state);">
                                 <option>Select State</option>
-                                <option>One</option>
-                                <option>Two</option>
+                                <option ng-repeat="state in States" value="{{state.id}}" >
+                                    {{state.name}}
+                                </option>
+
+
                             </select>
                         </div>
 
@@ -903,10 +925,12 @@
                             <label>Country</label>
                         </div>
                         <div class="col-lg-3">
-                            <select class="form-control" ng-model="supplier.country">
+                            <select class="form-control" ng-model="supplier.country" ng-change="getStatesfromCountry(supplier.country);">
                                 <option>Select Country</option>
-                                <option>One</option>
-                                <option>Two</option>
+                                <option ng-repeat="country in Countries" value="{{country.id}}" >
+                                    {{country.name}}
+                                </option>
+
                             </select>
                         </div>
 

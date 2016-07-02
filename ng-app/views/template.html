@@ -22,7 +22,7 @@
                                     <button type="submit">
                                         <i class="fa fa-search"></i>
                                     </button>
-                                    <input class="search_field" type="text" name="search"  ng-model="search" placeholder="Search Template">
+                                    <input class="search_field" type="text" name="search.name"  ng-model="search" placeholder="Search Template">
                                 </div>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                                             <div class="billing_actions"><a href="javascript:;" class="setting-button"></a>
                                                 <div class="tool-tip_popup">
                                                     <a href="javascript:;">Edit</a>
-                                                    <a href="javascript:;">Delete</a>
+                                                    <a href="javascript:;"   ng-click="templateDeleted(templateList.id)">Delete</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -157,7 +157,7 @@
                                 <button type="submit">
                                     <i class="fa fa-search"></i>
                                 </button>
-                                <input class="search_field" type="text" ng-model="search_cat" name="search_cat" placeholder="Search Category">
+                                <input class="search_field" type="text" ng-model="search_cat" name="search_cat.name" placeholder="Search Category">
                             </div>
                         </div>
                     </div>
@@ -178,9 +178,9 @@
                                         <span>{{category.description}}</span>
                                         <div class="settings_actions"><a href="javascript:;" class="setting-button"></a>
                                             <div class="tool-tip_popup">
-                                                <a href="javascript:;">View</a>
+                                                <!--<a href="javascript:;">View</a>-->
                                                 <a href="javascript:;">Edit</a>
-                                                <a href="javascript:;">Delete</a>
+                                                <a href="javascript:;"   ng-click="catDeleted(category.id)">Delete</a>
                                             </div>
                                         </div>
                                     </td>

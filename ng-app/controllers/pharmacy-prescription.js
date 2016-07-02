@@ -4,6 +4,7 @@ AppEHR.controller('pharmacyPrescription', ['$scope', '$rootScope', '$window', 'P
 	$rootScope.pageTitle = "EHR - Pharmacy";
 	$scope.action = '';
 	$scope.hideOptionsStrip = true;
+	$rootScope.loader = 'show';
 
 	$scope.currentPage = 1;
     $scope.numPerPage = 15;
@@ -14,6 +15,7 @@ AppEHR.controller('pharmacyPrescription', ['$scope', '$rootScope', '$window', 'P
 	function pharmanyListSuccess(res){
 		if(res.status ==  true){
 			$scope.allPharmacies = res.data;
+			$rootScope.loader = 'hide';
 		}
 	}
 
@@ -33,10 +35,6 @@ AppEHR.controller('pharmacyPrescription', ['$scope', '$rootScope', '$window', 'P
 		console.log($scope.patientID + "/" + $scope.encounterID);
 		$window.location.href = "#/pharmacy-view/" + $scope.patientID + "/" + $scope.encounterID;
 	}
-
-	/*$scope.search = function (row) {
-        return !!((row.first_name.indexOf($scope.query || '') !== -1 || row.patient_id.indexOf($scope.query || '') !== -1 || row.visit_id.indexOf($scope.query || '') !== -1));
-    };*/
 
     $scope.search = function(item){ // search data by patient name or partient id
         if($scope.query == undefined){
