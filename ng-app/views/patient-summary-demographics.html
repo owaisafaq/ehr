@@ -49,25 +49,27 @@
                         </div>
                     </div><!--end .panel -->
                     <div class="card panel">
-                        <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-3">
-                            <header>Immunizations</header>
-                            <div class="tools">
-                                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+                        <form class="custom-form" novalidate>
+                            <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-3">
+                                <header>Immunizations</header>
+                                <div class="tools">
+                                    <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+                                </div>
                             </div>
-                        </div>
-                        <div id="accordion3-3" class="collapse">
-                            <div class="card-body">
-                                <textarea ng-model="immunizationName" placeholder="Immunization"></textarea>
-                                <button ng-click="addImmunizations(immunizationName);">Add</button>
-                                <ul>
-                                    <li ng-repeat="immunization in immunizations">
-                                        {{immunization.name}}
-                                        <span class="delete-icon" ng-click="immunizations.splice($index, 1)"><img src="assets/img/cross.png" /></span>
-                                    </li>
-                                </ul>
-                                <!-- <p>Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Dicant vituperata consequuntur.</p> -->
+                            <div id="accordion3-3" class="collapse">
+                                <div class="card-body">
+                                    <textarea ng-model="immunizationName" placeholder="Immunization" required></textarea>
+                                    <button class="btn button-style-1 pull-right" ng-click="addImmunizations(immunizationName);">Add</button>
+                                    <ul class="ulli ulli_3 col-lg-12">
+                                        <li class="col-lg-12" ng-repeat="immunization in immunizations">
+                                            {{immunization.name}}
+                                            <span class="pull-right delete-icon" ng-click="immunizations.splice($index, 1)"><img src="assets/img/cross.png" /></span>
+                                        </li>
+                                    </ul>
+                                    <!-- <p>Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Dicant vituperata consequuntur.</p> -->
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div><!--end .panel -->
                     <div class="card panel">
                         <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-2">
