@@ -27,3 +27,15 @@ var intakeTypes = [
     {"id": "1", "name": "Intake"},
     {"id": "2", "name": "Type"}
 ];
+var medicationDropDowns = [
+    {"id": "1", "name": "abc"},
+    {"id": "2", "name": "eef"},
+]
+var pharmacyDataDropDown = [
+    {"id": "1", "name": "abc"},
+    {"id": "2", "name": "eef"},
+]
+var immunizations = [
+    {"id": "1", "name": "Intake"},
+   {"id": "2", "name": "Type"}
+];

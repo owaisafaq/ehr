@@ -1,5 +1,5 @@
 var AppEHR = angular.module('AppEHR');
-AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', 'GetResourcesByFolderArchives', 'ListFolderArchives', 'EditFolderArchives', 'DeleteFolderArchives', 'RemoveArchives', 'Upload', 'SaveFiles', '$timeout', 'DropDownData', 'ADDSupplements', 'ADDAllergy', 'AddFolderArchives', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy, GetResourcesByFolderArchives, ListFolderArchives, EditFolderArchives, DeleteFolderArchives, RemoveArchives, Upload, SaveFiles, $timeout, DropDownData, ADDSupplements, ADDAllergy, AddFolderArchives) {
+AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', 'GetResourcesByFolderArchives', 'ListFolderArchives', 'EditFolderArchives', 'DeleteFolderArchives', 'RemoveArchives', 'Upload', 'SaveFiles', '$timeout', 'DropDownData', 'ADDSupplements', 'ADDAllergy', 'AddFolderArchives','PatienPrescription', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy, GetResourcesByFolderArchives, ListFolderArchives, EditFolderArchives, DeleteFolderArchives, RemoveArchives, Upload, SaveFiles, $timeout, DropDownData, ADDSupplements, ADDAllergy, AddFolderArchives,PatienPrescription) {
         $rootScope.pageTitle = "EHR - Patient Summary Demographics";
         $scope.vital = {};
         $scope.PI = {};
@@ -11,6 +11,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         $scope.addSupplement = {};
         $scope.frequencies = frequencies;
         $scope.intakeTypes = intakeTypes;
+        $scope.immunizations = immunizations;
 
         $scope.supplementData = [];
 
@@ -34,11 +35,19 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         $scope.allergynumPerPage = 15;
         $scope.allergysmaxSize = 5;
         $scope.PID = $routeParams.patientID
+
+        $scope.medicationDropDowns = medicationDropDowns;
+        $scope.pharmacyDataDropDown = pharmacyDataDropDown;
+        
+         $scope.medicationsDataPush = [];
+
+
         PatientDemographics.get({
             token: $window.sessionStorage.token,
             patient_id: $routeParams.patientID
         }, getPatientInfoSuccess, getPatientInfoFailure);
         function getPatientInfoSuccess(res) {
+            console.log(res)
             if (res.status == true) {
                 var dob = new Date(res.data.date_of_birth);
                 var dobArr = dob.toDateString().split(' ');
@@ -303,7 +312,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
                 file.upload = Upload.upload({
                     url: serverPath + "add_patient_archive",
                     method: 'POST',
-                    data: {patient_archive: file, patient_id: $window.sessionStorage.patient_id, follow_up_parent_id: $scope.followupParentId}
+                    data: {patient_archive: file, patient_id: $routeParams.patientID, follow_up_parent_id: $scope.followupParentId}
                 });
 
                 file.upload.then(function (response) {
@@ -623,5 +632,65 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         function addAllergyFailure(error) {
             console.log(error);
+        }
+
+        $scope.addImmunizations = function (name) {
+            $scope.immunizations.push({id: immunizations.length + 1, name: name});
+            $scope.immunizationName = '';
+            console.log($scope.immunizations);
+        }
+
+        $scope.addMedication = function (checkEdit) {
+            var AddMedications = {
+                medication: $scope.MedicationData.medication,
+                sig: $scope.MedicationData.sig,
+                dispense: $scope.MedicationData.dispense,
+                reffills: $scope.MedicationData.reffills,
+                pharmacy: $scope.MedicationData.pharmacy,
+                note_of_pharmacy: $scope.MedicationData.note_of_pharmacy,
+            }
+            $scope.medicationsDataPush.push(AddMedications);
+            $scope.MedicationData.sig = "";
+            $scope.MedicationData.dispense = "";
+            $scope.MedicationData.reffills = "";
+            $scope.MedicationData.note_of_pharmacy = "";
+            $scope.MedicationData.medication = "";
+            $scope.MedicationData.pharmacy = "";
+            $("#addmedication select").select2("val", "");
+            if (checkEdit == 1) {
+                $scope.showUpdate = false;
+            }
+        }
+        $scope.editMedication = function (index) {
+            $scope.MedicationData = $scope.medicationsDataPush[index];
+            setTimeout(function () {
+                $('#addmedication select').trigger('change');
+            }, 100)
+            $scope.medicationsDataPush.splice(index, 1);
+            console.log($scope.medicationsDataPush)
+            $scope.showUpdate = true;
+        }
+        $scope.savePharmacyPopUp = function () {
+            for (var i = 0; i < $scope.medicationsDataPush.length; i++) {
+                delete $scope.medicationsDataPush[i].$$hashKey
+            }
+            var addPrescrptnPop = {
+                patient_id: $routeParams.patientID,
+                prescription: JSON.stringify($scope.medicationsDataPush),
+                token: $window.sessionStorage.token,
+                visit_id: 1
+            }
+            console.log(addPrescrptnPop)
+            PatienPrescription.save(addPrescrptnPop, PrescriptionSuccessPop, PrescriptionFailurePop)
+        }
+        function PrescriptionSuccessPop(res) {
+            console.log(res)
+            if (res.status == true) {
+                $('#addmedication').modal('hide');
+                $scope.medicationsDataPush = [];
+            }
+        }
+        function PrescriptionFailurePop(res) {
+            console.log(res)
         }
     }]);
