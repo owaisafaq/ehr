@@ -3,7 +3,7 @@ var AppEHR = angular.module('AppEHR');
 AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders', '$window', '$routeParams','getLabOrderInfo','cancelLabOrder', '$timeout', '$location', 'GetAllPatients', 'DropDownData', 'GetLabTests','addOrder', function ($scope, $rootScope, GetAllLabOrders, $window, $routeParams,getLabOrderInfo,cancelLabOrder, $timeout, $location, GetAllPatients, DropDownData, GetLabTests, addOrder) {
 	$rootScope.pageTitle = "EHR - Lab Order Listing";
     $scope.action = "";
-    $scope.test_added = false;
+    $scope.testAdded = false;
 	GetAllLabOrders.get({ // Getting all lab orders
 		token: $window.sessionStorage.token
 	}, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
@@ -125,13 +125,12 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
              console.log(error);
          }
     };
-
     $scope.lab_tests = []; // lab tests property
     $scope.lab_tests_td = []; // lab tests row data
     $scope.lab_test_total = 0; // lab tests total cost
     $scope.addTest = function (){ // adding test for order
         $scope.lab_tests.push({ 'lab_test' : $scope.Order.lab_test.id , 'priority' : $scope.Order.priority}); // update lab test object with new test
-        $scope.test_added = true;
+        $scope.testAdded = true;
         $scope.lab_tests_td.push({'name' : $scope.Order.lab_test.name, 'cost':$scope.Order.lab_test.cost, 'priority' : $scope.Order.priority}); // updating new test row for order
         $scope.lab_test_total = parseFloat($scope.lab_test_total) + parseFloat($scope.Order.lab_test.cost);
         $scope.Order.priority = undefined; // unsetting priority dropdown
@@ -173,6 +172,7 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
             GetAllLabOrders.get({ // Getting all lab orders
                 token: $window.sessionStorage.token
             }, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
+            $scope.orderSelected = false;
         } else {
             $scope.hideLoader = "hide";
             $scope.OrderBtn = false;
@@ -185,4 +185,11 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
     function OrderFailure(error) {
         console.log(error);
     }
+
+    $scope.addformsubmission = function(){
+        if($scope.submitted == true && $scope.addForm.$invalid == true ){
+            return true;
+        }
+        return false;
+    };
 }]);

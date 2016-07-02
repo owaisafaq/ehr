@@ -121,7 +121,7 @@
                             <div class="modal-header pop_head">
                                 <h2>New Order</h2>
                             </div>
-                            <form class="custom-form" name="addForm" ng-model="myForm" novalidate ng-submit="createOrder(Order);">
+                            <form class="custom-form" name="addForm" ng-model="myForm" novalidate ng-submit="testAdded && createOrder(Order);">
                                 <div class="modal-body pull-left">
                                     <div class="col-lg-12">
                                         <select class="form-control select_searchFields" ng-model="Order.patient_id" placeholder="Select Patient" name="patient_id" ng-class="{true: 'error'}[submitted && addForm.patient_id.$invalid]" required>
@@ -166,7 +166,7 @@
                                         <span class="plus" ng-click="addTest()"><i class="md-add"></i></span>
                                     </div>
                                     <div class="col-lg-12">
-                                        <p class="help-block PIValid" ng-show="submitted && !test_added">Required</p>
+                                        <p class="help-block PIValid" ng-show="submitted && !testAdded">Required</p>
                                         <table class="table table-striped no-margin table-custom">
                                             <thead>
                                                 <tr>
@@ -209,7 +209,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;" ng-disabled="submitted && addForm.$invalid">create</button>
+                                    <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;" ng-disabled="addformsubmission()">create</button>
                                     <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal" ng-disabled="OrderBtn">Cancel</button>
                                 </div>
                             </form>
