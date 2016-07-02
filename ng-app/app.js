@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR', [
     'ngRoute', 'ngResource',
-    'ngTouch', 'ui.grid', 'ui.grid.pagination', 'ngFileUpload', 'angular.filter', 'ui.bootstrap','fg', 'ngSanitize', 'markdown'
+    'ngTouch', 'ui.grid', 'ui.grid.pagination', 'ngFileUpload', 'angular.filter', 'ui.bootstrap', 'fg', 'ngSanitize', 'markdown'
 ]);
 AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
     function ($httpProvider, $routeProvider, $locationProvider) {
@@ -20,7 +20,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     controller: 'loginController'
                 }).
                 when('/appointments-calander-view', {
-                    templateUrl: 'views/appointments-calander-view.html',
+                    templateUrl: 'views/appointments-calender-view.html',
                     controller: 'appointmentsCalenderController'
                 }).
                 when('/appointments-list', {
@@ -131,7 +131,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/billing.html',
                     controller: 'billing'
                 }).
-                when('/pharmacy-view', {
+                when('/pharmacy-view/:patientID/:encounterID', {
                     templateUrl: 'views/pharmacy-view.html',
                     controller: 'pharmacyView'
                 }).

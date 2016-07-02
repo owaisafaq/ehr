@@ -20,13 +20,15 @@
                         <button type="submit">
                             <i class="fa fa-search"></i>
                         </button>
-                        <input class="search_field search_field_big" type="text" placeholder="Enter patient name, id or encounter number">
+                        <input class="search_field search_field_big" ng-model="query" type="text" placeholder="Enter patient name, id or encounter number">
                     </div>
-                </div> 
-                <button type="button" class="dispense_pharmacy button-custom pull-right">dispense pharmacy</button>
-                <button type="button" class="update button-custom pull-right">update pharmacy</button>
-                <button type="button" class="print button-custom pull-right">print prescription</button>
-                <button class="notes button-custom pull-right" data-target="#viewPrescription" data-toggle="modal">view prescription</button>
+                </div>
+                <div ng-hide="hideOptionsStrip">
+                    <button type="button" class="dispense_pharmacy button-custom pull-right">dispense pharmacy</button>
+                    <button type="button" class="update button-custom pull-right">update pharmacy</button>
+                    <button type="button" class="print button-custom pull-right">print prescription</button>
+                    <button class="notes button-custom pull-right" ng-click="goToPrescription();">view prescription</button>
+                </div>
             </div>
             <div class="card-body col-lg-12">
                 <div>
@@ -43,7 +45,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr ng-repeat="allpharmacy in allPharmacies.slice(begin, end) | filter:search">
+                                <td><div class="radio radio-styled">
+                                        <label>
+                                            <input type="radio" name="optionsRadios" ng-model="action" ng-click="checkPrescription(allpharmacy.id, allpharmacy.visit_id);">
+                                            <span></span>
+                                        </label>
+                                    </div></td>
+                                <td>{{allpharmacy.patient_id}}</td>
+                                <td><a class="link-style" href="javascript:;">{{allpharmacy.first_name}} {{allpharmacy.first_last}}</a></td>
+                                <td><a class="link-style" href="javascript:;">{{allpharmacy.visit_id}}</a></td>
+                                <td>{{allpharmacy.patient_plan}}</td>
+                                <td>{{allpharmacy.total_amount}}</td>
+                                <td>{{allpharmacy.prescription_status}}</td>
+                            </tr>
+                            <!-- <tr>
                                 <td><div class="radio radio-styled">
                                         <label>
                                             <input type="radio" name="optionsRadios">
@@ -69,39 +85,13 @@
                                 <td><a class="link-style" href="javascript:;">292002020</a></td>
                                 <td>General</td>
                                 <td>8500</td>
-                                <td><div class="checkbox checkbox-styled checkbox-styled-table">
-                                        <label>
-                                            <input type="checkbox">
-                                            <span></span>
-                                        </label>
-                                    </div></td>
                                 <td>Complete</td>
-                            </tr>
-                            <tr>
-                                <td><div class="radio radio-styled">
-                                        <label>
-                                            <input type="radio" name="optionsRadios">
-                                            <span></span>
-                                        </label>
-                                    </div></td>
-                                <td>90288282</td>
-                                <td><a class="link-style" href="javascript:;">Jane Doe</a></td>
-                                <td><a class="link-style" href="javascript:;">292002020</a></td>
-                                <td>General</td>
-                                <td>8500</td>
-                                <td><div class="checkbox checkbox-styled checkbox-styled-table">
-                                        <label>
-                                            <input type="checkbox">
-                                            <span></span>
-                                        </label>
-                                    </div></td>
-                                <td>Complete</td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                     </table>
+                    <pagination data-ng-model="currentPage" total-items="allPharmacies.length" items-per-page="numPerPage" data-max-size="maxSize" data-boundary-links="true" ng-init="begin = (currentPage - 1) * numPerPage; end = begin + numPerPage" data-ng-change="begin = (currentPage - 1) * numPerPage; end = begin + numPerPage">
+                    </pagination>
                 </div>
-
-
             </div><!--end .card-body -->
         </div><!--end .card -->
     </section>

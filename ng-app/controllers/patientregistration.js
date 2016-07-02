@@ -146,19 +146,15 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 GetLocalGovermentArea.get({token: $window.sessionStorage.token, state_id: state.id}, LGASuccess, LGAFailed);
                 City.get({token: $window.sessionStorage.token, state_id: state.id}, citySuccess, cityFailed);
                 function LGASuccess(res) {
-                    console.log(res);
                     if (res.status == true && res.data.length > 0) {
-                        console.log(res);
                         angular.copy(res.data, $scope.patientInfolocalGovtArea);
                         angular.copy(res.data, $scope.addresslocalGovtArea);
                         $scope.disabledDropdown = false;
                     } else {
                         $scope.disabledDropdown = false;
-                        console.log(111);
                     }
                 }
                 function LGAFailed(error) {
-                    console.log(error);
                     $scope.disabledDropdown = false;
                 }
 
@@ -170,7 +166,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     } else {
                         $scope.patientInfolocalGovtArea = [];
                         $scope.PI.patient_local_goverment_area = "";
-                        console.log(111);
                     }
                 }
                 function cityFailed(error) {
@@ -216,7 +211,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 City.get({token: $window.sessionStorage.token, state_id: states}, citySuccess, cityFailed);
                 function citySuccess(res) {
                     if (res.status == true && res.data.length > 0) {
-                        console.log(res);
                         angular.copy(res.data, $scope.nextOfKinCities);
                     } else {
                         console.log(111);
@@ -258,7 +252,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 City.get({token: $window.sessionStorage.token, state_id: states.id}, citySuccess, cityFailed);
                 function citySuccess(res) {
                     if (res.status == true && res.data.length > 0) {
-                        console.log(res);
                         angular.copy(res.data, $scope.employerCities);
                     } else {
                         console.log(111);
@@ -331,10 +324,8 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 };
                 $rootScope.loader = 'show';
                 if ($window.sessionStorage.patient_id == undefined) {
-                    console.log(dataToBeAdded);
                     PatientInformation.save(dataToBeAdded, patientInformationSuccess, patientInformationFailed);
                 } else {
-                    console.log('else');
                     dataToBeAdded.patient_id = $window.sessionStorage.patient_id;
                     PatientInformation.save(dataToBeAdded, patientInfoUpdateSucess, patientInfoUpdateFailed);
                 }
@@ -359,7 +350,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 }
 
                 function patientInfoUpdateSucess(res) {
-                    console.log(res);
                     if (res.status == true) {
                         $rootScope.loader = 'hide';
                     } else {
@@ -375,7 +365,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
         // patient address API
         $scope.validatePatientAddress = function (PIAdress) {
-            console.log(PIAdress);
             //console.log(angular.equals({}, PIAdress));
             if (angular.equals({}, PIAdress) == false) {
                 $rootScope.loader = 'show';
@@ -405,20 +394,16 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     permanent_postalCode: $scope.PI.adress.permanent_postalCode == undefined ? '' : $scope.PI.adress.permanent_postalCode
                 };
                 if ($scope.address_id == undefined) {
-                    console.log('if');
                     PatientRegistrationAddress.save(dataToBeAdded, patientAddressSuccess, patientAddressFailed);
                     function patientAddressSuccess(res) {
-                        console.log(res);
                         if (res.status == true) {
                             $rootScope.loader = 'hide';
                             $scope.address_id = res.address_id;
                             $scope.showSubmitButtonAddress = false;
-                            console.log($scope.disabledTabKin);
                             $scope.disabledTabKin = $scope.disabledTabKin == 'disabled-tabs' ? 'active' : '';
                             if ($scope.disabledTabKin == 'disabled-tabs') {
                                 $scope.disabledTabKin = 'active';
                             }
-                            console.log($scope.disabledTabKin);
                             $scope.disabledTabAdress = '';
                             //$scope.disabledTabs = "";
                         } else {
@@ -433,10 +418,8 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     }
                 } else {
                     dataToBeAdded.address_id = $scope.address_id;
-                    console.log('else ' + $scope.address_id);
                     PatientRegistrationAddress.save(dataToBeAdded, patientAddressUpdateSucess, patientAddressUpdateFailed);
                     function patientAddressUpdateSucess(res) {
-                        console.log(res);
                         $rootScope.loader = 'hide';
                         if (res.status == true) {
                             $scope.address_id = res.address_id;
@@ -463,7 +446,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         $scope.validatePatientKin = function (PIKin) {
             //console.log(PIKin);
             if (angular.equals({}, PIKin) == false) {
-                console.log(angular.equals({}, PIKin));
                 $rootScope.loader = 'show';
                 var dataToBeAdded = {
                     token: $window.sessionStorage.token,
@@ -505,7 +487,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                         console.log(error);
                     }
                 } else {
-                    console.log('else update');
                     dataToBeAdded.kin_id = $scope.kin_id;
                     PatientRegistrationKin.save(dataToBeAdded, patientKinUpdateSucess, patientKinUpdateFailed);
                     function patientKinUpdateSucess(res) {
@@ -551,10 +532,8 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
 
                 if ($scope.employer_id == undefined) {
-                    console.log('if');
                     PatientRegistrationEmployer.save(dataToBeAdded, patientEmployerSuccess, patientEmployerFailed);
                     function patientEmployerSuccess(res) {
-                        console.log(res);
                         if (res.status == true) {
                             $rootScope.loader = 'hide';
                             $scope.employer_id = res.employee_id;
@@ -599,7 +578,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
         // patient plan
         $scope.validatePatientPlan = function (PIPlan) {
-            console.log(PIPlan);
             $scope.disabledTabPatientPlant = 'active';
             $scope.disabledTabArchive = '';
         }
@@ -679,7 +657,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
         function patientEditSuccess(res) {
             if (res.status == true) {
-                console.log(res.data);
+                //console.log(res.data);
                 //$scope.PI.sameAsAbove = res.data.patient_address[1].length > 0 ? true : false;
                 $scope.PI.sameAsAbove = res.data.patient_address[1] != undefined ? false : true;
                 $scope.address_id = res.data.patient_address.length > 0 ? res.data.patient_address[0].id : undefined;
@@ -843,7 +821,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 }, function (response) {
                     if (response.status > 0)
                         $scope.errorMsg = response.status + ': ' + response.data;
-                    console.log($scope.errorMsg);
                 }, function (evt) {
                     file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
                 });
@@ -869,16 +846,12 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     DeleteFolderArchives.get({token: $window.sessionStorage.token, /*$window.sessionStorage.patient_id*/ resource_id: removeId}, deleteFolderSuccess, deleteFolderFailure);
                 } else {
                     $rootScope.loader = 'show';
-                    console.log('file delete ' + removeId);
-                    console.log($window.sessionStorage.patient_id);
                     RemoveArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, patient_fie_id: removeId}, removeArchiveSuccess, removeArchiveFailure);
                 }
             }
         }
 
         function removeArchiveSuccess(res) {
-            console.log('delete service');
-            console.log(res);
             if (res.status == true) {
                 $('.archive_buttons .edit,.archive_buttons .delete').css('display','none')
                 //$scope.followupParentId = $scope.removeItemId;
@@ -942,7 +915,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         function saveFolderNameSuccess(res) {
             if (res.status == true) {
                 $('.archive_buttons .edit,.archive_buttons .delete').css('display','none')
-                console.log(res)
                 ListFolderArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, followup_parent_id: $scope.followupParentId}, listFolderSuccess, listFolderFailure);
             }
         }
@@ -955,8 +927,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         function saveFileNameSuccess(res) {
             if (res.status == true) {
                 $('.archive_buttons .edit,.archive_buttons .delete').css('display','none')
-                console.log("success get all")
-                console.log($scope.followup_parent_id);
                 GetResourcesByFolderArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, followup_parent_id: $scope.followupParentId}, nestedFolderSuccess, nestedFolderFailure);
             }
         }
@@ -979,8 +949,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             if (res.status == true) {
                 $scope.foldersArchive = res.data;
                 $rootScope.loader = 'hide';
-                console.log($scope.foldersArchive)
-                console.log("hereee")
             }
         }
         function listFolderFailure(error) {
@@ -994,14 +962,10 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             var folderId = $('.file_uploads .active').data('id');
             if ($scope.backLinkID == '0') {
                 $scope.backLinkID = $scope.followupParentId;
-                console.log($scope.backLinkID + "--");
             } else {
-                console.log('not zero');
                 $scope.backLinkID = $scope.followupParentId;
-                console.log($scope.backLinkID);
             }
             $scope.followupParentId = folderId;
-            console.log("folderid "+$scope.followupParentId);
             if (folderId != undefined) {
                 $scope.foldersArchive = [];
                 $scope.archives = [];
@@ -1014,8 +978,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         }
 
         function nestedFolderSuccess(res) {
-            console.log("res")
-            console.log(res)
             if (res.status == true) {
                 $scope.backButtonArchive = false;
                 //$scope.foldersArchive = [];
@@ -1219,7 +1181,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             console.log($scope.PP.checkoutpatient);
             if ($scope.PP.checkoutpatient == 1)
             {
-
                 $scope.dataToBeAdded.retainership = '';
                 $scope.dataToBeAdded.category = '';
                 $scope.dataToBeAdded.notes = '';
@@ -1234,7 +1195,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 if($routeParams.patientID != undefined){
                     $scope.dataToBeAdded.patient_plan_id = 1;
                 }
-                console.log(1);
+                console.log($scope.dataToBeAdded);
                 PatienPlanSaveData.save($scope.dataToBeAdded, PlanDataSuccess, PlanDataFailure)
             }
             else if ($scope.PP.checkoutpatient == 2)
@@ -1262,7 +1223,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     
                     $rootScope.loader = 'show';
                     if($routeParams.patientID != undefined){
-                        $scope.dataToBeAdded.patient_plan_id = 1;
+                        $scope.dataToBeAdded_send.patient_plan_id = 1;
                     }
                     console.log(2);
                     console.log($scope.dataToBeAdded_send)
@@ -1292,7 +1253,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     }
                     $rootScope.loader = 'show';
                     if($routeParams.patientID != undefined){
-                        $scope.dataToBeAdded.patient_plan_id = 1;
+                        $scope.dataToBeAdded_send.patient_plan_id = 1;
                     }
                     console.log(3);
                     PatienPlanSaveData.save($scope.dataToBeAdded_send, PlanDataSuccess, PlanDataFailure)
