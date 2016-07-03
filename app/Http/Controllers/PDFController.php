@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\File;
 use DB;
 use PDF;
 use View;
+use PHPMailer;
+
 class PDFController extends Controller
 {
     public function get_lab_test_pdf(Request $request)
@@ -63,6 +65,54 @@ class PDFController extends Controller
                        'data' => $file_archive,
 
                    ),JSON_UNESCAPED_SLASHES);
+
+    }
+
+
+    public function send_invoice_email(Request $request){
+
+
+        $invoice_id = $request->input('invoice_id');
+        $email_address = $request->input('email_address');
+
+        $data = ['name'=>'foo'];
+
+        $view =  app()->make('view')->make('invoice_pdf', $data)->render();
+
+
+        $pdf = PDF::loadHTML($view);
+        $path = base_path().'/public/patient_archive/invoice_pdf';
+
+        $pdf->save($path);
+
+        $message = "Invoice Data";
+
+              $mail = new PHPMailer(true); // notice the \  you have to use root namespace here
+              try {
+                  $mail->isSMTP(); // tell to use smtp
+                  $mail->CharSet = "utf-8"; // set charset to utf8
+                  $mail->SMTPAuth = false;  // use smpt auth
+                  $mail->SMTPSecure = "tls"; // or ssl
+                  $mail->Host = "smtp.gmail.com";
+                  $mail->Port = `587`; // most likely something different for you. This is the mailtrap.io port i use for testing.
+                  $mail->Username = "aploskhan@gmail.com";
+                  $mail->Password = "Aplos@221";
+                  $mail->setFrom('smovaishassan12@hotmail.com');
+                  $mail->AddAttachment($path);
+                  $mail->Subject = "Message From Ehr";
+                  $mail->MsgHTML($message);
+                  $mail->addAddress($email_address);
+                  $mail->send();
+
+               } catch (phpmailerException $e) {
+                  dd($e);
+               } catch (Exception $e) {
+                              dd($e);
+               }
+
+
+        return response()->json(['status' => true, 'message' => 'Email Send Successfully']);
+
 
     }
 }
