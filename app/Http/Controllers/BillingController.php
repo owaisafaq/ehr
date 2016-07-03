@@ -190,4 +190,23 @@ class BillingController extends Controller
 
     }
 
+    public function get_bill_invoices(Request $request){
+
+
+        $bill_id = $request->input('bill_id');
+
+        $bills = DB::table('invoice')
+            ->select('invoice.*', 'hospital_plan.id as plan_id', 'hospital_plan.name as plan_name','patients.first_name','patients.middle_name','patients.last_name')
+            ->leftJoin('patients', 'patients.id', '=', 'invoice.patient_id')
+            ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.plan_id')
+            ->where('invoice.status', 1)
+            ->where('invoice.bill_id', $bill_id)
+            ->get();
+
+            return response()->json(['status' => true, 'message' => 'Invoices found', 'data' => $bills]);
+
+
+
+    }
+
 }

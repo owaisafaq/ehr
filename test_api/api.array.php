@@ -1955,3 +1955,14 @@ $api->params->token = "123435";
 
 $api_arr [] = $api;
 
+
+
+//Get Bill Invoices
+$api = new api();
+$api->name = "Get Bill Invoices";
+$api->url = HOST . 'get_bill_invoices';
+$api->method = "GET";
+$api->params->bill_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;

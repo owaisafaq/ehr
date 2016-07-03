@@ -49,7 +49,6 @@ class PDFController extends Controller
 //        return $view;
 //    return $view;
 
-        $file_archive = '/var/www/html/ehr/public/patient_archive/report_pdf';
         $pdf = PDF::loadHTML($view);
         // return $pdf->stream($file_archive);
 
@@ -59,10 +58,11 @@ class PDFController extends Controller
 
         $file_archive = url('/').'/patient_archive/report_pdf';
 
-        return response()->json(['status' => true, 'data'=> $file_archive]);
+        echo json_encode(array(
+                       'status' => true,
+                       'data' => $file_archive,
 
-      //  return $pdf->download('report_pdf');
-
+                   ),JSON_UNESCAPED_SLASHES);
 
     }
 }

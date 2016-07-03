@@ -248,5 +248,6 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->post('delete_invoice','App\Http\Controllers\BillingController@delete_invoice');
 
     $app->get('get_lab_test_pdf','App\Http\Controllers\PDFController@get_lab_test_pdf');
+    $app->get('get_bill_invoices','App\Http\Controllers\BillingController@get_bill_invoices');
 
 });
