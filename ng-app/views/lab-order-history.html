@@ -41,9 +41,9 @@
                         <button type="submit">
                             <i class="fa fa-search"></i>
                         </button>
-                        <input class="search_field search_field_big" type="text" placeholder="Search with patient order by patient name or id">
+                        <input class="search_field search_field_big" type="text" placeholder="Search patient order by patient name or id" ng-model="searchHistory">
                     </div>
-                    <button type="button" class="btn ink-reaction button-style-1 button-style-1 pull-left">Select</button>
+                    <!--<button type="button" class="btn ink-reaction button-style-1 button-style-1 pull-left">Select</button>-->
                 </div> 
             </div>
             <div class="card-body col-lg-12">
@@ -62,7 +62,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="labOrder in labOrders">
+                            <tr ng-repeat="labOrder in labOrders | filter:search">
                                 <td align="center">
                                     <div class="radio radio-styled">
                                         <label>

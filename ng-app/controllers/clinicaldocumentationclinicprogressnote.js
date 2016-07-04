@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootScope', '$window', '$routeParams', 'GetPatientInfo', 'ClinicalProgressNotesFields', 'GetTemplatesDropDown', 'SetClinicalProgressNotes', function($scope, $rootScope, $window, $routeParams, GetPatientInfo, ClinicalProgressNotesFields, GetTemplatesDropDown, SetClinicalProgressNotes){
+AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootScope', '$window', '$routeParams', 'GetPatientInfo', 'ClinicalProgressNotesFields', 'GetTemplatesDropDown', 'SetClinicalProgressNotes', 'PatienPrescription', 'GetAllPrescription', function($scope, $rootScope, $window, $routeParams, GetPatientInfo, ClinicalProgressNotesFields, GetTemplatesDropDown, SetClinicalProgressNotes, PatienPrescription, GetAllPrescription){
 	$rootScope.pageTitle = "EHR - Clinical Documentation - Clinic Progress Note";
 	$scope.displayInfo = {};
 	$scope.templates = {};
@@ -9,6 +9,10 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 	$scope.items = [];
 	$scope.selectedRow = false;
 	$rootScope.loader = "show";
+	$scope.medicationDropDowns = medicationDropDowns;
+    $scope.pharmacyDataDropDown = pharmacyDataDropDown;
+    $scope.MedicationData = [];
+    $scope.medicationsDataPush = [];
 	/*{{field = field + 1}}*/
 	GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID}, getPatientSuccess, getPatientFailure);
 	GetTemplatesDropDown.get({token: $window.sessionStorage.token}, getTemplateDropDownSuccess, getTemplateDropDownFailure);
@@ -84,5 +88,60 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 		}
 	}
 
+	/*PRISCRIPITON*/
 
+
+	$scope.addMedication = function (checkEdit) {
+           var AddMedications = {
+               medication: $scope.MedicationData.medication,
+               sig: $scope.MedicationData.sig,
+               dispense: $scope.MedicationData.dispense,
+               reffills: $scope.MedicationData.reffills,
+               pharmacy: $scope.MedicationData.pharmacy,
+               note_of_pharmacy: $scope.MedicationData.note_of_pharmacy,
+           }
+           $scope.medicationsDataPush.push(AddMedications);
+           $scope.MedicationData.sig = "";
+           $scope.MedicationData.dispense = "";
+           $scope.MedicationData.reffills = "";
+           $scope.MedicationData.note_of_pharmacy = "";
+           $scope.MedicationData.medication = "";
+           $scope.MedicationData.pharmacy = "";
+           $("#addmedication select").select2("val", "");
+           if (checkEdit == 1) {
+               $scope.showUpdate = false;
+           }
+       }
+       $scope.editMedication = function (index) {
+           $scope.MedicationData = $scope.medicationsDataPush[index];
+           setTimeout(function () {
+               $('#addmedication select').trigger('change');
+           }, 100)
+           $scope.medicationsDataPush.splice(index, 1);
+           console.log($scope.medicationsDataPush)
+           $scope.showUpdate = true;
+       }
+       $scope.savePharmacyPopUp = function () {
+           for (var i = 0; i < $scope.medicationsDataPush.length; i++) {
+               delete $scope.medicationsDataPush[i].$$hashKey
+           }
+           var addPrescrptnPop = {
+               patient_id: $routeParams.patientID,
+               prescription: JSON.stringify($scope.medicationsDataPush),
+               token: $window.sessionStorage.token,
+               visit_id: $scope.displayInfo.encounter_id
+           }
+           console.log(addPrescrptnPop)
+           PatienPrescription.save(addPrescrptnPop, PrescriptionSuccessPop, PrescriptionFailurePop)
+       }
+       function PrescriptionSuccessPop(res) {
+           console.log(res)
+           if (res.status == true) {
+               $('#addmedication').modal('hide');
+               $scope.medicationsDataPush = [];
+           }
+       }
+       function PrescriptionFailurePop(res) {
+           console.log(res)
+       }
 }]);

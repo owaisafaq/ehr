@@ -1363,11 +1363,12 @@ class ApiController extends Controller
 
 
         $patient_plan = DB::table('hospital_plan')
-            ->leftJoin('plan_details', 'plan_details.plan_id', '=', 'hospital_plan.id')
             ->leftJoin('patients', 'patients.hospital_plan', '=', 'hospital_plan.id')
+            ->leftJoin('plan_details', 'plan_details.plan_id', '=', 'hospital_plan.id')
             ->select(DB::raw('hospital_plan.name,plan_details.is_principal,plan_details.is_dependant,plan_details.id as plan_id,plan_details.hmo,plan_details.policies,plan_details.insurance_id,plan_details.description,plan_details.notes'))
             ->where('patients.status', 1)
-            ->where('patients.id', $patient_id)
+            ->where('plan_details.patient_id', $patient_id)
+            ->where('plan_details.status',1)
             ->groupby('patients.id')
             ->first();
 
@@ -1378,9 +1379,11 @@ class ApiController extends Controller
 
                 $dependents = DB::table('patient_dependants')
                     ->leftJoin('patients', 'patients.id', '=', 'patient_dependants.dependant_id')
-                    ->select(DB::raw('patient_dependants.plan_detail_id,patient_dependants.dependant_id,patient_dependants.relationship,patients.first_name,patients.last_name'))
+                    ->leftJoin('relationships', 'patient_dependants.relationship', '=', 'relationships.id')
+                    ->select(DB::raw('patient_dependants.plan_detail_id,patient_dependants.dependant_id,patient_dependants.relationship,patients.first_name,patients.middle_name,patients.last_name,relationships.name as dependent_relationship'))
                     ->where('patient_dependants.status', 1)
                     ->where('plan_detail_id', $patient_plan->plan_id)
+                    ->where('patient_dependants.principal_id', $patient_id)
                     ->get();
 
                 $patient_plan->dependents = $dependents;
@@ -1781,25 +1784,29 @@ class ApiController extends Controller
         if ($limit > 0 || $offset > 0) {
 
             $patient_medications = DB::table('medication_shedule')
-                ->select(DB::raw('id,prescriptions,to_date,from_date,medication_status as status'))
-                ->where('patient_id', $patient_id)
-                ->where('status', 1)
+                ->leftJoin('patient_prescription', 'patient_prescription.medication', '=', 'medication_shedule.id')
+		->leftJoin('visits', 'medication_shedule.patient_id', '=', 'visits.patient_id')
+                ->select(DB::raw('medication_shedule.id as prescription,visits.id as encounter_id, prescriptions,to_date,from_date,medication_status as status'))
+                ->where('medication_shedule.patient_id', $patient_id)
+                ->where('medication_shedule.status', 1)
                 ->skip($offset)->take($limit)
                 ->get();
 
             $count = DB::table('medication_shedule')
-                ->select(DB::raw('id,prescriptions,to_date,from_date,medication_status as status'))
-                ->where('patient_id', $patient_id)
-                ->where('status', 1)
+                ->leftJoin('patient_prescription', 'patient_prescription.medication', '=', 'medication_shedule.id')
+                ->select(DB::raw('medication_shedule.id,prescriptions,to_date,from_date,medication_status as status'))
+                ->where('medication_shedule.patient_id', $patient_id)
+                ->where('medication_shedule.status', 1)
                 ->count();
 
         } else {
 
             $patient_medications = DB::table('medication_shedule')
-                ->select(DB::raw('id,prescriptions,to_date,from_date,medication_status as status'))
-                ->where('patient_id', $patient_id)
-                ->where('status', 1)
-                ->skip($offset)->take($limit)
+                ->leftJoin('patient_prescription', 'patient_prescription.medication', '=', 'medication_shedule.id')
+		->leftJoin('visits', 'medication_shedule.patient_id', '=', 'visits.patient_id')
+                ->select(DB::raw('medication_shedule.id as prescription,,prescriptions,to_date,from_date,medication_status as status'))
+                ->where('medication_shedule.patient_id', $patient_id)
+                ->where('medication_shedule.status', 1)
                 ->get();
 
 
@@ -2619,6 +2626,18 @@ class ApiController extends Controller
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
+
+        $templates = DB::table('patient_lab_test_values')
+            ->select(DB::raw('id'))
+            ->where('template_id', $template_id)
+            ->get();
+
+        if (count($templates)>0){
+
+            return response()->json(['status' => false, 'message' => 'This Template is used by various Orders']);
+
+        }
+
         DB::table('templates')
             ->where('id', $template_id)
             ->update(
@@ -2677,6 +2696,19 @@ class ApiController extends Controller
         $category_id = $request->input('category_id');
 
         $currentdatetime = date("Y-m-d  H:i:s");
+
+        $templates = DB::table('templates')
+            ->select(DB::raw('id'))
+            ->where('category_id', $category_id)
+            ->get();
+
+        if (count($templates)>0){
+
+            return response()->json(['status' => false, 'message' => 'This Category is used by various templates']);
+
+        }
+
+
 
         DB::table('template_categories')
             ->where('id', $category_id)
@@ -2739,6 +2771,8 @@ class ApiController extends Controller
 
         $patient_id = $request->input('patient_id');
 
+        $visit_id = $request->input('visit_id');
+
         $prescription = html_entity_decode($request->input('prescription'));
 
         $patient_prescriptions = json_decode($prescription);
@@ -2751,6 +2785,7 @@ class ApiController extends Controller
             DB::table('patient_prescription')
                 ->insert(
                     ['patient_id' => $patient_id,
+                        'visit_id' => $visit_id,
                         'medication' => $patient_prescription->medication,
                         'sig' => $patient_prescription->sig,
                         'dispense' => $patient_prescription->dispense,
@@ -2779,7 +2814,7 @@ class ApiController extends Controller
 
 
         $prescriptions = DB::table('patient_prescription')
-            ->select(DB::raw('patient_id,medication,sig,dispense,reffills,pharmacy'))
+            ->select(DB::raw('patient_id,medication,sig,dispense,reffills,pharmacy,created_at'))
             ->where('status', 1)
             ->where('patient_id', $patient_id)
             ->get();
@@ -2812,6 +2847,58 @@ class ApiController extends Controller
 
         return response()->json(['status' => true, 'data' => $prescriptions]);
 
+
+    }
+
+
+    public function get_prescription(Request $request){
+
+        $prescription_id = $request->input('precription_id');
+
+
+        $prescriptions = DB::table('patient_prescription')
+            ->select(DB::raw('*'))
+            ->where('id',$prescription_id)
+            ->where('status', 1)
+            ->first();
+
+
+        return response()->json(['status' => true, 'data' => $prescriptions]);
+
+
+
+    }
+
+
+    public function update_prescription(Request $request){
+
+
+        $prescription_id = $request->input('precription_id');
+        $medication = $request->input('medication');
+        $sig = $request->input('sig');
+        $dispense= $request->input('dispense');
+        $reffills= $request->input('reffills');
+        $pharmacy= $request->input('pharmacy');
+        $note_of_pharmacy= $request->input('note_of_pharmacy');
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+        DB::table('patient_prescription')
+            ->where('id',$prescription_id)
+            ->update(
+                ['medication' => $medication,
+                    'sig' => $sig,
+                    'dispense' =>$dispense,
+                    'reffills' => $reffills,
+                    'pharmacy' => $pharmacy,
+                    'note_of_pharmacy' =>$note_of_pharmacy,
+                    'updated_at' => $currentdatetime
+
+                ]
+            );
+
+
+    return response()->json(['status' => true, 'message' => 'Prescrpition Updated Successfully']);
 
     }
 

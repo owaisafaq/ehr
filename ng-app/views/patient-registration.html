@@ -671,7 +671,7 @@
                                         <label>HMO</label>
                                     </div>
                                     <div class="col-lg-6">
-                                        <label class="txt-style-4">{{dataToBeAdded.updatePatientPlan.hmo}}</label>
+                                        <label class="txt-style-4">{{dataToBeAdded.updatePatientPlan.hmo == '1' ? 'Prepaid medicine' : '';}}</label>
                                     </div>
                                 </div>
                                 <div class="column col-lg-6">
@@ -679,7 +679,7 @@
                                         <label>Policies</label>
                                     </div>
                                     <div class="col-lg-6">
-                                        <label class="txt-style-4">{{dataToBeAdded.updatePatientPlan.policies}}</label>
+                                        <label class="txt-style-4">{{dataToBeAdded.updatePatientPlan.policies == '1' ? 'Public' : 'Private';}}</label>
                                     </div>
                                 </div>
                                 <div class="column col-lg-6">
@@ -972,9 +972,7 @@
                         <label>HMO</label>
                     </div>
                     <div class="col-lg-3">
-                        <select class="form-control" ng-class="{
-                                true
-                                        : 'error'}[checkValidate_nhis && form_modal_1.hmo_dropdown.$invalid]"  name="hmo_dropdown" data-placeholder="Select Hmo" ng-model="MI.hmo" ng-options="hmo.name for hmo in dropDownData.hmo track by hmo.id" required>
+                        <select class="form-control" ng-class="{true: 'error'}[checkValidate_nhis && form_modal_1.hmo_dropdown.$invalid]"  name="hmo_dropdown" data-placeholder="Select Hmo" ng-model="MI.hmo" ng-selected="dataToBeAdded.updatePatientPlan == MI.hmo" ng-options="hmo.name for hmo in dropDownData.hmo track by hmo.id" required>
                             <option value=""></option>
                         </select>
                         <span class="help-block PIValid" ng-show="checkValidate_nhis && form_modal_1.hmo_dropdown.$error.required">Required</span>

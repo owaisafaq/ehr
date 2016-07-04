@@ -33,10 +33,18 @@ AppEHR.controller('labOrderHistory', ['$scope', '$rootScope', '$window', 'GetLab
             console.log(error);
         }
     };
+    $scope.search = function(item){ // search data by patient name or partient id
+        if($scope.searchHistory == undefined){
+            return true;
+        }else{
+            if(item.patient_id.toLowerCase().indexOf($scope.searchHistory.toLowerCase()) != -1 || item.patient_name.toLowerCase().indexOf($scope.searchHistory.toLowerCase()) != -1){
+                return true;
+            }
+        }
+    };
 }]).filter('cmdate', [
     '$filter', function($filter) {
-        return function(input, format) {
+        return function (input, format) {
             return $filter('date')(new Date(input), format);
         };
-    }
-]);;
+    }]);

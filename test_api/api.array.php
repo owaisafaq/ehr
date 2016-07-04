@@ -1,9 +1,9 @@
 <?php
 
 require 'api.class.php';
-//define('HOST', 'http://131.107.100.10/ehr/public/api/');
+define('HOST', 'http://131.107.100.10/ehr/public/api/');
 //define('HOST', 'http://localhost/ehr/public/api/');
-define('HOST', 'http://demoz.online/ehr/public/api/');
+//define('HOST', 'http://demoz.online/ehr/public/api/');
 define('APP', '');
 define('ROUTE', '');
 
@@ -1238,6 +1238,7 @@ $api->method = "POST";
 $api->params->lab_order_id = "1";
 $api->params->lab_test_id = "1";
 $api->params->lab_test_values = "";
+$api->params->template_id = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -1868,6 +1869,7 @@ $api->url = HOST . 'add_patient_prescription';
 $api->method = "POST";
 $api->params->patient_id = "1";
 $api->params->prescription = "1";
+$api->params->visit_id = "1";
 /*$api->params->medication = "1";
 $api->params->sig = "test";
 $api->params->dispense = "1";
@@ -1897,6 +1899,70 @@ $api = new api();
 $api->name = "Get Prescription List";
 $api->url = HOST . 'get_prescription_list';
 $api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Delete Invoice
+$api = new api();
+$api->name = "Delete Invoice";
+$api->url = HOST . 'delete_invoice';
+$api->method = "POST";
+$api->params->invoice_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Get Lab test pdf
+$api = new api();
+$api->name = "Get Lab Test PDF";
+$api->url = HOST . 'get_lab_test_pdf';
+$api->method = "GET";
+$api->params->lab_test_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+
+//Get Prescription
+$api = new api();
+$api->name = "Get Prescription";
+$api->url = HOST . 'get_prescription';
+$api->method = "GET";
+$api->params->precription_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+
+//Update Prescription
+$api = new api();
+$api->name = "Update Prescription";
+$api->url = HOST . 'update_prescription';
+$api->method = "POST";
+$api->params->precription_id = "1";
+$api->params->medication = "1";
+$api->params->sig = "test";
+$api->params->dispense = "test";
+$api->params->reffills = "test";
+$api->params->pharmacy = "1";
+$api->params->note_of_pharmacy = "test";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+
+//Get Bill Invoices
+$api = new api();
+$api->name = "Get Bill Invoices";
+$api->url = HOST . 'get_bill_invoices';
+$api->method = "GET";
+$api->params->bill_id = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;

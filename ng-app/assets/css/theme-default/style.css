@@ -2705,7 +2705,7 @@ form .progress {
 #addmedication .medication_list .row > div{margin-bottom:0;}
 #addmedication .medication_list label{color: #516E7F;font-size:13px;text-transform: none;}
 #addmedication .medication_list span{color:#b5b6b8;}
-#addmedication .medication_list{border-top:1px solid #b5b6b8;max-height: 230px;min-height: 230px;overflow-y:auto;overflow-x: hidden;}
+#addmedication .medication_list{border-top:1px solid #b5b6b8;max-height: 230px;overflow-y:auto;overflow-x: hidden;}
 #addmedication .medication_list .med_row{border-bottom:1px solid #b5b6b8;padding: 10px 0px;margin: 0;}
 
 .pagination > li > a, .pagination > li > span{
@@ -2815,3 +2815,9 @@ form .progress {
 #template .custom-form .row > div .input-group .input-group-btn .btn-default{position:absolute;right: 1px;height: 32px;border: 0;}
 #template .custom-form .row > div .input-group .input-group-btn .btn-default .caret{position: relative;top: -4px;}
 #template .custom-form  .fg-field-overlay .btn-toolbar .btn[disabled]{color:#313534;}
+.ulli_3{
+    margin-top: 20px;
+}
+.ulli_3 li{
+    width: 100%;
+}

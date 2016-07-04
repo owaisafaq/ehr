@@ -22,8 +22,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	function GetAllBillsFailure(error) {
 		console.log(error);
 	}
-	
-	
+
 	//Get All Invoices
 
 	GetAllInvoices.get({
@@ -41,8 +40,6 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	function GetAllInvoicesFailure(error) {
 		console.log(error);
 	}
-
-
 	$scope.SelectedPatientWithInvoice = function(patient_id,invoice_id){
 
 		console.log(patient_id);
@@ -262,7 +259,10 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 		//$scope.invoice_id = invoice_id;
 
 		$rootScope.loader = "show";
-		GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: patient_id}, getPatientInfoSuccess, getPatientInfoFailure);
+		GetPatientInfo.get({
+			token: $window.sessionStorage.token,
+			patient_id: patient_id
+		}, getPatientInfoSuccess, getPatientInfoFailure);
 		function getPatientInfoSuccess(res) {
 			if (res.status == true) {
 				$rootScope.loader = "hide";
@@ -274,46 +274,76 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 
 			}
 		}
+
 		function getPatientInfoFailure(error) {
 			$rootScope.loader = "show";
 			console.log(error);
 		}
 	};
 
-$scope.PrintInvoice = function(invoice_id){
+	$scope.PrintInvoice = function(invoice_id) {
 
 		/*console.log(patient_id);
-		$scope.patient_id = patient_id;
-		//$scope.invoice_id = invoice_id;*/
-	var invoice=invoice_id ;
+		 $scope.patient_id = patient_id;
+		 //$scope.invoice_id = invoice_id;*/
+		var invoice = invoice_id;
 
-	if(invoice==null){
-		return false;
-	}
-	else{
-
-		$rootScope.loader = "show";
-	InvoiceData.get({token: $window.sessionStorage.token, invoice_id: invoice_id}, getInvoiceSuccess, getInvoiceFailure);
-		function getInvoiceSuccess(res) {
-			if (res.status == true) {
-				$rootScope.loader = "hide";
-				$scope.selectedInvoice = res.data;
-				console.log($scope.selectedInvoice);
-				//$(".billing").show();
-
-				$('.invoice_list').hide();
-				$('.print_invoice').show();
-				$('.custom-tab').hide();
-				
-
-
-
-			}
+		if (invoice == null) {
+			return false;
 		}
-		function getInvoiceFailure(error) {
+		else {
+
 			$rootScope.loader = "show";
-			console.log(error);
+			InvoiceData.get({
+				token: $window.sessionStorage.token,
+				invoice_id: invoice_id
+			}, getInvoiceSuccess, getInvoiceFailure);
+			function getInvoiceSuccess(res) {
+				if (res.status == true) {
+					$rootScope.loader = "hide";
+					$scope.selectedInvoice = res.data;
+					console.log($scope.selectedInvoice);
+					//$(".billing").show();
+
+					$('.invoice_list').hide();
+					$('.print_invoice').show();
+					$('.custom-tab').hide();
+
+
+				}
+			}
+
+			function getInvoiceFailure(error) {
+				$rootScope.loader = "show";
+				console.log(error);
+			}
+
+
 		}
+
+	};
+
+	$scope.deletingInvoice = function (invoice_id){
+		if ( window.confirm("Are you Sure you want to delete?") ) {
+			deleteInvoice.save({
+				token: $window.sessionStorage.token,
+				invoice_id: invoice_id
+			}, deleteInvoiceSuccess, deleteInvoiceFailure);
+		}
+	};
+
+	function deleteInvoiceSuccess(res){
+		if(res.status == true) {
+			GetAllInvoices.get({
+				token: $window.sessionStorage.token,
+			}, GetAllInvoicesSuccess, GetAllInvoicesFailure);
+		}else {
+			alert(res.message);
+		}
+	}
+	function deleteInvoiceFailure(error){
+		console.log(error);
+	}
 
 
 	}
