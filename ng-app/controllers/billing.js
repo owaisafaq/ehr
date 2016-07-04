@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData){
+AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData','GetBillInvoices','SendInvoiceEmail', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData,GetBillInvoices,SendInvoiceEmail){
 	$rootScope.pageTitle = "EHR - Billing";
 	$scope.BillListings={};
 	$scope.selectedPatient = {};
@@ -176,19 +176,88 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	};
 
 //Send Invoice
-	$scope.SendInvoice=function(sendData,pid,pname){
+	$scope.SendInvoice=function(sendData,invoice_id){
 
 		/*console.log("Amount: "+AmountPaid.amount_paid);
 		console.log("Invoice:"+invoice_id);*/
-		console.log('here');
-		$('#send_invoice').modal('hide');
+
+
+		console.log(sendData)
+		console.log(invoice_id)
+
+		SendInvoiceEmail.save({token: $window.sessionStorage.token, email_address: sendData, invoice_id:invoice_id}, SendEmailSuccess, SendEmailFailure);
+
+
+
+		function SendEmailSuccess(res) {
+			console.log(res);
+			if (res.status == true) {
+
+				$('#send_invoice').modal('hide');
+
+			}
+		}
+
+		function SendEmailFailure(error) {
+			console.log(error);
+		}
+
+
+
+
+
+
+
+	};
+	
+	
+	
+//View bill Invoice
+	$scope.ViewBillInvoices=function(bill_id){
+
+		/*console.log("Amount: "+AmountPaid.amount_paid);
+		console.log("Invoice:"+invoice_id);*/
+		console.log(bill_id);
+
+		if(bill_id=null){
+
+			return false;
+		}
+
+		else{
+
+			GetBillInvoices.get({
+				token: $window.sessionStorage.token,
+				bill_id:bill_id,
+			}, GetBillInvoicesSuccess, GetBillInvoicesFailure);
+		}
+
+
+
+		function GetBillInvoicesSuccess(res) {
+			console.log(res);
+			if (res.status == true) {
+				$scope.InvoiceListings = res.data;
+				console.log($scope.InvoiceListings)
+				$('.nav-tabs a[href="#invoices"]').tab('show');
+			}
+		}
+
+		function GetBillInvoicesFailure(error) {
+			console.log(error);
+		}
+
+		
+
 
 	};
 
 
-	$scope.SelectedPatient = function(patient_id){
+	$scope.SelectedPatient = function(patient_id,bill_id){
 
 		console.log(patient_id);
+		console.log(bill_id);
+		$scope.bill_id=bill_id;
 		$scope.patient_id = patient_id;
 		//$scope.invoice_id = invoice_id;
 
