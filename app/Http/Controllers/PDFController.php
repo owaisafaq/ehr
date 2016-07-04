@@ -54,11 +54,11 @@ class PDFController extends Controller
         $pdf = PDF::loadHTML($view);
         // return $pdf->stream($file_archive);
 
-        $path = base_path().'/public/patient_archive/report_pdf';
+        $path = base_path().'/public/patient_archive/report.pdf';
 
         $pdf->save($path);
 
-        $file_archive = url('/').'/patient_archive/report_pdf';
+        $file_archive = url('/').'/patient_archive/report.pdf';
 
         echo json_encode(array(
                        'status' => true,
@@ -91,7 +91,7 @@ class PDFController extends Controller
               try {
                   $mail->isSMTP(); // tell to use smtp
                   $mail->CharSet = "utf-8"; // set charset to utf8
-                  $mail->SMTPAuth = false;  // use smpt auth
+                  $mail->SMTPAuth = true;  // use smpt auth
                   $mail->SMTPSecure = "tls"; // or ssl
                   $mail->Host = "smtp.gmail.com";
                   $mail->Port = `587`; // most likely something different for you. This is the mailtrap.io port i use for testing.
