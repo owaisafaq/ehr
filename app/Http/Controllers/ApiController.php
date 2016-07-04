@@ -2831,7 +2831,7 @@ class ApiController extends Controller
                         'reffills' => $patient_prescription->reffills,
                         'pharmacy' => $patient_prescription->pharmacy,
                         'note_of_pharmacy' => $patient_prescription->note_of_pharmacy,
-                        'created_at' => $currentdatetime
+                        'update_at' => $currentdatetime
 
                     ]
                 )->where('id', $patient_prescription->id);
