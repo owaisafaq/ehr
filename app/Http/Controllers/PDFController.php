@@ -81,7 +81,7 @@ class PDFController extends Controller
 
 
         $pdf = PDF::loadHTML($view);
-        $path = base_path().'/public/patient_archive/invoice_pdf';
+        $path = base_path().'/public/patient_archive/invoice.pdf';
 
         $pdf->save($path);
 
