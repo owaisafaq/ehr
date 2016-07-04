@@ -1,9 +1,9 @@
 <?php
 
 require 'api.class.php';
-define('HOST', 'http://131.107.100.10/ehr/public/api/');
+//define('HOST', 'http://131.107.100.10/ehr/public/api/');
 //define('HOST', 'http://localhost/ehr/public/api/');
-//define('HOST', 'http://demoz.online/ehr/public/api/');
+define('HOST', 'http://demoz.online/ehr/public/api/');
 define('APP', '');
 define('ROUTE', '');
 
@@ -1963,6 +1963,19 @@ $api->name = "Get Bill Invoices";
 $api->url = HOST . 'get_bill_invoices';
 $api->method = "GET";
 $api->params->bill_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+
+//Send invoice email
+$api = new api();
+$api->name = "Send invoice email";
+$api->url = HOST . 'send_invoice_email';
+$api->method = "POST";
+$api->params->invoice_id = "1";
+$api->params->email_address = "smovaishassan12@hotmail.com";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
