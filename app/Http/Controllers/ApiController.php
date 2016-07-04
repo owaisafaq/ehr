@@ -2805,6 +2805,45 @@ class ApiController extends Controller
 
 
     }
+    public function update_patient_prescription(Request $request)
+    {
+
+        $patient_id = $request->input('patient_id');
+
+        $visit_id = $request->input('visit_id');
+
+        $prescription = html_entity_decode($request->input('prescription'));
+
+        $patient_prescriptions = json_decode($prescription);
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+        foreach ($patient_prescriptions as $patient_prescription) {
+
+            DB::table('patient_prescription')
+                ->update(
+                    ['patient_id' => $patient_id,
+                        'visit_id' => $visit_id,
+                        'medication' => $patient_prescription->medication,
+                        'sig' => $patient_prescription->sig,
+                        'dispense' => $patient_prescription->dispense,
+                        'reffills' => $patient_prescription->reffills,
+                        'pharmacy' => $patient_prescription->pharmacy,
+                        'note_of_pharmacy' => $patient_prescription->note_of_pharmacy,
+                        'created_at' => $currentdatetime
+
+                    ]
+                )->where('id', $patient_prescription->id);
+
+
+        }
+
+
+        return response()->json(['status' => true, 'message' => 'Prescrpition Updated Successfully']);
+
+
+    }
 
 
     public function get_all_prescription(Request $request)
