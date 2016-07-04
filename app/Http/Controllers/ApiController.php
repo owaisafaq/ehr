@@ -1686,7 +1686,7 @@ class ApiController extends Controller
         $file_archive = url('/') . '/patient_archive/';
 
         $patient_archives = DB::table('patient_file_access_log')
-            ->select(DB::raw('id,patient_id,file,CONCAT("' . $file_archive . '",file) as file,file_name,created_at'))
+            ->select(DB::raw('id,patient_id,follow_up_parent_id,file,CONCAT("' . $file_archive . '",file) as file,file_name,created_at'))
             ->where('patient_id', $patient_id)
             ->where('follow_up_parent_id', $followup_parent_id)
             ->where('status', 1)
@@ -2821,7 +2821,7 @@ class ApiController extends Controller
 
         foreach ($patient_prescriptions as $patient_prescription) {
 
-            DB::table('patient_prescription')
+            DB::table('patient_prescription')->where('id', $patient_prescription->id)
                 ->update(
                     ['patient_id' => $patient_id,
                         'visit_id' => $visit_id,
@@ -2834,7 +2834,7 @@ class ApiController extends Controller
                         'updated_at' => $currentdatetime
 
                     ]
-                )->where('id', $patient_prescription->id);
+                );
 
 
         }
