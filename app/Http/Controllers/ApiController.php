@@ -1709,8 +1709,13 @@ class ApiController extends Controller
             ->where('followup_parent_id', $followup_parent_id)
             ->where('status', 1)
             ->get();
+	if(count($resources) > 0){
+		return response()->json(['status' => true, 'data' => $resources]);	
+	}else{
+		return response()->json(['status' => true, 'data' => ['parent_id'=>$followup_parent_id]]);
+	}
 
-        return response()->json(['status' => true, 'data' => $resources]);
+        
 
 
     }
@@ -2853,7 +2858,7 @@ class ApiController extends Controller
 
 
         $prescriptions = DB::table('patient_prescription')
-            ->select(DB::raw('patient_id,medication,sig,dispense,reffills,pharmacy,created_at'))
+            ->select(DB::raw('id,patient_id,medication,sig,dispense,reffills,pharmacy,created_at'))
             ->where('status', 1)
             ->where('patient_id', $patient_id)
             ->get();
