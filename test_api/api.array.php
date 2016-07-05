@@ -2,8 +2,8 @@
 
 require 'api.class.php';
 //define('HOST', 'http://131.107.100.10/ehr/public/api/');
-//define('HOST', 'http://localhost/ehr/public/api/');
-define('HOST', 'http://demoz.online/ehr/public/api/');
+define('HOST', 'http://localhost/ehr/public/api/');
+//define('HOST', 'http://demoz.online/ehr/public/api/');
 define('APP', '');
 define('ROUTE', '');
 
@@ -1880,6 +1880,23 @@ $api->params->token = "123435";
 
 $api_arr [] = $api;
 
+//update Patient Prescription
+$api = new api();
+$api->name = "Update Patient Prescription";
+$api->url = HOST . 'update_patient_prescription';
+$api->method = "POST";
+$api->params->patient_id = "1";
+$api->params->prescription = "1";
+$api->params->visit_id = "1";
+/*$api->params->medication = "1";
+$api->params->sig = "test";
+$api->params->dispense = "1";
+$api->params->reffills = "test";
+$api->params->pharmacy = "1";
+$api->params->note_of_pharmacy = "test";*/
+$api->params->token = "123435";
+
+$api_arr [] = $api;
 
 //Get All Prescription
 $api = new api();

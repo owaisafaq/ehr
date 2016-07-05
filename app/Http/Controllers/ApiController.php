@@ -1686,7 +1686,7 @@ class ApiController extends Controller
         $file_archive = url('/') . '/patient_archive/';
 
         $patient_archives = DB::table('patient_file_access_log')
-            ->select(DB::raw('id,patient_id,file,CONCAT("' . $file_archive . '",file) as file,file_name,created_at'))
+            ->select(DB::raw('id,patient_id,follow_up_parent_id,file,CONCAT("' . $file_archive . '",file) as file,file_name,created_at'))
             ->where('patient_id', $patient_id)
             ->where('follow_up_parent_id', $followup_parent_id)
             ->where('status', 1)
@@ -1709,8 +1709,13 @@ class ApiController extends Controller
             ->where('followup_parent_id', $followup_parent_id)
             ->where('status', 1)
             ->get();
+	if(count($resources) > 0){
+		return response()->json(['status' => true, 'data' => $resources]);	
+	}else{
+		return response()->json(['status' => true, 'data' => ['parent_id'=>$followup_parent_id]]);
+	}
 
-        return response()->json(['status' => true, 'data' => $resources]);
+        
 
 
     }
@@ -2805,6 +2810,45 @@ class ApiController extends Controller
 
 
     }
+    public function update_patient_prescription(Request $request)
+    {
+
+        $patient_id = $request->input('patient_id');
+
+        $visit_id = $request->input('visit_id');
+
+        $prescription = html_entity_decode($request->input('prescription'));
+
+        $patient_prescriptions = json_decode($prescription);
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+        foreach ($patient_prescriptions as $patient_prescription) {
+
+            DB::table('patient_prescription')->where('id', $patient_prescription->id)
+                ->update(
+                    ['patient_id' => $patient_id,
+                        'visit_id' => $visit_id,
+                        'medication' => $patient_prescription->medication,
+                        'sig' => $patient_prescription->sig,
+                        'dispense' => $patient_prescription->dispense,
+                        'reffills' => $patient_prescription->reffills,
+                        'pharmacy' => $patient_prescription->pharmacy,
+                        'note_of_pharmacy' => $patient_prescription->note_of_pharmacy,
+                        'updated_at' => $currentdatetime
+
+                    ]
+                );
+
+
+        }
+
+
+        return response()->json(['status' => true, 'message' => 'Prescrpition Updated Successfully']);
+
+
+    }
 
 
     public function get_all_prescription(Request $request)
@@ -2814,7 +2858,7 @@ class ApiController extends Controller
 
 
         $prescriptions = DB::table('patient_prescription')
-            ->select(DB::raw('patient_id,medication,sig,dispense,reffills,pharmacy,created_at'))
+            ->select(DB::raw('id,patient_id,medication,sig,dispense,reffills,pharmacy,created_at'))
             ->where('status', 1)
             ->where('patient_id', $patient_id)
             ->get();
