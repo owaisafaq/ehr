@@ -154,6 +154,21 @@ AppEHR.factory("PatienPrescription", function ($resource) {
     };
     return patientRegistrationKin;
 });
+AppEHR.factory("PatienPrescriptionUpdate", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'update_patient_prescription', params, {
+            save: {method: 'POST'},
+        });
+        return res2;
+    }
+    var patientRegistrationKin = {
+        save:function(params,body,success) {
+          var res = getResource(params, body);
+          return res.save(params,body,success);
+        }
+    };
+    return patientRegistrationKin;
+});
 
 AppEHR.factory("GetResourcesByFolderArchives", function ($resource) {
     function getResource(params, body) {

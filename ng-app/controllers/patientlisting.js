@@ -10,7 +10,7 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
         $scope.offset = 1;
         //$scope.currentPage = 0;
         $scope.items = [];
-        $scope.f = {};
+        $scope.search = {};
         $scope.idCardDisabledBtn = true;
         GetAllPatients.get({
             token: $window.sessionStorage.token,
@@ -134,33 +134,4 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
         $scope.setPage = function (n) {
             $scope.currentPage = n;
         };
-//        $scope.filter_by = function (field) {
-//            console.log(field);
-//            console.log($scope.search);
-//            if ($scope.search === '') {
-//                delete $scope.f['__' + field];
-//                return;
-//            }
-//            $scope.f['__' + field] = true;
-//            $scope.patientLists.forEach(function (v) {
-//                v['__' + field] = v[field] < $scope.search;
-//            })
-//        }
-        $scope.findPatientBy = function () {
-            $scope.f = $scope.search1;
-            console.log($scope.search1)
-        }
-//        $scope.searchPatient = function (patientList) {
-//            console.log($scope.search1)
-//            if ($scope.search1 == "id") {
-//                return patientList.id === parseInt($scope.search)
-//            }
-//            else if($scope.search1 == "first_name"){
-//                return patientList.first_name === parseInt($scope.search)
-//            }
-//            else{
-//                
-//            }
-//        }
-
     }]);

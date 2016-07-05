@@ -1,6 +1,6 @@
 <div id="content">
-    <section>
-        <div class="card" ng-class="{true:'custom-card'}[patientInfo]">
+    <section class="idCardPrint hidden-print">
+        <div class="card" ng-class='{true:"custom-card"}[patientInfo]'>
             <div class="card-head card-head-custom card-color-3" ng-show="patientInfo">
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Encounter ID</label>
@@ -43,20 +43,23 @@
                     <span class="txt-style-3 pull-left text-uppercase">find patient</span>
                     <div class="col-lg-2">
                         <!---->
-                        <select ng-change="findPatientBy()" ng-model="search1" class="form-control">
+                        <select ng-model="filterType" class="form-control" placeholder="Select Search By">
                             <option></option>
-                            <option selected="selected" value="id">Patient ID</option>
+                            <option value="id">Patient ID</option>
                             <option value="first_name">Patient Name</option>
+                            <option value="last_name">Last Name</option>
+                            <option value="date_of_birth">Date of Birth</option>
+                            <option value="phone_number">Phone Number</option>
                         </select>
                     </div>
                     <div class="header-search margin-right-0 pull-left">
                         <button type="submit">
                             <i class="fa fa-search"></i>
                         </button>
-                        <input ng-model="search1" class="search_field" type="text" placeholder="Search for a patient" value="">
+                        <input ng-model="search[filterType]" class="search_field" type="text" placeholder="Search for a patient" value="">
                     </div>
                 </div> 
-                
+
                 <button type="button" data-toggle="modal" data-target="#addpatient" class="btn ink-reaction button-style-1 button-style-1 pull-right" ng-disabled="idCardDisabledBtn">create patient id card</button>
                 <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10">export</button>
                 <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10">import</button>
@@ -80,7 +83,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="patientList in patientLists.slice(begin, end) | filter: f">
+                            <tr ng-repeat="patientList in patientLists.slice(begin, end)| filter: search">
                                 <td align="center">
                                     <div class="radio radio-styled">
                                         <label>
@@ -96,10 +99,10 @@
                                 <td>{{patientList.phone_number}}</td>
                             </tr>
                         </tbody>
-                        
-                        </tfoot>
                     </table>
-                    <pagination data-ng-model="currentPage" total-items="patientLists.length" items-per-page="numPerPage" data-max-size="maxSize" data-boundary-links="true" ng-init="begin = (currentPage-1)*numPerPage; end = begin + numPerPage" data-ng-change="begin = (currentPage-1)*numPerPage; end = begin + numPerPage"></pagination>
+                    <pagination data-ng-model="currentPage" total-items="patientLists.length" items-per-page="numPerPage" data-max-size="maxSize" data-boundary-links="true" ng-init="begin = (currentPage - 1) * numPerPage;
+                                    end = begin + numPerPage" data-ng-change="begin = (currentPage - 1) * numPerPage;
+                                                    end = begin + numPerPage"></pagination>
                 </div>
 
 
@@ -140,7 +143,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default button-style-1">Print</button>
+                <button type="button" class="printIdCard btn btn-default button-style-1">Print</button>
                 <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
             </div>
         </div><!-- /.modal-content -->

@@ -45,13 +45,13 @@
                         <button type="submit">
                             <i class="fa fa-search"></i>
                         </button>
-                        <input class="search_field" type="text" ng-model="search" placeholder="Search for a patient">
+                        <input class="search_field" type="text" ng-model="search" placeholder="Search Patient By Name">
                     </div>
                 </div>
                 <!--ng-click="checkout(action);"-->
                 <button type="button"  class="checkout button-custom pull-right" data-toggle="modal" data-target="#checkout" ng-show="buttonDisabled">Checkout</button>
 
-                <button type="button" class="delete button-custom pull-right" ng-show="buttonDisabled" ng-click="removeEncounter();">remove</button>
+                <button type="button" class="delete button-custom pull-right" ng-show="buttonDisabled" data-target="#removeEncounter" data-toggle="modal">remove</button>
 
                 <button type="button" data-toggle="modal" class="edit button-custom pull-right" ng-show="buttonDisabled" ng-click="updateEncounters();">UPDATE</button>
 
@@ -76,7 +76,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="encounter in allEncounter | offset: currentPage*itemsPerPage | limitTo: itemsPerPage | filter : {'first_name': search}">
+                            <tr ng-repeat="encounter in allEncounter| offset: currentPage * itemsPerPage | limitTo: itemsPerPage | filter : {'first_name': search}">
                                 <td align="center">
                                     <!-- <div class="radio radio-styled">
                                         <label>
@@ -100,7 +100,7 @@
                                 <td>{{encounter.name}}</td>
                             </tr>
                         </tbody>
-                        
+
                         <!-- <tfoot ng-if="allEncounter > 15">
                             <td colspan="3">
                               <div class="pagination">
@@ -120,10 +120,12 @@
                         </tfoot> -->
                     </table>
                     <pagination data-ng-model="currentPage" total-items="numOfData.length"
-                            items-per-page="numPerPage" data-max-size="maxSize" data-boundary-links="true"
-                            ng-init="begin = (currentPage-1)*numPerPage; end = begin + numPerPage"
-                            data-ng-change="begin = (currentPage-1)*numPerPage; end = begin + numPerPage">
-                        </pagination>
+                                items-per-page="numPerPage" data-max-size="maxSize" data-boundary-links="true"
+                                ng-init="begin = (currentPage - 1) * numPerPage;
+                                                    end = begin + numPerPage"
+                                data-ng-change="begin = (currentPage - 1) * numPerPage;
+                                                    end = begin + numPerPage">
+                    </pagination>
                 </div>
             </div><!--end .card-body -->
         </div><!--end .card -->
@@ -189,7 +191,7 @@
             </div> 
 
             <div class="col-lg-12">
-            <img src="assets/img/loader.gif" class="pull-right encounter-loader {{hideLoader}}"/>
+                <img src="assets/img/loader.gif" class="pull-right encounter-loader {{hideLoader}}"/>
                 <div class="pull-right">
 
                     <button type="submit" class="btn ink-reaction button-style-1" ng-click="submitted = true;" ng-disabled="updateEncounterBtn">Update encounter</button>
@@ -466,5 +468,22 @@
                 </div>
             </div><!-- /.modal-content -->
         </form>
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="removeEncounter" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Confirmation</h2>
+            </div>
+            <div class="modal-body">
+                <p>Are you Sure want to delete?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-toggle="modal" data-dismiss="modal" ng-click="removeEncounter();">Ok</button>
+                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
