@@ -81,10 +81,7 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
         }
     };
 
-    $scope.go = function ( path ) { // method for routing on button click
-        $location.path( path + '/' + $scope.selectedOrder.id);
-    };
-
+  bill
     GetAllPatients.get({ // Getting all patients
         token: $window.sessionStorage.token
     }, GetAllPatientsSuccess, GetAllPatientsFailure);
