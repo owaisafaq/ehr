@@ -92,6 +92,9 @@ AppEHR.controller('pharmacy', ['$scope', '$rootScope', 'getPharmacy', '$window',
 				$('#s2id_autogen3 .select2-chosen').text('Select State');
 				$('#s2id_autogen5 .select2-chosen').text('Select City');
 			},1500);
+			getPharmacy.get({
+				token: $window.sessionStorage.token
+			}, getPharmacySuccess, getPharmacyFailure);
 		} else {
 			$scope.hideLoader = "hide";
 			$scope.addPharmacyBtn = false;

@@ -1,6 +1,5 @@
 var AppEHR = angular.module('AppEHR', [
-    'ngRoute', 'ngResource',
-    'ngTouch', 'ui.grid', 'ui.grid.pagination', 'ngFileUpload', 'angular.filter', 'ui.bootstrap', 'fg', 'ngSanitize', 'markdown'
+    'ngRoute', 'ngResource', 'ngFileUpload', 'angular.filter', 'fg', 'ngSanitize', 'markdown'
 ]);
 AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
     function ($httpProvider, $routeProvider, $locationProvider) {
@@ -153,6 +152,15 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
 
     }]);
 AppEHR.run(function ($rootScope, $location, $window) {
+    if (sessionStorage.length == 0) {
+        console.log(1111111111111111);
+//            var path = $location.$$path;
+//            if ((path == "/login" || path == "/") && path != undefined) {
+//                $location.path("patient-registration/");
+//            }
+//        } else {
+        $location.path("login");
+    }
     $rootScope.$on("$routeChangeStart", function (event, next, current) {
         if ($location.$$path != '/login' && $location.$$path != '/') {
             $rootScope.backgroundImg = "";
@@ -163,13 +171,15 @@ AppEHR.run(function ($rootScope, $location, $window) {
         }
         $rootScope.userName = $window.sessionStorage.name;
         $rootScope.loginCheck = $location.$$path == '/login' || $location.$$path == '/' ? true : false;
-        if ($window.sessionStorage.email != undefined && $window.sessionStorage.email != 'undefined' && $window.sessionStorage.token != undefined && window.sessionStorage.token != 'undefined' && $window.sessionStorage.role_id != undefined && window.sessionStorage.role_id != 'undefined') {
-            var path = $location.$$path;
-            if ((path == "/login" || path == "/") && path != undefined) {
-                $location.path("patient-registration/");
-            }
-        } else
-            $location.path("login");
+        console.log("here")
+        console.log(localStorage.getItem('sessionStorage'))
+
+
+
+
+
+
+
     });
     $rootScope.loadView = function (object) {
         $window.location.href = '#/patient-registration/';
@@ -181,6 +191,59 @@ AppEHR.run(function ($rootScope, $location, $window) {
     $rootScope.PI = {};
     $rootScope.loader = "";
     $rootScope.$on('$viewContentLoaded', function () {
+        // transfers sessionStorage from one tab to another
+        var sessionStorage_transfer = function (event) {
+            console.log("working")
+            console.log(sessionStorage)
+            if (!event) {
+                event = window.event;
+            } // ie suq
+            if (!event.newValue)
+                return;          // do nothing if no value to work with
+            if (event.key == 'getSessionStorage') {
+                console.log("working if")
+                // another tab asked for the sessionStorage -> send it
+                localStorage.setItem('sessionStorage', JSON.stringify(sessionStorage));
+                // the other tab should now have it, so we're done with it.
+                localStorage.removeItem('sessionStorage');  // <- could do short timeout as well.
+            } else if (event.key == 'sessionStorage' && !sessionStorage.length) {
+                console.log("working else")
+                // another tab sent data <- get it
+                var data = JSON.parse(event.newValue);
+                for (var key in data) {
+                    sessionStorage.setItem(key, data[key]);
+                }
+
+                if (sessionStorage.email != undefined && sessionStorage.email != 'undefined' && sessionStorage.token != undefined && sessionStorage.token != 'undefined' && sessionStorage.role_id != undefined && sessionStorage.role_id != 'undefined') {
+                    var path = $location.$$path;
+                    if ((path == "/login" || path == "/") && path != undefined) {
+                        $location.path("patient-registration/");
+                    }
+                } else {
+                    $location.path("login");
+                }
+
+
+            }
+        }
+        // listen for changes to localStorage
+        if (window.addEventListener) {
+            console.log("working 1")
+            console.log(sessionStorage)
+            window.addEventListener("storage", sessionStorage_transfer, false);
+        } else {
+            console.log("working 1 else")
+            window.attachEvent("onstorage", sessionStorage_transfer);
+        }
+        // Ask other tabs for session storage (this is ONLY to trigger event)
+        if (!sessionStorage.length) {
+            console.log("working 2")
+            console.log(sessionStorage)
+            localStorage.setItem('getSessionStorage', 'foobar');
+            localStorage.removeItem('getSessionStorage', 'foobar');
+        }
+
+
         $('.select-date').datepicker({autoclose: true, todayHighlight: true, format: 'yyyy-mm-dd'});
         $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
         $('.select_searchFields').select2();
