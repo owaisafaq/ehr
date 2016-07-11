@@ -64,7 +64,8 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', 'mySchema', '$routeP
             token : $window.sessionStorage.token,
             lab_order_id : $scope.labTest.lab_order_id,
             lab_test_id : $scope.selectedTemplate.id,
-            lab_test_values: $scope.myFormData
+            lab_test_values: $scope.myFormData,
+            template_id: $scope.selectedTemplate.id
         },saveTemplateValuesSuccess,saveTemplateValuesFailure)
     };
     function saveTemplateValuesSuccess(res){ // on success

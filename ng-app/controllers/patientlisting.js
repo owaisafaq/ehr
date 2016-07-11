@@ -10,7 +10,7 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
         $scope.offset = 0;
         //$scope.currentPage = 0;
         $scope.items = [];
-        $scope.f = {};
+        $scope.search = {};
         $scope.idCardDisabledBtn = true;
         GetAllPatients.get({
             token: $window.sessionStorage.token,

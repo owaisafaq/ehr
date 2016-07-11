@@ -16,7 +16,7 @@
                         <div class="col-lg-7">
                             <span class="txt-style-3 pull-left text-uppercase">category</span>
                             <div class="col-lg-2">
-                                <select class="form-control" ng-model="cat_search">
+                                <select class="form-control" ng-model="cat_search.category_name">
                                     <option value="">All</option>
                                     <option ng-repeat="category in CategoryLists" value="{{category.cat_name}}">
                                         {{category.cat_name}}
@@ -42,7 +42,7 @@
                                 <button type="submit">
                                     <i class="fa fa-search"></i>
                                 </button>
-                                <input class="search_field" type="text" ng-model="search" placeholder="Enter product code">
+                                <input class="search_field" type="text" ng-model="search.product_id" placeholder="Enter product code">
                             </div>
                         </div>
                     </div>
@@ -52,17 +52,19 @@
                         <table class="table table-striped no-margin table-custom table-custom_big inventory_detail">
                             <thead>
                                 <tr>
+                                    <th>product code</th>
                                     <th>product name</th>
                                     <th>Category</th>
                                     <th>latest retail price</th>
                                     <th>stock quantity</th>
                                     <th>reorder level</th>
-                                    <th>orde quantity</th>
+                                    <th>order quantity</th>
                                     <th >update</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="InventoryList in InventoryLists| filter:search |filter:cat_search">
+                                    <td>{{InventoryList.product_id}}</td>
                                     <td>{{InventoryList.product_name}}</td>
                                     <td>{{InventoryList.category_name}}</td>
                                     <td>{{InventoryList.cost_per_item}}</td>

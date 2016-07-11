@@ -45,13 +45,13 @@
                         <button type="submit">
                             <i class="fa fa-search"></i>
                         </button>
-                        <input class="search_field" type="text" ng-model="search" placeholder="Search for a patient">
+                        <input class="search_field" type="text" ng-model="search" placeholder="Search Patient By Name">
                     </div>
                 </div>
                 <!--ng-click="checkout(action);"-->
                 <button type="button"  class="checkout button-custom pull-right" data-toggle="modal" data-target="#checkout" ng-show="buttonDisabled">Checkout</button>
 
-                <button type="button" class="delete button-custom pull-right" ng-show="buttonDisabled" ng-click="removeEncounter();">remove</button>
+                <button type="button" class="delete button-custom pull-right" ng-show="buttonDisabled" data-target="#removeEncounter" data-toggle="modal">remove</button>
 
                 <button type="button" data-toggle="modal" class="edit button-custom pull-right" ng-show="buttonDisabled" ng-click="updateEncounters();">UPDATE</button>
 
@@ -479,5 +479,22 @@
                 </div>
             </div><!-- /.modal-content -->
         </form>
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="removeEncounter" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Confirmation</h2>
+            </div>
+            <div class="modal-body">
+                <p>Are you Sure want to delete?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-toggle="modal" data-dismiss="modal" ng-click="removeEncounter();">Ok</button>
+                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

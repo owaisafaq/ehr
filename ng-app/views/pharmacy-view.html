@@ -82,7 +82,7 @@
                                             <td>{{PrescriptionView.sig}}</td>
                                             <td>{{PrescriptionView.dispense}}</td>
                                             <td>{{PrescriptionView.reffills}}</td>
-                                            <td><input type="text" ng-keyup="calculateBalance(PrescriptionView.dispense,PrescriptionView.total_dispensed,$index)" ng-model="PrescriptionView.total_dispensed" value="15" disabled class="editDispensed" /></td>
+                                            <td><input type="text" ng-keyup="calculateBalance(PrescriptionView.dispense, PrescriptionView.total_dispensed, $index)" ng-model="PrescriptionView.total_dispensed" value="15" disabled class="editDispensed" /></td>
                                             <td>{{PrescriptionView.balance}}</td>
                                             <td><span ng-if="PrescriptionView.total_dispensed != undefined && PrescriptionView.total_dispensed != ''">N{{PrescriptionView.cost * PrescriptionView.total_dispensed}}</span></td>
                                         </tr>
@@ -102,12 +102,12 @@
                                             <label>pharmacy note</label>
                                         </div>
                                         <div class="col-lg-12">
-                                            <textarea ng-model="PrescriptionViews.prescriptionPharmacyNotes" placeholder="We have run out of paracetamol"></textarea>
+                                            <textarea ng-model="prescriptionPharmacyNotes" placeholder="We have run out of paracetamol"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 no-padding save_Pview_button">
                                         <button type="button" class="btn ink-reaction button-style-1 btn-big button-style-1_a pull-right patient-submit-btn">cancel</button>
-                                        <button type="button" class="btn ink-reaction button-style-1 btn-big pull-right btn-default patient-submit-btn margin-right-10" ng-click="savePharmacy()">save</button>
+                                        <button type="button" class="btn ink-reaction button-style-1 btn-big pull-right btn-default patient-submit-btn margin-right-10" ng-click="updatePharmacy()">save</button>
                                     </div>
                                 </form>
                             </div>
@@ -206,18 +206,16 @@
                 <h2>Add Medication</h2>
             </div>
             <div class="modal-body">
-                <form class="custom-form" novalidate>
+                <form class="custom-form" novalidate ng-submit="savePharmacyPopUp()">
                     <div class="row">
 
                         <div class="col-lg-3">
                             <label>Medication</label>
                         </div>
                         <div class="col-lg-9">
-                            <select ng-model="MedicationData.medicationDropDown" class="form-control" placeholder="Select Medication">
+                            <select ng-model="MedicationData.medication" class="form-control" placeholder="Select Medication">
                                 <option></option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
+                                <option ng-selected="MedicationData.medication == medicationDropData.name" value="{{medicationDropData.name}}" ng-repeat="medicationDropData in medicationDropDowns">{{medicationDropData.name}}</option>
                             </select>
                         </div>                                              
 
@@ -228,7 +226,8 @@
                             <input ng-model="MedicationData.sig" type="text" placeholder="" />
                         </div>
                         <div class="col-lg-1">
-                            <button class="setting-button button-custom pull-right open_sig"></button>
+                            <!--open_sig-->
+                            <a href="javascript:;" data-target="#addsig" data-toggle="modal" class="setting-button button-custom pull-right"></a>
                         </div>
 
                         <div class="col-lg-3">
@@ -242,7 +241,7 @@
                             <label>Refills</label>
                         </div>
                         <div class="col-lg-3">
-                            <input ng-model="MedicationData.refills" type="text" placeholder="" />
+                            <input ng-model="MedicationData.reffills" type="text" placeholder="" />
                         </div>
 
                         <div class="col-lg-3">
@@ -251,21 +250,21 @@
                         <div class="col-lg-9">
                             <select ng-model="MedicationData.pharmacy" class="form-control" placeholder="Select Pharmacy">
                                 <option></option>
-                                <option>2</option>
-                                <option>3</option>
+                                <option ng-selected="MedicationData.pharmacy == pharmacyDataDrop.name" value="{{pharmacyDataDrop.name}}" ng-repeat="pharmacyDataDrop in pharmacyDataDropDown">{{pharmacyDataDrop.name}}</option>
                             </select>
                         </div>
                         <div class="col-lg-3 clear">
                             <label>Note Of Pharmacy</label>
                         </div>
                         <div class="col-lg-9">
-                            <input ng-model="MedicationData.pharmacyNote" type="text" placeholder="" required/>
+                            <input ng-model="MedicationData.note_of_pharmacy" type="text" placeholder="" required/>
                         </div>
 
 
                         <div class="col-lg-3"></div>
                         <div class="col-lg-9">
-                            <button type="button" ng-click="addMedication(MedicationData)" class="btn btn-default pull-left button-style-1">Add</button>
+                            <button ng-hide="showUpdate" type="button" ng-click="addMedication()" class="btn btn-default pull-left button-style-1">Add</button>
+                            <button type="button" ng-show="showUpdate" ng-click="addMedication(1)" class="btn btn-default pull-left button-style-1">Update</button>
                         </div>
 
                     </div>
@@ -310,24 +309,29 @@
                                         <label>Refill</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <span>{{medicationDataPush.refills}}</span>
+                                        <span>{{medicationDataPush.reffills}}</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-2">
-                                <button class="delete remove_med button-custom pull-right"></button>
-                                <button class="edit button-custom pull-right"></button>                            
+                                <a ng-click="medicationsDataPush.splice($index, 1)" href="javascript:;" class="delete remove_med button-custom pull-right"></a>
+                                <a href="javascript:;" ng-click="editMedication($index);" class="edit button-custom pull-right"></a>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default button-style-1">Send</button>
+                        <button type="submit" class="btn btn-default button-style-1" ng-show="medicationsDataPush != ''">Send</button>
                         <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
                     </div>
                 </form>
+
             </div>
+
         </div><!-- /.modal-content -->
+
+
     </div><!-- /.modal-dialog -->
+
 </div><!-- /.modal -->
 
 <div class="modal fade big-modal" id="addsig" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
@@ -338,7 +342,7 @@
             </div>
             <div class="modal-body">
                 <form class="custom-form">
-                    <div class="row">  
+                    <div class="row">
                         <div class="col-lg-6">
                             <div class="row">
                                 <div class="col-lg-12">
@@ -410,3 +414,4 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
+</div>
