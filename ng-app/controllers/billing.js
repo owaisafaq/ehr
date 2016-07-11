@@ -323,6 +323,8 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 
 	};
 
+
+
 	$scope.deletingInvoice = function (invoice_id){
 		if ( window.confirm("Are you Sure you want to delete?") ) {
 			deleteInvoice.save({
@@ -346,9 +348,10 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	}
 
 
-	}
 
-};
+
+
+
 
 
 
