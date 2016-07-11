@@ -107,7 +107,7 @@
                                     </div>
                                     <div class="col-lg-12 no-padding save_Pview_button">
                                         <button type="button" class="btn ink-reaction button-style-1 btn-big button-style-1_a pull-right patient-submit-btn">cancel</button>
-                                        <button type="button" class="btn ink-reaction button-style-1 btn-big pull-right btn-default patient-submit-btn margin-right-10" ng-click="savePharmacy()">save</button>
+                                        <button type="button" class="btn ink-reaction button-style-1 btn-big pull-right btn-default patient-submit-btn margin-right-10" ng-click="updatePharmacy()">save</button>
                                     </div>
                                 </form>
                             </div>
@@ -215,7 +215,7 @@
                         <div class="col-lg-9">
                             <select ng-model="MedicationData.medication" class="form-control" placeholder="Select Medication">
                                 <option></option>
-                                <option ng-selected="MedicationData.medication == medicationDropData.id" value="{{medicationDropData.id}}" ng-repeat="medicationDropData in medicationDropDowns">{{medicationDropData.name}}</option>
+                                <option ng-selected="MedicationData.medication == medicationDropData.name" value="{{medicationDropData.name}}" ng-repeat="medicationDropData in medicationDropDowns">{{medicationDropData.name}}</option>
                             </select>
                         </div>                                              
 
@@ -227,7 +227,7 @@
                         </div>
                         <div class="col-lg-1">
                             <!--open_sig-->
-                            <a href="javascript:;" class="setting-button button-custom pull-right"></a>
+                            <a href="javascript:;" data-target="#addsig" data-toggle="modal" class="setting-button button-custom pull-right"></a>
                         </div>
 
                         <div class="col-lg-3">
@@ -250,7 +250,7 @@
                         <div class="col-lg-9">
                             <select ng-model="MedicationData.pharmacy" class="form-control" placeholder="Select Pharmacy">
                                 <option></option>
-                                <option ng-selected="MedicationData.pharmacy == pharmacyDataDrop.id" value="{{pharmacyDataDrop.id}}" ng-repeat="pharmacyDataDrop in pharmacyDataDropDown">{{pharmacyDataDrop.name}}</option>
+                                <option ng-selected="MedicationData.pharmacy == pharmacyDataDrop.name" value="{{pharmacyDataDrop.name}}" ng-repeat="pharmacyDataDrop in pharmacyDataDropDown">{{pharmacyDataDrop.name}}</option>
                             </select>
                         </div>
                         <div class="col-lg-3 clear">
@@ -314,7 +314,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-2">
-                                <a ng-click="medicationsDataPush.splice($index,1)" href="javascript:;" class="delete remove_med button-custom pull-right"></a>
+                                <a ng-click="medicationsDataPush.splice($index, 1)" href="javascript:;" class="delete remove_med button-custom pull-right"></a>
                                 <a href="javascript:;" ng-click="editMedication($index);" class="edit button-custom pull-right"></a>                            
                             </div>
                         </div>
@@ -333,3 +333,85 @@
     </div><!-- /.modal-dialog -->
 
 </div><!-- /.modal -->
+
+<div class="modal fade big-modal" id="addsig" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Build Instructions</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form">
+                    <div class="row">  
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label>Dose</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <select class="form-control" ng-model="buildInstructions.dose" placeholder="Select">
+                                        <option></option>
+                                        <option ng-repeat="dose in buildInstructionObject.dose" value="{{dose.name}}">{{dose.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Route</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <select class="form-control" ng-model="buildInstructions.route" placeholder="Select">
+                                        <option></option>
+                                        <option ng-repeat="route in buildInstructionObject.route" value="{{route.name}}">{{route.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Direction</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <select class="form-control" ng-model="buildInstructions.direction" placeholder="Select">
+                                        <option></option>
+                                        <option ng-repeat="direction in buildInstructionObject.direction" value="{{direction.name}}">{{direction.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label>Unit</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <select class="form-control" ng-model="buildInstructions.unit" placeholder="Select">
+                                        <option></option>
+                                        <option ng-repeat="unit in buildInstructionObject.unit" value="{{unit.name}}">{{unit.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Frequency</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <select class="form-control" ng-model="buildInstructions.frequency" placeholder="Select">
+                                        <option></option>
+                                        <option ng-repeat="frequency in buildInstructionObject.frequency" value="{{frequency.name}}">{{frequency.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Duration</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <select class="form-control" ng-model="buildInstructions.duration" placeholder="Select">
+                                        <option></option>
+                                        <option ng-repeat="duration in buildInstructionObject.duration" value="{{duration.name}}">{{duration.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default update_sig button-style-1" ng-click="addSIG(buildInstructions);">Update</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>

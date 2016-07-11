@@ -948,6 +948,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             console.log(res)
             if (res.status == true) {
                 $scope.foldersArchive = res.data;
+                console.log(res.data.parent_id + " " + res.data[0].followup_parent_id + " " + res.data.parent_id);
+                $scope.backLinkID = res.data.parent_id == undefined ? res.data[0].followup_parent_id : res.data.parent_id ;
+                console.log($scope.backLinkID);
                 $rootScope.loader = 'hide';
             }
         }

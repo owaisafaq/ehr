@@ -72,16 +72,18 @@ class PDFController extends Controller
     public function send_invoice_email(Request $request){
 
 
+
         $invoice_id = $request->input('invoice_id');
         $email_address = $request->input('email_address');
 
         $data = ['name'=>'foo'];
 
         $view =  app()->make('view')->make('invoice_pdf', $data)->render();
-
-
+        
         $pdf = PDF::loadHTML($view);
+
         $path = base_path().'/public/patient_archive/invoice.pdf';
+
 
         $pdf->save($path);
 

@@ -8,7 +8,7 @@ $(document).ready(function () {
     $('.checkout_patient_tab_con > div').css('display', 'none');
     var id = $('input:radio[name="checkoutpatient"]').val();
     $('#' + id).show();
-    $('body').on('click','input:radio[name="checkoutpatient"]', function () {
+    $('body').on('click', 'input:radio[name="checkoutpatient"]', function () {
         $('.checkout_patient_tab_con > div').css('display', 'none');
         $('.checkout_patient_tab_con > div').remove('active');
         var id = $(this).val();
@@ -28,7 +28,7 @@ $(document).ready(function () {
         $(this).siblings('input[type=text]').show();
     })
     $('body').on('click', '.file_create_con > div:not(.active),.folder_create_con > div:not(.active)', function () {
-        $('.archive_buttons .edit,.archive_buttons .delete').css('display','inline-block')
+        $('.archive_buttons .edit,.archive_buttons .delete').css('display', 'inline-block')
         $('.file_create_con > div,.folder_create_con > div').removeClass('active');
         $('.file_uploads').find('input').not($(this).find('input')).attr('disabled', 'disabled');
         $('.edit').show();
@@ -75,19 +75,28 @@ $(document).ready(function () {
         $('.invoice_list').show();
         $('.edit_invoice').hide();
     });
-    
+
     $(document).on('click', '.btn_print', function () {
         $('.foot_invoice').hide();
         window.print();
-        
+
     });
     $(document).on('click', '.hide_print_inovice', function () {
         $('.invoice_list').show();
         $('.print_invoice').hide();
         $('.custom-tab').show();
     });
-    
-    
+    $(document).on('click', '.printIdCard', function () {
+        window.print();
+
+    });
+    $(document).on('click', '.hide_print_inovice', function () {
+        $('.invoice_list').show();
+        $('.print_invoice').hide();
+        $('.custom-tab').show();
+    });
+
+
     $(document).on('click', '.add_invoice_row', function () {
         $('.invoice_row').prepend('<div class="row edit_inv_row"><div class="col-lg-4"><input type="text" placeholder="" ></div><div class="col-lg-1 code_col"><input type="text" placeholder="" ></div><div class="col-lg-2"><input type="text" placeholder="" ></div><div class="col-lg-2"><input type="text" placeholder="" ></div><div class="col-lg-2 amount_col"><input type="text" placeholder="" ></div><div class="col-lg-1 btn_can_col"><span class="remove_invoice_row"><i class="fa fa-close"></i></span></div></div>');
     });
@@ -95,22 +104,22 @@ $(document).ready(function () {
     $(document).on('click', '.remove_invoice_row', function () {
         $(this).parents('.edit_inv_row').remove();
     });
-    
-    $(document).on('click','.remove_med',function (){
+
+    $(document).on('click', '.remove_med', function () {
         $(this).parents('.med_row').remove();
     });
-    
-    $(document).on('click','.open_sig',function (){
+
+    $(document).on('click', '.open_sig', function () {
         $('#addsig').modal('show');
         $('#addmedication').modal('hide');
     });
-    
-    $(document).on('click','.update_sig',function (){
+
+    $(document).on('click', '.update_sig', function () {
         $('#addsig').modal('hide');
         $('#addmedication').modal('show');
     });
 
-    $(document).on('click','#cancelOrder2 .form-wizard-horizontal li',function(){
+    $(document).on('click', '#cancelOrder2 .form-wizard-horizontal li', function () {
         $('#cancelOrder2 .form-wizard-horizontal li').removeClass('active');
         $('#cancelOrder2 .form-wizard-horizontal li').removeClass('done');
         $(this).prevAll().addClass('done');
@@ -118,6 +127,6 @@ $(document).ready(function () {
         var index = $('#cancelOrder2 .form-wizard-horizontal li').index(this);
         var length = $('#cancelOrder2 .form-wizard-horizontal li').length;
         var width = index / (length - 1) * 100;
-        $('#cancelOrder2 .form-wizard-horizontal .progress .progress-bar-primary').css('width',width+'%');
+        $('#cancelOrder2 .form-wizard-horizontal .progress .progress-bar-primary').css('width', width + '%');
     });
 });
