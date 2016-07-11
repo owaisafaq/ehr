@@ -4,7 +4,11 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         $rootScope.pageTitle = "EHR - Pharmacy VIew";
         $scope.PrescriptionView = [];
         $scope.medicationsDataPush = [];
-        $scope.Prescription = {}
+        $scope.Prescription = {};
+        $scope.MedicationData = {}
+        $scope.buildInstructionObject = buildInstructionObject;
+        $scope.buildInstructions = {};
+        console.log();
         GetAllPrescription.get({
             token: $window.sessionStorage.token,
             patient_id: 1
@@ -15,8 +19,8 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
             console.log(res)
             $scope.Prescription.notes = res.notes;
         }
-        function prescriptionFailure() {
-            console.log(res)
+        function prescriptionFailure(error) {
+            console.log(error)
         }
         $scope.updateDispense = function () {
             $('.editable_table .editDispensed').removeAttr('disabled')
@@ -73,5 +77,10 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         }
         function MedicationFailure(res) {
             console.log(res)
+        }
+
+        $scope.addSIG = function(sigData){
+            $scope.MedicationData.sig = sigData.dose + " " + sigData.unit + " " + sigData.route + " for " + sigData.frequency + " " + sigData.direction + " " + sigData.duration;
+            console.log($scope.MedicationData.sig);
         }
     }]);
