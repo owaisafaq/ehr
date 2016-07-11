@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\File;
 use DB;
 use PDF;
 use View;
+use PHPMailer;
+
 class PDFController extends Controller
 {
     public function get_lab_test_pdf(Request $request)
@@ -27,7 +29,7 @@ class PDFController extends Controller
             ->leftJoin('templates','templates.id','=','patient_lab_test_values.template_id')
             ->where('lab_test', $id)->first();
 
-        $template_values = json_decode($db->template_values);
+       $template_values = json_decode($db->template_values);
         $template = json_decode($db->template);
         foreach ($template->fields as $temp){
             foreach ($template_values as $k => $v){
@@ -43,10 +45,76 @@ class PDFController extends Controller
 //    echo $template->fields[0]->displayName;
 //
         $data = ['data'=>$arr];
+
+
         $view =  app()->make('view')->make('report_pdf', $data)->render();
 //        return $view;
 //    return $view;
-    $pdf = PDF::loadHTML($view);
-    return $pdf->stream('report_pdf');
+
+        $pdf = PDF::loadHTML($view);
+        // return $pdf->stream($file_archive);
+
+        $path = base_path().'/public/patient_archive/report.pdf';
+
+        $pdf->save($path);
+
+        $file_archive = url('/').'/patient_archive/report.pdf';
+
+        echo json_encode(array(
+                       'status' => true,
+                       'data' => $file_archive,
+
+                   ),JSON_UNESCAPED_SLASHES);
+
+    }
+
+
+    public function send_invoice_email(Request $request){
+
+
+
+        $invoice_id = $request->input('invoice_id');
+        $email_address = $request->input('email_address');
+
+        $data = ['name'=>'foo'];
+
+        $view =  app()->make('view')->make('invoice_pdf', $data)->render();
+        
+        $pdf = PDF::loadHTML($view);
+
+        $path = base_path().'/public/patient_archive/invoice.pdf';
+
+
+        $pdf->save($path);
+
+        $message = "Invoice Data";
+
+              $mail = new PHPMailer(true); // notice the \  you have to use root namespace here
+              try {
+                  $mail->isSMTP(); // tell to use smtp
+                  $mail->CharSet = "utf-8"; // set charset to utf8
+                  $mail->SMTPAuth = true;  // use smpt auth
+                  $mail->SMTPSecure = "tls"; // or ssl
+                  $mail->Host = "smtp.gmail.com";
+                  $mail->Port = `587`; // most likely something different for you. This is the mailtrap.io port i use for testing.
+                  $mail->Username = "aploskhan@gmail.com";
+                  $mail->Password = "Aplos@221";
+                  $mail->setFrom('smovaishassan12@hotmail.com');
+                  $mail->AddAttachment($path);
+                  $mail->Subject = "Message From Ehr";
+                  $mail->MsgHTML($message);
+                  $mail->addAddress($email_address);
+                  $mail->send();
+
+               } catch (phpmailerException $e) {
+                  dd($e);
+               } catch (Exception $e) {
+                              dd($e);
+               }
+
+
+        return response()->json(['status' => true, 'message' => 'Email Send Successfully']);
+
+
     }
 }

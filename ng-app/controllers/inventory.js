@@ -152,14 +152,20 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 	}
 
 	function SupplierSuccess(res) {
-	 console.log(res);
-	 if (res.status == true) {
-	 $rootScope.loader = "hide";
-	 $timeout(function () {
-	 $('#addSupplier').modal('hide');
-	 },500);
-	 }
-	 }
+		console.log(res);
+		if (res.status == true) {
+			$rootScope.loader = "hide";
+			$timeout(function () {
+				$('#addSupplier').modal('hide');
+			},500);
+
+			GetAllSuppliers.get({
+				token: $window.sessionStorage.token
+
+			}, GetAllSupplierSuccess, GetAllSupplierFailure);
+
+		}
+	}
 
 	function SupplierFailure(error) {
 		console.log(error);
@@ -232,39 +238,10 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 	}
 
 	function AddInventorySuccess(res) {
-	 console.log(res);
-	 if (res.status == true) {
-
-	 $rootScope.loader = "hide";
-
-		 $("#stock_det").hide();
-		 $(".add-drug-supplements").hide();
-		 $(".add-drug-others").hide();
-		 $(".inventory_detail").show();
-		 $(".inv_header").show();
-
-
-		 document.getElementById("addInv").reset();
-
-
-		 GetAllInventory.get({
-			 token: $window.sessionStorage.token,
-		 }, GetAllInventorySuccess, GetAllInventoryFailure);
-
-
-	 }
-	 }
-
-	function AddInventoryFailure(error) {
-		console.log(error);
-	}
-
-	/*function AddProductSuccess(res) {
 		console.log(res);
 		if (res.status == true) {
-			$rootScope.loader = "hide";
-			console.log("in product now");
 
+			$rootScope.loader = "hide";
 
 			$("#stock_det").hide();
 			$(".add-drug-supplements").hide();
@@ -280,13 +257,42 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 				token: $window.sessionStorage.token,
 			}, GetAllInventorySuccess, GetAllInventoryFailure);
 
+
 		}
 	}
 
-	function AddProductFailure(error) {
+	function AddInventoryFailure(error) {
 		console.log(error);
 	}
-*/
+
+	/*function AddProductSuccess(res) {
+	 console.log(res);
+	 if (res.status == true) {
+	 $rootScope.loader = "hide";
+	 console.log("in product now");
+
+
+	 $("#stock_det").hide();
+	 $(".add-drug-supplements").hide();
+	 $(".add-drug-others").hide();
+	 $(".inventory_detail").show();
+	 $(".inv_header").show();
+
+
+	 document.getElementById("addInv").reset();
+
+
+	 GetAllInventory.get({
+	 token: $window.sessionStorage.token,
+	 }, GetAllInventorySuccess, GetAllInventoryFailure);
+
+	 }
+	 }
+
+	 function AddProductFailure(error) {
+	 console.log(error);
+	 }
+	 */
 
 
 
@@ -325,16 +331,16 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 
 			console.log(editInv);
 			/*var CategoryUpdate={
-				token: $window.sessionStorage.token,
-				cat_id:category.id,
-				cat_name:category.cat_name,
-				cat_desc:category.cat_desc,
-				cat_group:category.cat_group
+			 token: $window.sessionStorage.token,
+			 cat_id:category.id,
+			 cat_name:category.cat_name,
+			 cat_desc:category.cat_desc,
+			 cat_group:category.cat_group
 
 
-			}
-			console.log(updateCategory);
-			updateCategory.save(CategoryUpdate, UpdateCategorySuccess, UpdateCategoryFailure);*/
+			 }
+			 console.log(updateCategory);
+			 updateCategory.save(CategoryUpdate, UpdateCategorySuccess, UpdateCategoryFailure);*/
 
 		}
 	}
@@ -610,7 +616,7 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 				$scope.editinventory = res.data;
 				console.log($scope.editinventory);
 				/*$(".inventory_detail").hide();
-				$("#stock_det").show();*/
+				 $("#stock_det").show();*/
 
 
 			}
@@ -646,7 +652,7 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 				console.log($scope.selectedReorderProduct);
 				$('#update_reorder').modal('show');
 				/*$(".inventory_detail").hide();
-				$("#stock_det").show();*/
+				 $("#stock_det").show();*/
 
 
 			}
@@ -664,13 +670,13 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 	$scope.UpdateReorder = function (selectedInvnetory,productID) {
 		console.log(productID);
 
-			var ReorderUpdate={
-				token: $window.sessionStorage.token,
-				product_id:productID,
-				reorder_level:selectedInvnetory.reorder_level
-			}
-			console.log(ReorderUpdate);
-			updateReorderLevel.save(ReorderUpdate, ReorderUpdateSuccess, ReorderUpdateFailure);
+		var ReorderUpdate={
+			token: $window.sessionStorage.token,
+			product_id:productID,
+			reorder_level:selectedInvnetory.reorder_level
+		}
+		console.log(ReorderUpdate);
+		updateReorderLevel.save(ReorderUpdate, ReorderUpdateSuccess, ReorderUpdateFailure);
 
 
 		function ReorderUpdateSuccess(res) {
@@ -699,28 +705,28 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 	$scope.EditProduct = function (editinventory) {
 		console.log(editinventory);
 
-			var updateProduct={
- token:$window.sessionStorage.token,
- product_id:editinventory.id,
- description:editinventory.description,
- group:editinventory.group,
- department_id:editinventory.department_id,
- product_name:editinventory.name,
- trade_name:editinventory.trade_name,
- route:editinventory.route,
- reorder_level:editinventory.reorder_level,
- cat_id:editinventory.cat_id,
- strength:editinventory.strength,
- dose_from:editinventory.dose_from
+		var updateProduct={
+			token:$window.sessionStorage.token,
+			product_id:editinventory.id,
+			description:editinventory.description,
+			group:editinventory.group,
+			department_id:editinventory.department_id,
+			product_name:editinventory.name,
+			trade_name:editinventory.trade_name,
+			route:editinventory.route,
+			reorder_level:editinventory.reorder_level,
+			cat_id:editinventory.cat_id,
+			strength:editinventory.strength,
+			dose_from:editinventory.dose_from
 
-				
-			}
-			console.log(updateProduct);
+
+		}
+		console.log(updateProduct);
 		ProductUpdate.save(updateProduct, ProductUpdateSuccess, ProductUpdateFailure);
 
 
 		function ProductUpdateSuccess(res) {
-			
+
 			console.log(res);
 			if (res.status == true) {
 				$rootScope.loader = "hide";
@@ -730,8 +736,8 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 				//$("#stock_det").hide();
 				//$(".add-drug-supplements").hide();
 				$(".edit_prod").hide();
-				
-				
+
+
 				GetAllInventory.get({
 					token: $window.sessionStorage.token,
 				}, GetAllInventorySuccess, GetAllInventoryFailure);

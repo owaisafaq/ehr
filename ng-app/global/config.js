@@ -35,7 +35,84 @@ var pharmacyDataDropDown = [
     {"id": "1", "name": "abc"},
     {"id": "2", "name": "eef"},
 ]
+
+var buildInstructionObject = {
+   "dose" : [
+   		{ "id": "1", "name": "abc" },
+   		{ "id": "2", "name": "def" },
+   		{ "id": "3", "name": "ghi" },
+   		{ "id": "4", "name": "jkl" }
+   ],
+   "route" : [
+   		{ "id": "1", "name": "abc" },
+   		{ "id": "2", "name": "def" },
+   		{ "id": "3", "name": "ghi" },
+   		{ "id": "4", "name": "jkl" }
+   ],
+   "direction" : [
+   		{ "id": "1", "name": "abc" },
+   		{ "id": "2", "name": "def" },
+   		{ "id": "3", "name": "ghi" },
+   		{ "id": "4", "name": "jkl" }
+   ],
+   "unit" : [
+   		{ "id": "1", "name": "abc" },
+   		{ "id": "2", "name": "def" },
+   		{ "id": "3", "name": "ghi" },
+   		{ "id": "4", "name": "jkl" }
+   ],
+   "frequency" : [
+   		{ "id": "1", "name": "abc" },
+   		{ "id": "2", "name": "def" },
+   		{ "id": "3", "name": "ghi" },
+   		{ "id": "4", "name": "jkl" }
+   ],
+   "duration" : [
+   		{ "id": "1", "name": "abc" },
+   		{ "id": "2", "name": "def" },
+   		{ "id": "3", "name": "ghi" },
+   		{ "id": "4", "name": "jkl" }
+   ]
+}
 var immunizations = [
     {"id": "1", "name": "Intake"},
    {"id": "2", "name": "Type"}
 ];
+var buildInstructionObject = {
+  "dose" : [
+          { "id": "1", "name": "abc" },
+          { "id": "2", "name": "def" },
+          { "id": "3", "name": "ghi" },
+          { "id": "4", "name": "jkl" }
+  ],
+  "route" : [
+          { "id": "1", "name": "abc" },
+          { "id": "2", "name": "def" },
+          { "id": "3", "name": "ghi" },
+          { "id": "4", "name": "jkl" }
+  ],
+  "direction" : [
+          { "id": "1", "name": "abc" },
+          { "id": "2", "name": "def" },
+          { "id": "3", "name": "ghi" },
+          { "id": "4", "name": "jkl" }
+  ],
+  "unit" : [
+          { "id": "1", "name": "abc" },
+          { "id": "2", "name": "def" },
+          { "id": "3", "name": "ghi" },
+          { "id": "4", "name": "jkl" }
+  ],
+  "frequency" : [
+          { "id": "1", "name": "abc" },
+          { "id": "2", "name": "def" },
+          { "id": "3", "name": "ghi" },
+          { "id": "4", "name": "jkl" }
+  ],
+  "duration" : [
+          { "id": "1", "name": "abc" },
+          { "id": "2", "name": "def" },
+          { "id": "3", "name": "ghi" },
+          { "id": "4", "name": "jkl" }
+  ]
+}

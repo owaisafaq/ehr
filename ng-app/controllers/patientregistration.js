@@ -945,9 +945,12 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
         ListFolderArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, followup_parent_id: $scope.followupParentId}, listFolderSuccess, listFolderFailure);
         function listFolderSuccess(res) {
-            console.log(res)
+            console.log(res);
             if (res.status == true) {
                 $scope.foldersArchive = res.data;
+                console.log(res.data.parent_id + " " + res.data[0].followup_parent_id + " " + res.data.parent_id);
+                $scope.backLinkID = res.data.parent_id == undefined ? res.data[0].followup_parent_id : res.data.parent_id ;
+                console.log($scope.backLinkID);
                 $rootScope.loader = 'hide';
             }
         }

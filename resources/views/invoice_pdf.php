@@ -251,14 +251,14 @@ and open the template in the editor.
 <!--                        </div>-->
                         <div class="row">
                             <div class="col-lg-12 no-padding">
-                                    <?php foreach ($data as $d){ ?>
+                                    <?php /*foreach ($data as $d){ */?>
                                     <div class="col-lg-3">
-                                        <label><?php echo $d['field']->displayName;  //echo 'Mr Suriya';?></label>
+                                        <label><?php /*echo $d['field']->displayName; */ ;?></label>
                                     </div>
                                     <div class="col-lg-9">
-                                        <label><?php echo $d['value']; ?></label>
+                                        <label><?php /*echo $d['value']; */?></label>
                                     </div>
-                                    <?php } ?>
+                                   <!-- --><?php /*} */?>
 <!--                                <div class="col-lg-3">-->
 <!--                                    <label>Primary Diagnosis</label>-->
 <!--                                </div>-->

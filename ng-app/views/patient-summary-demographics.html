@@ -49,27 +49,25 @@
                         </div>
                     </div><!--end .panel -->
                     <div class="card panel">
-                        <form class="custom-form" novalidate>
-                            <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-3">
-                                <header>Immunizations</header>
-                                <div class="tools">
-                                    <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
-                                </div>
+                        <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-3">
+                            <header>Immunizations</header>
+                            <div class="tools">
+                                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
                             </div>
-                            <div id="accordion3-3" class="collapse">
-                                <div class="card-body">
-                                    <textarea ng-model="immunizationName" placeholder="Immunization" required></textarea>
-                                    <button class="btn button-style-1 pull-right" ng-click="addImmunizations(immunizationName);">Add</button>
-                                    <ul class="ulli ulli_3 col-lg-12">
-                                        <li class="col-lg-12" ng-repeat="immunization in immunizations">
-                                            {{immunization.name}}
-                                            <span class="pull-right delete-icon" ng-click="immunizations.splice($index, 1)"><img src="assets/img/cross.png" /></span>
-                                        </li>
-                                    </ul>
-                                    <!-- <p>Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Dicant vituperata consequuntur.</p> -->
-                                </div>
+                        </div>
+                        <div id="accordion3-3" class="collapse">
+                            <div class="card-body">
+                                <textarea ng-model="immunizationName" placeholder="Immunization"></textarea>
+                                <button ng-click="addImmunizations(immunizationName);">Add</button>
+                            <ul>
+                                <li ng-repeat="immunization in immunizations">
+                                    {{immunization.name}}
+                                    <span class="delete-icon" ng-click="immunizations.splice($index,1)"><img src="assets/img/cross.png" /></span>
+                                </li>
+                            </ul>
+                            <!-- <p>Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Dicant vituperata consequuntur.</p> -->
                             </div>
-                        </form>
+                        </div>
                     </div><!--end .panel -->
                     <div class="card panel">
                         <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-2">
@@ -98,6 +96,34 @@
                             </div>
                         </div>
                     </div><!--end .panel -->
+
+                    <!-- <div class="card panel">
+                        <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-5">
+                            <header>Procedures & Hospitalization</header>
+                            <div class="tools">
+                                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+                            </div>
+                        </div>
+                        <div id="accordion3-5" class="collapse">
+                            <div class="card-body"><p>Duo semper accumsan ea, quidam convenire cum cu, oportere maiestatis incorrupte est eu. Soluta audiam timeam ius te, idque gubergren forensibus ad mel, persius urbanitas usu id. Civibus nostrum fabellas mea te, ne pri lucilius iudicabit. Ut cibo semper vituperatoribus vix, cum in error elitr. Vix molestiae intellegat omittantur an, nam cu modo ullum scriptorem.</p>
+                                <p>Quod option numquam vel in, et fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Dicant vituperata consequuntur at sea, mazim commodo</p>
+                            </div>
+                        </div>
+                    </div> --><!--end .panel -->
+
+                    <!-- <div class="card panel">
+                        <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-6">
+                            <header>Injections</header>
+                            <div class="tools">
+                                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+                            </div>
+                        </div>
+                        <div id="accordion3-6" class="collapse">
+                            <div class="card-body"><p>Duo semper accumsan ea, quidam convenire cum cu, oportere maiestatis incorrupte est eu. Soluta audiam timeam ius te, idque gubergren forensibus ad mel, persius urbanitas usu id. Civibus nostrum fabellas mea te, ne pri lucilius iudicabit. Ut cibo semper vituperatoribus vix, cum in error elitr. Vix molestiae intellegat omittantur an, nam cu modo ullum scriptorem.</p>
+                                <p>Quod option numquam vel in, et fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Dicant vituperata consequuntur at sea, mazim commodo</p>
+                            </div>
+                        </div>
+                    </div> --><!--end .panel -->
                 </div><!--end .panel-group -->
             </div>
             <div class="card-head col-lg-9 no-padding card-head-auto">
@@ -192,8 +218,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
                             <div class="row">
                                 <div class="col-lg-12 no-padding">
                                     <div class="col-lg-3">
@@ -240,7 +264,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="encounter in encounters.slice(begin, end)">
+                            <tr ng-repeat="encounter in encounters">
                                 <td>{{encounter.created_at}}</td>
                                 <td>{{encounter.id}}</td>
                                 <td>{{encounter.encounter_type}}</td>
@@ -251,13 +275,26 @@
                             </tr>
                         </tbody>
                     </table>
-                    <pagination data-ng-model="visitcurrentPage" total-items="encounters.length"
+                    <div class="pagination pagination-centered">
+                        <ul class="pagination-controle pagination">
+                            <li>
+                              <button type="button" class="btn btn-primary" ng-disabled="encounterCurPage == 0" ng-click="encounterCurPage=encounterCurPage-1; encounterPaginationPrev(pageSize, encounterCurPage);"> &lt; PREV</button>
+                            </li>
+                            <li>
+                              <span>Page {{encounterCurPage + 1}} of {{ numberOfPagesEncounter() }}</span>
+                            </li>
+                            <li>
+                              <button type="button" class="btn btn-primary" ng-disabled="encounterCurPage >= encounterCount/pageSize - 1" ng-click="encounterCurPage = encounterCurPage+1; encounterPaginationNext(pageSize, encounterCurPage);">NEXT &gt;</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- <pagination data-ng-model="visitcurrentPage" total-items="encounters.length"
                                 items-per-page="visitnumPerPage" data-max-size="visitmaxSize" data-boundary-links="true"
                                 ng-init="begin = (visitcurrentPage - 1) * visitnumPerPage;
                                                     end = begin + visitnumPerPage"
                                 data-ng-change="begin = (visitcurrentPage - 1) * visitnumPerPage;
                                                     end = begin + visitnumPerPage">
-                    </pagination>
+                    </pagination> -->
                 </div>
 
                 <div class="tab-pane" id="health_vitals">
@@ -274,7 +311,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr data-ng-repeat="vital in vitals.slice(vitalbegin, vitalend)">
+                            <tr data-ng-repeat="vital in vitals">
                                 <td>{{vital.created_at}}</td>
                                 <td>{{vital.temperature_c}}<span ng-show="vital.temperature_c != ''">&#8451; </span>{{vital.temperature_f}}<span ng-show="vital.temperature_f != ''">&#8457;</span></td>
                                 <td>{{vital.systolic_mm_hg}}<span ng-show="vital.systolic_mm_hg != '' && vital.diastolic_mm_hg != ''">/</span>{{vital.diastolic_mm_hg}}<span ng-show="vital.systolic_mm_hg != '' && vital.diastolic_mm_hg != ''">mmHg</span></td>
@@ -284,13 +321,26 @@
                             </tr>
                         </tbody>
                     </table>
-                    <pagination data-ng-model="vitalscurrentPage" total-items="vitals.length"
+                    <div class="pagination pagination-centered" ng-show="vitalCount">
+                        <ul class="pagination-controle pagination">
+                            <li>
+                              <button type="button" class="btn btn-primary" ng-disabled="vitalCurPage == 0" ng-click="vitalCurPage=vitalCurPage-1; vitalPaginationPrev(pageSize, vitalCurPage);"> &lt; PREV</button>
+                            </li>
+                            <li>
+                              <span>Page {{vitalCurPage + 1}} of {{ numberOfPagesVital() }}</span>
+                            </li>
+                            <li>
+                              <button type="button" class="btn btn-primary" ng-disabled="vitalCurPage >= vitalCount/pageSize - 1" ng-click="vitalCurPage = vitalCurPage+1; vitalPaginationNext(pageSize, vitalCurPage);">NEXT &gt;</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- <pagination data-ng-model="vitalscurrentPage" total-items="vitals.length"
                                 items-per-page="vitalsnumPerPage" data-max-size="vitalsmaxSize" data-boundary-links="true"
                                 ng-init="vitalbegin = (vitalscurrentPage - 1) * vitalsnumPerPage;
                                                     vitalend = vitalbegin + vitalsnumPerPage"
                                 data-ng-change="vitalbegin = (vitalscurrentPage - 1) * vitalsnumPerPage;
                                                     vitalend = vitalbegin + vitalsnumPerPage">
-                    </pagination>
+                    </pagination> -->
                 </div>
 
                 <div class="tab-pane" id="medications">
@@ -305,7 +355,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr data-ng-repeat="medication in medications.slice(medicationbegin, medicationend)">
+                            <tr data-ng-repeat="medication in medications">
                                 <td>{{medication.prescriptions}}</td>
                                 <td>{{medication.from_date}}</td>
                                 <td>{{medication.to_date}}</td>
@@ -313,13 +363,26 @@
                             </tr>
                         </tbody>
                     </table>
-                    <pagination data-ng-model="medicationscurrentPage" total-items="medications.length"
+                    <!-- <pagination data-ng-model="medicationscurrentPage" total-items="medications.length"
                                 items-per-page="medicationnumPerPage" data-max-size="medicationmaxSize" data-boundary-links="true"
                                 ng-init="medicationbegin = (medicationscurrentPage - 1) * medicationnumPerPage;
                                                     medicationend = medicationbegin + medicationnumPerPage"
                                 data-ng-change="medicationbegin = (medicationscurrentPage - 1) * medicationnumPerPage;
                                                     medicationend = medicationbegin + medicationnumPerPage">
-                    </pagination>
+                    </pagination> -->
+                    <div class="pagination pagination-centered" ng-show="medicationsCount">
+                        <ul class="pagination-controle pagination">
+                            <li>
+                              <button type="button" class="btn btn-primary" ng-disabled="medicationCurPage == 0" ng-click="medicationCurPage=medicationCurPage-1; medicationPaginationNext(pageSize, medicationCurPage);"> &lt; PREV</button>
+                            </li>
+                            <li>
+                              <span>Page {{medicationCurPage + 1}} of {{ numberOfPagesMedication() }}</span>
+                            </li>
+                            <li>
+                              <button type="button" class="btn btn-primary" ng-disabled="medicationCurPage >= medicationsCount/pageSize - 1" ng-click="medicationCurPage = medicationCurPage+1; medicationPaginationNext(pageSize, medicationCurPage);">NEXT &gt;</button>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="tab-pane" id="supplements">
                     <button data-toggle="modal" data-target="#addsuplemets" class="btn ink-reaction button-style-1 button-style-1 pull-right margin-bottom-xxl">Add Supplements</button>
@@ -347,13 +410,26 @@
                             </tr>
                         </tbody>
                     </table>
-                    <pagination data-ng-model="suplimentscurrentPage" total-items="supplements.length"
+                    <!-- <pagination data-ng-model="suplimentscurrentPage" total-items="supplements.length"
                                 items-per-page="suplimentsnumPerPage" data-max-size="suplimentsmaxSize" data-boundary-links="true"
                                 ng-init="supplementbegin = (suplimentscurrentPage - 1) * suplimentsnumPerPage;
                                                     supplementend = supplementbegin + suplimentsnumPerPage"
                                 data-ng-change="supplementbegin = (suplimentscurrentPage - 1) * suplimentsnumPerPage;
                                                     supplementend = supplementbegin + suplimentsnumPerPage">
-                    </pagination>
+                    </pagination> -->
+                    <div class="pagination pagination-centered" ng-show="supplementsCount">
+                        <ul class="pagination-controle pagination">
+                            <li>
+                              <button type="button" class="btn btn-primary" ng-disabled="supplementsCurPage == 0" ng-click="supplementsCurPage=supplementsCurPage-1; supplementPaginationPrev(pageSize, supplementsCurPage);"> &lt; PREV</button>
+                            </li>
+                            <li>
+                              <span>Page {{supplementsCurPage + 1}} of {{ numberOfPagesSupplements() }}</span>
+                            </li>
+                            <li>
+                              <button type="button" class="btn btn-primary" ng-disabled="supplementsCurPage >= supplementsCount/pageSize - 1" ng-click="supplementsCurPage = supplementsCurPage+1; supplementPaginationNext(pageSize, supplementsCurPage);">NEXT &gt;</button>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="tab-pane" id="allergies"> 
                     <button class="btn ink-reaction button-style-1 button-style-1 pull-right margin-bottom-xxl" data-toggle="modal" data-target="#addallergies">Add Allergies</button>
@@ -386,7 +462,12 @@
                                     <select my-drop-down class="form-control" ng-model="allergie.allergy_status" placeholder="Select Allergy Status" ng-disabled="edit[$index] == false">
                                         <!--<option></option>-->
                                         <option ng-selected="allergie.allergy_status == allergy.name" ng-repeat="allergy in dropDownInfo.AllergyType" value="{{allergy.name}}">{{allergy.name}}</option>
+                                        <!--<option ng-selected="allergie.allergy_status == 'not any more'">Not Any More</option>-->
                                     </select>
+                                    <!--                                    <select class="form-control select_searchFields" placeholder="ID Type" ng-model="PI.identity_type">
+                                                                            <option value=""></option>
+                                                                            <option ng-repeat="idType in dropDownInfo.IdType" value="{{idType.id}}">{{idType.type}}</option>
+                                                                        </select>-->
                                 </td>
                                 <td><input type="text" ng-model="allergie.reactions" ng-disabled="edit[$index] == false" /></td>
                                 <td>
@@ -397,13 +478,26 @@
                             </tr>
                         </tbody>
                     </table>
-                    <pagination data-ng-model="allergycurrentPage" total-items="allergies.length"
+                    <div class="pagination pagination-centered" ng-show="allergiesCount">
+                        <ul class="pagination-controle pagination">
+                            <li>
+                              <button type="button" class="btn btn-primary" ng-disabled="allergyCurPage == 0" ng-click="allergyCurPage=allergyCurPage-1; paginationPrev(pageSize, allergyCurPage);"> &lt; PREV</button>
+                            </li>
+                            <li>
+                              <span>Page {{allergyCurPage + 1}} of {{ numberOfPages() }}</span>
+                            </li>
+                            <li>
+                              <button type="button" class="btn btn-primary" ng-disabled="allergyCurPage >= allergiesCount/pageSize - 1" ng-click="allergyCurPage = allergyCurPage+1; paginationNext(pageSize, allergyCurPage);">NEXT &gt;</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- <pagination data-ng-model="allergycurrentPage" total-items="allergies.length"
                                 items-per-page="allergynumPerPage" data-max-size="allergysmaxSize" data-boundary-links="true"
                                 ng-init="begin = (allergycurrentPage - 1) * allergynumPerPage;
                                                     end = begin + allergynumPerPage"
                                 data-ng-change="begin = (allergycurrentPage - 1) * allergynumPerPage;
                                                     end = begin + allergynumPerPage">
-                    </pagination>
+                    </pagination> -->
                 </div>
                 <div class="tab-pane" id="archive">
                     <div class="col-xs-12">
@@ -416,7 +510,7 @@
                     </div>
 
                     <div class="row file_uploads">
-                        <a href="javascript:;" ng-if="followupParentId != '0'" ng-hide="backButtonArchive" ng-click="backButton();"><< Back</a>
+                     <a href="javascript:;" ng-if="followupParentId != '0'" class="btn button-style-1" ng-hide="backButtonArchive" ng-click="backButton();">Folder Up</a>
                         <div class="col-xs-12 folder_create_con no-padding">
                             <div class="col-xs-2" data-id="{{folder.id}}" ng-repeat="folder in foldersArchive" ng-dblclick="openFolder();">
                                 <div>
@@ -431,7 +525,7 @@
                         <div class="file_create_con col-xs-12 no-padding">
                             <div class="col-xs-2" data-id="{{archive.id}}" ng-repeat="archive in archives">
                                 <!-- <a href="{{archive.file}}"> -->
-                                <div ng-if="archive.file.slice( - 3) == 'pdf'" ng-dblclick="showPDF(archive.file);">
+                                <div ng-if="archive.file.slice(-3) == 'pdf'" ng-dblclick="showPDF(archive.file);">
                                     <div class="file_preview">
                                         <!-- <img src="assets/img/pdf_icon.png" /> -->
                                         <object data="{{archive.file}}" type="application/pdf" style="height: 400px;"></object>
@@ -445,7 +539,7 @@
                                     </div>
                                 </div>
                                 <!-- </a> -->
-                                <div ng-if="archive.file.slice( - 3) == 'jpg' || archive.file.slice( - 3) == 'peg' || archive.file.slice( - 3) == 'png'">
+                                <div ng-if="archive.file.slice(-3) == 'jpg' || archive.file.slice(-3) == 'peg' || archive.file.slice(-3) == 'png'">
                                     <div class="file_preview">
                                         <img src="{{archive.file}}" />
                                     </div>
@@ -479,23 +573,23 @@
                     <div class="row text-center">
                         <div class="select_file_mode">
                             <a class="{{areaFileActive1}}" href="javascript:;" ng-click="folderArea = false;
-                                        fileArea = true;
-                                        selectType('application/pdf');
-                                        areaFileActive1 = 'active';
-                                        areaFileActive2 = '';
-                                        areaFileActive3 = ''"><img src="assets/img/pdf_big_icon.png" /></a>
+                                            fileArea = true;
+                                            selectType('application/pdf');
+                                            areaFileActive1 = 'active';
+                                            areaFileActive2 = '';
+                                            areaFileActive3 = ''"><img src="assets/img/pdf_big_icon.png" /></a>
                             <a class="{{areaFileActive2}}" href="javascript:;" ng-click="folderArea = false;
-                                        fileArea = true;
-                                        selectType('image/jpeg, image/png, image/jpg');
-                                        areaFileActive2 = 'active';
-                                        areaFileActive1 = '';
-                                        areaFileActive3 = ''"><img src="assets/img/jpg_big_icon.png" /></a>
+                                            fileArea = true;
+                                            selectType('image/jpeg, image/png, image/jpg');
+                                            areaFileActive2 = 'active';
+                                            areaFileActive1 = '';
+                                            areaFileActive3 = ''"><img src="assets/img/jpg_big_icon.png" /></a>
                             <a class="{{areaFileActive3}}" href="javascript:;" ng-click="fileArea = false;
-                                        folderArea = true;
-                                        areaFileActive3 = 'active';
-                                        areaFileActive1 = '';
-                                        areaFileActive2 = '';
-                                        areaFileActive3 = 'active'"><img src="assets/img/folder_icon_big.png" /></a>
+                                            folderArea = true;
+                                            areaFileActive3 = 'active';
+                                            areaFileActive1 = '';
+                                            areaFileActive2 = '';
+                                            areaFileActive3 = 'active'"><img src="assets/img/folder_icon_big.png" /></a>
                         </div>
                     </div>
                     <div class="show_uploading_format" ng-show="fileArea">
@@ -783,11 +877,11 @@
                             <label>Status</label>
                         </div>
                         <div class="col-lg-3">
-                            <select ng-model="allergie.status" class="form-control" placeholder="Select Status">
-                                <option></option>
-                                <option value="still exists">still exists</option>
-                                <option value="not any more">not any more</option>
-                            </select>
+                           <select ng-model="allergie.status" class="form-control" placeholder="Select Status">
+                               <option></option>
+                               <option value="still exists">still exists</option>
+                               <option value="not any more">not any more</option>
+                           </select>
                         </div>
 
                         <div class="col-lg-2">
@@ -947,16 +1041,18 @@
                 <h2>Add Medication</h2>
             </div>
             <div class="modal-body">
-                <form class="custom-form" novalidate ng-submit="savePharmacyPopUp()">
+                <form class="custom-form">
                     <div class="row">
 
                         <div class="col-lg-3">
                             <label>Medication</label>
                         </div>
                         <div class="col-lg-9">
-                            <select ng-model="MedicationData.medication" class="form-control" placeholder="Select Medication">
-                                <option></option>
-                                <option ng-selected="MedicationData.medication == medicationDropData.id" value="{{medicationDropData.id}}" ng-repeat="medicationDropData in medicationDropDowns">{{medicationDropData.name}}</option>
+                            <select class="form-control">
+                                <option>Select Medication</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
                             </select>
                         </div>                                              
 
@@ -964,104 +1060,217 @@
                             <label>SIG</label>
                         </div>
                         <div class="col-lg-8">
-                            <input ng-model="MedicationData.sig" type="text" placeholder="" />
+                            <input type="text" placeholder="" name=""/>
                         </div>
                         <div class="col-lg-1">
-                            <!--open_sig-->
-                            <a href="javascript:;" class="setting-button button-custom pull-right"></a>
+                            <button class="setting-button button-custom pull-right open_sig"></button>
                         </div>
 
                         <div class="col-lg-3">
                             <label>Dispense</label>
                         </div>
                         <div class="col-lg-3">
-                            <input ng-model="MedicationData.dispense" type="text" placeholder="" />
+                            <input type="text" placeholder="" name=""/>
                         </div>
 
                         <div class="col-lg-3">
                             <label>Refills</label>
                         </div>
                         <div class="col-lg-3">
-                            <input ng-model="MedicationData.reffills" type="text" placeholder="" />
+                            <input type="text" placeholder="" name=""/>
                         </div>
+
+                        <div class="col-lg-3"></div>
+                        <div class="col-lg-9">
+                            <div class="checkbox checkbox-styled">
+                                <label>
+                                    <input type="checkbox" value="">
+                                    <span>Add to Medication List</span>
+                                </label>
+                            </div>
+                        </div>
+
 
                         <div class="col-lg-3">
                             <label>Pharmacy</label>
                         </div>
-                        <div class="col-lg-9">
-                            <select ng-model="MedicationData.pharmacy" class="form-control" placeholder="Select Pharmacy">
-                                <option></option>
-                                <option ng-selected="MedicationData.pharmacy == pharmacyDataDrop.id" value="{{pharmacyDataDrop.id}}" ng-repeat="pharmacyDataDrop in pharmacyDataDropDown">{{pharmacyDataDrop.name}}</option>
+                        <div class="col-lg-6">
+                            <select class="form-control">
+                                <option>Select Pharmacy</option>
+                                <option>2</option>
+                                <option>3</option>
                             </select>
                         </div>
+                        <div class="col-lg-3"></div>
+
                         <div class="col-lg-3 clear">
-                            <label>Note Of Pharmacy</label>
+                            <label>Note Ot Pharmacy</label>
                         </div>
                         <div class="col-lg-9">
-                            <input ng-model="MedicationData.note_of_pharmacy" type="text" placeholder="" required/>
+                            <input type="text" placeholder="" name="" required/>
                         </div>
 
 
                         <div class="col-lg-3"></div>
                         <div class="col-lg-9">
-                            <button ng-hide="showUpdate" type="button" ng-click="addMedication()" class="btn btn-default pull-left button-style-1">Add</button>
-                            <button type="button" ng-show="showUpdate" ng-click="addMedication(1)" class="btn btn-default pull-left button-style-1">Update</button>
+                            <button type="button" class="btn btn-default pull-left button-style-1">Add</button>
                         </div>
 
                     </div>
 
                     <div class="medication_list">
-                        <div class="row med_row" ng-repeat="medicationDataPush in medicationsDataPush">
+                        <div class="row med_row">
                             <div class="col-lg-10">
                                 <div class="row">
                                     <div class="col-lg-2">
                                         <label>Medication</label>
                                     </div>
                                     <div class="col-lg-4">
-                                        <span>{{medicationDataPush.medication}}</span>
+                                        <span>Amoxicillin oral powder</span>
                                     </div>
                                     <div class="col-lg-3">
                                         <label>Dispense</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <span>{{medicationDataPush.dispense}}</span>
+                                        <span>5 Tablet Refills: 1</span>
                                     </div>
 
                                     <div class="col-lg-2 clear">
                                         <label>SIG</label>
                                     </div>
                                     <div class="col-lg-4">
-                                        <span>{{medicationDataPush.sig}}</span>
+                                        <span>10 mg QDPA for 5 days null route</span>
                                     </div>
                                     <div class="col-lg-3">
                                         <label>Pharmacy</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <span>{{medicationDataPush.pharmacy}}</span>
+                                        <span>Eye Clinic Pharmacy</span>
                                     </div>
 
                                     <div class="col-lg-2 clear">
                                         <label>Note</label>
                                     </div>
                                     <div class="col-lg-4">
-                                        <span>{{medicationDataPush.note_of_pharmacy}}</span>
+                                        <span>Lorem ipsum Lorem ipsum</span>
                                     </div>
                                     <div class="col-lg-3">
                                         <label>Refill</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <span>{{medicationDataPush.reffills}}</span>
+                                        <span>Lorem Ipsum</span>
                                     </div>
+
                                 </div>
                             </div>
                             <div class="col-lg-2">
-                                <a ng-click="medicationsDataPush.splice($index, 1)" href="javascript:;" class="delete remove_med button-custom pull-right"></a>
-                                <a href="javascript:;" ng-click="editMedication($index);" class="edit button-custom pull-right"></a>                            
+                                <button class="delete remove_med button-custom pull-right"></button>
+                                <button class="edit button-custom pull-right"></button>                            
+                            </div>
+                        </div>
+
+                        <div class="row med_row">
+                            <div class="col-lg-10">
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label>Medication</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>Amoxicillin oral powder</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Dispense</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>5 Tablet Refills: 1</span>
+                                    </div>
+
+                                    <div class="col-lg-2 clear">
+                                        <label>SIG</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>10 mg QDPA for 5 days null route</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Pharmacy</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>Eye Clinic Pharmacy</span>
+                                    </div>
+
+                                    <div class="col-lg-2 clear">
+                                        <label>Note</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>Lorem ipsum Lorem ipsum</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Refill</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>Lorem Ipsum</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <button class="delete remove_med button-custom pull-right"></button>
+                                <button class="edit button-custom pull-right"></button>                            
+                            </div>
+                        </div>
+
+                        <div class="row med_row">
+                            <div class="col-lg-10">
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label>Medication</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>Amoxicillin oral powder</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Dispense</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>5 Tablet Refills: 1</span>
+                                    </div>
+
+                                    <div class="col-lg-2 clear">
+                                        <label>SIG</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>10 mg QDPA for 5 days null route</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Pharmacy</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>Eye Clinic Pharmacy</span>
+                                    </div>
+
+                                    <div class="col-lg-2 clear">
+                                        <label>Note</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>Lorem ipsum Lorem ipsum</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Refill</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>Lorem Ipsum</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <button class="delete remove_med button-custom pull-right"></button>
+                                <button class="edit button-custom pull-right"></button>                            
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-default button-style-1" ng-show="medicationsDataPush != ''">Send</button>
+                        <button type="button" class="btn btn-default button-style-1">Send</button>
                         <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
                     </div>
                 </form>

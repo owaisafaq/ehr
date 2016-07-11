@@ -2744,6 +2744,9 @@ form .progress {
     .hidden-print {
         display: none !important;
     }
+    .idCardPrint.hidden-print,#addpatient .modal-footer,#addpatient .modal-header{
+        display: none;
+    }
 }
 .check-box-label label{
     width:auto;
@@ -2778,7 +2781,7 @@ form .progress {
 }
 
 .custom_template .btn-primary{
-     color: #ffffff;
+    color: #ffffff;
     background-color: #56aeea;
     border-color: #56aeea;
 }
@@ -2820,4 +2823,13 @@ form .progress {
 }
 .ulli_3 li{
     width: 100%;
+}
+#main-menu .gui-folder > a:after,#main-menu .title {
+    display: none;
+}
+.gui-controls li.expanded > ul {
+    display: none;
+}
+#main-menu:hover .gui-folder > a:after,#main-menu:hover .title, #main-menu:hover li.expanded > ul{
+    display: block;
 }
