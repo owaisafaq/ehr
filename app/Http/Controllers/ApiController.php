@@ -1411,6 +1411,7 @@ class ApiController extends Controller
     public function add_patient_vitals(Request $request)
     {
 
+        $visit_id = $request->input('visit_id');
 
         $patient_id = $request->input('patient_id');
 
@@ -1439,6 +1440,7 @@ class ApiController extends Controller
 
         DB::table('patient_vitals')->insert(
             ['patient_id' => $patient_id,
+                'visit_id' => $visit_id,
                 'systolic_mm_hg' => $systolic_mm_hg,
                 'diastolic_mm_hg' => $diastolic_mm_hg,
                 'pulse' => $pulse,
@@ -2809,15 +2811,29 @@ class ApiController extends Controller
 
         $patient_prescriptions = json_decode($prescription);
 
+        $note_for_pharmacy = $request->input('note_for_pharmacy');
+
         $currentdatetime = date("Y-m-d  H:i:s");
 
+
+        DB::table('patient_prescription')
+            ->insert(
+                [ 'visit_id'=>$visit_id,
+                    'patient_id' => $patient_id,
+                    'prescription_status'=>'in progress',
+                    'created_at' => $currentdatetime
+
+                ]
+            );
+
+
+        $prescription_id = DB::getPdo()->lastInsertId();
 
         foreach ($patient_prescriptions as $patient_prescription) {
 
             DB::table('patient_prescription')
                 ->insert(
-                    ['patient_id' => $patient_id,
-                        'visit_id' => $visit_id,
+                    ['prescription_id'=>$prescription_id,
                         'medication' => $patient_prescription->medication,
                         'sig' => $patient_prescription->sig,
                         'dispense' => $patient_prescription->dispense,
@@ -2825,12 +2841,19 @@ class ApiController extends Controller
                         'pharmacy' => $patient_prescription->pharmacy,
                         'note_of_pharmacy' => $patient_prescription->note_of_pharmacy,
                         'created_at' => $currentdatetime
-
                     ]
                 );
 
-
         }
+
+        DB::table('prescription_notes')
+            ->insert(
+                [ 'prescription_id'=>$prescription_id,
+                    'note_for_pharmacy' => $note_for_pharmacy,
+                    'created_at' => $currentdatetime
+                ]
+            );
+
 
 
         return response()->json(['status' => true, 'message' => 'Prescrpition Added Successfully']);

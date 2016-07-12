@@ -2,8 +2,8 @@
 
 require 'api.class.php';
 //define('HOST', 'http://131.107.100.10/ehr/public/api/');
-//define('HOST', 'http://localhost/ehr/public/api/');
-define('HOST', 'http://demoz.online/ehr/public/api/');
+define('HOST', 'http://localhost/ehr/public/api/');
+//define('HOST', 'http://demoz.online/ehr/public/api/');
 define('APP', '');
 define('ROUTE', '');
 
@@ -711,6 +711,7 @@ $api->url = HOST . 'add_patient_vitals';
 $api->method = "POST";
 $api->description = "Add Patient Vitals";
 $api->params->patient_id = "1";
+$api->params->visit_id = "1";
 $api->params->systolic_mm_hg= "10";
 $api->params->diastolic_mm_hg = "10";
 $api->params->pulse = "10";
@@ -1874,8 +1875,8 @@ $api->params->visit_id = "1";
 $api->params->sig = "test";
 $api->params->dispense = "1";
 $api->params->reffills = "test";
-$api->params->pharmacy = "1";
-$api->params->note_of_pharmacy = "test";*/
+$api->params->pharmacy = "1";*/
+$api->params->note_for_pharmacy = "test";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
