@@ -124,6 +124,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->get('list_resources','App\Http\Controllers\ApiController@list_resources');
 
+    $app->get('list_resources_back','App\Http\Controllers\ApiController@list_resources_back');
+
     $app->get('list_patient_resources','App\Http\Controllers\ApiController@list_patient_resources');
 
     $app->post('update_patient_resources','App\Http\Controllers\ApiController@update_patient_resources');

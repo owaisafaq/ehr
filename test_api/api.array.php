@@ -2,8 +2,8 @@
 
 require 'api.class.php';
 //define('HOST', 'http://131.107.100.10/ehr/public/api/');
-define('HOST', 'http://localhost/ehr/public/api/');
-//define('HOST', 'http://demoz.online/ehr/public/api/');
+//define('HOST', 'http://localhost/ehr/public/api/');
+define('HOST', 'http://demoz.online/ehr/public/api/');
 define('APP', '');
 define('ROUTE', '');
 
@@ -750,6 +750,19 @@ $api->name = "List Folder Files";
 $api->url = HOST . 'list_resources';
 $api->method = "GET";
 $api->description = "List Folder Files";
+$api->params->followup_parent_id = "1";
+$api->params->patient_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+
+// Back to  Folder
+$api = new api();
+$api->name = "Back to  Folder";
+$api->url = HOST . 'list_resources_back';
+$api->method = "GET";
 $api->params->followup_parent_id = "1";
 $api->params->patient_id = "1";
 $api->params->token = "123";
@@ -1887,8 +1900,9 @@ $api->name = "Update Patient Prescription";
 $api->url = HOST . 'update_patient_prescription';
 $api->method = "POST";
 $api->params->patient_id = "1";
+$api->params->prescribe_medication_id = "1";
 $api->params->prescription = "1";
-$api->params->visit_id = "1";
+
 /*$api->params->medication = "1";
 $api->params->sig = "test";
 $api->params->dispense = "1";
@@ -1917,6 +1931,8 @@ $api = new api();
 $api->name = "Get Prescription List";
 $api->url = HOST . 'get_prescription_list';
 $api->method = "GET";
+$api->params->offset = "1";
+$api->params->limit = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
@@ -1963,6 +1979,7 @@ $api->name = "Update Prescription";
 $api->url = HOST . 'update_prescription';
 $api->method = "POST";
 $api->params->precription_id = "1";
+$api->params->prescribe_medication_id = "1";
 $api->params->medication = "1";
 $api->params->sig = "test";
 $api->params->dispense = "test";
