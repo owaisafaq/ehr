@@ -1341,13 +1341,13 @@ AppEHR.factory("SendInvoiceEmail", function ($resource) {
         });
         return res2;
     }
-    var send = {
+    var sendInvoice = {
         save: function (params, body, success) {
             var res = getResource(params, body);
             return res.save(params, body, success);
         }
     };
-    return send;
+    return sendInvoice;
 });
 
 

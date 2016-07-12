@@ -77,7 +77,7 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '.btn_print', function () {
-        $('.foot_invoice').hide();
+       // $('.foot_invoice').hide();
         window.print();
 
     });

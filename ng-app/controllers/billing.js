@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData','GetBillInvoices','SendInvoiceEmail', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData,GetBillInvoices,SendInvoiceEmail){
+AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData','GetBillInvoices','SendInvoiceEmail','deleteInvoice', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData,GetBillInvoices,SendInvoiceEmail,deleteInvoice){
 	$rootScope.pageTitle = "EHR - Billing";
 	$scope.BillListings={};
 	$scope.selectedPatient = {};
@@ -126,7 +126,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 				$("#process_payment").modal('hide');
 
 
-				
+
 
 
 
@@ -182,7 +182,15 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 		console.log(sendData)
 		console.log(invoice_id)
 
-		SendInvoiceEmail.save({token: $window.sessionStorage.token, email_address: sendData, invoice_id:invoice_id}, SendEmailSuccess, SendEmailFailure);
+	//	SendInvoiceEmail.save({token: $window.sessionStorage.token, email_address: sendData, invoice_id:invoice_id}, SendEmailSuccess, SendEmailSuccess);
+
+
+		SendInvoiceEmail.save({
+			token: $window.sessionStorage.token,
+			email_address:sendData,
+			invoice_id: invoice_id
+		}, SendEmailSuccess, SendEmailFailure);
+
 
 
 
@@ -206,15 +214,15 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 
 
 	};
-	
-	
-	
+
+
+
 //View bill Invoice
 	$scope.ViewBillInvoices=function(bill_id){
 
 		/*console.log("Amount: "+AmountPaid.amount_paid);
 		console.log("Invoice:"+invoice_id);*/
-		console.log(bill_id);
+		console.log('BillID:'+bill_id);
 
 		if(bill_id=null){
 
@@ -224,11 +232,10 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 		else{
 
 			GetBillInvoices.get({
-				token: $window.sessionStorage.token,
 				bill_id:bill_id,
+				token: $window.sessionStorage.token,
 			}, GetBillInvoicesSuccess, GetBillInvoicesFailure);
 		}
-
 
 
 		function GetBillInvoicesSuccess(res) {
@@ -244,7 +251,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 			console.log(error);
 		}
 
-		
+
 
 
 	};
@@ -343,16 +350,10 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 			alert(res.message);
 		}
 	}
+
 	function deleteInvoiceFailure(error){
 		console.log(error);
 	}
-
-
-
-
-
-
-
 
 
 
