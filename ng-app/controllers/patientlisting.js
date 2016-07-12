@@ -1,28 +1,52 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPatients', '$window', '$routeParams', 'GetPatientInfo', function ($scope, $rootScope, GetAllPatients, $window, $routeParams, GetPatientInfo) {
+AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPatients', '$window', '$routeParams', 'GetPatientInfo', '$http', function ($scope, $rootScope, GetAllPatients, $window, $routeParams, GetPatientInfo, $http) {
         $scope.action = '';
         $rootScope.pageTitle = "EHR - Patient Listing";
         $scope.displayInfo = {};
         $scope.patientLists = [];
         $rootScope.loader = "show";
         $scope.itemsPerPage = 15;
-        $scope.offset = 1;
+        $scope.offset = 0;
         //$scope.currentPage = 0;
         $scope.items = [];
         $scope.search = {};
         $scope.idCardDisabledBtn = true;
         GetAllPatients.get({
             token: $window.sessionStorage.token,
-            offset: 0, limit: 0
+            offset: $scope.offset, limit: $scope.itemsPerPage
         }, GetAllPatientsSuccess, GetAllPatientsFailure);
+
+        $scope.curPage = 0;
+        $scope.pageSize = 15;
+        $scope.numberOfPages = function() {
+          return Math.ceil($scope.patientCount / $scope.pageSize);
+        };
+
+        $scope.paginationNext = function(pageSize, curPage){
+            $rootScope.loader = "show";
+            console.log(pageSize * curPage);
+            GetAllPatients.get({
+                token: $window.sessionStorage.token,
+                offset: (pageSize * curPage), limit: $scope.itemsPerPage
+            }, GetAllPatientsSuccess, GetAllPatientsFailure);
+        }
+
+        $scope.paginationPrev = function(pageSize, curPage){
+            $rootScope.loader = "show";
+            console.log(pageSize * curPage);
+            GetAllPatients.get({
+                token: $window.sessionStorage.token,
+                offset: (pageSize - 1) * curPage, limit: $scope.itemsPerPage
+            }, GetAllPatientsSuccess, GetAllPatientsFailure);
+        }
 
         function GetAllPatientsSuccess(res) {
             $rootScope.loader = "hide";
             if (res.status == true) {
+                $scope.patientLists = [];
                 $scope.patientLists = res.data;
-                console.log(res.data);
-                $scope.numOfData = res.count;
+                $scope.patientCount = res.count;
             }
         }
 
@@ -134,4 +158,48 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
         $scope.setPage = function (n) {
             $scope.currentPage = n;
         };
+//        $scope.filter_by = function (field) {
+//            console.log(field);
+//            console.log($scope.search);
+//            if ($scope.search === '') {
+//                delete $scope.f['__' + field];
+//                return;
+//            }
+//            $scope.f['__' + field] = true;
+//            $scope.patientLists.forEach(function (v) {
+//                v['__' + field] = v[field] < $scope.search;
+//            })
+//        }
+        $scope.findPatientBy = function () {
+            $scope.f = $scope.search1;
+            console.log($scope.search1)
+        }
+//        $scope.searchPatient = function (patientList) {
+//            console.log($scope.search1)
+//            if ($scope.search1 == "id") {
+//                return patientList.id === parseInt($scope.search)
+//            }
+//            else if($scope.search1 == "first_name"){
+//                return patientList.first_name === parseInt($scope.search)
+//            }
+//            else{
+//                
+//            }
+//        }
+
+
+    /*var vm = this;
+    vm.users = []; //declare an empty array
+    vm.pageno = 1; // initialize page no to 1
+    vm.total_count = 0;
+    vm.itemsPerPage = 10; //this could be a dynamic value from a drop down
+    vm.getData = function(pageno){ // This would fetch the data on page change.
+        GetAllPatients.get({
+            token: $window.sessionStorage.token,
+            offset: 0, limit: 0
+        }, GetAllPatientsSuccess, GetAllPatientsFailure);
+        
+    };
+    vm.getData(vm.pageno); // Call the function to fetch initial data on page load.*/
+
     }]);

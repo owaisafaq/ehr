@@ -4,6 +4,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
         $rootScope.pageTitle = "EHR - new Encounter Clinical Documentation Controller";
         $rootScope.loader = "show";
         $scope.allEncounter = [];
+        $scope.allEncounterCount;
         $scope.displayInfo = {};
         $scope.vital = {};
         //$scope.showStrip = false;
@@ -13,9 +14,14 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
         $scope.action = $scope.EID;
         $scope.updateEncounterPopUp = false;
         $scope.updateEncounter = {};
+        $scope.itemsPerPage = 15;
         $scope.hideLoader = 'hide';
 
-        GetAllEncounters.get({token: $window.sessionStorage.token}, getPatientEncounters, getPatientEncountersFailure);
+        GetAllEncounters.get({
+            token: $window.sessionStorage.token,
+            offset: 0,
+            limit: $scope.itemsPerPage
+        }, getPatientEncounters, getPatientEncountersFailure);
         GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID}, patientInfoSuccess, patientInfoFailure);
 
         function patientInfoSuccess(res) {
@@ -40,6 +46,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
             if (res.status == true) {
                 $rootScope.loader = "hide";
                 $scope.allEncounter = res.data;
+                $scope.allEncounterCount = res.count;
                 console.log($scope.allEncounter);
             }
             DropDownData.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id}, dropDownSuccess, dropDownFailed);
@@ -377,6 +384,32 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
         }
         $scope.parseFloat = function (val) {
             return isNaN(parseFloat(val)) ? 0 : parseFloat(val);
+        }
+
+        $scope.curPage = 0;
+        $scope.pageSize = 1;
+        $scope.numberOfPages = function() {
+          return Math.ceil($scope.allEncounterCount / $scope.pageSize);
+        };
+
+        $scope.paginationNext = function(pageSize, curPage){
+            $rootScope.loader = "show";
+            console.log(pageSize * curPage);
+            GetAllEncounters.get({
+                token: $window.sessionStorage.token,
+                token: $window.sessionStorage.token,
+                offset: (pageSize * curPage), limit: $scope.itemsPerPage
+            }, getPatientEncounters, getPatientEncountersFailure);
+        }
+
+        $scope.paginationPrev = function(pageSize, curPage){
+            $rootScope.loader = "show";
+            console.log(pageSize * curPage);
+            GetAllEncounters.get({
+                token: $window.sessionStorage.token,
+                token: $window.sessionStorage.token,
+                offset: (pageSize * curPage), limit: $scope.itemsPerPage
+            }, getPatientEncounters, getPatientEncountersFailure);
         }
 
     }]);

@@ -358,4 +358,10 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 
 
 
+
+
+
+
+
+
 }]);
