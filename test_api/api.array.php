@@ -1427,6 +1427,8 @@ $api = new api();
 $api->name = "Get All Pharmacies";
 $api->url = HOST . 'get_pharmacies';
 $api->method = "GET";
+$api->params->offset = "1";
+$api->params->limit = "1";
 $api->params->token = "";
 
 $api_arr [] = $api;

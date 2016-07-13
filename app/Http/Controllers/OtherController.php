@@ -69,15 +69,36 @@ class OtherController extends Controller
         }
         return true;
     }
-    public function get_pharmacies(Request $request){
+    public function get_pharmacies(Request $request)
+        {
 
-        $pharmacies = DB::table('pharmacy')
-             ->select(DB::raw('*'))
-             ->where('status', 1)
-             ->get();
+            $limit = $request->input('limit');
+            $offset = $request->input('offset');
 
-        return response()->json(['status' => true, 'data' => $pharmacies]);
-    }
+            if ($limit > 0 || $offset > 0) {
+
+                $pharmacies = DB::table('pharmacy')
+                    ->select(DB::raw('*'))
+                    ->where('status', 1)
+                    ->skip($offset)->take($limit)
+                    ->get();
+
+                $count = DB::table('pharmacy')
+                    ->select(DB::raw('*'))
+                    ->where('status', 1)
+                    ->count();
+
+            } else {
+
+                $pharmacies = DB::table('pharmacy')
+                    ->select(DB::raw('*'))
+                    ->where('status', 1)
+                    ->get();
+
+                $count = count($pharmacies);
+            }
+            return response()->json(['status' => true, 'data' => $pharmacies, 'count' => $count]);
+        }
     public function get_single_pharmacy(Request $request){
         $id = $request->input('pharmacy_id');
         $pharmacies = DB::table('pharmacy')
