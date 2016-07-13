@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData','GetBillInvoices','SendInvoiceEmail','deleteInvoice', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData,GetBillInvoices,SendInvoiceEmail,deleteInvoice){
+AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData','GetBillInvoices','SendEmail','deleteInvoice', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData,GetBillInvoices,SendEmail,deleteInvoice){
 	$rootScope.pageTitle = "EHR - Billing";
 	$scope.BillListings={};
 	$scope.selectedPatient = {};
@@ -179,17 +179,28 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 		console.log("Invoice:"+invoice_id);*/
 
 
-		console.log(sendData)
+		console.log(sendData.email)
 		console.log(invoice_id)
 
 	//	SendInvoiceEmail.save({token: $window.sessionStorage.token, email_address: sendData, invoice_id:invoice_id}, SendEmailSuccess, SendEmailSuccess);
 
 
-		SendInvoiceEmail.save({
+		/*var SendEmail = new SendInvoiceEmail({
 			token: $window.sessionStorage.token,
-			email_address:sendData,
+			email_address:'tvindhani93@gmail.com',
 			invoice_id: invoice_id
 		}, SendEmailSuccess, SendEmailFailure);
+
+		SendEmail.save();*/
+
+
+		SendEmail.get({
+			token: $window.sessionStorage.token,
+			email_address:sendData.email,
+			invoice_id: invoice_id
+		}, SendEmailSuccess, SendEmailFailure);
+
+
 
 
 
@@ -224,6 +235,8 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 		console.log("Invoice:"+invoice_id);*/
 		console.log('BillID:'+bill_id);
 
+		var b_id=bill_id;
+
 		if(bill_id=null){
 
 			return false;
@@ -232,7 +245,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 		else{
 
 			GetBillInvoices.get({
-				bill_id:bill_id,
+				bill_id:b_id,
 				token: $window.sessionStorage.token,
 			}, GetBillInvoicesSuccess, GetBillInvoicesFailure);
 		}
