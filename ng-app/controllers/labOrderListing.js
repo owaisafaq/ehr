@@ -72,6 +72,7 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
     }
 
     $scope.search = function(item){ // search data by patient name or partient id
+        console.log(item);
         if($scope.searchLab == undefined){
             return true;
         }else{
@@ -80,8 +81,6 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
             }
         }
     };
-
-  bill
     GetAllPatients.get({ // Getting all patients
         token: $window.sessionStorage.token
     }, GetAllPatientsSuccess, GetAllPatientsFailure);
