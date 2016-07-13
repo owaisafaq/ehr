@@ -829,6 +829,39 @@ AppEHR.factory("GetAllInventory", function ($resource) {
     return InventoryLists;
 });
 
+AppEHR.factory("GetAllActiveInventory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_active_stock', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var InventoryLists = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return InventoryLists;
+});
+AppEHR.factory("GetAllInActiveInventory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_inactive_stock', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var InventoryLists = {
+        get:
+
+            function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return InventoryLists;
+});
+
 AppEHR.factory("GetAllSuppliers", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'get_inventory_suppliers', params, {
@@ -1032,6 +1065,23 @@ AppEHR.factory("DeleteInventory", function ($resource) {
         }
     };
     return DeleteInventory;
+});
+
+
+AppEHR.factory("MakeInactiveInventory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'inventory_inactive', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return MakeInactive;
 });
 
 
@@ -1334,20 +1384,20 @@ AppEHR.factory("GetAllInvoices", function ($resource) {
 
 
 
-AppEHR.factory("SendInvoiceEmail", function ($resource) {
+AppEHR.factory("SendEmail", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'send_invoice_email', params, {
-            save: {method: 'POST'}
+            get: {method: 'POST'}
         });
         return res2;
     }
-    var send = {
-        save: function (params, body, success) {
+    var sendInvoice = {
+        get: function (params, body, success) {
             var res = getResource(params, body);
-            return res.save(params, body, success);
+            return res.get(params, body, success);
         }
     };
-    return send;
+    return sendInvoice;
 });
 
 

@@ -1,10 +1,44 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllInventory','GetAllSuppliers','AddCategory','GetAllCategories','AddSupplier','GetSingleSupplier','UpdateSuppliers','GetSingleCategory','GetSingleStock','updateCategory','DeleteCategory','DeleteSupplier','AddInventory','AddProduct','DeleteInventory','GetSingleProduct','GetAllPharmacies','GetReorderLevel','updateReorderLevel','GetProduct','ProductUpdate','Countries','States','City','$timeout', function($scope, $rootScope,$window,$routeParams,GetAllInventory,GetAllSuppliers,AddCategory,GetAllCategories,AddSupplier,GetSingleSupplier,UpdateSuppliers,GetSingleCategory,GetSingleStock,updateCategory,DeleteCategory,DeleteSupplier,AddInventory,AddProduct,DeleteInventory,GetSingleProduct,GetAllPharmacies,GetReorderLevel,updateReorderLevel,GetProduct,ProductUpdate,Countries,States,City,$timeout){
+AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllInventory','GetAllActiveInventory','GetAllInActiveInventory','GetAllSuppliers','AddCategory','GetAllCategories','AddSupplier','GetSingleSupplier','UpdateSuppliers','GetSingleCategory','GetSingleStock','updateCategory','DeleteCategory','DeleteSupplier','AddInventory','AddProduct','DeleteInventory','GetSingleProduct','GetAllPharmacies','GetReorderLevel','updateReorderLevel','GetProduct','ProductUpdate','Countries','States','City','MakeInactiveInventory','$timeout', function($scope, $rootScope,$window,$routeParams,GetAllInventory,GetAllActiveInventory,GetAllInActiveInventory,GetAllSuppliers,AddCategory,GetAllCategories,AddSupplier,GetSingleSupplier,UpdateSuppliers,GetSingleCategory,GetSingleStock,updateCategory,DeleteCategory,DeleteSupplier,AddInventory,AddProduct,DeleteInventory,GetSingleProduct,GetAllPharmacies,GetReorderLevel,updateReorderLevel,GetProduct,ProductUpdate,Countries,States,City,MakeInactiveInventory,$timeout){
 	$rootScope.pageTitle = "EHR - Inventory";
 	$scope.displayInfo = {};
 	$scope.cat_unique={};
 	$scope.selectedSupplier = {};
+
+
+	$scope.getInventoryActive =function(selected){
+
+		console.log(selected);
+
+
+		if(selected=="active"){
+
+			GetAllActiveInventory.get({
+			 token: $window.sessionStorage.token,
+			 }, GetAllInventorySuccess, GetAllInventoryFailure);
+
+		}
+		else if(selected=="inactive"){
+
+			GetAllInActiveInventory.get({
+			 token: $window.sessionStorage.token,
+			 }, GetAllInventorySuccess, GetAllInventoryFailure);
+
+		}
+		else{
+
+			GetAllInventory.get({
+				token: $window.sessionStorage.token,
+			}, GetAllInventorySuccess, GetAllInventoryFailure);
+
+		}
+
+
+
+	};
+	
+
 	GetAllInventory.get({
 		token: $window.sessionStorage.token,
 	}, GetAllInventorySuccess, GetAllInventoryFailure);
@@ -475,6 +509,33 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 			}
 		}
 		function deleteStockInfoFailure(error) {
+			$rootScope.loader = "show";
+			console.log(error);
+		}
+	};
+
+
+	//Status change Inventory
+
+
+	$scope.MakeInactive = function (stockID) {
+		console.log(stockID);
+		$scope.stockID = stockID;
+		$rootScope.loader = "show";
+		MakeInactiveInventory.save({token: $window.sessionStorage.token, stock_id: stockID}, InactiveSuccess, InactiveFailure);
+
+		function InactiveSuccess(res) {
+			if (res.status == true) {
+				$rootScope.loader = "hide";
+				console.log("Inactive now");
+				GetAllInventory.get({
+					token: $window.sessionStorage.token,
+				}, GetAllInventorySuccess, GetAllInventoryFailure);
+
+
+			}
+		}
+		function InactiveFailure(error) {
 			$rootScope.loader = "show";
 			console.log(error);
 		}

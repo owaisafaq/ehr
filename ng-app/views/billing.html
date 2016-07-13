@@ -89,7 +89,8 @@
                         <span class="txt-style-3 pull-left text-uppercase">Plan</span>
                         <div class="col-lg-2">
                             <select class="form-control" ng-model="search_plan_bill">
-                                <option selected >Self</option>
+                                <option selected value="">All</option>
+                                <option>Self</option>
                                 <option>NHIS</option>
                                 <option>Retainers</option>
                             </select>
@@ -1046,7 +1047,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
-                <h2>Process Payment</h2>
+                <h2>Send Invoice Via Email</h2>
             </div>
             <div class="modal-body">
                 <form class="custom-form" ng-submit="SendInvoice(sendData,invoice_id);">
@@ -1082,7 +1083,7 @@
                         </div>
                         <div class="col-lg-3">
 
-                            <input type="email" placeholder=""   ng-model="sendData.email"   />
+                            <input type="email" placeholder=""   ng-model="sendData.email"  required  />
                         </div>
 
 

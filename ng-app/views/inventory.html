@@ -26,10 +26,11 @@
                             </div>
                             <span class="txt-style-3 pull-left text-uppercase">status</span>
                             <div class="col-lg-2">
-                                <select class="form-control">
-                                    <option>Active</option>
-                                    <option>2</option>
-                                    <option>3</option>
+                                <select class="form-control" ng-model="selected" ng-change="getInventoryActive(selected)" >
+                                    <option value="">All</option>
+                                    <option value="active"  >Active</option>
+                                    <option value="inactive">InActive</option>
+
                                 </select>
                             </div>
                         </div>
@@ -59,6 +60,7 @@
                                     <th>stock quantity</th>
                                     <th>reorder level</th>
                                     <th>order quantity</th>
+                                    <th>status</th>
                                     <th >update</th>
                                 </tr>
                             </thead>
@@ -69,8 +71,9 @@
                                     <td>{{InventoryList.category_name}}</td>
                                     <td>{{InventoryList.cost_per_item}}</td>
                                     <td>{{InventoryList.quantity}}</td>
-                                    <td>{{InventoryList.quantity}}</td>
+                                    <td>{{InventoryList.reorder_level}}</td>
                                     <td>{{InventoryList.order_quantity}}</td>
+                                    <td>{{InventoryList.stock_status | capitalize}}</td>
 
                                     <td>
                                         <div class="inventory_actions"><a href="javascript:;" class="setting-button"></a>
@@ -78,7 +81,7 @@
                                                 <a  ng-click="StockSelected(InventoryList.product_id)">Stock Details</a>
                                                 <a href="javascript:;" ng-click="productDetail(InventoryList.product_id)"  >Edit Product Details</a>
                                                 <a href="javascript:;" ng-click="StockSelectedReorder(InventoryList.product_id)">Edit Reorder Level</a>
-                                                <a href="javascript:;" ng-click="DeleteInventory(InventoryList.stock_id)">Make Inactive</a>
+                                                <a href="javascript:;" ng-click="MakeInactive(InventoryList.stock_id)">Change Status</a>
                                                 <a href="javascript:;" ng-click="DeleteInventory(InventoryList.stock_id)">Delete Inventory</a>
                                             </div>
                                         </div>
@@ -877,23 +880,26 @@
                         </div>
 
                         <div class="col-lg-3">
-                            <label>City</label>
+                            <label>Country</label>
                         </div>
+
                         <div class="col-lg-3">
-
-                            <select class="form-control" ng-model="supplier.city" required>
-                                <option>Select City</option>
-                                <option ng-repeat="city in Cities" value="{{city.id}}" >
-
-                                    {{city.name}}
+                            <select class="form-control" ng-model="supplier.country" ng-change="getStatesfromCountry(supplier.country);">
+                                <option>Select Country</option>
+                                <option ng-repeat="country in Countries" value="{{country.id}}" >
+                                    {{country.name}}
                                 </option>
 
-
                             </select>
-
-
-
                         </div>
+
+
+
+
+
+
+
+
 
                         <div class="col-lg-3">
                             <label>Mobile</label>
@@ -924,16 +930,22 @@
                         </div>
 
                         <div class="col-lg-3">
-                            <label>Country</label>
+                            <label>City</label>
                         </div>
                         <div class="col-lg-3">
-                            <select class="form-control" ng-model="supplier.country" ng-change="getStatesfromCountry(supplier.country);">
-                                <option>Select Country</option>
-                                <option ng-repeat="country in Countries" value="{{country.id}}" >
-                                    {{country.name}}
+
+                            <select class="form-control" ng-model="supplier.city" required>
+                                <option>Select City</option>
+                                <option ng-repeat="city in Cities" value="{{city.id}}" >
+
+                                    {{city.name}}
                                 </option>
 
+
                             </select>
+
+
+
                         </div>
 
                         <div class="col-lg-3">
