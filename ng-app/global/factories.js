@@ -852,7 +852,9 @@ AppEHR.factory("GetAllInActiveInventory", function ($resource) {
         return res2;
     }
     var InventoryLists = {
-        get: function (params, body, success) {
+        get:
+
+            function (params, body, success) {
             var res = getResource(params, body);
             return res.get(params, body, success);
         }
