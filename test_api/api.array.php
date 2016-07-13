@@ -1280,6 +1280,27 @@ $api->params->token = "";
 
 $api_arr [] = $api;
 
+
+// Get Active stocks
+$api = new api();
+$api->name = "Get Active stocks";
+$api->url = HOST . 'get_active_stock';
+$api->method = "GET";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+// Get Inactive stocks
+$api = new api();
+$api->name = "Get Inactive stocks";
+$api->url = HOST . 'get_inactive_stock';
+$api->method = "GET";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+
+
 // Get stock details
 $api = new api();
 $api->name = "Get Stocks Details";
@@ -2023,6 +2044,17 @@ $api->url = HOST . 'send_invoice_email';
 $api->method = "POST";
 $api->params->invoice_id = "1";
 $api->params->email_address = "smovaishassan12@hotmail.com";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//inventory inactive
+$api = new api();
+$api->name = "Inventory Inactive";
+$api->url = HOST . 'inventory_inactive';
+$api->method = "POST";
+$api->params->stock_id = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;

@@ -232,6 +232,8 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->post('delete_inventory_supplier','App\Http\Controllers\InventoryAPIController@delete_supplier');
 
     $app->get('get_stock','App\Http\Controllers\InventoryAPIController@get_stock');
+    $app->get('get_active_stock','App\Http\Controllers\InventoryAPIController@get_active_stock');
+    $app->get('get_inactive_stock','App\Http\Controllers\InventoryAPIController@get_inactive_stock');
     $app->get('get_stock_details','App\Http\Controllers\InventoryAPIController@get_stock_details');
     $app->post('add_inventory','App\Http\Controllers\InventoryAPIController@add_stock');
     $app->post('delete_inventory','App\Http\Controllers\InventoryAPIController@delete_stock');
@@ -255,5 +257,6 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->get('get_lab_test_pdf','App\Http\Controllers\PDFController@get_lab_test_pdf');
     $app->post('send_invoice_email','App\Http\Controllers\PDFController@send_invoice_email');
     $app->get('get_bill_invoices','App\Http\Controllers\BillingController@get_bill_invoices');
+    $app->post('inventory_inactive','App\Http\Controllers\InventoryAPIController@inventory_inactive');
 
 });

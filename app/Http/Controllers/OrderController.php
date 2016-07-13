@@ -101,6 +101,7 @@ class OrderController extends Controller
             ->leftJoin('lab_tests', 'lab_tests.id', '=', 'lab_order_tests.lab_test')
             ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
             ->where('lab_orders.status', 1)
+            ->where('patients.status', 1)
             ->groupby('lab_orders.id')
             ->get();
 
@@ -162,6 +163,7 @@ class OrderController extends Controller
             ->where('lab_orders.status', 1)
             ->whereIn('order_status',['completed', 'cancelled'])
             ->groupby('lab_orders.id')
+            ->where('patients.status', 1)
             ->get();
 
 
