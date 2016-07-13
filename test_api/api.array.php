@@ -711,6 +711,7 @@ $api->url = HOST . 'add_patient_vitals';
 $api->method = "POST";
 $api->description = "Add Patient Vitals";
 $api->params->patient_id = "1";
+$api->params->visit_id = "1";
 $api->params->systolic_mm_hg= "10";
 $api->params->diastolic_mm_hg = "10";
 $api->params->pulse = "10";
@@ -749,6 +750,19 @@ $api->name = "List Folder Files";
 $api->url = HOST . 'list_resources';
 $api->method = "GET";
 $api->description = "List Folder Files";
+$api->params->followup_parent_id = "1";
+$api->params->patient_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+
+// Back to  Folder
+$api = new api();
+$api->name = "Back to  Folder";
+$api->url = HOST . 'list_resources_back';
+$api->method = "GET";
 $api->params->followup_parent_id = "1";
 $api->params->patient_id = "1";
 $api->params->token = "123";
@@ -1874,8 +1888,8 @@ $api->params->visit_id = "1";
 $api->params->sig = "test";
 $api->params->dispense = "1";
 $api->params->reffills = "test";
-$api->params->pharmacy = "1";
-$api->params->note_of_pharmacy = "test";*/
+$api->params->pharmacy = "1";*/
+$api->params->note_for_pharmacy = "test";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
@@ -1886,8 +1900,9 @@ $api->name = "Update Patient Prescription";
 $api->url = HOST . 'update_patient_prescription';
 $api->method = "POST";
 $api->params->patient_id = "1";
+$api->params->prescribe_medication_id = "1";
 $api->params->prescription = "1";
-$api->params->visit_id = "1";
+
 /*$api->params->medication = "1";
 $api->params->sig = "test";
 $api->params->dispense = "1";
@@ -1916,6 +1931,8 @@ $api = new api();
 $api->name = "Get Prescription List";
 $api->url = HOST . 'get_prescription_list';
 $api->method = "GET";
+$api->params->offset = "1";
+$api->params->limit = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
@@ -1962,6 +1979,7 @@ $api->name = "Update Prescription";
 $api->url = HOST . 'update_prescription';
 $api->method = "POST";
 $api->params->precription_id = "1";
+$api->params->prescribe_medication_id = "1";
 $api->params->medication = "1";
 $api->params->sig = "test";
 $api->params->dispense = "test";
