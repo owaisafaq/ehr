@@ -757,10 +757,22 @@ $api->params->token = "123";
 $api_arr [] = $api;
 
 
+// List Folder Files Back
+$api = new api();
+$api->name = "Back to  Folder";
+$api->url = HOST . 'list_patient_resources_back ';
+$api->method = "GET";
+$api->description = "List Folder Files Back";
+$api->params->followup_parent_id = "1";
+$api->params->patient_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
 
 // Back to  Folder
 $api = new api();
-$api->name = "Back to  Folder";
+$api->name = "Back to  Folder Files";
 $api->url = HOST . 'list_resources_back';
 $api->method = "GET";
 $api->params->followup_parent_id = "1";

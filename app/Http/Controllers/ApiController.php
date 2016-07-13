@@ -1691,12 +1691,13 @@ class ApiController extends Controller
             ->select(DB::raw('id,patient_id,followup_parent_id,file,CONCAT("' . $file_archive . '",file) as file,file_name,created_at'))
             ->where('patient_id', $patient_id)
             ->where('followup_parent_id', $followup_parent_id)
+            ->where('type', 'file')
             ->where('status', 1)
             ->get();
 
 
 
-        return response()->json(['status' => true, 'data' => $patient_archives]);
+        return response()->json(['status' => true, 'data' => $patient_archives,'parent_id'=>$followup_parent_id]);
     }
 
 
@@ -1725,9 +1726,10 @@ class ApiController extends Controller
                  ->where('patient_id', $patient_id)
                  ->where('followup_parent_id', $followup_id)
                  ->where('status', 1)
+                 ->where('type', 'file')
                  ->get();
 
-        return response()->json(['status' => true, 'data' => $patient_archives]);
+        return response()->json(['status' => true, 'data' => $patient_archives,'parent_id'=>$followup_parent_id]);
     }
 
 
@@ -1741,17 +1743,58 @@ class ApiController extends Controller
         $file_archive = url('/') . '/patient_archive/';
 
         $resources = DB::table('resources')
-            ->select(DB::raw('id,patient_id,name,followup_parent_id,CONCAT("' . $file_archive . '",file) as file,file_name,created_at'))
+            ->select(DB::raw('id,patient_id,name,type,followup_parent_id,file_name,created_at'))
             ->where('patient_id', $patient_id)
             ->where('followup_parent_id', $followup_parent_id)
+            ->where('type', 'folder')
             ->where('status', 1)
             ->get();
         if (count($resources) > 0) {
-            return response()->json(['status' => true, 'data' => $resources]);
+            return response()->json(['status' => true, 'data' => $resources,'parent_id'=>$followup_parent_id]);
         } else {
-            return response()->json(['status' => true, 'data' => $resources]);
+            return response()->json(['status' => true, 'data' => $resources,'parent_id'=>$followup_parent_id]);
         }
 
+
+    }
+
+
+    public function list_patient_resources_back(Request $request)
+    {
+
+
+
+        $patient_id = $request->input('patient_id');
+        $followup_parent_id = $request->input('followup_parent_id');
+
+
+        $file_archive = url('/') . '/patient_archive/';
+
+
+        $followup = DB::table('resources')
+              ->select(DB::raw('followup_parent_id'))
+              ->where('patient_id', $patient_id)
+              ->where('id', $followup_parent_id)
+              ->where('status', 1)
+              ->first();
+
+
+        $followup_id = $followup->followup_parent_id;
+
+        $resources = DB::table('resources')
+            ->select(DB::raw('id,patient_id,name,type,followup_parent_id,file_name,created_at'))
+            ->where('patient_id', $patient_id)
+            ->where('followup_parent_id', $followup_id)
+            ->where('status', 1)
+            ->where('type', 'folder')
+            ->get();
+
+
+      if (count($resources) > 0) {
+            return response()->json(['status' => true, 'data' => $resources,'parent_id'=>$followup_parent_id]);
+        } else {
+            return response()->json(['status' => true, 'data' => $resources,'parent_id'=>$followup_parent_id]);
+        }
 
     }
 
