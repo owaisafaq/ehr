@@ -1937,13 +1937,17 @@ $api->method = "POST";
 $api->params->patient_id = "1";
 $api->params->prescribe_medication_id = "1";
 $api->params->prescription = "1";
+$api->params->token = "123435";
 
-/*$api->params->medication = "1";
-$api->params->sig = "test";
-$api->params->dispense = "1";
-$api->params->reffills = "test";
-$api->params->pharmacy = "1";
-$api->params->note_of_pharmacy = "test";*/
+$api_arr [] = $api;
+
+//Add Patient Prescription Medication
+$api = new api();
+$api->name = "Add Patient Prescription Medication";
+$api->url = HOST . 'add_prescription_medication';
+$api->method = "POST";
+$api->params->prescription_id = "1";
+$api->params->prescription = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
