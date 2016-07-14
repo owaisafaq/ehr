@@ -230,8 +230,23 @@ class OtherController extends Controller
                     );
 
 
-                return response()->json(['status' => true, 'message' => 'Immunization Updated Successfully']);
+                return response()->json(['status' => true, 'message' => 'Immunization Deleted Successfully']);
 
        }
+
+
+    public function remove_patient_precription_medications(Request $request){
+        $prescribe_medication_id= $request->input('prescribe_medication_id');
+            DB::table('patient_prescription_medicine')
+                ->where('id',$prescribe_medication_id)
+                ->update(
+                         ['status' => 0, 'updated_at' => date("Y-m-d  H:i:s")]
+                     );
+
+
+                 return response()->json(['status' => true, 'message' => 'Medication Deleted Successfully']);
+
+
+    }
 }
 

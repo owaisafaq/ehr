@@ -3081,7 +3081,15 @@ class ApiController extends Controller
 
         $notes = $prescription_notes->note_for_pharmacy;
 
-        return response()->json(['status' => true, 'data' => $prescriptions, 'notes' => $notes]);
+        $prescription_data = DB::table('patient_prescription')
+            ->leftJoin('visits', 'patient_prescription.visit_id', '=', 'visits.id')
+            ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
+            ->select(DB::raw('patient_prescription.created_at as date,patient_prescription.visit_id,doctors.name as Provider'))
+            ->where('patient_prescription.status', 1)
+            ->where('patient_prescription.id', $prescription_id)
+            ->first();
+
+        return response()->json(['status' => true, 'data' => $prescriptions, 'notes' => $notes,'prescription_data'=>$prescription_data]);
 
 
     }

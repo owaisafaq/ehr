@@ -2104,3 +2104,15 @@ $api->params->patient_id = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+
+
+//Remove Patient Prescription Medications
+$api = new api();
+$api->name = "Remove Patient Prescription Medications";
+$api->url = HOST . 'remove_patient_precription_medications';
+$api->method = "POST";
+$api->params->prescribe_medication_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
