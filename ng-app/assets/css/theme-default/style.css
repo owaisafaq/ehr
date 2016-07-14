@@ -2744,17 +2744,14 @@ form .progress {
     .hidden-print {
         display: none !important;
     }
-    .idCardPrint.hidden-print,#addpatient .modal-footer,#addpatient .modal-header{
+    .idCardPrint.hidden-print,#addpatient .modal-footer,#addpatient .modal-header, #menubar, #header{
         display: none;
     }
     .id_card {
-         max-height:40%;
+        display: block;
     }
 
 }
-.id_card {
-         max-height:40%;
-    }
 .check-box-label label{
     width:auto;
 }
@@ -2839,4 +2836,7 @@ form .progress {
 }
 #main-menu:hover .gui-folder > a:after,#main-menu:hover .title, #main-menu:hover li.expanded > ul{
     display: block;
+}
+.delete-icon{
+    cursor: pointer;
 }

@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription', '$window', 'GetPrescription', '$routeParams', 'PatienPrescriptionUpdate', 'GetPatientInfo', function ($scope, $rootScope, PatienPrescription, $window, GetPrescription, $routeParams, PatienPrescriptionUpdate, GetPatientInfo) {
+AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription', '$window', 'GetPrescription', '$routeParams', 'PatienPrescriptionUpdate', 'GetPatientInfo', 'GetAllMedications', 'DropDownData', 'DeleteMedication', function ($scope, $rootScope, PatienPrescription, $window, GetPrescription, $routeParams, PatienPrescriptionUpdate, GetPatientInfo, GetAllMedications, DropDownData, DeleteMedication) {
         $rootScope.pageTitle = "EHR - Pharmacy VIew";
         $scope.PrescriptionView = [];
         $scope.medicationsDataPush = [];
@@ -11,14 +11,16 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         $scope.Prescription = {}
         $scope.showUpdate = false;
         $scope.prescriptionID = $routeParams.prescriptionID;
+        $scope.PrescriptionViews = [];
 
         $scope.MedicationData = {}
         $scope.buildInstructionObject = buildInstructionObject;
         $scope.buildInstructions = {};
         $rootScope.loader = 'show';
-        $scope.encounterID = $routeParams.encounterID;
+        
         $scope.patientID = $routeParams.patientID;
         $scope.displayInfo = {};
+        $scope.removePrescription = false;
         console.log($scope.prescriptionID);
         GetPrescription.get({
             token: $window.sessionStorage.token,
@@ -27,9 +29,14 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
 
         function prescriptionSuccess(res) {
             if(res.status == true){
+                console.log("all");
                 console.log(res);
                 $scope.PrescriptionViews = res.data;
                 $scope.Prescription.notes = res.notes;
+                $scope.prescription_data = res.prescription_data;
+                $scope.prescription_data.date = res.prescription_data.date;
+                $scope.prescription_data.date = $scope.prescription_data.date.split(' ');
+                $scope.encounterID = $scope.prescription_data.visit_id;
                 $rootScope.loader = 'hide';
             }
         }
@@ -82,7 +89,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                 precription_id: $scope.prescriptionID,
                 prescription: JSON.stringify($scope.PrescriptionViewsCopy),
                 token: $window.sessionStorage.token,
-                visit_id: $routeParams.encounterID
+                visit_id: $scope.encounterID
             }
             //console.log($scope.PrescriptionViews)
                 //            $scope.PrescriptionViews.notes = $scope.PrescriptionViews.prescriptionPharmacyNotes == undefined ? '' : $scope.PrescriptionViews.prescriptionPharmacyNotes;
@@ -141,9 +148,8 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                 prescription: JSON.stringify($scope.medicationsDataPush),
                 note_for_pharmacy: $scope.note,
                 token: $window.sessionStorage.token,
-                visit_id: $routeParams.encounterID
+                visit_id: $scope.encounterID
             }
-            console.log(addPrescrptnPop)
             PatienPrescription.save(addPrescrptnPop, PrescriptionSuccessPop, PrescriptionFailurePop)
         }
         function PrescriptionSuccessPop(res) {
@@ -153,12 +159,13 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                 $scope.medicationsDataPush = [];
                 GetPrescription.get({
                     token: $window.sessionStorage.token,
-                    patient_id: $routeParams.patientID
+                    precription_id: $scope.prescriptionID
                 }, prescriptionSuccess, prescriptionFailure);
             }
         }
         function PrescriptionFailurePop(res) {
-            console.log(res)
+            console.log("res");
+            console.log(res);
         }
         function PrescriptionSuccess(res) {
             console.log(res)
@@ -193,4 +200,66 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                 $scope.MedicationData.sig += sigData.duration == undefined ? '' : sigData.duration;
             }
         }
+
+        GetAllMedications.get({
+            token: $window.sessionStorage.token,
+            patient_id: $scope.patientID
+        }, getAllMedicationsSuccess, getAllMedicationsFailure);
+        $scope.allMedications = [];
+        $scope.allPharmacies = [];
+        function getAllMedicationsSuccess(res){
+            console.log(11112);
+            console.log(res);
+            if(res.status == true){
+                $scope.allMedications = res.data;
+            }
+        }
+        function getAllMedicationsFailure(error){
+            console.log(error);
+        }
+
+        DropDownData.get({
+            token: $window.sessionStorage.token
+        }, getpharmacySuccess, getPharmacyFailure);
+
+        function getpharmacySuccess(res){
+            if(res.status == true){
+                console.log(1);
+                console.log(res);
+                $scope.allPharmacies = res.data.pharmacy;
+            }
+        }
+
+        function getPharmacyFailure(error){
+            console.log(error);
+        }
+
+        $scope.selectedMedication = function(id){
+            $scope.medicationID = id;
+            $scope.removePrescription = true;
+            console.log(id);
+        }
+
+        $scope.removePrescriptions = function(){
+            $rootScope.loader = "show";
+            DeleteMedication.get({
+                token: $window.sessionStorage.token,
+                prescribe_medication_id: $scope.medicationID
+            }, deleteMedicationSuccess, deleteMedicationFailure);
+
+            function deleteMedicationSuccess(res){
+                if(res.status == true){
+                    $rootScope.loader = "hide";
+                    console.log(res);
+                    GetPrescription.get({
+                        token: $window.sessionStorage.token,
+                        precription_id: $scope.prescriptionID
+                    }, prescriptionSuccess, prescriptionFailure);
+                }
+            }
+            function deleteMedicationFailure(error){
+                console.log(error);
+            }
+        }
+
     }]);
