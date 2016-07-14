@@ -216,6 +216,7 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->get('get_prescription','App\Http\Controllers\ApiController@get_prescription');
     $app->get('get_patient_medications','App\Http\Controllers\ApiController@get_patient_medications');
     $app->post('update_prescription','App\Http\Controllers\ApiController@update_prescription');
+    $app->post('remove_patient_precription_medications','App\Http\Controllers\OtherController@remove_patient_precription_medications');
 
 
     $app->post('add_immunization','App\Http\Controllers\OtherController@add_immunization');
