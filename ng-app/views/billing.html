@@ -40,7 +40,7 @@
                 <ul class="nav nav-tabs nav-justified custom-tab" data-toggle="tabs">
                     <li id="billing" class="active"><a showtab href="#generate"> Bills</a></li>
                     <li id="invoicing"><a showtab href="#invoices">Invoices</a></li>
-                    <!--                    <li><a showtab href="#receipts">Receipts</a></li>-->
+                    <!-- <li><a showtab href="#receipts">Receipts</a></li>-->
                     <li><a showtab href="#reports">Reports</a></li>
                 </ul>
             </div>
@@ -89,8 +89,7 @@
                         <span class="txt-style-3 pull-left text-uppercase">Plan</span>
                         <div class="col-lg-2">
                             <select class="form-control" ng-model="search_plan_bill">
-                                <option selected value="">All</option>
-                                <option>Self</option>
+                                <option selected >Self</option>
                                 <option>NHIS</option>
                                 <option>Retainers</option>
                             </select>
@@ -1047,7 +1046,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
-                <h2>Send Invoice Via Email</h2>
+                <h2>Process Payment</h2>
             </div>
             <div class="modal-body">
                 <form class="custom-form" ng-submit="SendInvoice(sendData,invoice_id);">
@@ -1083,7 +1082,7 @@
                         </div>
                         <div class="col-lg-3">
 
-                            <input type="email" placeholder=""   ng-model="sendData.email"  required  />
+                            <input type="email" placeholder=""   ng-model="sendData.email"   />
                         </div>
 
 

@@ -40,6 +40,37 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
                 offset: (pageSize - 1) * curPage, limit: $scope.itemsPerPage
             }, GetAllPatientsSuccess, GetAllPatientsFailure);
         }
+        $scope.samePage = '';
+        $scope.goToPage = function(pageSize, num){
+            console.log($scope.samePage+num);
+            $rootScope.loader = "show";
+            GetAllPatients.get({
+                token: $window.sessionStorage.token,
+                offset: (pageSize * num), limit: $scope.itemsPerPage
+            }, GetAllPatientsSuccess, GetAllPatientsFailure);
+        }
+
+        $scope.selectBoxValue = function(value){
+            $rootScope.loader = "show";
+            $scope.pageNumber = '';
+            GetAllPatients.get({
+                token: $window.sessionStorage.token,
+                offset: ($scope.pageSize * $scope.curPage), limit: value
+            }, GetAllPatientsSuccess, GetAllPatientsFailure);
+        }
+        $('body').on('keyup', '.enterKey input[type=text]', function (e) {
+            if (e.keyCode == 13) {
+                if ($(this).val() != "") {
+                    $(this).trigger("enterKey");
+                    if($scope.pageNumber != undefined && $scope.pageNumber != '' && parseInt($scope.pageNumber) <= $scope.numberOfPages()){
+                        GetAllPatients.get({
+                            token: $window.sessionStorage.token,
+                            offset: ($scope.pageSize * $scope.pageNumber) == $scope.pageSize ? 0 : ($scope.pageSize * $scope.pageNumber), limit: $scope.itemsPerPage
+                        }, GetAllPatientsSuccess, GetAllPatientsFailure);
+                    }
+                }
+            }
+        });
 
         function GetAllPatientsSuccess(res) {
             $rootScope.loader = "hide";
@@ -158,48 +189,11 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
         $scope.setPage = function (n) {
             $scope.currentPage = n;
         };
-//        $scope.filter_by = function (field) {
-//            console.log(field);
-//            console.log($scope.search);
-//            if ($scope.search === '') {
-//                delete $scope.f['__' + field];
-//                return;
-//            }
-//            $scope.f['__' + field] = true;
-//            $scope.patientLists.forEach(function (v) {
-//                v['__' + field] = v[field] < $scope.search;
-//            })
-//        }
+
         $scope.findPatientBy = function () {
             $scope.f = $scope.search1;
             console.log($scope.search1)
         }
-//        $scope.searchPatient = function (patientList) {
-//            console.log($scope.search1)
-//            if ($scope.search1 == "id") {
-//                return patientList.id === parseInt($scope.search)
-//            }
-//            else if($scope.search1 == "first_name"){
-//                return patientList.first_name === parseInt($scope.search)
-//            }
-//            else{
-//                
-//            }
-//        }
 
-
-    /*var vm = this;
-    vm.users = []; //declare an empty array
-    vm.pageno = 1; // initialize page no to 1
-    vm.total_count = 0;
-    vm.itemsPerPage = 10; //this could be a dynamic value from a drop down
-    vm.getData = function(pageno){ // This would fetch the data on page change.
-        GetAllPatients.get({
-            token: $window.sessionStorage.token,
-            offset: 0, limit: 0
-        }, GetAllPatientsSuccess, GetAllPatientsFailure);
-        
-    };
-    vm.getData(vm.pageno); // Call the function to fetch initial data on page load.*/
 
     }]);
