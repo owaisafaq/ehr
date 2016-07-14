@@ -931,6 +931,12 @@ class ApiController extends Controller
             ->where('status', 1)
             ->get();
 
+        $pharmacy = DB::table('pharmacy')
+            ->select(DB::raw('id,name'))
+            ->where('status', 1)
+            ->get();
+
+
 
         $data = array(
             "religion" => $religion,
@@ -949,7 +955,8 @@ class ApiController extends Controller
             "categories" => $categories,
             "doctors" => $doctors,
             "labs" => $labs,
-            "manufacturer" => $manufacturers
+            "manufacturer" => $manufacturers,
+            "pharmacy" => $pharmacy
 
         );
 
@@ -3110,6 +3117,19 @@ class ApiController extends Controller
 
         return response()->json(['status' => true, 'message' => 'Prescrpition Updated Successfully']);
 
+    }
+
+
+    public function get_patient_medications(Request $request){
+
+        $patient_id = $request->input('patient_id');
+        $medicines = DB::table('medicines')
+                  ->select(DB::raw('id,supplements'))
+                  ->where('status', 1)
+                  ->where('patient_id', $patient_id)
+                  ->get();
+
+        return response()->json(['status' => true, 'data' => $medicines]);
     }
 
 }

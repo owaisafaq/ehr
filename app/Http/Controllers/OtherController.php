@@ -187,5 +187,51 @@ class OtherController extends Controller
             return response()->json(['status' => false, 'message' => "Error!"], 404);
         }
     }
+    public function add_immunization(Request $request){
+
+        $patient_id = $request->input('patient_id');
+        $name = $request->input('name');
+        DB::table('patient_immunizations')
+                 ->insert(
+                     ['patient_id' => $patient_id,
+                         'name' => $name,
+                         'created_at' => date("Y-m-d  H:i:s")
+
+                     ]
+                 );
+
+
+             return response()->json(['status' => true, 'message' => 'Immunization Added Successfully']);
+
+    }
+
+    public function list_immunizations(Request $request){
+
+        $patient_id = $request->input('patient_id');
+        $patient_immunizations = DB::table('patient_immunizations')
+                ->select(DB::raw('*'))
+                ->where('status', 1)
+                ->where('patient_id', $patient_id)
+                ->get();
+
+            return response()->json(['status' => true, 'data' => $patient_immunizations]);
+
+
+        }
+
+
+    public function delete_immunization(Request $request){
+
+           $immuization_id= $request->input('immuization_id');
+           DB::table('patient_immunizations')
+               ->where('id',$immuization_id)
+               ->update(
+                        ['status' => 0, 'updated_at' => date("Y-m-d  H:i:s")]
+                    );
+
+
+                return response()->json(['status' => true, 'message' => 'Immunization Updated Successfully']);
+
+       }
 }
 
