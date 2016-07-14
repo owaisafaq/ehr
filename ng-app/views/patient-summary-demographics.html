@@ -67,7 +67,7 @@
                                     <ul class="ulli ulli_3 col-lg-12">
                                         <li class="col-lg-12" ng-repeat="immunization in immunizations">
                                             {{immunization.name}}
-                                            <span class="pull-right delete-icon" ng-click="immunizations.splice($index, 1)"><img src="assets/img/cross.png" /></span>
+                                            <span class="pull-right delete-icon" ng-click="removeImmunization(immunization.id);"><img src="assets/img/cross.png" /></span><!-- immunizations.splice($index, 1) -->
                                         </li>
                                     </ul>
                                     <!-- <p>Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Dicant vituperata consequuntur.</p> -->
@@ -1083,7 +1083,7 @@
                         <div class="col-lg-9">
                             <select ng-model="MedicationData.medication" class="form-control" placeholder="Select Medication">
                                 <option></option>
-                                <option ng-selected="MedicationData.medication == medicationDropData.id" value="{{medicationDropData.id}}" ng-repeat="medicationDropData in medicationDropDowns">{{medicationDropData.name}}</option>
+                                <option ng-selected="MedicationData.medication == medicationDropData.id" value="{{medicationDropData.id}}" ng-repeat="medicationDropData in allMedications">{{medicationDropData.supplements}}</option>
                             </select>
                         </div>                                              
 
@@ -1118,7 +1118,7 @@
                         <div class="col-lg-9">
                             <select ng-model="MedicationData.pharmacy" class="form-control" placeholder="Select Pharmacy">
                                 <option></option>
-                                <option ng-selected="MedicationData.pharmacy == pharmacyDataDrop.id" value="{{pharmacyDataDrop.id}}" ng-repeat="pharmacyDataDrop in pharmacyDataDropDown">{{pharmacyDataDrop.name}}</option>
+                                <option ng-selected="MedicationData.pharmacy == pharmacyDataDrop.id" value="{{pharmacyDataDrop.id}}" ng-repeat="pharmacyDataDrop in allPharmacies">{{pharmacyDataDrop.name}}</option>
                             </select>
                         </div>
                         <div class="col-lg-3 clear">

@@ -1,5 +1,5 @@
 var AppEHR = angular.module('AppEHR');
-AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', 'GetResourcesByFolderArchives', 'ListFolderArchives', 'EditFolderArchives', 'DeleteFolderArchives', 'RemoveArchives', 'Upload', 'SaveFiles', '$timeout', 'DropDownData', 'ADDSupplements', 'ADDAllergy', 'AddFolderArchives','EditArchives', 'PatienPrescription', 'FolderUpContent', 'FolderUpFolders',  function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy, GetResourcesByFolderArchives, ListFolderArchives, EditFolderArchives, DeleteFolderArchives, RemoveArchives, Upload, SaveFiles, $timeout, DropDownData, ADDSupplements, ADDAllergy, AddFolderArchives,EditArchives,PatienPrescription, FolderUpContent,FolderUpFolders) {
+AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', 'GetResourcesByFolderArchives', 'ListFolderArchives', 'EditFolderArchives', 'DeleteFolderArchives', 'RemoveArchives', 'Upload', 'SaveFiles', '$timeout', 'DropDownData', 'ADDSupplements', 'ADDAllergy', 'AddFolderArchives','EditArchives', 'PatienPrescription', 'FolderUpContent', 'FolderUpFolders', 'ListImmunization', 'DeleteImmunization', 'AddImmunization', 'GetAllMedications', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy, GetResourcesByFolderArchives, ListFolderArchives, EditFolderArchives, DeleteFolderArchives, RemoveArchives, Upload, SaveFiles, $timeout, DropDownData, ADDSupplements, ADDAllergy, AddFolderArchives,EditArchives,PatienPrescription, FolderUpContent,FolderUpFolders, ListImmunization, DeleteImmunization, AddImmunization, GetAllMedications) {
         $rootScope.pageTitle = "EHR - Patient Summary Demographics";
         $scope.vital = {};
         $scope.PI = {};
@@ -11,7 +11,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         $scope.addSupplement = {};
         $scope.frequencies = frequencies;
         $scope.intakeTypes = intakeTypes;
-        $scope.immunizations = immunizations;
+        //$scope.immunizations = immunizations;
 
         $scope.supplementData = [];
 
@@ -41,8 +41,8 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         $scope.MedicationData = {}
         $scope.buildInstructionObject = buildInstructionObject;
         $scope.buildInstructions = {};
-        $scope.medicationDropDowns = medicationDropDowns;
-        $scope.pharmacyDataDropDown = pharmacyDataDropDown;
+        //$scope.medicationDropDowns = medicationDropDowns;
+        //$scope.pharmacyDataDropDown = pharmacyDataDropDown;
         $scope.medicationsDataPush = [];
 
         $scope.PID = $routeParams.patientID;
@@ -100,6 +100,22 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         function getPatientMedicationFailure(error) {
 
+            console.log(error);
+        }
+
+        ListImmunization.get({
+            token: $window.sessionStorage.token,
+            patient_id: $routeParams.patientID
+        }, listImmunizationSuccess, listImmunizationFailure);
+        $scope.immunizations = [];
+        function listImmunizationSuccess(res) {
+            if (res.status == true) {
+                console.log(res);
+                $scope.immunizations = res.data;
+            }
+        }
+
+        function listImmunizationFailure(error) {
             console.log(error);
         }
 
@@ -701,9 +717,48 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         $scope.addImmunizations = function(name){
             if(name != undefined && name != ''){
-                $scope.immunizations.push({id: immunizations.length+1, name: name});
+                //$scope.immunizations.push({id: immunizations.length+1, name: name});
+                AddImmunization.save({
+                    token: $window.sessionStorage.token,
+                    name: name,
+                    patient_id: $scope.PID
+                }, addImmunizationsSuccess, addImmunizationsFailure);
                 $scope.immunizationName = '';
+                function addImmunizationsSuccess(res) {
+                    if (res.status == true) {
+                        console.log(res);
+                        ListImmunization.get({
+                            token: $window.sessionStorage.token,
+                            patient_id: $routeParams.patientID
+                        }, listImmunizationSuccess, listImmunizationFailure);
+                        //$scope.immunizations = res.data;
+                    }
+                }
+
+                function addImmunizationsFailure(error) {
+                    console.log(error);
+                }
                 console.log($scope.immunizations);
+            }
+        }
+
+        $scope.removeImmunization = function(id){
+            DeleteImmunization.get({
+                token: $window.sessionStorage.token,
+                immuization_id: id
+            }, deleteImmunizationsSuccess, deleteImmunizationsFailure);
+            function deleteImmunizationsSuccess(res) {
+                if (res.status == true) {
+                    console.log(res);
+                    ListImmunization.get({
+                        token: $window.sessionStorage.token,
+                        patient_id: $routeParams.patientID
+                    }, listImmunizationSuccess, listImmunizationFailure);
+                }
+            }
+
+            function deleteImmunizationsFailure(error) {
+                console.log(error);
             }
         }
 
@@ -1037,5 +1092,38 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
                 }
             }
         });
+
+        GetAllMedications.get({
+            token: $window.sessionStorage.token,
+            patient_id: $scope.PID
+        }, getAllMedicationsSuccess, getAllMedicationsFailure);
+        $scope.allMedications = [];
+        $scope.allPharmacies = [];
+        function getAllMedicationsSuccess(res){
+            console.log(11112);
+            console.log(res);
+            if(res.status == true){
+                $scope.allMedications = res.data;
+            }
+        }
+        function getAllMedicationsFailure(error){
+            console.log(error);
+        }
+
+        DropDownData.get({
+            token: $window.sessionStorage.token
+        }, getpharmacySuccess, getPharmacyFailure);
+
+        function getpharmacySuccess(res){
+            if(res.status == true){
+                console.log(1);
+                console.log(res);
+                $scope.allPharmacies = res.data.pharmacy;
+            }
+        }
+
+        function getPharmacyFailure(error){
+            console.log(error);
+        }
 
 }]);

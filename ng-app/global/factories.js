@@ -1649,3 +1649,79 @@ AppEHR.factory("DeletePharmacy", function ($resource) {
    };
    return clinicalProgressNotesFields;
 });
+
+AppEHR.factory("ListImmunization", function ($resource) {
+   function getResource(params, body) {
+       var res2 = $resource(serverPath + 'list_immunizations', params, {
+           get: {method: 'GET'}
+       });
+       return res2;
+   }
+   var clinicalProgressNotesFields = {
+       get: function (params, body, success) {
+           var res = getResource(params, body);
+           return res.get(params, body, success);
+       }
+   };
+   return clinicalProgressNotesFields;
+});
+AppEHR.factory("DeleteImmunization", function ($resource) {
+   function getResource(params, body) {
+       var res2 = $resource(serverPath + 'delete_immunization', params, {
+           get: {method: 'POST'}
+       });
+       return res2;
+   }
+   var clinicalProgressNotesFields = {
+       get: function (params, body, success) {
+           var res = getResource(params, body);
+           return res.get(params, body, success);
+       }
+   };
+   return clinicalProgressNotesFields;
+});
+AppEHR.factory("AddImmunization", function ($resource) {
+   function getResource(params, body) {
+       var res2 = $resource(serverPath + 'add_immunization', params, {
+           save: {method: 'POST'}
+       });
+       return res2;
+   }
+   var clinicalProgressNotesFields = {
+       save: function (params, body, success) {
+           var res = getResource(params, body);
+           return res.save(params, body, success);
+       }
+   };
+   return clinicalProgressNotesFields;
+});
+AppEHR.factory("GetAllMedications", function ($resource) {
+   function getResource(params, body) {
+       var res2 = $resource(serverPath + 'get_patient_medications', params, {
+           get: {method: 'GET'}
+       });
+       return res2;
+   }
+   var clinicalProgressNotesFields = {
+       get: function (params, body, success) {
+           var res = getResource(params, body);
+           return res.get(params, body, success);
+       }
+   };
+   return clinicalProgressNotesFields;
+});
+AppEHR.factory("DeleteMedication", function ($resource) {
+   function getResource(params, body) {
+       var res2 = $resource(serverPath + 'remove_patient_precription_medications', params, {
+           get: {method: 'POST'}
+       });
+       return res2;
+   }
+   var clinicalProgressNotesFields = {
+       get: function (params, body, success) {
+           var res = getResource(params, body);
+           return res.get(params, body, success);
+       }
+   };
+   return clinicalProgressNotesFields;
+});
