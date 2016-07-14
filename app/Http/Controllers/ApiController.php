@@ -2961,20 +2961,21 @@ class ApiController extends Controller
         $prescription = html_entity_decode($request->input('prescription'));
 
         $patient_prescriptions = json_decode($prescription);
-
         $currentdatetime = date("Y-m-d  H:i:s");
 
+        DB::table('patient_prescription_medicine')->where('prescription_id', '=', $prescription_id)->delete();
 
         foreach ($patient_prescriptions as $patient_prescription) {
 
-            DB::table('patient_prescription_medicine')->where('prescription_id', $prescription_id)
-                ->update(
-                    ['medication' => $patient_prescription->medication,
+            DB::table('patient_prescription_medicine')
+                ->insert(
+                    [   'prescription_id'=>$prescription_id,
+                        'medication' => $patient_prescription->medication,
                         'sig' => $patient_prescription->sig,
                         'dispense' => $patient_prescription->dispense,
                         'reffills' => $patient_prescription->reffills,
                         'pharmacy' => $patient_prescription->pharmacy,
-                        'updated_at' => $currentdatetime
+                        'created_at' => $currentdatetime
 
                     ]
                 );
@@ -2988,6 +2989,39 @@ class ApiController extends Controller
 
     }
 
+
+    public function add_prescription_medication(Request $request)
+        {
+
+            $prescription_id = $request->input('prescription_id');
+            $prescription = html_entity_decode($request->input('prescription'));
+            $patient_prescriptions = json_decode($prescription);
+            $currentdatetime = date("Y-m-d  H:i:s");
+
+
+            foreach ($patient_prescriptions as $patient_prescription) {
+
+                DB::table('patient_prescription_medicine')
+                    ->insert(
+                        [   'prescription_id'=>$prescription_id,
+                            'medication' => $patient_prescription->medication,
+                            'sig' => $patient_prescription->sig,
+                            'dispense' => $patient_prescription->dispense,
+                            'reffills' => $patient_prescription->reffills,
+                            'pharmacy' => $patient_prescription->pharmacy,
+                            'created_at' => $currentdatetime
+
+                        ]
+                    );
+
+
+            }
+
+
+            return response()->json(['status' => true, 'message' => 'Prescrpition Added Successfully']);
+
+
+        }
 
     public function get_all_prescription(Request $request)
     {
@@ -3070,6 +3104,7 @@ class ApiController extends Controller
             ->select(DB::raw('*,patient_prescription_medicine.id as prescribe_medication_id'))
             ->where('patient_prescription.id', $prescription_id)
             ->where('patient_prescription.status', 1)
+            ->where('patient_prescription_medicine.status', 1)
             ->get();
 
 
