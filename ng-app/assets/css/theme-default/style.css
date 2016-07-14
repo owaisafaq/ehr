@@ -2751,6 +2751,14 @@ form .progress {
         display: block;
     }
 
+    #printHeading{
+        display: none;
+    }
+
+    #stripOptions{
+        display: none;
+    }
+
 }
 .check-box-label label{
     width:auto;

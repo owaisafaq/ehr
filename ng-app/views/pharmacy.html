@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 <button type="button" class="delete button-custom pull-right" ng-show="enableOptions" data-toggle="modal" data-target="#confirmation">remove Pharmacy</button>
-                <button type="button" class="edit button-custom pull-right" ng-show="enableOptions" data-target="#editPharmacy" data-toggle="modal">UPDATE Pharmacy</button>
+                <button type="button" class="edit button-custom pull-right" ng-show="enableOptions" data-target="#editPharmacy" data-toggle="modal" ng-click="pharmacyDropdown();">UPDATE Pharmacy</button>
                 <button class="add button-custom pull-right" data-target="#addPharmacy" data-toggle="modal">Add Pharmacy</button>
             </div>
             <div class="card-body col-lg-12">
@@ -233,10 +233,10 @@
                             <label>Country</label>
                         </div>
                         <div class="col-lg-3">
-                            <select class="form-control" name="countries"  ng-model="pharmacyDataEdit.countries" ng-change="addressStateByCountry(pharmacyDataEdit.countries);" placeholder="Select Country" required ng-class="{true: 'error'}[submitted && userForm1.countries.$invalid]">
+                            <select class="form-control" name="countries"  ng-model="pharmacyDataEdit.country" ng-change="addressStateByCountry(pharmacyDataEdit.countries);" placeholder="Select Country" required ng-class="{true: 'error'}[submitted && userForm1.countries.$invalid]">
                                 <option value=""></option>
-                                <option ng-repeat='country in countries' value='{{ country.id }}'>{{ country.name }}</option>
-                            </select>
+                                <option ng-repeat='country in countries' value='{{ country.id }}' ng-selected="pharmacyDataEdit.country == country.id">{{ country.name }}</option>
+                            </select>{{pharmacyDataEdit.country}}
                         </div>
                         <div class="col-lg-3">
                             <label>State</label>
@@ -244,8 +244,8 @@
                         <div class="col-lg-3">
                             <select class="form-control" name="state" ng-model="pharmacyDataEdit.state" placeholder="Select State"  ng-change="addressCityByState(pharmacyDataEdit.state);" required ng-class="{true: 'error'}[submitted && userForm1.state.$invalid]">
                                 <option value=""></option>
-                                <option ng-repeat='state in states' value='{{ state.id }}'>{{ state.name }}</option>
-                            </select>
+                                <option ng-repeat='state in states' value='{{ state.id }}' ng-selected="state.id == pharmacyDataEdit.state">{{ state.name }}</option>
+                            </select>{{pharmacyDataEdit.state}}
                         </div>
                         <div class="col-lg-3">
                             <label>City</label>
@@ -253,8 +253,8 @@
                         <div class="col-lg-3">
                             <select class="form-control" name="city" ng-model="pharmacyDataEdit.city" placeholder="Select City" required ng-class="{true: 'error'}[submitted && userForm1.city.$invalid]">
                                 <option value=""></option>
-                                <option ng-repeat='city in cities' value='{{ city.id }}'>{{ city.name }}</option>
-                            </select>
+                                <option ng-repeat='city in cities' value='{{ city.id }}' ng-selected="city.id == pharmacyDataEdit.city">{{ city.name }}</option>
+                            </select>{{pharmacyDataEdit.city}}
                         </div>
                         <div class="col-lg-3">
                             <label>Post Code</label>
@@ -266,7 +266,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;" ng-disabled="submitted && userForm1.$invalid">Update</button>
-                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal" ng-disabled="addPharmacyBtn">Cancel</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal" ng-disabled="addPharmacyBtn">Cancel</button> 
                     </div>
                 </form>
             </div>

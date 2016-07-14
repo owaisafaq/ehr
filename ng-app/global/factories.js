@@ -1725,3 +1725,18 @@ AppEHR.factory("DeleteMedication", function ($resource) {
    };
    return clinicalProgressNotesFields;
 });
+AppEHR.factory("AddMedicationInPrescription", function ($resource) {
+   function getResource(params, body) {
+       var res2 = $resource(serverPath + 'add_prescription_medication', params, {
+           save: {method: 'POST'}
+       });
+       return res2;
+   }
+   var clinicalProgressNotesFields = {
+       save: function (params, body, success) {
+           var res = getResource(params, body);
+           return res.save(params, body, success);
+       }
+   };
+   return clinicalProgressNotesFields;
+});

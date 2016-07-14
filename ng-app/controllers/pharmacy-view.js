@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription', '$window', 'GetPrescription', '$routeParams', 'PatienPrescriptionUpdate', 'GetPatientInfo', 'GetAllMedications', 'DropDownData', 'DeleteMedication', function ($scope, $rootScope, PatienPrescription, $window, GetPrescription, $routeParams, PatienPrescriptionUpdate, GetPatientInfo, GetAllMedications, DropDownData, DeleteMedication) {
+AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription', '$window', 'GetPrescription', '$routeParams', 'PatienPrescriptionUpdate', 'GetPatientInfo', 'GetAllMedications', 'DropDownData', 'DeleteMedication', 'AddMedicationInPrescription', function ($scope, $rootScope, PatienPrescription, $window, GetPrescription, $routeParams, PatienPrescriptionUpdate, GetPatientInfo, GetAllMedications, DropDownData, DeleteMedication, AddMedicationInPrescription) {
         $rootScope.pageTitle = "EHR - Pharmacy VIew";
         $scope.PrescriptionView = [];
         $scope.medicationsDataPush = [];
@@ -12,6 +12,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         $scope.showUpdate = false;
         $scope.prescriptionID = $routeParams.prescriptionID;
         $scope.PrescriptionViews = [];
+        $scope.AddButtonOnAddMedication = false;
 
         $scope.MedicationData = {}
         $scope.buildInstructionObject = buildInstructionObject;
@@ -114,6 +115,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                 pharmacy: $scope.MedicationData.pharmacy,
                 note_of_pharmacy: $scope.MedicationData.note_of_pharmacy,
             }
+            $scope.AddButtonOnAddMedication = true;
             $scope.note = $scope.MedicationData.note_of_pharmacy;
             if (angular.equals({}, AddMedications) == false) {
                 $scope.medicationsDataPush.push(AddMedications);
@@ -146,12 +148,13 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
             var addPrescrptnPop = {
                 patient_id: $scope.patientID,
                 prescription: JSON.stringify($scope.medicationsDataPush),
-                note_for_pharmacy: $scope.note,
+                //note_for_pharmacy: $scope.note,
                 token: $window.sessionStorage.token,
-                visit_id: $scope.encounterID
+                prescription_id: $scope.prescriptionID
             }
-            PatienPrescription.save(addPrescrptnPop, PrescriptionSuccessPop, PrescriptionFailurePop)
+            AddMedicationInPrescription.save(addPrescrptnPop, PrescriptionSuccessPop, PrescriptionFailurePop)
         }
+
         function PrescriptionSuccessPop(res) {
             console.log(res)
             if (res.status == true) {
@@ -249,6 +252,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
 
             function deleteMedicationSuccess(res){
                 if(res.status == true){
+                    $scope.removePrescription = false;
                     $rootScope.loader = "hide";
                     console.log(res);
                     GetPrescription.get({
@@ -262,4 +266,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
             }
         }
 
+        $scope.printprescription = function(){
+            window.print();
+        }
     }]);

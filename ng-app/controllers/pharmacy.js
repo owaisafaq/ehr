@@ -120,6 +120,7 @@ AppEHR.controller('pharmacy', ['$scope', '$rootScope', 'getPharmacy', '$window',
 		$scope.pharmacyID = pharmacyID;
 		//if($scope.pharmacyLists.length == index)
 			$scope.pharmacyDataEdit = $scope.pharmacyLists[index];
+			console.log($scope.pharmacyDataEdit);
 		//else $scope.pharmacyDataEdit = $scope.pharmacyLists[index];
 	}
 
@@ -192,6 +193,29 @@ AppEHR.controller('pharmacy', ['$scope', '$rootScope', 'getPharmacy', '$window',
 
 	function deletePharmacyFailure(error){
 		console.log(error);
+	}
+
+	$scope.pharmacyDropdown = function(){
+		States.get({token: $window.sessionStorage.token, country_id: $scope.pharmacyDataEdit.country}, stateSuccess, stateFailed);
+		function stateSuccess(res) {
+			if (res.status == true && res.data.length > 0) {
+				$scope.states = res.data;
+				$scope.disabledDropdown = false;
+			}
+		}
+		function stateFailed(error) {
+			console.log(error);
+		}
+		City.get({token: $window.sessionStorage.token, state_id: $scope.pharmacyDataEdit.state}, citySuccess, cityFailed);
+		function citySuccess(res) {
+			if (res.status == true && res.data.length > 0) {
+				$scope.cities = res.data;
+				$scope.disabledDropdown = false;
+			}
+		}
+		function cityFailed(error) {
+			console.log(error);
+		}
 	}
 
 	$scope.curPage = 0;

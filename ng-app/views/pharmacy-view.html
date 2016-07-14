@@ -22,7 +22,7 @@
                     <label class="txt-style-1 text-uppercase col-lg-12">marital status</label>
                     <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.marital_status}}</span>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-2" id="stripOptions">
                     <a href="javascript:;" class="button-style-2">
                         <img src="assets/img/content_icn_blue.png" />
                     </a>
@@ -75,7 +75,7 @@
                                             <td>
                                                 <div class="radio radio-styled">
                                                     <label>
-                                                        <input ng-model="PrescriptionView.id" type="radio" name="optionsRadios" ng-click="selectedMedication(PrescriptionView.id);">
+                                                        <input ng-model="PrescriptionView.id" type="radio" name="optionsRadios" ng-click="selectedMedication(PrescriptionView.prescribe_medication_id);">
                                                         <span></span>
                                                     </label>
                                                 </div>
@@ -126,19 +126,21 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
-                <h2>Prescription Label</h2>
+                <h2>Print Prescription</h2>
             </div>
             <div class="modal-body">
-
+            <div>
+                <p id="printHeading">Do you want to Print?</p>
+            </div>
             </div>
             <div class="modal-footer">
-                <div class="checkbox checkbox-styled pull-left margin-right-20">
+                <!-- <div class="checkbox checkbox-styled pull-left margin-right-20">
                     <label>
                         <input type="checkbox" value="">
                         <span>Notify Patient</span>
                     </label>
-                </div>
-                <button type="button" class="btn btn-default button-style-1">Print</button>
+                </div> -->
+                <button type="button" class="btn btn-default button-style-1" ng-click="printprescription();">Print</button>
                 <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
             </div>
         </div><!-- /.modal-content -->
@@ -255,17 +257,17 @@
                                 <option ng-selected="MedicationData.pharmacy == pharmacyDataDrop.name" value="{{pharmacyDataDrop.name}}" ng-repeat="pharmacyDataDrop in allPharmacies">{{pharmacyDataDrop.name}}</option>
                             </select>
                         </div>
-                        <div class="col-lg-3 clear">
+                        <!-- <div class="col-lg-3 clear">
                             <label>Note Of Pharmacy</label>
                         </div>
                         <div class="col-lg-9">
                             <input ng-model="MedicationData.note_of_pharmacy" type="text" placeholder="" required/>
-                        </div>
+                        </div> -->
 
 
                         <div class="col-lg-3"></div>
                         <div class="col-lg-9">
-                            <button ng-hide="showUpdate" type="button" ng-click="addMedication()" class="btn btn-default pull-left button-style-1">Add</button>
+                            <button ng-hide="showUpdate" type="button" ng-click="addMedication()" ng-disabled="AddButtonOnAddMedication" class="btn btn-default pull-left button-style-1">Add</button>
                             <button type="button" ng-show="showUpdate" ng-click="addMedication(1)" class="btn btn-default pull-left button-style-1">Update</button>
                         </div>
 
@@ -302,10 +304,10 @@
                                     </div>
 
                                     <div class="col-lg-2 clear">
-                                        <label>Note</label>
+                                        <!-- <label>Note</label> -->
                                     </div>
                                     <div class="col-lg-4">
-                                        <span>{{medicationDataPush.note_of_pharmacy}}</span>
+                                        <!-- <span>{{medicationDataPush.note_of_pharmacy}}</span> -->
                                     </div>
                                     <div class="col-lg-3">
                                         <label>Refill</label>
