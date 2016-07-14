@@ -2060,3 +2060,47 @@ $api->params->stock_id = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+//Add Patient Immunizations
+$api = new api();
+$api->name = "Add Patient Immunizations";
+$api->url = HOST . 'add_immunization';
+$api->method = "POST";
+$api->params->patient_id = "1";
+$api->params->name = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//List Patient Immunizations
+$api = new api();
+$api->name = "List Patient Immunizations";
+$api->url = HOST . 'list_immunizations';
+$api->method = "GET";
+$api->params->patient_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Delete Patient Immunizations
+$api = new api();
+$api->name = "Delete Patient Immunizations";
+$api->url = HOST . 'delete_immunization';
+$api->method = "POST";
+$api->params->immuization_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Get Patient Medicines
+$api = new api();
+$api->name = "Get Patient Medicines";
+$api->url = HOST . 'get_patient_medications';
+$api->method = "GET";
+$api->params->patient_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
