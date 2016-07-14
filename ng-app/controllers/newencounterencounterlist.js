@@ -4,7 +4,6 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
         $rootScope.pageTitle = "EHR - new Encounter Clinical Documentation Controller";
         $rootScope.loader = "show";
         $scope.allEncounter = [];
-        $scope.allEncounterCount;
         $scope.displayInfo = {};
         $scope.vital = {};
         //$scope.showStrip = false;
@@ -47,7 +46,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
                 $rootScope.loader = "hide";
                 $scope.allEncounter = res.data;
                 $scope.allEncounterCount = res.count;
-                console.log($scope.allEncounter);
+                console.log(res);
             }
             DropDownData.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id}, dropDownSuccess, dropDownFailed);
         }
@@ -387,7 +386,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
         }
 
         $scope.curPage = 0;
-        $scope.pageSize = 1;
+        $scope.pageSize = 15;
         $scope.numberOfPages = function() {
           return Math.ceil($scope.allEncounterCount / $scope.pageSize);
         };

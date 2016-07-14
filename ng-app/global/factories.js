@@ -185,10 +185,25 @@ AppEHR.factory("GetResourcesByFolderArchives", function ($resource) {
     };
     return patientRegistrationKin;
 });
-AppEHR.factory("GetAllPrescription", function ($resource) {
+/*AppEHR.factory("GetAllPrescription", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath +  'get_all_prescription', params, {
             get: {method: 'POST'},
+        });
+        return res2;
+    }
+    var patientRegistrationKin = {
+        get:function(params,body,success) {
+          var res = getResource(params, body);
+          return res.get(params,body,success);
+        }
+    };
+    return patientRegistrationKin;
+});*/
+AppEHR.factory("GetPrescription", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'get_prescription', params, {
+            get: {method: 'GET'},
         });
         return res2;
     }
@@ -279,6 +294,36 @@ AppEHR.factory("AddFolderArchives", function ($resource) {
 AppEHR.factory("ListFolderArchives", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath +  'list_patient_resources', params, {
+            get: {method: 'GET'},
+        });
+        return res2;
+    }
+    var patientRegistrationKin = {
+        get:function(params,body,success) {
+          var res = getResource(params, body);
+          return res.get(params,body,success);
+        }
+    };
+    return patientRegistrationKin;
+});
+AppEHR.factory("FolderUpContent", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'list_resources_back', params, {
+            get: {method: 'GET'},
+        });
+        return res2;
+    }
+    var patientRegistrationKin = {
+        get:function(params,body,success) {
+          var res = getResource(params, body);
+          return res.get(params,body,success);
+        }
+    };
+    return patientRegistrationKin;
+});
+AppEHR.factory("FolderUpFolders", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath +  'list_patient_resources_back', params, {
             get: {method: 'GET'},
         });
         return res2;
@@ -829,39 +874,6 @@ AppEHR.factory("GetAllInventory", function ($resource) {
     return InventoryLists;
 });
 
-AppEHR.factory("GetAllActiveInventory", function ($resource) {
-    function getResource(params, body) {
-        var res2 = $resource(serverPath + 'get_active_stock', params, {
-            get: {method: 'GET'}
-        });
-        return res2;
-    }
-    var InventoryLists = {
-        get: function (params, body, success) {
-            var res = getResource(params, body);
-            return res.get(params, body, success);
-        }
-    };
-    return InventoryLists;
-});
-AppEHR.factory("GetAllInActiveInventory", function ($resource) {
-    function getResource(params, body) {
-        var res2 = $resource(serverPath + 'get_inactive_stock', params, {
-            get: {method: 'GET'}
-        });
-        return res2;
-    }
-    var InventoryLists = {
-        get:
-
-            function (params, body, success) {
-            var res = getResource(params, body);
-            return res.get(params, body, success);
-        }
-    };
-    return InventoryLists;
-});
-
 AppEHR.factory("GetAllSuppliers", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'get_inventory_suppliers', params, {
@@ -1068,23 +1080,6 @@ AppEHR.factory("DeleteInventory", function ($resource) {
 });
 
 
-AppEHR.factory("MakeInactiveInventory", function ($resource) {
-    function getResource(params, body) {
-        var res2 = $resource(serverPath + 'inventory_inactive', params, {
-            save: {method: 'POST'}
-        });
-        return res2;
-    }
-    var MakeInactive = {
-        save: function (params, body, success) {
-            var res = getResource(params, body);
-            return res.save(params, body, success);
-        }
-    };
-    return MakeInactive;
-});
-
-
 
 AppEHR.factory("GetSingleSupplier", function ($resource) {
     function getResource(params, body) {
@@ -1239,10 +1234,6 @@ AppEHR.factory("getPharmacy", function ($resource) {
         });
         return res2;
     }
-
-
-
-
     var patientRegistrationEmployer = {
         get: function (params, body, success) {
             var res = getResource(params, body);
@@ -1387,17 +1378,17 @@ AppEHR.factory("GetAllInvoices", function ($resource) {
 AppEHR.factory("SendEmail", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'send_invoice_email', params, {
-            get: {method: 'POST'}
+            save: {method: 'POST'}
         });
         return res2;
     }
-    var sendInvoice = {
-        get: function (params, body, success) {
+    var send = {
+        save: function (params, body, success) {
             var res = getResource(params, body);
-            return res.get(params, body, success);
+            return res.save(params, body, success);
         }
     };
-    return sendInvoice;
+    return send;
 });
 
 
@@ -1615,6 +1606,38 @@ AppEHR.factory("PharmacyPrescription", function ($resource) {
    function getResource(params, body) {
        var res2 = $resource(serverPath + 'get_prescription_list', params, {
            get: {method: 'GET'}
+       });
+       return res2;
+   }
+   var clinicalProgressNotesFields = {
+       get: function (params, body, success) {
+           var res = getResource(params, body);
+           return res.get(params, body, success);
+       }
+   };
+   return clinicalProgressNotesFields;
+});
+
+AppEHR.factory("UpdatePharmacy", function ($resource) {
+   function getResource(params, body) {
+       var res2 = $resource(serverPath + 'update_pharmacy', params, {
+           save: {method: 'POST'}
+       });
+       return res2;
+   }
+   var clinicalProgressNotesFields = {
+       save: function (params, body, success) {
+           var res = getResource(params, body);
+           return res.save(params, body, success);
+       }
+   };
+   return clinicalProgressNotesFields;
+});
+
+AppEHR.factory("DeletePharmacy", function ($resource) {
+   function getResource(params, body) {
+       var res2 = $resource(serverPath + 'delete_pharmacy', params, {
+           get: {method: 'POST'}
        });
        return res2;
    }

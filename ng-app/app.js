@@ -54,7 +54,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/patient-registration.html',
                     controller: 'patientRegistrationController'
                 }).
-                when('/patient-summary-demographics/:patientID', {
+                when('/patient-summary-demographics/:patientID/:encounterID', {
                     templateUrl: 'views/patient-summary-demographics.html',
                     controller: 'patientSummaryDemographicsController'
                 }).
@@ -130,7 +130,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/billing.html',
                     controller: 'billing'
                 }).
-                when('/pharmacy-view/:patientID/:encounterID', {
+                when('/pharmacy-view/:prescriptionID/:encounterID/:patientID', {
                     templateUrl: 'views/pharmacy-view.html',
                     controller: 'pharmacyView'
                 }).
@@ -273,7 +273,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
                         $.each(data['data'], function (index, item) {
                             myResults.push({
                                 'id': item.id,
-                                'text': item.first_name
+                                'text': item.first_name + " " + item.last_name
                             });
                         });
                     }
