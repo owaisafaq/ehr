@@ -2747,10 +2747,13 @@ form .progress {
     .idCardPrint.hidden-print,#addpatient .modal-footer,#addpatient .modal-header{
         display: none;
     }
+    .id_card {
+         max-height:40%;
+    }
 
 }
 .id_card {
-         page-break-after: auto;
+         max-height:40%;
     }
 .check-box-label label{
     width:auto;

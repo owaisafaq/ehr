@@ -1375,7 +1375,7 @@ AppEHR.factory("GetAllInvoices", function ($resource) {
 
 
 
-AppEHR.factory("SendInvoiceEmail", function ($resource) {
+AppEHR.factory("SendEmail", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'send_invoice_email', params, {
             save: {method: 'POST'}
