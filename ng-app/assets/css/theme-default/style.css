@@ -306,7 +306,11 @@ Menu styling
     padding-left: 12px;
     color: #b6bbcc;
 }
-/*.header-search input[type=text]{
+.header-search input[type=text].search_field_big{
+    width: 334px !important;
+    padding-top: 0;
+}
+.header-search input[type=text]{
     width: 234px;
     height: 30px;
     border-radius: 15px; 
@@ -314,10 +318,7 @@ Menu styling
     border:1px solid #dfe7f6;
     font-family: 'SegoeUI-reg';
 }
-.header-search input[type=text].search_field_big{
-    width: 334px !important;
-    padding-top: 0;
-}
+
 .custom-form .header-search input[type=text]{
     width: 234px;
     height: 30px;
@@ -325,7 +326,7 @@ Menu styling
     padding-left: 35px;
     border:1px solid #dfe7f6;
     font-family: 'SegoeUI-reg';
-}*/
+}
 .custom-form .header-search button{
     position: absolute;
     left: 0;
@@ -2855,4 +2856,7 @@ form .progress {
 }
 .delete-icon{
     cursor: pointer;
+}
+.search-for-patient{
+    width: 100%!important;
 }

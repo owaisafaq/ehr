@@ -4,6 +4,7 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
 	$rootScope.pageTitle = "EHR - Lab Order Listing";
     $scope.action = "";
     $scope.testAdded = false;
+    $scope.searchLab = $routeParams.patientID == undefined ? '' : $routeParams.patientID;
 	GetAllLabOrders.get({ // Getting all lab orders
 		token: $window.sessionStorage.token
 	}, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
@@ -81,7 +82,6 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
         }
     };
 
-  bill
     GetAllPatients.get({ // Getting all patients
         token: $window.sessionStorage.token
     }, GetAllPatientsSuccess, GetAllPatientsFailure);

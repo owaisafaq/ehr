@@ -48,7 +48,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="labOrder in labOrders | filter:filterLabs | filter:search">
+                            <tr ng-repeat="labOrder in labOrders | filter:search | filter:{patient_id:searchLab}:true">
                                 <td align="center">
                                     <div class="radio radio-styled">
                                         <label>

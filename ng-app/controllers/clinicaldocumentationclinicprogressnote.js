@@ -9,8 +9,9 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 	$scope.items = [];
 	$scope.selectedRow = false;
 	$rootScope.loader = "show";
-	$scope.medicationDropDowns = medicationDropDowns;
-    $scope.pharmacyDataDropDown = pharmacyDataDropDown;
+  $scope.PID = "/"+$routeParams.patientID;
+	//$scope.medicationDropDowns = medicationDropDowns;
+    //$scope.pharmacyDataDropDown = pharmacyDataDropDown;
     $scope.MedicationData = [];
     $scope.medicationsDataPush = [];
     $scope.buildInstructionObject = buildInstructionObject;

@@ -82,6 +82,10 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/lab-order-listing.html',
                     controller: 'labOrderListing'
                 }).
+                when('/lab-order-listing/:patientID', {
+                    templateUrl: 'views/lab-order-listing.html',
+                    controller: 'labOrderListing'
+                }).
                 when('/lab-order-tests/:orderID', {
                     templateUrl: 'views/lab-order-tests.html',
                     controller: 'labOrderTests'
@@ -177,12 +181,6 @@ AppEHR.run(function ($rootScope, $location, $window) {
         $rootScope.loginCheck = $location.$$path == '/login' || $location.$$path == '/' ? true : false;
         console.log("here")
         console.log(localStorage.getItem('sessionStorage'))
-
-
-
-
-
-
 
     });
     $rootScope.loadView = function (object) {
@@ -353,8 +351,9 @@ AppEHR.run(function ($rootScope, $location, $window) {
     // on change
     $rootScope.getSearchPatientForHeader = function(string){
         console.log(string);
-        //$rootScope.loader = "show";
+        $rootScope.loader = "show";
         //$window.location.href = "#/patient-summary-demographics/"+string;
+        $location.path("patient-summary-demographics/"+string);
         
     }
 });
