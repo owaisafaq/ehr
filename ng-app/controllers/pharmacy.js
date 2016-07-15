@@ -100,6 +100,11 @@ AppEHR.controller('pharmacy', ['$scope', '$rootScope', 'getPharmacy', '$window',
 				$('#s2id_autogen3 .select2-chosen').text('Select State');
 				$('#s2id_autogen5 .select2-chosen').text('Select City');
 			},1500);
+			$scope.action = '';
+			$scope.enableOptions = false;
+			getPharmacy.get({
+				token: $window.sessionStorage.token
+			}, getPharmacySuccess, getPharmacyFailure);
 		} else {
 			$scope.hideLoader = "hide";
 			$scope.addPharmacyBtn = false;
@@ -116,6 +121,7 @@ AppEHR.controller('pharmacy', ['$scope', '$rootScope', 'getPharmacy', '$window',
 	/*MUZAMMIL WORK*/
 
 	$scope.pharmacySelected = function(pharmacyID, index){
+
 		$scope.enableOptions = true;
 		$scope.pharmacyID = pharmacyID;
 		//if($scope.pharmacyLists.length == index)
@@ -216,6 +222,9 @@ AppEHR.controller('pharmacy', ['$scope', '$rootScope', 'getPharmacy', '$window',
 		function cityFailed(error) {
 			console.log(error);
 		}
+		setTimeout(function () {
+            $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
+        },1000)
 	}
 
 	$scope.curPage = 0;
@@ -239,6 +248,15 @@ AppEHR.controller('pharmacy', ['$scope', '$rootScope', 'getPharmacy', '$window',
         getPharmacy.get({
             token: $window.sessionStorage.token,
             offset: (pageSize - 1) * curPage, limit: $scope.itemsPerPage
+        }, getPharmacySuccess, getPharmacyFailure);
+    }
+
+    $scope.selectBoxValue = function(value){
+        $rootScope.loader = "show";
+        $scope.pageNumber = '';
+        getPharmacy.get({
+            token: $window.sessionStorage.token,
+            offset: ($scope.pageSize * $scope.curPage), limit: value
         }, getPharmacySuccess, getPharmacyFailure);
     }
 

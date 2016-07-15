@@ -38,9 +38,9 @@
             <form action="post">
                 <div class="headerbar hidden-print">
                     <div class="headerbar-left">
-                        <a href="javascript:;" ng-click="loadView(PI);" class="white-btn"><img src="assets/img/add_person.png" /></a>
+                        <a href="#/patient-registration" ng-click="loadView(PI);" class="white-btn"><img src="assets/img/add_person.png" /></a>
                         <a href="javascript:;" class="white-btn"><img src="assets/img/heart_plus.png" /></a>
-                        <a href="javascript:;" class="white-btn"><img src="assets/img/content_icn.png" /></a>
+                        <a href="#/billing" class="white-btn"><img src="assets/img/content_icn.png" /></a>
                         <a href="javascript:;" class="white-btn"><img src="assets/img/report_icn.png" /></a>
                     </div>
                     <div class="headerbar-right">
@@ -49,14 +49,14 @@
                             <button type="submit">
                                 <i class="fa fa-search"></i>
                             </button>
-                            <input class="search_field" type="text" placeholder="Search for a patient" />
+                            <input class="search_field get-patient-search-bar" ng-change="getSearchPatientForHeader(search);" type="text" ng-model="search" placeholder="Search for a patient" />
                         </div> 
-                        <a href="javascript:;" class="button-style-2">
+                        <!-- <a href="javascript:;" class="button-style-2">
                             <img src="assets/img/admission_icn.png" />
                         </a>
                         <a href="javascript:;" class="button-style-2">
                             <img src="assets/img/discharge_icn.png" />
-                        </a>
+                        </a> -->
                         <ul class="header-nav header-nav-profile">
                             <li class="dropdown">
                                 <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">

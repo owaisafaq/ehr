@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('loginController', ['$scope', '$window', '$http', 'AUTH', function($scope, $window, $http, AUTH){
+AppEHR.controller('loginController', ['$scope', '$window', 'AUTH', function($scope, $window, AUTH){
 	$scope.pageTitle = "EHR - Login";
 	$window.sessionStorage.clear();
 	$scope.class = "hide";

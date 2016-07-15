@@ -876,23 +876,18 @@
                             <input type="text" placeholder=""  ng-model="supplier.wphone" required/>
                         </div>
 
+                        
                         <div class="col-lg-3">
-                            <label>City</label>
+                            <label>Country</label>
                         </div>
                         <div class="col-lg-3">
-
-                            <select class="form-control" ng-model="supplier.city" required>
-                                <option>Select City</option>
-                                <option ng-repeat="city in Cities" value="{{city.id}}" >
-
-                                    {{city.name}}
+                            <select class="form-control" ng-model="supplier.country" ng-change="getStatesfromCountry(supplier.country);">
+                                <option>Select Country</option>
+                                <option ng-repeat="country in Countries" value="{{country.id}}" >
+                                    {{country.name}}
                                 </option>
 
-
                             </select>
-
-
-
                         </div>
 
                         <div class="col-lg-3">
@@ -924,15 +919,15 @@
                         </div>
 
                         <div class="col-lg-3">
-                            <label>Country</label>
+                            <label>City</label>
                         </div>
                         <div class="col-lg-3">
-                            <select class="form-control" ng-model="supplier.country" ng-change="getStatesfromCountry(supplier.country);">
-                                <option>Select Country</option>
-                                <option ng-repeat="country in Countries" value="{{country.id}}" >
-                                    {{country.name}}
-                                </option>
+                            <select class="form-control" ng-model="supplier.city" required>
+                                <option>Select City</option>
+                                <option ng-repeat="city in Cities" value="{{city.id}}" >
 
+                                    {{city.name}}
+                                </option>
                             </select>
                         </div>
 

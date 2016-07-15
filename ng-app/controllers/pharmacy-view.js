@@ -7,8 +7,8 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         $scope.PrescriptionViewsCopy = [];
         $scope.medicationDropDowns = medicationDropDowns;
         $scope.pharmacyDataDropDown = pharmacyDataDropDown;
-        $scope.MedicationData = {}
-        $scope.Prescription = {}
+        $scope.MedicationData = {};
+        $scope.Prescription = {};
         $scope.showUpdate = false;
         $scope.prescriptionID = $routeParams.prescriptionID;
         $scope.PrescriptionViews = [];
@@ -141,6 +141,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
             $scope.showUpdate = true;
         }
         $scope.savePharmacyPopUp = function () {
+            $rootScope.loader = "show";
             for (var i = 0; i < $scope.medicationsDataPush.length; i++) {
                 delete $scope.medicationsDataPush[i].$$hashKey
                 delete $scope.medicationsDataPush[i].note_of_pharmacy

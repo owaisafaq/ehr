@@ -46,7 +46,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         $scope.medicationsDataPush = [];
 
         $scope.PID = $routeParams.patientID;
-        $scope.encounterID = $routeParams.encounterID;
+        $scope.encounterID = $routeParams.encounterID == undefined ? 1 : $routeParams.encounterID;
         PatientDemographics.get({
             token: $window.sessionStorage.token,
             patient_id: $routeParams.patientID
@@ -124,6 +124,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
                 if ($('form[name=vitalForm]').find('.error').length == 0) {
                     $rootScope.loader = "show";
                     var vitalField = {
+                        visit_id: $scope.encounterID == undefined ? $scope.EID : $scope.encounterID,
                         patient_id: $routeParams.patientID,
                         systolic_mm_hg: $scope.vital.systolic == undefined ? '' : $scope.vital.systolic,
                         diastolic_mm_hg: $scope.vital.diastolic == undefined ? '' : $scope.vital.diastolic,

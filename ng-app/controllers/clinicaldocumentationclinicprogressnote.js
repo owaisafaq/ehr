@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootScope', '$window', '$routeParams', 'GetPatientInfo', 'ClinicalProgressNotesFields', 'GetTemplatesDropDown', 'SetClinicalProgressNotes', 'PatienPrescription', 'GetPrescription', function($scope, $rootScope, $window, $routeParams, GetPatientInfo, ClinicalProgressNotesFields, GetTemplatesDropDown, SetClinicalProgressNotes, PatienPrescription, GetPrescription){
+AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootScope', '$window', '$routeParams', 'GetPatientInfo', 'ClinicalProgressNotesFields', 'GetTemplatesDropDown', 'SetClinicalProgressNotes', 'PatienPrescription', 'GetPrescription', 'GetAllMedications', 'DropDownData', function($scope, $rootScope, $window, $routeParams, GetPatientInfo, ClinicalProgressNotesFields, GetTemplatesDropDown, SetClinicalProgressNotes, PatienPrescription, GetPrescription, GetAllMedications, DropDownData){
 	$rootScope.pageTitle = "EHR - Clinical Documentation - Clinic Progress Note";
 	$scope.displayInfo = {};
 	$scope.templates = {};
@@ -167,4 +167,38 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
             $scope.MedicationData.sig = sigData.dose == undefined ? '' : sigData.dose + " " + sigData.unit == undefined ? '' : sigData.unit + " " + sigData.route  == undefined ? '' : sigData.route + " for " + sigData.frequency + " " + sigData.direction + " " + sigData.duration;
             console.log($scope.MedicationData.sig);
         }*/
+
+        GetAllMedications.get({
+            token: $window.sessionStorage.token,
+            patient_id: $routeParams.patientID
+        }, getAllMedicationsSuccess, getAllMedicationsFailure);
+        $scope.allMedications = [];
+        $scope.allPharmacies = [];
+        function getAllMedicationsSuccess(res){
+            console.log(11112);
+            console.log(res);
+            if(res.status == true){
+                $scope.allMedications = res.data;
+            }
+        }
+        function getAllMedicationsFailure(error){
+            console.log(error);
+        }
+
+        DropDownData.get({
+            token: $window.sessionStorage.token
+        }, getpharmacySuccess, getPharmacyFailure);
+
+        function getpharmacySuccess(res){
+            if(res.status == true){
+                console.log(1);
+                console.log(res);
+                $scope.allPharmacies = res.data.pharmacy;
+            }
+        }
+
+        function getPharmacyFailure(error){
+            console.log(error);
+        }
+
 }]);

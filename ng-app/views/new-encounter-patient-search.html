@@ -121,34 +121,8 @@
                 </div>
             </div>
             <div class="card-body col-lg-12">
-                <!-- <input ng-model='filterValue'/><button ng-click='filter()'>Filter</button>
-                <div id="grid1" ui-grid="gridOptions" class="grid"></div> -->
                 <div>
-                    <!-- <table class="table table-striped no-margin table-custom">
-                        <thead>
-                            <tr>
-                                <th width="5"></th>
-                                <th>patient id</th>
-                                <th>full name</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="encounter in allEncounters | filter:search">
-                                <td align="center">
-                                    <div class="radio radio-styled">
-                                        <label>
-                                            <input type="radio" name="optionsRadios" ng-modal="action[$index]" value="option1" ng-click="encounterSelected($index);">
-                                            <span></span>
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>PA-{{encounter.id}}</td>
-                                <td class="capitalize">{{encounter.first_name}}</td>
-                            </tr>
-                        </tbody>
-                    </table> -->
-                        <input class="encounter-search-bar" ng-change="getSearchPatient(search);" type="text" ng-model="search" placeholder="Search for a patient">
-                    
+                    <input class="encounter-search-bar" ng-change="getSearchPatient(search);" type="text" ng-model="search" placeholder="Search for a patient">
                 </div>
             </div><!--end .card-body -->
         </div><!--end .card -->

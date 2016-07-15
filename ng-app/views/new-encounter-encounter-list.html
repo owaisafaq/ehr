@@ -85,7 +85,7 @@
                                     </div> -->
                                     <div class="radio radio-styled">
                                         <label>
-                                            <input type="radio" name="optionsRadios" ng-model="action" ng-click="encounterSelected(encounter.patient_id, encounter.id);" ng-value="{{encounter.id}}" ng-checked="EID == encounter.id">
+                                            <input type="radio" name="optionsRadios" ng-model="action" ng-click="encounterSelected(encounter.patient_id, encounter.id);" ng-value="{{encounter.id}}" ng-checked="EID == encounter.id" ng-init="EID=EID==encounter.id ? EID : '';">
                                             <span></span>
                                         </label>
                                     </div>

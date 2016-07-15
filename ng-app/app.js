@@ -58,6 +58,10 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/patient-summary-demographics.html',
                     controller: 'patientSummaryDemographicsController'
                 }).
+                when('/patient-summary-demographics/:patientID', {
+                    templateUrl: 'views/patient-summary-demographics.html',
+                    controller: 'patientSummaryDemographicsController'
+                }).
                 when('/ward-bed-listing', {
                     templateUrl: 'views/ward-bed-listing.html',
                     controller: 'wardBedListingController'
@@ -253,7 +257,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
         $(".search-ajax").select2({
             placeholder: 'Select Patient',
             ajax: {
-                url: "http://demoz.online/ehr/public/api/search_patient",
+                url: serverPath+"search_patient",
                 delay: 250,
                 type: "POST",
                 data: function (params, page) {
@@ -285,10 +289,10 @@ AppEHR.run(function ($rootScope, $location, $window) {
             },
             minimumInputLength: 2,
         });
-        $(".encounter-search-bar").select2({
+        $(".encounter-search-bar, .get-patient-search-bar").select2({
             placeholder: 'Search Patient',
             ajax: {
-                url: "http://demoz.online/ehr/public/api/search_patient",
+                url: serverPath+"search_patient",
                 delay: 250,
                 type: "POST",
                 data: function (params, page) {
@@ -346,7 +350,13 @@ AppEHR.run(function ($rootScope, $location, $window) {
     });
     //$rootScope.html = '<div ng-include="\'utils/script-file.html\'"></div>';
     $rootScope.html = '<script src="assets/js/libs/bootstrap/bootstrap.min.js"></script><script src="assets/js/libs/spin.js/spin.min.js"></script><script src="assets/js/libs/autosize/jquery.autosize.min.js"></script><script src="assets/js/libs/nanoscroller/jquery.nanoscroller.min.js"></script><script src="assets/js/core/source/App.js"></script><script src="assets/js/core/source/AppNavigation.js"></script><script src="assets/js/core/source/AppOffcanvas.js"></script><script src="assets/js/core/source/AppCard.js"></script><script src="assets/js/core/source/AppForm.js"></script><script src="assets/js/core/source/AppNavSearch.js"></script><script src="assets/js/core/source/AppVendor.js"></script><script src="assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script><script src="assets/js/core/demo/Demo.js"></script><script src="assets/js/core/source/script.js" type="text/javascript"></script><script src="assets/js/libs/select2/select2.min.js" type="text/javascript"></script><script src="assets/js/libs/inputmask/jquery.inputmask.bundle.min.js"></script><script src="assets/js/libs/bootstrap-timepicker/bootstrap-timepicker.js" type="text/javascript"></script>';
-
+    // on change
+    $rootScope.getSearchPatientForHeader = function(string){
+        console.log(string);
+        //$rootScope.loader = "show";
+        //$window.location.href = "#/patient-summary-demographics/"+string;
+        
+    }
 });
 AppEHR.filter('capitalize', function () {
     return function (input) {

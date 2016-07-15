@@ -306,7 +306,7 @@ Menu styling
     padding-left: 12px;
     color: #b6bbcc;
 }
-.header-search input[type=text]{
+/*.header-search input[type=text]{
     width: 234px;
     height: 30px;
     border-radius: 15px; 
@@ -325,7 +325,7 @@ Menu styling
     padding-left: 35px;
     border:1px solid #dfe7f6;
     font-family: 'SegoeUI-reg';
-}
+}*/
 .custom-form .header-search button{
     position: absolute;
     left: 0;
@@ -1565,6 +1565,14 @@ Patient Plan
     border-radius: 15px;
     padding-left: 35px;
     border: 1px solid #dfe7f6;
+    font-family: 'SegoeUI-reg';
+}
+.get-patient-search-bar{
+    padding-left:5px;
+    width:100%!important;
+    background: #f9fafd;
+    height: 30px;
+    border-radius: 15px;
     font-family: 'SegoeUI-reg';
 }
 .search-btn-icon{

@@ -162,6 +162,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
                 if ($('form[name=vitalForm]').find('.error').length == 0) {
                     $rootScope.loader = "show";
                     var vitalField = {
+                        visit_id: $scope.EID == undefined ? $scope.encounterID : $scope.EID,
                         patient_id: $routeParams.patientID,
                         systolic_mm_hg: $scope.vital.systolic == undefined ? '' : $scope.vital.systolic,
                         diastolic_mm_hg: $scope.vital.diastolic == undefined ? '' : $scope.vital.diastolic,

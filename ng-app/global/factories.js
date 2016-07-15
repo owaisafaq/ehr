@@ -1740,3 +1740,48 @@ AppEHR.factory("AddMedicationInPrescription", function ($resource) {
    };
    return clinicalProgressNotesFields;
 });
+AppEHR.factory("GetAllActiveInventory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_active_stock', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var InventoryLists = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return InventoryLists;
+});
+AppEHR.factory("GetAllInActiveInventory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_inactive_stock', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var InventoryLists = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return InventoryLists;
+});
+AppEHR.factory("SendEmail", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'send_invoice_email', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var sendInvoice = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return sendInvoice;
+});
