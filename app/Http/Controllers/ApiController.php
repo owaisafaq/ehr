@@ -245,8 +245,8 @@ class ApiController extends Controller
             );
 
 
-            $patient_id = DB::getPdo()->lastInsertId();
 
+            $patient_id = DB::getPdo()->lastInsertId();
 
             return response()->json(['status' => true, 'message' => "Patient registered successfully", "patient_id" => $patient_id]);
 
