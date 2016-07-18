@@ -23,7 +23,7 @@ class OrderController extends Controller
     {
 
         header('Access-Control-Allow-Origin: *');
-
+        date_default_timezone_set("Africa/Lagos");
 
         if ($request->input('token')) {
 
