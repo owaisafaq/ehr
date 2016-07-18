@@ -13,6 +13,13 @@ use DB;
 
 class InventoryAPIController extends Controller
 {
+    public function __construct(Request $request)
+    {
+
+        header('Access-Control-Allow-Origin: *');
+        date_default_timezone_set("Africa/Lagos");
+
+    }
     //Categories APIs.
     public function get_categories(){
         $categories = DB::table('inventory_categories')->where('status', 1)->get();

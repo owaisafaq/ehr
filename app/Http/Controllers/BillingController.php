@@ -13,6 +13,13 @@ use DB;
 
 class BillingController extends Controller
 {
+    public function __construct(Request $request)
+    {
+
+        header('Access-Control-Allow-Origin: *');
+        date_default_timezone_set("Africa/Lagos");
+
+    }
     public function get_all_bills()
     {
         $bills = DB::table('billing')
