@@ -5,7 +5,7 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
     $scope.action = "";
     $rootScope.loader = "show";
     $scope.testAdded = false;
-    //$scope.searchLab = $routeParams.patientID == undefined ? '' : $routeParams.patientID;
+    $scope.searchLab = $routeParams.patientID == undefined ? '' : $routeParams.patientID;
     if($routeParams.patientID != undefined){
         LabOrdersByPatient.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID}, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
     }else{
@@ -14,9 +14,16 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
     	}, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
     }
 	function GetAllLabOrdersSuccess(res) { // on success GetAllLabOrders
+        console.log(res);
 		if (res.status == true) {
-            $rootScope.loader
+            $rootScope.loader = "hide";
+            if(res.data.length == 0){
+                console.log(11);
+                $('#noRecordFound').modal('show');
+                return false;
+            }
 			$scope.labOrders = res.data;
+
 		}
 	}
 	function GetAllLabOrdersFailure(error) { // on failure GetAllLabOrders
