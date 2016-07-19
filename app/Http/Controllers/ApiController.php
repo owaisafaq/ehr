@@ -78,7 +78,8 @@ class ApiController extends Controller
         $name = $request->input('name');
 
         $patients = DB::table('patients')
-            ->select(DB::raw('id,first_name,last_name'))
+            //->select(DB::raw('id,first_name,last_name'))
+            ->select(DB::raw('CONCAT(first_name," ",last_name) AS label,id as value'))
             ->where('first_name', 'like', "%$name%")
             ->where('plan_id', 1)
             ->get();
@@ -245,8 +246,8 @@ class ApiController extends Controller
             );
 
 
-
             $patient_id = DB::getPdo()->lastInsertId();
+
 
             return response()->json(['status' => true, 'message' => "Patient registered successfully", "patient_id" => $patient_id]);
 
