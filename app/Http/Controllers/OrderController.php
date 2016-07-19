@@ -150,6 +150,72 @@ class OrderController extends Controller
 
 
     }
+
+
+    public function get_patient_lab_orders(Request $request)
+    {
+
+        $patient_id = $request->input('patient_id');
+
+        $orders = DB::table('lab_orders')
+            ->select(DB::raw('lab_orders.id,lab_orders.patient_id,patients.first_name as patient_name,lab_orders.order_status,labs.name as lab_name,patients.age,patients.marital_status,patients.sex,maritial_status.name as marital_status'))
+            ->leftJoin('patients', 'lab_orders.patient_id', '=', 'patients.id')
+            ->leftJoin('labs', 'labs.id', '=', 'lab_orders.lab')
+            ->leftJoin('lab_order_tests', 'lab_order_tests.lab_order_id', '=', 'lab_orders.id')
+            ->leftJoin('lab_tests', 'lab_tests.id', '=', 'lab_order_tests.lab_test')
+            ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
+            ->where('lab_orders.status', 1)
+            ->where('patients.status', 1)
+            ->where('patients.id', $patient_id)
+            ->groupby('lab_orders.id')
+            ->get();
+
+
+        foreach ($orders as $lab_orders) {
+
+
+            $lab_orders->ordered_by = 'Dr Smith';
+            $lab_orders->handled_by = 'James';
+            $lab_orders->total_cost = 0;
+            //$lab_orders->test_name = 'Blood Test';
+
+
+            if ($lab_orders->sex == 1) {
+
+                $lab_orders->gender = 'male';
+            } else {
+
+                $lab_orders->gender = 'female';
+            }
+
+        }
+        foreach ($orders as $key => $order_tests) {
+            $tests = DB::table('lab_tests')
+                ->select(DB::raw('lab_tests.name as test_name,lab_tests.cost,priority'))
+                ->leftJoin('lab_order_tests', 'lab_order_tests.lab_test', '=', 'lab_tests.id')
+                ->where('lab_order_tests.lab_order_id', $order_tests->id)
+                ->get();
+
+            $test_cost = DB::table('lab_tests')
+                ->select(DB::raw('IFNULL(SUM(lab_tests.cost),0) as cost,count(lab_order_tests.lab_test) as totaltests'))
+                ->leftJoin('lab_order_tests', 'lab_order_tests.lab_test', '=', 'lab_tests.id')
+                ->where('lab_order_tests.lab_order_id', $order_tests->id)
+                ->first();
+
+            $orders[$key]->total_cost = $test_cost->cost;
+            $orders[$key]->total_test = $test_cost->totaltests;
+
+
+            $orders[$key]->lab_tests = $tests;
+
+            //$apetizer_product_items[]=$product_item;
+        }
+
+        return response()->json(['status' => true, 'data' => $orders]);
+
+
+    }
+
     public function get_lab_order_history(Request $request)
     {
 
