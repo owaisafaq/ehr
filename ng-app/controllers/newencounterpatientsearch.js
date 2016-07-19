@@ -131,8 +131,8 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 				department_id: addEncounter.department,
 				encounter_class: addEncounter.class,
 				encounter_type: addEncounter.type,
-				whom_to_see: addEncounter.wts
-				/*describe_whome_to_see : addEncounter.describeWTS*/
+				whom_to_see: addEncounter.wts,
+				decscribe_whom_to_see : addEncounter.describeWTS
 			}, encounterSuccess, encounterFailed);
 		}else{
 			console.log(0);
