@@ -291,6 +291,7 @@ Menu styling
     float: left;
 }
 .header-search{
+    z-index: 0;
     position: relative;
 }
 .header-search button{
@@ -306,9 +307,16 @@ Menu styling
     padding-left: 12px;
     color: #b6bbcc;
 }
+.ui-widget-content{
+    z-index: 1000000!important;
+    max-height: 150px;
+    overflow-Y: auto;
+    overflow-X: hidden;
+}
 .header-search input[type=text].search_field_big{
     width: 334px !important;
     padding-top: 0;
+    z-index: 10000;
 }
 .header-search input[type=text]{
     width: 234px;
@@ -680,6 +688,10 @@ Table Styling
 }
 .email{
     background: url(../..//img/envelop.jpg) no-repeat top center;
+}
+
+.microscope{
+    background: url(../..//img/microscope.png) no-repeat top center;
 }
 
 .add-result{

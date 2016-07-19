@@ -26,6 +26,7 @@
         <link href="assets/css/theme-default/style.css" rel="stylesheet" type="text/css"/>
         <script src="assets/js/libs/jquery/jquery-1.11.2.min.js"></script>
         <script src="assets/js/libs/jquery/jquery-migrate-1.2.1.min.js"></script>
+        <link type="text/css" rel="stylesheet" href="assets/css/theme-default/libs/jquery-ui/jquery-ui-theme.css?1423393666" />
         <!--END STYLESHEETS--> 
         <!--         HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries 
                 [if lt IE 9]>
@@ -35,7 +36,7 @@
     </head>
     <body class="menubar-hoverable header-fixed">
         <header id="header" class="hide {{class}}">
-            <form action="post">
+            <form action="post" novalidate>
                 <div class="headerbar hidden-print">
                     <div class="headerbar-left">
                         <a href="#/patient-registration" ng-click="loadView(PI);" class="white-btn"><img src="assets/img/add_person.png" /></a>
@@ -46,11 +47,13 @@
                     <div class="headerbar-right">
                         <a class="margin-right-20" href="javascript:;"><img src="assets/img/emergency.png" /></a>
                         <div class="header-search">
-                            <!-- <button type="submit">
+                            <button type="submit">
                                 <i class="fa fa-search"></i>
-                            </button> -->
+                            </button>
                             <!-- <input class="search_field get-patient-search-bar search-for-patient" ng-change="getSearchPatientForHeader(search);" type="text" ng-model="search" placeholder="Search for a patient" /> -->
-                            <input class="encounter-search-bar" ng-change="getSearchPatientForHeader(search);" type="text" ng-model="search" placeholder="Search for a patient">
+                            <!-- <input class="encounter-search-bar" ng-change="getSearchPatientForHeader(search);" type="text" ng-model="search" placeholder="Search for a patient"> -->
+                            <!-- <input type="text" id="autocomplete2" class="form-control search_field" data-source="data/100.json" placeholder="Search for a patient"> -->
+                            <input type="text" id="autocomplete2" class="search_field" data-source="http://demoz.online/ehr/public/api/search_patient" placeholder="Search for a patient">
                         </div> 
                         <!-- <a href="javascript:;" class="button-style-2">
                             <img src="assets/img/admission_icn.png" />

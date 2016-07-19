@@ -169,6 +169,40 @@ AppEHR.run(function ($rootScope, $location, $window) {
 //        } else {
         $location.path("login");
     }
+    $('#autocomplete2').on('input', function(){
+        var input = $('#autocomplete2').val();
+        if(input != undefined || input != ''){
+            $.ajax({
+                url: $('#autocomplete2').data('source'),
+                dataType: "json",
+                type: "POST",
+                delay: 250,
+                data: {name: input},
+                success: function (patients) {
+                    if(patients.status == true){
+                        $("#autocomplete2").autocomplete({
+                            source: function (request, response) {
+                                response($.map(patients.data, function (value, key) {
+                                    return {
+                                        label: value.first_name + " " + value.last_name,
+                                        value: value.id
+                                    }
+                                }));
+                                patients.data = [];
+                            },
+                            select: function(event, ui) {
+                                $('#autocomplete2').val(ui.item.label);
+                                var selectId = ui.item.value;
+                                window.location.href = "#/patient-summary-demographics/"+selectId;
+                                return false;
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    });
+    
     $rootScope.$on("$routeChangeStart", function (event, next, current) {
         if ($location.$$path != '/login' && $location.$$path != '/') {
             $rootScope.backgroundImg = "";
@@ -273,6 +307,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
                     }
                     else {
                         $.each(data['data'], function (index, item) {
+                            console.log(item);
                             myResults.push({
                                 'id': item.id,
                                 'text': item.first_name + " " + item.last_name
@@ -347,7 +382,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
         })
     });
     //$rootScope.html = '<div ng-include="\'utils/script-file.html\'"></div>';
-    $rootScope.html = '<script src="assets/js/libs/bootstrap/bootstrap.min.js"></script><script src="assets/js/libs/spin.js/spin.min.js"></script><script src="assets/js/libs/autosize/jquery.autosize.min.js"></script><script src="assets/js/libs/nanoscroller/jquery.nanoscroller.min.js"></script><script src="assets/js/core/source/App.js"></script><script src="assets/js/core/source/AppNavigation.js"></script><script src="assets/js/core/source/AppOffcanvas.js"></script><script src="assets/js/core/source/AppCard.js"></script><script src="assets/js/core/source/AppForm.js"></script><script src="assets/js/core/source/AppNavSearch.js"></script><script src="assets/js/core/source/AppVendor.js"></script><script src="assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script><script src="assets/js/core/demo/Demo.js"></script><script src="assets/js/core/source/script.js" type="text/javascript"></script><script src="assets/js/libs/select2/select2.min.js" type="text/javascript"></script><script src="assets/js/libs/inputmask/jquery.inputmask.bundle.min.js"></script><script src="assets/js/libs/bootstrap-timepicker/bootstrap-timepicker.js" type="text/javascript"></script>';
+    $rootScope.html = '<script src="assets/js/libs/jquery-ui/jquery-ui.min.js"></script><script src="assets/js/libs/bootstrap/bootstrap.min.js"></script><script src="assets/js/libs/spin.js/spin.min.js"></script><script src="assets/js/libs/autosize/jquery.autosize.min.js"></script><script src="assets/js/libs/nanoscroller/jquery.nanoscroller.min.js"></script><script src="assets/js/core/source/App.js"></script><script src="assets/js/core/source/AppNavigation.js"></script><script src="assets/js/core/source/AppOffcanvas.js"></script><script src="assets/js/core/source/AppCard.js"></script><script src="assets/js/core/source/AppForm.js"></script><script src="assets/js/core/source/AppNavSearch.js"></script><script src="assets/js/core/source/AppVendor.js"></script><script src="assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script><script src="assets/js/core/demo/Demo.js"></script><script src="assets/js/core/source/script.js" type="text/javascript"></script><script src="assets/js/libs/select2/select2.min.js" type="text/javascript"></script><script src="assets/js/libs/inputmask/jquery.inputmask.bundle.min.js"></script><script src="assets/js/libs/bootstrap-timepicker/bootstrap-timepicker.js" type="text/javascript"></script>';
     // on change
     $rootScope.getSearchPatientForHeader = function(string){
         console.log(string);
