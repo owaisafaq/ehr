@@ -23,7 +23,7 @@ class ApiController extends Controller
     {
 
         header('Access-Control-Allow-Origin: *');
-
+        date_default_timezone_set("Africa/Lagos");
 
         if ($request->input('token')) {
 
@@ -245,8 +245,8 @@ class ApiController extends Controller
             );
 
 
-            $patient_id = DB::getPdo()->lastInsertId();
 
+            $patient_id = DB::getPdo()->lastInsertId();
 
             return response()->json(['status' => true, 'message' => "Patient registered successfully", "patient_id" => $patient_id]);
 
@@ -2997,7 +2997,7 @@ class ApiController extends Controller
             $prescription = html_entity_decode($request->input('prescription'));
             $patient_prescriptions = json_decode($prescription);
             $currentdatetime = date("Y-m-d  H:i:s");
-
+            
 
             foreach ($patient_prescriptions as $patient_prescription) {
 
