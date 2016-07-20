@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootScope', '$window', '$routeParams', 'GetPatientInfo', 'ClinicalProgressNotesFields', 'GetTemplatesDropDown', 'SetClinicalProgressNotes', 'PatienPrescription', 'GetPrescription', 'GetAllMedications', 'DropDownData', 'CheckoutPatient', function($scope, $rootScope, $window, $routeParams, GetPatientInfo, ClinicalProgressNotesFields, GetTemplatesDropDown, SetClinicalProgressNotes, PatienPrescription, GetPrescription, GetAllMedications, DropDownData, CheckoutPatient){
+AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootScope', '$window', '$routeParams', 'GetPatientInfo', 'ClinicalProgressNotesFields', 'GetTemplatesDropDown', 'SetClinicalProgressNotes', 'PatienPrescription', 'GetPrescription', 'GetAllMedications', 'DropDownData', 'CheckoutPatient', 'GetMedicineUnits', function($scope, $rootScope, $window, $routeParams, GetPatientInfo, ClinicalProgressNotesFields, GetTemplatesDropDown, SetClinicalProgressNotes, PatienPrescription, GetPrescription, GetAllMedications, DropDownData, CheckoutPatient, GetMedicineUnits){
 	$rootScope.pageTitle = "EHR - Clinical Documentation - Clinic Progress Note";
 	$scope.displayInfo = {};
 	$scope.templates = {};
@@ -15,7 +15,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
     //$scope.pharmacyDataDropDown = pharmacyDataDropDown;
     $scope.MedicationData = [];
     $scope.medicationsDataPush = [];
-    $scope.buildInstructionObject = buildInstructionObject;
+    //$scope.buildInstructionObject = buildInstructionObject;
 	/*{{field = field + 1}}*/
 	GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID}, getPatientSuccess, getPatientFailure);
 	GetTemplatesDropDown.get({token: $window.sessionStorage.token}, getTemplateDropDownSuccess, getTemplateDropDownFailure);
@@ -35,6 +35,18 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 			$rootScope.loader = "hide";
 		}
 	}
+
+  GetMedicineUnits.get({token: $window.sessionStorage.token}, getMedicineUnitSuccess, getMedicineUnitFailure);
+  function getMedicineUnitFailure(error){
+    $rootScope.loader = "hide";
+    console.log(error);
+  }
+
+  function getMedicineUnitSuccess(res){
+    if(res.status == true){
+      $scope.medicineUnits = res.data;
+    }
+  }
 
 	function getPatientFailure(error){
 		$rootScope.loader = "hide";
@@ -118,7 +130,6 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
                $('#addmedication select').trigger('change');
            }, 100)
            $scope.medicationsDataPush.splice(index, 1);
-           console.log($scope.medicationsDataPush)
            $scope.showUpdate = true;
         }
         $scope.savePharmacyPopUp = function () {
@@ -132,7 +143,6 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
                token: $window.sessionStorage.token,
                visit_id: $scope.displayInfo.encounter_id
            }
-           console.log(addPrescrptnPop);
            $rootScope.loader = 'show';
            PatienPrescription.save(addPrescrptnPop, PrescriptionSuccessPop, PrescriptionFailurePop)
         }
@@ -157,7 +167,6 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 	            $scope.MedicationData.sig += sigData.frequency == undefined ? '' : " for " + sigData.frequency + " ";
 	            $scope.MedicationData.sig += sigData.direction == undefined ? '' : sigData.direction + " ";
 	            $scope.MedicationData.sig += sigData.duration == undefined ? '' : sigData.duration;
-	            console.log($scope.MedicationData.sig);
 	        }
         }
 

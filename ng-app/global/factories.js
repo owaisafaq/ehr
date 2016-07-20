@@ -1800,3 +1800,18 @@ AppEHR.factory("LabOrdersByPatient", function ($resource) {
     };
     return sendInvoice;
 });
+AppEHR.factory("GetMedicineUnits", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_medicine_units', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var sendInvoice = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return sendInvoice;
+});

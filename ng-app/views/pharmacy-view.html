@@ -355,7 +355,7 @@
                                 <div class="col-lg-12">
                                     <select class="form-control" ng-model="buildInstructions.dose" placeholder="Select">
                                         <option></option>
-                                        <option ng-repeat="dose in buildInstructionObject.dose" value="{{dose.name}}">{{dose.name}}</option>
+                                        <option ng-repeat="dose in medicineUnits.dosage" value="{{dose.dosage}}">{{dose.dosage}}</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-12">
@@ -364,7 +364,7 @@
                                 <div class="col-lg-12">
                                     <select class="form-control" ng-model="buildInstructions.route" placeholder="Select">
                                         <option></option>
-                                        <option ng-repeat="route in buildInstructionObject.route" value="{{route.name}}">{{route.name}}</option>
+                                        <option ng-repeat="route in medicineUnits.route" value="{{route.route}}">{{route.route}}</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-12">
@@ -373,7 +373,7 @@
                                 <div class="col-lg-12">
                                     <select class="form-control" ng-model="buildInstructions.direction" placeholder="Select">
                                         <option></option>
-                                        <option ng-repeat="direction in buildInstructionObject.direction" value="{{direction.name}}">{{direction.name}}</option>
+                                        <option ng-repeat="direction in medicineUnits.direction" value="{{direction.direction}}">{{direction.direction}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -386,7 +386,7 @@
                                 <div class="col-lg-12">
                                     <select class="form-control" ng-model="buildInstructions.unit" placeholder="Select">
                                         <option></option>
-                                        <option ng-repeat="unit in buildInstructionObject.unit" value="{{unit.name}}">{{unit.name}}</option>
+                                        <option ng-repeat="unit in medicineUnits.unit" value="{{unit.unit}}">{{unit.unit}}</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-12">
@@ -395,7 +395,7 @@
                                 <div class="col-lg-12">
                                     <select class="form-control" ng-model="buildInstructions.frequency" placeholder="Select">
                                         <option></option>
-                                        <option ng-repeat="frequency in buildInstructionObject.frequency" value="{{frequency.name}}">{{frequency.name}}</option>
+                                        <option ng-repeat="frequency in medicineUnits.frequency" value="{{frequency.frequency}}">{{frequency.frequency}}</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-12">
@@ -404,7 +404,7 @@
                                 <div class="col-lg-12">
                                     <select class="form-control" ng-model="buildInstructions.duration" placeholder="Select">
                                         <option></option>
-                                        <option ng-repeat="duration in buildInstructionObject.duration" value="{{duration.name}}">{{duration.name}}</option>
+                                        <option ng-repeat="duration in medicineUnits.duration" value="{{duration.duration}}">{{duration.duration}}</option>
                                     </select>
                                 </div>
                             </div>

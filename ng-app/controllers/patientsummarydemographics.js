@@ -1,5 +1,5 @@
 var AppEHR = angular.module('AppEHR');
-AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', 'GetResourcesByFolderArchives', 'ListFolderArchives', 'EditFolderArchives', 'DeleteFolderArchives', 'RemoveArchives', 'Upload', 'SaveFiles', '$timeout', 'DropDownData', 'ADDSupplements', 'ADDAllergy', 'AddFolderArchives','EditArchives', 'PatienPrescription', 'FolderUpContent', 'FolderUpFolders', 'ListImmunization', 'DeleteImmunization', 'AddImmunization', 'GetAllMedications', 'CheckoutPatient', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy, GetResourcesByFolderArchives, ListFolderArchives, EditFolderArchives, DeleteFolderArchives, RemoveArchives, Upload, SaveFiles, $timeout, DropDownData, ADDSupplements, ADDAllergy, AddFolderArchives,EditArchives,PatienPrescription, FolderUpContent,FolderUpFolders, ListImmunization, DeleteImmunization, AddImmunization, GetAllMedications, CheckoutPatient) {
+AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', 'GetResourcesByFolderArchives', 'ListFolderArchives', 'EditFolderArchives', 'DeleteFolderArchives', 'RemoveArchives', 'Upload', 'SaveFiles', '$timeout', 'DropDownData', 'ADDSupplements', 'ADDAllergy', 'AddFolderArchives','EditArchives', 'PatienPrescription', 'FolderUpContent', 'FolderUpFolders', 'ListImmunization', 'DeleteImmunization', 'AddImmunization', 'GetAllMedications', 'CheckoutPatient', 'GetMedicineUnits', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy, GetResourcesByFolderArchives, ListFolderArchives, EditFolderArchives, DeleteFolderArchives, RemoveArchives, Upload, SaveFiles, $timeout, DropDownData, ADDSupplements, ADDAllergy, AddFolderArchives,EditArchives,PatienPrescription, FolderUpContent,FolderUpFolders, ListImmunization, DeleteImmunization, AddImmunization, GetAllMedications, CheckoutPatient, GetMedicineUnits) {
         $rootScope.pageTitle = "EHR - Patient Summary Demographics";
         $scope.vital = {};
         $scope.PI = {};
@@ -39,7 +39,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         $scope.offset = 0;
 
         $scope.MedicationData = {}
-        $scope.buildInstructionObject = buildInstructionObject;
+        //$scope.buildInstructionObject = buildInstructionObject;
         $scope.buildInstructions = {};
         //$scope.medicationDropDowns = medicationDropDowns;
         //$scope.pharmacyDataDropDown = pharmacyDataDropDown;
@@ -89,9 +89,20 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
             console.log(error);
         }
 
+        GetMedicineUnits.get({token: $window.sessionStorage.token}, getMedicineUnitsSuccess, getMedicineUnitsFailure);
+
+        function getMedicineUnitsSuccess(res) {
+            if (res.status == true) {
+                $scope.medicineUnits = res.data;
+            }
+        }
+
+        function getMedicineUnitsFailure(error) {
+            console.log(error);
+        }
+
         function getPatientMedicationSuccess(res) {
             if (res.status == true) {
-                console.log(res);
                 $rootScope.loader = "hide";
                 $scope.medications = res.data;
                 $scope.medicationsCount = res.count;
@@ -236,7 +247,6 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }, GetEncountersByPatientsSuccess, GetEncountersByPatientsFailure);
         function GetEncountersByPatientsSuccess(res) {
             if (res.status == true) {
-                console.log(res.count);
                 $rootScope.loader = "hide";
                 $scope.encounters = res.data;
                 $scope.encounterCount = res.count;
@@ -265,7 +275,6 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
                 token: $window.sessionStorage.token,
             }
             UpdateAllergies.save(AllergyData, allergySuccess, allergyFailure);
-            console.log(index)
             $scope.edit[index] = false;
         }
         function allergySuccess(res) {
@@ -300,7 +309,6 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         }
         $scope.doDelete = function () {
-            console.log("Oo")
             RemoveAllergy.save($scope.removeAllergyData, allergySuccess, allergyFailure);
             GetAllergies.get({
                 token: $window.sessionStorage.token,
