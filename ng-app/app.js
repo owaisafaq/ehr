@@ -138,6 +138,10 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/billing.html',
                     controller: 'billing'
                 }).
+                when('/billing/:patientID', {
+                    templateUrl: 'views/billing.html',
+                    controller: 'billing'
+                }).
                 when('/pharmacy-view/:prescriptionID/:patientID', {
                     templateUrl: 'views/pharmacy-view.html',
                     controller: 'pharmacyView'

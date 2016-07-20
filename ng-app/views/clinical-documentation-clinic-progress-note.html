@@ -23,14 +23,14 @@
                     <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.marital_status}}</span>
                 </div>
                 <div class="col-lg-2">
-                    <a href="javascript:;" class="button-style-2">
+                    <a href="#/billing{{PID}}" class="button-style-2">
                         <img src="assets/img/content_icn_blue.png" />
                     </a>
                     <a href="javascript:;" class="button-style-2">
                         <img src="assets/img/assign_blue.png" />
                     </a>
                     <a href="javascript:;" class="button-style-2">
-                        <img src="assets/img/discharge_icn_blue.png" />
+                        <img src="assets/img/discharge_icn_blue.png" data-toggle="modal" data-target="#checkout"/>
                     </a>                             
                 </div>
             </div>
@@ -126,7 +126,7 @@
                 </div>
             </div><!--end .card-body -->
             <div class="clinical-footer">
-                <button type="button" ng-click="openCreateEncounter();" class="check-out button-custom pull-right open-custom_pop" ng-hide="disabledEncounterButton">Checkout Patient</button>
+                <button type="button" class="check-out button-custom pull-right open-custom_pop" ng-hide="disabledEncounterButton" data-toggle="modal" data-target="#checkout">Checkout Patient</button>
                 <button type="button" class="assign button-custom pull-right" ng-hide="disabledEncounterButton">Assign</button>
                 <button type="button" data-toggle="modal" data-target="#neworder" class="finalize-report button-custom pull-right" ng-hide="disabledEncounterButton">Finalize Report</button>
                 <button type="button" ng-click="openCreateEncounter();" class="view-report button-custom pull-right open-custom_pop" ng-hide="disabledEncounterButton">Preview Report</button>
@@ -287,7 +287,7 @@
                                 <div class="col-lg-12">
                                     <select class="form-control" ng-model="buildInstructions.dose" placeholder="Select">
                                         <option></option>
-                                        <option ng-repeat="dose in buildInstructionObject.dose" value="{{dose.name}}">{{dose.name}}</option>
+                                        <option ng-repeat="dose in medicineUnits.dosage" value="{{dose.dosage}}">{{dose.dosage}}</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-12">
@@ -296,7 +296,7 @@
                                 <div class="col-lg-12">
                                     <select class="form-control" ng-model="buildInstructions.route" placeholder="Select">
                                         <option></option>
-                                        <option ng-repeat="route in buildInstructionObject.route" value="{{route.name}}">{{route.name}}</option>
+                                        <option ng-repeat="route in medicineUnits.route" value="{{route.route}}">{{route.route}}</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-12">
@@ -305,7 +305,7 @@
                                 <div class="col-lg-12">
                                     <select class="form-control" ng-model="buildInstructions.direction" placeholder="Select">
                                         <option></option>
-                                        <option ng-repeat="direction in buildInstructionObject.direction" value="{{direction.name}}">{{direction.name}}</option>
+                                        <option ng-repeat="direction in medicineUnits.direction" value="{{direction.direction}}">{{direction.direction}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -318,7 +318,7 @@
                                 <div class="col-lg-12">
                                     <select class="form-control" ng-model="buildInstructions.unit" placeholder="Select">
                                         <option></option>
-                                        <option ng-repeat="unit in buildInstructionObject.unit" value="{{unit.name}}">{{unit.name}}</option>
+                                        <option ng-repeat="unit in medicineUnits.unit" value="{{unit.unit}}">{{unit.unit}}</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-12">
@@ -327,7 +327,7 @@
                                 <div class="col-lg-12">
                                     <select class="form-control" ng-model="buildInstructions.frequency" placeholder="Select">
                                         <option></option>
-                                        <option ng-repeat="frequency in buildInstructionObject.frequency" value="{{frequency.name}}">{{frequency.name}}</option>
+                                        <option ng-repeat="frequency in medicineUnits.frequency" value="{{frequency.frequency}}">{{frequency.frequency}}</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-12">
@@ -336,7 +336,7 @@
                                 <div class="col-lg-12">
                                     <select class="form-control" ng-model="buildInstructions.duration" placeholder="Select">
                                         <option></option>
-                                        <option ng-repeat="duration in buildInstructionObject.duration" value="{{duration.name}}">{{duration.name}}</option>
+                                        <option ng-repeat="duration in medicineUnits.duration" value="{{duration.duration}}">{{duration.duration}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -351,6 +351,136 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+<div class="modal fade" id="checkout" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-mid">
+        <form class="custom-form">
+            <div class="modal-content">
+                <div class="modal-header pop_head">
+                    <h2>Check Out Patient</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12 no-padding margin-bottom-xxl">
+                        <div class="alert {{messageType}}" role="alert" ng-show="message">
+                            <i class="{{errorSymbol}}"></i> {{errorMessage}}
+                        </div>
+                        <div class="radio radio-styled">
+                            <label>
+                                <input type="radio" name="checkoutpatient" value="Noappointment" ng-checked="true" ng-model="CO.reason">
+                                <span>No Appointment</span>
+                            </label>
+                        </div>
+                        <div class="radio radio-styled">
+                            <label>
+                                <input type="radio" name="checkoutpatient" value="followUp" ng-model="CO.reason">
+                                <span>Follow up</span>
+                            </label>
+                        </div>
+                        <div class="radio radio-styled">
+                            <label>
+                                <input type="radio" name="checkoutpatient" value="admitPatient" ng-model="CO.reason">
+                                <span>Admit Patient</span>
+                            </label>
+                        </div>
+                        <div class="radio radio-styled">
+                            <label>
+                                <input type="radio" name="checkoutpatient" value="dead" ng-model="CO.reason">
+                                <span>Dead</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="checkout_patient_tab_con">
+                        <div id="Noappointment" class="active">
+                            <label class="margin-bottom-xl">Note</label>
+                            <textarea placeholder="Write Here..."  ng-model="CO.note"></textarea>
+                        </div>
+                        <div id="followUp" class="row">
+                            <div class="col-lg-2">
+                                <label>DATE</label>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group date select-date col-lg-12">
+                                    <div class="input-group-content">
+                                        <input type="text" class="form-control" placeholder="Select Date"  ng-model="CO.date">
+                                    </div>
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <label>Time</label>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group bootstrap-timepicker timepicker col-lg-12">
+                                    <input type="text" class="form-control input-small timepicker"  ng-model="CO.time">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <label class="margin-bottom-xl">Note</label>
+                                <textarea class="margin-bottom-lg" placeholder="Write Here..."  ng-model="CO.note"></textarea>
+                            </div>
+                        </div>
+                        <div id="admitPatient" class="row">
+                            <div class="col-lg-12">
+                                <span class="txt-style-4">Presenting Complaint: Captured from Clinical Note</span>
+                            </div>
+                            <div class="col-lg-3">
+                                <label>to specialty</label>
+                            </div>
+                            <div class="col-lg-3 select-con">
+                                <select class="form-control" ng-model="CO.ward" placeholder="Clinic Progress Notes">
+                                    <option value=""></option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3">
+                                <label>admit to ward</label>
+                            </div>
+                            <div class="col-lg-3 select-con select-con_small">
+                                <select class="form-control" ng-model="CO.ward" placeholder="Select Ward">
+                                    <option value=""></option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                                <button class="ward-button"></button>
+                            </div>
+                            <div class="col-lg-3">
+                                <label>Admitted DATE</label>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="txt-style-4">April 05, 2016</label>
+                            </div>
+                            <div class="col-lg-3">
+                                <label>Estimated Discharge</label>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="input-group bootstrap-timepicker timepicker col-lg-12">
+                                    <input type="text" class="form-control input-small timepicker"  ng-model="CO.time">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <label class="margin-bottom-xl">Note</label>
+                                <textarea class="margin-bottom-lg" placeholder="Write Here..."  ng-model="CO.note"></textarea>
+                            </div>
+                        </div>
+                        <div id="dead" class="row">
+                            <div class="col-lg-12">
+                                <label class="margin-bottom-xl">Note</label>
+                                <textarea class="margin-bottom-lg" placeholder="Write Here..."  ng-model="CO.note"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer padding-right-0">
+                        <button type="button" class="btn btn-default button-style-1 padding11" ng-click="checkoutPatient(CO)">Save & Close</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </form>
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <script type="text/javascript">
     $('body').on('click', '.show_textarea span', function () {
         $(this).siblings('input[type=text]').toggle();

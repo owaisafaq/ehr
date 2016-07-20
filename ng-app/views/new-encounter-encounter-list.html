@@ -1,7 +1,7 @@
 <div id="content">
     <section>
         <div class="card" ng-class="{true:'custom-card'}[patientInfo]">
-            <div class="card-head card-head-custom card-color-2" ng-show="patientInfo">
+            <div class="card-head card-head-custom {{hospital_plan}}" ng-show="patientInfo">
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Encounter ID</label>
                     <span class="txt-style-2 col-lg-12 capitalize">{{encounterID == undefined ? EID : encounterID}}</span>
@@ -27,14 +27,14 @@
                     <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.marital_status}}</span>
                 </div>
                 <div class="col-lg-2">
-                    <a href="javascript:;" class="button-style-2">
-                        <img src="assets/img/content_icn_white.png" />
+                    <a href="#/billing/{{PID}}" class="button-style-2">
+                        <img src="assets/img/content_icn_blue.png" />
                     </a>
                     <a href="javascript:;" class="button-style-2">
-                        <img src="assets/img/admission_icn_white.png" />
+                        <img src="assets/img/assign_blue.png" />
                     </a>
-                    <a href="javascript:;" class="button-style-2">
-                        <img src="assets/img/discharge_icn_white.png" />
+                    <a href="javascript:;" class="button-style-2" data-toggle="modal" data-target="#checkout">
+                        <img src="assets/img/discharge_icn_blue.png" />
                     </a>                             
                 </div>
             </div>
@@ -121,7 +121,7 @@
                     </div>
                 </div>
             </div><!--end .card-body -->
-            <div class="clinical-footer">
+            <!-- <div class="clinical-footer">
                 <button type="button" ng-click="openCreateEncounter();" class="check-out button-custom pull-right open-custom_pop" ng-hide="disabledEncounterButton">Checkout Patient</button>
                 <button type="button" class="assign button-custom pull-right" ng-hide="disabledEncounterButton">Assign</button>
                 <button type="button" data-toggle="modal" data-target="#neworder" class="finalize-report button-custom pull-right" ng-hide="disabledEncounterButton">Finalize Report</button>
@@ -129,7 +129,7 @@
                 <button type="button" class="save button-custom pull-right" ng-hide="disabledEncounterButton">Save Changes</button>
                 <button type="button" data-toggle="modal" data-target="#neworder" class="add button-custom pull-right" ng-hide="disabledEncounterButton">Add Attachment</button>
                 <button type="button" data-toggle="modal" data-target="#neworder" class="refer-patient button-custom pull-right" ng-hide="disabledEncounterButton">Refer Patient</button>
-            </div>
+            </div> -->
         </div><!--end .card -->
 
     </section>
@@ -357,25 +357,25 @@
                     <div class="col-lg-12 no-padding margin-bottom-xxl">
                         <div class="radio radio-styled">
                             <label>
-                                <input type="radio" name="checkoutpatient" value="Noappointment" checked>
+                                <input type="radio" name="checkoutpatient" value="Noappointment" ng-checked="true" ng-model="CO.reason">
                                 <span>No Appointment</span>
                             </label>
                         </div>
                         <div class="radio radio-styled">
                             <label>
-                                <input type="radio" name="checkoutpatient" value="followUp">
+                                <input type="radio" name="checkoutpatient" value="followUp" ng-model="CO.reason">
                                 <span>Follow up</span>
                             </label>
                         </div>
                         <div class="radio radio-styled">
                             <label>
-                                <input type="radio" name="checkoutpatient" value="admitPatient">
+                                <input type="radio" name="checkoutpatient" value="admitPatient" ng-model="CO.reason">
                                 <span>Admit Patient</span>
                             </label>
                         </div>
                         <div class="radio radio-styled">
                             <label>
-                                <input type="radio" name="checkoutpatient" value="dead">
+                                <input type="radio" name="checkoutpatient" value="dead" ng-model="CO.reason">
                                 <span>Dead</span>
                             </label>
                         </div>
@@ -383,7 +383,7 @@
                     <div class="checkout_patient_tab_con">
                         <div id="Noappointment" class="active">
                             <label class="margin-bottom-xl">Note</label>
-                            <textarea placeholder="Write Here..."></textarea>
+                            <textarea placeholder="Write Here..."  ng-model="CO.note"></textarea>
                         </div>
                         <div id="followUp" class="row">
                             <div class="col-lg-2">
@@ -392,7 +392,7 @@
                             <div class="col-lg-4">
                                 <div class="input-group date select-date col-lg-12">
                                     <div class="input-group-content">
-                                        <input type="text" class="form-control" placeholder="Select Date">
+                                        <input type="text" class="form-control" placeholder="Select Date"  ng-model="CO.date">
                                     </div>
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
@@ -402,13 +402,13 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="input-group bootstrap-timepicker timepicker col-lg-12">
-                                    <input type="text" class="form-control input-small timepicker">
+                                    <input type="text" class="form-control input-small timepicker"  ng-model="CO.time">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <label class="margin-bottom-xl">Note</label>
-                                <textarea class="margin-bottom-lg" placeholder="Write Here..."></textarea>
+                                <textarea class="margin-bottom-lg" placeholder="Write Here..."  ng-model="CO.note"></textarea>
                             </div>
                         </div>
                         <div id="admitPatient" class="row">
@@ -419,8 +419,8 @@
                                 <label>to specialty</label>
                             </div>
                             <div class="col-lg-3 select-con">
-                                <select class="form-control">
-                                    <option>Clinic Progress Notes</option>
+                                <select class="form-control" ng-model="CO.ward" placeholder="Clinic Progress Notes">
+                                    <option value=""></option>
                                     <option>2</option>
                                     <option>3</option>
                                 </select>
@@ -429,8 +429,8 @@
                                 <label>admit to ward</label>
                             </div>
                             <div class="col-lg-3 select-con select-con_small">
-                                <select class="form-control">
-                                    <option>Select Ward</option>
+                                <select class="form-control" ng-model="CO.ward" placeholder="Select Ward">
+                                    <option value=""></option>
                                     <option>2</option>
                                     <option>3</option>
                                 </select>
@@ -447,25 +447,25 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="input-group bootstrap-timepicker timepicker col-lg-12">
-                                    <input type="text" class="form-control input-small timepicker">
+                                    <input type="text" class="form-control input-small timepicker"  ng-model="CO.time">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                                 </div>
                             </div>
 
                             <div class="col-lg-12">
                                 <label class="margin-bottom-xl">Note</label>
-                                <textarea class="margin-bottom-lg" placeholder="Write Here..."></textarea>
+                                <textarea class="margin-bottom-lg" placeholder="Write Here..."  ng-model="CO.note"></textarea>
                             </div>
                         </div>
                         <div id="dead" class="row">
                             <div class="col-lg-12">
                                 <label class="margin-bottom-xl">Note</label>
-                                <textarea class="margin-bottom-lg" placeholder="Write Here..."></textarea>
+                                <textarea class="margin-bottom-lg" placeholder="Write Here..."  ng-model="CO.note"></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer padding-right-0">
-                        <button type="button" class="btn btn-default button-style-1 padding11" ng-click="checkoutPatient()">Save & Close</button>
+                        <button type="button" class="btn btn-default button-style-1 padding11" ng-click="checkoutPatient(CO)">Save & Close</button>
                         <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>

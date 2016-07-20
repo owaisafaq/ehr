@@ -1,12 +1,12 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription', '$window', 'GetPrescription', '$routeParams', 'PatienPrescriptionUpdate', 'GetPatientInfo', 'GetAllMedications', 'DropDownData', 'DeleteMedication', 'AddMedicationInPrescription', function ($scope, $rootScope, PatienPrescription, $window, GetPrescription, $routeParams, PatienPrescriptionUpdate, GetPatientInfo, GetAllMedications, DropDownData, DeleteMedication, AddMedicationInPrescription) {
+AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription', '$window', 'GetPrescription', '$routeParams', 'PatienPrescriptionUpdate', 'GetPatientInfo', 'GetAllMedications', 'DropDownData', 'DeleteMedication', 'AddMedicationInPrescription', 'GetMedicineUnits', function ($scope, $rootScope, PatienPrescription, $window, GetPrescription, $routeParams, PatienPrescriptionUpdate, GetPatientInfo, GetAllMedications, DropDownData, DeleteMedication, AddMedicationInPrescription, GetMedicineUnits) {
         $rootScope.pageTitle = "EHR - Pharmacy VIew";
         $scope.PrescriptionView = [];
         $scope.medicationsDataPush = [];
         $scope.PrescriptionViewsCopy = [];
-        $scope.medicationDropDowns = medicationDropDowns;
-        $scope.pharmacyDataDropDown = pharmacyDataDropDown;
+        //$scope.medicationDropDowns = medicationDropDowns;
+        //$scope.pharmacyDataDropDown = pharmacyDataDropDown;
         $scope.MedicationData = {};
         $scope.Prescription = {};
         $scope.showUpdate = false;
@@ -15,13 +15,14 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         $scope.AddButtonOnAddMedication = false;
 
         $scope.MedicationData = {}
-        $scope.buildInstructionObject = buildInstructionObject;
+        //$scope.buildInstructionObject = buildInstructionObject;
         $scope.buildInstructions = {};
         $rootScope.loader = 'show';
         
         $scope.patientID = $routeParams.patientID;
         $scope.displayInfo = {};
         $scope.removePrescription = false;
+        $scope.medicineUnits = [];
         console.log($scope.prescriptionID);
         GetPrescription.get({
             token: $window.sessionStorage.token,
@@ -42,6 +43,17 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
             }
         }
         function prescriptionFailure(res) {
+            console.log(res)
+        }
+
+        GetMedicineUnits.get({token: $window.sessionStorage.token}, getMedicineSuccess, getMedicineFailure);
+
+        function getMedicineSuccess(res) {
+            if(res.status == true){
+                $scope.medicineUnits = res.data;
+            }
+        }
+        function getMedicineFailure(res) {
             console.log(res)
         }
 
@@ -69,7 +81,6 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
             $('.editable_table .editDispensed').removeAttr('disabled')
         }
         $scope.updatePharmacy = function () {
-            console.log($scope.PrescriptionViews)
             $rootScope.loader = "show";
             angular.copy($scope.PrescriptionViews, $scope.PrescriptionViewsCopy)
                 // $scope.PrescriptionViews.token = $window.sessionStorage.token;

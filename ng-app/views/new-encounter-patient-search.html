@@ -1,7 +1,7 @@
 <div id="content">
     <section>
         <div class="card {{dataStrip}}" ng-class="{true: 'custom-card'}[patientInfo]">
-            <div class="card-head card-head-custom card-color-1" ng-show="patientInfo">
+            <div class="card-head card-head-custom {{hospital_plan}}" ng-show="patientInfo">
                 <div class="col-lg-3">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
                     <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.first_name}} {{displayInfo.middle_name}} {{displayInfo.last_name}}</span>
@@ -23,7 +23,7 @@
                     <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.marital_status}}</span>
                 </div>
                 <div class="col-lg-2">
-                    <a href="#/lab-order-listing/{{PID}}" class="button-style-2">
+                    <a href="#/billing/{{PID}}" class="button-style-2">
                         <img src="assets/img/content_icn_blue.png" />
                     </a>
                     <a href="javascript:;" class="button-style-2">
@@ -31,7 +31,7 @@
                     </a>
                     <a href="javascript:void(0);" data-target="#simpleModal1" data-toggle="modal" class="button-style-2">
                         <img src="assets/img/discharge_icn_blue.png" />
-                    </a>                             
+                    </a>
                 </div>
             </div>
             <div class="table-header col-lg-12">
@@ -45,8 +45,8 @@
                     </div> -->
                 </div>
                 <div class="create_counter">
-                    <button type="button" ng-click="openCreateEncounter();" class="add button-custom pull-right open-custom_pop" ng-hide="disabledEncounterButton">create encounter</button>
-
+                    <button type="button" ng-click="goToEncounter();" class="add button-custom pull-right open-custom_pop" ng-if="visitStatus == 1">Go To Encouter</button>
+                    <button type="button" ng-click="openCreateEncounter();" class="add button-custom pull-right open-custom_pop" ng-hide="disabledEncounterButton" ng-if="visitStatus == 0">create encounter</button>
                     <button type="button" class="calendar button-custom pull-right" ng-hide="disabledEncounterButton">Create Appoinment</button>
                     <button type="button" data-toggle="modal" data-target="#neworder" class="microscope button-custom pull-right" ng-hide="disabledEncounterButton">Order Labs</button>
                     <div class="counter_pop custom_popup" ng-hide="closePopUp">

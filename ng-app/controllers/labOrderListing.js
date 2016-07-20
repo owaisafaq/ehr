@@ -5,17 +5,25 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
     $scope.action = "";
     $rootScope.loader = "show";
     $scope.testAdded = false;
+    $scope.itemsPerPage = 15;
     $scope.searchLab = $routeParams.patientID == undefined ? '' : $routeParams.patientID;
     if($routeParams.patientID != undefined){
-        LabOrdersByPatient.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID}, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
+        LabOrdersByPatient.get({
+            token: $window.sessionStorage.token,
+            patient_id: $routeParams.patientID,
+            limit: $scope.itemsPerPage, offset: 0
+        }, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
     }else{
     	GetAllLabOrders.get({ // Getting all lab orders
-    		token: $window.sessionStorage.token
+    		token: $window.sessionStorage.token,
+            limit: $scope.itemsPerPage, offset: 0
     	}, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
     }
 	function GetAllLabOrdersSuccess(res) { // on success GetAllLabOrders
         console.log(res);
 		if (res.status == true) {
+            $scope.labOrderCount = res.count;
+            console.log($scope.labOrderCount);
             $rootScope.loader = "hide";
             if(res.data.length == 0){
                 console.log(11);
@@ -204,6 +212,46 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
         }
         return false;
     };
+
+    $scope.curPage = 0;
+    $scope.pageSize = 15;
+    $scope.numberOfPages = function() {
+      return Math.ceil($scope.labOrderCount / $scope.pageSize);
+    };
+
+    $scope.paginationNext = function(pageSize, curPage){
+        $rootScope.loader = "show";
+        console.log(pageSize * curPage);
+        if($routeParams.patientID != undefined){
+            LabOrdersByPatient.get({
+                token: $window.sessionStorage.token,
+                patient_id: $routeParams.patientID,
+                offset: (pageSize * curPage), limit: $scope.itemsPerPage
+            }, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
+        }else{
+            GetAllLabOrders.get({ // Getting all lab orders
+                token: $window.sessionStorage.token,
+                offset: (pageSize * curPage), limit: $scope.itemsPerPage
+            }, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
+        }
+    }
+
+    $scope.paginationPrev = function(pageSize, curPage){
+        $rootScope.loader = "show";
+        console.log(pageSize * curPage);
+        if($routeParams.patientID != undefined){
+            LabOrdersByPatient.get({
+                token: $window.sessionStorage.token,
+                patient_id: $routeParams.patientID,
+                offset: (pageSize * curPage), limit: $scope.itemsPerPage
+            }, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
+        }else{
+            GetAllLabOrders.get({ // Getting all lab orders
+                token: $window.sessionStorage.token,
+                offset: (pageSize * curPage), limit: $scope.itemsPerPage
+            }, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
+        }
+    }
 
     
 }]);
