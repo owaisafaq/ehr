@@ -1282,11 +1282,13 @@ class ApiController extends Controller
         $patient_id = $request->input('patient_id');
 
         $patients = DB::table('patients')
-            ->select('patients.*', 'visits.id as encounter_id', 'visits.created_at as visit_created_at')
+            ->select('patients.*', 'visits.id as encounter_id', 'visits.created_at as visit_created_at','visits.visit_status')
             ->leftJoin('visits', 'patients.id', '=', 'visits.patient_id')
             ->where('patients.id', $patient_id)
+           // ->where('visit_status', 'queue')
             ->get();
 
+        $is_visit=0;
 
         //  dd($patients);
 
@@ -1309,13 +1311,13 @@ class ApiController extends Controller
             $patients[0]->marital_status = 'married';
         }
 
-        if ($patients[0]->marital_status == 3) {
+        if ($patients[0]->visit_status == 'queue') {
 
-            $patients[0]->marital_status = 'Divorced';
+            $is_visit = 1;
         }
 
 
-        return response()->json(['status' => true, 'data' => $patients[0]]);
+        return response()->json(['status' => true, 'data' => $patients[0],'is_visit'=>$is_visit]);
 
 
     }
