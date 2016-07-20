@@ -6,6 +6,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
         $scope.allEncounter = [];
         $scope.displayInfo = {};
         $scope.vital = {};
+        $scope.CO = {};
         //$scope.showStrip = false;
         $scope.buttonDisabled = false;
         $scope.PID = $routeParams.patientID;
@@ -25,6 +26,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
 
         function patientInfoSuccess(res) {
             if (res.status == true) {
+                console.log(res);
                 $scope.buttonDisabled = true;
                 $scope.displayInfo.first_name = res.data.first_name;
                 $scope.displayInfo.middle_name = res.data.middle_name;
@@ -33,7 +35,11 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
                 $scope.displayInfo.age = res.data.age;
                 $scope.displayInfo.sex = res.data.sex;
                 $scope.displayInfo.marital_status = res.data.marital_status;
+                $scope.hospital_plan = res.data.hospital_plan;
                 $scope.patientInfo = true;
+                if($scope.hospital_plan == '1') $scope.hospital_plan = "card-color-1";
+                if($scope.hospital_plan == '2') $scope.hospital_plan = "card-color-2";
+                else $scope.hospital_plan = "card-color-3";
             }
         }
 
@@ -72,7 +78,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
             GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: patientID}, getEncountersSuccess, getEncountersFailure);
             function getEncountersSuccess(res) {
                 if (res.status == true) {
-                    //console.log(res);
+                    console.log(res);
                     $scope.buttonDisabled = true;
                     $rootScope.loader = "hide";
                     $scope.disabledEncounterButton = false;
@@ -84,6 +90,10 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
                     $scope.displayInfo.age = res.data.age;
                     $scope.displayInfo.sex = res.data.sex;
                     $scope.displayInfo.marital_status = res.data.marital_status;
+                    $scope.hospital_plan = res.data.hospital_plan;
+                    if($scope.hospital_plan == '1') $scope.hospital_plan = "card-color-1";
+                    if($scope.hospital_plan == '2') $scope.hospital_plan = "card-color-2";
+                    else $scope.hospital_plan = "card-color-3";
                     //$scope.showStrip = true;
                     //$scope.dataStrip = "custom-card";
                 }
@@ -103,7 +113,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
 //            $rootScope.loader = "show";
 //            CheckOut.save({token: $window.sessionStorage.token, status: 'checkout', visit_id: $scope.encounterID == undefined ? action : $scope.encounterID}, addVitalSuccess, addVitalFailure);
 //        }
-        $scope.checkoutPatient = function () {
+        $scope.checkoutPatient = function (CO) {
             console.log($('input:radio[name="checkoutpatient"]:checked').val())
             console.log($('.checkout_patient_tab_con > div.active textarea').val())
 //            CheckOut.save({token: $window.sessionStorage.token, status: 'checkout', visit_id: $scope.encounterID == undefined ? action : $scope.encounterID}, addVitalSuccess, addVitalFailure);
@@ -113,12 +123,12 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
                 patient_id: $routeParams.patientID,
                 reason: $('input:radio[name="checkoutpatient"]:checked').val(),
                 notes: $('.checkout_patient_tab_con > div.active textarea').val() == undefined ? '' : $('.checkout_patient_tab_con > div.active textarea').val(),
-                pick_date: '',
-                pick_time: '',
-                admit_date: '',
-                start_time: '',
-                department_id: '',
-                ward_id: ''
+                pick_date: CO.date,
+                pick_time: CO.time,
+                admit_date: CO.date,
+                start_time: CO.time,
+                department_id: CO.date,
+                ward_id: CO.date
             }
             CheckoutPatient.save(CheckoutDetails, checkoutSuccess, checkoutSuccessFailure);
         }

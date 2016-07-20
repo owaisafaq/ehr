@@ -6,6 +6,11 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	$scope.selectedPatient = {};
 	$scope.AmountPaid = {};
 
+	if($routeParams.patientID != undefined){
+		$scope.patientID = $routeParams.patientID;
+		$scope.search_all_bill = $scope.patientID;
+	}
+
 	//Get Bills
 	GetAllBills.get({
 		token: $window.sessionStorage.token,

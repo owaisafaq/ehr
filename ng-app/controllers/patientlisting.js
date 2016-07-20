@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPatients', '$window', '$routeParams', 'GetPatientInfo', '$http', function ($scope, $rootScope, GetAllPatients, $window, $routeParams, GetPatientInfo, $http) {
+AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPatients', '$window', '$routeParams', 'GetPatientInfo', 'CheckoutPatient', function ($scope, $rootScope, GetAllPatients, $window, $routeParams, GetPatientInfo, CheckoutPatient) {
         $scope.action = '';
         $rootScope.pageTitle = "EHR - Patient Listing";
         $scope.displayInfo = {};
@@ -193,6 +193,42 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
         $scope.findPatientBy = function () {
             $scope.f = $scope.search1;
             console.log($scope.search1)
+        }
+
+        $scope.CO = {};
+        $scope.checkout = function (dataToBeAdded){
+            $scope.message = false;
+            $rootScope.loader = "show";
+            CheckoutPatient.save({
+                token: $window.sessionStorage.token, 
+                patient_id: $scope.patientID,
+                visit_id: $scope.displayInfo.encounter_id,
+                reason: $('input:radio[name="checkoutpatient"]:checked').val(),
+                notes: $('.checkout_patient_tab_con > div.active textarea').val() == undefined ? '' : $('.checkout_patient_tab_con > div.active textarea').val(),
+                pick_date: dataToBeAdded.date,
+                pick_time: dataToBeAdded.time,
+                admit_date: dataToBeAdded.date,
+                start_time: dataToBeAdded.time,
+                //department_id: dataToBeAdded.ward,
+                ward_id: dataToBeAdded.ward,
+            }, checkoutSuccess, checkoutFailure);
+        }
+
+        function checkoutSuccess(res){
+            if(res.status ==  true){
+                console.log(res);
+                $rootScope.loader = "hide";
+                $scope.messageType = "alert-success";
+                $scope.errorMessage = res.message;
+                $scope.errorSymbol = "fa fa-check";// 
+                $scope.message = true;
+                setTimeout(function() {$('#simpleModal1').modal('hide');}, 1000);
+                
+            }
+        }
+
+        function checkoutFailure(error){
+            console.log(error);
         }
 
 

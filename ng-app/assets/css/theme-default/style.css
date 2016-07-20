@@ -931,9 +931,9 @@ Side PopUp
 .card-color-2{
     background: #c8ddee;
 }
-.card-color-2 .button-style-2{
+/*.card-color-2 .button-style-2{
     background: #a2a6b9;    
-}
+}*/
 .card-color-2 .txt-style-2{
     color: #516e81;
 }
@@ -2890,4 +2890,7 @@ form .progress {
 }
 .clinical-footer{
     background-color: #eee;
+}
+.white{
+    background-color: #a2a6b9!important;
 }

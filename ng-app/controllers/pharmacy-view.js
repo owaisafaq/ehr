@@ -5,8 +5,8 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         $scope.PrescriptionView = [];
         $scope.medicationsDataPush = [];
         $scope.PrescriptionViewsCopy = [];
-        $scope.medicationDropDowns = medicationDropDowns;
-        $scope.pharmacyDataDropDown = pharmacyDataDropDown;
+        //$scope.medicationDropDowns = medicationDropDowns;
+        //$scope.pharmacyDataDropDown = pharmacyDataDropDown;
         $scope.MedicationData = {};
         $scope.Prescription = {};
         $scope.showUpdate = false;
