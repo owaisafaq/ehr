@@ -71,10 +71,11 @@ class OrderController extends Controller
     }
 
 
-    public function get_lab_tests(Request $request){
+    public function get_lab_tests(Request $request)
+    {
 
 
-        $lab= $request->input('lab');
+        $lab = $request->input('lab');
 
 
         $lab_test = DB::table('lab_tests')
@@ -86,34 +87,66 @@ class OrderController extends Controller
         return response()->json(['status' => true, 'data' => $lab_test]);
 
 
-
     }
 
 
     public function get_all_lab_orders(Request $request)
     {
+        $limit = $request->input('limit');
+        $offset = $request->input('offset');
 
-        $orders = DB::table('lab_orders')
-            ->select(DB::raw('lab_orders.id,lab_orders.patient_id,patients.first_name as patient_name,lab_orders.order_status,labs.name as lab_name,patients.age,patients.marital_status,patients.sex,maritial_status.name as marital_status'))
-            ->leftJoin('patients', 'lab_orders.patient_id', '=', 'patients.id')
-            ->leftJoin('labs', 'labs.id', '=', 'lab_orders.lab')
-            ->leftJoin('lab_order_tests', 'lab_order_tests.lab_order_id', '=', 'lab_orders.id')
-            ->leftJoin('lab_tests', 'lab_tests.id', '=', 'lab_order_tests.lab_test')
-            ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
-            ->where('lab_orders.status', 1)
-            ->where('patients.status', 1)
-            ->groupby('lab_orders.id')
-            ->get();
+        if ($limit > 0 || $offset > 0) {
+
+            $orders = DB::table('lab_orders')
+                ->select(DB::raw('lab_orders.id,lab_orders.patient_id,patients.first_name as patient_name,lab_orders.order_status,labs.name as lab_name,patients.age,patients.marital_status,patients.sex,maritial_status.name as marital_status'))
+                ->leftJoin('patients', 'lab_orders.patient_id', '=', 'patients.id')
+                ->leftJoin('labs', 'labs.id', '=', 'lab_orders.lab')
+                ->leftJoin('lab_order_tests', 'lab_order_tests.lab_order_id', '=', 'lab_orders.id')
+                ->leftJoin('lab_tests', 'lab_tests.id', '=', 'lab_order_tests.lab_test')
+                ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
+                ->where('lab_orders.status', 1)
+                ->where('patients.status', 1)
+                ->groupby('lab_orders.id')
+                ->skip($offset)->take($limit)
+                ->get();
+
+            $count = DB::table('lab_orders')
+                ->select(DB::raw('lab_orders.id,lab_orders.patient_id,patients.first_name as patient_name,lab_orders.order_status,labs.name as lab_name,patients.age,patients.marital_status,patients.sex,maritial_status.name as marital_status'))
+                ->leftJoin('patients', 'lab_orders.patient_id', '=', 'patients.id')
+                ->leftJoin('labs', 'labs.id', '=', 'lab_orders.lab')
+                ->leftJoin('lab_order_tests', 'lab_order_tests.lab_order_id', '=', 'lab_orders.id')
+                ->leftJoin('lab_tests', 'lab_tests.id', '=', 'lab_order_tests.lab_test')
+                ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
+                ->where('lab_orders.status', 1)
+                ->where('patients.status', 1)
+                ->groupby('lab_orders.id')
+                ->get();
+
+            $count = count($count);
+
+        } else {
+
+            $orders = DB::table('lab_orders')
+                ->select(DB::raw('lab_orders.id,lab_orders.patient_id,patients.first_name as patient_name,lab_orders.order_status,labs.name as lab_name,patients.age,patients.marital_status,patients.sex,maritial_status.name as marital_status'))
+                ->leftJoin('patients', 'lab_orders.patient_id', '=', 'patients.id')
+                ->leftJoin('labs', 'labs.id', '=', 'lab_orders.lab')
+                ->leftJoin('lab_order_tests', 'lab_order_tests.lab_order_id', '=', 'lab_orders.id')
+                ->leftJoin('lab_tests', 'lab_tests.id', '=', 'lab_order_tests.lab_test')
+                ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
+                ->where('lab_orders.status', 1)
+                ->where('patients.status', 1)
+                ->groupby('lab_orders.id')
+                ->get();
 
 
+            $count = count($orders);
+        }
         foreach ($orders as $lab_orders) {
-
 
             $lab_orders->ordered_by = 'Dr Smith';
             $lab_orders->handled_by = 'James';
             $lab_orders->total_cost = 0;
             //$lab_orders->test_name = 'Blood Test';
-
 
             if ($lab_orders->sex == 1) {
 
@@ -139,52 +172,77 @@ class OrderController extends Controller
 
             $orders[$key]->total_cost = $test_cost->cost;
             $orders[$key]->total_test = $test_cost->totaltests;
-
-
             $orders[$key]->lab_tests = $tests;
 
             //$apetizer_product_items[]=$product_item;
         }
 
-        return response()->json(['status' => true, 'data' => $orders]);
-
+        return response()->json(['status' => true, 'data' => $orders, 'count' => $count]);
 
     }
 
 
     public function get_patient_lab_orders(Request $request)
     {
-
         $patient_id = $request->input('patient_id');
+        $limit = $request->input('limit');
+        $offset = $request->input('offset');
 
-        $orders = DB::table('lab_orders')
-            ->select(DB::raw('lab_orders.id,lab_orders.patient_id,patients.first_name as patient_name,lab_orders.order_status,labs.name as lab_name,patients.age,patients.marital_status,patients.sex,maritial_status.name as marital_status'))
-            ->leftJoin('patients', 'lab_orders.patient_id', '=', 'patients.id')
-            ->leftJoin('labs', 'labs.id', '=', 'lab_orders.lab')
-            ->leftJoin('lab_order_tests', 'lab_order_tests.lab_order_id', '=', 'lab_orders.id')
-            ->leftJoin('lab_tests', 'lab_tests.id', '=', 'lab_order_tests.lab_test')
-            ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
-            ->where('lab_orders.status', 1)
-            ->where('patients.status', 1)
-            ->where('patients.id', $patient_id)
-            ->groupby('lab_orders.id')
-            ->get();
+        if ($limit > 0 || $offset > 0) {
 
+            $orders = DB::table('lab_orders')
+                ->select(DB::raw('lab_orders.id,lab_orders.patient_id,patients.first_name as patient_name,lab_orders.order_status,labs.name as lab_name,patients.age,patients.marital_status,patients.sex,maritial_status.name as marital_status'))
+                ->leftJoin('patients', 'lab_orders.patient_id', '=', 'patients.id')
+                ->leftJoin('labs', 'labs.id', '=', 'lab_orders.lab')
+                ->leftJoin('lab_order_tests', 'lab_order_tests.lab_order_id', '=', 'lab_orders.id')
+                ->leftJoin('lab_tests', 'lab_tests.id', '=', 'lab_order_tests.lab_test')
+                ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
+                ->where('lab_orders.status', 1)
+                ->where('patients.status', 1)
+                ->where('patients.id', $patient_id)
+                ->groupby('lab_orders.id')
+                ->skip($offset)->take($limit)
+                ->get();
+
+            $count = DB::table('lab_orders')
+                ->select(DB::raw('lab_orders.id,lab_orders.patient_id,patients.first_name as patient_name,lab_orders.order_status,labs.name as lab_name,patients.age,patients.marital_status,patients.sex,maritial_status.name as marital_status'))
+                ->leftJoin('patients', 'lab_orders.patient_id', '=', 'patients.id')
+                ->leftJoin('labs', 'labs.id', '=', 'lab_orders.lab')
+                ->leftJoin('lab_order_tests', 'lab_order_tests.lab_order_id', '=', 'lab_orders.id')
+                ->leftJoin('lab_tests', 'lab_tests.id', '=', 'lab_order_tests.lab_test')
+                ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
+                ->where('lab_orders.status', 1)
+                ->where('patients.status', 1)
+                ->where('patients.id', $patient_id)
+                ->groupby('lab_orders.id')
+                ->get();
+            $count = count($count);
+        } else {
+            $orders = DB::table('lab_orders')
+                ->select(DB::raw('lab_orders.id,lab_orders.patient_id,patients.first_name as patient_name,lab_orders.order_status,labs.name as lab_name,patients.age,patients.marital_status,patients.sex,maritial_status.name as marital_status'))
+                ->leftJoin('patients', 'lab_orders.patient_id', '=', 'patients.id')
+                ->leftJoin('labs', 'labs.id', '=', 'lab_orders.lab')
+                ->leftJoin('lab_order_tests', 'lab_order_tests.lab_order_id', '=', 'lab_orders.id')
+                ->leftJoin('lab_tests', 'lab_tests.id', '=', 'lab_order_tests.lab_test')
+                ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
+                ->where('lab_orders.status', 1)
+                ->where('patients.status', 1)
+                ->where('patients.id', $patient_id)
+                ->groupby('lab_orders.id')
+                ->get();
+            $count = count($orders);
+        }
 
         foreach ($orders as $lab_orders) {
-
 
             $lab_orders->ordered_by = 'Dr Smith';
             $lab_orders->handled_by = 'James';
             $lab_orders->total_cost = 0;
             //$lab_orders->test_name = 'Blood Test';
 
-
             if ($lab_orders->sex == 1) {
-
                 $lab_orders->gender = 'male';
             } else {
-
                 $lab_orders->gender = 'female';
             }
 
@@ -204,14 +262,12 @@ class OrderController extends Controller
 
             $orders[$key]->total_cost = $test_cost->cost;
             $orders[$key]->total_test = $test_cost->totaltests;
-
-
             $orders[$key]->lab_tests = $tests;
 
             //$apetizer_product_items[]=$product_item;
         }
 
-        return response()->json(['status' => true, 'data' => $orders]);
+        return response()->json(['status' => true, 'data' => $orders,'count'=>$count]);
 
 
     }
@@ -227,7 +283,7 @@ class OrderController extends Controller
             ->leftJoin('lab_tests', 'lab_tests.id', '=', 'lab_order_tests.lab_test')
             ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
             ->where('lab_orders.status', 1)
-            ->whereIn('order_status',['completed', 'cancelled'])
+            ->whereIn('order_status', ['completed', 'cancelled'])
             ->groupby('lab_orders.id')
             ->where('patients.status', 1)
             ->get();
@@ -426,7 +482,9 @@ class OrderController extends Controller
 
         return response()->json(['status' => true, 'data' => $lab_templates]);
     }
-    public function add_lab_test_templates(Request $request){
+
+    public function add_lab_test_templates(Request $request)
+    {
         $name = $request->input('template_name');
         $cat_id = $request->input('cat_id');
         $type_id = $request->input('type_id');
@@ -434,16 +492,18 @@ class OrderController extends Controller
         $currentdatetime = date('Y-m-d H:i:s');
 
         $id = DB::table('lab_templates')->insertGetId([
-            'name'=>$name,
-            'category'=>$cat_id,
-            'type'=>$type_id,
-            'description'=>$desc,
-            'created_at'=>$currentdatetime
+            'name' => $name,
+            'category' => $cat_id,
+            'type' => $type_id,
+            'description' => $desc,
+            'created_at' => $currentdatetime
         ]);
-        return response()->json(['status' => true, 'data' =>'Template Added.', 'id'=>$id]);
+        return response()->json(['status' => true, 'data' => 'Template Added.', 'id' => $id]);
 
     }
-    public function update_lab_test_templates(Request $request){
+
+    public function update_lab_test_templates(Request $request)
+    {
         $template_id = $request->input('template_id');
         $name = $request->input('template_name');
         $cat_id = $request->input('cat_id');
@@ -454,24 +514,26 @@ class OrderController extends Controller
         DB::table('lab_templates')
             ->where('id', $template_id)
             ->update([
-            'name'=>$name,
-            'category'=>$cat_id,
-            'type'=>$type_id,
-            'description'=>$desc,
-            'updated_at'=>$currentdatetime
-        ]);
-        return response()->json(['status' => true, 'data' =>'Template Updated.']);
+                'name' => $name,
+                'category' => $cat_id,
+                'type' => $type_id,
+                'description' => $desc,
+                'updated_at' => $currentdatetime
+            ]);
+        return response()->json(['status' => true, 'data' => 'Template Updated.']);
 
     }
-    public function delete_lab_test_templates(Request $request){
+
+    public function delete_lab_test_templates(Request $request)
+    {
         $template_id = $request->input('template_id');
 
         DB::table('lab_templates')
             ->where('id', $template_id)
             ->update([
-                'status'=>0
+                'status' => 0
             ]);
-        return response()->json(['status' => true, 'data' =>'Template Deleted.']);
+        return response()->json(['status' => true, 'data' => 'Template Deleted.']);
 
     }
 
@@ -501,7 +563,7 @@ class OrderController extends Controller
 
         $lab_test_id = $request->input('lab_test_id');
 
-        $template_id= $request->input('template_id');
+        $template_id = $request->input('template_id');
 
         $lab_test_values = html_entity_decode($request->input('lab_test_values'));
 
@@ -510,30 +572,29 @@ class OrderController extends Controller
         $lab_test = json_decode($lab_test_values);
 
 
-            DB::table('patient_lab_test_values')->insert(
-                ['lab_order_id' => $lab_order_id,
-                    'lab_test' => $lab_test_id,
-                    'template_values' => $lab_test_values,
-                    'template_id' => $template_id,
-                    'created_at' => $currentdatetime
+        DB::table('patient_lab_test_values')->insert(
+            ['lab_order_id' => $lab_order_id,
+                'lab_test' => $lab_test_id,
+                'template_values' => $lab_test_values,
+                'template_id' => $template_id,
+                'created_at' => $currentdatetime
 
-                ]
-            );
-
-
+            ]
+        );
 
 
         return response()->json(['status' => true, 'message' => 'Lab Report Added Sucessfully']);
 
     }
 
-    public function get_lab_test_details(Request $request){
+    public function get_lab_test_details(Request $request)
+    {
 
         $lab_test_id = $request->input('lab_test_id');
 
 
         $lab_test = DB::table('lab_tests')
-            ->select('lab_tests.*','lab_order_tests.lab_order_id','patients.first_name','patients.last_name','patients.id as patient_id','patients.age','patients.sex','maritial_status.name as marital_status')
+            ->select('lab_tests.*', 'lab_order_tests.lab_order_id', 'patients.first_name', 'patients.last_name', 'patients.id as patient_id', 'patients.age', 'patients.sex', 'maritial_status.name as marital_status')
             ->leftJoin('lab_order_tests', 'lab_order_tests.lab_test', '=', 'lab_tests.id')
             ->leftJoin('lab_orders', 'lab_orders.id', '=', 'lab_order_tests.lab_order_id')
             ->leftJoin('patients', 'patients.id', '=', 'lab_orders.patient_id')
@@ -542,12 +603,10 @@ class OrderController extends Controller
             ->where('lab_tests.id', $lab_test_id)
             ->first();
 
-        if($lab_test->sex==1){
+        if ($lab_test->sex == 1) {
 
             $lab_test->gender = 'Male';
-        }
-
-        else{
+        } else {
 
             $lab_test->gender = 'FeMale';
         }
@@ -555,11 +614,11 @@ class OrderController extends Controller
         return response()->json(['status' => true, 'data' => $lab_test]);
 
 
-
     }
 
     // LAB Template Category
-    public function get_lab_template_categories(Request $request){
+    public function get_lab_template_categories(Request $request)
+    {
 
 
         $lab_categories = DB::table('template_categories')
@@ -570,7 +629,9 @@ class OrderController extends Controller
         return response()->json(['status' => true, 'data' => $lab_categories]);
 
     }
-    public function get_lab_template_category(Request $request){
+
+    public function get_lab_template_category(Request $request)
+    {
         $id = $request->input('cat_id');
         $lab_categories = DB::table('template_categories')
             ->select(DB::raw('id,name'))
@@ -580,86 +641,102 @@ class OrderController extends Controller
 
         return response()->json(['status' => true, 'data' => $lab_categories]);
     }
-    public function add_lab_template_category(Request $request){
+
+    public function add_lab_template_category(Request $request)
+    {
         $name = $request->input('category_name');
         $desc = $request->input('description');
         $currentdatetime = date('Y-m-d H:i:s');
-        $id = DB::table('template_categories')->insertGetId(['name'=>$name,'description'=>$desc, 'created_at'=>$currentdatetime]);
+        $id = DB::table('template_categories')->insertGetId(['name' => $name, 'description' => $desc, 'created_at' => $currentdatetime]);
 
-        return response()->json(['status'=>true, 'data'=>'Category Created.', 'data'=>$id]);
+        return response()->json(['status' => true, 'data' => 'Category Created.', 'data' => $id]);
     }
-    public function update_lab_template_category(Request $request){
+
+    public function update_lab_template_category(Request $request)
+    {
         $cat_id = $request->input('cat_id');
         $desc = $request->input('description');
         $name = $request->input('category_name');
         $currentdatetime = date('Y-m-d H:i:s');
         DB::table('template_categories')
             ->where('id', $cat_id)
-            ->update(['name'=>$name, 'description'=>$desc,'updated_at'=>$currentdatetime]);
+            ->update(['name' => $name, 'description' => $desc, 'updated_at' => $currentdatetime]);
 
-        return response()->json(['status'=>true, 'data'=>'Category Updated.']);
+        return response()->json(['status' => true, 'data' => 'Category Updated.']);
     }
-    public function delete_lab_template_category(Request $request){
+
+    public function delete_lab_template_category(Request $request)
+    {
         $cat_id = $request->input('cat_id');
 
         DB::table('template_categories')
             ->where('id', $cat_id)
-            ->update(['status'=>0]);
+            ->update(['status' => 0]);
 
-        return response()->json(['status'=>true, 'data'=>'Category Deleted.']);
+        return response()->json(['status' => true, 'data' => 'Category Deleted.']);
     }
 
     // LAB Template Types
-    public function get_lab_template_types(){
-        $types = DB::table('template_types')->where('status',1)->get();
+    public function get_lab_template_types()
+    {
+        $types = DB::table('template_types')->where('status', 1)->get();
 
         return response()->json(['status' => true, 'data' => $types]);
 
     }
-    public function get_lab_template_type(Request $request){
+
+    public function get_lab_template_type(Request $request)
+    {
         $id = $request->input('type_id');
-        $types = DB::table('template_types')->where('id',$id)->where('status',1)->get();
+        $types = DB::table('template_types')->where('id', $id)->where('status', 1)->get();
         return response()->json(['status' => true, 'data' => $types]);
 
     }
-    public function add_lab_template_types(Request $request){
+
+    public function add_lab_template_types(Request $request)
+    {
         $name = $request->input('type_name');
         $desc = $request->input('description');
         $currentdatetime = date('Y-m-d H:i:s');
-        $id = DB::table('template_types')->insertGetId(['name'=>$name,'description'=>$desc, 'created_at'=>$currentdatetime]);
-        return response()->json(['status'=>true, 'data'=>'Type Created.', 'id'=>$id]);
+        $id = DB::table('template_types')->insertGetId(['name' => $name, 'description' => $desc, 'created_at' => $currentdatetime]);
+        return response()->json(['status' => true, 'data' => 'Type Created.', 'id' => $id]);
 
     }
-    public function update_lab_template_types(Request $request){
+
+    public function update_lab_template_types(Request $request)
+    {
         $type_id = $request->input('type_id');
         $name = $request->input('type_name');
         $desc = $request->input('description');
         $currentdatetime = date('Y-m-d H:i:s');
-        DB::table('template_types')->where('id',$type_id)->update(['name'=>$name,'description'=>$desc, 'updated_at'=>$currentdatetime]);
-        return response()->json(['status'=>true, 'data'=>'Type Updated.']);
+        DB::table('template_types')->where('id', $type_id)->update(['name' => $name, 'description' => $desc, 'updated_at' => $currentdatetime]);
+        return response()->json(['status' => true, 'data' => 'Type Updated.']);
     }
-    public function delete_lab_template_types(Request $request){
+
+    public function delete_lab_template_types(Request $request)
+    {
         $type_id = $request->input('type_id');
 
         DB::table('template_types')
             ->where('id', $type_id)
-            ->update(['status'=>0]);
+            ->update(['status' => 0]);
 
-        return response()->json(['status'=>true, 'data'=>'Type Deleted.']);
+        return response()->json(['status' => true, 'data' => 'Type Deleted.']);
     }
 
 
-    public function get_template_details(Request $request){
+    public function get_template_details(Request $request)
+    {
 
         $template_id = $request->input('template_id');
 
         $details = DB::table('templates')
-                ->select(DB::raw('*'))
-                ->where('templates.id', $template_id)
-                ->where('status', 1)
-                ->first();
+            ->select(DB::raw('*'))
+            ->where('templates.id', $template_id)
+            ->where('status', 1)
+            ->first();
 
-            return response()->json(['status' => true, 'data' => $details]);
+        return response()->json(['status' => true, 'data' => $details]);
 
     }
 

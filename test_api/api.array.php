@@ -1155,6 +1155,8 @@ $api->name = "Get All Lab Orders";
 $api->url = HOST . 'get_all_lab_orders';
 $api->method = "GET";
 $api->description = "Get All Lab  Orders";
+$api->params->limit = "0";
+$api->params->offset = "0";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -1168,6 +1170,8 @@ $api->url = HOST . 'get_patient_lab_orders';
 $api->method = "GET";
 $api->description = "Get Patient Lab Orders";
 $api->params->patient_id = "1";
+$api->params->limit = "0";
+$api->params->offset = "0";
 $api->params->token = "123";
 
 $api_arr [] = $api;
