@@ -693,6 +693,22 @@ Table Styling
 .microscope{
     background: url(../..//img/microscope.png) no-repeat top center;
 }
+.refer-patient{
+    background: url(../..//img/refer.png) no-repeat top center;
+}
+.assign{
+    background: url(../..//img/check_style.png) no-repeat top center;
+}
+.view-report{
+    background: url(../..//img/view-report.png) no-repeat top center;
+}
+.finalize-report{
+    background: url(../..//img/finalize-report.png) no-repeat top center;
+}
+
+.check-out{
+    background: url(../..//img/discharge_icn_blue.png) no-repeat top center;
+}
 
 .add-result{
     background: url(../..//img/add_result.png) no-repeat top center;
@@ -2871,4 +2887,7 @@ form .progress {
 }
 .search-for-patient{
     width: 100%!important;
+}
+.clinical-footer{
+    background-color: #eee;
 }

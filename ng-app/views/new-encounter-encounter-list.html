@@ -121,7 +121,17 @@
                     </div>
                 </div>
             </div><!--end .card-body -->
+            <div class="clinical-footer">
+                <button type="button" ng-click="openCreateEncounter();" class="check-out button-custom pull-right open-custom_pop" ng-hide="disabledEncounterButton">Checkout Patient</button>
+                <button type="button" class="assign button-custom pull-right" ng-hide="disabledEncounterButton">Assign</button>
+                <button type="button" data-toggle="modal" data-target="#neworder" class="finalize-report button-custom pull-right" ng-hide="disabledEncounterButton">Finalize Report</button>
+                <button type="button" ng-click="openCreateEncounter();" class="view-report button-custom pull-right open-custom_pop" ng-hide="disabledEncounterButton">Preview Report</button>
+                <button type="button" class="save button-custom pull-right" ng-hide="disabledEncounterButton">Save Changes</button>
+                <button type="button" data-toggle="modal" data-target="#neworder" class="add button-custom pull-right" ng-hide="disabledEncounterButton">Add Attachment</button>
+                <button type="button" data-toggle="modal" data-target="#neworder" class="refer-patient button-custom pull-right" ng-hide="disabledEncounterButton">Refer Patient</button>
+            </div>
         </div><!--end .card -->
+
     </section>
 </div>
 <div class="counter_pop custom_popup update-encounter" ng-show="updateEncounterPopUp">

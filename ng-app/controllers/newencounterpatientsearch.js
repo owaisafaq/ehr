@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope', '$window', 'AddEncounter', '$timeout', 'GetVisits', '$rootScope', 'GetPatientInfo', 'DropDownData', '$http', 'GetAllPatients', 'GetLabTests', 'addOrder', 'GetAllLabOrders', function($scope, $rootScope, $window, AddEncounter, $timeout, GetVisits, $rootScope, GetPatientInfo, DropDownData, $http, GetAllPatients, GetLabTests, addOrder, GetAllLabOrders){
+AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope', '$window', 'AddEncounter', '$timeout', 'GetVisits', '$rootScope', 'GetPatientInfo', 'DropDownData', '$http', 'GetAllPatients', 'GetLabTests', 'addOrder', 'GetAllLabOrders', 'CheckoutPatient', function($scope, $rootScope, $window, AddEncounter, $timeout, GetVisits, $rootScope, GetPatientInfo, DropDownData, $http, GetAllPatients, GetLabTests, addOrder, GetAllLabOrders, CheckoutPatient){
 	$rootScope.pageTitle = "EHR - New Encounter Patient Search";
 	$scope.addEncounter = {};
 	$scope.allEncounters = [];
@@ -87,6 +87,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 	}
 
 	$scope.encounterSelected = function(index){
+		$scope.redirectPID = $scope.allEncounters[index].id;
 		$rootScope.loader = "show";
 		GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: $scope.allEncounters[index].id}, getPatientSuccess, getPatientFailure);
 		$scope.displayInfo = $scope.allEncounters[index];
@@ -262,6 +263,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
                 $('#s2id_autogen3 .select2-chosen').text('Select Lab'); // changing place holder back to its original one
                 $('#neworder').modal('hide');
                 $scope.message = false;
+                $window.location.href = "#/lab-order-listing/" + $scope.search;
             },500);
             $scope.orderSelected = false;
         } else {
@@ -277,4 +279,41 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
         console.log(error);
     }
 
+    /*$scope.openCheckOutModal = function(){
+    	$('#checkOutModal').modal('show');
+    }*/
+    $scope.CO = {};
+    $scope.checkout = function (dataToBeAdded){
+    	console.log(dataToBeAdded);
+    	CheckoutPatient.save({
+    		token: $window.sessionStorage.token, 
+    		patient_id: $scope.PID,
+    		visit_id: 1,
+    		reason: $('input:radio[name="checkoutpatient"]:checked').val(),
+            notes: $('.checkout_patient_tab_con > div.active textarea').val() == undefined ? '' : $('.checkout_patient_tab_con > div.active textarea').val(),
+    		pick_date: dataToBeAdded.date,
+    		pick_time: dataToBeAdded.time,
+    		admit_date: dataToBeAdded.date,
+    		start_time: dataToBeAdded.time,
+    		//department_id: dataToBeAdded.ward,
+    		ward_id: dataToBeAdded.ward,
+    	}, checkoutSuccess, checkoutFailure);
+    }
+
+    function checkoutSuccess(res){
+    	if(res.status ==  true){
+    		console.log(res);
+    		$scope.hideLoader = "hide";
+			$scope.messageType = "alert-success";
+			$scope.errorMessage = res.message;
+			$scope.errorSymbol = "fa fa-check";// 
+			$scope.message = true;
+			setTimeout(function() {$('#simpleModal1').modal('hide');}, 1000);
+			
+    	}
+    }
+
+    function checkoutFailure(error){
+    	console.log(error);
+    }
 }]);
