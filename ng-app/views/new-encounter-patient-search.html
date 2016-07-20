@@ -45,8 +45,8 @@
                     </div> -->
                 </div>
                 <div class="create_counter">
-                    <button type="button" ng-click="openCreateEncounter();" class="add button-custom pull-right open-custom_pop" ng-hide="disabledEncounterButton">create encounter</button>
-
+                    <button type="button" ng-click="goToEncounter();" class="add button-custom pull-right open-custom_pop" ng-if="visitStatus == 1">Go To Encouter</button>
+                    <button type="button" ng-click="openCreateEncounter();" class="add button-custom pull-right open-custom_pop" ng-hide="disabledEncounterButton" ng-if="visitStatus == 0">create encounter</button>
                     <button type="button" class="calendar button-custom pull-right" ng-hide="disabledEncounterButton">Create Appoinment</button>
                     <button type="button" data-toggle="modal" data-target="#neworder" class="microscope button-custom pull-right" ng-hide="disabledEncounterButton">Order Labs</button>
                     <div class="counter_pop custom_popup" ng-hide="closePopUp">

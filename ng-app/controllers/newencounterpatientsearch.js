@@ -37,6 +37,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 		GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: string}, getPatientSuccess, getPatientFailure);
 		function getPatientSuccess(res){
 			if(res.status == true){
+				console.log(res);
 				$scope.disabledEncounterButton = false;
 				$scope.patientInfo = true;
 				$rootScope.loader = "hide";
@@ -46,6 +47,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 				$scope.displayInfo.sex = res.data.sex;
 				$scope.displayInfo.marital_status = res.data.marital_status;
 				$scope.EID = res.data.encounter_id;
+				$scope.visitStatus = res.is_visit;
 				$scope.hospital_plan = res.data.hospital_plan;
 				if($scope.hospital_plan == '1') $scope.hospital_plan = "card-color-1";
                 if($scope.hospital_plan == '2') $scope.hospital_plan = "card-color-2";
@@ -319,5 +321,9 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 
     function checkoutFailure(error){
     	console.log(error);
+    }
+
+    $scope.goToEncounter = function(){
+    	$window.location.href = "#/new-encounter-encounter-list/" + $scope.EID + '/' + $scope.search;
     }
 }]);
