@@ -1347,23 +1347,27 @@ class ApiController extends Controller
         $patient_info = DB::table('patients')
             ->select(DB::raw('*'))
             ->where('id', $patient_id)
+            ->where('status', 1)
             ->first();
 
         $patient_address = DB::table('patient_address')
             ->select(DB::raw('*'))
             ->where('patient_id', $patient_id)
+            ->where('status', 1)
             ->get();
 
 
         $patient_kin = DB::table('patient_kin')
             ->select(DB::raw('*'))
             ->where('patient_id', $patient_id)
+            ->where('status', 1)
             ->first();
 
 
         $patient_employers = DB::table('patient_employers')
             ->select(DB::raw('*'))
             ->where('patient_id', $patient_id)
+            ->where('status', 1)
             ->first();
 
 
