@@ -98,7 +98,7 @@ class OrderController extends Controller
         if ($limit > 0 || $offset > 0) {
 
             $orders = DB::table('lab_orders')
-                ->select(DB::raw('lab_orders.id,lab_orders.patient_id,patients.first_name as patient_name,lab_orders.order_status,labs.name as lab_name,patients.age,patients.marital_status,patients.sex,maritial_status.name as marital_status'))
+                ->select(DB::raw('lab_orders.id,lab_orders.patient_id,CONCAT(patients.first_name," ",patients.last_name) AS patient_name,lab_orders.order_status,labs.name as lab_name,patients.age,patients.marital_status,patients.sex,maritial_status.name as marital_status'))
                 ->leftJoin('patients', 'lab_orders.patient_id', '=', 'patients.id')
                 ->leftJoin('labs', 'labs.id', '=', 'lab_orders.lab')
                 ->leftJoin('lab_order_tests', 'lab_order_tests.lab_order_id', '=', 'lab_orders.id')
