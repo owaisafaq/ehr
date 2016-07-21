@@ -18,7 +18,7 @@ AppEHR.controller('loginController', ['$scope', '$window', 'AUTH', function($sco
 					$window.sessionStorage.role_id = res.data.role_id;
 					$window.sessionStorage.source_id = res.data.source_id;
 					$window.sessionStorage.token = res.token;
-					$window.location.href = '#/patient-registration';
+					$window.location.href = '#/patient-listing';
 				}else{
 					console.log(res);
 					$scope.errorMessage = errorMessages.authFailed;

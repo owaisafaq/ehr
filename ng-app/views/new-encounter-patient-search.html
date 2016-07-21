@@ -2,17 +2,21 @@
     <section>
         <div class="card {{dataStrip}}" ng-class="{true: 'custom-card'}[patientInfo]">
             <div class="card-head card-head-custom {{hospital_plan}}" ng-show="patientInfo">
-                <div class="col-lg-3">
+                <div class="col-lg-2">
+                    <label class="txt-style-1 text-uppercase col-lg-12">Encounter ID</label>
+                    <span class="txt-style-2 col-lg-12 capitalize">{{EID}}</span>
+                </div>
+                <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
-                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.first_name}} {{displayInfo.middle_name}} {{displayInfo.last_name}}</span>
+                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.first_name}} {{displayInfo.last_name}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Number</label>
                     <span class="txt-style-2 col-lg-12">PA-{{displayInfo.patient_id}}</span>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-1">
                     <label class="txt-style-1 text-uppercase col-lg-12">Age</label>
-                    <span class="txt-style-2 col-lg-12">{{displayInfo.age}} Years</span>
+                    <span class="txt-style-2 col-lg-12">{{displayInfo.age}}</span>
                 </div>
                 <div class="col-lg-1">
                     <label class="txt-style-1 text-uppercase col-lg-12">Sex</label>
@@ -29,7 +33,7 @@
                     <a href="javascript:;" class="button-style-2">
                         <img src="assets/img/assign_blue.png" />
                     </a>
-                    <a href="javascript:void(0);" data-target="#simpleModal1" data-toggle="modal" class="button-style-2">
+                    <a href="javascript:void(0);" ng-if="visitStatus == 0" data-target="#simpleModal1" data-toggle="modal" class="button-style-2">
                         <img src="assets/img/discharge_icn_blue.png" />
                     </a>
                 </div>
