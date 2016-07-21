@@ -2133,3 +2133,14 @@ $api->params->prescribe_medication_id = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+
+
+//Get Medicine Units
+$api = new api();
+$api->name = "Get Medicine Units";
+$api->url = HOST . 'get_medicine_units';
+$api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
