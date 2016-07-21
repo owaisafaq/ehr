@@ -235,14 +235,17 @@ class OrderController extends Controller
 
         foreach ($orders as $lab_orders) {
 
+
             $lab_orders->ordered_by = 'Dr Smith';
             $lab_orders->handled_by = 'James';
             $lab_orders->total_cost = 0;
             //$lab_orders->test_name = 'Blood Test';
 
             if ($lab_orders->sex == 1) {
+
                 $lab_orders->gender = 'male';
             } else {
+
                 $lab_orders->gender = 'female';
             }
 

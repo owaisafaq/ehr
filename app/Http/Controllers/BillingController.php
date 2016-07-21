@@ -26,7 +26,9 @@ class BillingController extends Controller
             ->leftJoin('visits', 'visits.id', '=', 'billing.encounter_id')
             ->leftJoin('patients', 'patients.id', '=', 'billing.patient_id')
             ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.hospital_plan')
-            ->where('billing.status', 1)->get();
+            ->where('billing.status', 1)
+            ->where('patients.status', 1)
+            ->get();
         if ($bills) {
             return response()->json(['status' => true, 'message' => 'Bills found', 'data' => $bills]);
 
@@ -41,7 +43,9 @@ class BillingController extends Controller
             ->select('invoice.*', 'hospital_plan.id as plan_id', 'hospital_plan.name as plan_name','patients.first_name','patients.middle_name','patients.last_name')
             ->leftJoin('patients', 'patients.id', '=', 'invoice.patient_id')
             ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.plan_id')
-            ->where('invoice.status', 1)->get();
+            ->where('invoice.status', 1)
+            ->where('patients.status', 1)
+            ->get();
 
             return response()->json(['status' => true, 'message' => 'Invoices found', 'data' => $bills]);
 
@@ -117,6 +121,7 @@ class BillingController extends Controller
             ->leftJoin('patient_address', 'patient_address.patient_id', '=', 'patients.id')
             ->select(DB::raw('patients.id as patient_id,patients.first_name,patients.middle_name,patients.last_name,patients.age,patient_address.house_number,patient_address.street,invoice.id as invoice_id,invoice.created_at as invoice_date,invoice.due,invoice.amount,invoice.invoice_status,patients.sex,invoice.description as purpose'))
             ->where('invoice.status', 1)
+            ->where('patients.status', 1)
             ->where('invoice.id', $invoice_id)
             ->groupby('patients.id')
             ->first();
@@ -165,6 +170,7 @@ class BillingController extends Controller
             ->leftJoin('patients', 'billing.patient_id', '=', 'patients.id')
             ->select(DB::raw('patients.id as patient_id,patients.first_name,patients.middle_name,patients.last_name,patients.age,billing.id as recipent_no,billing.created_at as date'))
             ->where('billing.status', 1)
+            ->where('patients.status', 1)
             ->where('billing.id', $bill_id)
             ->first();
 
@@ -207,6 +213,7 @@ class BillingController extends Controller
             ->leftJoin('patients', 'patients.id', '=', 'invoice.patient_id')
             ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.plan_id')
             ->where('invoice.status', 1)
+            ->where('patients.status', 1)
             ->where('invoice.bill_id', $bill_id)
             ->get();
 
