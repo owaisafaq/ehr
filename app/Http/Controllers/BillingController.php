@@ -77,7 +77,7 @@ class BillingController extends Controller
             DB::table('invoice')
                 ->where('id', $invoice_id)
                 ->update(
-                    ['due' => $invoice_amount, 'invoice_status' => $status]);
+                    ['due' => $invoice_amount, 'invoice_status' => $status,'updated_at'=>$currentdatetime]);
 
             return response()->json(['status' => true, 'message' => 'Invoice Updated successfully']);
 
