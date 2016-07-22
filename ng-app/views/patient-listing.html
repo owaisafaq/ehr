@@ -1,7 +1,7 @@
 <div id="content" class="hidden-print">
     <section class="idCardPrint">
         <div class="card" ng-class='{true:"custom-card"}[patientInfo]'>
-            <div class="card-head card-head-custom card-color-3" ng-show="patientInfo">
+            <div class="card-head card-head-custom {{hospital_plan}}" ng-show="patientInfo">
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Encounter ID</label>
                     <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.encounter_id}}</span>
@@ -58,18 +58,21 @@
                         </button>
                         <input ng-model="search[filterType]" class="search_field" type="text" placeholder="Search for a patient" value="">
                     </div>
-                </div> 
+                </div>
 
                 <button type="button" data-toggle="modal" data-target="#addpatient" class="btn ink-reaction button-style-1 button-style-1 pull-right" ng-disabled="idCardDisabledBtn">create patient id card</button>
                 <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10">export</button>
                 <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10">import</button>
             </div>
             <div class="card-body col-lg-12">
-                <div class="icons_con">
+                <div class="icons_con" ng-init="hideOptions = true;">
                     <a class="edit button-custom" href=""></a>
                     <a class="delete button-custom" href=""></a>
                     <a class="add button-custom" href=""></a>
                 </div>
+                <button class="add button-custom pull-right" ng-click="addPatientButton();">Add</button>
+                <button class="edit button-custom pull-right" ng-hide="hideOptions" ng-click="updatePatientButton();">Update</button>
+                <button class="delete button-custom pull-right" data-toggle="modal" data-target="#deleteModal" ng-hide="hideOptions">Delete</button>
                 <div>
                 <div class="col-lg-2">
                     <select ng-model="pageSize" class="form-control" ng-change="selectBoxValue(pageSize);" placeholder="Number of Record">
@@ -310,5 +313,36 @@
                 </div>
             </div><!-- /.modal-content -->
         </form>
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Confirmation</h2>
+            </div>
+            <div class="modal-body">
+                <p>Do You Want To Delete?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" ng-click="deletePatientButton();">Yes</button>
+                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">No</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade" id="completedModal" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Status</h2>
+            </div>
+            <div class="modal-body">
+                <p>{{errorMessage}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">OK</button>
+            </div>
+        </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

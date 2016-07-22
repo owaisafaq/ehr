@@ -18,6 +18,10 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/login.html',
                     controller: 'loginController'
                 }).
+                when('/dashboard', {
+                    templateUrl: 'views/dashboard.html',
+                    controller: 'dashboard'
+                }).
                 when('/appointments-calander-view', {
                     templateUrl: 'views/appointments-calender-view.html',
                     controller: 'appointmentsCalenderController'
@@ -163,9 +167,9 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                 });
 
     }]);
-AppEHR.run(function ($rootScope, $location, $window) {
+AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData, $timeout) {
     if (sessionStorage.length == 0) {
-        console.log(1111111111111111);
+        //console.log(1111111111111111);
 //            var path = $location.$$path;
 //            if ((path == "/login" || path == "/") && path != undefined) {
 //                $location.path("patient-registration/");
@@ -173,6 +177,8 @@ AppEHR.run(function ($rootScope, $location, $window) {
 //        } else {
         $location.path("login");
     }
+    //$rootScope.SelectedPatientAfterSearch = false;
+    $rootScope.encounterHeaderSearchBar = true;
     $('#autocomplete2').on('input', function(){
         var input = $('#autocomplete2').val();
         if(input != undefined || input != ''){
@@ -197,7 +203,10 @@ AppEHR.run(function ($rootScope, $location, $window) {
                             select: function(event, ui) {
                                 $('#autocomplete2').val(ui.item.label);
                                 var selectId = ui.item.value;
-                                window.location.href = "#/patient-summary-demographics/"+selectId;
+                                //$rootScope.HEADERSEARCHPATIENTID = selectId;
+                                getter(selectId);
+                                $('.headerleftOptions').removeClass('ng-hide');
+                                //window.location.href = "#/patient-summary-demographics/"+selectId;
                                 return false;
                             }
                         });
@@ -206,6 +215,65 @@ AppEHR.run(function ($rootScope, $location, $window) {
             });
         }
     });
+    function getter(value){
+        $rootScope.HEADERSEARCHPATIENTID = value;
+    }
+    $rootScope.medicalHistoryheaderBar = function(){
+        $('.create_counter_header').addClass('hide');
+        $window.location.href = "#/patient-summary-demographics/"+$rootScope.HEADERSEARCHPATIENTID;
+    }
+    $rootScope.billingheaderBar = function(){
+        $('.create_counter_header').addClass('hide');
+        $window.location.href = "#/billing/"+$rootScope.HEADERSEARCHPATIENTID;
+    }
+    $rootScope.encounterHeaderBar = function(){
+        $rootScope.headerHideLoader = "hide";
+        $rootScope.encounterHeaderSearchBar = false;
+        $('.create_counter_header').removeClass('hide');
+        DropDownData.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id}, dropDownSuccess, dropDownFailed);
+        function dropDownSuccess(res){
+            if(res.status == true){
+                $rootScope.headerEncountersDropdownData = res.data;
+            }
+        }
+        function dropDownFailed(error){
+            console.log(error);
+        }
+    }
+    $rootScope.dismissHeaderEncounterModal = function(){
+        $('.create_counter_header').addClass('hide');
+        $rootScope.encounterHeaderSearchBar = true;
+    }
+    $rootScope.headerEncounterAdd = function(addEncounter){
+        $rootScope.headerHideLoader = "show";
+        AddEncounter.save({
+            token: $window.sessionStorage.token, 
+            patient_id: $rootScope.HEADERSEARCHPATIENTID,
+            department_id: addEncounter.department,
+            encounter_class: addEncounter.class,
+            encounter_type: addEncounter.type,
+            whom_to_see: addEncounter.wts,
+            decscribe_whom_to_see : addEncounter.describeWTS
+        }, encounterSuccess, encounterFailed);
+        function encounterSuccess(res){
+            if(res.status == true){
+                $rootScope.headerHideLoader = "hide";
+                $rootScope.headerMessageType = "alert-success";
+                $rootScope.headerErrorMessage = res.message;
+                $rootScope.headerErrorSymbol = "fa fa-check";// 
+                $rootScope.headerMessage = true;
+                $rootScope.headerSubmitted = false;
+                $timeout(function(){
+                    $rootScope.headerMessage = false;
+                    $rootScope.encounterHeaderSearchBar = true;
+                    $('.create_counter_header').addClass('hide');
+                }, 2000);
+            }
+        }
+        function encounterFailed(error){
+            console.log(error);
+        }
+    }
     
     $rootScope.$on("$routeChangeStart", function (event, next, current) {
         if ($location.$$path != '/login' && $location.$$path != '/') {
@@ -222,7 +290,8 @@ AppEHR.run(function ($rootScope, $location, $window) {
 
     });
     $rootScope.loadView = function (object) {
-        $window.location.href = '#/patient-registration/';
+        $('.create_counter_header').addClass('hide');
+        $window.location.href = '#/patient-listing/';
     }
     $rootScope.logout = function () {
         $window.sessionStorage.clear();
@@ -230,6 +299,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
     }
     $rootScope.PI = {};
     $rootScope.loader = "";
+    
     $rootScope.$on('$viewContentLoaded', function () {
         // transfers sessionStorage from one tab to another
         var sessionStorage_transfer = function (event) {
@@ -257,7 +327,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
                 if (sessionStorage.email != undefined && sessionStorage.email != 'undefined' && sessionStorage.token != undefined && sessionStorage.token != 'undefined' && sessionStorage.role_id != undefined && sessionStorage.role_id != 'undefined') {
                     var path = $location.$$path;
                     if ((path == "/login" || path == "/") && path != undefined) {
-                        $location.path("patient-registration/");
+                        $location.path("patient-listing/");
                     }
                 } else {
                     $location.path("login");
@@ -349,7 +419,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
                         $.each(data['data'], function (index, item) {
                             myResults.push({
                                 'id': item.id,
-                                'text': item.first_name
+                                'text': item.first_name + " " + item.last_name
                             });
                         });
                     }

@@ -17,10 +17,12 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	}, GetAllBillsSuccess, GetAllBillsFailure);
 
 	function GetAllBillsSuccess(res) {
-		console.log(res);
 		if (res.status == true) {
+			if(res.data.length == 0){
+				$('#noResultFound').modal('show');
+				return true;
+			}
 			$scope.BillListings = res.data;
-			console.log($scope.BillListings)
 		}
 	}
 

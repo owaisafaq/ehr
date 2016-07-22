@@ -36,23 +36,20 @@
     </head>
     <body class="menubar-hoverable header-fixed">
         <header id="header" class="hide {{class}}">
-            <form action="post" novalidate>
+            <form novalidate>
                 <div class="headerbar hidden-print">
-                    <div class="headerbar-left">
+                    <div class="headerbar-left" ng-init="SelectedPatientAfterSearch = false">
                         <a href="#/patient-registration" ng-click="loadView(PI);" class="white-btn"><img src="assets/img/add_person.png" /></a>
-                        <a href="javascript:;" class="white-btn"><img src="assets/img/heart_plus.png" /></a>
-                        <a href="#/billing" class="white-btn"><img src="assets/img/content_icn.png" /></a>
-                        <a href="javascript:;" class="white-btn"><img src="assets/img/report_icn.png" /></a>
+                        <a href="javascript:;" class="white-btn headerleftOptions" ng-show="SelectedPatientAfterSearch" ng-click="encounterHeaderBar()"><img src="assets/img/heart_plus.png" /></a>
+                        <a href="javascript:;" class="white-btn headerleftOptions" ng-show="SelectedPatientAfterSearch" ng-click="billingheaderBar();"><img src="assets/img/content_icn.png" /></a>
+                        <a href="javascript:;" class="white-btn headerleftOptions" ng-show="SelectedPatientAfterSearch" ng-click="medicalHistoryheaderBar();"><img src="assets/img/report_icn.png" /></a>
                     </div>
                     <div class="headerbar-right">
-                        <a class="margin-right-20" href="javascript:;"><img src="assets/img/emergency.png" /></a>
+                        <a class="margin-right-20" href="javascript:;" ng-hide="true"><img src="assets/img/emergency.png" /></a>
                         <div class="header-search">
                             <button type="submit">
                                 <i class="fa fa-search"></i>
                             </button>
-                            <!-- <input class="search_field get-patient-search-bar search-for-patient" ng-change="getSearchPatientForHeader(search);" type="text" ng-model="search" placeholder="Search for a patient" /> -->
-                            <!-- <input class="encounter-search-bar" ng-change="getSearchPatientForHeader(search);" type="text" ng-model="search" placeholder="Search for a patient"> -->
-                            <!-- <input type="text" id="autocomplete2" class="form-control search_field" data-source="data/100.json" placeholder="Search for a patient"> -->
                             <input type="text" id="autocomplete2" class="search_field" data-source="http://demoz.online/ehr/public/api/search_patient" placeholder="Search for a patient">
                         </div> 
                         <!-- <a href="javascript:;" class="button-style-2">
@@ -81,7 +78,6 @@
         </header>
         <div class="loader hide {{loader}}"></div>
         <div id="base" class="{{backgroundImg}}">
-
             <div ng-view></div> 
             <!--<div ng-include src="includeTemplate"></div>--> 
             <!-- BEGIN MENUBAR-->
@@ -96,7 +92,7 @@
                         </a>
                     </div>
                     <div class="expanded">
-                        <a href="../../html/dashboards/dashboard.html">
+                        <a href="#/dashboard">
                             <span class="text-lg text-bold text-primary ">MATERIAL&nbsp;ADMIN</span>
                         </a>
                     </div>
@@ -108,7 +104,7 @@
 
                         <!-- BEGIN DASHBOARD -->
                         <li>
-                            <a href="#/new-encounter-clinical-documentation">
+                            <a href="#/dashboard">
                                 <div class="gui-icon"><i class="md md-dashboard"></i></div>
                                 <span class="title">Dashboard</span>
                             </a>
@@ -206,6 +202,86 @@
                 </div><!--end .menubar-scroll-panel-->
             </div><!--end #menubar-->
             <!-- END MENUBAR -->
+            <!-- ENCOUNTER MODAL ng-hide="encounterHeaderSearchBar"-->
+            <div class="create_counter_header hide">
+                <div class="counter_pop counter_pop2 custom_popup">
+                    <div class="pop_head col-lg-12">
+                        <h2 class="">Create New Encounter</h2> 
+                    </div>
+                    <div class="pop_body">
+                        <div class="alert {{headerMessageType}}" role="alert" ng-show="headerMessage">
+                            <i class="{{headerErrorSymbol}}"></i> {{headerErrorMessage}}
+                        </div>
+                        <form class="custom-form" name="encounterForm" ng-model="myForm" novalidate ng-submit="headerEncounterAdd(addEncounter);" >
+                            <div class="col-lg-6">
+                                <label>clinic facility / Dept</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <select class="form-control" ng-class="{true: 'error'}[headerSubmitted && encounterForm.department.$invalid]" name="department" ng-model="addEncounter.department" placeholder="Select" required>
+                                    <option value=""></option>
+                                    <!-- <option value="1">1</option>
+                                    <option value="2">2</option> -->
+                                    <option ng-repeat="department in headerEncountersDropdownData.departments" value="{{department.id}}">{{department.name}}</option>
+                                </select>
+                                <p class="help-block PIValid" ng-show="headerSubmitted && encounterForm.department.$error.required">Required</p>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label>encounter class</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <select class="form-control" ng-class="{true: 'error'}[headerSubmitted && encounterForm.class.$invalid]" name="class" ng-model="addEncounter.class" placeholder="Select" required>
+                                    <option value=""></option>
+                                    <!-- <option ng-repeat="class in eclass" value="{{class.id}}">{{class.name}}</option> -->
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select>
+                                <p class="help-block PIValid" ng-show="headerSubmitted && encounterForm.class.$error.required">Required</p>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label>encounter type</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <select class="form-control" ng-class="{true: 'error'}[headerSubmitted && encounterForm.type.$invalid]" name="type" ng-model="addEncounter.type" placeholder="Select" required>
+                                    <option value=""></option>
+                                    <!-- <option ng-repeat="type in types" value="{{type.id}}">{{type.name}}</option> -->
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select>
+                                <p class="help-block PIValid" ng-show="headerSubmitted && encounterForm.type.$error.required">Required</p>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label>whom to see</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <select class="form-control" ng-class="{true: 'error'}[headerSubmitted && encounterForm.wts.$invalid]" name="wts" ng-model="addEncounter.wts" placeholder="Select whom to see" required>
+                                    <option value=""></option>
+                                    <option ng-repeat="wts in headerEncountersDropdownData.doctors" value="{{wts.id}}">{{wts.name}}</option>
+                                    <!-- <option value="1">1</option>
+                                    <option value="2">2</option> -->
+                                </select>
+                                <p class="help-block PIValid" ng-show="headerSubmitted && encounterForm.wts.$error.required">Required</p>
+                            </div> 
+                            <div class="col-lg-6">
+                                <label>Describe whom to see</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <textarea  ng-model="addEncounter.describeWTS"></textarea>
+                            </div> 
+
+                            <div class="col-lg-12">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn ink-reaction button-style-1" ng-click="headerSubmitted = true;" ng-disabled="headerSubmitted && encounterForm.$invalid">create encounter</button>
+                                    <button type="button" class="btn ink-reaction button-style-1 button-style-1_a close_custom_pop" ng-click="dismissHeaderEncounterModal();">Cancel</button>
+                                </div>
+                                <img src="assets/img/loader.gif" class="pull-right encounter-loader {{headerHideLoader}}"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div> <!-- ENCOUNTER MODAL END -->
         </div><!--end #base-->
         <div dynamic='html'></div>
         <!-- END BASE -->
@@ -231,6 +307,7 @@
         <script src="global/factories.js"></script>
         <script src="global/directives.js"></script>
         <script src="controllers/login.js"></script>
+        <script src="controllers/dashboard.js"></script>
 
 
 

@@ -1815,3 +1815,18 @@ AppEHR.factory("GetMedicineUnits", function ($resource) {
     };
     return sendInvoice;
 });
+AppEHR.factory("DeletePatient", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'delete_patient', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var sendInvoice = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return sendInvoice;
+});

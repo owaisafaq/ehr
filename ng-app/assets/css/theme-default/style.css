@@ -770,7 +770,7 @@ Table Styling
     margin-top: 0;
 }
 .card-color-1{
-    background: #d1b4d5;
+    background: #C4E8C0;
 }
 .card-color-4{
     background: #bcb9d8;
@@ -875,8 +875,13 @@ td .radio label{
 /*============
 Side PopUp
 ==============*/
+.create_counter_header .counter_pop2{
+    margin-top: 60px;
+    z-index: 130;
+}
+
 .create_counter{
-    position: relative;   
+    position: relative;
 }
 .counter_pop{
     width: 600px;
@@ -894,6 +899,17 @@ Side PopUp
     color: #fff;
     padding: 0;
     padding-left: 20px;
+}
+.counter_pop2{
+    width: 600px;
+    min-height: 350px;
+    float: left;
+    position: absolute;
+    right: 0;
+    top: 60;
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 11;
 }
 .pop_head h2{
     margin: 0;
@@ -2893,4 +2909,73 @@ form .progress {
 }
 .white{
     background-color: #a2a6b9!important;
+}
+.dashboard{
+margin: 0;
+}
+.dashboard .card{
+background: #fff;
+-webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33);
+box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33);
+text-align: center;
+}
+.dashboard .card span:not(.color-circle){
+display: block;
+}
+.dashboard .card span.textstyle-1{
+margin-top: 15px;
+letter-spacing: 1px;
+}
+.color-circle{
+display: inline-block;
+background-color: #005b9a;
+padding: 17px 13px;
+border-radius: 100%;
+}
+.textstyle-1{
+font-size: 14px;
+color: #272939;
+text-transform: uppercase;
+}
+.textstyle-2{
+font-size: 28px;
+color: #272939;
+font-weight: bold;
+line-height: 34px;
+}
+.login{
+right: 0;
+left: 0;
+position: relative;
+height: 21em;
+top: 50%;
+float: left;
+transform: translateY(-50%);
+-webkit-transform: translateY(-50%);
+-moz-transform: translateY(-50%);
+bottom: auto;
+}
+.username{
+font-size: 11px;
+letter-spacing: 1px;
+}
+.logo {
+font-size: 27px;
+}
+.sign-in-heading {
+margin-bottom: 15px;
+margin-top: -8px;
+font-size: 13px;
+}
+.wrapper{
+background-repeat: no-repeat;
+background-position: left 0 center;
+background-size: auto;
+background: none;
+height: 100vh;
+}
+.login_image{
+height: 100vh;
+float: left;
+margin-left: -180px;
 }
