@@ -351,6 +351,9 @@ class OtherController extends Controller
             ->where('status', 1)
             ->count();
 
+        $wards_count = DB::table('wards')
+            ->where('status', 1)
+            ->count();
 
         $data = array(
             "patients_count" => $patients_count,
@@ -358,7 +361,7 @@ class OtherController extends Controller
             "patient_registration_count" => $patients_count,
             "appointments_count" => $appointment_count,
             "pharmacy_count" => $pharmacy_count,
-            "wards_count" => 100,
+            "wards_count" => $wards_count,
             "radiology_count" => 100,
             "patient_pool_area_count" => 50,
             "inventory_count" => $inventory_products_count,
