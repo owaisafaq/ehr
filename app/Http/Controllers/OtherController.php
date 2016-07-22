@@ -269,40 +269,40 @@ class OtherController extends Controller
         $dosage = DB::table('medicine_units')
             ->select(DB::raw('id,dosage'))
             ->where('status', 1)
-            ->where('dosage','!=','')
+            ->where('dosage', '!=', '')
             ->get();
 
         $unit = DB::table('medicine_units')
-                 ->select(DB::raw('id,unit'))
-                 ->where('status', 1)
-                 ->where('unit','!=','')
-                 ->get();
+            ->select(DB::raw('id,unit'))
+            ->where('status', 1)
+            ->where('unit', '!=', '')
+            ->get();
 
         $route = DB::table('medicine_units')
-             ->select(DB::raw('id,route'))
-             ->where('status', 1)
-             ->where('route','!=','')
-             ->get();
+            ->select(DB::raw('id,route'))
+            ->where('status', 1)
+            ->where('route', '!=', '')
+            ->get();
 
         $frequency = DB::table('medicine_units')
-              ->select(DB::raw('id,frequency'))
-              ->where('status', 1)
-              ->where('frequency','!=','')
-              ->get();
+            ->select(DB::raw('id,frequency'))
+            ->where('status', 1)
+            ->where('frequency', '!=', '')
+            ->get();
 
 
         $direction = DB::table('medicine_units')
-               ->select(DB::raw('id,direction'))
-               ->where('status', 1)
-               ->where('direction','!=','')
-               ->get();
+            ->select(DB::raw('id,direction'))
+            ->where('status', 1)
+            ->where('direction', '!=', '')
+            ->get();
 
 
         $duration = DB::table('medicine_units')
-                ->select(DB::raw('id,duration'))
-                ->where('status', 1)
-                ->where('duration','!=','')
-                ->get();
+            ->select(DB::raw('id,duration'))
+            ->where('status', 1)
+            ->where('duration', '!=', '')
+            ->get();
 
         $data = array(
             "dosage" => $dosage,
@@ -316,6 +316,60 @@ class OtherController extends Controller
 
         return response()->json(['status' => true, 'data' => $data]);
 
+    }
+
+    public function get_dashboard_counts(Request $request)
+    {
+
+        $patients_count = DB::table('patients')
+            ->where('status', 1)
+            ->count();
+
+        $visits_count = DB::table('visits')
+            ->where('status', 1)
+            ->count();
+
+        $appointment_count = DB::table('appointments')
+            ->where('status', 1)
+            ->count();
+
+
+        $pharmacy_count = DB::table('pharmacy')
+            ->where('status', 1)
+            ->count();
+
+
+        $inventory_products_count = DB::table('inventory_products')
+            ->where('status', 1)
+            ->count();
+
+        $lab_order_count = DB::table('lab_orders')
+            ->where('status', 1)
+            ->count();
+
+        $billing_count = DB::table('billing')
+            ->where('status', 1)
+            ->count();
+
+        $wards_count = DB::table('wards')
+            ->where('status', 1)
+            ->count();
+
+        $data = array(
+            "patients_count" => $patients_count,
+            "encounter_count" => $visits_count,
+            "patient_registration_count" => $patients_count,
+            "appointments_count" => $appointment_count,
+            "pharmacy_count" => $pharmacy_count,
+            "wards_count" => $wards_count,
+            "radiology_count" => 100,
+            "patient_pool_area_count" => 50,
+            "inventory_count" => $inventory_products_count,
+            "laboratory_count" => $lab_order_count,
+            "billing_count" => $billing_count
+        );
+
+        return response()->json(['status' => true, 'data' => $data]);
     }
 }
 

@@ -2144,3 +2144,12 @@ $api->method = "GET";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+//Get Dashboard Counts
+$api = new api();
+$api->name = "Get Dashboard Counts";
+$api->url = HOST . 'get_dashboard_counts';
+$api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;

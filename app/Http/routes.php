@@ -227,6 +227,7 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->post('delete_immunization','App\Http\Controllers\OtherController@delete_immunization');
 
     $app->get('get_medicine_units','App\Http\Controllers\OtherController@get_medicine_units');
+    $app->get('get_dashboard_counts','App\Http\Controllers\OtherController@get_dashboard_counts');
 
 
 });
