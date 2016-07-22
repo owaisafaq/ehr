@@ -1845,3 +1845,18 @@ AppEHR.factory("DashboardCounts", function ($resource) {
     };
     return sendInvoice;
 });
+AppEHR.factory("MakeInactiveInventory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'inventory_inactive', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return MakeInactive;
+});

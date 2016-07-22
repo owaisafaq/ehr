@@ -1,11 +1,13 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData','GetBillInvoices','SendEmail', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData,GetBillInvoices,SendEmail){
+AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData','GetBillInvoices','SendEmail', 'CheckoutPatient', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData,GetBillInvoices,SendEmail, CheckoutPatient){
 	$rootScope.pageTitle = "EHR - Billing";
 	$scope.BillListings={};
 	$scope.selectedPatient = {};
 	$scope.AmountPaid = {};
-	$scope.hidePatientInfoBar = true;
+	$scope.dataStrip = "c";
+	$rootScope.loader = "show";
+	$scope.tabs_sec = 'qqqqq';
 
 	if($routeParams.patientID != undefined){
 		$scope.patientID = $routeParams.patientID;
@@ -19,6 +21,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 
 	function GetAllBillsSuccess(res) {
 		if (res.status == true) {
+			$rootScope.loader = "hide";
 			if(res.data.length == 0){
 				$('#noResultFound').modal('show');
 				return true;
@@ -59,9 +62,9 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 		function getPatientInfoSuccess(res) {
 			if (res.status == true) {
 				$rootScope.loader = "hide";
-				$scope.hidePatientInfoBar = false;
+				$scope.tabs_sec = 'tabs-sec';
+				$scope.dataStrip = "custom-card";
 				$scope.selectedPatient = res.data;
-				console.log($scope.selectedPatient);
 				$(".billing").show();
 
 			}
@@ -275,9 +278,16 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 		function getPatientInfoSuccess(res) {
 			if (res.status == true) {
 				$rootScope.loader = "hide";
+				$scope.tabs_sec = 'tabs_sec';
+				$scope.dataStrip = "custom-card";
 				$scope.selectedPatient = res.data;
 				console.log($scope.selectedPatient);
 				//$(".billing").show();
+				$scope.EID = res.data.encounter_id;
+				$scope.hospital_plan = res.data.hospital_plan;
+				if($scope.hospital_plan == '1') $scope.hospital_plan = "card-color-1";
+                if($scope.hospital_plan == '2') $scope.hospital_plan = "card-color-2";
+                else $scope.hospital_plan = "card-color-3";
 
 				$scope.patientInfo = true;
 
@@ -355,6 +365,41 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	function deleteInvoiceFailure(error){
 		console.log(error);
 	}
+
+	/*CHECKOUT*/
+
+        $scope.checkout = function (CO) {
+        	$rootScope.loader = "show";
+            var CheckoutDetails = {
+                token: $window.sessionStorage.token,
+                visit_id: $scope.EID,
+                patient_id: $scope.patient_id,
+                reason: $('input:radio[name="checkoutpatient"]:checked').val(),
+                notes: $('.checkout_patient_tab_con > div.active textarea').val() == undefined ? '' : $('.checkout_patient_tab_con > div.active textarea').val(),
+                pick_date: CO.date,
+                pick_time: CO.time,
+                admit_date: CO.date,
+                start_time: CO.time,
+                department_id: CO.date,
+                ward_id: CO.date
+            }
+            CheckoutPatient.save(CheckoutDetails, checkoutSuccess, checkoutSuccessFailure);
+        }
+        function checkoutSuccess(res) {
+            console.log(res)
+            $rootScope.loader = "hide";
+            $scope.messageType = "alert-success";
+            $scope.errorMessage = res.message;
+            $scope.errorSymbol = "fa fa-check";// 
+            $scope.message = true;
+            $('#simpleModal1').modal('hide');
+            $('.checkout_patient_tab_con > div.active textarea').val('');
+            $('input:radio[name="checkoutpatient"]').prop("checked", false);
+            $('input:radio[name="checkoutpatient"]').eq(0).trigger("click");
+        }
+        function  checkoutSuccessFailure(res) {
+            console.log(res)
+        }
 
 
 

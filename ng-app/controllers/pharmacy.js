@@ -14,9 +14,13 @@ AppEHR.controller('pharmacy', ['$scope', '$rootScope', 'getPharmacy', '$window',
 
 	function getPharmacySuccess(res) {
 		if (res.status == true) {
+			$rootScope.loader = "hide";
+			if(res.data.length == 0){
+				$('#noResultFound').modal('show');
+				return true;
+			}
 			$scope.pharmacyLists = res.data;
 			$scope.pharmacyCount = res.count;
-			$rootScope.loader = "hide";
 		}
 	}
 

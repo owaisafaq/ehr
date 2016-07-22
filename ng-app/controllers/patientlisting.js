@@ -108,6 +108,9 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
                     $scope.showIdCard = true
                     $scope.displayInfo.date_of_birth = res.data.date_of_birth;
                     $scope.displayInfo.encounter_id = res.data.encounter_id;
+                    if($scope.displayInfo.encounter_id == undefined || $scope.displayInfo.encounter_id == null){
+                        $scope.ifEncounterID = true;
+                    }
                     $scope.showIdCard = true;
                     $scope.hospital_plan = res.data.hospital_plan;
                     if($scope.hospital_plan == '1') $scope.hospital_plan = "card-color-1";

@@ -69,6 +69,7 @@
                                 <ul class="dropdown-menu animation-dock">
                                     <li><a href="#/" ng-click="logout();">My profile</a></li>
                                     <li><a href="#/">Setting</a></li>
+                                    <li><a href="#/logout">Logout</a></li>
                                 </ul><!--end .dropdown-menu -->
                             </li><!--end .dropdown -->
                         </ul><!--end .header-nav-profile -->
@@ -111,22 +112,15 @@
                         </li><!--end /menu-li -->
                         <!-- END DASHBOARD -->
 
-                        <!-- BEGIN EMAIL -->
-                        <li>
-                            <a href="../../html/dashboards/dashboard.html">
-                                <div class="gui-icon"><i class="md md-event"></i></div>
-                                <span class="title">Appointments</span>
-                            </a>
-                        </li><!--end /menu-li -->
-                        <!-- END EMAIL -->
+                        
 
                         <!-- BEGIN DASHBOARD -->
-                        <li>
+                        <!-- <li>
                             <a href="../../html/layouts/builder.html" >
                                 <div class="gui-icon"><i class="md md-chat"></i></div>
                                 <span class="title">Messages</span>
                             </a>
-                        </li><!--end /menu-li -->
+                        </li> --><!--end /menu-li -->
                         <li class="gui-folder">
                             <a>
                                 <div class="gui-icon"><i class="md md-person-add"></i></div>
@@ -134,20 +128,22 @@
                             </a>
                             <!--start submenu -->
                             <ul>
-                                <li><a href="../../html/tables/static.html" ><span class="title">Patient Detail</span></a></li>
-                                <li><a href="../../html/tables/dynamic.html" ><span class="title">IPD</span></a></li>
-                                <li><a href="../../html/tables/responsive.html" ><span class="title">OPD</span></a></li>
-                                <li><a href="#/new-encounter-patient-search" ><span class="title">Encounter</span></a></li>
-                                <li><a href="../../html/tables/responsive.html" ><span class="title">Checkout</span></a></li>
+                                <li><a href="#/patient-registration/"><span class="title">Add Patient</span></a></li>
+                                <li><a href="#/patient-listing" ><span class="title">List Patient</span></a></li>
+                                <!-- <li><a href="../../html/tables/responsive.html" ><span class="title">OPD</span></a></li> -->
+                                <!-- <li><a href="#/new-encounter-patient-search" ><span class="title">Encounter</span></a></li> -->
+                                <!-- <li><a href="../../html/tables/responsive.html" ><span class="title">Checkout</span></a></li> -->
                             </ul><!--end /submenu -->
                         </li><!--end /menu-li -->
 
                         <li>
-                            <a href="../../html/layouts/builder.html" >
-                                <div class="gui-icon"><i class="md md-store-mall-directory"></i></div>
-                                <span class="title">Store</span>
+                            <a href="#/new-encounter-patient-search" >
+                                <div class="gui-icon"><i class="md md-favorite"></i></div>
+                                <span class="title">Encounters</span>
                             </a>
                         </li><!--end /menu-li -->
+
+                        
 
                         <li>
                             <a href="#/billing" >
@@ -159,7 +155,7 @@
                         <li>
                             <a href="#/lab-order-listing" >
                                 <div class="gui-icon"><i class="md md-format-color-fill"></i></div>
-                                <span class="title">Lab</span>
+                                <span class="title">Lab Orders</span>
                             </a>
                         </li><!--end /menu-li -->
                         <li>
@@ -169,30 +165,21 @@
                             </a>
                         </li><!--end /menu-li -->
                         <li>
-                            <a href="../../html/layouts/builder.html" >
-                                <div class="gui-icon"><i class="md md-insert-drive-file"></i></div>
-                                <span class="title">Requisition</span>
+                            <a href="#/inventory" >
+                                <div class="gui-icon"><i class="md md-local-pharmacy"></i></div>
+                                <span class="title">Inventory</span>
                             </a>
                         </li><!--end /menu-li -->
+                        <!-- BEGIN EMAIL -->
                         <li>
-                            <a href="../../html/layouts/builder.html" >
-                                <div class="gui-icon"><i class="fa fa-briefcase"></i></div>
-                                <span class="title">eConsultancy</span>
+                            <a href="../../html/dashboards/dashboard.html">
+                                <div class="gui-icon"><i class="md md-event"></i></div>
+                                <span class="title">Appointments</span>
                             </a>
                         </li><!--end /menu-li -->
-                        <li>
-                            <a href="../../html/layouts/builder.html" >
-                                <div class="gui-icon"><i class="md md-assignment"></i></div>
-                                <span class="title">Reporting</span>
-                            </a>
-                        </li><!--end /menu-li -->
-                        <li>
-                            <a href="../../html/layouts/builder.html" >
-                                <div class="gui-icon"><i class="fa fa-book"></i></div>
-                                <span class="title">Knowledgebase</span>
-                            </a>
-                        </li><!--end /menu-li -->
+                        <!-- END EMAIL -->
                     </ul><!--end .main-menu -->
+
                     <!-- END MAIN MENU -->
                     <div class="menubar-foot-panel">
                         <small class="no-linebreak hidden-folded">
@@ -319,7 +306,7 @@
         <script data-require="showdown@0.3.*" data-semver="0.3.1" src="//cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
         <script data-require="angular-markdown-text@0.0.2" data-semver="0.0.2" src="https://cdn.rawgit.com/McNull/angular-markdown-text/v0.0.2/dist/angular-markdown-text.min.js"></script>
 
-
+        <script src="controllers/logout.js"></script>
         <script src="controllers/patientlisting.js"></script>
         <script src="controllers/appointmentscalenderview.js"></script>
         <script src="controllers/appointmentslist.js"></script>

@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription', '$window', 'GetPrescription', '$routeParams', 'PatienPrescriptionUpdate', 'GetPatientInfo', 'GetAllMedications', 'DropDownData', 'DeleteMedication', 'AddMedicationInPrescription', 'GetMedicineUnits', function ($scope, $rootScope, PatienPrescription, $window, GetPrescription, $routeParams, PatienPrescriptionUpdate, GetPatientInfo, GetAllMedications, DropDownData, DeleteMedication, AddMedicationInPrescription, GetMedicineUnits) {
+AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription', '$window', 'GetPrescription', '$routeParams', 'PatienPrescriptionUpdate', 'GetPatientInfo', 'GetAllMedications', 'DropDownData', 'DeleteMedication', 'AddMedicationInPrescription', 'GetMedicineUnits', 'CheckoutPatient', function ($scope, $rootScope, PatienPrescription, $window, GetPrescription, $routeParams, PatienPrescriptionUpdate, GetPatientInfo, GetAllMedications, DropDownData, DeleteMedication, AddMedicationInPrescription, GetMedicineUnits, CheckoutPatient) {
         $rootScope.pageTitle = "EHR - Pharmacy VIew";
         $scope.PrescriptionView = [];
         $scope.medicationsDataPush = [];
@@ -33,6 +33,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
             if(res.status == true){
                 console.log("all");
                 console.log(res);
+                $scope.patient_id = res.data.patient_id;
                 $scope.PrescriptionViews = res.data;
                 $scope.Prescription.notes = res.notes;
                 $scope.prescription_data = res.prescription_data;
@@ -69,6 +70,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                 $scope.displayInfo.age = res.data.age;
                 $scope.displayInfo.sex = res.data.sex;
                 $scope.displayInfo.marital_status = res.data.marital_status;
+                $scope.EID = res.data.encounter_id;
                 $scope.patientInfo = true;
             }
         }
@@ -281,4 +283,41 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         $scope.printprescription = function(){
             window.print();
         }
+
+        $scope.CO = {};
+        $scope.checkout = function (dataToBeAdded){
+            $scope.message = false;
+            $rootScope.loader = "show";
+            CheckoutPatient.save({
+                token: $window.sessionStorage.token, 
+                patient_id: $scope.patientID,
+                visit_id: $scope.EID,
+                reason: $('input:radio[name="checkoutpatient"]:checked').val(),
+                notes: $('.checkout_patient_tab_con > div.active textarea').val() == undefined ? '' : $('.checkout_patient_tab_con > div.active textarea').val(),
+                pick_date: dataToBeAdded.date,
+                pick_time: dataToBeAdded.time,
+                admit_date: dataToBeAdded.date,
+                start_time: dataToBeAdded.time,
+                //department_id: dataToBeAdded.ward,
+                ward_id: dataToBeAdded.ward,
+            }, checkoutSuccess, checkoutFailure);
+        }
+
+        function checkoutSuccess(res){
+            if(res.status ==  true){
+                console.log(res);
+                $rootScope.loader = "hide";
+                $scope.messageType = "alert-success";
+                $scope.errorMessage = res.message;
+                $scope.errorSymbol = "fa fa-check";// 
+                $scope.message = true;
+                setTimeout(function() {$('#simpleModal1').modal('hide');}, 1000);
+                
+            }
+        }
+
+        function checkoutFailure(error){
+            console.log(error);
+        }
+
     }]);

@@ -2470,7 +2470,7 @@ table.setting_table_cat > tbody > tr > td:nth-child(2) span{float:left;}
 .settings_cont{margin-bottom: 50px;margin-top: 15px;}
 .settings_cont .setting_box:nth-of-type(1){margin-top:25px;}
 .billing{background-color:#c7d8eb;padding:26px 0 !important;height: 102px !important;padding-left:80px !important;}
-.billing .button-style-2{background-color:#003d51;}
+.billing .button-style-2{background-color:#FFF;}
 .billing .txt-style-2{font-size:20px}
 .tabs_sec{margin-top:36px;}
 .billing_search{margin-top:0;}
@@ -2913,6 +2913,9 @@ form .progress {
 .dashboard{
 margin: 0;
 padding-top:30px; 
+}
+.dashboard a{
+    text-decoration: none;
 }
 .dashboard .card{
 background: #fff;

@@ -18,6 +18,10 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/login.html',
                     controller: 'loginController'
                 }).
+                when('/logout', {
+                    templateUrl: 'views/logout.html',
+                    controller: 'logoutController'
+                }).
                 when('/dashboard', {
                     templateUrl: 'views/dashboard.html',
                     controller: 'dashboard'
@@ -246,6 +250,8 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
     }
     $rootScope.headerEncounterAdd = function(addEncounter){
         $rootScope.headerHideLoader = "show";
+        $rootScope.addEncounter = {};
+        $rootScope.headerSubmitted = false;
         AddEncounter.save({
             token: $window.sessionStorage.token, 
             patient_id: $rootScope.HEADERSEARCHPATIENTID,
@@ -257,12 +263,14 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
         }, encounterSuccess, encounterFailed);
         function encounterSuccess(res){
             if(res.status == true){
+                console.log(res);
                 $rootScope.headerHideLoader = "hide";
                 $rootScope.headerMessageType = "alert-success";
                 $rootScope.headerErrorMessage = res.message;
                 $rootScope.headerErrorSymbol = "fa fa-check";// 
                 $rootScope.headerMessage = true;
                 $rootScope.headerSubmitted = false;
+                $window.location.href = "#/new-encounter-encounter-list/"+res.visit_id+"/"+$rootScope.HEADERSEARCHPATIENTID;
                 $timeout(function(){
                     $rootScope.headerMessage = false;
                     $rootScope.encounterHeaderSearchBar = true;
@@ -285,6 +293,13 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
         }
         $rootScope.userName = $window.sessionStorage.name;
         $rootScope.loginCheck = $location.$$path == '/login' || $location.$$path == '/' ? true : false;
+        if ($window.sessionStorage.email != undefined && $window.sessionStorage.email != 'undefined' && $window.sessionStorage.token != undefined && window.sessionStorage.token != 'undefined' && $window.sessionStorage.role_id != undefined && window.sessionStorage.role_id != 'undefined') {
+            var path = $location.$$path;
+            if ((path == "/login" || path == "/") && path != undefined) {
+                $location.path("dashboard");
+            }
+        } else
+            $location.path("login");
         console.log("here")
         console.log(localStorage.getItem('sessionStorage'))
 
@@ -327,7 +342,7 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
                 if (sessionStorage.email != undefined && sessionStorage.email != 'undefined' && sessionStorage.token != undefined && sessionStorage.token != 'undefined' && sessionStorage.role_id != undefined && sessionStorage.role_id != 'undefined') {
                     var path = $location.$$path;
                     if ((path == "/login" || path == "/") && path != undefined) {
-                        $location.path("patient-listing/");
+                        $location.path("dashboard");
                     }
                 } else {
                     $location.path("login");
