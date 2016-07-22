@@ -230,7 +230,9 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
         $('.create_counter_header').addClass('hide');
         $window.location.href = "#/billing/"+$rootScope.HEADERSEARCHPATIENTID;
     }
+    
     $rootScope.encounterHeaderBar = function(){
+        console.log('ookok');
         $rootScope.headerHideLoader = "hide";
         $rootScope.encounterHeaderSearchBar = false;
         $('.create_counter_header').removeClass('hide');

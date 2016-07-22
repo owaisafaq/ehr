@@ -98,7 +98,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="patientList in patientLists">
+                            <tr ng-repeat="patientList in patientLists | filter: search">
                                 <td align="center">
                                     <div class="radio radio-styled">
                                         <label>
