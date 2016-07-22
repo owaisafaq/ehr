@@ -355,6 +355,12 @@ class OtherController extends Controller
             ->where('status', 1)
             ->count();
 
+        $pool_area_count = DB::table('visits')
+            ->where('status', 1)
+            ->where('visit_status','!=','checkout')
+            ->groupby('visits.patient_id')
+            ->count();
+
         $data = array(
             "patients_count" => $patients_count,
             "encounter_count" => $visits_count,
@@ -362,8 +368,8 @@ class OtherController extends Controller
             "appointments_count" => $appointment_count,
             "pharmacy_count" => $pharmacy_count,
             "wards_count" => $wards_count,
-            "radiology_count" => 100,
-            "patient_pool_area_count" => 50,
+            "radiology_count" => 00,
+            "patient_pool_area_count" => $pool_area_count,
             "inventory_count" => $inventory_products_count,
             "laboratory_count" => $lab_order_count,
             "billing_count" => $billing_count
