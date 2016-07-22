@@ -53,8 +53,10 @@ AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routePar
 
     $scope.updateTestForm = function (){ // updating Test Form Status
         //if (angular.equals({}, test) == false) {
+            console.log($('#cancelOrder2 .form-wizard-horizontal li.active .title').data('val'));
             $scope.hideLoader = 'show';
             $scope.updateTestBtn = true; // disabling submit button until request is complete
+            $scope.selectedTest.test_status = $('#cancelOrder2 .form-wizard-horizontal li.active .title').data('val');
             updateTestStatus.save({ // sending data over updateTestStatus factory which will update Test Status
                 token: $window.sessionStorage.token,
                 lab_test: $scope.selectedTest.id,
@@ -65,6 +67,7 @@ AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routePar
     };
 
     function updateTestStatusSuccess(res){ // on success
+        console.log(res);
         if (res.status == true) {
             $scope.hideLoader = 'hide';
             $scope.message = true;

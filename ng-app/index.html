@@ -21,7 +21,7 @@
         <link type="text/css" rel="stylesheet" href="assets/css/theme-default/libs/bootstrap-datepicker/datepicker3.css?1424887858" />
         <link type="text/css" rel="stylesheet" href="assets/css/theme-default/libs/wizard/wizard.css" />
         <!--grid files-->
-        <link href="assets/css/theme-default/ui-grid.css" rel="stylesheet" type="text/css"/>
+        <!-- <link href="assets/css/theme-default/ui-grid.css" rel="stylesheet" type="text/css"/> -->
         <!--grid files-->
         <link href="assets/css/theme-default/style.css" rel="stylesheet" type="text/css"/>
         <script src="assets/js/libs/jquery/jquery-1.11.2.min.js"></script>
@@ -126,15 +126,22 @@
                                 <div class="gui-icon"><i class="md md-person-add"></i></div>
                                 <span class="title">Patient</span>
                             </a>
-                            <!--start submenu -->
                             <ul>
                                 <li><a href="#/patient-registration/"><span class="title">Add Patient</span></a></li>
                                 <li><a href="#/patient-listing" ><span class="title">List Patient</span></a></li>
-                                <!-- <li><a href="../../html/tables/responsive.html" ><span class="title">OPD</span></a></li> -->
-                                <!-- <li><a href="#/new-encounter-patient-search" ><span class="title">Encounter</span></a></li> -->
-                                <!-- <li><a href="../../html/tables/responsive.html" ><span class="title">Checkout</span></a></li> -->
-                            </ul><!--end /submenu -->
-                        </li><!--end /menu-li -->
+                            </ul>
+                        </li>
+
+                        <li class="gui-folder">
+                            <a>
+                                <div class="gui-icon"><i class="md md-format-color-fill"></i></div>
+                                <span class="title">Lab Orders</span>
+                            </a>
+                            <ul>
+                                <li><a href="#/lab-order-listing/"><span class="title">Lab Order Listing</span></a></li>
+                                <li><a href="#/lab-order-history"><span class="title">Lab Order History</span></a></li>
+                            </ul>
+                        </li>
 
                         <li>
                             <a href="#/new-encounter-patient-search" >
@@ -152,12 +159,12 @@
                             </a>
                         </li><!--end /menu-li -->
 
-                        <li>
+                       <!--  <li>
                             <a href="#/lab-order-listing" >
                                 <div class="gui-icon"><i class="md md-format-color-fill"></i></div>
                                 <span class="title">Lab Orders</span>
                             </a>
-                        </li><!--end /menu-li -->
+                        </li> --><!--end /menu-li -->
                         <li>
                             <a href="#/pharmacy" >
                                 <div class="gui-icon"><i class="md md-local-pharmacy"></i></div>
@@ -168,6 +175,18 @@
                             <a href="#/inventory" >
                                 <div class="gui-icon"><i class="md md-local-pharmacy"></i></div>
                                 <span class="title">Inventory</span>
+                            </a>
+                        </li><!--end /menu-li -->
+                        <li>
+                            <a href="#/templates" >
+                                <div class="gui-icon"><i class="md md-local-pharmacy"></i></div>
+                                <span class="title">Templates</span>
+                            </a>
+                        </li><!--end /menu-li -->
+                        <li>
+                            <a href="#/pharmacy-prescription" >
+                                <div class="gui-icon"><i class="md md-local-pharmacy"></i></div>
+                                <span class="title">Pharmacy Prescription</span>
                             </a>
                         </li><!--end /menu-li -->
                         <!-- BEGIN EMAIL -->

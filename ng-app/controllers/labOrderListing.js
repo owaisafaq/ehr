@@ -81,6 +81,18 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
             $timeout(function(){
                 $('#cancelOrder').modal('hide');
             },500);
+            if($routeParams.patientID != undefined){
+                LabOrdersByPatient.get({
+                    token: $window.sessionStorage.token,
+                    patient_id: $routeParams.patientID,
+                    limit: $scope.itemsPerPage, offset: 0
+                }, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
+            }else{
+                GetAllLabOrders.get({ // Getting all lab orders
+                    token: $window.sessionStorage.token,
+                    limit: $scope.itemsPerPage, offset: 0
+                }, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
+            }
         } else {
             $scope.hideLoader = "hide";
             $scope.cancleOrderBtn = false;
@@ -252,6 +264,10 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
             }, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
         }
     }
+
+    $scope.go = function ( path ) { // method for routing on button click
+        $location.path( path + '/' + $scope.selectedOrder.id);
+    };
 
     
 }]);

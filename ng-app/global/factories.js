@@ -1374,22 +1374,22 @@ AppEHR.factory("GetAllInvoices", function ($resource) {
 });
 
 
-
 AppEHR.factory("SendEmail", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'send_invoice_email', params, {
-            save: {method: 'POST'}
+            get: {method: 'POST'}
         });
         return res2;
     }
-    var send = {
-        save: function (params, body, success) {
+    var sendInvoice = {
+        get: function (params, body, success) {
             var res = getResource(params, body);
-            return res.save(params, body, success);
+            return res.get(params, body, success);
         }
     };
-    return send;
+    return sendInvoice;
 });
+
 
 
 
