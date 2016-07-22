@@ -2912,6 +2912,7 @@ form .progress {
 }
 .dashboard{
 margin: 0;
+padding-top:30px; 
 }
 .dashboard .card{
 background: #fff;

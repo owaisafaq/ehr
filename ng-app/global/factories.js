@@ -1830,3 +1830,18 @@ AppEHR.factory("DeletePatient", function ($resource) {
     };
     return sendInvoice;
 });
+AppEHR.factory("DashboardCounts", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_dashboard_counts', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var sendInvoice = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return sendInvoice;
+});
