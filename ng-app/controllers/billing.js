@@ -5,6 +5,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	$scope.BillListings={};
 	$scope.selectedPatient = {};
 	$scope.AmountPaid = {};
+	$scope.hidePatientInfoBar = true;
 
 	if($routeParams.patientID != undefined){
 		$scope.patientID = $routeParams.patientID;
@@ -58,6 +59,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 		function getPatientInfoSuccess(res) {
 			if (res.status == true) {
 				$rootScope.loader = "hide";
+				$scope.hidePatientInfoBar = false;
 				$scope.selectedPatient = res.data;
 				console.log($scope.selectedPatient);
 				$(".billing").show();
