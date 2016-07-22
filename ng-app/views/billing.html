@@ -1,7 +1,7 @@
 <div id="content">
     <section>
         <div class="card custom-card">
-            <div class="card-head card-head-custom card-color-3 billing hidden-print" >
+            <div class="card-head card-head-custom card-color-3 billing hidden-print" ng-hide="hidePatientInfoBar">
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
                     <span class="txt-style-2 col-lg-12 capitalize">{{selectedPatient.first_name}}</span>
@@ -40,7 +40,7 @@
                 <ul class="nav nav-tabs nav-justified custom-tab" data-toggle="tabs">
                     <li id="billing" class="active"><a showtab href="#generate"> Bills</a></li>
                     <li id="invoicing"><a showtab href="#invoices">Invoices</a></li>
-                    <!--                    <li><a showtab href="#receipts">Receipts</a></li>-->
+                    <!-- <li><a showtab href="#receipts">Receipts</a></li>-->
                     <li><a showtab href="#reports">Reports</a></li>
                 </ul>
             </div>
@@ -89,8 +89,8 @@
                         <span class="txt-style-3 pull-left text-uppercase">Plan</span>
                         <div class="col-lg-2">
                             <select class="form-control" ng-model="search_plan_bill">
-                                <option selected value="">All</option>
-                                <option>Self</option>
+                                <option value=""></option>
+                                <option selected >Self</option>
                                 <option>NHIS</option>
                                 <option>Retainers</option>
                             </select>
@@ -1047,7 +1047,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
-                <h2>Send Invoice Via Email</h2>
+                <h2>Process Payment</h2>
             </div>
             <div class="modal-body">
                 <form class="custom-form" ng-submit="SendInvoice(sendData,invoice_id);">
@@ -1083,7 +1083,7 @@
                         </div>
                         <div class="col-lg-3">
 
-                            <input type="email" placeholder=""   ng-model="sendData.email"  required  />
+                            <input type="email" placeholder=""   ng-model="sendData.email"   />
                         </div>
 
 
@@ -1257,17 +1257,18 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </div>
-
-
-<script>
-    $(document).ready(function () {
-
-
-
-    });
-
-
-
-
-
-</script>
+<div class="modal fade" id="noResultFound" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Result</h2>
+            </div>
+            <div class="modal-body">
+                <p>No Result Found</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

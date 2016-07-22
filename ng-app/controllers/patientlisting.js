@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPatients', '$window', '$routeParams', 'GetPatientInfo', '$http', function ($scope, $rootScope, GetAllPatients, $window, $routeParams, GetPatientInfo, $http) {
+AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPatients', '$window', '$routeParams', 'GetPatientInfo', 'CheckoutPatient', 'DeletePatient', function ($scope, $rootScope, GetAllPatients, $window, $routeParams, GetPatientInfo, CheckoutPatient, DeletePatient) {
         $scope.action = '';
         $rootScope.pageTitle = "EHR - Patient Listing";
         $scope.displayInfo = {};
@@ -40,6 +40,37 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
                 offset: (pageSize - 1) * curPage, limit: $scope.itemsPerPage
             }, GetAllPatientsSuccess, GetAllPatientsFailure);
         }
+        $scope.samePage = '';
+        $scope.goToPage = function(pageSize, num){
+            console.log($scope.samePage+num);
+            $rootScope.loader = "show";
+            GetAllPatients.get({
+                token: $window.sessionStorage.token,
+                offset: (pageSize * num), limit: $scope.itemsPerPage
+            }, GetAllPatientsSuccess, GetAllPatientsFailure);
+        }
+
+        $scope.selectBoxValue = function(value){
+            $rootScope.loader = "show";
+            $scope.pageNumber = '';
+            GetAllPatients.get({
+                token: $window.sessionStorage.token,
+                offset: ($scope.pageSize * $scope.curPage), limit: value
+            }, GetAllPatientsSuccess, GetAllPatientsFailure);
+        }
+        $('body').on('keyup', '.enterKey input[type=text]', function (e) {
+            if (e.keyCode == 13) {
+                if ($(this).val() != "") {
+                    $(this).trigger("enterKey");
+                    if($scope.pageNumber != undefined && $scope.pageNumber != '' && parseInt($scope.pageNumber) <= $scope.numberOfPages()){
+                        GetAllPatients.get({
+                            token: $window.sessionStorage.token,
+                            offset: ($scope.pageSize * $scope.pageNumber) == $scope.pageSize ? 0 : ($scope.pageSize * $scope.pageNumber), limit: $scope.itemsPerPage
+                        }, GetAllPatientsSuccess, GetAllPatientsFailure);
+                    }
+                }
+            }
+        });
 
         function GetAllPatientsSuccess(res) {
             $rootScope.loader = "hide";
@@ -60,6 +91,7 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
             GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: patientID}, getPatientSuccess, getPatientFailure);
             function getPatientSuccess(res) {
                 if (res.status == true) {
+                    $scope.hideOptions = false;
                     $scope.idCardDisabledBtn = false;
                     console.log(res.data);
                     $rootScope.loader = "hide";
@@ -77,6 +109,10 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
                     $scope.displayInfo.date_of_birth = res.data.date_of_birth;
                     $scope.displayInfo.encounter_id = res.data.encounter_id;
                     $scope.showIdCard = true;
+                    $scope.hospital_plan = res.data.hospital_plan;
+                    if($scope.hospital_plan == '1') $scope.hospital_plan = "card-color-1";
+                    if($scope.hospital_plan == '2') $scope.hospital_plan = "card-color-2";
+                    else $scope.hospital_plan = "card-color-3";
                     //$scope.showStrip = true;
                     //$scope.dataStrip = "custom-card";
                 }
@@ -158,48 +194,82 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
         $scope.setPage = function (n) {
             $scope.currentPage = n;
         };
-//        $scope.filter_by = function (field) {
-//            console.log(field);
-//            console.log($scope.search);
-//            if ($scope.search === '') {
-//                delete $scope.f['__' + field];
-//                return;
-//            }
-//            $scope.f['__' + field] = true;
-//            $scope.patientLists.forEach(function (v) {
-//                v['__' + field] = v[field] < $scope.search;
-//            })
-//        }
+
         $scope.findPatientBy = function () {
             $scope.f = $scope.search1;
             console.log($scope.search1)
         }
-//        $scope.searchPatient = function (patientList) {
-//            console.log($scope.search1)
-//            if ($scope.search1 == "id") {
-//                return patientList.id === parseInt($scope.search)
-//            }
-//            else if($scope.search1 == "first_name"){
-//                return patientList.first_name === parseInt($scope.search)
-//            }
-//            else{
-//                
-//            }
-//        }
 
+        $scope.CO = {};
+        $scope.checkout = function (dataToBeAdded){
+            $scope.message = false;
+            $rootScope.loader = "show";
+            CheckoutPatient.save({
+                token: $window.sessionStorage.token, 
+                patient_id: $scope.patientID,
+                visit_id: $scope.displayInfo.encounter_id,
+                reason: $('input:radio[name="checkoutpatient"]:checked').val(),
+                notes: $('.checkout_patient_tab_con > div.active textarea').val() == undefined ? '' : $('.checkout_patient_tab_con > div.active textarea').val(),
+                pick_date: dataToBeAdded.date,
+                pick_time: dataToBeAdded.time,
+                admit_date: dataToBeAdded.date,
+                start_time: dataToBeAdded.time,
+                //department_id: dataToBeAdded.ward,
+                ward_id: dataToBeAdded.ward,
+            }, checkoutSuccess, checkoutFailure);
+        }
 
-    /*var vm = this;
-    vm.users = []; //declare an empty array
-    vm.pageno = 1; // initialize page no to 1
-    vm.total_count = 0;
-    vm.itemsPerPage = 10; //this could be a dynamic value from a drop down
-    vm.getData = function(pageno){ // This would fetch the data on page change.
-        GetAllPatients.get({
-            token: $window.sessionStorage.token,
-            offset: 0, limit: 0
-        }, GetAllPatientsSuccess, GetAllPatientsFailure);
-        
-    };
-    vm.getData(vm.pageno); // Call the function to fetch initial data on page load.*/
+        function checkoutSuccess(res){
+            if(res.status ==  true){
+                console.log(res);
+                $rootScope.loader = "hide";
+                $scope.messageType = "alert-success";
+                $scope.errorMessage = res.message;
+                $scope.errorSymbol = "fa fa-check";// 
+                $scope.message = true;
+                setTimeout(function() {$('#simpleModal1').modal('hide');}, 1000);
+                
+            }
+        }
 
-    }]);
+        function checkoutFailure(error){
+            console.log(error);
+        }
+
+        $scope.updatePatientButton = function(){
+            $window.location.href = "#/patient-registration-update/" + $scope.patientID;
+        }
+
+        $scope.deletePatientButton = function(){
+            $rootScope.loader = "show";
+            DeletePatient.save({
+                token: $window.sessionStorage.token,
+                patient_id: $scope.patientID
+            }, deletePatientSuccess, deletePatientFailure);
+
+            function deletePatientSuccess(res){
+                $rootScope.loader = "hide";
+                if(res.status ==  true){
+                    console.log(res);
+                    $scope.hideOptions = true;
+                    $scope.patientInfo = false;
+                    $('#deleteModal').modal('hide');
+                    $scope.errorMessage = res.message;
+                    $('#completedModal').modal('show');
+                    setTimeout(function() {$('#completedModal').modal('hide');}, 2000);
+                    GetAllPatients.get({
+                        token: $window.sessionStorage.token,
+                        offset: $scope.offset, limit: $scope.itemsPerPage
+                    }, GetAllPatientsSuccess, GetAllPatientsFailure);
+                }
+            }
+
+            function deletePatientFailure(error){
+                console.log(error);
+            }
+        }
+
+        $scope.addPatientButton = function(){
+            $window.location.href = "#/patient-registration/";
+        }
+}]);

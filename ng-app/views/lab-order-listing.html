@@ -48,7 +48,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="labOrder in labOrders | filter:filterLabs | filter:search">
+                            <tr ng-repeat="labOrder in labOrders | filter:search">
                                 <td align="center">
                                     <div class="radio radio-styled">
                                         <label>
@@ -114,6 +114,19 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div class="pagination pagination-centered" ng-show="labOrderCount">
+                        <ul class="pagination-controle pagination">
+                            <li>
+                              <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"> &lt; PREV</button>
+                            </li>
+                            <li>
+                              <span>Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+                            </li>
+                            <li>
+                              <button type="button" class="btn btn-primary" ng-disabled="curPage >= labOrderCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);">NEXT &gt;</button>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="modal fade big-modal" id="neworder" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -256,3 +269,18 @@
         </div><!--end .card -->
     </section>
 </div>
+<div class="modal fade" id="noRecordFound" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Status</h2>
+            </div>
+            <div class="modal-body">
+                <p>No Record Found</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

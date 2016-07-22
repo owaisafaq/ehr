@@ -23,7 +23,7 @@ class ApiController extends Controller
     {
 
         header('Access-Control-Allow-Origin: *');
-
+        date_default_timezone_set("Africa/Lagos");
 
         if ($request->input('token')) {
 
@@ -79,8 +79,10 @@ class ApiController extends Controller
 
         $patients = DB::table('patients')
             ->select(DB::raw('id,first_name,last_name'))
+           // ->select(DB::raw('CONCAT(first_name," ",last_name) AS label,id as value'))
             ->where('first_name', 'like', "%$name%")
             ->where('plan_id', 1)
+            ->where('status', 1)
             ->get();
 
 
@@ -637,8 +639,6 @@ class ApiController extends Controller
 
     public function user_login(Request $request)
     {
-
-
         $email_address = $request->input('email');
 
         $password = $request->input('password');
@@ -691,8 +691,6 @@ class ApiController extends Controller
 
     public function add_visit(Request $request)
     {
-
-
         $user_id = $request->input('source_id');
 
         $patient_id = $request->input('patient_id');
@@ -708,9 +706,6 @@ class ApiController extends Controller
         $decscribe_whom_to_see = $request->input('decscribe_whom_to_see');
 
         $token = $request->input('token');
-
-
-        //here
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
@@ -737,8 +732,6 @@ class ApiController extends Controller
 
     public function update_visit(Request $request)
     {
-
-
         $visit_id = $request->input('visit_id');
 
         $user_id = $request->input('source_id');
@@ -757,9 +750,6 @@ class ApiController extends Controller
 
         $token = $request->input('token');
 
-
-        //here
-
         $currentdatetime = date("Y-m-d  H:i:s");
 
 
@@ -777,7 +767,6 @@ class ApiController extends Controller
                 ]
             );
 
-
         return response()->json(['status' => true, 'message' => 'Visit Updated successfully']);
 
     }
@@ -785,10 +774,9 @@ class ApiController extends Controller
 
     public function get_countries()
     {
-
-
         $countries = DB::table('countries')
             ->select(DB::raw('id,name,country_code'))
+            ->where('status', 1)
             ->get();
 
         return response()->json(['status' => true, 'data' => $countries]);
@@ -798,13 +786,12 @@ class ApiController extends Controller
 
     public function get_states(Request $request)
     {
-
-
         $country_id = $request->input('country_id');
 
         $states = DB::table('states')
             ->select(DB::raw('id,name'))
             ->where('country_id', $country_id)
+            ->where('status', 1)
             ->get();
 
         return response()->json(['status' => true, 'data' => $states]);
@@ -814,13 +801,12 @@ class ApiController extends Controller
 
     public function get_cities(Request $request)
     {
-
-
         $state_id = $request->input('state_id');
 
         $cities = DB::table('cities')
             ->select(DB::raw('id,name'))
             ->where('state_id', $state_id)
+            ->where('status', 1)
             ->get();
 
         return response()->json(['status' => true, 'data' => $cities]);
@@ -829,13 +815,12 @@ class ApiController extends Controller
 
     public function get_local_goverment_area(Request $request)
     {
-
-
         $state_id = $request->input('state_id');
 
         $local_goverment_area = DB::table('local_goverment_area')
             ->select(DB::raw('id,name'))
             ->where('state_id', $state_id)
+            ->where('status', 1)
             ->get();
 
         return response()->json(['status' => true, 'data' => $local_goverment_area]);
@@ -846,7 +831,6 @@ class ApiController extends Controller
 
     public function get_dropdowndata(Request $request)
     {
-
         $religion = DB::table('religion')
             ->select(DB::raw('id,name'))
             ->where('status', 1)
@@ -931,6 +915,10 @@ class ApiController extends Controller
             ->where('status', 1)
             ->get();
 
+        $pharmacy = DB::table('pharmacy')
+            ->select(DB::raw('id,name'))
+            ->where('status', 1)
+            ->get();
 
         $data = array(
             "religion" => $religion,
@@ -949,7 +937,8 @@ class ApiController extends Controller
             "categories" => $categories,
             "doctors" => $doctors,
             "labs" => $labs,
-            "manufacturer" => $manufacturers
+            "manufacturer" => $manufacturers,
+            "pharmacy" => $pharmacy
 
         );
 
@@ -961,15 +950,12 @@ class ApiController extends Controller
 
     public function get_patient_vitals(Request $request)
     {
-
-
         $data = DB::table('medical_record_fields')
             ->select(DB::raw('id,category,name'))
+            ->where('status', 1)
             ->get();
 
-
         return response()->json(['status' => true, 'data' => $data]);
-
 
     }
 
@@ -1007,7 +993,6 @@ class ApiController extends Controller
         $is_dependant = $request->input('is_dependant');
 
         $currentdatetime = date("Y-m-d  H:i:s");
-
 
         $patient_plan_id = $request->input('patient_plan_id');
 
@@ -1183,9 +1168,7 @@ class ApiController extends Controller
 
                 }
 
-
                 return response()->json(['status' => true, 'message' => 'Patient Plan added successfully']);
-
 
             }
 
@@ -1219,9 +1202,11 @@ class ApiController extends Controller
         $folder_id = $request->input('follow_up_parent_id');
 
 
-        DB::table('patient_file_access_log')->insert(
+        DB::table('resources')->insert(
             ['patient_id' => $patient_id,
-                'follow_up_parent_id' => $folder_id,
+                'type' => 'file',
+                'name' => $original_name,
+                'followup_parent_id' => $folder_id,
                 'file' => $fileName,
                 'file_name' => $original_name,
                 'created_at' => $currentdatetime
@@ -1249,7 +1234,7 @@ class ApiController extends Controller
         $file_name = $request->input('file_name');
 
 
-        DB::table('patient_file_access_log')
+        DB::table('resources')
             ->where('id', $patient_file_id)
             ->update(
                 ['file_name' => $file_name,
@@ -1272,11 +1257,13 @@ class ApiController extends Controller
         $patient_id = $request->input('patient_id');
 
         $patients = DB::table('patients')
-            ->select('patients.*', 'visits.id as encounter_id', 'visits.created_at as visit_created_at')
+            ->select('patients.*', 'visits.id as encounter_id', 'visits.created_at as visit_created_at','visits.visit_status')
             ->leftJoin('visits', 'patients.id', '=', 'visits.patient_id')
             ->where('patients.id', $patient_id)
+           // ->where('visit_status', 'queue')
             ->get();
 
+        $is_visit=0;
 
         //  dd($patients);
 
@@ -1299,13 +1286,13 @@ class ApiController extends Controller
             $patients[0]->marital_status = 'married';
         }
 
-        if ($patients[0]->marital_status == 3) {
+        if ($patients[0]->visit_status == 'queue') {
 
-            $patients[0]->marital_status = 'Divorced';
+            $is_visit = 1;
         }
 
 
-        return response()->json(['status' => true, 'data' => $patients[0]]);
+        return response()->json(['status' => true, 'data' => $patients[0],'is_visit'=>$is_visit]);
 
 
     }
@@ -1314,11 +1301,12 @@ class ApiController extends Controller
     public function get_visits()
     {
 
-
         $visits = DB::table('visits')
             ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
             ->select(DB::raw('patients.id,first_name,middle_name,last_name'))
             ->where('first_name', '!=', 'null')
+            ->where('visits.status', 1)
+            ->where('patients.status', 1)
             ->get();
 
 
@@ -1335,23 +1323,27 @@ class ApiController extends Controller
         $patient_info = DB::table('patients')
             ->select(DB::raw('*'))
             ->where('id', $patient_id)
+            ->where('status', 1)
             ->first();
 
         $patient_address = DB::table('patient_address')
             ->select(DB::raw('*'))
             ->where('patient_id', $patient_id)
+            ->where('status', 1)
             ->get();
 
 
         $patient_kin = DB::table('patient_kin')
             ->select(DB::raw('*'))
             ->where('patient_id', $patient_id)
+            ->where('status', 1)
             ->first();
 
 
         $patient_employers = DB::table('patient_employers')
             ->select(DB::raw('*'))
             ->where('patient_id', $patient_id)
+            ->where('status', 1)
             ->first();
 
 
@@ -1483,6 +1475,7 @@ class ApiController extends Controller
                 ->where('visits.patient_id', '!=', 'null')
                 ->where('visits.visit_status', '!=', 'checkout')
                 ->where('visits.status', '1')
+                ->where('patients.status', '1')
                 ->skip($offset)->take($limit)
                 ->get();
 
@@ -1496,6 +1489,7 @@ class ApiController extends Controller
                 ->where('visits.patient_id', '!=', 'null')
                 ->where('visits.visit_status', '!=', 'checkout')
                 ->where('visits.status', '1')
+                ->where('patients.status', '1')
                 ->count();
 
         } else {
@@ -1509,6 +1503,7 @@ class ApiController extends Controller
                 ->where('visits.patient_id', '!=', 'null')
                 ->where('visits.visit_status', '!=', 'checkout')
                 ->where('visits.status', '1')
+                ->where('patients.status', '1')
                 ->get();
 
             $count = count($visit_history);
@@ -1649,6 +1644,7 @@ class ApiController extends Controller
             ->where('visits.patient_id', '!=', 'null')
             ->where('visits.visit_status', '!=', 'checkout')
             ->where('visits.status', '1')
+            ->where('patients.status', '1')
             ->where('visits.id', $visit_id)
             ->first();
 
@@ -1666,7 +1662,7 @@ class ApiController extends Controller
 
         $file_archive = url('/') . '/patient_archive/';
 
-        $patient_archives = DB::table('patient_file_access_log')
+        $patient_archives = DB::table('resources')
             ->select(DB::raw('id,patient_id,file,CONCAT("' . $file_archive . '",file) as file,file_name,created_at'))
             ->where('patient_id', $patient_id)
             ->where('status', 1)
@@ -1691,14 +1687,13 @@ class ApiController extends Controller
             ->select(DB::raw('id,patient_id,followup_parent_id,file,CONCAT("' . $file_archive . '",file) as file,file_name,created_at'))
             ->where('patient_id', $patient_id)
             ->where('followup_parent_id', $followup_parent_id)
+            ->where('type', 'file')
             ->where('status', 1)
             ->get();
 
 
-
-        return response()->json(['status' => true, 'data' => $patient_archives]);
+        return response()->json(['status' => true, 'data' => $patient_archives, 'parent_id' => $followup_parent_id]);
     }
-
 
 
     public function list_resources_back(Request $request)
@@ -1718,16 +1713,25 @@ class ApiController extends Controller
             ->where('status', 1)
             ->first();
 
-        $followup_id = $followup->followup_parent_id;
+        if ($followup_parent_id == 0) {
+
+            $followup_id = 0;
+
+        } else {
+
+            $followup_id = $followup->followup_parent_id;
+
+        }
 
         $patient_archives = DB::table('resources')
-                 ->select(DB::raw('id,patient_id,followup_parent_id,file,CONCAT("' . $file_archive . '",file) as file,file_name,created_at'))
-                 ->where('patient_id', $patient_id)
-                 ->where('followup_parent_id', $followup_id)
-                 ->where('status', 1)
-                 ->get();
+            ->select(DB::raw('id,patient_id,followup_parent_id,file,CONCAT("' . $file_archive . '",file) as file,file_name,created_at'))
+            ->where('patient_id', $patient_id)
+            ->where('followup_parent_id', $followup_id)
+            ->where('status', 1)
+            ->where('type', 'file')
+            ->get();
 
-        return response()->json(['status' => true, 'data' => $patient_archives]);
+        return response()->json(['status' => true, 'data' => $patient_archives, 'parent_id' => $followup_id]);
     }
 
 
@@ -1741,17 +1745,67 @@ class ApiController extends Controller
         $file_archive = url('/') . '/patient_archive/';
 
         $resources = DB::table('resources')
-            ->select(DB::raw('id,patient_id,name,followup_parent_id,CONCAT("' . $file_archive . '",file) as file,file_name,created_at'))
+            ->select(DB::raw('id,patient_id,name,type,followup_parent_id,file_name,created_at'))
             ->where('patient_id', $patient_id)
             ->where('followup_parent_id', $followup_parent_id)
+            ->where('type', 'folder')
             ->where('status', 1)
             ->get();
         if (count($resources) > 0) {
-            return response()->json(['status' => true, 'data' => $resources]);
+            return response()->json(['status' => true, 'data' => $resources, 'parent_id' => $followup_parent_id]);
         } else {
-            return response()->json(['status' => true, 'data' => $resources]);
+            return response()->json(['status' => true, 'data' => $resources, 'parent_id' => $followup_parent_id]);
         }
 
+
+    }
+
+
+    public function list_patient_resources_back(Request $request)
+    {
+
+
+        $patient_id = $request->input('patient_id');
+        $followup_parent_id = $request->input('followup_parent_id');
+
+
+        $file_archive = url('/') . '/patient_archive/';
+
+
+        $followup = DB::table('resources')
+            ->select(DB::raw('followup_parent_id'))
+            ->where('patient_id', $patient_id)
+            ->where('id', $followup_parent_id)
+            ->where('status', 1)
+            ->first();
+
+
+        if ($followup_parent_id == 0) {
+
+            $followup_id = 0;
+
+        } else {
+
+            $followup_id = $followup->followup_parent_id;
+
+        }
+
+
+
+        $resources = DB::table('resources')
+            ->select(DB::raw('id,patient_id,name,type,followup_parent_id,file_name,created_at'))
+            ->where('patient_id', $patient_id)
+            ->where('followup_parent_id', $followup_id)
+            ->where('status', 1)
+            ->where('type', 'folder')
+            ->get();
+
+
+        if (count($resources) > 0) {
+            return response()->json(['status' => true, 'data' => $resources, 'parent_id' => $followup_id]);
+        } else {
+            return response()->json(['status' => true, 'data' => $resources, 'parent_id' => $followup_id]);
+        }
 
     }
 
@@ -1802,7 +1856,7 @@ class ApiController extends Controller
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
-        DB::table('patient_file_access_log')
+        DB::table('resources')
             ->where('id', $patient_file_id)
             ->update(array('status' => 0, 'updated_at' => $currentdatetime));
 
@@ -2502,10 +2556,7 @@ class ApiController extends Controller
 
                 ]
             );
-
-
         }
-
 
         if ($reason == 'Admit') {
 
@@ -2807,7 +2858,6 @@ class ApiController extends Controller
     public function get_patient_plan(Request $request)
     {
 
-
         $patient_id = $request->input('patient_id');
 
         $patient_plan = DB::table('hospital_plan')
@@ -2817,7 +2867,6 @@ class ApiController extends Controller
             ->where('patients.status', 1)
             ->where('patients.id', $patient_id)
             ->get();
-
 
         return response()->json(['status' => true, 'data' => $patient_plan]);
 
@@ -2894,33 +2943,65 @@ class ApiController extends Controller
         $prescription = html_entity_decode($request->input('prescription'));
 
         $patient_prescriptions = json_decode($prescription);
-
         $currentdatetime = date("Y-m-d  H:i:s");
 
+        DB::table('patient_prescription_medicine')->where('prescription_id', '=', $prescription_id)->delete();
 
         foreach ($patient_prescriptions as $patient_prescription) {
 
-            DB::table('patient_prescription_medicine')->where('prescription_id', $prescription_id)
-                ->update(
-                    ['medication' => $patient_prescription->medication,
+            DB::table('patient_prescription_medicine')
+                ->insert(
+                    [   'prescription_id'=>$prescription_id,
+                        'medication' => $patient_prescription->medication,
                         'sig' => $patient_prescription->sig,
                         'dispense' => $patient_prescription->dispense,
                         'reffills' => $patient_prescription->reffills,
                         'pharmacy' => $patient_prescription->pharmacy,
-                        'updated_at' => $currentdatetime
+                        'created_at' => $currentdatetime
 
                     ]
                 );
 
-
         }
-
 
         return response()->json(['status' => true, 'message' => 'Prescrpition Updated Successfully']);
 
 
     }
 
+
+    public function add_prescription_medication(Request $request)
+        {
+
+            $prescription_id = $request->input('prescription_id');
+            $prescription = html_entity_decode($request->input('prescription'));
+            $patient_prescriptions = json_decode($prescription);
+            $currentdatetime = date("Y-m-d  H:i:s");
+            
+
+            foreach ($patient_prescriptions as $patient_prescription) {
+
+                DB::table('patient_prescription_medicine')
+                    ->insert(
+                        [   'prescription_id'=>$prescription_id,
+                            'medication' => $patient_prescription->medication,
+                            'sig' => $patient_prescription->sig,
+                            'dispense' => $patient_prescription->dispense,
+                            'reffills' => $patient_prescription->reffills,
+                            'pharmacy' => $patient_prescription->pharmacy,
+                            'created_at' => $currentdatetime
+
+                        ]
+                    );
+
+
+            }
+
+
+            return response()->json(['status' => true, 'message' => 'Prescrpition Added Successfully']);
+
+
+        }
 
     public function get_all_prescription(Request $request)
     {
@@ -2973,7 +3054,7 @@ class ApiController extends Controller
             ->count();
 
 
-        if($offset==0 && $limit==0){
+        if ($offset == 0 && $limit == 0) {
 
             $prescriptions = DB::table('patient_prescription')
                 ->leftJoin('patients', 'patients.id', '=', 'patient_prescription.patient_id')
@@ -2982,11 +3063,11 @@ class ApiController extends Controller
                 ->where('patient_prescription.status', 1)
                 ->get();
 
-            $count=count($prescriptions);
+            $count = count($prescriptions);
 
         }
 
-        return response()->json(['status' => true, 'data' => $prescriptions , 'count'=>$count]);
+        return response()->json(['status' => true, 'data' => $prescriptions, 'count' => $count]);
 
 
     }
@@ -3003,6 +3084,7 @@ class ApiController extends Controller
             ->select(DB::raw('*,patient_prescription_medicine.id as prescribe_medication_id'))
             ->where('patient_prescription.id', $prescription_id)
             ->where('patient_prescription.status', 1)
+            ->where('patient_prescription_medicine.status', 1)
             ->get();
 
 
@@ -3012,9 +3094,17 @@ class ApiController extends Controller
             ->where('prescription_notes.prescription_id', $prescription_id)
             ->first();
 
-        $notes=$prescription_notes->note_for_pharmacy;
+        $notes = $prescription_notes->note_for_pharmacy;
 
-        return response()->json(['status' => true, 'data' => $prescriptions ,'notes' => $notes]);
+        $prescription_data = DB::table('patient_prescription')
+            ->leftJoin('visits', 'patient_prescription.visit_id', '=', 'visits.id')
+            ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
+            ->select(DB::raw('patient_prescription.created_at as date,patient_prescription.visit_id,doctors.name as Provider'))
+            ->where('patient_prescription.status', 1)
+            ->where('patient_prescription.id', $prescription_id)
+            ->first();
+
+        return response()->json(['status' => true, 'data' => $prescriptions, 'notes' => $notes,'prescription_data'=>$prescription_data]);
 
 
     }
@@ -3050,6 +3140,19 @@ class ApiController extends Controller
 
         return response()->json(['status' => true, 'message' => 'Prescrpition Updated Successfully']);
 
+    }
+
+
+    public function get_patient_medications(Request $request){
+
+        $patient_id = $request->input('patient_id');
+        $medicines = DB::table('medicines')
+                  ->select(DB::raw('id,supplements'))
+                  ->where('status', 1)
+                  ->where('patient_id', $patient_id)
+                  ->get();
+
+        return response()->json(['status' => true, 'data' => $medicines]);
     }
 
 }

@@ -5,16 +5,19 @@ AppEHR.controller('pharmacyPrescription', ['$scope', '$rootScope', '$window', 'P
 	$scope.action = '';
 	$scope.hideOptionsStrip = true;
 	$rootScope.loader = 'show';
+    $scope.offset = 0;
+    $scope.itemsPerPage = 15;
 
-	$scope.currentPage = 1;
-    $scope.numPerPage = 15;
-    $scope.maxSize = 5;
-
-	PharmacyPrescription.get({token: $window.sessionStorage.token}, pharmanyListSuccess, pharmanyListFailure);
+	PharmacyPrescription.get({
+        token: $window.sessionStorage.token,
+        offset: $scope.offset,
+        limit: $scope.itemsPerPage
+    }, pharmanyListSuccess, pharmanyListFailure);
 
 	function pharmanyListSuccess(res){
 		if(res.status ==  true){
 			$scope.allPharmacies = res.data;
+			$scope.pharmacyCount = res.count;
 			$rootScope.loader = 'hide';
 		}
 	}
@@ -23,17 +26,15 @@ AppEHR.controller('pharmacyPrescription', ['$scope', '$rootScope', '$window', 'P
 		console.log(error);
 	}
 
-	$scope.checkPrescription = function(Pid, Eid){
-		console.log(Pid);
-		console.log(Eid);
-		$scope.patientID = Pid;
+	$scope.checkPrescription = function(Pid, Eid, patientID){
+		$scope.prescriptionID = Pid;
 		$scope.encounterID = Eid;
+        $scope.patientID = patientID;
 		$scope.hideOptionsStrip = false;
 	}
 
 	$scope.goToPrescription = function(){
-		console.log($scope.patientID + "/" + $scope.encounterID);
-		$window.location.href = "#/pharmacy-view/" + $scope.patientID + "/" + $scope.encounterID;
+		$window.location.href = "#/pharmacy-view/" + $scope.prescriptionID /*+ "/" + $scope.encounterID*/ + "/" + $scope.patientID;
 	}
 
     $scope.search = function(item){ // search data by patient name or partient id
@@ -45,5 +46,50 @@ AppEHR.controller('pharmacyPrescription', ['$scope', '$rootScope', '$window', 'P
             }
         }
     };
+
+    /*PAGINATION*/
+
+    $scope.curPage = 0;
+    $scope.pageSize = 15;
+    $scope.numberOfPages = function() {
+      return Math.ceil($scope.pharmacyCount / $scope.pageSize);
+    };
+
+    $scope.paginationNext = function(pageSize, curPage){
+        $rootScope.loader = "show";
+        console.log(pageSize * curPage);
+        PharmacyPrescription.get({
+            token: $window.sessionStorage.token,
+            offset: (pageSize * curPage), 
+            limit: $scope.itemsPerPage
+        }, pharmanyListSuccess, pharmanyListFailure);
+    }
+
+    $scope.paginationPrev = function(pageSize, curPage){
+        $rootScope.loader = "show";
+        console.log(pageSize * curPage);
+        PharmacyPrescription.get({
+            token: $window.sessionStorage.token,
+            offset: (pageSize - 1) * curPage, limit: $scope.itemsPerPage
+        }, pharmanyListSuccess, pharmanyListFailure);
+    }
+
+    // Allergies
+    $('body').on('keyup', '.enterKey .keyUpPharmacy', function (e) {
+        if (e.keyCode == 13) {
+            if ($(this).val() != "") {
+                $(this).trigger("enterKey");
+                console.log(321);
+                if($scope.pageNumberPharmacy != undefined && $scope.pageNumberPharmacy != '' && parseInt($scope.pageNumberPharmacy) <= $scope.numberOfPages()){
+                    $rootScope.loader = "show";
+                    console.log(111);
+                    PharmacyPrescription.get({
+                        token: $window.sessionStorage.token,
+                        offset: ($scope.pageSize * parseInt($scope.pageNumberPharmacy-1)), /*== $scope.pageSize ? 0 : ($scope.pageSize * $scope.pageNumberPharmacy),*/ limit: $scope.itemsPerPage
+                    }, pharmanyListSuccess, pharmanyListFailure);
+                }
+            }
+        }
+    });
 
 }]);

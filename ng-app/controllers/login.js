@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('loginController', ['$scope', '$window', '$http', 'AUTH', function($scope, $window, $http, AUTH){
+AppEHR.controller('loginController', ['$scope', '$window', 'AUTH', function($scope, $window, AUTH){
 	$scope.pageTitle = "EHR - Login";
 	$window.sessionStorage.clear();
 	$scope.class = "hide";
@@ -18,7 +18,7 @@ AppEHR.controller('loginController', ['$scope', '$window', '$http', 'AUTH', func
 					$window.sessionStorage.role_id = res.data.role_id;
 					$window.sessionStorage.source_id = res.data.source_id;
 					$window.sessionStorage.token = res.token;
-					$window.location.href = '#/patient-registration';
+					$window.location.href = '#/dashboard';
 				}else{
 					console.log(res);
 					$scope.errorMessage = errorMessages.authFailed;

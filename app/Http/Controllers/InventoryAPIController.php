@@ -13,6 +13,13 @@ use DB;
 
 class InventoryAPIController extends Controller
 {
+    public function __construct(Request $request)
+    {
+
+        header('Access-Control-Allow-Origin: *');
+        date_default_timezone_set("Africa/Lagos");
+
+    }
     //Categories APIs.
     public function get_categories(){
         $categories = DB::table('inventory_categories')->where('status', 1)->get();
@@ -178,7 +185,7 @@ class InventoryAPIController extends Controller
         $stock = DB::table('stock')
             ->select('stock.id as stock_id', 'inventory_products.id as product_id','inventory_categories.id as category_id',
                      'inventory_categories.cat_name as category_name',
-                     'inventory_products.name as product_name','cost_per_item', 'quantity','order_quantity')
+                     'inventory_products.name as product_name','cost_per_item', 'quantity','order_quantity','inventory_products.reorder_level','stock.stock_status')
             ->leftJoin('inventory_products','inventory_products.id','=','stock.product_id')
             ->leftJoin('inventory_categories','inventory_products.cat_id','=','inventory_categories.id')
             ->where(['stock.status'=>1])
@@ -190,6 +197,46 @@ class InventoryAPIController extends Controller
         }
 
     }
+
+    //Stock APIs.
+       public function get_active_stock(){
+           $stock = DB::table('stock')
+               ->select('stock.id as stock_id', 'inventory_products.id as product_id','inventory_categories.id as category_id',
+                        'inventory_categories.cat_name as category_name',
+                        'inventory_products.name as product_name','cost_per_item', 'quantity','order_quantity','inventory_products.reorder_level','stock.stock_status')
+               ->leftJoin('inventory_products','inventory_products.id','=','stock.product_id')
+               ->leftJoin('inventory_categories','inventory_products.cat_id','=','inventory_categories.id')
+               ->where(['stock.status'=>1])
+               ->where('stock_status', 'active')
+               ->get();
+           if($stock){
+               return response()->json(['status' => true, 'message' => "Stock Found.", 'data'=>$stock], 200);
+           }else{
+               return response()->json(['status' => false, 'message' => "Stock not found"], 404);
+           }
+
+       }
+
+
+    //Stock APIs.
+       public function get_inactive_stock(){
+           $stock = DB::table('stock')
+               ->select('stock.id as stock_id', 'inventory_products.id as product_id','inventory_categories.id as category_id',
+                        'inventory_categories.cat_name as category_name',
+                        'inventory_products.name as product_name','cost_per_item', 'quantity','order_quantity','inventory_products.reorder_level','stock.stock_status')
+               ->leftJoin('inventory_products','inventory_products.id','=','stock.product_id')
+               ->leftJoin('inventory_categories','inventory_products.cat_id','=','inventory_categories.id')
+               ->where(['stock.status'=>1])
+               ->where('stock_status', 'inactive')
+               ->get();
+           if($stock){
+               return response()->json(['status' => true, 'message' => "Stock Found.", 'data'=>$stock], 200);
+           }else{
+               return response()->json(['status' => false, 'message' => "Stock not found"], 404);
+           }
+
+       }
+
     public function get_stock_details(Request $request){
         $product_id = $request->input('product_id');
         $stock = DB::table('stock')
@@ -481,6 +528,37 @@ class InventoryAPIController extends Controller
                 return response()->json(['status' => false, 'message' => "Product Inventory Added Successfully"], 200);
 
             }
+
+
+    }
+
+
+    public function inventory_inactive(Request $request){
+
+        $stock_id = $request->input('stock_id');
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+        $stock = DB::table('stock')->where('id',$stock_id)->first();
+
+        $stock_status = $stock->stock_status;
+
+        if($stock_status=='inactive'){
+
+            $status = 'active';
+        }
+
+        if($stock_status=='active'){
+
+            $status = 'inactive';
+        }
+
+        DB::table('stock')->where('id', $stock_id)->update(
+            [ 'stock_status'=>$status, 'updated_at'=> $currentdatetime
+            ]
+        );
+
+
+        return response()->json(['status' => true, 'message' => "Stock Updated Successfully"]);
 
 
     }

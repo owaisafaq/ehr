@@ -27,16 +27,16 @@ var intakeTypes = [
     {"id": "1", "name": "Intake"},
     {"id": "2", "name": "Type"}
 ];
-var medicationDropDowns = [
+/*var medicationDropDowns = [
     {"id": "1", "name": "abc"},
     {"id": "2", "name": "eef"},
 ]
 var pharmacyDataDropDown = [
     {"id": "1", "name": "abc"},
     {"id": "2", "name": "eef"},
-]
+]*/
 
-var buildInstructionObject = {
+/*var buildInstructionObject = {
    "dose" : [
    		{ "id": "1", "name": "abc" },
    		{ "id": "2", "name": "def" },
@@ -73,12 +73,12 @@ var buildInstructionObject = {
    		{ "id": "3", "name": "ghi" },
    		{ "id": "4", "name": "jkl" }
    ]
-}
-var immunizations = [
+}*/
+/*var immunizations = [
     {"id": "1", "name": "Intake"},
    {"id": "2", "name": "Type"}
-];
-var buildInstructionObject = {
+];*/
+/*var buildInstructionObject = {
   "dose" : [
           { "id": "1", "name": "abc" },
           { "id": "2", "name": "def" },
@@ -115,4 +115,4 @@ var buildInstructionObject = {
           { "id": "3", "name": "ghi" },
           { "id": "4", "name": "jkl" }
   ]
-}
+}*/

@@ -1,15 +1,37 @@
 var AppEHR = angular.module('AppEHR');
 // Lab Order Listing Controller
-AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders', '$window', '$routeParams','getLabOrderInfo','cancelLabOrder', '$timeout', '$location', 'GetAllPatients', 'DropDownData', 'GetLabTests','addOrder', function ($scope, $rootScope, GetAllLabOrders, $window, $routeParams,getLabOrderInfo,cancelLabOrder, $timeout, $location, GetAllPatients, DropDownData, GetLabTests, addOrder) {
+AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders', '$window', '$routeParams','getLabOrderInfo','cancelLabOrder', '$timeout', '$location', 'GetAllPatients', 'DropDownData', 'GetLabTests','addOrder', 'LabOrdersByPatient', function ($scope, $rootScope, GetAllLabOrders, $window, $routeParams,getLabOrderInfo,cancelLabOrder, $timeout, $location, GetAllPatients, DropDownData, GetLabTests, addOrder, LabOrdersByPatient) {
 	$rootScope.pageTitle = "EHR - Lab Order Listing";
     $scope.action = "";
+    $rootScope.loader = "show";
     $scope.testAdded = false;
-	GetAllLabOrders.get({ // Getting all lab orders
-		token: $window.sessionStorage.token
-	}, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
+    $scope.itemsPerPage = 15;
+    $scope.searchLab = $routeParams.patientID == undefined ? '' : $routeParams.patientID;
+    if($routeParams.patientID != undefined){
+        LabOrdersByPatient.get({
+            token: $window.sessionStorage.token,
+            patient_id: $routeParams.patientID,
+            limit: $scope.itemsPerPage, offset: 0
+        }, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
+    }else{
+    	GetAllLabOrders.get({ // Getting all lab orders
+    		token: $window.sessionStorage.token,
+            limit: $scope.itemsPerPage, offset: 0
+    	}, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
+    }
 	function GetAllLabOrdersSuccess(res) { // on success GetAllLabOrders
+        console.log(res);
 		if (res.status == true) {
+            $scope.labOrderCount = res.count;
+            console.log($scope.labOrderCount);
+            $rootScope.loader = "hide";
+            if(res.data.length == 0){
+                console.log(11);
+                $('#noRecordFound').modal('show');
+                return false;
+            }
 			$scope.labOrders = res.data;
+
 		}
 	}
 	function GetAllLabOrdersFailure(error) { // on failure GetAllLabOrders
@@ -48,6 +70,7 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
         }
     };
     function cancelLabOrderSuccess(res) { // on success
+        $rootScope.loader = "hide";
         if (res.status == true) {
             $scope.hideLoader = 'hide';
             $scope.message = true;
@@ -72,7 +95,6 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
     }
 
     $scope.search = function(item){ // search data by patient name or partient id
-        console.log(item);
         if($scope.searchLab == undefined){
             return true;
         }else{
@@ -81,10 +103,12 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
             }
         }
     };
+
     GetAllPatients.get({ // Getting all patients
         token: $window.sessionStorage.token
     }, GetAllPatientsSuccess, GetAllPatientsFailure);
     function GetAllPatientsSuccess(res) { // on success
+        $rootScope.loader = "hide";
         if (res.status == true) {
             $scope.patients = res.data;
         }
@@ -188,4 +212,46 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
         }
         return false;
     };
+
+    $scope.curPage = 0;
+    $scope.pageSize = 15;
+    $scope.numberOfPages = function() {
+      return Math.ceil($scope.labOrderCount / $scope.pageSize);
+    };
+
+    $scope.paginationNext = function(pageSize, curPage){
+        $rootScope.loader = "show";
+        console.log(pageSize * curPage);
+        if($routeParams.patientID != undefined){
+            LabOrdersByPatient.get({
+                token: $window.sessionStorage.token,
+                patient_id: $routeParams.patientID,
+                offset: (pageSize * curPage), limit: $scope.itemsPerPage
+            }, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
+        }else{
+            GetAllLabOrders.get({ // Getting all lab orders
+                token: $window.sessionStorage.token,
+                offset: (pageSize * curPage), limit: $scope.itemsPerPage
+            }, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
+        }
+    }
+
+    $scope.paginationPrev = function(pageSize, curPage){
+        $rootScope.loader = "show";
+        console.log(pageSize * curPage);
+        if($routeParams.patientID != undefined){
+            LabOrdersByPatient.get({
+                token: $window.sessionStorage.token,
+                patient_id: $routeParams.patientID,
+                offset: (pageSize * curPage), limit: $scope.itemsPerPage
+            }, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
+        }else{
+            GetAllLabOrders.get({ // Getting all lab orders
+                token: $window.sessionStorage.token,
+                offset: (pageSize * curPage), limit: $scope.itemsPerPage
+            }, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
+        }
+    }
+
+    
 }]);

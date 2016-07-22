@@ -18,6 +18,10 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/login.html',
                     controller: 'loginController'
                 }).
+                when('/dashboard', {
+                    templateUrl: 'views/dashboard.html',
+                    controller: 'dashboard'
+                }).
                 when('/appointments-calander-view', {
                     templateUrl: 'views/appointments-calender-view.html',
                     controller: 'appointmentsCalenderController'
@@ -54,6 +58,10 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/patient-registration.html',
                     controller: 'patientRegistrationController'
                 }).
+                when('/patient-summary-demographics/:patientID/:encounterID', {
+                    templateUrl: 'views/patient-summary-demographics.html',
+                    controller: 'patientSummaryDemographicsController'
+                }).
                 when('/patient-summary-demographics/:patientID', {
                     templateUrl: 'views/patient-summary-demographics.html',
                     controller: 'patientSummaryDemographicsController'
@@ -75,6 +83,10 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     controller: 'wardsDischargeSummaryController'
                 }).
                 when('/lab-order-listing', {
+                    templateUrl: 'views/lab-order-listing.html',
+                    controller: 'labOrderListing'
+                }).
+                when('/lab-order-listing/:patientID', {
                     templateUrl: 'views/lab-order-listing.html',
                     controller: 'labOrderListing'
                 }).
@@ -130,7 +142,11 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                     templateUrl: 'views/billing.html',
                     controller: 'billing'
                 }).
-                when('/pharmacy-view/:patientID/:encounterID', {
+                when('/billing/:patientID', {
+                    templateUrl: 'views/billing.html',
+                    controller: 'billing'
+                }).
+                when('/pharmacy-view/:prescriptionID/:patientID', {
                     templateUrl: 'views/pharmacy-view.html',
                     controller: 'pharmacyView'
                 }).
@@ -151,9 +167,9 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                 });
 
     }]);
-AppEHR.run(function ($rootScope, $location, $window) {
+AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData, $timeout) {
     if (sessionStorage.length == 0) {
-        console.log(1111111111111111);
+        //console.log(1111111111111111);
 //            var path = $location.$$path;
 //            if ((path == "/login" || path == "/") && path != undefined) {
 //                $location.path("patient-registration/");
@@ -161,6 +177,104 @@ AppEHR.run(function ($rootScope, $location, $window) {
 //        } else {
         $location.path("login");
     }
+    //$rootScope.SelectedPatientAfterSearch = false;
+    $rootScope.encounterHeaderSearchBar = true;
+    $('#autocomplete2').on('input', function(){
+        var input = $('#autocomplete2').val();
+        if(input != undefined || input != ''){
+            $.ajax({
+                url: $('#autocomplete2').data('source'),
+                dataType: "json",
+                type: "POST",
+                delay: 250,
+                data: {name: input},
+                success: function (patients) {
+                    if(patients.status == true){
+                        $("#autocomplete2").autocomplete({
+                            source: function (request, response) {
+                                response($.map(patients.data, function (value, key) {
+                                    return {
+                                        label: value.first_name + " " + value.last_name,
+                                        value: value.id
+                                    }
+                                }));
+                                patients.data = [];
+                            },
+                            select: function(event, ui) {
+                                $('#autocomplete2').val(ui.item.label);
+                                var selectId = ui.item.value;
+                                //$rootScope.HEADERSEARCHPATIENTID = selectId;
+                                getter(selectId);
+                                $('.headerleftOptions').removeClass('ng-hide');
+                                //window.location.href = "#/patient-summary-demographics/"+selectId;
+                                return false;
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    });
+    function getter(value){
+        $rootScope.HEADERSEARCHPATIENTID = value;
+    }
+    $rootScope.medicalHistoryheaderBar = function(){
+        $('.create_counter_header').addClass('hide');
+        $window.location.href = "#/patient-summary-demographics/"+$rootScope.HEADERSEARCHPATIENTID;
+    }
+    $rootScope.billingheaderBar = function(){
+        $('.create_counter_header').addClass('hide');
+        $window.location.href = "#/billing/"+$rootScope.HEADERSEARCHPATIENTID;
+    }
+    $rootScope.encounterHeaderBar = function(){
+        $rootScope.headerHideLoader = "hide";
+        $rootScope.encounterHeaderSearchBar = false;
+        $('.create_counter_header').removeClass('hide');
+        DropDownData.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id}, dropDownSuccess, dropDownFailed);
+        function dropDownSuccess(res){
+            if(res.status == true){
+                $rootScope.headerEncountersDropdownData = res.data;
+            }
+        }
+        function dropDownFailed(error){
+            console.log(error);
+        }
+    }
+    $rootScope.dismissHeaderEncounterModal = function(){
+        $('.create_counter_header').addClass('hide');
+        $rootScope.encounterHeaderSearchBar = true;
+    }
+    $rootScope.headerEncounterAdd = function(addEncounter){
+        $rootScope.headerHideLoader = "show";
+        AddEncounter.save({
+            token: $window.sessionStorage.token, 
+            patient_id: $rootScope.HEADERSEARCHPATIENTID,
+            department_id: addEncounter.department,
+            encounter_class: addEncounter.class,
+            encounter_type: addEncounter.type,
+            whom_to_see: addEncounter.wts,
+            decscribe_whom_to_see : addEncounter.describeWTS
+        }, encounterSuccess, encounterFailed);
+        function encounterSuccess(res){
+            if(res.status == true){
+                $rootScope.headerHideLoader = "hide";
+                $rootScope.headerMessageType = "alert-success";
+                $rootScope.headerErrorMessage = res.message;
+                $rootScope.headerErrorSymbol = "fa fa-check";// 
+                $rootScope.headerMessage = true;
+                $rootScope.headerSubmitted = false;
+                $timeout(function(){
+                    $rootScope.headerMessage = false;
+                    $rootScope.encounterHeaderSearchBar = true;
+                    $('.create_counter_header').addClass('hide');
+                }, 2000);
+            }
+        }
+        function encounterFailed(error){
+            console.log(error);
+        }
+    }
+    
     $rootScope.$on("$routeChangeStart", function (event, next, current) {
         if ($location.$$path != '/login' && $location.$$path != '/') {
             $rootScope.backgroundImg = "";
@@ -174,15 +288,10 @@ AppEHR.run(function ($rootScope, $location, $window) {
         console.log("here")
         console.log(localStorage.getItem('sessionStorage'))
 
-
-
-
-
-
-
     });
     $rootScope.loadView = function (object) {
-        $window.location.href = '#/patient-registration/';
+        $('.create_counter_header').addClass('hide');
+        $window.location.href = '#/patient-listing/';
     }
     $rootScope.logout = function () {
         $window.sessionStorage.clear();
@@ -190,6 +299,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
     }
     $rootScope.PI = {};
     $rootScope.loader = "";
+    
     $rootScope.$on('$viewContentLoaded', function () {
         // transfers sessionStorage from one tab to another
         var sessionStorage_transfer = function (event) {
@@ -217,7 +327,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
                 if (sessionStorage.email != undefined && sessionStorage.email != 'undefined' && sessionStorage.token != undefined && sessionStorage.token != 'undefined' && sessionStorage.role_id != undefined && sessionStorage.role_id != 'undefined') {
                     var path = $location.$$path;
                     if ((path == "/login" || path == "/") && path != undefined) {
-                        $location.path("patient-registration/");
+                        $location.path("patient-listing/");
                     }
                 } else {
                     $location.path("login");
@@ -253,7 +363,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
         $(".search-ajax").select2({
             placeholder: 'Select Patient',
             ajax: {
-                url: "http://demoz.online/ehr/public/api/search_patient",
+                url: serverPath+"search_patient",
                 delay: 250,
                 type: "POST",
                 data: function (params, page) {
@@ -271,9 +381,10 @@ AppEHR.run(function ($rootScope, $location, $window) {
                     }
                     else {
                         $.each(data['data'], function (index, item) {
+                            console.log(item);
                             myResults.push({
                                 'id': item.id,
-                                'text': item.first_name
+                                'text': item.first_name + " " + item.last_name
                             });
                         });
                     }
@@ -285,10 +396,10 @@ AppEHR.run(function ($rootScope, $location, $window) {
             },
             minimumInputLength: 2,
         });
-        $(".encounter-search-bar").select2({
+        $(".encounter-search-bar, .get-patient-search-bar").select2({
             placeholder: 'Search Patient',
             ajax: {
-                url: "http://demoz.online/ehr/public/api/search_patient",
+                url: serverPath+"search_patient",
                 delay: 250,
                 type: "POST",
                 data: function (params, page) {
@@ -308,7 +419,7 @@ AppEHR.run(function ($rootScope, $location, $window) {
                         $.each(data['data'], function (index, item) {
                             myResults.push({
                                 'id': item.id,
-                                'text': item.first_name
+                                'text': item.first_name + " " + item.last_name
                             });
                         });
                     }
@@ -345,8 +456,15 @@ AppEHR.run(function ($rootScope, $location, $window) {
         })
     });
     //$rootScope.html = '<div ng-include="\'utils/script-file.html\'"></div>';
-    $rootScope.html = '<script src="assets/js/libs/bootstrap/bootstrap.min.js"></script><script src="assets/js/libs/spin.js/spin.min.js"></script><script src="assets/js/libs/autosize/jquery.autosize.min.js"></script><script src="assets/js/libs/nanoscroller/jquery.nanoscroller.min.js"></script><script src="assets/js/core/source/App.js"></script><script src="assets/js/core/source/AppNavigation.js"></script><script src="assets/js/core/source/AppOffcanvas.js"></script><script src="assets/js/core/source/AppCard.js"></script><script src="assets/js/core/source/AppForm.js"></script><script src="assets/js/core/source/AppNavSearch.js"></script><script src="assets/js/core/source/AppVendor.js"></script><script src="assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script><script src="assets/js/core/demo/Demo.js"></script><script src="assets/js/core/source/script.js" type="text/javascript"></script><script src="assets/js/libs/select2/select2.min.js" type="text/javascript"></script><script src="assets/js/libs/inputmask/jquery.inputmask.bundle.min.js"></script><script src="assets/js/libs/bootstrap-timepicker/bootstrap-timepicker.js" type="text/javascript"></script>';
-
+    $rootScope.html = '<script src="assets/js/libs/jquery-ui/jquery-ui.min.js"></script><script src="assets/js/libs/bootstrap/bootstrap.min.js"></script><script src="assets/js/libs/spin.js/spin.min.js"></script><script src="assets/js/libs/autosize/jquery.autosize.min.js"></script><script src="assets/js/libs/nanoscroller/jquery.nanoscroller.min.js"></script><script src="assets/js/core/source/App.js"></script><script src="assets/js/core/source/AppNavigation.js"></script><script src="assets/js/core/source/AppOffcanvas.js"></script><script src="assets/js/core/source/AppCard.js"></script><script src="assets/js/core/source/AppForm.js"></script><script src="assets/js/core/source/AppNavSearch.js"></script><script src="assets/js/core/source/AppVendor.js"></script><script src="assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script><script src="assets/js/core/demo/Demo.js"></script><script src="assets/js/core/source/script.js" type="text/javascript"></script><script src="assets/js/libs/select2/select2.min.js" type="text/javascript"></script><script src="assets/js/libs/inputmask/jquery.inputmask.bundle.min.js"></script><script src="assets/js/libs/bootstrap-timepicker/bootstrap-timepicker.js" type="text/javascript"></script>';
+    // on change
+    $rootScope.getSearchPatientForHeader = function(string){
+        console.log(string);
+        $rootScope.loader = "show";
+        //$window.location.href = "#/patient-summary-demographics/"+string;
+        $location.path("patient-summary-demographics/"+string);
+        
+    }
 });
 AppEHR.filter('capitalize', function () {
     return function (input) {

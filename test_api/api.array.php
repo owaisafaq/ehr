@@ -757,10 +757,22 @@ $api->params->token = "123";
 $api_arr [] = $api;
 
 
+// List Folder Files Back
+$api = new api();
+$api->name = "Back to  Folder";
+$api->url = HOST . 'list_patient_resources_back ';
+$api->method = "GET";
+$api->description = "List Folder Files Back";
+$api->params->followup_parent_id = "1";
+$api->params->patient_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
 
 // Back to  Folder
 $api = new api();
-$api->name = "Back to  Folder";
+$api->name = "Back to  Folder Files";
 $api->url = HOST . 'list_resources_back';
 $api->method = "GET";
 $api->params->followup_parent_id = "1";
@@ -1142,14 +1154,27 @@ $api = new api();
 $api->name = "Get All Lab Orders";
 $api->url = HOST . 'get_all_lab_orders';
 $api->method = "GET";
-$api->description = "Get All Lab Lab Orders";
+$api->description = "Get All Lab  Orders";
+$api->params->limit = "0";
+$api->params->offset = "0";
 $api->params->token = "123";
-
-
-
 
 $api_arr [] = $api;
 
+
+
+// Get Patient Lab Orders
+$api = new api();
+$api->name = "Get Patient Lab Orders";
+$api->url = HOST . 'get_patient_lab_orders';
+$api->method = "GET";
+$api->description = "Get Patient Lab Orders";
+$api->params->patient_id = "1";
+$api->params->limit = "0";
+$api->params->offset = "0";
+$api->params->token = "123";
+
+$api_arr [] = $api;
 
 
 // Get All Lab Orders History
@@ -1267,6 +1292,27 @@ $api->method = "GET";
 $api->params->token = "";
 
 $api_arr [] = $api;
+
+
+// Get Active stocks
+$api = new api();
+$api->name = "Get Active stocks";
+$api->url = HOST . 'get_active_stock';
+$api->method = "GET";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+// Get Inactive stocks
+$api = new api();
+$api->name = "Get Inactive stocks";
+$api->url = HOST . 'get_inactive_stock';
+$api->method = "GET";
+$api->params->token = "";
+
+$api_arr [] = $api;
+
+
 
 // Get stock details
 $api = new api();
@@ -1394,6 +1440,8 @@ $api = new api();
 $api->name = "Get All Pharmacies";
 $api->url = HOST . 'get_pharmacies';
 $api->method = "GET";
+$api->params->offset = "1";
+$api->params->limit = "1";
 $api->params->token = "";
 
 $api_arr [] = $api;
@@ -1902,13 +1950,17 @@ $api->method = "POST";
 $api->params->patient_id = "1";
 $api->params->prescribe_medication_id = "1";
 $api->params->prescription = "1";
+$api->params->token = "123435";
 
-/*$api->params->medication = "1";
-$api->params->sig = "test";
-$api->params->dispense = "1";
-$api->params->reffills = "test";
-$api->params->pharmacy = "1";
-$api->params->note_of_pharmacy = "test";*/
+$api_arr [] = $api;
+
+//Add Patient Prescription Medication
+$api = new api();
+$api->name = "Add Patient Prescription Medication";
+$api->url = HOST . 'add_prescription_medication';
+$api->method = "POST";
+$api->params->prescription_id = "1";
+$api->params->prescription = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
@@ -2011,6 +2063,93 @@ $api->url = HOST . 'send_invoice_email';
 $api->method = "POST";
 $api->params->invoice_id = "1";
 $api->params->email_address = "smovaishassan12@hotmail.com";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//inventory inactive
+$api = new api();
+$api->name = "Inventory Inactive";
+$api->url = HOST . 'inventory_inactive';
+$api->method = "POST";
+$api->params->stock_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Add Patient Immunizations
+$api = new api();
+$api->name = "Add Patient Immunizations";
+$api->url = HOST . 'add_immunization';
+$api->method = "POST";
+$api->params->patient_id = "1";
+$api->params->name = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//List Patient Immunizations
+$api = new api();
+$api->name = "List Patient Immunizations";
+$api->url = HOST . 'list_immunizations';
+$api->method = "GET";
+$api->params->patient_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Delete Patient Immunizations
+$api = new api();
+$api->name = "Delete Patient Immunizations";
+$api->url = HOST . 'delete_immunization';
+$api->method = "POST";
+$api->params->immuization_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Get Patient Medicines
+$api = new api();
+$api->name = "Get Patient Medicines";
+$api->url = HOST . 'get_patient_medications';
+$api->method = "GET";
+$api->params->patient_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+
+//Remove Patient Prescription Medications
+$api = new api();
+$api->name = "Remove Patient Prescription Medications";
+$api->url = HOST . 'remove_patient_precription_medications';
+$api->method = "POST";
+$api->params->prescribe_medication_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+
+//Get Medicine Units
+$api = new api();
+$api->name = "Get Medicine Units";
+$api->url = HOST . 'get_medicine_units';
+$api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Get Dashboard Counts
+$api = new api();
+$api->name = "Get Dashboard Counts";
+$api->url = HOST . 'get_dashboard_counts';
+$api->method = "GET";
 $api->params->token = "123435";
 
 $api_arr [] = $api;

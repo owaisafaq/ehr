@@ -1,5 +1,5 @@
 var AppEHR = angular.module('AppEHR');
-AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', 'GetResourcesByFolderArchives', 'ListFolderArchives', 'EditFolderArchives', 'DeleteFolderArchives', 'RemoveArchives', 'Upload', 'SaveFiles', '$timeout', 'DropDownData', 'ADDSupplements', 'ADDAllergy', 'AddFolderArchives','EditArchives', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy, GetResourcesByFolderArchives, ListFolderArchives, EditFolderArchives, DeleteFolderArchives, RemoveArchives, Upload, SaveFiles, $timeout, DropDownData, ADDSupplements, ADDAllergy, AddFolderArchives,EditArchives) {
+AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', 'GetResourcesByFolderArchives', 'ListFolderArchives', 'EditFolderArchives', 'DeleteFolderArchives', 'RemoveArchives', 'Upload', 'SaveFiles', '$timeout', 'DropDownData', 'ADDSupplements', 'ADDAllergy', 'AddFolderArchives','EditArchives', 'PatienPrescription', 'FolderUpContent', 'FolderUpFolders', 'ListImmunization', 'DeleteImmunization', 'AddImmunization', 'GetAllMedications', 'CheckoutPatient', 'GetMedicineUnits', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy, GetResourcesByFolderArchives, ListFolderArchives, EditFolderArchives, DeleteFolderArchives, RemoveArchives, Upload, SaveFiles, $timeout, DropDownData, ADDSupplements, ADDAllergy, AddFolderArchives,EditArchives,PatienPrescription, FolderUpContent,FolderUpFolders, ListImmunization, DeleteImmunization, AddImmunization, GetAllMedications, CheckoutPatient, GetMedicineUnits) {
         $rootScope.pageTitle = "EHR - Patient Summary Demographics";
         $scope.vital = {};
         $scope.PI = {};
@@ -11,7 +11,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         $scope.addSupplement = {};
         $scope.frequencies = frequencies;
         $scope.intakeTypes = intakeTypes;
-        $scope.immunizations = immunizations;
+        //$scope.immunizations = immunizations;
 
         $scope.supplementData = [];
 
@@ -38,13 +38,22 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         $scope.itemsPerPage = 15;
         $scope.offset = 0;
 
-        $scope.PID = $routeParams.patientID
+        $scope.MedicationData = {}
+        //$scope.buildInstructionObject = buildInstructionObject;
+        $scope.buildInstructions = {};
+        //$scope.medicationDropDowns = medicationDropDowns;
+        //$scope.pharmacyDataDropDown = pharmacyDataDropDown;
+        $scope.medicationsDataPush = [];
+
+        $scope.PID = $routeParams.patientID;
+        $scope.encounterID = $routeParams.encounterID == undefined ? 1 : $routeParams.encounterID;
         PatientDemographics.get({
             token: $window.sessionStorage.token,
             patient_id: $routeParams.patientID
         }, getPatientInfoSuccess, getPatientInfoFailure);
         function getPatientInfoSuccess(res) {
             if (res.status == true) {
+                console.log(res.data);
                 var dob = new Date(res.data.date_of_birth);
                 var dobArr = dob.toDateString().split(' ');
                 $scope.PI.date_of_birth = dobArr[1] + ' ' + dobArr[2] + ' ' + dobArr[3];
@@ -80,9 +89,20 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
             console.log(error);
         }
 
+        GetMedicineUnits.get({token: $window.sessionStorage.token}, getMedicineUnitsSuccess, getMedicineUnitsFailure);
+
+        function getMedicineUnitsSuccess(res) {
+            if (res.status == true) {
+                $scope.medicineUnits = res.data;
+            }
+        }
+
+        function getMedicineUnitsFailure(error) {
+            console.log(error);
+        }
+
         function getPatientMedicationSuccess(res) {
             if (res.status == true) {
-                console.log(res);
                 $rootScope.loader = "hide";
                 $scope.medications = res.data;
                 $scope.medicationsCount = res.count;
@@ -94,11 +114,28 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
             console.log(error);
         }
 
+        ListImmunization.get({
+            token: $window.sessionStorage.token,
+            patient_id: $routeParams.patientID
+        }, listImmunizationSuccess, listImmunizationFailure);
+        $scope.immunizations = [];
+        function listImmunizationSuccess(res) {
+            if (res.status == true) {
+                console.log(res);
+                $scope.immunizations = res.data;
+            }
+        }
+
+        function listImmunizationFailure(error) {
+            console.log(error);
+        }
+
         $scope.validateVitals = function (vital) {
             if (angular.equals({}, vital) == false) {
                 if ($('form[name=vitalForm]').find('.error').length == 0) {
                     $rootScope.loader = "show";
                     var vitalField = {
+                        visit_id: $scope.encounterID == undefined ? $scope.EID : $scope.encounterID,
                         patient_id: $routeParams.patientID,
                         systolic_mm_hg: $scope.vital.systolic == undefined ? '' : $scope.vital.systolic,
                         diastolic_mm_hg: $scope.vital.diastolic == undefined ? '' : $scope.vital.diastolic,
@@ -173,6 +210,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }, GetSupplementsSuccess, GetSupplementsFailure);
         function GetSupplementsSuccess(res) {
             if (res.status == true) {
+                $rootScope.loader = 'hide';
                 $scope.supplementsCount = res.count;
                 $scope.supplements = res.data;
             }
@@ -191,15 +229,9 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }, GetAllergiesSuccess, GetAllergiesFailure);
         function GetAllergiesSuccess(res) {
             if (res.status == true) {
-//                $scope.allergies = 
+                $rootScope.loader = "hide";
                 $scope.allergies = res.data;
                 $scope.allergiesCount = res.count;
-//                $scope.allergy_status = {
-//                    "value": res.data.allergy_status,
-//                    "values": ["Service 1", "Service 2", "Service 3", "Service 4"]
-//                };
-//                $scope.allergie.allergy_status == res.data.allergy_status;
-//                console.log(res.data)
             }
         }
 
@@ -215,7 +247,6 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }, GetEncountersByPatientsSuccess, GetEncountersByPatientsFailure);
         function GetEncountersByPatientsSuccess(res) {
             if (res.status == true) {
-                console.log(res.count);
                 $rootScope.loader = "hide";
                 $scope.encounters = res.data;
                 $scope.encounterCount = res.count;
@@ -244,7 +275,6 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
                 token: $window.sessionStorage.token,
             }
             UpdateAllergies.save(AllergyData, allergySuccess, allergyFailure);
-            console.log(index)
             $scope.edit[index] = false;
         }
         function allergySuccess(res) {
@@ -279,7 +309,6 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         }
         $scope.doDelete = function () {
-            console.log("Oo")
             RemoveAllergy.save($scope.removeAllergyData, allergySuccess, allergyFailure);
             GetAllergies.get({
                 token: $window.sessionStorage.token,
@@ -460,16 +489,17 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         $scope.followupParentId = '0';
         GetResourcesByFolderArchives.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID, followup_parent_id: $scope.followupParentId}, nestedFolderSuccess, nestedFolderFailure);
-        function nestedFolderSuccess(res) {
+        /*function nestedFolderSuccess(res) {
             if (res.status == true) {
                 console.log(res.data);
                 $scope.backButtonArchive = false;
                 //$scope.foldersArchive = [];
                 $scope.archives = [];
                 $scope.archives = res.data;
+                $scope.backLinkID = res.parent_id;
                 $rootScope.loader = 'hide';
             }
-        }
+        }*/
 
         function nestedFolderFailure(error) {
             console.log(error);
@@ -495,10 +525,10 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         function listFolderSuccess(res) {
             if (res.status == true) {
                 $scope.foldersArchive = [];
-                console.log(res.data);
-                console.log(res.data.parent_id + " " + res.data[0].followup_parent_id + " " + res.data.parent_id);
-                $scope.backLinkID = res.data.parent_id == undefined ? res.data[0].followup_parent_id : res.data.parent_id ;
-                console.log($scope.backLinkID);
+                //console.log(res.data);
+                //console.log(res.data.parent_id + " " + res.data[0].followup_parent_id + " " + res.data.parent_id);
+                //$scope.backLinkID = res.data.parent_id //== undefined ? res.data[0].followup_parent_id : res.data.parent_id ;
+                console.log("bckid "+$scope.backLinkID);
                 $scope.foldersArchive = res.data;
                 $rootScope.loader = 'hide';
             }
@@ -506,18 +536,15 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         function listFolderFailure(error) {
             console.log(error);
         }
+        //$scope.backLinkID;
         $scope.backLinkID = '0';
         // Open folder when double click
         $scope.openFolder = function () {
             var folderId = $('.file_uploads .active').data('id');
-            /*if ($scope.backLinkID == '0') {
-                $scope.backLinkID = $scope.followupParentId;
-                console.log($scope.backLinkID + "--");
-            } else {
-                console.log('not zero');
-                $scope.backLinkID = $scope.followupParentId;
-                console.log($scope.backLinkID);
-            }*/
+            console.log(folderId);
+            console.log($scope.backLinkID);
+            console.log("backid");
+            $scope.backLinkID = $scope.backLinkID == null ? '0' : $scope.backLinkID;
             $scope.followupParentId = folderId;
             //console.log("folderifd"+folderId);
             if (folderId != undefined) {
@@ -525,8 +552,16 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
                 $scope.archives = [];
                 $rootScope.loader = 'show';
                 $scope.backButtonArchive = true;
-                GetResourcesByFolderArchives.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID, followup_parent_id: folderId}, nestedFolderSuccess, nestedFolderFailure);
-                ListFolderArchives.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID, followup_parent_id: folderId}, listFolderSuccess, listFolderFailure);
+                GetResourcesByFolderArchives.get({
+                    token: $window.sessionStorage.token, 
+                    patient_id: $routeParams.patientID, 
+                    followup_parent_id: folderId
+                }, nestedFolderSuccess, nestedFolderFailure);
+                ListFolderArchives.get({
+                    token: $window.sessionStorage.token, 
+                    patient_id: $routeParams.patientID, 
+                    followup_parent_id: folderId
+                }, listFolderSuccess, listFolderFailure);
                 //GetArchives.get({token: $window.sessionStorage.token, patient_id: '1' /*$window.sessionStorage.patient_id*/}, archiveSuccess, archiveFailure);
             }
         }
@@ -535,6 +570,9 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
             if (res.status == true) {
                 $scope.backButtonArchive = false;
                 //$scope.foldersArchive = [];
+                console.log(res);
+                $scope.backLinkID = res.parent_id;
+                console.log("bckid "+$scope.backLinkID);
                 $scope.archives = [];
                 $scope.archives = res.data;
                 $rootScope.loader = 'hide';
@@ -546,14 +584,53 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
 
         $scope.backButton = function () {
-            console.log($scope.followupParentId);
+            console.log("backLinkID");
+            console.log($scope.backLinkID);
             if ($scope.backLinkID == '0') {
-                $scope.followupParentId = $scope.backLinkID;
-                console.log($scope.followupParentId + "--followupParentId");
+                $scope.backButtonArchive = true; 
             }
-            GetResourcesByFolderArchives.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID, followup_parent_id: $scope.backLinkID}, nestedFolderSuccess, nestedFolderFailure);
+            FolderUpContent.get({
+                token: $window.sessionStorage.token, 
+                patient_id: $routeParams.patientID, 
+                followup_parent_id: $scope.backLinkID
+            }, folderUpContentSuccess, folderUpContentFailure);
 
-            ListFolderArchives.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID, followup_parent_id: $scope.backLinkID}, listFolderSuccess, listFolderFailure);
+            FolderUpFolders.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID, followup_parent_id: $scope.backLinkID}, folderUpFoldersSuccess, folderUpFoldersFailure);
+        }
+
+        function folderUpFoldersSuccess(res) {
+            if (res.status == true) {
+                $scope.foldersArchive = [];
+                $scope.backLinkID = res.parent_id;
+                console.log("bckid "+$scope.backLinkID);
+                $scope.foldersArchive = res.data;
+                $rootScope.loader = 'hide';
+            }
+        }
+
+        function folderUpFoldersFailure(error) {
+            console.log(error);
+        }
+
+        function folderUpContentSuccess(res) {
+            if (res.status == true) {
+
+                $scope.backButtonArchive = false;
+                //$scope.foldersArchive = [];
+                console.log(res);
+                $scope.backLinkID = res.parent_id;
+                if ($scope.backLinkID == '0') {
+                    $scope.backButtonArchive = true; 
+                }
+                console.log("folderUpContentSuccess" + $scope.backLinkID);
+                $scope.archives = [];
+                $scope.archives = res.data;
+                $rootScope.loader = 'hide';
+            }
+        }
+
+        function folderUpContentFailure(error) {
+            console.log(error);
         }
 
         $scope.folderBtn = function () {
@@ -648,9 +725,50 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
 
         $scope.addImmunizations = function(name){
-            $scope.immunizations.push({id: immunizations.length+1, name: name});
-            $scope.immunizationName = '';
-            console.log($scope.immunizations);
+            if(name != undefined && name != ''){
+                //$scope.immunizations.push({id: immunizations.length+1, name: name});
+                AddImmunization.save({
+                    token: $window.sessionStorage.token,
+                    name: name,
+                    patient_id: $scope.PID
+                }, addImmunizationsSuccess, addImmunizationsFailure);
+                $scope.immunizationName = '';
+                function addImmunizationsSuccess(res) {
+                    if (res.status == true) {
+                        console.log(res);
+                        ListImmunization.get({
+                            token: $window.sessionStorage.token,
+                            patient_id: $routeParams.patientID
+                        }, listImmunizationSuccess, listImmunizationFailure);
+                        //$scope.immunizations = res.data;
+                    }
+                }
+
+                function addImmunizationsFailure(error) {
+                    console.log(error);
+                }
+                console.log($scope.immunizations);
+            }
+        }
+
+        $scope.removeImmunization = function(id){
+            DeleteImmunization.get({
+                token: $window.sessionStorage.token,
+                immuization_id: id
+            }, deleteImmunizationsSuccess, deleteImmunizationsFailure);
+            function deleteImmunizationsSuccess(res) {
+                if (res.status == true) {
+                    console.log(res);
+                    ListImmunization.get({
+                        token: $window.sessionStorage.token,
+                        patient_id: $routeParams.patientID
+                    }, listImmunizationSuccess, listImmunizationFailure);
+                }
+            }
+
+            function deleteImmunizationsFailure(error) {
+                console.log(error);
+            }
         }
 
         /*ALLERGY PAGINATION*/
@@ -718,6 +836,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         $scope.encounterPaginationNext = function(pageSize, curPage){
             $rootScope.loader = "show";
             console.log(pageSize * curPage);
+            $scope.pageNumber = '';
             GetEncountersByPatients.get({
                 token: $window.sessionStorage.token,
                 offset: (pageSize * curPage),
@@ -729,6 +848,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         $scope.encounterPaginationPrev = function(pageSize, curPage){
             $rootScope.loader = "show";
             console.log(pageSize * curPage);
+            $scope.pageNumber = '';
             GetEncountersByPatients.get({
                 token: $window.sessionStorage.token,
                 offset: (pageSize - 1) * curPage,
@@ -745,11 +865,11 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         $scope.vitalPaginationNext = function(pageSize, curPage){
             $rootScope.loader = "show";
-            console.log(pageSize * curPage);
+            console.log(pageSize * curPage + "-" + $scope.vitalPageSize);
             GetVitalsInfo.get({
                 token: $window.sessionStorage.token,
                 offset: (pageSize * curPage),
-                limit: $scope.itemsPerPage,
+                limit: $scope.vitalPageSize == undefined ? $scope.itemsPerPage : $scope.vitalPageSize,
                 patient_id: $routeParams.patientID
             }, getVitalInfoSuccess, getVitalInfoFailure);
         }
@@ -791,4 +911,261 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
             }, getPatientMedicationSuccess, getPatientMedicationFailure);
         }
 
-    }]);
+        /*MEDICATION*/
+        $scope.addMedication = function (checkEdit) {
+           var AddMedications = {
+               medication: $scope.MedicationData.medication,
+               sig: $scope.MedicationData.sig,
+               dispense: $scope.MedicationData.dispense,
+               reffills: $scope.MedicationData.reffills,
+               pharmacy: $scope.MedicationData.pharmacy,
+               note_of_pharmacy: $scope.MedicationData.note_of_pharmacy,
+           }
+           $scope.note = $scope.MedicationData.note_of_pharmacy;
+           $scope.medicationsDataPush.push(AddMedications);
+           $scope.MedicationData.sig = "";
+           $scope.MedicationData.dispense = "";
+           $scope.MedicationData.reffills = "";
+           $scope.MedicationData.note_of_pharmacy = "";
+           $scope.MedicationData.medication = "";
+           $scope.MedicationData.pharmacy = "";
+           $("#addmedication select").select2("val", "");
+           if (checkEdit == 1) {
+               $scope.showUpdate = false;
+           }
+        }
+        $scope.editMedication = function (index) {
+
+           $scope.MedicationData = $scope.medicationsDataPush[index];
+           console.log($scope.MedicationData)
+           setTimeout(function () {
+               $('#addmedication select').trigger('change');
+           }, 100)
+           $scope.medicationsDataPush.splice(index, 1);
+           
+           $scope.showUpdate = true;
+        }
+        $scope.savePharmacyPopUp = function () {
+           for (var i = 0; i < $scope.medicationsDataPush.length; i++) {
+               delete $scope.medicationsDataPush[i].$$hashKey;
+               delete $scope.medicationsDataPush[i].note_of_pharmacy;
+           }
+           var addPrescrptnPop = {
+               patient_id: $routeParams.patientID,
+               prescription: JSON.stringify($scope.medicationsDataPush),
+               note_for_pharmacy: $scope.note,
+               token: $window.sessionStorage.token,
+               visit_id: $scope.encounterID
+           }
+           console.log(addPrescrptnPop);
+           $rootScope.loader = 'show';
+           PatienPrescription.save(addPrescrptnPop, PrescriptionSuccessPop, PrescriptionFailurePop)
+        }
+
+        function PrescriptionSuccessPop(res) {
+           console.log(res)
+           if (res.status == true) {
+               $('#addmedication').modal('hide');
+               $scope.medicationsDataPush = [];
+                GetPatientMedications.get({
+                    token: $window.sessionStorage.token,
+                    offset: $scope.offset,
+                    limit: $scope.itemsPerPage,
+                    patient_id: $routeParams.patientID
+                }, getPatientMedicationSuccess, getPatientMedicationFailure);
+                $rootScope.loader = 'hide';
+           }
+        }
+
+        function PrescriptionFailurePop(res) {
+           console.log(res)
+        }
+
+        $scope.addSIG = function (sigData) {
+            $scope.MedicationData.sig = sigData.dose == undefined ? '' : sigData.dose + " ";
+            $scope.MedicationData.sig += sigData.unit == undefined ? '' : sigData.unit + " ";
+            $scope.MedicationData.sig += sigData.route == undefined ? '' : sigData.route;
+            $scope.MedicationData.sig += sigData.frequency == undefined ? '' : " for " + sigData.frequency + " ";
+            $scope.MedicationData.sig += sigData.direction == undefined ? '' : sigData.direction + " ";
+            $scope.MedicationData.sig += sigData.duration == undefined ? '' : sigData.duration;
+            console.log($scope.MedicationData.sig);
+        }
+
+        /*$scope.selectBoxValue = function(value){
+            $rootScope.loader = "show";
+            $scope.pageNumber = '';
+            GetEncountersByPatients.get({
+                token: $window.sessionStorage.token,
+                offset: ($scope.pageSize * $scope.curPage),
+                limit: value,
+                patient_id: $routeParams.patientID
+            }, GetEncountersByPatientsSuccess, GetEncountersByPatientsFailure);
+        }*/
+        $scope.encounterCurPage = 0;
+        $('body').on('keyup', '.enterKey .keyUpEncounter', function (e) {
+            if (e.keyCode == 13) {
+                if ($(this).val() != "") {
+                    $(this).trigger("enterKey");
+                    console.log(321);
+                    if($scope.pageNumberEncounter != undefined && $scope.pageNumberEncounter != '' && parseInt($scope.pageNumberEncounter) <= $scope.numberOfPagesEncounter()){
+                        $rootScope.loader = "show";
+                        console.log($scope.encounterCurPage + " -- " + $scope.pageNumberEncounter);
+                       // $scope.encounterCurPage = $scope.encounterCurPage == parseInt($scope.pageNumberEncounter) ? $scope.encounterCurPage : parseInt($scope.pageNumberEncounter);
+                        console.log($scope.encounterCurPage);
+                        GetEncountersByPatients.get({
+                            token: $window.sessionStorage.token,
+                            offset: ($scope.pageSize * parseInt($scope.pageNumberEncounter-1)), /*== $scope.pageSize ? 0 : ($scope.pageSize * $scope.pageNumberEncounter),*/ limit: $scope.itemsPerPage,
+                            patient_id: $routeParams.patientID
+                        }, GetEncountersByPatientsSuccess, GetEncountersByPatientsFailure);
+                    }
+                }
+            }
+        });
+        // VITALS selectbox
+        /*$scope.vitalSelectBoxValue = function(value){
+            $rootScope.loader = "show";
+            $scope.pageNumber = '';
+            GetVitalsInfo.get({
+                token: $window.sessionStorage.token,
+                offset: ($scope.pageSize * $scope.vitalCurPage),
+                limit: value,
+                patient_id: $routeParams.patientID
+            }, getVitalInfoSuccess, getVitalInfoFailure);
+        }*/
+        $('body').on('keyup', '.enterKey .keyUpVital', function (e) {
+            if (e.keyCode == 13) {
+                if ($(this).val() != "") {
+                    $(this).trigger("enterKey");
+                    console.log(321);
+                    if($scope.pageNumberVital != undefined && $scope.pageNumberVital != '' && parseInt($scope.pageNumberVital) <= $scope.numberOfPagesVital()){
+                        $rootScope.loader = "show";
+                        GetVitalsInfo.get({
+                            token: $window.sessionStorage.token,
+                            offset: ($scope.pageSize * parseInt($scope.pageNumberVital-1)), /*== $scope.pageSize ? 0 : ($scope.pageSize * $scope.pageNumberVital),*/ limit: $scope.itemsPerPage,
+                            patient_id: $routeParams.patientID
+                        }, getVitalInfoSuccess, getVitalInfoFailure);
+                    }
+                }
+            }
+        });
+        // Medication
+        $('body').on('keyup', '.enterKey .keyUpMedication', function (e) {
+            if (e.keyCode == 13) {
+                if ($(this).val() != "") {
+                    $(this).trigger("enterKey");
+                    if($scope.pageNumberMedication != undefined && $scope.pageNumberMedication != '' && parseInt($scope.pageNumberMedication) <= $scope.numberOfPagesMedication()){
+                        $rootScope.loader = "show";
+                        GetPatientMedications.get({
+                            token: $window.sessionStorage.token,
+                            offset: ($scope.pageSize * parseInt($scope.pageNumberMedication-1)), /*== $scope.pageSize ? 0 : ($scope.pageSize * $scope.pageNumberMedication),*/ limit: $scope.itemsPerPage,
+                            patient_id: $routeParams.patientID
+                        }, getPatientMedicationSuccess, getPatientMedicationFailure);
+                    }
+                }
+            }
+        });
+        // Supplements
+        $('body').on('keyup', '.enterKey .keyUpSupplement', function (e) {
+            if (e.keyCode == 13) {
+                if ($(this).val() != "") {
+                    $(this).trigger("enterKey");
+                    console.log(321);
+                    if($scope.pageNumberSupplement != undefined && $scope.pageNumberSupplement != '' && parseInt($scope.pageNumberSupplement) <= $scope.numberOfPagesSupplements()){
+                        $rootScope.loader = "show";
+                        console.log(111);
+                        GetSupplements.get({
+                            token: $window.sessionStorage.token,
+                            offset: ($scope.pageSize * parseInt($scope.pageNumberSupplement-1)), /*== $scope.pageSize ? 0 : ($scope.pageSize * $scope.pageNumberSupplement),*/ limit: $scope.itemsPerPage,
+                            patient_id: $routeParams.patientID
+                        }, GetSupplementsSuccess, GetSupplementsFailure);
+                    }
+                }
+            }
+        });
+
+        // Allergies
+        $('body').on('keyup', '.enterKey .keyUpAllergy', function (e) {
+            if (e.keyCode == 13) {
+                if ($(this).val() != "") {
+                    $(this).trigger("enterKey");
+                    console.log(321);
+                    if($scope.pageNumberAllergy != undefined && $scope.pageNumberAllergy != '' && parseInt($scope.pageNumberAllergy) <= $scope.numberOfPagesSupplements()){
+                        $rootScope.loader = "show";
+                        console.log(111);
+                        GetAllergies.get({
+                            token: $window.sessionStorage.token,
+                            offset: ($scope.pageSize * parseInt($scope.pageNumberAllergy-1)), /*== $scope.pageSize ? 0 : ($scope.pageSize * $scope.pageNumberAllergy),*/ limit: $scope.itemsPerPage,
+                            patient_id: $routeParams.patientID
+                        }, GetAllergiesSuccess, GetAllergiesFailure);
+                    }
+                }
+            }
+        });
+
+        GetAllMedications.get({
+            token: $window.sessionStorage.token,
+            patient_id: $scope.PID
+        }, getAllMedicationsSuccess, getAllMedicationsFailure);
+        $scope.allMedications = [];
+        $scope.allPharmacies = [];
+        function getAllMedicationsSuccess(res){
+            console.log(11112);
+            console.log(res);
+            if(res.status == true){
+                $scope.allMedications = res.data;
+            }
+        }
+        function getAllMedicationsFailure(error){
+            console.log(error);
+        }
+
+        DropDownData.get({
+            token: $window.sessionStorage.token
+        }, getpharmacySuccess, getPharmacyFailure);
+
+        function getpharmacySuccess(res){
+            if(res.status == true){
+                console.log(1);
+                console.log(res);
+                $scope.allPharmacies = res.data.pharmacy;
+            }
+        }
+
+        function getPharmacyFailure(error){
+            console.log(error);
+        }
+
+        /*CHECKOUT*/
+
+        $scope.checkoutPatient = function (CO) {
+            var CheckoutDetails = {
+                token: $window.sessionStorage.token,
+                visit_id: $scope.encounterID == undefined ? $scope.action : $scope.encounterID,
+                patient_id: $routeParams.patientID,
+                reason: $('input:radio[name="checkoutpatient"]:checked').val(),
+                notes: $('.checkout_patient_tab_con > div.active textarea').val() == undefined ? '' : $('.checkout_patient_tab_con > div.active textarea').val(),
+                pick_date: CO.date,
+                pick_time: CO.time,
+                admit_date: CO.date,
+                start_time: CO.time,
+                department_id: CO.date,
+                ward_id: CO.date
+            }
+            CheckoutPatient.save(CheckoutDetails, checkoutSuccess, checkoutSuccessFailure);
+        }
+        function checkoutSuccess(res) {
+            console.log(res)
+            $('#checkout').modal('hide');
+            $('.checkout_patient_tab_con > div.active textarea').val('');
+            $('input:radio[name="checkoutpatient"]').prop("checked", false);
+            $('input:radio[name="checkoutpatient"]').eq(0).trigger("click");
+            $scope.buttonDisabled = false;
+            $('.counter_pop').addClass('ng-hide');
+            $scope.buttonDisabled = false;
+            $scope.patientInfo = false;
+        }
+        function  checkoutSuccessFailure(res) {
+            console.log(res)
+        }
+
+}]);

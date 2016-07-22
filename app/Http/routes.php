@@ -128,6 +128,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->get('list_patient_resources','App\Http\Controllers\ApiController@list_patient_resources');
 
+    $app->get('list_patient_resources_back','App\Http\Controllers\ApiController@list_patient_resources_back');
+
     $app->post('update_patient_resources','App\Http\Controllers\ApiController@update_patient_resources');
 
     $app->post('delete_patient_resources','App\Http\Controllers\ApiController@delete_patient_resources');
@@ -147,6 +149,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->get('get_lab_test_details','App\Http\Controllers\OrderController@get_lab_test_details');
 
     $app->get('get_all_lab_orders','App\Http\Controllers\OrderController@get_all_lab_orders');
+
+    $app->get('get_patient_lab_orders','App\Http\Controllers\OrderController@get_patient_lab_orders');
 
     $app->get('get_lab_order','App\Http\Controllers\OrderController@get_lab_order');
 
@@ -209,10 +213,21 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->get('get_template_details','App\Http\Controllers\OrderController@get_template_details');
     $app->post('add_patient_prescription','App\Http\Controllers\ApiController@add_patient_prescription');
     $app->post('update_patient_prescription','App\Http\Controllers\ApiController@update_patient_prescription');
+    $app->post('add_prescription_medication','App\Http\Controllers\ApiController@add_prescription_medication');
     $app->post('get_all_prescription','App\Http\Controllers\ApiController@get_all_prescription');
     $app->get('get_prescription_list','App\Http\Controllers\ApiController@get_prescription_list');
     $app->get('get_prescription','App\Http\Controllers\ApiController@get_prescription');
+    $app->get('get_patient_medications','App\Http\Controllers\ApiController@get_patient_medications');
     $app->post('update_prescription','App\Http\Controllers\ApiController@update_prescription');
+    $app->post('remove_patient_precription_medications','App\Http\Controllers\OtherController@remove_patient_precription_medications');
+
+
+    $app->post('add_immunization','App\Http\Controllers\OtherController@add_immunization');
+    $app->get('list_immunizations','App\Http\Controllers\OtherController@list_immunizations');
+    $app->post('delete_immunization','App\Http\Controllers\OtherController@delete_immunization');
+
+    $app->get('get_medicine_units','App\Http\Controllers\OtherController@get_medicine_units');
+    $app->get('get_dashboard_counts','App\Http\Controllers\OtherController@get_dashboard_counts');
 
 
 });
@@ -230,6 +245,8 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->post('delete_inventory_supplier','App\Http\Controllers\InventoryAPIController@delete_supplier');
 
     $app->get('get_stock','App\Http\Controllers\InventoryAPIController@get_stock');
+    $app->get('get_active_stock','App\Http\Controllers\InventoryAPIController@get_active_stock');
+    $app->get('get_inactive_stock','App\Http\Controllers\InventoryAPIController@get_inactive_stock');
     $app->get('get_stock_details','App\Http\Controllers\InventoryAPIController@get_stock_details');
     $app->post('add_inventory','App\Http\Controllers\InventoryAPIController@add_stock');
     $app->post('delete_inventory','App\Http\Controllers\InventoryAPIController@delete_stock');
@@ -253,5 +270,6 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->get('get_lab_test_pdf','App\Http\Controllers\PDFController@get_lab_test_pdf');
     $app->post('send_invoice_email','App\Http\Controllers\PDFController@send_invoice_email');
     $app->get('get_bill_invoices','App\Http\Controllers\BillingController@get_bill_invoices');
+    $app->post('inventory_inactive','App\Http\Controllers\InventoryAPIController@inventory_inactive');
 
 });
