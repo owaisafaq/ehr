@@ -343,7 +343,7 @@ class OtherController extends Controller
             ->where('status', 1)
             ->count();
 
-        $lab_order_products_count = DB::table('lab_orders')
+        $lab_order_count = DB::table('lab_orders')
             ->where('status', 1)
             ->count();
 
@@ -365,7 +365,7 @@ class OtherController extends Controller
             "radiology_count" => 100,
             "patient_pool_area_count" => 50,
             "inventory_count" => $inventory_products_count,
-            "laboratory_count" => $lab_order_products_count,
+            "laboratory_count" => $lab_order_count,
             "billing_count" => $billing_count
         );
 
