@@ -229,6 +229,9 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->get('get_medicine_units','App\Http\Controllers\OtherController@get_medicine_units');
     $app->get('get_dashboard_counts','App\Http\Controllers\OtherController@get_dashboard_counts');
 
+    //services regarding wards
+
+     $app->post('create_ward','App\Http\Controllers\OtherController@create_ward');
 
 });
 $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($app) {
