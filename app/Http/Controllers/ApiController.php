@@ -157,6 +157,8 @@ class ApiController extends Controller
 
         $patient_id = $request->input('patient_id');
 
+        $fileName = $request->input('patient_image');
+
 
         if (isset($patient_id)) {
 
@@ -169,7 +171,7 @@ class ApiController extends Controller
                     'date_of_birth' => $date_of_birth,
                     'age' => $age,
                     'sex' => $sex,
-                    'patient_image' => '',
+                    'patient_image' => $fileName,
                     'marital_status' => $marital_status,
                     'religion' => $religion,
                     'father_firstname' => $father_firstname,
@@ -194,7 +196,7 @@ class ApiController extends Controller
 
         } else {
 
-            if ($request->file('patient_image')) {
+ /*           if ($request->file('patient_image')) {
 
                 if ($request->file('patient_image')->isValid()) {
 
@@ -213,7 +215,8 @@ class ApiController extends Controller
             } else {
 
                 $fileName = '';
-            }
+            }*/
+
 
 
             DB::table('patients')->insert(
@@ -253,6 +256,34 @@ class ApiController extends Controller
             return response()->json(['status' => true, 'message' => "Patient registered successfully", "patient_id" => $patient_id]);
 
         }
+
+
+    }
+
+    public function upload_patient_image(Request $request){
+
+        if ($request->file('patient_image')) {
+
+           if ($request->file('patient_image')->isValid()) {
+               $destinationPath = base_path() . '/public/uploaded_images'; // upload path
+               $extension = $request->file('patient_image')->getClientOriginalExtension(); // getting image extension
+               $fileName = time() . '.' . $extension; // renameing image
+
+               $request->file('patient_image')->move($destinationPath, $fileName); // uploading file to given path
+
+
+           } else {
+
+               $fileName = '';
+
+           }
+
+        } else {
+
+            $fileName = '';
+        }
+
+        return response()->json(['status' => true, 'message' => "Patient Image Uploaded Successfully", "image" => $fileName]);
 
 
     }

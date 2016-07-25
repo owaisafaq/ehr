@@ -36,6 +36,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->post('register_patient', 'App\Http\Controllers\ApiController@register_patient');
 
+    $app->post('upload_patient_image', 'App\Http\Controllers\ApiController@upload_patient_image');
+
     $app->post('add_patient', 'App\Http\Controllers\ApiController@add_patient');
 
     $app->post('delete_patient', 'App\Http\Controllers\ApiController@delete_patient');

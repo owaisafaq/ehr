@@ -2167,3 +2167,14 @@ $api->params->description = "";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+
+//Upload Patient Image
+$api = new api();
+$api->name = "Upload Patient Image";
+$api->url = HOST . 'upload_patient_image';
+$api->method = "POST";
+$api->params->patient_image = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
