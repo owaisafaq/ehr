@@ -262,26 +262,20 @@ class ApiController extends Controller
 
     public function upload_patient_image(Request $request){
 
-        if ($request->file('patient_image')) {
 
-           if ($request->file('patient_image')->isValid()) {
-               $destinationPath = base_path() . '/public/uploaded_images'; // upload path
-               $extension = $request->file('patient_image')->getClientOriginalExtension(); // getting image extension
-               $fileName = time() . '.' . $extension; // renameing image
+         $image = $request->file('patient_image');
+         $destinationPath = base_path() . '/public/uploaded_images';
+         $original_name = $image->getClientOriginalName();
 
-               $request->file('patient_image')->move($destinationPath, $fileName); // uploading file to given path
+         $extension = $image->getClientOriginalExtension(); // getting image extension
+         $fileName = rand() . time() . '.' . $extension; // renameing image
+         if (!$image->isValid()) {
+             return response()->json(['status' => false, 'message' => 'Invalid image']);
+         }
 
 
-           } else {
+        $image->move($destinationPath, $fileName);
 
-               $fileName = '';
-
-           }
-
-        } else {
-
-            $fileName = '';
-        }
 
         return response()->json(['status' => true, 'message' => "Patient Image Uploaded Successfully", "image" => $fileName]);
 
@@ -3008,7 +3002,7 @@ class ApiController extends Controller
             $prescription = html_entity_decode($request->input('prescription'));
             $patient_prescriptions = json_decode($prescription);
             $currentdatetime = date("Y-m-d  H:i:s");
-            
+
 
             foreach ($patient_prescriptions as $patient_prescription) {
 
