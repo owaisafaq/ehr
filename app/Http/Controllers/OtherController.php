@@ -400,5 +400,18 @@ class OtherController extends Controller
 
 
         }
+
+    public function bed_occupancy(Request $request){
+
+        $data = DB::table('wards')
+            ->leftJoin('departments', 'departments.id', '=', 'wards.department_id')
+            ->select(DB::raw('wards.id,wards.name,wards.number_of_beds,wards.available_beds,wards.number_of_beds_closed,wards.number_of_beds_occupied,departments.name as speciality'))
+            ->where('wards.status', 1)
+            ->get();
+
+        return response()->json(['status' => true, 'data' =>$data]);
+
+    }
+
 }
 
