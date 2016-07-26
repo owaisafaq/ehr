@@ -390,6 +390,7 @@ class OtherController extends Controller
                     ['department_id' => $speciality,
                         'name' => $ward,
                         'number_of_beds' => $number_of_beds,
+                        'available_beds' => $number_of_beds,
                         'description' => $description,
                         'created_at' => date("Y-m-d  H:i:s")]
                 );
