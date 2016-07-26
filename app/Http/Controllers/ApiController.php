@@ -1274,33 +1274,22 @@ class ApiController extends Controller
         $logo_image = url('/') . '/uploaded_images/';
 
         $patients = DB::table('patients')
-            ->select('patients.*', 'visits.id as encounter_id', 'visits.created_at as visit_created_at', 'visits.visit_status')
+            ->select('patients.*', 'visits.id as encounter_id', 'visits.created_at as visit_created_at', 'visits.visit_status','maritial_status.name as marital_status')
             ->leftJoin('visits', 'patients.id', '=', 'visits.patient_id')
+            ->leftJoin('maritial_status', 'patients.marital_status', '=', 'maritial_status.id')
             ->where('patients.id', $patient_id)
             // ->where('visit_status', 'queue')
             ->get();
 
         $is_visit = 0;
 
-        //  dd($patients);
-
         if ($patients[0]->sex == 1) {
 
             $patients[0]->sex = 'male';
+
         } else {
 
             $patients[0]->sex = 'female';
-        }
-
-
-        if ($patients[0]->marital_status == 1) {
-
-            $patients[0]->marital_status = 'single';
-        }
-
-        if ($patients[0]->marital_status == 2) {
-
-            $patients[0]->marital_status = 'married';
         }
 
         if ($patients[0]->visit_status == 'queue') {
