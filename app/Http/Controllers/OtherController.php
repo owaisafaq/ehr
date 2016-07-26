@@ -413,5 +413,10 @@ class OtherController extends Controller
 
     }
 
+    public function patients_admitted(Request $request){
+
+        dd('here');
+    }
+
 }
 

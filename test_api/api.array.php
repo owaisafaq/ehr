@@ -2179,10 +2179,10 @@ $api->params->token = "123435";
 $api_arr [] = $api;
 
 
-//Ward List
+//Patients Admitted
 $api = new api();
-$api->name = "Ward List";
-$api->url = HOST . 'bed_occupancy';
+$api->name = "Patients Admitted";
+$api->url = HOST . 'patients_admitted';
 $api->method = "GET";
 $api->params->token = "123435";
 
