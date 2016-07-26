@@ -1348,19 +1348,11 @@ class ApiController extends Controller
             ->where('status', 1)
             ->first();
 
-
         $patient_employers = DB::table('patient_employers')
             ->select(DB::raw('*'))
             ->where('patient_id', $patient_id)
             ->where('status', 1)
             ->first();
-
-
-        /*       $patient_plan = DB::table('hospital_plan')
-                   ->leftJoin('patients', 'patients.plan_id', '=', 'hospital_plan.id')
-                   ->select(DB::raw('hospital_plan.id,hospital_plan.name'))
-                   ->where('patients.id', $patient_id)
-                   ->first();*/
 
 
         $patient_plan = DB::table('hospital_plan')
