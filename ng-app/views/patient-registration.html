@@ -13,7 +13,7 @@
             </div><!-- end .card-head -->
             <div class="card-body tab-content">
                 <div class="tab-pane {{disabledTabInfo}}" id="info">
-                    <form class="custom-form" name="userForm1" ng-model="myForm" novalidate ng-submit="validatePatientInfo(PI);" enctype="multipart/form-data">
+                    <form class="custom-form" name="userForm1" ng-model="myForm" novalidate ng-submit="validatePatientInfo(PI);" enctype="multipart/form-data" method="post">
                         <div class="row">
                             <div class="col-lg-3">
                                 <label>Patient ID</label>
@@ -63,7 +63,7 @@
                                     <div class="file-path-wrapper">
                                         <input class="file-path" type="text" placeholder="Upload Image" id="csv">
                                     </div>
-                                    <input type="file" ngf-select ng-model="PI.file" name="file" accept="image/*">
+                                    <input type="file" ngf-select="uploadFiles($files, $invalidFiles, 1)" name="file" accept="image/*">
                                     <div class="btn-browse">
                                         <span class="browse">Browse</span>
                                         <span class="web-cam"></span>
@@ -89,8 +89,8 @@
                                 <div class="col-lg-3" ng-init="PI.sex = undefined">
                                     <select class="form-control " name="sex" placeholder="Gender" ng-model="PI.sex" ng-class="{true:'error'}[submitted && userForm1.sex.$invalid]" required>
                                         <option value=""></option>
-                                        <option value="1">Female</option>
-                                        <option value="2">Male</option>
+                                        <option value="1">Male</option>
+                                        <option value="2">Female</option>
                                     </select>
                                     <p class="help-block PIValid" ng-show="submitted && userForm1.sex.$error.required">Required</p>
                                 </div>

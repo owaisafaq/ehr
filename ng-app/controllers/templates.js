@@ -70,6 +70,10 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
 
     function getTemplateSuccess(res) {
         if (res.status == true) {
+            if(res.data.length == 0){
+                $('#noRecordFound').modal('show');
+                return true;
+            }
             $scope.templateLists = res.data;
         }
     }

@@ -75,6 +75,10 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
         function GetAllPatientsSuccess(res) {
             $rootScope.loader = "hide";
             if (res.status == true) {
+                if(res.data.length == 0){
+                    $('#noRecordFound').modal('show');
+                    return true;
+                }
                 $scope.patientLists = [];
                 $scope.patientLists = res.data;
                 $scope.patientCount = res.count;
@@ -108,6 +112,8 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
                     $scope.showIdCard = true
                     $scope.displayInfo.date_of_birth = res.data.date_of_birth;
                     $scope.displayInfo.encounter_id = res.data.encounter_id;
+                    $scope.PI.patient_image = res.data.patient_image;
+                    $scope.PI.displayImage = patientImageDirectory + res.data.patient_image;
                     if($scope.displayInfo.encounter_id == undefined || $scope.displayInfo.encounter_id == null){
                         $scope.ifEncounterID = true;
                     }
