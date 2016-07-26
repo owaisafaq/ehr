@@ -3,7 +3,8 @@
 require 'api.class.php';
 //define('HOST', 'http://131.107.100.10/ehr/public/api/');
 //define('HOST', 'http://localhost/ehr/public/api/');
-define('HOST', 'http://demoz.online/ehr/public/api/');
+//define('HOST', 'http://demoz.online/ehr/public/api/');
+define('HOST', 'http://demoz.online/staging/ehr/public/api/');
 define('APP', '');
 define('ROUTE', '');
 
@@ -2150,6 +2151,30 @@ $api = new api();
 $api->name = "Get Dashboard Counts";
 $api->url = HOST . 'get_dashboard_counts';
 $api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Create Ward
+$api = new api();
+$api->name = "Create Ward";
+$api->url = HOST . 'create_ward';
+$api->method = "POST";
+$api->params->ward = "Orthopadic ward";
+$api->params->speciality = "1";
+$api->params->number_of_beds = "10";
+$api->params->description = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Upload Patient Image
+$api = new api();
+$api->name = "Upload Patient Image";
+$api->url = HOST . 'upload_patient_image';
+$api->method = "POST";
+$api->params->patient_image = "";
 $api->params->token = "123435";
 
 $api_arr [] = $api;

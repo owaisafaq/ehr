@@ -24,6 +24,8 @@ $app->group(['prefix' => 'api'], function () use ($app) {
     $app->post('add_patient_archive','App\Http\Controllers\ApiController@add_patient_archive');
     $app->options('add_patient_archive','App\Http\Controllers\ApiController@optadd_patient_archive');
     $app->post('update_patient_archive','App\Http\Controllers\ApiController@update_patient_archive');
+    $app->post('upload_patient_image', 'App\Http\Controllers\ApiController@upload_patient_image');
+    $app->options('upload_patient_image','App\Http\Controllers\ApiController@optupload_patient_image');
 
 
 });
@@ -35,6 +37,7 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
 
     $app->post('register_patient', 'App\Http\Controllers\ApiController@register_patient');
+
 
     $app->post('add_patient', 'App\Http\Controllers\ApiController@add_patient');
 
@@ -229,6 +232,9 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->get('get_medicine_units','App\Http\Controllers\OtherController@get_medicine_units');
     $app->get('get_dashboard_counts','App\Http\Controllers\OtherController@get_dashboard_counts');
 
+    //services regarding wards
+
+     $app->post('create_ward','App\Http\Controllers\OtherController@create_ward');
 
 });
 $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($app) {

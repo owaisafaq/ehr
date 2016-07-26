@@ -157,6 +157,8 @@ class ApiController extends Controller
 
         $patient_id = $request->input('patient_id');
 
+        $fileName = $request->input('patient_image');
+
 
         if (isset($patient_id)) {
 
@@ -169,7 +171,7 @@ class ApiController extends Controller
                     'date_of_birth' => $date_of_birth,
                     'age' => $age,
                     'sex' => $sex,
-                    'patient_image' => '',
+                    'patient_image' => $fileName,
                     'marital_status' => $marital_status,
                     'religion' => $religion,
                     'father_firstname' => $father_firstname,
@@ -194,7 +196,7 @@ class ApiController extends Controller
 
         } else {
 
-            if ($request->file('patient_image')) {
+ /*           if ($request->file('patient_image')) {
 
                 if ($request->file('patient_image')->isValid()) {
 
@@ -213,7 +215,8 @@ class ApiController extends Controller
             } else {
 
                 $fileName = '';
-            }
+            }*/
+
 
 
             DB::table('patients')->insert(
@@ -256,6 +259,34 @@ class ApiController extends Controller
 
 
     }
+
+    public function upload_patient_image(Request $request){
+
+        
+         $image = $request->file('patient_image');
+         $destinationPath = base_path() . '/public/uploaded_images';
+         $original_name = $image->getClientOriginalName();
+
+         $extension = $image->getClientOriginalExtension(); // getting image extension
+         $fileName = rand() . time() . '.' . $extension; // renameing image
+         if (!$image->isValid()) {
+             return response()->json(['status' => false, 'message' => 'Invalid image']);
+         }
+
+
+        $image->move($destinationPath, $fileName);
+
+
+        return response()->json(['status' => true, 'message' => "Patient Image Uploaded Successfully", "image" => $fileName]);
+
+
+    }
+
+    public function optupload_patient_image(Request $request){
+
+           return response()->json(['status' => true, 'message' => 'hello']);
+
+       }
 
 
     public function delete_patient(Request $request)
@@ -1255,6 +1286,7 @@ class ApiController extends Controller
 
 
         $patient_id = $request->input('patient_id');
+        $logo_image = url('/') . '/uploaded_images/';
 
         $patients = DB::table('patients')
             ->select('patients.*', 'visits.id as encounter_id', 'visits.created_at as visit_created_at','visits.visit_status')
@@ -1583,6 +1615,7 @@ class ApiController extends Controller
 
         $patient_id = $request->input('patient_id');
 
+        $logo_image = url('/') . '/uploaded_images/';
 
         $demographics = DB::table('patients')
             ->leftJoin('patient_address', 'patient_address.patient_id', '=', 'patients.id')
@@ -1591,9 +1624,9 @@ class ApiController extends Controller
             ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
             ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.plan_id')
             ->leftJoin('blood_group', 'blood_group.id', '=', 'patients.blood_group')
-            ->select(DB::raw('patients.id,patients.first_name,patients.middle_name,patients.last_name,patients.date_of_birth,patients.sex,patients.age,patients.patient_image,religion.name as religion,maritial_status.name as marital_status,hospital_plan.name as hospital_plan,patient_address.mobile_number,patient_address.email,patient_kin.fullname as next_to_kin,patient_address.house_number,patient_address.street,blood_group.name as blood_group'))
+            ->select(DB::raw('patients.id,patients.patient_image,patients.first_name,patients.middle_name,patients.last_name,patients.date_of_birth,patients.sex,patients.age,religion.name as religion,maritial_status.name as marital_status,hospital_plan.name as hospital_plan,patient_address.mobile_number,patient_address.email,patient_kin.fullname as next_to_kin,patient_address.house_number,patient_address.street,blood_group.name as blood_group'))
             ->where('patients.id', $patient_id)
-            ->where('patient_address.address_type', 'contact')
+           // ->where('patient_address.address_type', 'contact')
             ->where('patients.status', 1)
             ->first();
 
@@ -2977,7 +3010,7 @@ class ApiController extends Controller
             $prescription = html_entity_decode($request->input('prescription'));
             $patient_prescriptions = json_decode($prescription);
             $currentdatetime = date("Y-m-d  H:i:s");
-            
+
 
             foreach ($patient_prescriptions as $patient_prescription) {
 
