@@ -3,12 +3,18 @@ var AppEHR = angular.module('AppEHR');
 AppEHR.controller('labOrderHistory', ['$scope', '$rootScope', '$window', 'GetLabOrdersHistory', 'getLabOrderInfo', function($scope, $rootScope, $window, GetLabOrdersHistory, getLabOrderInfo){
 	$rootScope.pageTitle = "EHR - Lab Order History";
     $scope.action = "";
+    $rootScope.loader = "show";
 	GetLabOrdersHistory.get({ // Getting all lab orders
 		token: $window.sessionStorage.token
 	}, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
 	function GetAllLabOrdersSuccess(res) { // on success GetAllLabOrders
         console.log(res);
+        $rootScope.loader = "hide";
 		if (res.status == true) {
+            if(res.data.length == 0){
+                $('#noRecordFound').modal('show');
+                return true;
+            }
 			$scope.labOrders = res.data;
 		}
 	}

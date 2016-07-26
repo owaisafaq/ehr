@@ -74,6 +74,11 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
                 $scope.PI.hospital_plan = res.data.hospital_plan;
                 $scope.PI.religion = res.data.religion;
                 $scope.PI.patient_image = res.data.patient_image;
+                $scope.PI.displayImage = patientImageDirectory + res.data.patient_image;
+                $scope.hospital_plan = res.data.hospital_plan;
+                if($scope.hospital_plan == '1') $scope.hospital_plan = "card-color-1";
+                if($scope.hospital_plan == '2') $scope.hospital_plan = "card-color-2";
+                else $scope.hospital_plan = "card-color-3";
                 GetPatientMedications.get({
                     token: $window.sessionStorage.token,
                     offset: $scope.offset,

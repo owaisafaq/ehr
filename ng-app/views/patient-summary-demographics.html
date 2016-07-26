@@ -1,7 +1,7 @@
 <div id="content">
     <section>
         <div class="card custom-card">
-            <div class="card-head card-head-custom card-color-4">
+            <div class="card-head card-head-custom {{hospital_plan}}">
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Encounter ID</label>
                     <span class="txt-style-2 col-lg-12 capitalize">{{encounterID == undefined ? EID : encounterID}}</span>
@@ -102,34 +102,6 @@
                             </div>
                         </div>
                     </div><!--end .panel -->
-
-                    <!-- <div class="card panel">
-                        <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-5">
-                            <header>Procedures & Hospitalization</header>
-                            <div class="tools">
-                                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
-                            </div>
-                        </div>
-                        <div id="accordion3-5" class="collapse">
-                            <div class="card-body"><p>Duo semper accumsan ea, quidam convenire cum cu, oportere maiestatis incorrupte est eu. Soluta audiam timeam ius te, idque gubergren forensibus ad mel, persius urbanitas usu id. Civibus nostrum fabellas mea te, ne pri lucilius iudicabit. Ut cibo semper vituperatoribus vix, cum in error elitr. Vix molestiae intellegat omittantur an, nam cu modo ullum scriptorem.</p>
-                                <p>Quod option numquam vel in, et fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Dicant vituperata consequuntur at sea, mazim commodo</p>
-                            </div>
-                        </div>
-                    </div> --><!--end .panel -->
-
-                    <!-- <div class="card panel">
-                        <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-6">
-                            <header>Injections</header>
-                            <div class="tools">
-                                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
-                            </div>
-                        </div>
-                        <div id="accordion3-6" class="collapse">
-                            <div class="card-body"><p>Duo semper accumsan ea, quidam convenire cum cu, oportere maiestatis incorrupte est eu. Soluta audiam timeam ius te, idque gubergren forensibus ad mel, persius urbanitas usu id. Civibus nostrum fabellas mea te, ne pri lucilius iudicabit. Ut cibo semper vituperatoribus vix, cum in error elitr. Vix molestiae intellegat omittantur an, nam cu modo ullum scriptorem.</p>
-                                <p>Quod option numquam vel in, et fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Dicant vituperata consequuntur at sea, mazim commodo</p>
-                            </div>
-                        </div>
-                    </div> --><!--end .panel -->
                 </div><!--end .panel-group -->
             </div>
             <div class="card-head col-lg-9 no-padding card-head-auto">
@@ -153,7 +125,7 @@
                         <div class="patient_summary col-lg-12">
                             <div class="row">
                                 <div class="col-lg-2 text-center">
-                                    <img src="assets/img/profile_pic.jpg" />
+                                    <img src="{{PI.patient_image == '' || PI.patient_image == undefined ? 'assets/img/imgpsh_fullsize.jpeg' : PI.displayImage}}" style="width:150px;" />
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="col-lg-12">
@@ -273,7 +245,7 @@
                                 <th>date</th>
                                 <th>ID</th>
                                 <th>type</th>
-                                <th>chief / complaint</th>
+                                <th>chief complaint</th>
                                 <th>diagnosis</th>
                                 <th>consultant</th>
                                 <th>report</th>

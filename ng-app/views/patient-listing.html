@@ -70,7 +70,7 @@
                     <a class="delete button-custom" href=""></a>
                     <a class="add button-custom" href=""></a>
                 </div>
-                <button class="add button-custom pull-right" ng-click="addPatientButton();">Add</button>
+                <!-- <button class="add button-custom pull-right" ng-click="addPatientButton();">Add</button> -->
                 <button class="edit button-custom pull-right" ng-hide="hideOptions" ng-click="updatePatientButton();">Update</button>
                 <button class="delete button-custom pull-right" data-toggle="modal" data-target="#deleteModal" ng-hide="hideOptions">Delete</button>
                 <div>
@@ -107,7 +107,7 @@
                                         </label>
                                     </div>
                                 </td>
-                                <td>{{patientList.id}}</td>
+                                <td>PA-{{patientList.id}}</td>
                                 <td>{{patientList.first_name}}</td>
                                 <td>{{patientList.last_name}}</td>
                                 <td>{{patientList.date_of_birth}}</td>
@@ -156,14 +156,15 @@
                 <div class="id_card">
                     <div>
                         <h2>HOSPITAL LOGO</h2>
-                        <img class="id_card_img" src="assets/img/idcard_img.jpg" />
+                        <img class="id_card_img" src="{{PI.patient_image == '' || PI.patient_image == undefined ? 'assets/img/imgpsh_fullsize.jpeg' : PI.displayImage}}"/>
+                        <!-- <img class="id_card_img" src="assets/img/idcard_img.jpg" /> -->
                         <div class="col-lg-8 idCardInfo">
                             <label class="col-lg-12">Patient</label>
                             <span class="col-lg-12 patinetcard_name">{{displayInfo.first_name}}</span>
 
                             <div class="row">
                                 <label class="col-lg-6">Patient ID</label>
-                                <span class="col-lg-6">{{patientID}}</span>
+                                <span class="col-lg-6">PA-{{patientID}}</span>
                             </div>
 
                             <label class="col-lg-6">Date of Birth</label>
@@ -342,6 +343,21 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">OK</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade" id="noRecordFound" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Status</h2>
+            </div>
+            <div class="modal-body">
+                <p>No Record Found</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

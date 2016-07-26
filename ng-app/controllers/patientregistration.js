@@ -352,6 +352,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 function patientInfoUpdateSucess(res) {
                     if (res.status == true) {
                         $rootScope.loader = 'hide';
+                        $window.location.href = "#/patient-summary-demographics/"+$scope.PI.patient_ID.substr(0);
                     } else {
                         $scope.showSubmitButton = true;
                     }
@@ -797,23 +798,35 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         $scope.files = [];
         $scope.patient_archive = [];
         $scope.saveAndClose = true;
-        $scope.uploadFiles = function (files, errFiles) {
+        $scope.uploadFiles = function (files, errFiles, dp) {
             $scope.files = files;
             $scope.errFiles = errFiles;
             var i = 1;
             angular.forEach(files, function (file) {
-                file.upload = Upload.upload({
-                    url: serverPath + "add_patient_archive",
-                    method: 'POST',
-                    data: {patient_archive: file, patient_id: $window.sessionStorage.patient_id, follow_up_parent_id: $scope.followupParentId}
-                });
+                if(dp != undefined){
+                    console.log('dp1');
+                    console.log(file);
+                    file.upload = Upload.upload({
+                        url: serverPath + "upload_patient_image",
+                        method: 'POST',
+                        data: {patient_image: file}
+                    });
+                    
+                }else{
+                    file.upload = Upload.upload({
+                        url: serverPath + "add_patient_archive",
+                        method: 'POST',
+                        data: {patient_archive: file, patient_id: $window.sessionStorage.patient_id, follow_up_parent_id: $scope.followupParentId}
+                    });
+                }
 
                 file.upload.then(function (response) {
                     $timeout(function () {
                         file.result = response.data;
                         console.log(response);
+                        if(dp != undefined) $scope.PI.file = response.data.image;
                         if(files.length == i){
-                            console.log(i);
+                            console.log($scope.PI.file);
                             $scope.saveAndClose = false;
                         }
                         i++;

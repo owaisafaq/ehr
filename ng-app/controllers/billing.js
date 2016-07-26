@@ -20,6 +20,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	}, GetAllBillsSuccess, GetAllBillsFailure);
 
 	function GetAllBillsSuccess(res) {
+		console.log(res);
 		if (res.status == true) {
 			$rootScope.loader = "hide";
 			if(res.data.length == 0){

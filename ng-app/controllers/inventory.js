@@ -3,6 +3,7 @@ var AppEHR = angular.module('AppEHR');
 AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllInventory','GetAllSuppliers','AddCategory','GetAllCategories','AddSupplier','GetSingleSupplier','UpdateSuppliers','GetSingleCategory','GetSingleStock','updateCategory','DeleteCategory','DeleteSupplier','AddInventory','AddProduct','DeleteInventory','GetSingleProduct','GetAllPharmacies','GetReorderLevel','updateReorderLevel','GetProduct','ProductUpdate','Countries','States','City','$timeout', function($scope, $rootScope,$window,$routeParams,GetAllInventory,GetAllSuppliers,AddCategory,GetAllCategories,AddSupplier,GetSingleSupplier,UpdateSuppliers,GetSingleCategory,GetSingleStock,updateCategory,DeleteCategory,DeleteSupplier,AddInventory,AddProduct,DeleteInventory,GetSingleProduct,GetAllPharmacies,GetReorderLevel,updateReorderLevel,GetProduct,ProductUpdate,Countries,States,City,$timeout){
 	$rootScope.pageTitle = "EHR - Inventory";
 	$scope.displayInfo = {};
+	$rootScope.loader = "show";
 	$scope.cat_unique={};
 	$scope.selectedSupplier = {};
 	GetAllInventory.get({
@@ -10,10 +11,13 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 	}, GetAllInventorySuccess, GetAllInventoryFailure);
 
 	function GetAllInventorySuccess(res) {
-		console.log(res);
+		$rootScope.loader = "hide";
 		if (res.status == true) {
+			if(res.data.length == 0){
+                $('#noRecordFound').modal('show');
+                return true;
+            }
 			$scope.InventoryLists = res.data;
-			console.log($scope.InventoryLists)
 		}
 	}
 
@@ -27,10 +31,8 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 	}, GetAllSupplierSuccess, GetAllSupplierFailure);
 
 	function GetAllSupplierSuccess(res) {
-		console.log(res);
 		if (res.status == true) {
 			$scope.SuppplierLists = res.data;
-			console.log($scope.SuppplierLists)
 		}
 	}
 
@@ -54,7 +56,6 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 
 			}
 			angular.copy(addCateogry,$scope.cat_unique);
-			console.log(addCateogry);
 			AddCategory.save(addCateogry, CategorySuccess, CategoryFailure);
 
 
@@ -62,11 +63,9 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 	}
 
 	function CategorySuccess(res) {
-		console.log(res);
 		if (res.status == true) {
 			$rootScope.loader = "hide";
 			$scope.CategoryLists.push($scope.cat_unique);
-			console.log($scope.CategoryLists);
 			$timeout(function () {
 				$('#addCategory').modal('hide');
 			},500);
@@ -89,7 +88,6 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 		console.log(res);
 		if (res.status == true) {
 			$scope.CategoryLists = res.data;
-			console.log($scope.CategoryLists)
 		}
 	}
 
@@ -106,7 +104,6 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 	}, GetAllPharmaciesSuccess, GetAllPharmaciesFailure);
 
 	function GetAllPharmaciesSuccess(res) {
-		console.log(res);
 		if (res.status == true) {
 			$scope.PharmacyLists = res.data;
 			console.log($scope.PharmacyLists)
@@ -144,7 +141,6 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 				post_code:supplier.post_code
 
 			}
-			console.log(addSupplier);
 			AddSupplier.save(addSupplier, SupplierSuccess, SupplierFailure);
 
 
@@ -152,7 +148,6 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 	}
 
 	function SupplierSuccess(res) {
-		console.log(res);
 		if (res.status == true) {
 			$rootScope.loader = "hide";
 			$timeout(function () {
@@ -226,9 +221,6 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 
 
 
-			console.log("inventory full: "+inventory);
-			console.log(addInventory);
-			//console.log(addProduct);
 			AddInventory.save(addInventory, AddInventorySuccess, AddInventoryFailure);
 			//AddProduct.save(addProduct, AddProductSuccess, AddProductFailure);
 
@@ -238,7 +230,6 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 	}
 
 	function AddInventorySuccess(res) {
-		console.log(res);
 		if (res.status == true) {
 
 			$rootScope.loader = "hide";

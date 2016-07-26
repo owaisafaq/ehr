@@ -50,6 +50,10 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
         function getPatientEncounters(res) {
             if (res.status == true) {
                 $rootScope.loader = "hide";
+                if(res.data.length == 0){
+                    $('#noRecordFound').modal('show');
+                    return true;
+                }
                 $scope.allEncounter = res.data;
                 $scope.allEncounterCount = res.count;
                 console.log(res);

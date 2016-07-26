@@ -11,14 +11,14 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
         //$locationProvider.html5Mode(true);
         $routeProvider.
                 when('/', {
-                    templateUrl: 'views/patient-registration.html',
+                    templateUrl: 'views/login.html',
                     controller: 'loginController'
                 }).
                 when('/login', {
                     templateUrl: 'views/login.html',
                     controller: 'loginController'
-                }).
-                when('/logout', {
+                })
+                .when('/logout', {
                     templateUrl: 'views/logout.html',
                     controller: 'logoutController'
                 }).
@@ -186,37 +186,43 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
     $('#autocomplete2').on('input', function(){
         var input = $('#autocomplete2').val();
         if(input != undefined || input != ''){
-            $.ajax({
-                url: $('#autocomplete2').data('source'),
-                dataType: "json",
-                type: "POST",
-                delay: 250,
-                data: {name: input},
-                success: function (patients) {
-                    if(patients.status == true){
-                        $("#autocomplete2").autocomplete({
-                            source: function (request, response) {
-                                response($.map(patients.data, function (value, key) {
-                                    return {
-                                        label: value.first_name + " " + value.last_name,
-                                        value: value.id
-                                    }
-                                }));
-                                patients.data = [];
-                            },
-                            select: function(event, ui) {
-                                $('#autocomplete2').val(ui.item.label);
-                                var selectId = ui.item.value;
-                                //$rootScope.HEADERSEARCHPATIENTID = selectId;
-                                getter(selectId);
-                                $('.headerleftOptions').removeClass('ng-hide');
-                                //window.location.href = "#/patient-summary-demographics/"+selectId;
-                                return false;
-                            }
-                        });
+            if(input.length == 0){
+                $('.headerWithSwitchingImages').addClass('ng-hide');
+                $('.headerWithSwitchingImages1').removeClass('ng-hide');
+            }else{
+                $.ajax({
+                    url: $('#autocomplete2').data('source'),
+                    dataType: "json",
+                    type: "POST",
+                    delay: 250,
+                    data: {name: input},
+                    success: function (patients) {
+                        if(patients.status == true){
+                            $("#autocomplete2").autocomplete({
+                                source: function (request, response) {
+                                    response($.map(patients.data, function (value, key) {
+                                        return {
+                                            label: value.first_name + " " + value.last_name,
+                                            value: value.id
+                                        }
+                                    }));
+                                    patients.data = [];
+                                },
+                                select: function(event, ui) {
+                                    $('#autocomplete2').val(ui.item.label);
+                                    var selectId = ui.item.value;
+                                    //$rootScope.HEADERSEARCHPATIENTID = selectId;
+                                    getter(selectId);
+                                    $('.headerWithSwitchingImages').removeClass('ng-hide');
+                                    $('.headerleftOptions').removeClass('ng-hide');
+                                    //window.location.href = "#/patient-summary-demographics/"+selectId;
+                                    return false;
+                                }
+                            });
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     });
     function getter(value){
@@ -224,10 +230,14 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
     }
     $rootScope.medicalHistoryheaderBar = function(){
         $('.create_counter_header').addClass('hide');
+        $('#autocomplete2').val('');
         $window.location.href = "#/patient-summary-demographics/"+$rootScope.HEADERSEARCHPATIENTID;
     }
     $rootScope.billingheaderBar = function(){
         $('.create_counter_header').addClass('hide');
+        $('#autocomplete2').val('');
+        $('.headerWithSwitchingImages').addClass('hide');
+        $('.headerWithSwitchingImages1').removeClass('hide');
         $window.location.href = "#/billing/"+$rootScope.HEADERSEARCHPATIENTID;
     }
     
@@ -248,7 +258,7 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
     }
     $rootScope.dismissHeaderEncounterModal = function(){
         $('.create_counter_header').addClass('hide');
-        $rootScope.encounterHeaderSearchBar = true;
+        //$rootScope.encounterHeaderSearchBar = true;
     }
     $rootScope.headerEncounterAdd = function(addEncounter){
         $rootScope.headerHideLoader = "show";
@@ -272,6 +282,7 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
                 $rootScope.headerErrorSymbol = "fa fa-check";// 
                 $rootScope.headerMessage = true;
                 $rootScope.headerSubmitted = false;
+                $('#autocomplete2').val('');
                 $window.location.href = "#/new-encounter-encounter-list/"+res.visit_id+"/"+$rootScope.HEADERSEARCHPATIENTID;
                 $timeout(function(){
                     $rootScope.headerMessage = false;

@@ -2692,6 +2692,7 @@ table.billing_table > tbody > tr > td:nth-child(4){vertical-align:bottom;}
     font-family: 'sgui-bold';
 }
 .id_card_img{
+    width: 120px;
     float: right;
     margin-right: 40px;
 }
@@ -2982,4 +2983,8 @@ height: 100vh;
 height: 100vh;
 float: left;
 margin-left: -180px;
+}
+.disabled-header-option{
+    cursor: not-allowed;
+    background: rgba(255,255,255,0.5);
 }
