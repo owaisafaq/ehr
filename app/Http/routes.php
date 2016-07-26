@@ -25,6 +25,7 @@ $app->group(['prefix' => 'api'], function () use ($app) {
     $app->options('add_patient_archive','App\Http\Controllers\ApiController@optadd_patient_archive');
     $app->post('update_patient_archive','App\Http\Controllers\ApiController@update_patient_archive');
     $app->post('upload_patient_image', 'App\Http\Controllers\ApiController@upload_patient_image');
+    $app->options('upload_patient_image','App\Http\Controllers\ApiController@optupload_patient_image');
 
 
 });

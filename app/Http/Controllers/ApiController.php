@@ -262,7 +262,7 @@ class ApiController extends Controller
 
     public function upload_patient_image(Request $request){
 
-
+        
          $image = $request->file('patient_image');
          $destinationPath = base_path() . '/public/uploaded_images';
          $original_name = $image->getClientOriginalName();
@@ -281,6 +281,12 @@ class ApiController extends Controller
 
 
     }
+
+    public function optupload_patient_image(Request $request){
+
+           return response()->json(['status' => true, 'message' => 'hello']);
+
+       }
 
 
     public function delete_patient(Request $request)
