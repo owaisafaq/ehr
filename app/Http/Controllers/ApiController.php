@@ -1614,6 +1614,7 @@ class ApiController extends Controller
 
         $patient_id = $request->input('patient_id');
 
+        $logo_image = url('/') . '/uploaded_images/';
 
         $demographics = DB::table('patients')
             ->leftJoin('patient_address', 'patient_address.patient_id', '=', 'patients.id')
@@ -1622,9 +1623,9 @@ class ApiController extends Controller
             ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
             ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.plan_id')
             ->leftJoin('blood_group', 'blood_group.id', '=', 'patients.blood_group')
-            ->select(DB::raw('patients.id,patients.first_name,patients.middle_name,patients.last_name,patients.date_of_birth,patients.sex,patients.age,patients.patient_image,religion.name as religion,maritial_status.name as marital_status,hospital_plan.name as hospital_plan,patient_address.mobile_number,patient_address.email,patient_kin.fullname as next_to_kin,patient_address.house_number,patient_address.street,blood_group.name as blood_group'))
+            ->select(DB::raw('patients.id,CONCAT("'.$logo_image.'",patients.patient_image) as patient_image,patients.first_name,patients.middle_name,patients.last_name,patients.date_of_birth,patients.sex,patients.age,religion.name as religion,maritial_status.name as marital_status,hospital_plan.name as hospital_plan,patient_address.mobile_number,patient_address.email,patient_kin.fullname as next_to_kin,patient_address.house_number,patient_address.street,blood_group.name as blood_group'))
             ->where('patients.id', $patient_id)
-            ->where('patient_address.address_type', 'contact')
+           // ->where('patient_address.address_type', 'contact')
             ->where('patients.status', 1)
             ->first();
 
