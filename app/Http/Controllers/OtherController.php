@@ -415,7 +415,18 @@ class OtherController extends Controller
 
     public function patients_admitted(Request $request){
 
-        dd('here');
+        $data = DB::table('patients_admitted')
+                ->leftJoin('beds', 'patients_admitted.patient_id', '=', 'beds.patient_id')
+                ->leftJoin('wards', 'patients_admitted.ward_id', '=', 'wards.id')
+                ->leftJoin('departments', 'patients_admitted.department_id', '=', 'departments.id')
+                ->leftJoin('patients', 'patients_admitted.patient_id', '=', 'patients.id')
+                ->select(DB::raw('patients_admitted.id,patients_admitted.patient_id,patients.first_name,patients.middle_name,patients.last_name,patients_admitted.expected_discharge_date,departments.name as speciality,wards.name as ward,beds.id as bed'))
+                ->where('patients_admitted.status', 1)
+                ->where('patients_admitted.is_discharged', 0)
+                ->where('beds.patient_id','!=', 0)
+                ->get();
+
+        return response()->json(['status' => true, 'data' =>$data]);
     }
 
 }
