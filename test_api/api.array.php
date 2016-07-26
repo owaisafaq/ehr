@@ -2179,6 +2179,15 @@ $api->params->token = "123435";
 $api_arr [] = $api;
 
 
+//Ward List
+$api = new api();
+$api->name = "Ward List";
+$api->url = HOST . 'bed_occupancy';
+$api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
 //Upload Patient Image
 $api = new api();
 $api->name = "Upload Patient Image";

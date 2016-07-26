@@ -24,9 +24,9 @@ class InventoryAPIController extends Controller
     public function get_categories(){
         $categories = DB::table('inventory_categories')->where('status', 1)->get();
         if($categories){
-            return response()->json(['status' => true, 'message' => "Categories Found.", 'data'=>$categories], 200);
+            return response()->json(['status' => true, 'message' => "Categories Found", 'data'=>$categories], 200);
         }else{
-            return response()->json(['status' => false, 'message' => "Categories not found"], 404);
+            return response()->json(['status' => true, 'message' => "Categories not found",'data'=>$categories ], 200);
         }
     }
     public function get_single_category(Request $request){
@@ -35,7 +35,7 @@ class InventoryAPIController extends Controller
         if($categories){
             return response()->json(['status' => true, 'message' => "Categories Found.", 'data'=>$categories], 200);
         }else{
-            return response()->json(['status' => false, 'message' => "Categories not found"], 404);
+            return response()->json(['status' => true, 'message' => "Categories not found",'data'=>$categories], 200);
         }
     }
     public function create_category(Request $request){
@@ -81,9 +81,9 @@ class InventoryAPIController extends Controller
     public function get_suppliers(){
         $suppliers = DB::table('suppliers')->where('status',1)->get();
         if($suppliers){
-            return response()->json(['status' => true, 'message' => "Suppliers Found.", 'data'=>$suppliers], 200);
+            return response()->json(['status' => true, 'message' => "Suppliers Found ", 'data'=>$suppliers], 200);
         }else{
-            return response()->json(['status' => false, 'message' => "Suppliers not found"], 404);
+            return response()->json(['status' => true, 'message' => "Suppliers not found",'data'=>$suppliers], 200);
         }
     }
     public function get_single_supplier(Request $request){
@@ -193,7 +193,7 @@ class InventoryAPIController extends Controller
         if($stock){
             return response()->json(['status' => true, 'message' => "Stock Found.", 'data'=>$stock], 200);
         }else{
-            return response()->json(['status' => false, 'message' => "Stock not found"], 404);
+            return response()->json(['status' => true, 'message' => "Stock not found", 'data'=>$stock], 200);
         }
 
     }
