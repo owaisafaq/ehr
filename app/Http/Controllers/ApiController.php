@@ -196,29 +196,6 @@ class ApiController extends Controller
 
         } else {
 
- /*           if ($request->file('patient_image')) {
-
-                if ($request->file('patient_image')->isValid()) {
-
-                    $destinationPath = base_path() . '/public/uploaded_images'; // upload path
-                    $extension = $request->file('patient_image')->getClientOriginalExtension(); // getting image extension
-                    $fileName = time() . '.' . $extension; // renameing image
-
-                    $request->file('patient_image')->move($destinationPath, $fileName); // uploading file to given path
-
-                } else {
-
-                    $fileName = '';
-
-                }
-
-            } else {
-
-                $fileName = '';
-            }*/
-
-
-
             DB::table('patients')->insert(
                 ['first_name' => $first_name,
                     'middle_name' => $middle_name,
