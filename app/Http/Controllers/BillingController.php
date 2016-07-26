@@ -33,7 +33,7 @@ class BillingController extends Controller
             return response()->json(['status' => true, 'message' => 'Bills found', 'data' => $bills]);
 
         } else {
-            return response()->json(['status' => false, 'message' => 'Bills not found']);
+            return response()->json(['status' => true, 'message' => 'Bills not found','data' => $bills]);
         }
     }
 
