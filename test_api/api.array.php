@@ -2197,3 +2197,19 @@ $api->params->patient_image = "";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+//Move Patient
+$api = new api();
+$api->name = "Move Patient";
+$api->url = HOST . 'move_patient';
+$api->method = "POST";
+$api->params->patient_id = "";
+$api->params->department_id = "";
+$api->params->current_ward_id = "";
+$api->params->ward_id = "";
+$api->params->bed_id = "";
+$api->params->current_bed_id = "";
+$api->params->notes = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;

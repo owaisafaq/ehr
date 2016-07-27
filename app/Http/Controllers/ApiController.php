@@ -88,8 +88,13 @@ class ApiController extends Controller
 
         if (empty($patients)) {
 
+            $patient = array(
+                "id" => 0,
+                "first_name" => "Sorry No Record Found",
+                "last_name" => "",
+            );
 
-            return response()->json(['status' => false, 'message' => "sorry no patients found"]);
+            return response()->json(['status' => true, 'data'=>$patient]);
 
 
         } else {
