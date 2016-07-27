@@ -455,8 +455,8 @@ class OrderController extends Controller
     {
 
 
-        $lab_id = $request->input('lab_test');
-        $lab_order_test_id = $request->input('lab_order_test_id');
+       // $lab_id = $request->input('lab_test');
+        $lab_order_test_id = $request->input('lab_test');
         $status = $request->input('status');
 
         $currentdatetime = date("Y-m-d  H:i:s");
@@ -599,15 +599,14 @@ class OrderController extends Controller
 
         $lab_test_id = $request->input('lab_test_id');
 
-
         $lab_test = DB::table('lab_tests')
-            ->select('lab_tests.*', 'lab_order_tests.lab_order_id', 'patients.first_name', 'patients.last_name', 'patients.id as patient_id', 'patients.age', 'patients.sex', 'maritial_status.name as marital_status')
+            ->select('lab_order_tests.id','lab_tests.name','lab_tests.lonic_code','lab_tests.cost','lab_tests.lab','lab_order_tests.test_status', 'lab_order_tests.lab_order_id', 'patients.first_name', 'patients.last_name', 'patients.id as patient_id', 'patients.age', 'patients.sex', 'maritial_status.name as marital_status')
             ->leftJoin('lab_order_tests', 'lab_order_tests.lab_test', '=', 'lab_tests.id')
             ->leftJoin('lab_orders', 'lab_orders.id', '=', 'lab_order_tests.lab_order_id')
             ->leftJoin('patients', 'patients.id', '=', 'lab_orders.patient_id')
             ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
             ->where('lab_tests.status', 1)
-            ->where('lab_tests.id', $lab_test_id)
+            ->where('lab_order_tests.id', $lab_test_id)
             ->first();
 
         if ($lab_test->sex == 1) {
