@@ -235,6 +235,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     //services regarding wards
 
      $app->post('create_ward','App\Http\Controllers\OtherController@create_ward');
+     $app->get('bed_occupancy','App\Http\Controllers\OtherController@bed_occupancy');
+     $app->get('patients_admitted','App\Http\Controllers\OtherController@patients_admitted');
 
 });
 $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($app) {
