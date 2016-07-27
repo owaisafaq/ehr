@@ -456,14 +456,18 @@ class OrderController extends Controller
 
 
         $lab_id = $request->input('lab_test');
+        $lab_order_test_id = $request->input('lab_order_test_id');
         $status = $request->input('status');
 
         $currentdatetime = date("Y-m-d  H:i:s");
-
+        /*
         DB::table('lab_tests')
             ->where('id', $lab_id)
-            ->update(array('test_status' => $status, 'updated_at' => $currentdatetime));
+            ->update(array('test_status' => $status, 'updated_at' => $currentdatetime));*/
 
+        DB::table('lab_order_tests')
+            ->where('id', $lab_order_test_id)
+            ->update(array('test_status' => $status, 'updated_at' => $currentdatetime));
 
         return response()->json(['status' => true, 'message' => 'Lab Test Updated Successfully']);
 
