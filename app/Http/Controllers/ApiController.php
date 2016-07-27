@@ -94,7 +94,7 @@ class ApiController extends Controller
                 "last_name" => "",
             );
 
-            return response()->json(['status' => true, 'data'=>$patient]);
+            return response()->json(['status' => false, 'data'=>$patient]);
 
 
         } else {
