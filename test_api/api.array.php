@@ -1252,7 +1252,8 @@ $api = new api();
 $api->name = "Update Lab Test";
 $api->url = HOST . 'update_lab_test';
 $api->method = "POST";
-$api->params->lab_test = "1";
+//$api->params->lab_test = "1";
+$api->params->lab_order_test_id = "";
 $api->params->status = "in progress";
 $api->params->token = "123";
 
