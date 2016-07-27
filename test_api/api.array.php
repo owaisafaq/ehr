@@ -1788,6 +1788,7 @@ $api = new api();
 $api->name = "Get Templates";
 $api->url = HOST . 'get_templates';
 $api->method = "GET";
+$api->params->category_id = "";
 $api->params->token = "123435";
 
 
