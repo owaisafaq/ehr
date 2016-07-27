@@ -52,6 +52,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         $scope.archives = [];
         $scope.showSubmitButtonPatientPlan = true;
         $scope.patientPlantRadios = false;
+        $scope.imageUploading = true;
         //$scope.PI.identity_type = dropDownInfo.IdType[0].id;
         //$scope.PI.kin_relationship = dropDownInfo.relationship[0].id;
         //$scope.PI.dependant_relationship = dropDownInfo.relationship[0].id;
@@ -333,7 +334,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     if (res.status == true) {
                         $rootScope.loader = 'hide';
                         $window.sessionStorage.patient_id = res.patient_id;
-                        $scope.PI.patient_ID = "ID" + res.patient_id;
+                        $scope.PI.patient_ID = /*"ID" +*/ res.patient_id;
                         $scope.successMessage = true;
                         $scope.showSubmitButton = false;
                         $scope.disabledTabAdress = 'active';
@@ -352,7 +353,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 function patientInfoUpdateSucess(res) {
                     if (res.status == true) {
                         $rootScope.loader = 'hide';
-                        $window.location.href = "#/patient-summary-demographics/"+$scope.PI.patient_ID.substr(0);
+                        $window.location.href = "#/patient-summary-demographics/"+$scope.PI.patient_ID;
                     } else {
                         $scope.showSubmitButton = true;
                     }
@@ -805,7 +806,8 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             angular.forEach(files, function (file) {
                 if(dp != undefined){
                     console.log('dp1');
-                    console.log(file);
+                    $scope.imageUploading = false;
+                    $scope.patientImageProgress = true;
                     file.upload = Upload.upload({
                         url: serverPath + "upload_patient_image",
                         method: 'POST',
@@ -821,6 +823,8 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 }
 
                 file.upload.then(function (response) {
+                    $scope.imageUploading = true;
+                    $scope.patientImageProgress = false;
                     $timeout(function () {
                         file.result = response.data;
                         console.log(response);

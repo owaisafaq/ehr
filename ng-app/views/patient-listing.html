@@ -43,7 +43,7 @@
                     <span class="txt-style-3 pull-left text-uppercase">find patient</span>
                     <div class="col-lg-2">
                         <!---->
-                        <select ng-model="filterType" class="form-control" placeholder="Select Search By">
+                        <select ng-model="filterType" class="form-control" placeholder="Select Search By" ng-change="findPatient();">
                             <option></option>
                             <option value="id">Patient ID</option>
                             <option value="first_name">Patient Name</option>
@@ -56,7 +56,7 @@
                         <button type="submit">
                             <i class="fa fa-search"></i>
                         </button>
-                        <input ng-model="search[filterType]" class="search_field" type="text" placeholder="Search for a patient" value="">
+                        <input ng-model="search[filterType]" ng-disabled="disabledSearchBar" class="search_field" type="text" placeholder="Search for a patient" value="">
                     </div>
                 </div>
 

@@ -82,8 +82,12 @@
                                     <select class="form-control" ng-class="{true: 'error'}[submitted && encounterForm.class.$invalid]" name="class" ng-model="addEncounter.class" placeholder="Select" required>
                                         <option value=""></option>
                                         <!-- <option ng-repeat="class in eclass" value="{{class.id}}">{{class.name}}</option> -->
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
+                                        <option value="Emergency">Emergency</option>
+                                        <option value="Inpatient">Inpatient</option>
+                                        <option value="Outpatient">Outpatient</option>
+                                        <option value="Preadmit">Preadmit</option>
+                                        <option value="Recurring patient">Recurring patient</option>
+                                        <option value="Obstetrics">Obstetrics</option>
                                     </select>
                                     <p class="help-block PIValid" ng-show="submitted && encounterForm.class.$error.required">Required</p>
                                 </div>
@@ -95,8 +99,10 @@
                                     <select class="form-control" ng-class="{true: 'error'}[submitted && encounterForm.type.$invalid]" name="type" ng-model="addEncounter.type" placeholder="Select" required>
                                         <option value=""></option>
                                         <!-- <option ng-repeat="type in types" value="{{type.id}}">{{type.name}}</option> -->
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
+                                        <option value="Consultation">Consultation</option>
+                                        <option value="Surgical procedure">Surgical procedure</option>
+                                        <option value="Followup visit">Followup visit</option>
+                                        <option value="Rehabilitation">Rehabilitation</option>
                                     </select>
                                     <p class="help-block PIValid" ng-show="submitted && encounterForm.type.$error.required">Required</p>
                                 </div>

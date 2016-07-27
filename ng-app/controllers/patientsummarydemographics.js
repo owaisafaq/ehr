@@ -90,7 +90,8 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
 
         function getPatientInfoFailure(error) {
-            alert('Invalid Patient ID');
+            $scope.errorMessage = errorMessages.InvalidPatientID;
+            $('#errorModal').modal('show');
             console.log(error);
         }
 
