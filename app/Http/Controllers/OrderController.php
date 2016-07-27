@@ -340,7 +340,7 @@ class OrderController extends Controller
 
 
         $tests = DB::table('lab_tests')
-            ->select(DB::raw('lab_tests.id as test_id,lab_tests.name as test_name,lab_tests.cost,priority,lab_order_tests.id as lab_order_test_id'))
+            ->select(DB::raw('lab_tests.id as test_id,lab_tests.name as test_name,lab_tests.cost,priority,lab_order_tests.test_status,lab_order_tests.id as lab_order_test_id'))
             ->leftJoin('lab_order_tests', 'lab_order_tests.lab_test', '=', 'lab_tests.id')
             ->where('lab_order_tests.lab_order_id', $orders->id)
             ->get();
