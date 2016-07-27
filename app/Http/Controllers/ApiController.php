@@ -80,7 +80,7 @@ class ApiController extends Controller
         $patients = DB::table('patients')
             ->select(DB::raw('id,first_name,last_name'))
             // ->select(DB::raw('CONCAT(first_name," ",last_name) AS label,id as value'))
-            ->where('first_name', 'like', "%$name%")
+            ->where('first_name', 'like', "$name%")
             ->where('plan_id', 1)
             ->where('status', 1)
             ->get();
