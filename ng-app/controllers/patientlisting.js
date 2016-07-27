@@ -11,6 +11,7 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
         //$scope.currentPage = 0;
         $scope.items = [];
         $scope.search = {};
+        $scope.disabledSearchBar = true;
         $scope.idCardDisabledBtn = true;
         GetAllPatients.get({
             token: $window.sessionStorage.token,
@@ -280,5 +281,9 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
 
         $scope.addPatientButton = function(){
             $window.location.href = "#/patient-registration/";
+        }
+
+        $scope.findPatient = function(){
+            $scope.disabledSearchBar = false;
         }
 }]);

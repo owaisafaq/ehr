@@ -1,14 +1,50 @@
 var AppEHR = angular.module('AppEHR', [
     'ngRoute', 'ngResource', 'ngFileUpload', 'angular.filter', 'fg', 'ngSanitize', 'markdown'
 ]);
-AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
-    function ($httpProvider, $routeProvider, $locationProvider) {
+AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$controllerProvider',
+    function ($httpProvider, $routeProvider, $locationProvider, $controllerProvider) {
         $locationProvider.hashPrefix();
         $httpProvider.defaults.headers.common = {};
         $httpProvider.defaults.headers.post = {};
         $httpProvider.defaults.headers.put = {};
         $httpProvider.defaults.headers.patch = {};
         //$locationProvider.html5Mode(true);
+        AppEHR.registerCtrl = $controllerProvider.register;
+        function loadScript(path) {
+          var result = $.Deferred(),
+          script = document.createElement("script");
+          //script.async = "async";
+          //script.type = "text/javascript";
+          script.src = path;
+          script.onload = script.onreadystatechange = function (_, isAbort) {
+              if (!script.readyState || /loaded|complete/.test(script.readyState)) {
+                 if (isAbort)
+                     result.reject();
+                 else
+                    result.resolve();
+            }
+          };
+          script.onerror = function () { result.reject(); };
+          document.querySelector("myTag").appendChild(script);
+          return result.promise();
+        }
+
+        function loader(arrayName){
+            return {
+                load: function($q){
+                    var deferred = $q.defer(),
+                    map = arrayName.map(function(name) {
+                        return loadScript('controllers/'+name+".js");
+                    });
+
+                    $q.all(map).then(function(r){
+                        deferred.resolve();
+                    });
+
+                    return deferred.promise;
+                }
+            };
+        }
         $routeProvider.
                 when('/', {
                     templateUrl: 'views/login.html',
@@ -24,6 +60,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                 }).
                 when('/dashboard', {
                     templateUrl: 'views/dashboard.html',
+                    resolve: loader(['dashboard']),
                     controller: 'dashboard'
                 }).
                 when('/appointments-calander-view', {
@@ -52,6 +89,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider',
                 }).
                 when('/patient-listing', {
                     templateUrl: 'views/patient-listing.html',
+                    //resolve: loader(['patientlisting'])
                     controller: 'patientListingController'
                 }).
                 when('/patient-registration/', {
@@ -183,6 +221,7 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
     }
     //$rootScope.SelectedPatientAfterSearch = false;
     $rootScope.encounterHeaderSearchBar = true;
+    $rootScope.headerPatientSearch = serverPath;
     $('#autocomplete2').on('input', function(){
         var input = $('#autocomplete2').val();
         if(input != undefined || input != ''){
@@ -231,6 +270,8 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
     $rootScope.medicalHistoryheaderBar = function(){
         $('.create_counter_header').addClass('hide');
         $('#autocomplete2').val('');
+        $('.headerWithSwitchingImages').addClass('hide');
+        $('.headerWithSwitchingImages1').removeClass('hide');
         $window.location.href = "#/patient-summary-demographics/"+$rootScope.HEADERSEARCHPATIENTID;
     }
     $rootScope.billingheaderBar = function(){
@@ -315,7 +356,7 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
             $location.path("login");
         console.log("here")
         console.log(localStorage.getItem('sessionStorage'))
-
+        $rootScope.PI = {};
     });
     $rootScope.loadView = function (object) {
         $('.create_counter_header').addClass('hide');
@@ -325,7 +366,7 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
         $window.sessionStorage.clear();
         $window.location.href = '#/login';
     }
-    $rootScope.PI = {};
+    
     $rootScope.loader = "";
     
     $rootScope.$on('$viewContentLoaded', function () {

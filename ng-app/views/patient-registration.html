@@ -142,7 +142,7 @@
                                 <div class="col-lg-3">
                                     <select class="form-control select_searchFields" ng-model="PI.language" placeholder="Language">
                                         <option value=""></option>
-                                        <option ng-repeat="language in dropDownData.language" value="language.id">{{language.name}}</option>
+                                        <option ng-repeat="language in dropDownData.languages" value="language.id">{{language.name}}</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-3">
@@ -190,9 +190,10 @@
                             </div>
                         </div>
                         <div class="clear">
-                            <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-click="submitted = true;
-                                    " value="Next" ng-show="showSubmitButton">Save</button>
-                            <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-click="submitted = true;" value="Next" ng-hide="showSubmitButton">Update</button>
+
+                            <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-click="submitted = true;" value="Next" ng-show="showSubmitButton" ng-disabled="patientImageProgress">Save</button>
+                            <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-click="submitted = true;" value="Next" ng-hide="showSubmitButton" ng-disabled="patientImageProgress">Update</button>
+                            <button ng-hide="imageUploading" class="btn btn-default float-right">Image uploading...</button> 
                         </div>
                     </form>
                 </div>
