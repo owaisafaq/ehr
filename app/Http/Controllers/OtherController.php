@@ -451,9 +451,31 @@ class OtherController extends Controller
             );
 
         $bed_number = DB::table('wards')
-            ->select(DB::raw(''))
+            ->select(DB::raw('available_beds,number_of_beds_occupied'))
             ->where('wards.status', 1)
-            ->get();
+            ->where('wards.id', $current_ward_id)
+            ->first();
+
+        $available_beds = $bed_number->available_beds + 1;
+        $beds_occupied = $bed_number->number_of_beds_occupied - 1;
+
+        DB::table('wards')
+            ->where('id', $current_ward_id)
+            ->update(
+                ['available_beds' => $available_beds,'number_of_beds_occupied'=>$beds_occupied, 'updated_at' => date("Y-m-d  H:i:s")]
+            );
+
+        DB::table('patients_admitted')
+            ->where('patient_id', $patient_id)
+            ->update(
+                ['department_id' => $department_id, 'ward_id' => $ward_id,'notes'=>$notes, 'updated_at' => date("Y-m-d  H:i:s")]
+            );
+
+        DB::table('beds')
+            ->where('id', $bed_id)
+            ->update(
+                ['bed_status' => 'occupied','patient_id'=>$patient_id,'ward_id'=>$ward_id, 'updated_at' => date("Y-m-d  H:i:s")]
+            );
         return response()->json(['status' => true, 'message' => 'Patient Moved Successfully']);
 
 
