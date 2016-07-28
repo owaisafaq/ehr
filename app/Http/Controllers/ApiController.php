@@ -2568,6 +2568,7 @@ class ApiController extends Controller
             $start_time = $request->input('start_time');
             $department_id = $request->input('department_id');
             $ward_id = $request->input('ward_id');
+            $bed_id= $request->input('bed_id');
 
 
             DB::table('patients_admitted')->insert(
@@ -2581,6 +2582,13 @@ class ApiController extends Controller
 
                 ]
             );
+
+            DB::table('beds')
+                ->where('id',$bed_id)
+                ->update(
+                    ['bed_status' => 'occupied', 'patient_id' => $patient_id, 'ward_id' => $ward_id, 'updated_at' => date("Y-m-d  H:i:s")]
+                );
+
 
         }
 

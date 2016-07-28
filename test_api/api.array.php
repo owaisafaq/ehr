@@ -979,6 +979,7 @@ $api->params->admit_date = "2016-06-15";
 $api->params->start_time = "2:30 P.M";
 $api->params->department_id = "1";
 $api->params->ward_id = "1";
+$api->params->bed_id = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
