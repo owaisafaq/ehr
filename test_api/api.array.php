@@ -858,6 +858,8 @@ $api->url = HOST . 'get_patient_appointments';
 $api->method = "GET";
 $api->description = "Get Patient Appointements";
 $api->params->patient_id = "1";
+$api->params->offset = "1";
+$api->params->limit = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;

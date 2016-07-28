@@ -2257,25 +2257,38 @@ class ApiController extends Controller
     public function get_patient_appointments(Request $request)
     {
 
-
         $patient_id = $request->input('patient_id');
+        $limit = $request->input('limit');
+        $offset = $request->input('offset');
+        if ($limit > 0 || $offset > 0) {
+            $appointments = DB::table('appointments')
+                ->select(DB::raw('appointments.id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,start_time'))
+                ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
+                ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
+                ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
+                ->where('appointments.status', 1)
+                ->skip($offset)->take($limit)
+                //->where('appointments.patient_id', $patient_id)
+                ->get();
+            $count = DB::table('appointments')->count();
+        }else{
+            $appointments = DB::table('appointments')
+                ->select(DB::raw('appointments.id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,start_time'))
+                ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
+                ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
+                ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
+                ->where('appointments.status', 1)
+                ->get();
+            $count = DB::table('appointments')->count();
 
-        $appointments = DB::table('appointments')
-            ->select(DB::raw('appointments.id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,start_time'))
-            ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
-            ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
-            ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
-            ->where('appointments.status', 1)
-            //->where('appointments.patient_id', $patient_id)
-            ->get();
-
+        }
         foreach ($appointments as $appointment) {
 
             $appointment->appointment_status = '';
         }
 
 
-        return response()->json(['status' => true, 'data' => $appointments]);
+        return response()->json(['status' => true, 'data' => $appointments,'count'=>$count]);
 
     }
 
