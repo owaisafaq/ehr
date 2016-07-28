@@ -43,7 +43,7 @@
                             <td align="center">
                                 <div class="radio radio-styled">
                                     <label>
-                                        <input type="radio" name="checked" ng-click="testSelected(labTest.lab_order_test_id);">
+                                        <input type="radio" name="checked" ng-click="testSelected(labTest.lab_order_test_id);" ng-checked="selectedTest.id == labTest.lab_order_test_id">
                                         <span></span>
                                     </label>
                                 </div>
@@ -92,11 +92,11 @@
                                         <div class="form-wizard-nav">
                                             <div class="progress" style="width: 85%;"><div class="progress-bar progress-bar-primary" style="width: 0%;"></div></div>
                                             <ul class="nav nav-justified">
-                                                <li ng-class="selectedTest.test_status == 'paid' ? 'active' : ''"><a href="javascript:;"><span class="step">1</span> <span class="title" data-val="paid" data-id="1">paid</span></a></li>
-                                                <li ng-class="selectedTest.test_status == 'sample collected' ? 'active' : ''"><a href="javascript:;"><span class="step">2</span> <span class="title" data-val="sample collected" data-id="2">sample <br />collected</span></a></li>
-                                                <li ng-class="selectedTest.test_status == 'in progress' ? 'active' : ''"><a href="javascript:;"><span class="step">3</span> <span class="title" data-val="in progress" data-id="3">test in <br />progress</span></a></li>
-                                                <li ng-class="selectedTest.test_status == 'result completed' ? 'active' : ''"><a href="javascript:;"><span class="step">4</span> <span class="title" data-val="result completed" data-id="4">result <br />completed</span></a></li>
-                                                <li ng-class="selectedTest.test_status == 'signed' ? 'active' : ''"><a href="javascript:;"><span class="step">5</span> <span class="title" data-val="signed" data-id="5">signed</span></a></li>
+                                                <li ng-class="selectedTest.test_status == 'paid' ? 'active' : '' || selectedTest.test_status == 'sample collected' ? 'done' : '' || selectedTest.test_status == 'in progress' ? 'done' : '' || selectedTest.test_status == 'completed' ? 'done' : '' || selectedTest.test_status == 'signed' ? 'done' : '' || selectedTest.test_status == 'result completed' ? 'done' : ''"><a href="javascript:;"><span class="step">1</span> <span class="title" data-val="paid" data-id="1">paid</span></a></li>
+                                                <li ng-class="selectedTest.test_status == 'sample collected' ? 'active' : '' || selectedTest.test_status == 'in progress' ? 'done' : '' || selectedTest.test_status == 'completed' ? 'done' : '' || selectedTest.test_status == 'signed' ? 'done' : '' || selectedTest.test_status == 'result completed' ? 'done' : ''"><a href="javascript:;"><span class="step">2</span> <span class="title" data-val="sample collected" data-id="2">sample <br />collected</span></a></li>
+                                                <li ng-class="selectedTest.test_status == 'in progress' ? 'active' : '' || selectedTest.test_status == 'completed' ? 'done' : '' || selectedTest.test_status == 'signed' ? 'done' : '' || selectedTest.test_status == 'result completed' ? 'done' : ''"><a href="javascript:;"><span class="step">3</span> <span class="title" data-val="in progress" data-id="3">test in <br />progress</span></a></li>
+                                                <li ng-class="selectedTest.test_status == 'result completed' ? 'active' : '' || selectedTest.test_status == 'completed' ? 'done' : '' || selectedTest.test_status == 'signed' ? 'done' : ''"><a href="javascript:;"><span class="step">4</span> <span class="title" data-val="result completed" data-id="4">result <br />completed</span></a></li>
+                                                <li ng-class="selectedTest.test_status == 'signed' ? 'active' : '' || selectedTest.test_status == 'completed' ? 'done' : ''"><a href="javascript:;"><span class="step">5</span> <span class="title" data-val="signed" data-id="5">signed</span></a></li>
                                                 <li ng-class="selectedTest.test_status == 'completed' ? 'active' : ''"><a href="javascript:;"><span class="step">6</span> <span class="title" data-val="completed" data-id="6">completed</span></a></li>
                                             </ul>
                                         </div>

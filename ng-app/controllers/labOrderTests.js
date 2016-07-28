@@ -32,6 +32,20 @@ AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routePar
                 $rootScope.loader = "hide";
                 $scope.testIsSelected = true;
                 $scope.selectedTest = res.data;
+                var length = $('#cancelOrder2 .form-wizard-horizontal li').length;
+                var width = 0 / (length - 1) * 100;
+                if($scope.selectedTest.test_status == 'sample collected'){
+                    width = 1 / (length - 1) * 100;
+                }else if($scope.selectedTest.test_status == 'in progress'){
+                    width = 2 / (length - 1) * 100;
+                }else if($scope.selectedTest.test_status == 'result completed'){
+                    width = 3 / (length - 1) * 100;
+                }else if($scope.selectedTest.test_status == 'signed'){
+                    width = 4 / (length - 1) * 100;
+                }else if($scope.selectedTest.test_status == 'completed'){
+                    width = 5 / (length - 1) * 100;
+                }
+                $('#cancelOrder2 .form-wizard-horizontal .progress .progress-bar-primary').css('width', width + '%');
                 $scope.selectedTest.updated_at = new Date($scope.selectedTest.updated_at); // date property for current date
             }
         }
@@ -51,23 +65,20 @@ AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routePar
         }
     };
 
-    $scope.updateTestForm = function (){ // updating Test Form Status
+    $scope.updateTestForm = function () { // updating Test Form Status
         //if (angular.equals({}, test) == false) {
-            $scope.hideLoader = 'show';
-            $scope.updateTestBtn = true; // disabling submit button until request is complete
-            console.log($scope.selectedTest.test_status);
-            updateTestStatus.save({ // sending data over updateTestStatus factory which will update Test Status
-                token: $window.sessionStorage.token,
-                lab_test: $scope.selectedTest.id,
-                status: $('#cancelOrder2 .form-wizard-horizontal li.active .title').data('val')
-            }, updateTestStatusSuccess, updateTestStatusFailure);
-            $scope.testSelected($scope.selectedTest.id);
-            $scope.selectedTest.test_status = $('#cancelOrder2 .form-wizard-horizontal li.active .title').data('val');
+        $scope.hideLoader = 'show';
+        $scope.updateTestBtn = true; // disabling submit button until request is complete
+        updateTestStatus.save({ // sending data over updateTestStatus factory which will update Test Status
+            token: $window.sessionStorage.token,
+            lab_test: $scope.selectedTest.id,
+            status: $('#cancelOrder2 .form-wizard-horizontal li.active .title').data('val')
+        }, updateTestStatusSuccess, updateTestStatusFailure);
+        $scope.testSelected($scope.selectedTest.id);
         //}
     };
 
     function updateTestStatusSuccess(res){ // on success
-        console.log(res);
         if (res.status == true) {
             $scope.hideLoader = 'hide';
             $scope.message = true;
@@ -76,6 +87,11 @@ AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routePar
             $scope.messageType = 'alert-success';
             $scope.errorSymbol = 'fa fa-check';
             $timeout(function(){
+                getLabOrderInfo.get({ // Getting all tests along with order info
+                        token: $window.sessionStorage.token,
+                        order_id: $routeParams.orderID},
+                    getLabOrderInfoSuccess, getLabOrderInfoFailure);
+                $scope.selectedTest.test_status = $('#cancelOrder2 .form-wizard-horizontal li.active .title').data('val');
                 $('#cancelOrder2').modal('hide');
                 $scope.message = false;
             },500);
