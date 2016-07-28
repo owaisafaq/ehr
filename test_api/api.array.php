@@ -2200,6 +2200,17 @@ $api->params->token = "123435";
 
 $api_arr [] = $api;
 
+
+//Discharge Patient
+$api = new api();
+$api->name = "Discharge Patient";
+$api->url = HOST . 'patient_discharge';
+$api->method = "POST";
+$api->params->patient_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
 //Upload Patient Image
 $api = new api();
 $api->name = "Upload Patient Image";
