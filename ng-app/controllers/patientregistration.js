@@ -292,6 +292,10 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             }
         };
 
+        $scope.saveArchiveButton = function(){
+            $window.location.href = "#/new-encounter-patient-search";
+        }
+
         // patient information API
         $scope.validatePatientInfo = function (PI) {
             if (PI.first_name != undefined && PI.last_name != undefined && PI.date_of_birth != undefined && PI.age != undefined && PI.sex != undefined) {
@@ -426,6 +430,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                         if (res.status == true) {
                             $scope.address_id = res.address_id;
                             $scope.showSubmitButtonAddress = false;
+                            $window.location.href = "#/patient-summary-demographics/"+$window.sessionStorage.patient_id;
                             /*$scope.disabledTabKin = 'active';
                              $scope.disabledTabAdress = '';
                              $scope.disabledTabs = "";*/
@@ -495,7 +500,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                         if (res.status == true) {
                             $rootScope.loader = 'hide';
                             $scope.showSubmitButtonAddress = false;
+                            
                             $scope.disabledTabs = "";
+                            $window.location.href = "#/patient-summary-demographics/"+$window.sessionStorage.patient_id;
                         } else {
                             $scope.showSubmitButtonKin = true;
                             $rootScope.loader = 'hide';
@@ -562,6 +569,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                             $rootScope.loader = 'hide';
                             $scope.showSubmitButtonAddress = false;
                             $scope.disabledTabs = "";
+                            $window.location.href = "#/patient-summary-demographics/"+$window.sessionStorage.patient_id;
                         } else {
                             $scope.errorKinMessage = true;
                             $scope.showSubmitButtonKin = true;

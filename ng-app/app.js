@@ -1,20 +1,21 @@
 var AppEHR = angular.module('AppEHR', [
-    'ngRoute', 'ngResource', 'ngFileUpload', 'angular.filter', 'fg', 'ngSanitize', 'markdown'
+    'ngRoute', 'ngResource', 'ngFileUpload', 'angular.filter', 'fg', 'ngSanitize', 'markdown', 'oc.lazyLoad'
 ]);
-AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$controllerProvider',
-    function ($httpProvider, $routeProvider, $locationProvider, $controllerProvider) {
+AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$controllerProvider', function ($httpProvider, $routeProvider, $locationProvider, $controllerProvider) {
         $locationProvider.hashPrefix();
         $httpProvider.defaults.headers.common = {};
         $httpProvider.defaults.headers.post = {};
         $httpProvider.defaults.headers.put = {};
         $httpProvider.defaults.headers.patch = {};
+
+
         //$locationProvider.html5Mode(true);
         AppEHR.registerCtrl = $controllerProvider.register;
         function loadScript(path) {
           var result = $.Deferred(),
           script = document.createElement("script");
-          //script.async = "async";
-          //script.type = "text/javascript";
+          script.async = "async";
+          script.type = "text/javascript";
           script.src = path;
           script.onload = script.onreadystatechange = function (_, isAbort) {
               if (!script.readyState || /loaded|complete/.test(script.readyState)) {
@@ -25,7 +26,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
             }
           };
           script.onerror = function () { result.reject(); };
-          document.querySelector("myTag").appendChild(script);
+          document.querySelector("body").appendChild(script);
           return result.promise();
         }
 
@@ -56,153 +57,424 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                 })
                 .when('/logout', {
                     templateUrl: 'views/logout.html',
-                    controller: 'logoutController'
+                    controller: 'logoutController',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/logout.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/dashboard', {
                     templateUrl: 'views/dashboard.html',
-                    resolve: loader(['dashboard']),
-                    controller: 'dashboard'
+                    controller: 'dashboard',
+                    //templateProvider: function() { return lazyDeferred.promise; },
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/dashboard.js").then(function() {
+                            });
+                        }
+                    }
+                    /*resolve: function(){
+                        $ocLazyLoad.load("controllers/dashboard.js").then(function() {
+                            console.log('loaded!!');
+                            var el, elToAppend;
+                            //elToAppend = $compile('<say-hello to="world"></say-hello>')($scope);
+                            //el = angular.element('#example');
+                            //el.append(elToAppend);
+                        }, function(e) {
+                            console.log('errr');
+                            console.error(e);
+                        })
+                    }*/
+                    
                 }).
                 when('/appointments-calander-view', {
                     templateUrl: 'views/appointments-calender-view.html',
-                    controller: 'appointmentsCalenderController'
+                    controller: 'appointmentsCalenderController',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/appointmentscalenderview.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/appointments-list', {
                     templateUrl: 'views/ppointments-list.html',
-                    controller: 'appointmentsListController'
+                    controller: 'appointmentsListController',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/appointmentslist.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/clinical-documentation-clinic-progress-note/:patientID', {
                     templateUrl: 'views/clinical-documentation-clinic-progress-note.html',
-                    controller: 'clinicalDocumentationClinicProgressNote'
+                    controller: 'clinicalDocumentationClinicProgressNote',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/clinicaldocumentationclinicprogressnote.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/new-encounter-clinical-documentation', {
                     templateUrl: 'views/new-encounter-clinical-documentation.html',
-                    controller: 'newEncounterClinicalDocumentationController'
+                    controller: 'newEncounterClinicalDocumentationController',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/newencounterclinicaldocumentation.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/new-encounter-encounter-list/:encounterID/:patientID', {
                     templateUrl: 'views/new-encounter-encounter-list.html',
-                    controller: 'newEncounterEncounterListController'
+                    controller: 'newEncounterEncounterListController',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/newencounterencounterlist.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/new-encounter-patient-search', {
                     templateUrl: 'views/new-encounter-patient-search.html',
-                    controller: 'newEncounterPatientSearchController'
+                    controller: 'newEncounterPatientSearchController',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/newencounterpatientsearch.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/patient-listing', {
                     templateUrl: 'views/patient-listing.html',
-                    //resolve: loader(['patientlisting'])
-                    controller: 'patientListingController'
+                    controller: 'patientListingController',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/patientlisting.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/patient-registration/', {
                     templateUrl: 'views/patient-registration.html',
-                    controller: 'patientRegistrationController'
+                    controller: 'patientRegistrationController',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/patientregistration.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/patient-registration-update/:patientID', {
                     templateUrl: 'views/patient-registration.html',
-                    controller: 'patientRegistrationController'
+                    controller: 'patientRegistrationController',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/patientregistration.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/patient-summary-demographics/:patientID/:encounterID', {
                     templateUrl: 'views/patient-summary-demographics.html',
-                    controller: 'patientSummaryDemographicsController'
+                    controller: 'patientSummaryDemographicsController',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/patientsummarydemographics.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/patient-summary-demographics/:patientID', {
                     templateUrl: 'views/patient-summary-demographics.html',
-                    controller: 'patientSummaryDemographicsController'
+                    controller: 'patientSummaryDemographicsController',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/patientsummarydemographics.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/ward-bed-listing', {
                     templateUrl: 'views/ward-bed-listing.html',
-                    controller: 'wardBedListingController'
+                    controller: 'wardBedListingController',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/wardbedlisting.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/wards-bed-occupancy', {
                     templateUrl: 'views/wards-bed-occupancy.html',
-                    controller: 'wardsBedOccupancyController'
+                    controller: 'wardsBedOccupancyController',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/wardsbedoccupancy.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/wards-bed-shematic', {
                     templateUrl: 'views/wards-bed-shematic.html',
-                    controller: 'wardsBedShematicController'
+                    controller: 'wardsBedShematicController',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/wardsbedshematic.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/wards-discharge-summary', {
                     templateUrl: 'views/wards-discharge-summary.html',
-                    controller: 'wardsDischargeSummaryController'
+                    controller: 'wardsDischargeSummaryController',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/wardsdischargesummary.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/lab-order-listing', {
                     templateUrl: 'views/lab-order-listing.html',
-                    controller: 'labOrderListing'
+                    controller: 'labOrderListing',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/labOrderListing.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/lab-order-listing/:patientID', {
                     templateUrl: 'views/lab-order-listing.html',
-                    controller: 'labOrderListing'
+                    controller: 'labOrderListing',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/labOrderListing.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/lab-order-tests/:orderID', {
                     templateUrl: 'views/lab-order-tests.html',
-                    controller: 'labOrderTests'
+                    controller: 'labOrderTests',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/labOrderTests.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/lab-order-history', {
                     templateUrl: 'views/lab-order-history.html',
-                    controller: 'labOrderHistory'
+                    controller: 'labOrderHistory',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/labOrderHistory.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/lab-order-reporting', {
                     templateUrl: 'views/lab-order-reporting.html',
-                    controller: 'labOrderReporting'
+                    controller: 'labOrderReporting',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/labOrderReporting.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/lab-test-report/:testID', {
                     templateUrl: 'views/lab-test-report.html',
-                    controller: 'labTestReport'
+                    controller: 'labTestReport',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/labTestReport.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/lab-report-parasitology', {
                     templateUrl: 'views/lab-report-parasitology.html',
-                    controller: 'labReportParasitology'
+                    controller: 'labReportParasitology',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/labReportParasitology.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/lab-report-haematology', {
                     templateUrl: 'views/lab-report-haematology.html',
-                    controller: 'labReportHaematology'
+                    controller: 'labReportHaematology',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/labReportHaematology.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/lab-report-haematology-lokoja', {
                     templateUrl: 'views/lab-report-haematology-lokoja.html',
-                    controller: 'labReportHaematologyLokoja'
+                    controller: 'labReportHaematologyLokoja',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/labReportHaematology.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/inventory', {
                     templateUrl: 'views/inventory.html',
-                    controller: 'Inventory'
+                    controller: 'Inventory',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/inventory.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/pharmacy', {
                     templateUrl: 'views/pharmacy.html',
-                    controller: 'pharmacy'
+                    controller: 'pharmacy',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/pharmacy.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/pharmacy-prescription', {
                     templateUrl: 'views/pharmacy-prescription.html',
-                    controller: 'pharmacyPrescription'
+                    controller: 'pharmacyPrescription',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/pharmacy-prescription.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/settings-temp', {
                     templateUrl: 'views/settings-temp.html',
-                    controller: 'settings-temp'
+                    controller: 'settings-temp',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/settings-temp.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/settings', {
                     templateUrl: 'views/settings.html',
-                    controller: 'settings'
+                    controller: 'settings',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/settings.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/billing', {
                     templateUrl: 'views/billing.html',
-                    controller: 'billing'
+                    controller: 'billing',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/billing.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/billing/:patientID', {
                     templateUrl: 'views/billing.html',
-                    controller: 'billing'
+                    controller: 'billing',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/billing.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/pharmacy-view/:prescriptionID/:patientID', {
                     templateUrl: 'views/pharmacy-view.html',
-                    controller: 'pharmacyView'
+                    controller: 'pharmacyView',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/pharmacy-view.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/billing-invoice-print/:invoiceID', {
                     templateUrl: 'views/billing-invoice-print.html',
-                    controller: 'billing-invoice-print'
+                    controller: 'billing-invoice-print',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/billing-invoice-print.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/billing-codes', {
                     templateUrl: 'views/billing-codes.html',
-                    controller: 'billing-codes'
+                    controller: 'billing-codes',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/billing-codes.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/templates', {
                     templateUrl: 'views/template.html',
-                    controller: 'templates'
+                    controller: 'templates',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/templates.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 otherwise({
                     redirectTo: '/error'
@@ -233,19 +505,33 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
                     url: $('#autocomplete2').data('source'),
                     dataType: "json",
                     type: "POST",
-                    delay: 250,
+                    delay: 500,
+                    minLength: 2,
                     data: {name: input},
                     success: function (patients) {
-                        if(patients.status == true){
+                        //if(patients.status == true){
                             $("#autocomplete2").autocomplete({
                                 source: function (request, response) {
-                                    response($.map(patients.data, function (value, key) {
-                                        return {
-                                            label: value.first_name + " " + value.last_name,
-                                            value: value.id
-                                        }
-                                    }));
-                                    patients.data = [];
+                                    if(patients.status == true){
+                                        response($.map(patients.data, function (value, key) {
+                                            return {
+                                                label: value.first_name == "" || value.first_name == undefined ? "No patient found" : value.first_name + " " + value.last_name,
+                                                value: value.id == "" ? '0' : value.id
+                                            }
+                                        }));
+                                        patients.data = [];
+                                    }else{
+                                        //patients.data = [];
+                                        response({label:"No Patient Found"});
+                                        /*$( "#autocomplete2" ).autocomplete( "close" );
+                                        response($.map(patients.data, function (value, key) {
+                                            return {
+                                                label: "No patient found",
+                                                value: ''
+                                            }
+                                        }));*/
+                                        patients.data = [];
+                                    }
                                 },
                                 select: function(event, ui) {
                                     $('#autocomplete2').val(ui.item.label);
@@ -253,12 +539,13 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
                                     //$rootScope.HEADERSEARCHPATIENTID = selectId;
                                     getter(selectId);
                                     $('.headerWithSwitchingImages').removeClass('ng-hide');
+                                    $('.headerWithSwitchingImages').removeClass('hide');
                                     $('.headerleftOptions').removeClass('ng-hide');
                                     //window.location.href = "#/patient-summary-demographics/"+selectId;
                                     return false;
                                 }
                             });
-                        }
+                        //}
                     }
                 });
             }
