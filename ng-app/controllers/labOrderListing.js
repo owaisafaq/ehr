@@ -196,6 +196,7 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
                 $scope.lab_tests = []; // resetting lab tests object
                 $scope.lab_tests_td = []; // clearing all test rows
                 $scope.lab_test_total = 0; // setting total cost of tests to 0
+                $scope.submitted = false;
                 $('#s2id_autogen9 .select2-chosen').text('Select Patient'); // changing place holder back to its original one
                 $('#s2id_autogen3 .select2-chosen').text('Select Lab'); // changing place holder back to its original one
                 $('#neworder').modal('hide');

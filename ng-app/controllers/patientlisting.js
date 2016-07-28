@@ -82,6 +82,7 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
                 }
                 $scope.patientLists = [];
                 $scope.patientLists = res.data;
+                console.log(res.data);
                 $scope.patientCount = res.count;
             }
         }
