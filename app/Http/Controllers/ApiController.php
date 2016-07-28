@@ -2266,7 +2266,7 @@ class ApiController extends Controller
             ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
             ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
             ->where('appointments.status', 1)
-            ->where('appointments.patient_id', $patient_id)
+            //->where('appointments.patient_id', $patient_id)
             ->get();
 
         foreach ($appointments as $appointment) {
