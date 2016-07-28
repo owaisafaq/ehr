@@ -434,7 +434,7 @@ class OtherController extends Controller
 
              } else {
 
-                 $bed->gender = 'Male';
+                 $bed->gender = 'FeMale';
              }
          }
 
