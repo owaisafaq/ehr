@@ -2181,6 +2181,15 @@ $api->params->token = "123435";
 
 $api_arr [] = $api;
 
+//Ward Occupancy
+$api = new api();
+$api->name = "Ward Occupancy";
+$api->url = HOST . 'ward_occupancy';
+$api->method = "GET";
+$api->params->ward_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
 
 //Patients Admitted
 $api = new api();
