@@ -80,7 +80,7 @@ class ApiController extends Controller
         $patients = DB::table('patients')
             ->select(DB::raw('id,first_name,last_name'))
             // ->select(DB::raw('CONCAT(first_name," ",last_name) AS label,id as value'))
-            ->where('first_name', 'like', "%$name%")
+            ->where('first_name', 'like', "$name%")
             ->where('plan_id', 1)
             ->where('status', 1)
             ->get();
@@ -88,8 +88,13 @@ class ApiController extends Controller
 
         if (empty($patients)) {
 
+            $patient = array(
+                "id" => '0',
+                "first_name" => "",
+                "last_name" => "",
+            );
 
-            return response()->json(['status' => false, 'message' => "sorry no patients found"]);
+            return response()->json(['status' => false, 'data'=>$patient]);
 
 
         } else {
@@ -2714,11 +2719,13 @@ class ApiController extends Controller
 
     public function get_templates(Request $request)
     {
+        $category_id = $request->input('category_id');
 
         $templates = DB::table('templates')
             ->leftJoin('template_categories', 'template_categories.id', '=', 'templates.category_id')
             ->select(DB::raw('templates.id,templates.name,templates.description,template_categories.name as category,templates.template'))
             ->where('templates.status', 1)
+            ->where('templates.category_id', $category_id)
             ->get();
 
         return response()->json(['status' => true, 'data' => $templates]);

@@ -357,7 +357,7 @@ class OtherController extends Controller
 
         $pool_area_count = DB::table('visits')
             ->where('status', 1)
-            ->where('visit_status','!=','checkout')
+            ->where('visit_status', '!=', 'checkout')
             ->groupby('visits.patient_id')
             ->count();
 
@@ -379,29 +379,30 @@ class OtherController extends Controller
     }
 
     public function create_ward(Request $request)
-        {
-            $ward = $request->input('ward');
-            $speciality = $request->input('speciality');
-            $number_of_beds = $request->input('number_of_beds');
-            $description = $request->input('description');
+    {
+        $ward = $request->input('ward');
+        $speciality = $request->input('speciality');
+        $number_of_beds = $request->input('number_of_beds');
+        $description = $request->input('description');
 
-            DB::table('wards')
-                ->insert(
-                    ['department_id' => $speciality,
-                        'name' => $ward,
-                        'number_of_beds' => $number_of_beds,
-                        'available_beds' => $number_of_beds,
-                        'description' => $description,
-                        'created_at' => date("Y-m-d  H:i:s")]
-                );
-
-
-            return response()->json(['status' => true, 'message' => 'Ward Added Successfully']);
+        DB::table('wards')
+            ->insert(
+                ['department_id' => $speciality,
+                    'name' => $ward,
+                    'number_of_beds' => $number_of_beds,
+                    'available_beds' => $number_of_beds,
+                    'description' => $description,
+                    'created_at' => date("Y-m-d  H:i:s")]
+            );
 
 
-        }
+        return response()->json(['status' => true, 'message' => 'Ward Added Successfully']);
 
-    public function bed_occupancy(Request $request){
+
+    }
+
+    public function bed_occupancy(Request $request)
+    {
 
         $data = DB::table('wards')
             ->leftJoin('departments', 'departments.id', '=', 'wards.department_id')
@@ -409,24 +410,92 @@ class OtherController extends Controller
             ->where('wards.status', 1)
             ->get();
 
-        return response()->json(['status' => true, 'data' =>$data]);
+        return response()->json(['status' => true, 'data' => $data]);
 
     }
 
-    public function patients_admitted(Request $request){
+    public function patients_admitted(Request $request)
+    {
 
         $data = DB::table('patients_admitted')
-                ->leftJoin('beds', 'patients_admitted.patient_id', '=', 'beds.patient_id')
-                ->leftJoin('wards', 'patients_admitted.ward_id', '=', 'wards.id')
-                ->leftJoin('departments', 'patients_admitted.department_id', '=', 'departments.id')
-                ->leftJoin('patients', 'patients_admitted.patient_id', '=', 'patients.id')
-                ->select(DB::raw('patients_admitted.id,patients_admitted.patient_id,patients.first_name,patients.middle_name,patients.last_name,patients_admitted.expected_discharge_date,departments.name as speciality,wards.name as ward,beds.id as bed'))
-                ->where('patients_admitted.status', 1)
-                ->where('patients_admitted.is_discharged', 0)
-                ->where('beds.patient_id','!=', 0)
-                ->get();
+            ->leftJoin('beds', 'patients_admitted.patient_id', '=', 'beds.patient_id')
+            ->leftJoin('wards', 'patients_admitted.ward_id', '=', 'wards.id')
+            ->leftJoin('departments', 'patients_admitted.department_id', '=', 'departments.id')
+            ->leftJoin('patients', 'patients_admitted.patient_id', '=', 'patients.id')
+            ->select(DB::raw('patients_admitted.id,patients_admitted.patient_id,patients.first_name,patients.middle_name,patients.last_name,patients_admitted.expected_discharge_date,departments.name as speciality,wards.name as ward,beds.id as bed'))
+            ->where('patients_admitted.status', 1)
+            ->where('patients_admitted.is_discharged', 0)
+            ->where('beds.patient_id', '!=', 0)
+            ->get();
 
-        return response()->json(['status' => true, 'data' =>$data]);
+        return response()->json(['status' => true, 'data' => $data]);
+    }
+
+    public function move_patient(Request $request)
+    {
+
+
+        $current_bed_id = $request->input('current_bed_id');
+        $bed_id = $request->input('bed_id');
+        $current_ward_id = $request->input('current_ward_id');
+        $ward_id = $request->input('ward_id');
+        $department_id = $request->input('department_id');
+        $patient_id = $request->input('patient_id');
+        $notes = $request->input('notes');
+
+
+        DB::table('beds')
+            ->where('id', $current_bed_id)
+            ->update(
+                ['bed_status' => 'available', 'updated_at' => date("Y-m-d  H:i:s")]
+            );
+
+        $bed_number = DB::table('wards')
+            ->select(DB::raw('available_beds,number_of_beds_occupied'))
+            ->where('wards.status', 1)
+            ->where('wards.id', $current_ward_id)
+            ->first();
+
+        $available_beds = $bed_number->available_beds + 1;
+        $beds_occupied = $bed_number->number_of_beds_occupied - 1;
+
+        DB::table('wards')
+            ->where('id', $current_ward_id)
+            ->update(
+                ['available_beds' => $available_beds,'number_of_beds_occupied'=>$beds_occupied, 'updated_at' => date("Y-m-d  H:i:s")]
+            );
+
+        DB::table('patients_admitted')
+            ->where('patient_id', $patient_id)
+            ->update(
+                ['department_id' => $department_id, 'ward_id' => $ward_id,'notes'=>$notes, 'updated_at' => date("Y-m-d  H:i:s")]
+            );
+
+        DB::table('beds')
+            ->where('id', $bed_id)
+            ->update(
+                ['bed_status' => 'occupied','patient_id'=>$patient_id,'ward_id'=>$ward_id, 'updated_at' => date("Y-m-d  H:i:s")]
+            );
+
+        $bed_number = DB::table('wards')
+               ->select(DB::raw('available_beds,number_of_beds_occupied'))
+               ->where('wards.status', 1)
+               ->where('wards.id', $ward_id)
+               ->first();
+
+           $available_beds = $bed_number->available_beds - 1;
+           $beds_occupied = $bed_number->number_of_beds_occupied + 1;
+
+        DB::table('wards')
+            ->where('id', $ward_id)
+            ->update(
+                ['available_beds' => $available_beds,'number_of_beds_occupied'=>$beds_occupied, 'updated_at' => date("Y-m-d  H:i:s")]
+            );
+
+
+        return response()->json(['status' => true, 'message' => 'Patient Moved Successfully']);
+
+
     }
 
 }

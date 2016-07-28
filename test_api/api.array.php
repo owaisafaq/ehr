@@ -1253,6 +1253,7 @@ $api->name = "Update Lab Test";
 $api->url = HOST . 'update_lab_test';
 $api->method = "POST";
 $api->params->lab_test = "1";
+//$api->params->lab_order_test_id = "";
 $api->params->status = "in progress";
 $api->params->token = "123";
 
@@ -1788,6 +1789,7 @@ $api = new api();
 $api->name = "Get Templates";
 $api->url = HOST . 'get_templates';
 $api->method = "GET";
+$api->params->category_id = "";
 $api->params->token = "123435";
 
 
@@ -2194,6 +2196,22 @@ $api->name = "Upload Patient Image";
 $api->url = HOST . 'upload_patient_image';
 $api->method = "POST";
 $api->params->patient_image = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Move Patient
+$api = new api();
+$api->name = "Move Patient";
+$api->url = HOST . 'move_patient';
+$api->method = "POST";
+$api->params->patient_id = "";
+$api->params->department_id = "";
+$api->params->current_ward_id = "";
+$api->params->ward_id = "";
+$api->params->bed_id = "";
+$api->params->current_bed_id = "";
+$api->params->notes = "";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
