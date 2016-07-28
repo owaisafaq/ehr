@@ -110,8 +110,6 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
             }
             angular.copy(addCateogry,$scope.catt_unique);
             AddTemplateCategory.save(addCateogry, CategorySuccess, CategoryFailure);
-
-
         }
     }
 
@@ -125,6 +123,8 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
             console.log($scope.CategoryLists);
             $timeout(function () {
                 $('#addcategory').modal('hide');
+                $scope.category = [];
+                $scope.submitted = false;
             },500);
         }
     }

@@ -80,7 +80,7 @@ class ApiController extends Controller
         $patients = DB::table('patients')
             ->select(DB::raw('id,first_name,last_name'))
             // ->select(DB::raw('CONCAT(first_name," ",last_name) AS label,id as value'))
-            ->where('first_name', 'like', "%$name%")
+            ->where('first_name', 'like', "$name%")
             ->where('plan_id', 1)
             ->where('status', 1)
             ->get();
@@ -88,8 +88,13 @@ class ApiController extends Controller
 
         if (empty($patients)) {
 
+            $patient = array(
+                "id" => '0',
+                "first_name" => "",
+                "last_name" => "",
+            );
 
-            return response()->json(['status' => false, 'message' => "sorry no patients found"]);
+            return response()->json(['status' => false, 'data' => $patient]);
 
 
         } else {
@@ -1274,7 +1279,7 @@ class ApiController extends Controller
         $logo_image = url('/') . '/uploaded_images/';
 
         $patients = DB::table('patients')
-            ->select('patients.*', 'visits.id as encounter_id', 'visits.created_at as visit_created_at', 'visits.visit_status','maritial_status.name as marital_status')
+            ->select('patients.*', 'visits.id as encounter_id', 'visits.created_at as visit_created_at', 'visits.visit_status', 'maritial_status.name as marital_status')
             ->leftJoin('visits', 'patients.id', '=', 'visits.patient_id')
             ->leftJoin('maritial_status', 'patients.marital_status', '=', 'maritial_status.id')
             ->where('patients.id', $patient_id)
@@ -2563,6 +2568,7 @@ class ApiController extends Controller
             $start_time = $request->input('start_time');
             $department_id = $request->input('department_id');
             $ward_id = $request->input('ward_id');
+            $bed_id = $request->input('bed_id');
 
 
             DB::table('patients_admitted')->insert(
@@ -2576,6 +2582,29 @@ class ApiController extends Controller
 
                 ]
             );
+
+
+            $bed_number = DB::table('wards')
+                ->select(DB::raw('available_beds,number_of_beds_occupied'))
+                ->where('wards.status', 1)
+                ->where('wards.id', $ward_id)
+                ->first();
+
+            $available_beds = $bed_number->available_beds - 1;
+            $beds_occupied = $bed_number->number_of_beds_occupied + 1;
+
+            DB::table('wards')
+                ->where('id', $ward_id)
+                ->update(
+                    ['available_beds' => $available_beds, 'number_of_beds_occupied' => $beds_occupied, 'updated_at' => date("Y-m-d  H:i:s")]
+                );
+
+            DB::table('beds')
+                ->where('id', $bed_id)
+                ->update(
+                    ['bed_status' => 'occupied', 'patient_id' => $patient_id, 'ward_id' => $ward_id, 'updated_at' => date("Y-m-d  H:i:s")]
+                );
+
 
         }
 
@@ -2714,11 +2743,13 @@ class ApiController extends Controller
 
     public function get_templates(Request $request)
     {
+        $category_id = $request->input('category_id');
 
         $templates = DB::table('templates')
             ->leftJoin('template_categories', 'template_categories.id', '=', 'templates.category_id')
             ->select(DB::raw('templates.id,templates.name,templates.description,template_categories.name as category,templates.template'))
             ->where('templates.status', 1)
+            ->where('templates.category_id', $category_id)
             ->get();
 
         return response()->json(['status' => true, 'data' => $templates]);
