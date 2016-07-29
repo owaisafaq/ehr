@@ -865,6 +865,17 @@ $api->params->token = "123";
 $api_arr [] = $api;
 
 
+// Get Single Appointement
+$api = new api();
+$api->name = "Get Single Appointement";
+$api->url = HOST . 'get_single_appointment';
+$api->method = "GET";
+$api->description = "Get Single Appointement";
+$api->params->appointment_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
 
 // Add Patient Appointements
 $api = new api();

@@ -89,6 +89,7 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->get('get_all_patients','App\Http\Controllers\ApiController@get_all_patients');
 
     $app->get('get_patient_appointments','App\Http\Controllers\ApiController@get_patient_appointments');
+    $app->get('get_single_appointment','App\Http\Controllers\ApiController@get_single_appointment');
     $app->post('add_patient_appointments','App\Http\Controllers\ApiController@add_patient_appointments');
     $app->post('update_patient_appointments','App\Http\Controllers\ApiController@update_patient_appointments');
     $app->post('delete_patient_appointments','App\Http\Controllers\ApiController@delete_patient_appointments');
