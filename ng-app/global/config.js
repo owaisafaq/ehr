@@ -32,6 +32,16 @@ var intakeTypes = [
     {"id": "1", "name": "Intake"},
     {"id": "2", "name": "Type"}
 ];
+var priorities = [
+    {"id": "High", "name": "High"},
+    {"id": "Average", "name": "Average"},
+    {"id": "Low", "name": "Low"}
+];
+var reason = [
+    {"id": "High", "name": "High"},
+    {"id": "Average", "name": "Average"},
+    {"id": "Low", "name": "Low"}
+];
 /*var medicationDropDowns = [
     {"id": "1", "name": "abc"},
     {"id": "2", "name": "eef"},
