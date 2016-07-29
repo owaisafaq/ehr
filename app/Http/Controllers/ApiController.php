@@ -2236,7 +2236,9 @@ class ApiController extends Controller
                 ->skip($offset)->take($limit)
                 ->get();
 
-            $count = DB::table('patients')->count();
+            $count = DB::table('patients')
+                ->where('status',1)
+                ->count();
 
         } else {
 
@@ -2246,7 +2248,9 @@ class ApiController extends Controller
                 ->where('patients.status', 1)
                 ->get();
 
-            $count = DB::table('patients')->count();
+            $count = DB::table('patients')
+                ->where('status',1)
+                ->count();
 
         }
         return response()->json(['status' => true, 'count' => $count, 'data' => $patients]);
@@ -2270,7 +2274,9 @@ class ApiController extends Controller
                 ->skip($offset)->take($limit)
                 //->where('appointments.patient_id', $patient_id)
                 ->get();
-            $count = DB::table('appointments')->count();
+            $count = DB::table('appointments')
+                ->where('status',1)
+                ->count();
         }else{
             $appointments = DB::table('appointments')
                 ->select(DB::raw('appointments.id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,start_time'))
@@ -2279,7 +2285,9 @@ class ApiController extends Controller
                 ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
                 ->where('appointments.status', 1)
                 ->get();
-            $count = DB::table('appointments')->count();
+            $count = DB::table('appointments')
+                ->where('status',1)
+                ->count();
 
         }
         foreach ($appointments as $appointment) {
@@ -2415,7 +2423,7 @@ class ApiController extends Controller
         DB::table('appointments')
             ->where('id', $appointment_id)
             ->update(
-                ['status' => 1, 'updated_at' => $currentdatetime]
+                ['status' => 0, 'updated_at' => $currentdatetime]
             );
 
 
