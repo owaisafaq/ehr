@@ -2262,7 +2262,7 @@ class ApiController extends Controller
     {
         $appointment_id = $request->input('appointment_id');
         $appointment = DB::table('appointments')
-                ->select(DB::raw('appointments.id,appointments.department_id,appointments.doctor_id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,start_time,end_time'))
+                ->select(DB::raw('appointments.id,appointments.department_id,appointments.doctor_id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,start_time,end_time,priority'))
                 ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
                 ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
                 ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
