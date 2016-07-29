@@ -82,7 +82,6 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
             GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: patientID}, getEncountersSuccess, getEncountersFailure);
             function getEncountersSuccess(res) {
                 if (res.status == true) {
-                    console.log(res);
                     $scope.buttonDisabled = true;
                     $rootScope.loader = "hide";
                     $scope.disabledEncounterButton = false;
@@ -137,7 +136,6 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
             CheckoutPatient.save(CheckoutDetails, checkoutSuccess, checkoutSuccessFailure);
         }
         function checkoutSuccess(res) {
-            console.log(res)
             GetAllEncounters.get({token: $window.sessionStorage.token}, getPatientEncounters, getPatientEncountersFailure);
             $('#checkout').modal('hide');
             $('.checkout_patient_tab_con > div.active textarea').val('');
@@ -233,8 +231,6 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
         }
 
         function getOneEncounterSuccess(res) {
-            console.log(res);
-            console.log("adad")
             if (res.status == true) {
                 $scope.updateEncounter.department = res.data.department_id;
                 $scope.updateEncounter.class = res.data.encounter_class;

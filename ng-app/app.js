@@ -8,9 +8,8 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
         $httpProvider.defaults.headers.put = {};
         $httpProvider.defaults.headers.patch = {};
 
-
         //$locationProvider.html5Mode(true);
-        AppEHR.registerCtrl = $controllerProvider.register;
+        /*AppEHR.registerCtrl = $controllerProvider.register;
         function loadScript(path) {
           var result = $.Deferred(),
           script = document.createElement("script");
@@ -45,21 +44,40 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     return deferred.promise;
                 }
             };
-        }
+        }*/
         $routeProvider.
                 when('/', {
                     templateUrl: 'views/login.html',
-                    controller: 'loginController'
+                    controller: 'loginController',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load (["controllers/login.js"]/*{
+                                files: [
+                                    "global/factories.js",
+                                    "controllers/login.js"
+                                ]
+                            }*/).then(function() {
+                            });
+                        }
+                    }
                 }).
                 when('/login', {
                     templateUrl: 'views/login.html',
-                    controller: 'loginController'
+                    controller: 'loginController',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/login.js").then(function() {
+                            });
+                        }
+                    }
                 })
                 .when('/logout', {
                     templateUrl: 'views/logout.html',
                     controller: 'logoutController',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/logout.js").then(function() {
                             });
@@ -71,31 +89,18 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     controller: 'dashboard',
                     //templateProvider: function() { return lazyDeferred.promise; },
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/dashboard.js").then(function() {
                             });
                         }
                     }
-                    /*resolve: function(){
-                        $ocLazyLoad.load("controllers/dashboard.js").then(function() {
-                            console.log('loaded!!');
-                            var el, elToAppend;
-                            //elToAppend = $compile('<say-hello to="world"></say-hello>')($scope);
-                            //el = angular.element('#example');
-                            //el.append(elToAppend);
-                        }, function(e) {
-                            console.log('errr');
-                            console.error(e);
-                        })
-                    }*/
-                    
                 }).
                 when('/appointments-calander-view', {
                     templateUrl: 'views/appointments-calender-view.html',
                     controller: 'appointmentsCalenderController',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/appointmentscalenderview.js").then(function() {
                             });
@@ -103,10 +108,10 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     }
                 }).
                 when('/appointments-list', {
-                    templateUrl: 'views/ppointments-list.html',
+                    templateUrl: 'views/appointments-list.html',
                     controller: 'appointmentsListController',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/appointmentslist.js").then(function() {
                             });
@@ -117,7 +122,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/clinical-documentation-clinic-progress-note.html',
                     controller: 'clinicalDocumentationClinicProgressNote',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/clinicaldocumentationclinicprogressnote.js").then(function() {
                             });
@@ -128,7 +133,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/new-encounter-clinical-documentation.html',
                     controller: 'newEncounterClinicalDocumentationController',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/newencounterclinicaldocumentation.js").then(function() {
                             });
@@ -139,7 +144,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/new-encounter-encounter-list.html',
                     controller: 'newEncounterEncounterListController',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/newencounterencounterlist.js").then(function() {
                             });
@@ -150,7 +155,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/new-encounter-patient-search.html',
                     controller: 'newEncounterPatientSearchController',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/newencounterpatientsearch.js").then(function() {
                             });
@@ -161,7 +166,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/patient-listing.html',
                     controller: 'patientListingController',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/patientlisting.js").then(function() {
                             });
@@ -172,7 +177,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/patient-registration.html',
                     controller: 'patientRegistrationController',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/patientregistration.js").then(function() {
                             });
@@ -183,7 +188,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/patient-registration.html',
                     controller: 'patientRegistrationController',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/patientregistration.js").then(function() {
                             });
@@ -194,7 +199,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/patient-summary-demographics.html',
                     controller: 'patientSummaryDemographicsController',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/patientsummarydemographics.js").then(function() {
                             });
@@ -205,7 +210,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/patient-summary-demographics.html',
                     controller: 'patientSummaryDemographicsController',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/patientsummarydemographics.js").then(function() {
                             });
@@ -216,7 +221,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/ward-bed-listing.html',
                     controller: 'wardBedListingController',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/wardbedlisting.js").then(function() {
                             });
@@ -227,7 +232,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/wards-bed-occupancy.html',
                     controller: 'wardsBedOccupancyController',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/wardsbedoccupancy.js").then(function() {
                             });
@@ -238,7 +243,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/wards-bed-shematic.html',
                     controller: 'wardsBedShematicController',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/wardsbedshematic.js").then(function() {
                             });
@@ -249,7 +254,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/wards-discharge-summary.html',
                     controller: 'wardsDischargeSummaryController',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/wardsdischargesummary.js").then(function() {
                             });
@@ -260,7 +265,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/lab-order-listing.html',
                     controller: 'labOrderListing',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/labOrderListing.js").then(function() {
                             });
@@ -271,7 +276,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/lab-order-listing.html',
                     controller: 'labOrderListing',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/labOrderListing.js").then(function() {
                             });
@@ -282,7 +287,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/lab-order-tests.html',
                     controller: 'labOrderTests',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/labOrderTests.js").then(function() {
                             });
@@ -293,7 +298,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/lab-order-history.html',
                     controller: 'labOrderHistory',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/labOrderHistory.js").then(function() {
                             });
@@ -304,7 +309,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/lab-order-reporting.html',
                     controller: 'labOrderReporting',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/labOrderReporting.js").then(function() {
                             });
@@ -315,7 +320,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/lab-test-report.html',
                     controller: 'labTestReport',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/labTestReport.js").then(function() {
                             });
@@ -326,7 +331,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/lab-report-parasitology.html',
                     controller: 'labReportParasitology',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/labReportParasitology.js").then(function() {
                             });
@@ -337,7 +342,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/lab-report-haematology.html',
                     controller: 'labReportHaematology',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/labReportHaematology.js").then(function() {
                             });
@@ -348,7 +353,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/lab-report-haematology-lokoja.html',
                     controller: 'labReportHaematologyLokoja',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/labReportHaematology.js").then(function() {
                             });
@@ -359,7 +364,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/inventory.html',
                     controller: 'Inventory',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/inventory.js").then(function() {
                             });
@@ -370,7 +375,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/pharmacy.html',
                     controller: 'pharmacy',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/pharmacy.js").then(function() {
                             });
@@ -381,7 +386,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/pharmacy-prescription.html',
                     controller: 'pharmacyPrescription',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/pharmacy-prescription.js").then(function() {
                             });
@@ -392,7 +397,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/settings-temp.html',
                     controller: 'settings-temp',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/settings-temp.js").then(function() {
                             });
@@ -403,7 +408,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/settings.html',
                     controller: 'settings',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/settings.js").then(function() {
                             });
@@ -414,7 +419,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/billing.html',
                     controller: 'billing',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/billing.js").then(function() {
                             });
@@ -425,7 +430,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/billing.html',
                     controller: 'billing',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/billing.js").then(function() {
                             });
@@ -436,7 +441,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/pharmacy-view.html',
                     controller: 'pharmacyView',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/pharmacy-view.js").then(function() {
                             });
@@ -447,7 +452,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/billing-invoice-print.html',
                     controller: 'billing-invoice-print',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/billing-invoice-print.js").then(function() {
                             });
@@ -458,7 +463,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/billing-codes.html',
                     controller: 'billing-codes',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/billing-codes.js").then(function() {
                             });
@@ -469,7 +474,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     templateUrl: 'views/template.html',
                     controller: 'templates',
                     resolve: {
-                        load: function($templateCache, $ocLazyLoad, $q, $http) {
+                        load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/templates.js").then(function() {
                             });
@@ -477,7 +482,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                     }
                 }).
                 otherwise({
-                    redirectTo: '/error'
+                    redirectTo: '/dashboard'
                 });
 
     }]);
