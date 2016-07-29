@@ -2332,7 +2332,6 @@ class ApiController extends Controller
 
         DB::table('appointments')->insert(
             ['patient_id' => $patient_id,
-                'visit_id' => $visit_id,
                 'department_id' => $department_id,
                 'reason' => $reason,
                 'pick_date' => $date,
@@ -2362,8 +2361,6 @@ class ApiController extends Controller
 
         $patient_id = $request->input('patient_id');
 
-        $visit_id = $request->input('visit_id');
-
         $department_id = $request->input('department');
 
         $reason = $request->input('reason');
@@ -2389,7 +2386,6 @@ class ApiController extends Controller
             ->where('id', $appointment_id)
             ->update(
                 ['patient_id' => $patient_id,
-                    'visit_id' => $visit_id,
                     'department_id' => $department_id,
                     'reason' => $reason,
                     'pick_date' => $date,
