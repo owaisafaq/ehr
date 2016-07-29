@@ -2236,7 +2236,9 @@ class ApiController extends Controller
                 ->skip($offset)->take($limit)
                 ->get();
 
-            $count = DB::table('patients')->count();
+            $count = DB::table('patients')
+                ->where('status',1)
+                ->count();
 
         } else {
 
@@ -2246,7 +2248,9 @@ class ApiController extends Controller
                 ->where('patients.status', 1)
                 ->get();
 
-            $count = DB::table('patients')->count();
+            $count = DB::table('patients')
+                ->where('status',1)
+                ->count();
 
         }
         return response()->json(['status' => true, 'count' => $count, 'data' => $patients]);
@@ -2254,30 +2258,66 @@ class ApiController extends Controller
     }
 
 
-    public function get_patient_appointments(Request $request)
+    public function get_single_appointment(Request $request)
     {
-
-
-        $patient_id = $request->input('patient_id');
-
-        $appointments = DB::table('appointments')
-            ->select(DB::raw('appointments.id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,start_time'))
-            ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
-            ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
-            ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
-            ->where('appointments.status', 1)
-            ->where('appointments.patient_id', $patient_id)
-            ->get();
-
-        foreach ($appointments as $appointment) {
-
+        $appointment_id = $request->input('appointment_id');
+        $appointment = DB::table('appointments')
+                ->select(DB::raw('appointments.id,appointments.department_id,appointments.doctor_id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,start_time,end_time,priority'))
+                ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
+                ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
+                ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
+                ->where('appointments.status', 1)
+                ->where('appointments.id', $appointment_id)
+                ->first();
+        if(!empty($appointment)) {
             $appointment->appointment_status = '';
         }
-
-
-        return response()->json(['status' => true, 'data' => $appointments]);
+        return response()->json(['status' => true, 'data' => $appointment]);
 
     }
+
+
+    public function get_patient_appointments(Request $request)
+       {
+
+           $patient_id = $request->input('patient_id');
+           $limit = $request->input('limit');
+           $offset = $request->input('offset');
+           if ($limit > 0 || $offset > 0) {
+               $appointments = DB::table('appointments')
+                   ->select(DB::raw('appointments.id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,start_time'))
+                   ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
+                   ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
+                   ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
+                   ->where('appointments.status', 1)
+                   ->skip($offset)->take($limit)
+                   //->where('appointments.patient_id', $patient_id)
+                   ->get();
+               $count = DB::table('appointments')
+                   ->where('status',1)
+                   ->count();
+           }else{
+               $appointments = DB::table('appointments')
+                   ->select(DB::raw('appointments.id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,start_time'))
+                   ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
+                   ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
+                   ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
+                   ->where('appointments.status', 1)
+                   ->get();
+               $count = DB::table('appointments')
+                   ->where('status',1)
+                   ->count();
+
+           }
+           foreach ($appointments as $appointment) {
+
+               $appointment->appointment_status = '';
+           }
+
+
+           return response()->json(['status' => true, 'data' => $appointments,'count'=>$count]);
+
+       }
 
 
     public function add_patient_appointments(Request $request)
@@ -2311,7 +2351,6 @@ class ApiController extends Controller
 
         DB::table('appointments')->insert(
             ['patient_id' => $patient_id,
-                'visit_id' => $visit_id,
                 'department_id' => $department_id,
                 'reason' => $reason,
                 'pick_date' => $date,
@@ -2341,8 +2380,6 @@ class ApiController extends Controller
 
         $patient_id = $request->input('patient_id');
 
-        $visit_id = $request->input('visit_id');
-
         $department_id = $request->input('department');
 
         $reason = $request->input('reason');
@@ -2368,7 +2405,6 @@ class ApiController extends Controller
             ->where('id', $appointment_id)
             ->update(
                 ['patient_id' => $patient_id,
-                    'visit_id' => $visit_id,
                     'department_id' => $department_id,
                     'reason' => $reason,
                     'pick_date' => $date,
@@ -2402,7 +2438,7 @@ class ApiController extends Controller
         DB::table('appointments')
             ->where('id', $appointment_id)
             ->update(
-                ['status' => 1, 'updated_at' => $currentdatetime]
+                ['status' => 0, 'updated_at' => $currentdatetime]
             );
 
 

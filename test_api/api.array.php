@@ -858,10 +858,23 @@ $api->url = HOST . 'get_patient_appointments';
 $api->method = "GET";
 $api->description = "Get Patient Appointements";
 $api->params->patient_id = "1";
+$api->params->offset = "1";
+$api->params->limit = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
 
+
+// Get Single Appointement
+$api = new api();
+$api->name = "Get Single Appointement";
+$api->url = HOST . 'get_single_appointment';
+$api->method = "GET";
+$api->description = "Get Single Appointement";
+$api->params->appointment_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
 
 
 // Add Patient Appointements
@@ -871,7 +884,6 @@ $api->url = HOST . 'add_patient_appointments';
 $api->method = "POST";
 $api->description = "Add Patient Appointements";
 $api->params->patient_id = "1";
-$api->params->visit_id = "1";
 $api->params->department = "1";
 $api->params->reason = "1";
 $api->params->date = "2016-06-15";
@@ -894,7 +906,6 @@ $api->method = "POST";
 $api->description = "Update Patient Appointements";
 $api->params->appointment_id = "1";
 $api->params->patient_id = "1";
-$api->params->visit_id = "1";
 $api->params->department = "1";
 $api->params->reason = "1";
 $api->params->date = "2016-06-15";
@@ -2196,6 +2207,17 @@ $api = new api();
 $api->name = "Patients Admitted";
 $api->url = HOST . 'patients_admitted';
 $api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Discharge Patient
+$api = new api();
+$api->name = "Discharge Patient";
+$api->url = HOST . 'patient_discharge';
+$api->method = "POST";
+$api->params->patient_id = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
