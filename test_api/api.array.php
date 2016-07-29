@@ -2188,6 +2188,8 @@ $api = new api();
 $api->name = "Bed Occupancy";
 $api->url = HOST . 'bed_occupancy';
 $api->method = "GET";
+$api->params->offset = "1";
+$api->params->limit = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
