@@ -2183,6 +2183,16 @@ $api->params->token = "123435";
 $api_arr [] = $api;
 
 
+//Delete Ward
+$api = new api();
+$api->name = "Delete Ward";
+$api->url = HOST . 'delete_ward';
+$api->method = "POST";
+$api->params->ward_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
 //Bed Occupancy
 $api = new api();
 $api->name = "Bed Occupancy";

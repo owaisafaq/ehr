@@ -401,6 +401,20 @@ class OtherController extends Controller
 
     }
 
+    public function delete_ward(Request $request)
+     {
+         $ward_id= $request->input('ward_id');
+
+         DB::table('wards')
+             ->where('id',$ward_id)
+             ->update(
+                 ['status' => 0,'updated_at' => date("Y-m-d  H:i:s")]
+             );
+
+         return response()->json(['status' => true, 'message' => 'Ward Delteted Successfully']);
+
+     }
+
     public function bed_occupancy(Request $request)
     {
         $limit = $request->input('limit');
