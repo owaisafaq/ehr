@@ -2221,6 +2221,8 @@ $api->name = "Ward Occupancy";
 $api->url = HOST . 'ward_occupancy';
 $api->method = "GET";
 $api->params->ward_id = "1";
+$api->params->offset = "0";
+$api->params->limit = "10";
 $api->params->token = "123435";
 
 $api_arr [] = $api;

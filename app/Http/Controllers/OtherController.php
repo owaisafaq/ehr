@@ -458,7 +458,10 @@ class OtherController extends Controller
                 ->select(DB::raw('wards.id,wards.name,wards.number_of_beds,wards.available_beds,wards.number_of_beds_closed,wards.number_of_beds_occupied,departments.name as speciality,wards.description'))
                 ->where('wards.status', 1)
                 ->get();
-
+        }
+        foreach($data as $bed){
+            $bed->patients_wating = '';
+            $bed->expected_discharge_date = '';
         }
         $count = DB::table('wards')->where('status',1)->count();
         return response()->json(['status' => true, 'data' => $data,'count'=>$count]);
@@ -468,29 +471,47 @@ class OtherController extends Controller
     public function ward_occupancy(Request $request)
      {
          $ward_id= $request->input('ward_id');
+         $limit = $request->input('limit');
+         $offset = $request->input('offset');
 
+         if ($limit > 0 || $offset > 0) {
          $beds = DB::table('beds')
              ->leftJoin('patients_admitted', 'beds.patient_id', '=', 'patients_admitted.patient_id')
              ->leftJoin('patients', 'patients.id', '=', 'patients_admitted.patient_id')
              ->select(DB::raw('beds.id,beds.bed_status,patients.first_name,patients.middle_name,patients.last_name,patients.date_of_birth,patients.sex,patients_admitted.expected_discharge_date'))
              ->where('beds.status', 1)
              ->where('beds.ward_id', $ward_id)
+             ->skip($offset)->take($limit)
              ->get();
 
+             $count = DB::table('beds')
+                 ->leftJoin('patients_admitted', 'beds.patient_id', '=', 'patients_admitted.patient_id')
+                 ->leftJoin('patients', 'patients.id', '=', 'patients_admitted.patient_id')
+                 ->select(DB::raw('beds.id,beds.bed_status,patients.first_name,patients.middle_name,patients.last_name,patients.date_of_birth,patients.sex,patients_admitted.expected_discharge_date'))
+                 ->where('beds.status', 1)
+                 ->where('beds.ward_id', $ward_id)
+                 ->count();
+         }
+         else{
+             $beds = DB::table('beds')
+                 ->leftJoin('patients_admitted', 'beds.patient_id', '=', 'patients_admitted.patient_id')
+                 ->leftJoin('patients', 'patients.id', '=', 'patients_admitted.patient_id')
+                 ->select(DB::raw('beds.id,beds.bed_status,patients.first_name,patients.middle_name,patients.last_name,patients.date_of_birth,patients.sex,patients_admitted.expected_discharge_date'))
+                 ->where('beds.status', 1)
+                 ->where('beds.ward_id', $ward_id)
+                 ->get();
+
+             $count=count($beds);
+         }
          foreach($beds as $bed){
-
              if ($bed->sex == 1) {
-
-                $bed->gender = 'Male';
-
+                 $bed->gender = 'Male';
              } else {
-
                  $bed->gender = 'FeMale';
              }
          }
 
-
-         return response()->json(['status' => true, 'data' => $beds]);
+         return response()->json(['status' => true, 'data' => $beds,'count'=>$count]);
 
      }
 
