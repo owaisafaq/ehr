@@ -415,6 +415,17 @@ class OtherController extends Controller
         }
     }
 
+    public function get_single_ward(Request $request){
+        $ward_id = $request->input('ward_id');
+        $data = DB::table('wards')
+            ->leftJoin('departments', 'departments.id', '=', 'wards.department_id')
+            ->select(DB::raw('wards.id,wards.name,wards.number_of_beds,wards.available_beds,wards.number_of_beds_closed,wards.number_of_beds_occupied,departments.name as speciality,wards.description,departments.id as department_id'))
+            ->where('wards.status', 1)
+            ->where('wards.id', $ward_id)
+            ->first();
+        return response()->json(['status' => true, 'data' => $data]);
+    }
+
     public function delete_ward(Request $request)
      {
          $ward_id= $request->input('ward_id');

@@ -2184,6 +2184,16 @@ $api->params->token = "123435";
 $api_arr [] = $api;
 
 
+//Get Single Ward
+$api = new api();
+$api->name = "Get Single Ward";
+$api->url = HOST . 'get_single_ward';
+$api->method = "GET";
+$api->params->ward_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
 //Delete Ward
 $api = new api();
 $api->name = "Delete Ward";
