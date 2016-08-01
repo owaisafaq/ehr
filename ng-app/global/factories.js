@@ -1935,3 +1935,108 @@ AppEHR.factory("GetOneAppointment", function ($resource) {
     };
     return MakeInactive;
 });
+AppEHR.factory("GetAllWards", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'bed_occupancy', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("CreateWard", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'create_ward', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("DeleteWard", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'delete_ward', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("GetOneWard", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_single_ward', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("BedOccupancy", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'bed_occupancy', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("AdmitPatient", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'patients_admitted', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("WardOccupancy", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'ward_occupancy', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return MakeInactive;
+});

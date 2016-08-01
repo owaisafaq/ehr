@@ -228,7 +228,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                         }
                     }
                 }).
-                when('/wards-bed-occupancy', {
+                when('/wards-bed-occupancy/:wardID', {
                     templateUrl: 'views/wards-bed-occupancy.html',
                     controller: 'wardsBedOccupancyController',
                     resolve: {
@@ -239,7 +239,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                         }
                     }
                 }).
-                when('/wards-bed-shematic', {
+                when('/wards-bed-shematic/:wardID', {
                     templateUrl: 'views/wards-bed-shematic.html',
                     controller: 'wardsBedShematicController',
                     resolve: {
@@ -488,7 +488,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
     }]);
 AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData, $timeout) {
     if (sessionStorage.length == 0) {
-        //console.log(1111111111111111);
+        console.log(1111111111111111);
 //            var path = $location.$$path;
 //            if ((path == "/login" || path == "/") && path != undefined) {
 //                $location.path("patient-registration/");
@@ -642,6 +642,7 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
         if ($window.sessionStorage.email != undefined && $window.sessionStorage.email != 'undefined' && $window.sessionStorage.token != undefined && window.sessionStorage.token != 'undefined' && $window.sessionStorage.role_id != undefined && window.sessionStorage.role_id != 'undefined') {
             var path = $location.$$path;
             if ((path == "/login" || path == "/") && path != undefined) {
+
                 $location.path("dashboard");
             }
         } else

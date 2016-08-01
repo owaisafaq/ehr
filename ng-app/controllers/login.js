@@ -7,7 +7,6 @@ AppEHR.controller('loginController', ['$scope', '$window', 'AUTH', function($sco
 	$scope.errorMessage = '';
 	$scope.emailFormat = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
 	$scope.login = function (email, password){
-		console.log(email);
 		if(email != undefined && password != undefined){
 			AUTH.get({}, {email: email, password: password}, authSuccess, authFailed);
 			function authSuccess(res){
@@ -20,7 +19,6 @@ AppEHR.controller('loginController', ['$scope', '$window', 'AUTH', function($sco
 					$window.sessionStorage.token = res.token;
 					$window.location.href = '#/dashboard';
 				}else{
-					console.log(res);
 					$scope.errorMessage = errorMessages.authFailed;
 				}
 			}
