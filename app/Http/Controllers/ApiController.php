@@ -1388,6 +1388,13 @@ class ApiController extends Controller
 
         }
 
+        $patient_valid = 0;
+
+        if(!empty($patient_info)){
+
+            $patient_valid =1;
+        }
+
         $data = array(
             "patient_info" => $patient_info,
             "patient_address" => $patient_address,
@@ -1397,7 +1404,7 @@ class ApiController extends Controller
 
         );
 
-        return response()->json(['status' => true, 'data' => $data]);
+        return response()->json(['status' => true, 'data' => $data,'is_valid'=>$patient_valid]);
 
 
     }
