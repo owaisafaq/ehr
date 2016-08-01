@@ -380,25 +380,39 @@ class OtherController extends Controller
 
     public function create_ward(Request $request)
     {
+        $ward_id = $request->input('ward_id');
         $ward = $request->input('ward');
         $speciality = $request->input('speciality');
         $number_of_beds = $request->input('number_of_beds');
         $description = $request->input('description');
 
-        DB::table('wards')
-            ->insert(
-                ['department_id' => $speciality,
-                    'name' => $ward,
-                    'number_of_beds' => $number_of_beds,
-                    'available_beds' => $number_of_beds,
-                    'description' => $description,
-                    'created_at' => date("Y-m-d  H:i:s")]
-            );
+        if(isset($ward_id)){
+            DB::table('wards')
+                ->where('id',$ward_id)
+                ->update(
+                    ['department_id' => $speciality,
+                        'name' => $ward,
+                        'number_of_beds' => $number_of_beds,
+                        'available_beds' => $number_of_beds,
+                        'description' => $description,
+                        'updated_at' => date("Y-m-d  H:i:s")]
+                );
+            return response()->json(['status' => true, 'message' => 'Ward Updated Successfully']);
 
+        }else{
+            DB::table('wards')
+                ->insert(
+                    ['department_id' => $speciality,
+                        'name' => $ward,
+                        'number_of_beds' => $number_of_beds,
+                        'available_beds' => $number_of_beds,
+                        'description' => $description,
+                        'created_at' => date("Y-m-d  H:i:s")]
+                );
 
-        return response()->json(['status' => true, 'message' => 'Ward Added Successfully']);
+            return response()->json(['status' => true, 'message' => 'Ward Added Successfully']);
 
-
+        }
     }
 
     public function delete_ward(Request $request)

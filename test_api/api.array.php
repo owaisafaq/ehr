@@ -2174,6 +2174,7 @@ $api = new api();
 $api->name = "Create Ward";
 $api->url = HOST . 'create_ward';
 $api->method = "POST";
+$api->params->ward_id = "1";
 $api->params->ward = "Orthopadic ward";
 $api->params->speciality = "1";
 $api->params->number_of_beds = "10";
