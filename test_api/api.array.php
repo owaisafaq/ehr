@@ -2232,6 +2232,8 @@ $api = new api();
 $api->name = "Patients Admitted";
 $api->url = HOST . 'patients_admitted';
 $api->method = "GET";
+$api->params->offset = "0";
+$api->params->limit = "5";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
