@@ -2274,3 +2274,14 @@ $api->params->notes = "";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+//Patient Pool Area
+$api = new api();
+$api->name = "Patient Pool Area";
+$api->url = HOST . 'patients_pool_area';
+$api->method = "GET";
+$api->params->offset = "0";
+$api->params->limit = "5";
+$api->params->token = "123435";
+
+$api_arr [] = $api;

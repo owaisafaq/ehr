@@ -175,6 +175,7 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->get('get_medicine_units','App\Http\Controllers\OtherController@get_medicine_units');
     $app->get('get_dashboard_counts','App\Http\Controllers\OtherController@get_dashboard_counts');
+    $app->get('patients_pool_area','App\Http\Controllers\OtherController@patients_pool_area');
 
     //services regarding wards
 
