@@ -665,6 +665,8 @@ class OtherController extends Controller
 
 
     }
+    public function patients_pool_area(Request $request){}
+
 
 }
 
