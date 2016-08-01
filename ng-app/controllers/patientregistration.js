@@ -667,6 +667,12 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
         function patientEditSuccess(res) {
             if (res.status == true) {
+                if(res.is_valid == 0){
+                    $scope.modalHeading = "Invalid";
+                    $scope.modalMessage = "Invalid Patient ID";
+                    $('#noResultFound').modal('show');
+                    return true;
+                }
                 //console.log(res.data);
                 //$scope.PI.sameAsAbove = res.data.patient_address[1].length > 0 ? true : false;
                 $scope.PI.sameAsAbove = res.data.patient_address[1] != undefined ? false : true;

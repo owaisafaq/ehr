@@ -6,60 +6,65 @@
             </div>
             <div class="card-body col-lg-12">
                 <!--<div>-->
-                <!--                    <table class="table table-striped no-margin table-custom table-custom_big">
-                                        <thead>
-                                            <tr>
-                                                <th>SN</th>
-                                                <th>speciality</th>
-                                                <th>Ward</th>
-                                                <th>total beds</th>
-                                                <th>available beds</th>
-                                                <th>closed/unavailable</th>
-                                                <th>occupied beds</th>
-                                                <th>patients waiting for beds</th>
-                                                <th>expected discharge</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td></td>
-                                                <td>aa</td>
-                                                <td>asda</td>
-                                                <td>asdas</td>
-                                                <td>ada</td>
-                                                <td>aadsa</td>
-                                                <td>adsad</td>
-                                                <td>asd</td>
-                                                <td>adasd</td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td>aa</td>
-                                                <td>asda</td>
-                                                <td>asdas</td>
-                                                <td>ada</td>
-                                                <td>aadsa</td>
-                                                <td>adsad</td>
-                                                <td>asd</td>
-                                                <td>adasd</td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td>aa</td>
-                                                <td>asda</td>
-                                                <td>asdas</td>
-                                                <td>ada</td>
-                                                <td>aadsa</td>
-                                                <td>adsad</td>
-                                                <td>asd</td>
-                                                <td>adasd</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>-->
+                    <table class="table table-striped no-margin table-custom table-custom_big">
+                        <thead>
+                            <tr>
+                                <th>SN</th>
+                                <th>speciality</th>
+                                <th>Ward</th>
+                                <th>total beds</th>
+                                <th>available beds</th>
+                                <th>closed/unavailable</th>
+                                <th>occupied beds</th>
+                                <th>patients waiting for beds</th>
+                                <th>expected discharge</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="beds in allBedOccupancy">
+                                <td>{{$index+1}}</td>
+                                <td>{{beds.speciality}}</td>
+                                <td>{{beds.name}}</td>
+                                <td>{{beds.number_of_beds}}</td>
+                                <td>{{beds.available_beds}}</td>
+                                <td>{{beds.number_of_beds_closed}}</td>
+                                <td>{{beds.number_of_beds_occupied}}</td>
+                                <td>{{beds.patients_wating}}</td>
+                                <td>{{beds.expected_discharge_date}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="pagination pagination-centered" ng-show="bedCount">
+                        <ul class="pagination-controle pagination">
+                            <li>
+                              <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"> &lt; PREV</button>
+                            </li>
+                            <li>
+                              <span>Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+                            </li>
+                            <li>
+                              <button type="button" class="btn btn-primary" ng-disabled="curPage >= bedCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);">NEXT &gt;</button>
+                            </li>
+                        </ul>
+                    </div>
                 <!--</div>-->
                 <div id="grid1" ui-grid="gridOptions" ui-grid-pagination class="grid custom-grid custom-grid_big"></div>
-
             </div><!--end .card-body -->
         </div><!--end .card -->
     </section>
 </div>
+<div class="modal fade" id="noResultFound" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>{{modalHeading}}</h2>
+            </div>
+            <div class="modal-body">
+                <p>{{modalMessage}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
