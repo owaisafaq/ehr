@@ -508,7 +508,7 @@ class OtherController extends Controller
                 ->skip($offset)->take($limit)
                 ->get();
 
-            $patients= DB::table('patients_admitted')
+            $patients = DB::table('patients_admitted')
                 ->leftJoin('beds', 'patients_admitted.patient_id', '=', 'beds.patient_id')
                 ->leftJoin('wards', 'patients_admitted.ward_id', '=', 'wards.id')
                 ->leftJoin('departments', 'patients_admitted.department_id', '=', 'departments.id')
