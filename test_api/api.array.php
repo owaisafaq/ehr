@@ -2285,3 +2285,14 @@ $api->params->limit = "5";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+
+//Ward Beds
+$api = new api();
+$api->name = "Ward Beds";
+$api->url = HOST . 'ward_beds';
+$api->method = "GET";
+$api->params->ward_id = "0";
+$api->params->token = "123435";
+
+$api_arr [] = $api;

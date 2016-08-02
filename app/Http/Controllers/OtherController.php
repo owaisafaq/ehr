@@ -668,7 +668,6 @@ class OtherController extends Controller
 
     public function patients_pool_area(Request $request)
     {
-
         $encounter = DB::table('visits')
             ->select(DB::raw('CONCAT(patients.first_name," ",patients.last_name) AS patient_name,visits.id'))
             ->leftJoin('patients', 'visits.patient_id', '=', 'patients.id')
@@ -713,10 +712,21 @@ class OtherController extends Controller
               );
 
         return response()->json(['status' => true, 'data' => $data]);
-
-
     }
 
+
+    public function ward_beds(Request $request){
+
+        $ward_id = $request->input('ward_id');
+        $beds = DB::table('beds')
+            ->select(DB::raw('id'))
+            ->where('beds.status', 1)
+            ->where('beds.bed_status','available')
+            ->where('beds.ward_id',$ward_id)
+            ->get();
+        return response()->json(['status' => true, 'data' => $beds]);
+
+    }
 
 }
 
