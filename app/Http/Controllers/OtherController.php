@@ -592,7 +592,7 @@ class OtherController extends Controller
         DB::table('beds')
             ->where('id', $current_bed_id)
             ->update(
-                ['bed_status' => 'available', 'updated_at' => date("Y-m-d  H:i:s")]
+                ['bed_status' => 'available','patient_id'=>0, 'updated_at' => date("Y-m-d  H:i:s")]
             );
 
         $bed_number = DB::table('wards')
