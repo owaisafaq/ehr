@@ -21,41 +21,24 @@ class ApiController extends Controller
 
     public function __construct(Request $request)
     {
-
         header('Access-Control-Allow-Origin: *');
         date_default_timezone_set("Africa/Lagos");
 
         if ($request->input('token')) {
-
-
             $token = $request->input('token');
-
             $user_id = JWTAuth::authenticate($token)->id;
 
-
             if (!isset($user_id)) {
-
                 return response()->json(['status' => false, 'message' => 'Invalid Token']);
-
-
             }
-
             $user_status = DB::table('users')
                 ->select(DB::raw('user_status'))
                 ->where('id', $user_id)
                 ->first();
-
-
             if ($user_status->user_status == 'block') {
-
-
                 return response()->json(['status' => false, 'message' => 'This user is Blocked']);
-
             }
-
         }
-
-
     }
 
 
