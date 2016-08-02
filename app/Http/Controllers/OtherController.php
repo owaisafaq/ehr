@@ -58,7 +58,6 @@ class OtherController extends Controller
 
     public function get_pharmacies(Request $request)
     {
-
         $limit = $request->input('limit');
         $offset = $request->input('offset');
 
@@ -101,8 +100,6 @@ class OtherController extends Controller
 
     public function create_pharmacy(Request $request)
     {
-
-
         $name = $request->input('name');
         $contact_person = $request->input('contact_person');
         $city = $request->input('city');
@@ -185,7 +182,6 @@ class OtherController extends Controller
 
     public function add_immunization(Request $request)
     {
-
         $patient_id = $request->input('patient_id');
         $name = $request->input('name');
         DB::table('patient_immunizations')
@@ -197,14 +193,12 @@ class OtherController extends Controller
                 ]
             );
 
-
         return response()->json(['status' => true, 'message' => 'Immunization Added Successfully']);
 
     }
 
     public function list_immunizations(Request $request)
     {
-
         $patient_id = $request->input('patient_id');
         $patient_immunizations = DB::table('patient_immunizations')
             ->select(DB::raw('*'))
@@ -214,13 +208,11 @@ class OtherController extends Controller
 
         return response()->json(['status' => true, 'data' => $patient_immunizations]);
 
-
     }
 
 
     public function delete_immunization(Request $request)
     {
-
         $immuization_id = $request->input('immuization_id');
         DB::table('patient_immunizations')
             ->where('id', $immuization_id)
@@ -228,9 +220,7 @@ class OtherController extends Controller
                 ['status' => 0, 'updated_at' => date("Y-m-d  H:i:s")]
             );
 
-
         return response()->json(['status' => true, 'message' => 'Immunization Deleted Successfully']);
-
     }
 
 
@@ -251,7 +241,6 @@ class OtherController extends Controller
 
     public function get_medicine_units(Request $request)
     {
-
         $dosage = DB::table('medicine_units')
             ->select(DB::raw('id,dosage'))
             ->where('status', 1)
@@ -306,7 +295,6 @@ class OtherController extends Controller
 
     public function get_dashboard_counts(Request $request)
     {
-
         $patients_count = DB::table('patients')
             ->where('status', 1)
             ->count();
@@ -587,8 +575,6 @@ class OtherController extends Controller
 
     public function move_patient(Request $request)
     {
-
-
         $current_bed_id = $request->input('current_bed_id');
         $bed_id = $request->input('bed_id');
         $current_ward_id = $request->input('current_ward_id');
@@ -700,10 +686,9 @@ class OtherController extends Controller
         return response()->json(['status' => true, 'data' => $data]);
     }
 
-
     public function all_wards(Request $request){
         $wards = DB::table('wards')
-            ->select(DB::raw('id'))
+            ->select(DB::raw('id,name'))
             ->where('wards.status', 1)
             ->where('available_beds','>', 1)
             ->get();
