@@ -31,7 +31,7 @@
                                 <td align="center">
                                     <div class="radio radio-styled">
                                         <label>
-                                            <input type="radio" name="checked" ng-model="action" ng-click="admitPatientSelected(admin.patient_id, appointment.id);">
+                                            <input type="radio" name="checked" ng-model="action" ng-click="admitPatientSelected($index);">
                                             <span></span>
                                         </label>
                                     </div>
@@ -45,6 +45,19 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div class="pagination pagination-centered" ng-show="admitCount">
+                        <ul class="pagination-controle pagination">
+                            <li>
+                              <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"> &lt; PREV</button>
+                            </li>
+                            <li>
+                              <span>Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+                            </li>
+                            <li>
+                              <button type="button" class="btn btn-primary" ng-disabled="curPage >= admitCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);">NEXT &gt;</button>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div><!--end .card-body -->
         </div><!--end .card -->
@@ -102,72 +115,47 @@
 <div class="modal fade" id="movepatient" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-mid">
         <div class="modal-content col-lg-12 no-padding">
-            <form class="custom-form">
+            <form class="custom-form" name="moveForm" novalidate ng-submit="movePatient(move, selectedPatientToMove);">
                 <div class="modal-header pop_head">
                     <h2>Move Patient</h2>
                 </div>
                 <div class="modal-body modal-body-2 pull-left">
                     <div class="table-header table-header-2 margin-bottom-xxl">
                         <span class="txt-style-3 pull-left text-uppercase">Current Speciality</span>
-                        <span class="txt-style-4 pull-left">Surgery</span>
-
+                        <span class="txt-style-4 pull-left">{{selectedPatientToMove.speciality}}</span>
                         <span class="txt-style-3 pull-left text-uppercase">Current Ward</span>
-                        <span class="txt-style-4 pull-left">General</span>
-
+                        <span class="txt-style-4 pull-left">{{selectedPatientToMove.ward}}</span>
                         <span class="txt-style-3 pull-left text-uppercase">Bed</span>
-                        <span class="txt-style-4 pull-left">25</span>
+                        <span class="txt-style-4 pull-left">{{selectedPatientToMove.bed}}</span>
                     </div>
                     <div class="col-lg-3">
                         <label>to specialty</label>
                     </div>
                     <div class="col-lg-3 select-con">
-                        <select class="form-control">
-                            <option>Clinic Progress Notes</option>
-                            <option>2</option>
-                            <option>3</option>
+                        <select class="form-control" name="cpn" ng-model="move.CPN" ng-class="{true: 'error'}[submitted && moveForm.cpn.$invalid]" required placeholder="Select">
+                            <option value=""></option>
+                            <option value="{{depart.id}}" ng-repeat="depart in encountersDropdownData.departments">{{depart.name}}</option>
                         </select>
+                        <p class="help-block PIValid" ng-show="submitted && moveForm.cpn.$error.required">Required</p>
                     </div>
                     <div class="col-lg-3">
                         <label>admit to ward</label>
                     </div>
                     <div class="col-lg-3 select-con select-con_small">
-                        <select class="form-control">
-                            <option>Select Ward</option>
-                            <option>2</option>
-                            <option>3</option>
+                        <select class="form-control" name="ward" ng-change="wardSelected(move.ward);" ng-model="move.ward" ng-class="{true: 'error'}[submitted && moveForm.ward.$invalid]" placeholder="Select Ward" required>
+                            <option value=""></option>
+                            <option value="{{w.id}}" ng-repeat="w in wardDropdown">{{w.name}}</option>
                         </select>
                         <div class="ward-button-con">
-                            <button class="ward-button"></button>
+                            <button class="ward-button" type="button"></button>
                             <div class="select-bed-dropdown">
-                                <div class="radio radio-styled">
-                                    <label>
-                                        <input type="radio" name="checkoutpatient" value="appointment" checked>
-                                        <span>01</span>
-                                    </label>
-                                </div>
-                                <div class="radio radio-styled">
-                                    <label>
-                                        <input type="radio" name="checkoutpatient" value="followup">
-                                        <span>02</span>
-                                    </label>
-                                </div>
-                                <div class="radio radio-styled">
-                                    <label>
-                                        <input type="radio" name="checkoutpatient" value="admit_patient">
-                                        <span>03</span>
-                                    </label>
-                                </div>
-                                <div class="radio radio-styled">
-                                    <label>
-                                        <input type="radio" name="checkoutpatient" value="dead">
-                                        <span>04</span>
-                                    </label>
-                                </div>
-                                <div class="radio radio-styled">
-                                    <label>
-                                        <input type="radio" name="checkoutpatient" value="dead">
-                                        <span>05</span>
-                                    </label>
+                                <div class="radio radio-styled" ng-repeat="beds in noOFBeds">
+                                    <div class="radio radio-styled">
+                                        <label>
+                                            <input type="radio" name="checked" ng-model="action" ng-click="bedSelected(beds.id);">
+                                            <span>{{beds.id}}</span>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -176,25 +164,25 @@
                         <label>Admitted DATE</label>
                     </div>
                     <div class="col-lg-3">
-                        <label class="txt-style-4">April 05, 2016</label>
+                        <label class="txt-style-4">{{selectedPatientToMove.admit_date}}</label>
                     </div>
                     <div class="col-lg-3">
                         <label>Estimated Discharge</label>
                     </div>
                     <div class="col-lg-3">
                         <div class="input-group bootstrap-timepicker timepicker col-lg-12">
-                            <input type="text" class="form-control input-small timepicker">
+                            <input type="text" name="discharge" class="form-control input-small timepicker" ng-model="move.estimateDischarge" required ng-class="{true: 'error'}[submitted && moveForm.discharge.$invalid]">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                         </div>
                     </div>
 
                     <div class="col-lg-12">
                         <label class="margin-bottom-xl">Note</label>
-                        <textarea class="margin-bottom-lg" placeholder="Write Here..."></textarea>
+                        <textarea class="margin-bottom-lg" placeholder="Write Here..." ng-model="move.notes" required name="note" ng-class="{true: 'error'}[submitted && moveForm.note.$invalid]"></textarea>
                     </div>
                     <div class="col-lg-12">
                         <button type="button" class="btn button-style-1 button-style-1_a pull-right" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-default button-style-1 pull-right padding11 margin-right-10">Save & continue</button>
+                        <button type="submit" class="btn btn-default button-style-1 pull-right padding11 margin-right-10" ng-click="submitted = true;" ng-disabled="addformsubmission()">Save & close</button>
                     </div>
                 </div>
             </form>
@@ -365,6 +353,21 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1">Ok</button>
                 <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade" id="noResultFound" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>{{modalHeading}}</h2>
+            </div>
+            <div class="modal-body">
+                <p>{{modalMessage}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

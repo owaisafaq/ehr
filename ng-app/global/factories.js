@@ -2040,3 +2040,48 @@ AppEHR.factory("WardOccupancy", function ($resource) {
     };
     return MakeInactive;
 });
+AppEHR.factory("GetBedsByWard", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'ward_beds', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("GetAllWardsDropDown", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'all_wards', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("MovePatient", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'move_patient', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
