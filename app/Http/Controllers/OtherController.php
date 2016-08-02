@@ -701,6 +701,15 @@ class OtherController extends Controller
     }
 
 
+    public function all_wards(Request $request){
+        $wards = DB::table('wards')
+            ->select(DB::raw('id'))
+            ->where('wards.status', 1)
+            ->where('available_beds','>', 1)
+            ->get();
+        return response()->json(['status' => true, 'data' => $wards]);
+    }
+
     public function ward_beds(Request $request){
 
         $ward_id = $request->input('ward_id');

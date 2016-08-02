@@ -2287,6 +2287,17 @@ $api->params->token = "123435";
 $api_arr [] = $api;
 
 
+
+//All Wards
+$api = new api();
+$api->name = "All Wards";
+$api->url = HOST . 'all_wards';
+$api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
 //Ward Beds
 $api = new api();
 $api->name = "Ward Beds";
