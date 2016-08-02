@@ -175,16 +175,20 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->get('get_medicine_units','App\Http\Controllers\OtherController@get_medicine_units');
     $app->get('get_dashboard_counts','App\Http\Controllers\OtherController@get_dashboard_counts');
+    $app->get('patients_pool_area','App\Http\Controllers\OtherController@patients_pool_area');
 
     //services regarding wards
 
      $app->post('create_ward','App\Http\Controllers\OtherController@create_ward');
+     $app->get('get_single_ward','App\Http\Controllers\OtherController@get_single_ward');
      $app->post('delete_ward','App\Http\Controllers\OtherController@delete_ward');
      $app->get('bed_occupancy','App\Http\Controllers\OtherController@bed_occupancy');
      $app->get('ward_occupancy','App\Http\Controllers\OtherController@ward_occupancy');
      $app->get('patients_admitted','App\Http\Controllers\OtherController@patients_admitted');
      $app->post('patient_discharge','App\Http\Controllers\OtherController@patient_discharge');
      $app->post('move_patient','App\Http\Controllers\OtherController@move_patient');
+     $app->get('all_wards','App\Http\Controllers\OtherController@all_wards');
+     $app->get('ward_beds','App\Http\Controllers\OtherController@ward_beds');
 
 });
 $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($app) {

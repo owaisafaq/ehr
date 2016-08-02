@@ -2174,6 +2174,7 @@ $api = new api();
 $api->name = "Create Ward";
 $api->url = HOST . 'create_ward';
 $api->method = "POST";
+$api->params->ward_id = "1";
 $api->params->ward = "Orthopadic ward";
 $api->params->speciality = "1";
 $api->params->number_of_beds = "10";
@@ -2182,6 +2183,16 @@ $api->params->token = "123435";
 
 $api_arr [] = $api;
 
+
+//Get Single Ward
+$api = new api();
+$api->name = "Get Single Ward";
+$api->url = HOST . 'get_single_ward';
+$api->method = "GET";
+$api->params->ward_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
 
 //Delete Ward
 $api = new api();
@@ -2210,6 +2221,8 @@ $api->name = "Ward Occupancy";
 $api->url = HOST . 'ward_occupancy';
 $api->method = "GET";
 $api->params->ward_id = "1";
+$api->params->offset = "0";
+$api->params->limit = "10";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
@@ -2219,6 +2232,8 @@ $api = new api();
 $api->name = "Patients Admitted";
 $api->url = HOST . 'patients_admitted';
 $api->method = "GET";
+$api->params->offset = "0";
+$api->params->limit = "5";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
@@ -2256,6 +2271,39 @@ $api->params->ward_id = "";
 $api->params->bed_id = "";
 $api->params->current_bed_id = "";
 $api->params->notes = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Patient Pool Area
+$api = new api();
+$api->name = "Patient Pool Area";
+$api->url = HOST . 'patients_pool_area';
+$api->method = "GET";
+$api->params->offset = "0";
+$api->params->limit = "5";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+
+//All Wards
+$api = new api();
+$api->name = "All Wards";
+$api->url = HOST . 'all_wards';
+$api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Ward Beds
+$api = new api();
+$api->name = "Ward Beds";
+$api->url = HOST . 'ward_beds';
+$api->method = "GET";
+$api->params->ward_id = "0";
 $api->params->token = "123435";
 
 $api_arr [] = $api;

@@ -21,23 +21,16 @@ class OtherController extends Controller
 
     public function __construct(Request $request)
     {
-
         header('Access-Control-Allow-Origin: *');
         date_default_timezone_set("Africa/Lagos");
 
         if ($request->input('token')) {
 
-
             $token = $request->input('token');
-
             $user_id = JWTAuth::authenticate($token)->id;
 
-
             if (!isset($user_id)) {
-
                 return response()->json(['status' => false, 'message' => 'Invalid Token']);
-
-
             }
 
             $user_status = DB::table('users')
@@ -45,17 +38,10 @@ class OtherController extends Controller
                 ->where('id', $user_id)
                 ->first();
 
-
             if ($user_status->user_status == 'block') {
-
-
                 return response()->json(['status' => false, 'message' => 'This user is Blocked']);
-
             }
-
         }
-
-
     }
 
 
@@ -72,7 +58,6 @@ class OtherController extends Controller
 
     public function get_pharmacies(Request $request)
     {
-
         $limit = $request->input('limit');
         $offset = $request->input('offset');
 
@@ -115,8 +100,6 @@ class OtherController extends Controller
 
     public function create_pharmacy(Request $request)
     {
-
-
         $name = $request->input('name');
         $contact_person = $request->input('contact_person');
         $city = $request->input('city');
@@ -199,7 +182,6 @@ class OtherController extends Controller
 
     public function add_immunization(Request $request)
     {
-
         $patient_id = $request->input('patient_id');
         $name = $request->input('name');
         DB::table('patient_immunizations')
@@ -211,14 +193,12 @@ class OtherController extends Controller
                 ]
             );
 
-
         return response()->json(['status' => true, 'message' => 'Immunization Added Successfully']);
 
     }
 
     public function list_immunizations(Request $request)
     {
-
         $patient_id = $request->input('patient_id');
         $patient_immunizations = DB::table('patient_immunizations')
             ->select(DB::raw('*'))
@@ -228,13 +208,11 @@ class OtherController extends Controller
 
         return response()->json(['status' => true, 'data' => $patient_immunizations]);
 
-
     }
 
 
     public function delete_immunization(Request $request)
     {
-
         $immuization_id = $request->input('immuization_id');
         DB::table('patient_immunizations')
             ->where('id', $immuization_id)
@@ -242,9 +220,7 @@ class OtherController extends Controller
                 ['status' => 0, 'updated_at' => date("Y-m-d  H:i:s")]
             );
 
-
         return response()->json(['status' => true, 'message' => 'Immunization Deleted Successfully']);
-
     }
 
 
@@ -265,7 +241,6 @@ class OtherController extends Controller
 
     public function get_medicine_units(Request $request)
     {
-
         $dosage = DB::table('medicine_units')
             ->select(DB::raw('id,dosage'))
             ->where('status', 1)
@@ -320,7 +295,6 @@ class OtherController extends Controller
 
     public function get_dashboard_counts(Request $request)
     {
-
         $patients_count = DB::table('patients')
             ->where('status', 1)
             ->count();
@@ -380,40 +354,66 @@ class OtherController extends Controller
 
     public function create_ward(Request $request)
     {
+        $ward_id = $request->input('ward_id');
         $ward = $request->input('ward');
         $speciality = $request->input('speciality');
         $number_of_beds = $request->input('number_of_beds');
         $description = $request->input('description');
 
-        DB::table('wards')
-            ->insert(
-                ['department_id' => $speciality,
-                    'name' => $ward,
-                    'number_of_beds' => $number_of_beds,
-                    'available_beds' => $number_of_beds,
-                    'description' => $description,
-                    'created_at' => date("Y-m-d  H:i:s")]
-            );
+        if (isset($ward_id)) {
+            DB::table('wards')
+                ->where('id', $ward_id)
+                ->update(
+                    ['department_id' => $speciality,
+                        'name' => $ward,
+                        'number_of_beds' => $number_of_beds,
+                        'available_beds' => $number_of_beds,
+                        'description' => $description,
+                        'updated_at' => date("Y-m-d  H:i:s")]
+                );
+            return response()->json(['status' => true, 'message' => 'Ward Updated Successfully']);
 
+        } else {
+            DB::table('wards')
+                ->insert(
+                    ['department_id' => $speciality,
+                        'name' => $ward,
+                        'number_of_beds' => $number_of_beds,
+                        'available_beds' => $number_of_beds,
+                        'description' => $description,
+                        'created_at' => date("Y-m-d  H:i:s")]
+                );
 
-        return response()->json(['status' => true, 'message' => 'Ward Added Successfully']);
+            return response()->json(['status' => true, 'message' => 'Ward Added Successfully']);
 
+        }
+    }
 
+    public function get_single_ward(Request $request)
+    {
+        $ward_id = $request->input('ward_id');
+        $data = DB::table('wards')
+            ->leftJoin('departments', 'departments.id', '=', 'wards.department_id')
+            ->select(DB::raw('wards.id,wards.name,wards.number_of_beds,wards.available_beds,wards.number_of_beds_closed,wards.number_of_beds_occupied,departments.name as speciality,wards.description,departments.id as department_id'))
+            ->where('wards.status', 1)
+            ->where('wards.id', $ward_id)
+            ->first();
+        return response()->json(['status' => true, 'data' => $data]);
     }
 
     public function delete_ward(Request $request)
-     {
-         $ward_id= $request->input('ward_id');
+    {
+        $ward_id = $request->input('ward_id');
 
-         DB::table('wards')
-             ->where('id',$ward_id)
-             ->update(
-                 ['status' => 0,'updated_at' => date("Y-m-d  H:i:s")]
-             );
+        DB::table('wards')
+            ->where('id', $ward_id)
+            ->update(
+                ['status' => 0, 'updated_at' => date("Y-m-d  H:i:s")]
+            );
 
-         return response()->json(['status' => true, 'message' => 'Ward Delteted Successfully']);
+        return response()->json(['status' => true, 'message' => 'Ward Delteted Successfully']);
 
-     }
+    }
 
     public function bed_occupancy(Request $request)
     {
@@ -426,74 +426,126 @@ class OtherController extends Controller
                 ->where('wards.status', 1)
                 ->skip($offset)->take($limit)
                 ->get();
-        }
-        else{
+        } else {
             $data = DB::table('wards')
                 ->leftJoin('departments', 'departments.id', '=', 'wards.department_id')
                 ->select(DB::raw('wards.id,wards.name,wards.number_of_beds,wards.available_beds,wards.number_of_beds_closed,wards.number_of_beds_occupied,departments.name as speciality,wards.description'))
                 ->where('wards.status', 1)
                 ->get();
-
         }
-        $count = DB::table('wards')->where('status',1)->count();
-        return response()->json(['status' => true, 'data' => $data,'count'=>$count]);
+        foreach ($data as $bed) {
+            $bed->patients_wating = '';
+            $bed->expected_discharge_date = '';
+        }
+        $count = DB::table('wards')->where('status', 1)->count();
+        return response()->json(['status' => true, 'data' => $data, 'count' => $count]);
 
     }
 
     public function ward_occupancy(Request $request)
-     {
-         $ward_id= $request->input('ward_id');
+    {
+        $ward_id = $request->input('ward_id');
+        $limit = $request->input('limit');
+        $offset = $request->input('offset');
 
-         $beds = DB::table('beds')
-             ->leftJoin('patients_admitted', 'beds.patient_id', '=', 'patients_admitted.patient_id')
-             ->leftJoin('patients', 'patients.id', '=', 'patients_admitted.patient_id')
-             ->select(DB::raw('beds.id,beds.bed_status,patients.first_name,patients.middle_name,patients.last_name,patients.date_of_birth,patients.sex,patients_admitted.expected_discharge_date'))
-             ->where('beds.status', 1)
-             ->where('beds.ward_id', $ward_id)
-             ->get();
+        if ($limit > 0 || $offset > 0) {
+            $beds = DB::table('beds')
+                ->leftJoin('patients_admitted', 'beds.patient_id', '=', 'patients_admitted.patient_id')
+                ->leftJoin('patients', 'patients.id', '=', 'patients_admitted.patient_id')
+                ->select(DB::raw('beds.id,beds.bed_status,patients.first_name,patients.middle_name,patients.last_name,patients.date_of_birth,patients.sex,patients_admitted.expected_discharge_date'))
+                ->where('beds.status', 1)
+                ->where('beds.ward_id', $ward_id)
+                ->skip($offset)->take($limit)
+                ->get();
 
-         foreach($beds as $bed){
+            $count = DB::table('beds')
+                ->leftJoin('patients_admitted', 'beds.patient_id', '=', 'patients_admitted.patient_id')
+                ->leftJoin('patients', 'patients.id', '=', 'patients_admitted.patient_id')
+                ->select(DB::raw('beds.id,beds.bed_status,patients.first_name,patients.middle_name,patients.last_name,patients.date_of_birth,patients.sex,patients_admitted.expected_discharge_date'))
+                ->where('beds.status', 1)
+                ->where('beds.ward_id', $ward_id)
+                ->count();
+        } else {
+            $beds = DB::table('beds')
+                ->leftJoin('patients_admitted', 'beds.patient_id', '=', 'patients_admitted.patient_id')
+                ->leftJoin('patients', 'patients.id', '=', 'patients_admitted.patient_id')
+                ->select(DB::raw('beds.id,beds.bed_status,patients.first_name,patients.middle_name,patients.last_name,patients.date_of_birth,patients.sex,patients_admitted.expected_discharge_date'))
+                ->where('beds.status', 1)
+                ->where('beds.ward_id', $ward_id)
+                ->get();
 
-             if ($bed->sex == 1) {
-
+            $count = count($beds);
+        }
+        foreach ($beds as $bed) {
+            if ($bed->sex == 1) {
                 $bed->gender = 'Male';
+            } else {
+                $bed->gender = 'FeMale';
+            }
+        }
 
-             } else {
+        return response()->json(['status' => true, 'data' => $beds, 'count' => $count]);
 
-                 $bed->gender = 'FeMale';
-             }
-         }
-
-
-         return response()->json(['status' => true, 'data' => $beds]);
-
-     }
+    }
 
 
     public function patients_admitted(Request $request)
     {
+        $limit = $request->input('limit');
+        $offset = $request->input('offset');
 
-        $data = DB::table('patients_admitted')
-            ->leftJoin('beds', 'patients_admitted.patient_id', '=', 'beds.patient_id')
-            ->leftJoin('wards', 'patients_admitted.ward_id', '=', 'wards.id')
-            ->leftJoin('departments', 'patients_admitted.department_id', '=', 'departments.id')
-            ->leftJoin('patients', 'patients_admitted.patient_id', '=', 'patients.id')
-            ->select(DB::raw('patients_admitted.id,patients_admitted.patient_id,patients.first_name,patients.middle_name,patients.last_name,patients_admitted.expected_discharge_date,departments.name as speciality,wards.name as ward,beds.id as bed'))
-            ->where('patients_admitted.status', 1)
-            ->where('patients_admitted.is_discharged', 0)
-            ->where('beds.patient_id', '!=', 0)
-            ->get();
+        if ($limit > 0 || $offset > 0) {
+            $data = DB::table('patients_admitted')
+                ->leftJoin('beds', 'patients_admitted.patient_id', '=', 'beds.patient_id')
+                ->leftJoin('wards', 'patients_admitted.ward_id', '=', 'wards.id')
+                ->leftJoin('departments', 'patients_admitted.department_id', '=', 'departments.id')
+                ->leftJoin('patients', 'patients_admitted.patient_id', '=', 'patients.id')
+                ->select(DB::raw('patients_admitted.id,patients_admitted.patient_id,patients.first_name,patients.middle_name,patients.last_name,patients_admitted.admit_date,patients_admitted.expected_discharge_date,departments.id as department_id,departments.name as speciality,wards.name as ward,beds.id as bed'))
+                ->where('patients_admitted.status', 1)
+                ->where('patients_admitted.is_discharged', 0)
+                ->where('beds.patient_id', '!=', 0)
+                ->groupby('patients_admitted.id')
+                ->skip($offset)->take($limit)
+                ->get();
 
-        return response()->json(['status' => true, 'data' => $data]);
+            $patients = DB::table('patients_admitted')
+                ->leftJoin('beds', 'patients_admitted.patient_id', '=', 'beds.patient_id')
+                ->leftJoin('wards', 'patients_admitted.ward_id', '=', 'wards.id')
+                ->leftJoin('departments', 'patients_admitted.department_id', '=', 'departments.id')
+                ->leftJoin('patients', 'patients_admitted.patient_id', '=', 'patients.id')
+                ->select(DB::raw('patients_admitted.id,patients_admitted.patient_id,patients.first_name,patients.middle_name,patients.last_name,patients_admitted.admit_date,patients_admitted.expected_discharge_date,departments.id as department_id,departments.name as speciality,wards.name as ward,beds.id as bed'))
+                ->where('patients_admitted.status', 1)
+                ->where('patients_admitted.is_discharged', 0)
+                ->where('beds.patient_id', '!=', 0)
+                ->groupby('patients_admitted.id')
+                ->get();
+            $count = count($patients);
+
+        } else {
+            $data = DB::table('patients_admitted')
+                ->leftJoin('beds', 'patients_admitted.patient_id', '=', 'beds.patient_id')
+                ->leftJoin('wards', 'patients_admitted.ward_id', '=', 'wards.id')
+                ->leftJoin('departments', 'patients_admitted.department_id', '=', 'departments.id')
+                ->leftJoin('patients', 'patients_admitted.patient_id', '=', 'patients.id')
+                ->select(DB::raw('patients_admitted.id,patients_admitted.patient_id,patients.first_name,patients.middle_name,patients.last_name,patients_admitted.admit_date,patients_admitted.expected_discharge_date,departments.id as department_id,departments.name as speciality,wards.name as ward,beds.id as bed'))
+                ->where('patients_admitted.status', 1)
+                ->where('patients_admitted.is_discharged', 0)
+                ->where('beds.patient_id', '!=', 0)
+                ->groupby('patients_admitted.id')
+                ->get();
+            $count = count($data);
+        }
+        return response()->json(['status' => true, 'data' => $data, 'count' => $count]);
     }
 
-    public function patient_discharge(Request $request){
+    public function patient_discharge(Request $request)
+    {
 
         $patient_id = $request->input('patient_id');
 
         $ward = DB::table('patients_admitted')
             ->select(DB::raw('ward_id'))
-            ->where('patients_admitted.patient_id',$patient_id)
+            ->where('patients_admitted.patient_id', $patient_id)
             ->first();
 
         $ward_id = $ward->ward_id;
@@ -516,20 +568,18 @@ class OtherController extends Controller
         DB::table('beds')
             ->where('patient_id', $patient_id)
             ->update(
-                ['bed_status'=>'available','patient_id'=>0,'updated_at'=>date("Y-m-d  H:i:s")]
+                ['bed_status' => 'available', 'patient_id' => 0, 'updated_at' => date("Y-m-d  H:i:s")]
             );
 
         DB::table('patients_admitted')
             ->where('patient_id', $patient_id)
-            ->update( ['is_discharged'=>1,'updated_at'=>date("Y-m-d  H:i:s")]);
+            ->update(['is_discharged' => 1, 'updated_at' => date("Y-m-d  H:i:s")]);
 
         return response()->json(['status' => true, 'message' => 'Patient Discharged Successfully']);
     }
 
     public function move_patient(Request $request)
     {
-
-
         $current_bed_id = $request->input('current_bed_id');
         $bed_id = $request->input('bed_id');
         $current_ward_id = $request->input('current_ward_id');
@@ -542,7 +592,7 @@ class OtherController extends Controller
         DB::table('beds')
             ->where('id', $current_bed_id)
             ->update(
-                ['bed_status' => 'available', 'updated_at' => date("Y-m-d  H:i:s")]
+                ['bed_status' => 'available','patient_id'=>0, 'updated_at' => date("Y-m-d  H:i:s")]
             );
 
         $bed_number = DB::table('wards')
@@ -557,39 +607,109 @@ class OtherController extends Controller
         DB::table('wards')
             ->where('id', $current_ward_id)
             ->update(
-                ['available_beds' => $available_beds,'number_of_beds_occupied'=>$beds_occupied, 'updated_at' => date("Y-m-d  H:i:s")]
+                ['available_beds' => $available_beds, 'number_of_beds_occupied' => $beds_occupied, 'updated_at' => date("Y-m-d  H:i:s")]
             );
 
         DB::table('patients_admitted')
             ->where('patient_id', $patient_id)
             ->update(
-                ['department_id' => $department_id, 'ward_id' => $ward_id,'notes'=>$notes, 'updated_at' => date("Y-m-d  H:i:s")]
+                ['department_id' => $department_id, 'ward_id' => $ward_id, 'notes' => $notes, 'updated_at' => date("Y-m-d  H:i:s")]
             );
 
         DB::table('beds')
             ->where('id', $bed_id)
             ->update(
-                ['bed_status' => 'occupied','patient_id'=>$patient_id,'ward_id'=>$ward_id, 'updated_at' => date("Y-m-d  H:i:s")]
+                ['bed_status' => 'occupied', 'patient_id' => $patient_id, 'ward_id' => $ward_id, 'updated_at' => date("Y-m-d  H:i:s")]
             );
 
         $bed_number = DB::table('wards')
-               ->select(DB::raw('available_beds,number_of_beds_occupied'))
-               ->where('wards.status', 1)
-               ->where('wards.id', $ward_id)
-               ->first();
+            ->select(DB::raw('available_beds,number_of_beds_occupied'))
+            ->where('wards.status', 1)
+            ->where('wards.id', $ward_id)
+            ->first();
 
-           $available_beds = $bed_number->available_beds - 1;
-           $beds_occupied = $bed_number->number_of_beds_occupied + 1;
+        $available_beds = $bed_number->available_beds - 1;
+        $beds_occupied = $bed_number->number_of_beds_occupied + 1;
 
         DB::table('wards')
             ->where('id', $ward_id)
             ->update(
-                ['available_beds' => $available_beds,'number_of_beds_occupied'=>$beds_occupied, 'updated_at' => date("Y-m-d  H:i:s")]
+                ['available_beds' => $available_beds, 'number_of_beds_occupied' => $beds_occupied, 'updated_at' => date("Y-m-d  H:i:s")]
             );
 
 
         return response()->json(['status' => true, 'message' => 'Patient Moved Successfully']);
 
+
+    }
+
+    public function patients_pool_area(Request $request)
+    {
+        $encounter = DB::table('visits')
+            ->select(DB::raw('CONCAT(patients.first_name," ",patients.last_name) AS patient_name,visits.id'))
+            ->leftJoin('patients', 'visits.patient_id', '=', 'patients.id')
+            ->where('visits.status',1)
+            ->where('patients.status',1)
+            ->where('visits.visit_status','queue')
+            ->groupby('patients.id')
+            ->get();
+
+        $triage = DB::table('visits')
+            ->select(DB::raw('CONCAT(patients.first_name," ",patients.last_name) AS patient_name,visits.id'))
+            ->leftJoin('patients', 'visits.patient_id', '=', 'patients.id')
+            ->where('visits.status', 1)
+            ->where('patients.status', 1)
+            ->where('visits.visit_status', 'triage')
+            ->groupby('patients.id')
+            ->get();
+
+        $physician = DB::table('visits')
+            ->select(DB::raw('CONCAT(patients.first_name," ",patients.last_name) AS patient_name,visits.id'))
+            ->leftJoin('patients', 'visits.patient_id', '=', 'patients.id')
+            ->where('visits.status', 1)
+            ->where('patients.status', 1)
+            ->where('visits.visit_status', 'physician')
+            ->groupby('patients.id')
+            ->get();
+
+        $checkout = DB::table('visits')
+            ->select(DB::raw('CONCAT(patients.first_name," ",patients.last_name) AS patient_name,visits.id'))
+            ->leftJoin('patients', 'visits.patient_id', '=', 'patients.id')
+            ->where('visits.status', 1)
+            ->where('patients.status', 1)
+            ->where('visits.visit_status', 'checkout')
+            ->groupby('patients.id')
+            ->get();
+
+        $data = array(
+                  "encounter" => $encounter,
+                  "triage" => $triage,
+                  "physician" => $physician,
+                  "checkout" => $checkout
+              );
+
+        return response()->json(['status' => true, 'data' => $data]);
+    }
+
+    public function all_wards(Request $request){
+        $wards = DB::table('wards')
+            ->select(DB::raw('id,name'))
+            ->where('wards.status', 1)
+            ->where('available_beds','>', 0)
+            ->get();
+        return response()->json(['status' => true, 'data' => $wards]);
+    }
+
+    public function ward_beds(Request $request){
+
+        $ward_id = $request->input('ward_id');
+        $beds = DB::table('beds')
+            ->select(DB::raw('id'))
+            ->where('beds.status', 1)
+            ->where('beds.bed_status','available')
+            ->where('beds.ward_id',$ward_id)
+            ->get();
+        return response()->json(['status' => true, 'data' => $beds]);
 
     }
 
