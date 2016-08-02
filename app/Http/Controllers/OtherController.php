@@ -500,33 +500,38 @@ class OtherController extends Controller
                 ->leftJoin('wards', 'patients_admitted.ward_id', '=', 'wards.id')
                 ->leftJoin('departments', 'patients_admitted.department_id', '=', 'departments.id')
                 ->leftJoin('patients', 'patients_admitted.patient_id', '=', 'patients.id')
-                ->select(DB::raw('patients_admitted.id,patients_admitted.patient_id,patients.first_name,patients.middle_name,patients.last_name,patients_admitted.admit_date,patients_admitted.expected_discharge_date,departments.name as speciality,wards.name as ward,beds.id as bed'))
+                ->select(DB::raw('patients_admitted.id,patients_admitted.patient_id,patients.first_name,patients.middle_name,patients.last_name,patients_admitted.admit_date,patients_admitted.expected_discharge_date,departments.id as department_id,departments.name as speciality,wards.name as ward,beds.id as bed'))
                 ->where('patients_admitted.status', 1)
                 ->where('patients_admitted.is_discharged', 0)
                 ->where('beds.patient_id', '!=', 0)
+                ->groupby('patients_admitted.id')
                 ->skip($offset)->take($limit)
                 ->get();
 
-            $count = DB::table('patients_admitted')
+            $patients= DB::table('patients_admitted')
                 ->leftJoin('beds', 'patients_admitted.patient_id', '=', 'beds.patient_id')
                 ->leftJoin('wards', 'patients_admitted.ward_id', '=', 'wards.id')
                 ->leftJoin('departments', 'patients_admitted.department_id', '=', 'departments.id')
                 ->leftJoin('patients', 'patients_admitted.patient_id', '=', 'patients.id')
-                ->select(DB::raw('patients_admitted.id,patients_admitted.patient_id,patients.first_name,patients.middle_name,patients.last_name,patients_admitted.admit_date,patients_admitted.expected_discharge_date,departments.name as speciality,wards.name as ward,beds.id as bed'))
+                ->select(DB::raw('patients_admitted.id,patients_admitted.patient_id,patients.first_name,patients.middle_name,patients.last_name,patients_admitted.admit_date,patients_admitted.expected_discharge_date,departments.id as department_id,departments.name as speciality,wards.name as ward,beds.id as bed'))
                 ->where('patients_admitted.status', 1)
                 ->where('patients_admitted.is_discharged', 0)
                 ->where('beds.patient_id', '!=', 0)
-                ->count();
+                ->groupby('patients_admitted.id')
+                ->get();
+            $count = count($patients);
+
         } else {
             $data = DB::table('patients_admitted')
                 ->leftJoin('beds', 'patients_admitted.patient_id', '=', 'beds.patient_id')
                 ->leftJoin('wards', 'patients_admitted.ward_id', '=', 'wards.id')
                 ->leftJoin('departments', 'patients_admitted.department_id', '=', 'departments.id')
                 ->leftJoin('patients', 'patients_admitted.patient_id', '=', 'patients.id')
-                ->select(DB::raw('patients_admitted.id,patients_admitted.patient_id,patients.first_name,patients.middle_name,patients.last_name,patients_admitted.admit_date,patients_admitted.expected_discharge_date,departments.name as speciality,wards.name as ward,beds.id as bed'))
+                ->select(DB::raw('patients_admitted.id,patients_admitted.patient_id,patients.first_name,patients.middle_name,patients.last_name,patients_admitted.admit_date,patients_admitted.expected_discharge_date,departments.id as department_id,departments.name as speciality,wards.name as ward,beds.id as bed'))
                 ->where('patients_admitted.status', 1)
                 ->where('patients_admitted.is_discharged', 0)
                 ->where('beds.patient_id', '!=', 0)
+                ->groupby('patients_admitted.id')
                 ->get();
             $count = count($data);
         }
@@ -690,7 +695,7 @@ class OtherController extends Controller
         $wards = DB::table('wards')
             ->select(DB::raw('id,name'))
             ->where('wards.status', 1)
-            ->where('available_beds','>', 1)
+            ->where('available_beds','>', 0)
             ->get();
         return response()->json(['status' => true, 'data' => $wards]);
     }
