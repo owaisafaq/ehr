@@ -1318,7 +1318,13 @@ class ApiController extends Controller
             ->select(DB::raw('*'))
             ->where('id', $patient_id)
             ->where('status', 1)
-            ->first();
+            ->get();
+
+        foreach ($patient_info as $info) {
+
+            $info->barcode = "http://131.107.100.10/php-barcode-master/barcode.php?text=$info->id";
+        }
+
 
         $patient_address = DB::table('patient_address')
             ->select(DB::raw('*'))
@@ -1379,7 +1385,7 @@ class ApiController extends Controller
         }
 
         $data = array(
-            "patient_info" => $patient_info,
+            "patient_info" => $patient_info[0],
             "patient_address" => $patient_address,
             "patient_kin" => $patient_kin,
             "patient_employeer" => $patient_employers,
