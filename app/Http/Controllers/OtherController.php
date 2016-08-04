@@ -713,15 +713,15 @@ class OtherController extends Controller
 
     }
     public function appointment_dates(Request $request){
-        $appointments = DB::table('appointments')
-            ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
-            ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
-            ->select(DB::raw('appointments.id,appointments.pick_date,appointments.start_time,doctors.name,CONCAT(patients.first_name," ",patients.last_name) AS patient_name'))
-            ->orderby('pick_date','desc')
-            ->get();
-        return response()->json(['status' => true, 'data' => $appointments]);
+          $appointments = DB::table('appointments')
+              ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
+              ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
+              ->select(DB::raw('appointments.id,appointments.pick_date,appointments.start_time,doctors.name,CONCAT(patients.first_name," ",patients.last_name) AS patient_name'))
+              ->orderby('pick_date','desc')
+              ->get();
+          return response()->json(['status' => true, 'data' => $appointments]);
 
-    }
+      }
 
 }
 
