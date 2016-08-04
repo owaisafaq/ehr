@@ -1286,6 +1286,11 @@ class ApiController extends Controller
         }
 
 
+        foreach ($patients as $patient) {
+
+            $patient->barcode = "http://demoz.online/php-barcode-master/barcode.php?text=$patient->id";
+        }
+
         return response()->json(['status' => true, 'data' => $patients[0], 'is_visit' => $is_visit]);
 
 
@@ -1318,13 +1323,7 @@ class ApiController extends Controller
             ->select(DB::raw('*'))
             ->where('id', $patient_id)
             ->where('status', 1)
-            ->get();
-
-        foreach ($patient_info as $info) {
-
-            $info->barcode = "http://131.107.100.10/php-barcode-master/barcode.php?text=$info->id";
-        }
-
+            ->first();
 
         $patient_address = DB::table('patient_address')
             ->select(DB::raw('*'))
@@ -1371,10 +1370,7 @@ class ApiController extends Controller
                     ->get();
 
                 $patient_plan->dependents = $dependents;
-
             }
-
-
         }
 
         $patient_valid = 0;
@@ -1385,7 +1381,7 @@ class ApiController extends Controller
         }
 
         $data = array(
-            "patient_info" => $patient_info[0],
+            "patient_info" => $patient_info,
             "patient_address" => $patient_address,
             "patient_kin" => $patient_kin,
             "patient_employeer" => $patient_employers,
