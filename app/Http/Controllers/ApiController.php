@@ -1257,7 +1257,6 @@ class ApiController extends Controller
     public function get_patient(Request $request)
     {
 
-
         $patient_id = $request->input('patient_id');
         $logo_image = url('/') . '/uploaded_images/';
 
