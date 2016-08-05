@@ -2407,6 +2407,18 @@ $api->params->token = "123435";
 
 $api_arr [] = $api;
 
+//Update Tax Rate
+$api = new api();
+$api->name = "Update Tax Rate";
+$api->url = HOST . 'update_tax_rates';
+$api->method = "POST";
+$api->params->tax_rate_id = "1";
+$api->params->name = "";
+$api->params->rate = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
 //List All Tax Rates
 $api = new api();
 $api->name = "List All Tax Rates";

@@ -324,6 +324,16 @@ class BillingController extends Controller
 
 
     }
+    public function update_tax_rates(Request $request){
+        $tax_rate_id= $request->input('tax_rate_id');
+        $name = $request->input('name');
+        $rate = $request->input('rate');
+        DB::table('tax_rates')
+            ->where('id',$tax_rate_id)
+            ->update( ['name' => $name, 'rate' => $rate, 'updated_at' => date("Y-m-d  H:i:s")]);
+
+        return response()->json(['status' => true, 'message' => 'Tax Rates Updated successfully']);
+    }
 
     public function list_tax_rates(Request $request){
 
