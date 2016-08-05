@@ -236,5 +236,8 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
 
     //Billing Codes and Templates
     $app->post('add_billing_category','App\Http\Controllers\BillingController@add_billing_category');
+    $app->get('get_billing_category','App\Http\Controllers\BillingController@get_billing_category');
+    $app->post('add_billing_code','App\Http\Controllers\BillingController@add_billing_code');
+
 
 });

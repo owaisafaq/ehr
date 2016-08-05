@@ -2328,3 +2328,26 @@ $api->params->description = "";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+//Get Billing Category
+$api = new api();
+$api->name = "Get Billing Category";
+$api->url = HOST . 'get_billing_category';
+$api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Add Code
+$api = new api();
+$api->name = "Add Code";
+$api->url = HOST . 'add_billing_code';
+$api->method = "POST";
+$api->params->code = "";
+$api->params->description = "";
+$api->params->charge = "";
+$api->params->category = "";
+$api->params->tax = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;

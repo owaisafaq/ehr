@@ -235,5 +235,16 @@ class BillingController extends Controller
         return response()->json(['status' => true, 'message' => 'Category Inserted successfully']);
 
     }
+    public function get_billing_category(Request $request){
+
+        $bill_category = DB::table('billing_category')
+            ->select(DB::raw('id,name'))
+            ->where('status', 1)
+            ->get();
+
+        return response()->json(['status' => true, 'data'=>$bill_category]);
+
+    }
+
 
 }
