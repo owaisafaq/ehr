@@ -2085,3 +2085,18 @@ AppEHR.factory("MovePatient", function ($resource) {
     };
     return MakeInactive;
 });
+AppEHR.factory("PatientPoolArea", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'patients_pool_area', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return MakeInactive;
+});

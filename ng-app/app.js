@@ -443,6 +443,17 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', function 
                         }
                     }
                 }).
+                when('/patient-pool-area', {
+                    templateUrl: 'views/patient-pool-area.html',
+                    controller: 'patientPoolArea',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/patientpoolarea.js").then(function() {
+                            });
+                        }
+                    }
+                }).
                 otherwise({
                     redirectTo: '/dashboard'
                 });
