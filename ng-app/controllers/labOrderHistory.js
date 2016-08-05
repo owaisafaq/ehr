@@ -19,6 +19,7 @@ AppEHR.controller('labOrderHistory', ['$scope', '$rootScope', '$window', 'GetLab
 		}
 	}
 	function GetAllLabOrdersFailure(error) { // on failure GetAllLabOrders
+        $('#internetError').modal('show');
 		console.log(error);
 	}
 
@@ -35,7 +36,8 @@ AppEHR.controller('labOrderHistory', ['$scope', '$rootScope', '$window', 'GetLab
             }
         }
         function getLabOrderInfoFailure(error) { // on failure
-            $rootScope.loader = "show";
+            $rootScope.loader = "hide";
+            $('#internetError').modal('show');
             console.log(error);
         }
     };

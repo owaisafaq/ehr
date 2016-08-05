@@ -32,6 +32,7 @@ AppEHR.controller('wardBedListingController', ['$scope', '$rootScope', '$window'
 	}
 	function getWardsFailure(error){
 		console.log(error);
+        $('#internetError').modal('show');
 	}
 
     DropDownData.get({token: $window.sessionStorage.token}, dropDownSuccess, dropDownFaliure);
@@ -42,6 +43,7 @@ AppEHR.controller('wardBedListingController', ['$scope', '$rootScope', '$window'
     }
     function dropDownFaliure(error){
         console.log(error);
+        $('#internetError').modal('show');
     }
 
 	$scope.wardSelected = function(WID, index){
@@ -61,6 +63,7 @@ AppEHR.controller('wardBedListingController', ['$scope', '$rootScope', '$window'
         }
         function getOneWardsFailure(error){
             console.log(error);
+            $('#internetError').modal('show');
         }
         
 	}
@@ -95,6 +98,7 @@ AppEHR.controller('wardBedListingController', ['$scope', '$rootScope', '$window'
         }
         function createWardFailure(error){
             console.log(error);
+            $('#internetError').modal('show');
         }
     }
     $scope.updateWard = function(dataToBeAdded){
@@ -130,6 +134,7 @@ AppEHR.controller('wardBedListingController', ['$scope', '$rootScope', '$window'
         }
         function updateWardFailure(error){
             console.log(error);
+            $('#internetError').modal('show');
         }
     }
 
@@ -184,6 +189,7 @@ AppEHR.controller('wardBedListingController', ['$scope', '$rootScope', '$window'
 		}
 		function deleteWardFailure(error){
 			console.log(error);
+            $('#internetError').modal('show');
 		}
     }
 

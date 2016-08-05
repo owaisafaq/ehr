@@ -138,6 +138,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 console.log(error);
                 console.log("here");
                 $scope.disabledDropdown = false;
+                $('#internetError').modal('show');
             }
         };
 
@@ -157,6 +158,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 }
                 function LGAFailed(error) {
                     $scope.disabledDropdown = false;
+                    $('#internetError').modal('show');
                 }
 
                 function citySuccess(res) {
@@ -171,6 +173,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 }
                 function cityFailed(error) {
                     console.log(error);
+                    $('#internetError').modal('show');
                 }
             } else {
                 if (flag) {
@@ -204,6 +207,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             }
             function nextOfKinStateFailed(error) {
                 console.log(error);
+                $('#internetError').modal('show');
             }
         };
 
@@ -219,6 +223,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 }
                 function cityFailed(error) {
                     console.log(error);
+                    $('#internetError').modal('show');
                 }
             } else {
                 $scope.PI.kin_city = "null";
@@ -245,6 +250,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             }
             function employerStateFailed(error) {
                 console.log(error);
+                $('#internetError').modal('show');
             }
         };
 
@@ -260,6 +266,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 }
                 function cityFailed(error) {
                     console.log(error);
+                    $('#internetError').modal('show');
                 }
             } else {
                 $scope.PI.employer_city = "null";
@@ -351,6 +358,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 }
 
                 function patientInformationFailed(error) {
+                    $('#internetError').modal('show');
                     console.log(error);
                 }
 
@@ -365,6 +373,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
                 function patientInfoUpdateFailed(error) {
                     console.log(error);
+                    $('#internetError').modal('show');
                 }
             }
         }
@@ -421,6 +430,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
                     function patientAddressFailed(error) {
                         console.log(error);
+                        $('#internetError').modal('show');
                     }
                 } else {
                     dataToBeAdded.address_id = $scope.address_id;
@@ -441,6 +451,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
                     function patientAddressUpdateFailed(error) {
                         console.log(error);
+                        $('#internetError').modal('show');
                     }
                 }
             } else {
@@ -492,6 +503,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     }
                     function patientKinFailed(error) {
                         console.log(error);
+                        $('#internetError').modal('show');
                     }
                 } else {
                     dataToBeAdded.kin_id = $scope.kin_id;
@@ -511,6 +523,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
                     function patientKinUpdateFailed(error) {
                         console.log(error);
+                        $('#internetError').modal('show');
                     }
                 }
             } else {
@@ -560,6 +573,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     }
                     function patientEmployerFailed(error) {
                         console.log(error);
+                        $('#internetError').modal('show');
                     }
                 } else {
                     dataToBeAdded.employee_id = $scope.employer_id;
@@ -578,6 +592,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     }
                     function patientKinUpdateFailed(error) {
                         console.log(error);
+                        $('#internetError').modal('show');
                     }
                 }
             } else {
@@ -784,6 +799,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         }
         function patientEditFailed(error) {
             console.log(error);
+            $('#internetError').modal('show');
         }
 
         function archiveSuccess(res) {
@@ -795,6 +811,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
         function archiveFailure(error) {
             console.log(error);
+            $('#internetError').modal('show');
         }
         /* $('body').on('change','.abc',function(){
          console.log($(this).val());            
@@ -907,6 +924,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         function removeArchiveFailure(error) {
             console.log(error);
             $rootScope.loader == 'hide'
+            $('#internetError').modal('show');
         }
 
         function deleteFolderSuccess(res) {
@@ -921,6 +939,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         function deleteFolderFailure(error) {
             console.log(error);
             $rootScope.loader == 'hide'
+            $('#internetError').modal('show');
         }
 
         // edit archive
@@ -963,6 +982,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         function editArchiveFailure(error) {
             console.log(error);
             $rootScope.loader == 'hide'
+            $('#internetError').modal('show');
         }
 
         function saveFileNameSuccess(res) {
@@ -974,6 +994,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         function editFileArchiveFailure(error) {
             console.log(error);
             $rootScope.loader == 'hide'
+            $('#internetError').modal('show');
         }
 
         $scope.showPDF = function (link) {
@@ -997,6 +1018,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         }
         function listFolderFailure(error) {
             console.log(error);
+            $('#internetError').modal('show');
         }
 
         $scope.backLinkID = '0';
@@ -1057,6 +1079,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
         function nestedFolderFailure(error) {
             console.log(error);
+            $('#internetError').modal('show');
         }
 
 
@@ -1104,6 +1127,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
         function folderUpFoldersFailure(error) {
             console.log(error);
+            $('#internetError').modal('show');
         }
 
         function folderUpContentSuccess(res) {
@@ -1125,6 +1149,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
         function folderUpContentFailure(error) {
             console.log(error);
+            $('#internetError').modal('show');
         }
 
         $scope.folderBtn = function () {
@@ -1147,6 +1172,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
         function folderCreatedFailure(error) {
             console.log(error);
+            $('#internetError').modal('show');
         }
 
         $rootScope.do_valid = true;
@@ -1400,6 +1426,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             function PlanDataFailure(res) {
                 $scope.errorMessage = true;
                 $rootScope.loader = 'hide';
+                $('#internetError').modal('show');
                 console.log(res + "failure failure")
 
             }

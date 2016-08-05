@@ -11,6 +11,7 @@ AppEHR.controller('dashboard', ['$scope', '$rootScope', '$window', 'DashboardCou
 	}
 
 	function dashboardFailure(error){
+		$('#internetError').modal('show');
 		console.log(error);
 	}
 }]);

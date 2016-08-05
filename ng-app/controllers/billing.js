@@ -32,6 +32,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	}
 
 	function GetAllBillsFailure(error) {
+		$('#internetError').modal('show');
 		console.log(error);
 	}
 
@@ -50,6 +51,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	}
 
 	function GetAllInvoicesFailure(error) {
+		$('#internetError').modal('show');
 		console.log(error);
 	}
 	$scope.SelectedPatientWithInvoice = function(patient_id,invoice_id){
@@ -71,7 +73,8 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 			}
 		}
 		function getPatientInfoFailure(error) {
-			$rootScope.loader = "show";
+			$rootScope.loader = "hide";
+			$('#internetError').modal('show');
 			console.log(error);
 		}
 	};
@@ -113,7 +116,8 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 			}
 		}
 		function InvoiecStatusFailure(error) {
-			$rootScope.loader = "show";
+			$rootScope.loader = "hide";
+			$('#internetError').modal('show');
 			console.log(error);
 		}
 
@@ -157,7 +161,8 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 			}
 		}
 		function PaymentFailure(error) {
-			$rootScope.loader = "show";
+			$rootScope.loader = "hide";
+			$('#internetError').modal('show');
 			console.log(error);
 		}
 
@@ -209,6 +214,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 		}
 
 		function SendEmailFailure(error) {
+			$('#internetError').modal('show');
 			console.log(error);
 		}
 
@@ -254,6 +260,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 		}
 
 		function GetBillInvoicesFailure(error) {
+			$('#internetError').modal('show');
 			console.log(error);
 		}
 
@@ -296,7 +303,8 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 		}
 
 		function getPatientInfoFailure(error) {
-			$rootScope.loader = "show";
+			$rootScope.loader = "hide";
+			$('#internetError').modal('show');
 			console.log(error);
 		}
 	};
@@ -334,7 +342,8 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 			}
 
 			function getInvoiceFailure(error) {
-				$rootScope.loader = "show";
+				$rootScope.loader = "hide";
+				$('#internetError').modal('show');
 				console.log(error);
 			}
 
@@ -364,6 +373,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 		}
 	}
 	function deleteInvoiceFailure(error){
+		$('#internetError').modal('show');
 		console.log(error);
 	}
 
@@ -399,6 +409,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
             $('input:radio[name="checkoutpatient"]').eq(0).trigger("click");
         }
         function  checkoutSuccessFailure(res) {
+        	$('#internetError').modal('show');
             console.log(res)
         }
 

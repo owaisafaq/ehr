@@ -20,6 +20,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 	}
 
 	function dropDownFailed(error){
+		$('#internetError').modal('show');
 		console.log(error);
 	}
 	$scope.Order = {};
@@ -56,6 +57,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 		}
 
 		function getPatientFailure(error){
+			$('#internetError').modal('show');
 			console.log(error);
 		}
 	}
@@ -113,6 +115,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 	}
 
 	function getPatientFailure(error){
+		$('#internetError').modal('show');
 		console.log(error);
 	}
 
@@ -186,6 +189,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
         }
     }
     function GetAllPatientsFailure(error) { // on failure
+    	$('#internetError').modal('show');
         console.log(error);
     }
 
@@ -198,6 +202,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
         }
     }
     function DropDownDataFailure(error) { // on failure
+    	$('#internetError').modal('show');
         console.log(error);
     }
 
@@ -212,6 +217,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
              }
          }
          function GetLabTestsFailure(error) { // on failure
+         	$('#internetError').modal('show');
              console.log(error);
          }
     };
@@ -282,6 +288,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
         }
     }
     function OrderFailure(error) {
+    	$('#internetError').modal('show');
         console.log(error);
     }
 
@@ -320,6 +327,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
     }
 
     function checkoutFailure(error){
+    	$('#internetError').modal('show');
     	console.log(error);
     }
 

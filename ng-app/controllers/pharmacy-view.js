@@ -44,6 +44,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
             }
         }
         function prescriptionFailure(res) {
+            $('#internetError').modal('show');
             console.log(res)
         }
 
@@ -55,6 +56,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
             }
         }
         function getMedicineFailure(res) {
+            $('#internetError').modal('show');
             console.log(res)
         }
 
@@ -76,6 +78,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         }
 
         function patientInfoFailure(error) {
+            $('#internetError').modal('show');
             console.log(error);
         }
 
@@ -183,6 +186,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         function PrescriptionFailurePop(res) {
             console.log("res");
             console.log(res);
+            $('#internetError').modal('show');
         }
         function PrescriptionSuccess(res) {
             console.log(res)
@@ -193,6 +197,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         }
         function PrescriptionFailure(res) {
             console.log(res)
+            $('#internetError').modal('show');
         }
 
         function MedicationSuccess(res) {
@@ -202,6 +207,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         }
         function MedicationFailure(res) {
             console.log(res)
+            $('#internetError').modal('show');
         }
         /*$scope.addSIG = function (sigData) {
             $scope.MedicationData.sig = sigData.dose + " " + sigData.unit + " " + sigData.route + " for " + sigData.frequency + " " + sigData.direction + " " + sigData.duration;
@@ -233,6 +239,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         }
         function getAllMedicationsFailure(error){
             console.log(error);
+            $('#internetError').modal('show');
         }
 
         DropDownData.get({
@@ -249,6 +256,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
 
         function getPharmacyFailure(error){
             console.log(error);
+            $('#internetError').modal('show');
         }
 
         $scope.selectedMedication = function(id){
@@ -277,6 +285,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
             }
             function deleteMedicationFailure(error){
                 console.log(error);
+                $('#internetError').modal('show');
             }
         }
 
@@ -318,6 +327,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
 
         function checkoutFailure(error){
             console.log(error);
+            $('#internetError').modal('show');
         }
 
     }]);

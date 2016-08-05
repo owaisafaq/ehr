@@ -35,6 +35,7 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
 		}
 	}
 	function GetAllLabOrdersFailure(error) { // on failure GetAllLabOrders
+        $('#internetError').modal('show');
 		console.log(error);
 	}
 
@@ -51,7 +52,8 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
             }
         }
         function getLabOrderInfoFailure(error) { // on failure
-            $rootScope.loader = "show";
+            $rootScope.loader = "hide";
+            $('#internetError').modal('show');
             console.log(error);
         }
     };
@@ -103,6 +105,7 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
         }
     }
     function cancelLabOrderFailure(error) { // on failure
+        $('#internetError').modal('show');
         console.log(error);
     }
 
@@ -126,6 +129,7 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
         }
     }
     function GetAllPatientsFailure(error) { // on failure
+        $('#internetError').modal('show');
         console.log(error);
     }
 
@@ -138,6 +142,7 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
         }
     }
     function DropDownDataFailure(error) { // on failure
+        $('#internetError').modal('show');
         console.log(error);
     }
 
@@ -154,6 +159,7 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
              }
          }
          function GetLabTestsFailure(error) { // on failure
+            $('#internetError').modal('show');
              console.log(error);
          }
     };
@@ -216,6 +222,7 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
         }
     }
     function OrderFailure(error) {
+        $('#internetError').modal('show');
         console.log(error);
     }
 

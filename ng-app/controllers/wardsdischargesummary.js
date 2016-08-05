@@ -30,6 +30,7 @@ AppEHR.controller('wardsDischargeSummaryController', ['$scope', '$rootScope','$w
 	}
 	function admitPatientFailure(error){
 		console.log(error);
+		$('#internetError').modal('show');
 	}
 
 	GetAllWardsDropDown.get({
@@ -44,6 +45,7 @@ AppEHR.controller('wardsDischargeSummaryController', ['$scope', '$rootScope','$w
 	}
 	function wardsDropDownFailure(error){
 		console.log(error);
+		$('#internetError').modal('show');
 	}
 
 	DropDownData.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id}, dropDownSuccess, dropDownFailed);
@@ -56,6 +58,7 @@ AppEHR.controller('wardsDischargeSummaryController', ['$scope', '$rootScope','$w
 
 	function dropDownFailed(error){
 		console.log(error);
+		$('#internetError').modal('show');
 	}
 
 	$scope.admitPatientSelected = function(index){
@@ -78,6 +81,7 @@ AppEHR.controller('wardsDischargeSummaryController', ['$scope', '$rootScope','$w
 		}
 		function getBedsWardFailure(error){
 			console.log(error);
+			$('#internetError').modal('show');
 		}
 	}
 
@@ -118,6 +122,7 @@ AppEHR.controller('wardsDischargeSummaryController', ['$scope', '$rootScope','$w
 		}
 		function movePatientFailure(error){
 			console.log(error);
+			$('#internetError').modal('show');
 		}
 	}
 

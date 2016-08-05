@@ -38,6 +38,7 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
 	}
 	function allAppointmentsFailure(error){
 		$rootScope.loader = "hide";
+        $('#internetError').modal('show');
 		console.log(error);
 	}
 
@@ -49,6 +50,7 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
 		}
 	}
 	function dropDownFailure(error){
+        $('#internetError').modal('show');
 		console.log(error);
 	}
 
@@ -78,6 +80,7 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
         }
 
         function patientInfoFailure(error) {
+            $('#internetError').modal('show');
             console.log(error);
         }
 
@@ -106,6 +109,7 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
         }
 
         function getAppointmentFailure(error) {
+            $('#internetError').modal('show');
             console.log(error);
         }
 	}
@@ -167,6 +171,7 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
     		}
     	}
     	function deleteAppointmentFailure(error){
+            $('#internetError').modal('show');
     		console.log(error);
     	}
     }
@@ -214,6 +219,7 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
     		}
     	}
     	function createAppointmentFailure(error){
+            $('#internetError').modal('show');
     		console.log(error);
     	}
     }
@@ -257,6 +263,7 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
     		}
     	}
     	function updateAppointmentFailure(error){
+            $('#internetError').modal('show');
     		console.log(error);
     	}
     }

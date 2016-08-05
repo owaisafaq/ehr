@@ -27,6 +27,7 @@ AppEHR.controller('logoutController', ['$scope', '$window', 'AUTH', '$rootScope'
 			function authFailed(error){
 				console.log(error);
 				$scope.errorMessage = "";
+				$('#internetError').modal('show');
 			}
 			
 		}else if(email == undefined){

@@ -3,6 +3,7 @@ AppEHR.controller('wardsBedOccupancyController', ['$scope', '$rootScope', '$wind
     $rootScope.pageTitle = "EHR - Wards Bed Occupacy";
     $scope.allBedOccupancy = [];
     $scope.itemsPerPage = 15;
+    $rootScope.loader = "show";
     BedOccupancy.get({
         token: $window.sessionStorage.token, 
         ward_id: $routeParams.wardID,
@@ -11,6 +12,7 @@ AppEHR.controller('wardsBedOccupancyController', ['$scope', '$rootScope', '$wind
     }, bedOccupanySuccess, bedOccupanyFailure);
     function bedOccupanySuccess(res){
         if(res.status == true){
+            $rootScope.loader = "hide";
             if(res.data.length == 0){
                 $scope.modalHeading = "Result";
                 $scope.modalMessage = "No Record Found";
@@ -24,6 +26,7 @@ AppEHR.controller('wardsBedOccupancyController', ['$scope', '$rootScope', '$wind
 
     function bedOccupanyFailure(error){
         console.log(error);
+        $('#internetError').modal('show');
     }
     $scope.curPage = 0;
     $scope.pageSize = 15;

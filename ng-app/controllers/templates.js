@@ -61,6 +61,7 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
 
     function AddTemplateFailure(error) {
         console.log(error);
+        $('#internetError').modal('show');
     }
 
 
@@ -80,6 +81,7 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
 
     function getTemplateFailure(error) {
         console.log(error);
+        $('#internetError').modal('show');
     }
 
     getTemplateCategory.get({token: $window.sessionStorage.token}, TemplateCategorySuccess, TemplateCategoryFailed);
@@ -94,6 +96,7 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
 
     function TemplateCategoryFailed(error) {
         console.log(error);
+        $('#internetError').modal('show');
     }
 
     $scope.AddCategory = function (category) {
@@ -131,6 +134,7 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
 
     function CategoryFailure(error) {
         console.log(error);
+        $('#internetError').modal('show');
     }
 
 
@@ -152,8 +156,9 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
                 }
             }
             function deleteCategoryInfoFailure(error) {
-                $rootScope.loader = "show";
+                $rootScope.loader = "hide";
                 console.log(error);
+                $('#internetError').modal('show');
             }
 
         }
@@ -178,7 +183,8 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
                 }
             }
             function deleteTemplateInfoFailure(error) {
-                $rootScope.loader = "show";
+                $rootScope.loader = "hide";
+                $('#internetError').modal('show');
                 console.log(error);
             }
 

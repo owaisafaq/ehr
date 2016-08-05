@@ -14,6 +14,7 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', 'mySchema', '$routeP
     }
 
     function getLabOrderInfoFailure(error){ // on failure
+        $('#internetError').modal('show');
         console.log(error);
     }
 
@@ -26,6 +27,7 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', 'mySchema', '$routeP
         }
     }
     function getTemplateCategoriesFailure(error){ // on failure
+        $('#internetError').modal('show');
         console.log(error);
     }
 
@@ -40,6 +42,7 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', 'mySchema', '$routeP
         $scope.have_templates = true; // if there are templates in selected category
     }
     function getTemplatesFailure(error){ // on failure
+        $('#internetError').modal('show');
         console.log(error)
     }
 
@@ -55,6 +58,7 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', 'mySchema', '$routeP
         $scope.mySchema = JSON.parse(res.data.template);
     }
     function getTemplateDataFailure(error){ // on failure
+        $('#internetError').modal('show');
         console.log(error);
     }
 
@@ -91,6 +95,7 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', 'mySchema', '$routeP
         }
     }
     function saveTemplateValuesFailure(error){ // on failure
+        $('#internetError').modal('show');
         console.log(error);
     }
 }]);

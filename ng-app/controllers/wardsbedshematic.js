@@ -23,6 +23,7 @@ AppEHR.controller('wardsBedShematicController', ['$scope', '$rootScope', '$windo
 
 	function bedOccupancyFailure(error){
 		console.log(error);
+        $('#internetError').modal('show');
 	}
 
 	$scope.curPage = 0;

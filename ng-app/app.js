@@ -1,50 +1,12 @@
 var AppEHR = angular.module('AppEHR', [
     'ngRoute', 'ngResource', 'ngFileUpload', 'angular.filter', 'fg', 'ngSanitize', 'markdown', 'oc.lazyLoad'
 ]);
-AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$controllerProvider', function ($httpProvider, $routeProvider, $locationProvider, $controllerProvider) {
+AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', function ($httpProvider, $routeProvider, $locationProvider) {
         $locationProvider.hashPrefix();
         $httpProvider.defaults.headers.common = {};
         $httpProvider.defaults.headers.post = {};
         $httpProvider.defaults.headers.put = {};
         $httpProvider.defaults.headers.patch = {};
-
-        //$locationProvider.html5Mode(true);
-        /*AppEHR.registerCtrl = $controllerProvider.register;
-        function loadScript(path) {
-          var result = $.Deferred(),
-          script = document.createElement("script");
-          script.async = "async";
-          script.type = "text/javascript";
-          script.src = path;
-          script.onload = script.onreadystatechange = function (_, isAbort) {
-              if (!script.readyState || /loaded|complete/.test(script.readyState)) {
-                 if (isAbort)
-                     result.reject();
-                 else
-                    result.resolve();
-            }
-          };
-          script.onerror = function () { result.reject(); };
-          document.querySelector("body").appendChild(script);
-          return result.promise();
-        }
-
-        function loader(arrayName){
-            return {
-                load: function($q){
-                    var deferred = $q.defer(),
-                    map = arrayName.map(function(name) {
-                        return loadScript('controllers/'+name+".js");
-                    });
-
-                    $q.all(map).then(function(r){
-                        deferred.resolve();
-                    });
-
-                    return deferred.promise;
-                }
-            };
-        }*/
         $routeProvider.
                 when('/', {
                     templateUrl: 'views/login.html',
@@ -484,7 +446,6 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', '$control
                 otherwise({
                     redirectTo: '/dashboard'
                 });
-
     }]);
 AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData, $timeout) {
     if (sessionStorage.length == 0) {
@@ -627,6 +588,13 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
         function encounterFailed(error){
             console.log(error);
         }
+    }
+
+    $rootScope.internetError = function(){
+        $rootScope.loader = "show";
+        location.reload();
+        //$location.path($location.$$path);
+        //$window.location.href = "#"+$location.$$path
     }
     
     $rootScope.$on("$routeChangeStart", function (event, next, current) {
