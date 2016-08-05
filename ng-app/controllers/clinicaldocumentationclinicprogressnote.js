@@ -50,6 +50,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 
 	function getPatientFailure(error){
 		$rootScope.loader = "hide";
+    $('#internetError').modal('show');
 		console.log(error);
 	}
 
@@ -61,6 +62,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 
 	function getTemplateDropDownFailure(error){
 		$rootScope.loader = "hide";
+    $('#internetError').modal('show');
 		console.log(error);
 	}
 
@@ -78,6 +80,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 
 		function getTemplatesFailure(error){
 			$rootScope.loader = "hide";
+      $('#internetError').modal('show');
 			console.log(error);
 		}
 	}
@@ -97,6 +100,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 
 		function saveClinicalFailure(error){
 			$rootScope.loader = "hide";
+      $('#internetError').modal('show');
 			console.log(error);
 		}
 	}
@@ -156,6 +160,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
         }
 
         function PrescriptionFailurePop(res) {
+          $('#internetError').modal('show');
            console.log(res)
         }
 
@@ -187,6 +192,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
             }
         }
         function getAllMedicationsFailure(error){
+          $('#internetError').modal('show');
             console.log(error);
         }
 
@@ -201,6 +207,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
         }
 
         function getPharmacyFailure(error){
+          $('#internetError').modal('show');
             console.log(error);
         }
 
@@ -241,7 +248,8 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
             $scope.patientInfo = false;
         }
         function  checkoutSuccessFailure(res) {
-            console.log(res)
+          $('#internetError').modal('show');
+          console.log(res)
         }
 
 }]);

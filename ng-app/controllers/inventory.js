@@ -22,6 +22,7 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 	}
 
 	function GetAllInventoryFailure(error) {
+		$('#internetError').modal('show');
 		console.log(error);
 	}
 
@@ -37,6 +38,7 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 	}
 
 	function GetAllSupplierFailure(error) {
+		$('#internetError').modal('show');
 		console.log(error);
 	}
 
@@ -73,6 +75,7 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 	}
 
 	function CategoryFailure(error) {
+		$('#internetError').modal('show');
 		console.log(error);
 	}
 
@@ -92,6 +95,7 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 	}
 
 	function GetAllCategoriesFailure(error) {
+		$('#internetError').modal('show');
 		console.log(error);
 	}
 
@@ -111,6 +115,7 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 	}
 
 	function GetAllPharmaciesFailure(error) {
+		$('#internetError').modal('show');
 		console.log(error);
 	}
 
@@ -163,6 +168,7 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 	}
 
 	function SupplierFailure(error) {
+		$('#internetError').modal('show');
 		console.log(error);
 	}
 
@@ -253,6 +259,7 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 	}
 
 	function AddInventoryFailure(error) {
+		$('#internetError').modal('show');
 		console.log(error);
 	}
 
@@ -353,6 +360,7 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 	}
 
 	function UpdateCategoryFailure(error) {
+		$('#internetError').modal('show');
 		console.log(error);
 	}
 
@@ -408,6 +416,7 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 	}
 
 	function UpdateSupplierFailure(error) {
+		$('#internetError').modal('show');
 		console.log(error);
 	}
 
@@ -437,7 +446,8 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 			}
 		}
 		function deleteSupplierInfoFailure(error) {
-			$rootScope.loader = "show";
+			$rootScope.loader = "hide";
+			$('#internetError').modal('show');
 			console.log(error);
 		}
 	};
@@ -466,7 +476,8 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 			}
 		}
 		function deleteStockInfoFailure(error) {
-			$rootScope.loader = "show";
+			$rootScope.loader = "hide";
+			$('#internetError').modal('show');
 			console.log(error);
 		}
 	};
@@ -493,7 +504,8 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 			}
 		}
 		function getCategoryInfoFailure(error) {
-			$rootScope.loader = "show";
+			$rootScope.loader = "hide";
+			$('#internetError').modal('show');
 			console.log(error);
 		}
 	};
@@ -525,7 +537,8 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 			}
 		}
 		function deleteCategoryInfoFailure(error) {
-			$rootScope.loader = "show";
+			$rootScope.loader = "hide";
+			$('#internetError').modal('show');
 			console.log(error);
 		}
 	};
@@ -552,7 +565,8 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 			}
 		}
 		function getSupplierInfoFailure(error) {
-			$rootScope.loader = "show";
+			$rootScope.loader = "hide";
+			$('#internetError').modal('show');
 			console.log(error);
 		}
 	};
@@ -579,7 +593,8 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 			}
 		}
 		function getStockInfoFailure(error) {
-			$rootScope.loader = "show";
+			$rootScope.loader = "hide";
+			$('#internetError').modal('show');
 			console.log(error);
 		}
 	};
@@ -613,7 +628,8 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 			}
 		}
 		function getProductInfoFailure(error) {
-			$rootScope.loader = "show";
+			$rootScope.loader = "hide";
+			$('#internetError').modal('show');
 			console.log(error);
 		}
 	};
@@ -649,7 +665,8 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 			}
 		}
 		function getReorderInfoFailure(error) {
-			$rootScope.loader = "show";
+			$rootScope.loader = "hide";
+			$('#internetError').modal('show');
 			console.log(error);
 		}
 	};
@@ -686,6 +703,7 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 		}
 
 		function ReorderUpdateFailure(error) {
+			$('#internetError').modal('show');
 			console.log(error);
 		}
 	};
@@ -737,6 +755,7 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 		}
 
 		function ProductUpdateFailure(error) {
+			$('#internetError').modal('show');
 			console.log(error);
 		}
 
@@ -757,6 +776,7 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 	}
 	function GetAllCountriesFailure(error) {
 		//$rootScope.loader = "show";
+		$('#internetError').modal('show');
 		console.log(error);
 	}
 
@@ -780,6 +800,7 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 		}
 		function GetAllStatesFailure(error) {
 			//$rootScope.loader = "show";
+			$('#internetError').modal('show');
 			console.log(error);
 		}
 
@@ -805,6 +826,7 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 		}
 		function GetAllCitiesFailure(error) {
 			//$rootScope.loader = "show";
+			$('#internetError').modal('show');
 			console.log(error);
 		}
 

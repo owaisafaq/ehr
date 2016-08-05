@@ -28,6 +28,7 @@ AppEHR.controller('pharmacyPrescription', ['$scope', '$rootScope', '$window', 'P
 	}
 
 	function pharmanyListFailure(error){
+        $('#internetError').modal('show');
 		console.log(error);
 	}
 

@@ -106,6 +106,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
 
         function getMedicineUnitsFailure(error) {
+            $('#internetError').modal('show');
             console.log(error);
         }
 
@@ -118,7 +119,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
 
         function getPatientMedicationFailure(error) {
-
+            $('#internetError').modal('show');
             console.log(error);
         }
 
@@ -135,6 +136,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         function listImmunizationFailure(error) {
             console.log(error);
+            $('#internetError').modal('show');
         }
 
         $scope.validateVitals = function (vital) {
@@ -182,6 +184,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         function vitalFailure(error) {
             console.log(error);
+            $('#internetError').modal('show');
         }
 
         GetVitalsInfo.get({
@@ -203,6 +206,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         function getVitalInfoFailure(error) {
             console.log(error);
+            $('#internetError').modal('show');
         }
 
         $scope.clinicalNote = function () {
@@ -225,6 +229,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         function GetSupplementsFailure(error) {
             console.log(error);
+            $('#internetError').modal('show');
         }
 
 
@@ -244,6 +249,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         function GetAllergiesFailure(error) {
             console.log(error);
+            $('#internetError').modal('show');
         }
 
         GetEncountersByPatients.get({
@@ -262,6 +268,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         function GetEncountersByPatientsFailure(error) {
             console.log(error);
+            $('#internetError').modal('show');
         }
 
 
@@ -291,6 +298,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
         function allergyFailure(error) {
             console.log(error);
+            $('#internetError').modal('show');
         }
         $scope.GetTempcVal = function () {
             $scope.vital.temperaturef = ($scope.vital.temperaturec - 32) * (5 / 9);
@@ -333,6 +341,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         function archiveFailure(error) {
             console.log(error);
+            $('#internetError').modal('show');
         }
 
         $scope.getFileDetails = function (e) {
@@ -422,6 +431,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         function removeArchiveFailure(error) {
             console.log(error);
             $rootScope.loader == 'hide'
+            $('#internetError').modal('show');
         }
 
         function deleteFolderSuccess(res) {
@@ -435,7 +445,8 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         function deleteFolderFailure(error) {
             console.log(error);
-            $rootScope.loader == 'hide'
+            $rootScope.loader = 'hide';
+            $('#internetError').modal('show');
         }
 
         // edit archive
@@ -477,7 +488,8 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         function editArchiveFailure(error) {
             console.log(error);
-            $rootScope.loader == 'hide'
+            $rootScope.loader = 'hide';
+            $('#internetError').modal('show');
         }
 
         function saveFileNameSuccess(res) {
@@ -487,7 +499,8 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
         function editFileArchiveFailure(error) {
             console.log(error);
-            $rootScope.loader == 'hide'
+            $rootScope.loader = 'hide';
+            $('#internetError').modal('show');
         }
 
         $scope.showPDF = function (link) {
@@ -510,6 +523,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         function nestedFolderFailure(error) {
             console.log(error);
+            $('#internetError').modal('show');
         }
 
         $scope.disabledEditButton = true;
@@ -542,6 +556,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
         function listFolderFailure(error) {
             console.log(error);
+            $('#internetError').modal('show');
         }
         //$scope.backLinkID;
         $scope.backLinkID = '0';
@@ -588,6 +603,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         function nestedFolderFailure(error) {
             console.log(error);
+            $('#internetError').modal('show');
         }
 
         $scope.backButton = function () {
@@ -616,6 +632,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
 
         function folderUpFoldersFailure(error) {
+            $('#internetError').modal('show');
             console.log(error);
         }
 
@@ -637,6 +654,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
 
         function folderUpContentFailure(error) {
+            $('#internetError').modal('show');
             console.log(error);
         }
 
@@ -661,6 +679,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
 
         function folderCreatedFailure(error) {
+            $('#internetError').modal('show');
             console.log(error);
         }
         $scope.addSupplements = function (dataToBeAdded) {
@@ -694,6 +713,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
 
         function addSupplementsFailure(error) {
+            $('#internetError').modal('show');
             console.log(error);
         }
 
@@ -728,6 +748,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
 
         function addAllergyFailure(error) {
+            $('#internetError').modal('show');
             console.log(error);
         }
 
@@ -752,6 +773,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
                 }
 
                 function addImmunizationsFailure(error) {
+                    $('#internetError').modal('show');
                     console.log(error);
                 }
                 console.log($scope.immunizations);
@@ -775,6 +797,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
             function deleteImmunizationsFailure(error) {
                 console.log(error);
+                $('#internetError').modal('show');
             }
         }
 
@@ -1124,6 +1147,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
         function getAllMedicationsFailure(error){
             console.log(error);
+            $('#internetError').modal('show');
         }
 
         DropDownData.get({
@@ -1140,6 +1164,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         function getPharmacyFailure(error){
             console.log(error);
+            $('#internetError').modal('show');
         }
 
         /*CHECKOUT*/
@@ -1171,8 +1196,9 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
             $scope.buttonDisabled = false;
             $scope.patientInfo = false;
         }
-        function  checkoutSuccessFailure(res) {
-            console.log(res)
+        function checkoutSuccessFailure(res) {
+            console.log(res);
+            $('#internetError').modal('show');
         }
 
 }]);

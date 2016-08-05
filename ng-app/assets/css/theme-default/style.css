@@ -1632,7 +1632,7 @@ Patient Plan
 BED Occupancy
 -----------*/
 .bed-box{
-    width: 118px;
+    width: 18%;
     height: 160px;
     float: left;
     border: 1px solid #ddecf8;
@@ -1640,6 +1640,23 @@ BED Occupancy
     margin-right: 30px;
     margin-bottom: 30px;
     position: relative;
+}
+.bed-box-con > .bed-box:nth-child(5n){    
+    margin-right: 0;
+}
+.bed-box-con > .bed-box:nth-child(5n) .bed-info{
+    box-shadow: -12px 0 40px 0 rgba(224,232,238,1);
+    left:auto;
+    right: 110%;
+}
+.bed-box-con > .bed-box:nth-child(5n) .bed-info:before{
+    left: auto;
+    content: "\f0da";
+    right: -8px;
+}
+.bed-box-con > .bed-box:nth-child(5n):hover .bed-info{
+    left:auto;
+    right: 100%;
 }
 .bed-box:hover{
     background: #526f82;
@@ -2730,6 +2747,7 @@ table.billing_table > tbody > tr > td:nth-child(4){vertical-align:bottom;}
 .id_card .barCode{
     display: block;
     margin: 0 auto;
+    width: 246px;
 }
 .thumb {
     width: 24px;
@@ -2805,16 +2823,14 @@ form .progress {
     .id_card {
         display: block;
     }
-
     #printHeading{
         display: none;
     }
-
     #stripOptions{
         display: none;
     }
-
 }
+
 .check-box-label label{
     width:auto;
 }
@@ -2992,4 +3008,7 @@ margin-left: -180px;
 .display-image{
     width: 130px;
     height: 130px;
+}
+.error-header{
+    color: #ff4d4d!important;
 }

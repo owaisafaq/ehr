@@ -26,7 +26,6 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
 
         $scope.paginationNext = function(pageSize, curPage){
             $rootScope.loader = "show";
-            console.log(pageSize * curPage);
             GetAllPatients.get({
                 token: $window.sessionStorage.token,
                 offset: (pageSize * curPage), limit: $scope.itemsPerPage
@@ -35,7 +34,6 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
 
         $scope.paginationPrev = function(pageSize, curPage){
             $rootScope.loader = "show";
-            console.log(pageSize * curPage);
             GetAllPatients.get({
                 token: $window.sessionStorage.token,
                 offset: (pageSize - 1) * curPage, limit: $scope.itemsPerPage
@@ -43,7 +41,6 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
         }
         $scope.samePage = '';
         $scope.goToPage = function(pageSize, num){
-            console.log($scope.samePage+num);
             $rootScope.loader = "show";
             GetAllPatients.get({
                 token: $window.sessionStorage.token,
@@ -80,14 +77,15 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
                     $('#noRecordFound').modal('show');
                     return true;
                 }
+                //$('#internetError').modal('show');
                 $scope.patientLists = [];
                 $scope.patientLists = res.data;
-                console.log(res.data);
                 $scope.patientCount = res.count;
             }
         }
 
         function GetAllPatientsFailure(error) {
+            $('#internetError').modal('show');
             console.log(error);
         }
 
@@ -99,7 +97,6 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
                 if (res.status == true) {
                     $scope.hideOptions = false;
                     $scope.idCardDisabledBtn = false;
-                    console.log(res.data);
                     $rootScope.loader = "hide";
                     $scope.disabledEncounterButton = false;
                     $scope.patientInfo = true;
@@ -115,6 +112,7 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
                     $scope.displayInfo.date_of_birth = res.data.date_of_birth;
                     $scope.displayInfo.encounter_id = res.data.encounter_id;
                     $scope.PI.patient_image = res.data.patient_image;
+                    $scope.displayInfo.barcode = res.data.barcode;
                     $scope.PI.displayImage = patientImageDirectory + res.data.patient_image;
                     if($scope.displayInfo.encounter_id == undefined || $scope.displayInfo.encounter_id == null){
                         $scope.ifEncounterID = true;
@@ -130,7 +128,8 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
             }
 
             function getPatientFailure(error) {
-                $rootScope.loader = "show";
+                $rootScope.loader = "hide";
+                $('#internetError').modal('show');
                 console.log(error);
             }
         }
@@ -232,7 +231,6 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
 
         function checkoutSuccess(res){
             if(res.status ==  true){
-                console.log(res);
                 $rootScope.loader = "hide";
                 $scope.messageType = "alert-success";
                 $scope.errorMessage = res.message;
@@ -244,6 +242,7 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
         }
 
         function checkoutFailure(error){
+            $('#internetError').modal('show');
             console.log(error);
         }
 
@@ -261,7 +260,6 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
             function deletePatientSuccess(res){
                 $rootScope.loader = "hide";
                 if(res.status ==  true){
-                    console.log(res);
                     $scope.hideOptions = true;
                     $scope.patientInfo = false;
                     $('#deleteModal').modal('hide');
@@ -276,6 +274,7 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
             }
 
             function deletePatientFailure(error){
+                $('#internetError').modal('show');
                 console.log(error);
             }
         }

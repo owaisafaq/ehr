@@ -15,7 +15,8 @@ AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routePar
         }
     }
     function getLabOrderInfoFailure(error) { // on failure
-        $rootScope.loader = "show";
+        $rootScope.loader = "hide";
+        $('#internetError').modal('show');
         console.log(error);
     }
 
@@ -50,7 +51,8 @@ AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routePar
             }
         }
         function getLabTestInfoFailure(error) { // on failure
-            $rootScope.loader = "show";
+            $rootScope.loader = "hide";
+            $('#internetError').modal('show');
             console.log(error);
         }
     };
@@ -105,6 +107,7 @@ AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routePar
         }
     }
     function updateTestStatusFailure(error){ // on failure
+        $('#internetError').modal('show');
         console.log(error);
     }
 

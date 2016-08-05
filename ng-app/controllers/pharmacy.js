@@ -26,6 +26,7 @@ AppEHR.controller('pharmacy', ['$scope', '$rootScope', 'getPharmacy', '$window',
 
 	function getPharmacyFailure(error) {
 		console.log(error);
+		$('#internetError').modal('show');
 	}
 	$scope.emailFormat = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
 
@@ -41,6 +42,7 @@ AppEHR.controller('pharmacy', ['$scope', '$rootScope', 'getPharmacy', '$window',
 
 	function countryFailed(error) {
 		console.log(error);
+		$('#internetError').modal('show');
 	}
 
 	$scope.addressStateByCountry = function (country) {
@@ -54,6 +56,7 @@ AppEHR.controller('pharmacy', ['$scope', '$rootScope', 'getPharmacy', '$window',
 		}
 		function stateFailed(error) {
 			console.log(error);
+			$('#internetError').modal('show');
 		}
 	};
 
@@ -67,6 +70,7 @@ AppEHR.controller('pharmacy', ['$scope', '$rootScope', 'getPharmacy', '$window',
 		}
 		function cityFailed(error) {
 			console.log(error);
+			$('#internetError').modal('show');
 		}
 
 	};
@@ -120,6 +124,7 @@ AppEHR.controller('pharmacy', ['$scope', '$rootScope', 'getPharmacy', '$window',
 	}
 	function addPharmacyFailure(error){ // on failure
 		console.log(error);
+		$('#internetError').modal('show');
 	}
 
 	/*MUZAMMIL WORK*/
@@ -181,6 +186,7 @@ AppEHR.controller('pharmacy', ['$scope', '$rootScope', 'getPharmacy', '$window',
 	}
 	function editPharmacyFailure(error){ // on failure
 		console.log(error);
+		$('#internetError').modal('show');
 	}
 
 	$scope.removePharmacy = function(){
@@ -203,6 +209,7 @@ AppEHR.controller('pharmacy', ['$scope', '$rootScope', 'getPharmacy', '$window',
 
 	function deletePharmacyFailure(error){
 		console.log(error);
+		$('#internetError').modal('show');
 	}
 
 	$scope.pharmacyDropdown = function(){
@@ -215,6 +222,7 @@ AppEHR.controller('pharmacy', ['$scope', '$rootScope', 'getPharmacy', '$window',
 		}
 		function stateFailed(error) {
 			console.log(error);
+			$('#internetError').modal('show');
 		}
 		City.get({token: $window.sessionStorage.token, state_id: $scope.pharmacyDataEdit.state}, citySuccess, cityFailed);
 		function citySuccess(res) {
@@ -225,6 +233,7 @@ AppEHR.controller('pharmacy', ['$scope', '$rootScope', 'getPharmacy', '$window',
 		}
 		function cityFailed(error) {
 			console.log(error);
+			$('#internetError').modal('show');
 		}
 		setTimeout(function () {
             $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});

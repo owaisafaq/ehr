@@ -44,6 +44,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
         }
 
         function patientInfoFailure(error) {
+            $('#internetError').modal('show');
             console.log(error);
         }
 
@@ -72,6 +73,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
         }
 
         function getPatientEncountersFailure(error) {
+            $('#internetError').modal('show');
             console.log(error);
         }
 
@@ -103,7 +105,8 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
             }
 
             function getEncountersFailure(error) {
-                $rootScope.loader = "show";
+                $rootScope.loader = "hide";
+                $('#internetError').modal('show');
                 console.log(error);
             }
         }
@@ -147,6 +150,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
             $scope.patientInfo = false;
         }
         function  checkoutSuccessFailure(res) {
+            $('#internetError').modal('show');
             console.log(res)
         }
         function addVitalSuccess(res) {
@@ -158,6 +162,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
         }
 
         function addVitalFailure(error) {
+            $('#internetError').modal('show');
             console.log(error);
         }
 
@@ -213,6 +218,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
         }
 
         function vitalFailure(error) {
+            $('#internetError').modal('show');
             console.log(error);
         }
 
@@ -244,6 +250,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
         }
 
         function getOneEncounterFailure(error) {
+            $('#internetError').modal('show');
             console.log(error);
         }
 
@@ -291,6 +298,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
         }
 
         function updateEncounterFailure(error) {
+            $('#internetError').modal('show');
             console.log(error);
         }
 
@@ -321,6 +329,7 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
         function encounterDeletefailure(error) {
             console.log(error);
             $rootScope.loader = "hide";
+            $('#internetError').modal('show');
         }
 
         /*PAGINATION*/
