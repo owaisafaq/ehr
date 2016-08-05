@@ -1257,7 +1257,6 @@ class ApiController extends Controller
     public function get_patient(Request $request)
     {
 
-
         $patient_id = $request->input('patient_id');
         $logo_image = url('/') . '/uploaded_images/';
 
@@ -1285,6 +1284,11 @@ class ApiController extends Controller
             $is_visit = 1;
         }
 
+
+        foreach ($patients as $patient) {
+
+            $patient->barcode = "http://demoz.online/php-barcode-master/barcode.php?text=$patient->id";
+        }
 
         return response()->json(['status' => true, 'data' => $patients[0], 'is_visit' => $is_visit]);
 
@@ -1365,10 +1369,7 @@ class ApiController extends Controller
                     ->get();
 
                 $patient_plan->dependents = $dependents;
-
             }
-
-
         }
 
         $patient_valid = 0;

@@ -2307,3 +2307,13 @@ $api->params->ward_id = "0";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+
+//Appointment Dates
+$api = new api();
+$api->name = "Appointment Dates";
+$api->url = HOST . 'appointment_dates';
+$api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
