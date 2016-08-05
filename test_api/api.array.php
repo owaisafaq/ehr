@@ -2416,6 +2416,16 @@ $api->params->token = "123435";
 
 $api_arr [] = $api;
 
+//List  Tax Rate
+$api = new api();
+$api->name = "List Tax Rate";
+$api->url = HOST . 'list_tax_rate';
+$api->method = "GET";
+$api->params->tax_rate_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
 
 //Delete Tax Rates
 $api = new api();

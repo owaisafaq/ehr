@@ -335,6 +335,18 @@ class BillingController extends Controller
         return response()->json(['status' => true, 'data' => $tax_rates]);
 
     }
+
+    public function list_tax_rate(Request $request){
+          $tax_rate_id= $request->input('tax_rate_id');
+          $tax_rate = DB::table('tax_rates')
+              ->select(DB::raw('name,rate'))
+              ->where('status', 1)
+              ->where('id', $tax_rate_id)
+              ->first();
+
+          return response()->json(['status' => true, 'data' => $tax_rate]);
+      }
+
     public function delete_tax_rate(Request $request){
         $tax_rate_id= $request->input('tax_rate_id');
         DB::table('tax_rates')
