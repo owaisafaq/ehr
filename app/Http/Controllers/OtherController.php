@@ -645,6 +645,7 @@ class OtherController extends Controller
 
     public function patients_pool_area(Request $request)
     {
+
         $encounter = DB::table('visits')
             ->select(DB::raw('CONCAT(patients.first_name," ",patients.last_name) AS patient_name,visits.id'))
             ->leftJoin('patients', 'visits.patient_id', '=', 'patients.id')
@@ -681,6 +682,11 @@ class OtherController extends Controller
             ->groupby('patients.id')
             ->get();
 
+        $is_exist = 1;
+        if(empty($encounter) || empty($triage) || empty($physician) || empty($checkout)){
+            $is_exist = 0;
+        }
+
         $data = array(
                   "encounter" => $encounter,
                   "triage" => $triage,
@@ -688,7 +694,7 @@ class OtherController extends Controller
                   "checkout" => $checkout
               );
 
-        return response()->json(['status' => true, 'data' => $data]);
+        return response()->json(['status' => true, 'data' => $data,'is_exist'=> $is_exist]);
     }
 
     public function all_wards(Request $request){
