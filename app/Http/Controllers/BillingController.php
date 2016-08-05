@@ -245,6 +245,71 @@ class BillingController extends Controller
         return response()->json(['status' => true, 'data'=>$bill_category]);
 
     }
+    public function add_billing_code(Request $request){
+        $code = $request->input('code');
+        $description = $request->input('description');
+        $charge = $request->input('charge');
+        $category_id= $request->input('category_id');
+        $tax= $request->input('tax');
 
+        DB::table('billing_codes')
+            ->insert(
+                ['code' => $code,'description'=>$description,'charge'=>$charge,'category'=>$category_id,'tax'=>$tax,'created_at'=>date("Y-m-d  H:i:s")]);
 
+        return response()->json(['status' => true, 'message' => 'Billing Code Inserted successfully']);
+
+    }
+
+    public function get_all_billing_codes(Request $request){
+
+          $bill_codes = DB::table('billing_codes')
+              ->leftJoin('billing_category', 'billing_codes.category', '=','billing_category.id' )
+              ->select(DB::raw('billing_codes.id,billing_codes.code,billing_codes.description,billing_codes.charge,billing_category.name as category'))
+              ->where('billing_codes.status', 1)
+              ->get();
+
+          return response()->json(['status' => true, 'data'=>$bill_codes]);
+
+      }
+
+    public function get_billing_code(Request $request){
+
+          $bill_code = DB::table('billing_codes')
+              ->leftJoin('billing_category', 'billing_codes.category', '=','billing_category.id' )
+              ->select(DB::raw('billing_codes.id,billing_codes.code,billing_codes.description,billing_codes.charge,billing_category.name as category,billing_codes.category as category_id'))
+              ->where('billing_codes.status', 1)
+              ->first();
+
+          return response()->json(['status' => true, 'data'=>$bill_code]);
+
+      }
+
+    public function update_billing_code(Request $request){
+         $billing_code_id = $request->input('billing_code_id');
+         $code = $request->input('code');
+         $description = $request->input('description');
+         $charge = $request->input('charge');
+         $category_id= $request->input('category_id');
+         $tax= $request->input('tax');
+
+         DB::table('billing_codes')
+             ->where('id',$billing_code_id)
+             ->update(
+                 ['code' => $code,'description'=>$description,'charge'=>$charge,'category'=>$category_id,'tax'=>$tax,'updated_at'=>date("Y-m-d  H:i:s")]);
+
+         return response()->json(['status' => true, 'message' => 'Billing Code Updated successfully']);
+
+     }
+
+    public function delete_billing_code(Request $request){
+           $billing_code_id = $request->input('billing_code_id');
+
+           DB::table('billing_codes')
+               ->where('id',$billing_code_id)
+               ->update(
+                   ['status'=>0,'updated_at'=>date("Y-m-d  H:i:s")]);
+
+           return response()->json(['status' => true, 'message' => 'Billing Code Deleted successfully']);
+
+       }
 }

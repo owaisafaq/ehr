@@ -2346,8 +2346,52 @@ $api->method = "POST";
 $api->params->code = "";
 $api->params->description = "";
 $api->params->charge = "";
-$api->params->category = "";
+$api->params->category_id = "";
 $api->params->tax = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Get All Billing Codes
+$api = new api();
+$api->name = "Get All Billing Codes";
+$api->url = HOST . 'get_all_billing_codes';
+$api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Get Billing Code
+$api = new api();
+$api->name = "Get Billing Code";
+$api->url = HOST . 'get_billing_code';
+$api->method = "GET";
+$api->params->billing_code_id = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Update Code
+$api = new api();
+$api->name = "Update Code";
+$api->url = HOST . 'update_billing_code';
+$api->method = "POST";
+$api->params->billing_code_id = "";
+$api->params->code = "";
+$api->params->description = "";
+$api->params->charge = "";
+$api->params->category_id = "";
+$api->params->tax = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Delete Billing Code
+$api = new api();
+$api->name = "Delete Billing Code";
+$api->url = HOST . 'delete_billing_code';
+$api->method = "POST";
+$api->params->billing_code_id = "";
 $api->params->token = "123435";
 
 $api_arr [] = $api;

@@ -238,6 +238,10 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->post('add_billing_category','App\Http\Controllers\BillingController@add_billing_category');
     $app->get('get_billing_category','App\Http\Controllers\BillingController@get_billing_category');
     $app->post('add_billing_code','App\Http\Controllers\BillingController@add_billing_code');
+    $app->post('update_billing_code','App\Http\Controllers\BillingController@update_billing_code');
+    $app->get('get_all_billing_codes','App\Http\Controllers\BillingController@get_all_billing_codes');
+    $app->get('get_billing_code','App\Http\Controllers\BillingController@get_billing_code');
+    $app->post('delete_billing_code','App\Http\Controllers\BillingController@delete_billing_code');
 
 
 });
