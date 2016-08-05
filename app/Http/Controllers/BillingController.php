@@ -324,4 +324,15 @@ class BillingController extends Controller
 
 
     }
+
+    public function list_tax_rates(Request $request){
+
+        $tax_rates = DB::table('tax_rates')
+            ->select(DB::raw('name,rate'))
+            ->where('status', 1)
+            ->get();
+
+        return response()->json(['status' => true, 'data' => $tax_rates]);
+
+    }
 }

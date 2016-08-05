@@ -2406,3 +2406,12 @@ $api->params->rate = "";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+//List All Tax Rates
+$api = new api();
+$api->name = "List All Tax Rates";
+$api->url = HOST . 'list_tax_rates';
+$api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
