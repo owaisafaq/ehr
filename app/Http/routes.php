@@ -234,4 +234,7 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->get('get_bill_invoices','App\Http\Controllers\BillingController@get_bill_invoices');
     $app->post('inventory_inactive','App\Http\Controllers\InventoryAPIController@inventory_inactive');
 
+    //Billing Codes and Templates
+    $app->post('add_billing_category','App\Http\Controllers\BillingController@add_billing_category');
+
 });

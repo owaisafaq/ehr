@@ -223,4 +223,17 @@ class BillingController extends Controller
 
     }
 
+    public function add_billing_category(Request $request){
+
+        $name = $request->input('name');
+        $description = $request->input('description');
+
+        DB::table('billing_category')
+            ->insert(
+                ['name' => $name,'description'=>$description,'created_at'=>date("Y-m-d  H:i:s")]);
+
+        return response()->json(['status' => true, 'message' => 'Category Inserted successfully']);
+
+    }
+
 }

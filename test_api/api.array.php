@@ -2317,3 +2317,14 @@ $api->method = "GET";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+//Add Billing Category
+$api = new api();
+$api->name = "Add Billing Category";
+$api->url = HOST . 'add_billing_category';
+$api->method = "POST";
+$api->params->name = "";
+$api->params->description = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
