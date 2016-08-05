@@ -32,6 +32,9 @@ body{
 .padding-top-0{
     padding-top: 0 !important;
 }
+.padding-left{
+    padding-left: 26px !important;
+}
 .padding-right-0{
     padding-right: 0 !important;
 }
@@ -1626,6 +1629,12 @@ Patient Plan
 .update-encounter{
     margin-top: 125px;
 }
+.patient-pool-area{
+    background-color: #ddecf8;
+    color: #516e81;
+    font-weight: bold;
+}
+
 /*MUZAMMIL CODE END*/
 
 /*-----------
@@ -1830,6 +1839,16 @@ BED Occupancy
     font-size: 13px;
     color: #1a1a1a;
     text-transform: capitalize;
+}
+.label-ppa{
+    font-size: 15px;
+    color: #AFB3C3;
+    text-transform: capitalize;
+    font-weight: bold;
+}
+.ppa-col-3{
+    padding-right: 0px!important;
+    padding-left: 0px!important;
 }
 .label-style-con label.txt-style-4{
     font-size: 13px;
