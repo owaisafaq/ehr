@@ -694,7 +694,7 @@ class OtherController extends Controller
                   "checkout" => $checkout
               );
 
-        return response()->json(['status' => true, 'data' => $data,'is_exist'=> $is_exist]);
+        return response()->json(['status' => true, 'data' => $data,'is_exist'=>$is_exist]);
     }
 
     public function all_wards(Request $request){
