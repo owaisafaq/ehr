@@ -2415,3 +2415,14 @@ $api->method = "GET";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+
+//Delete Tax Rates
+$api = new api();
+$api->name = "Delete Tax Rates";
+$api->url = HOST . 'delete_tax_rate';
+$api->method = "POST";
+$api->params->tax_rate_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;

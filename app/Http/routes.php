@@ -246,5 +246,6 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     //Tax Rates
     $app->post('add_tax_rates','App\Http\Controllers\BillingController@add_tax_rates');
     $app->get('list_tax_rates','App\Http\Controllers\BillingController@list_tax_rates');
+    $app->post('delete_tax_rate','App\Http\Controllers\BillingController@delete_tax_rate');
 
 });

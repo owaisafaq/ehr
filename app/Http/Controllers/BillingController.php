@@ -335,4 +335,14 @@ class BillingController extends Controller
         return response()->json(['status' => true, 'data' => $tax_rates]);
 
     }
+    public function delete_tax_rate(Request $request){
+        $tax_rate_id= $request->input('tax_rate_id');
+        DB::table('tax_rates')
+            ->where('id',$tax_rate_id)
+            ->update(
+                    ['status'=>0,'updated_at' => date("Y-m-d  H:i:s")]);
+
+            return response()->json(['status' => true, 'message' => 'Tax Rate Deleted successfully']);
+
+    }
 }
