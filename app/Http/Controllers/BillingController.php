@@ -312,4 +312,16 @@ class BillingController extends Controller
            return response()->json(['status' => true, 'message' => 'Billing Code Deleted successfully']);
 
        }
+
+    public function add_tax_rates(Request $request){
+        $name = $request->input('name');
+        $rate = $request->input('rate');
+        DB::table('tax_rates')
+            ->insert(
+                ['name' => $name, 'rate' => $rate, 'created_at' => date("Y-m-d  H:i:s")]);
+
+        return response()->json(['status' => true, 'message' => 'Tax Rates Added successfully']);
+
+
+    }
 }

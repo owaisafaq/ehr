@@ -2395,3 +2395,14 @@ $api->params->billing_code_id = "";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+//Add Tax Rates
+$api = new api();
+$api->name = "Add Tax Rates";
+$api->url = HOST . 'add_tax_rates';
+$api->method = "POST";
+$api->params->name = "";
+$api->params->rate = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
