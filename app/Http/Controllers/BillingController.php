@@ -367,4 +367,61 @@ class BillingController extends Controller
             return response()->json(['status' => true, 'message' => 'Tax Rate Deleted successfully']);
 
     }
+
+    public function add_investigation_billing_code(Request $request){
+
+        $investigation_type = $request->input('investigation_type');
+        $code= $request->input('code');
+        $charge= $request->input('charge');
+        $tax = $request->input('tax');
+        $description = $request->input('description');
+
+        DB::table('new_investigation_billing_code')
+            ->insert(['investigation_type' => $investigation_type,
+                'code' => $code,
+                'charge' => $charge,
+                'tax' => $tax,
+                'description' => $description,
+                'created_at' => date("Y-m-d  H:i:s")]);
+
+        return response()->json(['status' => true, 'message' => 'New investigation billing code added successfully']);
+    }
+
+    public function delete_investigation_billing_code(Request $request){
+
+        $investigation_billing_code_id = $request->input('investigation_billing_code_id');
+
+        DB::table('new_investigation_billing_code')
+            ->where('id',$investigation_billing_code_id)
+            ->update(['status' => 0,'updated_at' => date("Y-m-d  H:i:s")]);
+
+        return response()->json(['status' => true, 'message' => 'New investigation billing code Deleted successfully']);
+
+
+    }
+
+    public function get_all_investigation_billing_codes(){
+
+        $investigation_billing_codes = DB::table('new_investigation_billing_code')
+                 ->leftJoin('tax_rates', 'tax_rates.id', '=','new_investigation_billing_code.tax' )
+                 ->select(DB::raw('new_investigation_billing_code.id,investigation_type,code,charge,description,CONCAT(tax_rates.rate," ",tax_rates.name) AS tax'))
+                 ->where('new_investigation_billing_code.status', 1)
+                 ->get();
+
+        return response()->json(['status' => true, 'data' => $investigation_billing_codes]);
+    }
+    public function get_investigation_billing_code(Request $request){
+
+        $investigation_billing_code_id = $request->input('investigation_billing_code_id');
+
+        $investigation_billing_code = DB::table('new_investigation_billing_code')
+                 ->leftJoin('tax_rates', 'tax_rates.id', '=','new_investigation_billing_code.tax' )
+                 ->select(DB::raw('new_investigation_billing_code.id,investigation_type,code,charge,description,CONCAT(tax_rates.rate," ",tax_rates.name) AS tax,tax_rates.id as tax_id'))
+                 ->where('new_investigation_billing_code.status', 1)
+                 ->where('new_investigation_billing_code.id', $investigation_billing_code_id)
+                 ->first();
+
+        return response()->json(['status' => true, 'data' => $investigation_billing_code]);
+    }
+
 }
