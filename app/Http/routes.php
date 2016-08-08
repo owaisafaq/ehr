@@ -234,4 +234,20 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->get('get_bill_invoices','App\Http\Controllers\BillingController@get_bill_invoices');
     $app->post('inventory_inactive','App\Http\Controllers\InventoryAPIController@inventory_inactive');
 
+    //Billing Codes and Templates
+    $app->post('add_billing_category','App\Http\Controllers\BillingController@add_billing_category');
+    $app->get('get_billing_category','App\Http\Controllers\BillingController@get_billing_category');
+    $app->post('add_billing_code','App\Http\Controllers\BillingController@add_billing_code');
+    $app->post('update_billing_code','App\Http\Controllers\BillingController@update_billing_code');
+    $app->get('get_all_billing_codes','App\Http\Controllers\BillingController@get_all_billing_codes');
+    $app->get('get_billing_code','App\Http\Controllers\BillingController@get_billing_code');
+    $app->post('delete_billing_code','App\Http\Controllers\BillingController@delete_billing_code');
+
+    //Tax Rates
+    $app->post('add_tax_rates','App\Http\Controllers\BillingController@add_tax_rates');
+    $app->post('update_tax_rates','App\Http\Controllers\BillingController@update_tax_rates');
+    $app->get('list_tax_rates','App\Http\Controllers\BillingController@list_tax_rates');
+    $app->get('list_tax_rate','App\Http\Controllers\BillingController@list_tax_rate');
+    $app->post('delete_tax_rate','App\Http\Controllers\BillingController@delete_tax_rate');
+
 });

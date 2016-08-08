@@ -2317,3 +2317,134 @@ $api->method = "GET";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+//Add Billing Category
+$api = new api();
+$api->name = "Add Billing Category";
+$api->url = HOST . 'add_billing_category';
+$api->method = "POST";
+$api->params->name = "";
+$api->params->description = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Get Billing Category
+$api = new api();
+$api->name = "Get Billing Category";
+$api->url = HOST . 'get_billing_category';
+$api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Add Code
+$api = new api();
+$api->name = "Add Code";
+$api->url = HOST . 'add_billing_code';
+$api->method = "POST";
+$api->params->code = "";
+$api->params->description = "";
+$api->params->charge = "";
+$api->params->category_id = "";
+$api->params->tax = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Get All Billing Codes
+$api = new api();
+$api->name = "Get All Billing Codes";
+$api->url = HOST . 'get_all_billing_codes';
+$api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Get Billing Code
+$api = new api();
+$api->name = "Get Billing Code";
+$api->url = HOST . 'get_billing_code';
+$api->method = "GET";
+$api->params->billing_code_id = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Update Code
+$api = new api();
+$api->name = "Update Code";
+$api->url = HOST . 'update_billing_code';
+$api->method = "POST";
+$api->params->billing_code_id = "";
+$api->params->code = "";
+$api->params->description = "";
+$api->params->charge = "";
+$api->params->category_id = "";
+$api->params->tax = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Delete Billing Code
+$api = new api();
+$api->name = "Delete Billing Code";
+$api->url = HOST . 'delete_billing_code';
+$api->method = "POST";
+$api->params->billing_code_id = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Add Tax Rates
+$api = new api();
+$api->name = "Add Tax Rates";
+$api->url = HOST . 'add_tax_rates';
+$api->method = "POST";
+$api->params->name = "";
+$api->params->rate = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Update Tax Rate
+$api = new api();
+$api->name = "Update Tax Rate";
+$api->url = HOST . 'update_tax_rates';
+$api->method = "POST";
+$api->params->tax_rate_id = "1";
+$api->params->name = "";
+$api->params->rate = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//List All Tax Rates
+$api = new api();
+$api->name = "List All Tax Rates";
+$api->url = HOST . 'list_tax_rates';
+$api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//List  Tax Rate
+$api = new api();
+$api->name = "List Tax Rate";
+$api->url = HOST . 'list_tax_rate';
+$api->method = "GET";
+$api->params->tax_rate_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Delete Tax Rates
+$api = new api();
+$api->name = "Delete Tax Rates";
+$api->url = HOST . 'delete_tax_rate';
+$api->method = "POST";
+$api->params->tax_rate_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
