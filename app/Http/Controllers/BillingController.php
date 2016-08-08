@@ -338,7 +338,7 @@ class BillingController extends Controller
     public function list_tax_rates(Request $request){
 
         $tax_rates = DB::table('tax_rates')
-            ->select(DB::raw('name,rate'))
+            ->select(DB::raw('id,name,rate'))
             ->where('status', 1)
             ->get();
 
@@ -349,7 +349,7 @@ class BillingController extends Controller
     public function list_tax_rate(Request $request){
           $tax_rate_id= $request->input('tax_rate_id');
           $tax_rate = DB::table('tax_rates')
-              ->select(DB::raw('name,rate'))
+              ->select(DB::raw('id,name,rate'))
               ->where('status', 1)
               ->where('id', $tax_rate_id)
               ->first();
