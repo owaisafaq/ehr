@@ -18,81 +18,6 @@ AppEHR.filter('offset', function() {
   };
 });
 
-AppEHR.directive('modal', function ($window) {
-    return {
-        templateUrl: function (elem, attrs) {
-            return "views/" + attrs.templateUrl
-        },
-        controller: "@",
-        name: "controllerName",
-        restrict: 'E',
-        transclude: true,
-        replace: true,
-        scope: true,
-        link: function postLink(scope, element, attrs) {
-            scope.$watch(attrs.visible, function (value) {
-                if (value == true) {
-                    $(element).modal('show');
-                }
-                else {
-                    $(element).modal('hide');
-                }
-            });
-            $(element).on('shown.bs.modal', function () {
-                scope.$$phase || scope.$apply(function () {
-                    scope.$parent.$parent[attrs.visible] = true;
-                });
-            });
-            $(element).on('hidden.bs.modal', function () {
-                scope.$$phase || scope.$apply(function () {
-                    var abc = $("body");
-                    var bbb = abc.hasClass('modal-open');
-                    var child = abc.children();
-                    var au = child[1];
-                    var bbb2 = au.className;
-                    if (bbb == false && bbb2 == 'modal-backdrop fade') {
-                        child[1].remove();
-                    }
-                    scope.$parent.$parent[attrs.visible] = false;
-                });
-            });
-        }
-    };
-});
-
-function Modal(templateUrl, controller) {
-    return {
-        templateUrl: templateUrl,
-        controller: controller,
-        restrict: 'E',
-        transclude: true,
-        replace: true,
-        scope: true,
-        link: function postLink(scope, element, attrs) {
-            scope.$watch(attrs.visible, function (value) {
-                if (value == true) {
-                    $(element).modal('show');
-                }
-                else {
-                    $(element).modal('hide');
-                }
-            });
-
-            $(element).on('shown.bs.modal', function () {
-                scope.$$phase || scope.$apply(function () {
-                    scope.$parent.$parent[attrs.visible] = true;
-                });
-            });
-
-            $(element).on('hidden.bs.modal', function () {
-                scope.$$phase || scope.$apply(function () {
-                    scope.$parent.$parent[attrs.visible] = false;
-                });
-            });
-        }
-    };
-}
-
 AppEHR.directive('numbersOnly', function () {
     return {
         require: 'ngModel',
@@ -181,30 +106,11 @@ AppEHR.service('fileUpload', ['$http', '$rootScope', '$interval', 'ListFolderArc
         //fd.append('patient_archive', file);
         fd.patient_archive = [];
         for (var i in file) {
-            //console.log(file[i]);
             fd.patient_archive.push(file[i]);
-            //fd.append("patient_archive", file[i]);
-            //console.log(fd);
         }
         fd.patient_id = patientID;
         fd.follow_up_parent_id = followUpID;
         console.log(fd);
-        // ADD LISTENERS.
-            /*var objXhr = new XMLHttpRequest();
-            objXhr.addEventListener("progress", updateProgress, false);
-            objXhr.addEventListener("load", transferComplete, false);
-
-            // SEND FILE DETAILS TO THE API.
-            objXhr.open("POST", uploadUrl);
-            objXhr.send(file);
-
-        // UPDATE PROGRESS BAR.
-        function updateProgress(e) {
-            if (e.lengthComputable) {
-                document.getElementById('pro').setAttribute('value', e.loaded);
-                document.getElementById('pro').setAttribute('max', e.total);
-            }
-        }*/
 
         // CONFIRMATION.
         function transferComplete(e) {

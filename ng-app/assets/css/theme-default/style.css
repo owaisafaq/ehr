@@ -3031,3 +3031,10 @@ margin-left: -180px;
 .error-header{
     color: #ff4d4d!important;
 }
+.text-center{
+    text-align: center;
+    color: #516e81;
+}
+.preloader{
+    width: 130px;
+}
