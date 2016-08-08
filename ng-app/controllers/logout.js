@@ -5,9 +5,9 @@ AppEHR.controller('logoutController', ['$scope', '$window', 'AUTH', '$rootScope'
 	$window.sessionStorage.clear();
 	$rootScope.class = "hide";
 	$scope.errorMessage = '';
-	$scope.emailFormat = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
 	$scope.login = function (email, password){
-		console.log(email);
+		$scope.preLoader = true;
+		$scope.loginButton = true;
 		if(email != undefined && password != undefined){
 			AUTH.get({}, {email: email, password: password}, authSuccess, authFailed);
 			function authSuccess(res){
@@ -18,21 +18,27 @@ AppEHR.controller('logoutController', ['$scope', '$window', 'AUTH', '$rootScope'
 					$window.sessionStorage.role_id = res.data.role_id;
 					$window.sessionStorage.source_id = res.data.source_id;
 					$window.sessionStorage.token = res.token;
+					$scope.preLoader = false;
 					$window.location.href = '#/dashboard';
 				}else{
-					console.log(res);
+					$scope.preLoader = false;
+					$scope.loginButton = false;
 					$scope.errorMessage = errorMessages.authFailed;
 				}
 			}
 			function authFailed(error){
-				console.log(error);
-				$scope.errorMessage = "";
-				$('#internetError').modal('show');
+				$scope.errorMessage = "Internet Connection Lost";
+				$scope.loginButton = false;
+				$scope.preLoader = false;
+				//$('#internetError').modal('show');
 			}
-			
 		}else if(email == undefined){
+			$scope.preLoader = false;
+			$scope.loginButton = false;
 			$scope.errorMessage = "Invalid email";
 		}else{
+			$scope.preLoader = false;
+			$scope.loginButton = false;
 			$scope.errorMessage = errorMessages.fieldRequired;
 		}
 	};
