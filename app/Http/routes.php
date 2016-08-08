@@ -259,7 +259,9 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
 
     //Radiology Templates
     $app->post('add_radiology_template','App\Http\Controllers\BillingController@add_radiology_template');
+    $app->post('update_radiology_template','App\Http\Controllers\BillingController@update_radiology_template');
     $app->get('get_radiology_templates','App\Http\Controllers\BillingController@get_radiology_templates');
     $app->post('delete_radiology_template','App\Http\Controllers\BillingController@delete_radiology_template');
+    $app->get('get_radiology_template','App\Http\Controllers\BillingController@get_radiology_template');
 
 });

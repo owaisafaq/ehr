@@ -475,5 +475,28 @@ class BillingController extends Controller
 
         return response()->json(['status' => true, 'message' => 'Radiology Template deleted successfully']);
     }
+    public function get_radiology_template(Request $request){
+        $template_id = $request->input('template_id');
+
+        $template = DB::table('radiology_template')
+                   ->leftJoin('investigation_type', 'radiology_template.investigation_type', '=','investigation_type.id' )
+                   ->select(DB::raw('radiology_template.id,investigation_type.name,radiology_template.template'))
+                   ->where('radiology_template.status', 1)
+                   ->where('radiology_template.id', $template_id)
+                   ->get();
+
+          return response()->json(['status' => true, 'data' => $template]);
+    }
+    public function update_radiology_template(Request $request){
+        $template_id = $request->input('template_id');
+        $investigation_type = $request->input('investigation_type');
+        $template= $request->input('template');
+
+        DB::table('radiology_template')
+               ->where('id',$template_id)
+               ->update(['investigation_type' => $investigation_type,'template' => $template,'updated_at' => date("Y-m-d  H:i:s")]);
+
+        return response()->json(['status' => true, 'message' => 'template updated successfully']);
+    }
 
 }

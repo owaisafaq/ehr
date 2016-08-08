@@ -2542,3 +2542,27 @@ $api->params->template_id = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+
+//Get Radiology Template
+$api = new api();
+$api->name = "Get Radiology Template";
+$api->url = HOST . 'get_radiology_template';
+$api->method = "GET";
+$api->params->template_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Update Radiology Template
+$api = new api();
+$api->name = "Update Radiology Template";
+$api->url = HOST . 'update_radiology_template';
+$api->method = "POST";
+$api->params->template_id = "1";
+$api->params->investigation_type = "1";
+$api->params->template = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
