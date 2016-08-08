@@ -387,6 +387,27 @@ class BillingController extends Controller
         return response()->json(['status' => true, 'message' => 'New investigation billing code added successfully']);
     }
 
+    public function update_investigation_billing_code(Request $request){
+
+        $investigation_billing_code_id = $request->input('investigation_billing_code_id');
+        $investigation_type = $request->input('investigation_type');
+        $code= $request->input('code');
+        $charge= $request->input('charge');
+        $tax = $request->input('tax');
+        $description = $request->input('description');
+
+        DB::table('new_investigation_billing_code')
+            ->where('id',$investigation_billing_code_id)
+            ->update(['investigation_type' => $investigation_type,
+                'code' => $code,
+                'charge' => $charge,
+                'tax' => $tax,
+                'description' => $description,
+                'updated_at' => date("Y-m-d  H:i:s")]);
+
+        return response()->json(['status' => true, 'message' => 'New investigation billing code updated successfully']);
+    }
+
     public function delete_investigation_billing_code(Request $request){
 
         $investigation_billing_code_id = $request->input('investigation_billing_code_id');
@@ -422,6 +443,37 @@ class BillingController extends Controller
                  ->first();
 
         return response()->json(['status' => true, 'data' => $investigation_billing_code]);
+    }
+
+    public function add_radiology_template(Request $request){
+
+        $investigation_type = $request->input('investigation_type');
+        $template= $request->input('template');
+
+        DB::table('radiology_template')
+              ->insert(['investigation_type' => $investigation_type,
+                  'template' => $template,
+                  'created_at' => date("Y-m-d  H:i:s")]);
+
+        return response()->json(['status' => true, 'message' => 'Radiology Template added successfully']);
+    }
+    public function get_radiology_templates(){
+        $templates = DB::table('radiology_template')
+                   ->leftJoin('investigation_type', 'radiology_template.investigation_type', '=','investigation_type.id' )
+                   ->select(DB::raw('radiology_template.id,investigation_type.name,radiology_template.template'))
+                   ->where('radiology_template.status', 1)
+                   ->get();
+
+          return response()->json(['status' => true, 'data' => $templates]);
+
+    }
+    public function delete_radiology_template(Request $request){
+        $template_id = $request->input('template_id');
+        DB::table('radiology_template')
+            ->where('id',$template_id)
+            ->update(['status' => 0,'updated_at' => date("Y-m-d  H:i:s")]);
+
+        return response()->json(['status' => true, 'message' => 'Radiology Template deleted successfully']);
     }
 
 }
