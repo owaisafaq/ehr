@@ -2448,3 +2448,121 @@ $api->params->tax_rate_id = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+//Add Investigation Billing Code
+$api = new api();
+$api->name = "Add Investigation Billing Code";
+$api->url = HOST . 'add_investigation_billing_code';
+$api->method = "POST";
+$api->params->investigation_type = "";
+$api->params->code = "";
+$api->params->charge = "";
+$api->params->tax = "";
+$api->params->description = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+
+//Delete Investigation Billing Code
+$api = new api();
+$api->name = "Delete Investigation Billing Code";
+$api->url = HOST . 'delete_investigation_billing_code';
+$api->method = "POST";
+$api->params->investigation_billing_code_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Get All Investigation Billing Codes
+$api = new api();
+$api->name = "Get All Investigation Billing Codes";
+$api->url = HOST . 'get_all_investigation_billing_codes';
+$api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Get Investigation Billing Code
+$api = new api();
+$api->name = "Get Investigation Billing Code";
+$api->url = HOST . 'get_investigation_billing_code';
+$api->method = "GET";
+$api->params->investigation_billing_code_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Update Investigation Billing Code
+$api = new api();
+$api->name = "Update Investigation Billing Code";
+$api->url = HOST . 'update_investigation_billing_code';
+$api->method = "POST";
+$api->params->investigation_billing_code_id = "1";
+$api->params->investigation_type = "";
+$api->params->code = "";
+$api->params->charge = "";
+$api->params->tax = "";
+$api->params->description = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Add Radiology Templates
+$api = new api();
+$api->name = "Add Radiology Templates";
+$api->url = HOST . 'add_radiology_template';
+$api->method = "POST";
+$api->params->investigation_type = "1";
+$api->params->template = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Get Radiology Templates
+$api = new api();
+$api->name = "Get Radiology Templates";
+$api->url = HOST . 'get_radiology_templates';
+$api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Delete Radiology Template
+$api = new api();
+$api->name = "Delete Radiology Template";
+$api->url = HOST . 'delete_radiology_template';
+$api->method = "POST";
+$api->params->template_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Get Radiology Template
+$api = new api();
+$api->name = "Get Radiology Template";
+$api->url = HOST . 'get_radiology_template';
+$api->method = "GET";
+$api->params->template_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Update Radiology Template
+$api = new api();
+$api->name = "Update Radiology Template";
+$api->url = HOST . 'update_radiology_template';
+$api->method = "POST";
+$api->params->template_id = "1";
+$api->params->investigation_type = "1";
+$api->params->template = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;

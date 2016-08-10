@@ -250,4 +250,18 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->get('list_tax_rate','App\Http\Controllers\BillingController@list_tax_rate');
     $app->post('delete_tax_rate','App\Http\Controllers\BillingController@delete_tax_rate');
 
+    //Billing  Codes and Templates
+    $app->post('add_investigation_billing_code','App\Http\Controllers\BillingController@add_investigation_billing_code');
+    $app->post('update_investigation_billing_code','App\Http\Controllers\BillingController@update_investigation_billing_code');
+    $app->post('delete_investigation_billing_code','App\Http\Controllers\BillingController@delete_investigation_billing_code');
+    $app->get('get_all_investigation_billing_codes','App\Http\Controllers\BillingController@get_all_investigation_billing_codes');
+    $app->get('get_investigation_billing_code','App\Http\Controllers\BillingController@get_investigation_billing_code');
+
+    //Radiology Templates
+    $app->post('add_radiology_template','App\Http\Controllers\BillingController@add_radiology_template');
+    $app->post('update_radiology_template','App\Http\Controllers\BillingController@update_radiology_template');
+    $app->get('get_radiology_templates','App\Http\Controllers\BillingController@get_radiology_templates');
+    $app->post('delete_radiology_template','App\Http\Controllers\BillingController@delete_radiology_template');
+    $app->get('get_radiology_template','App\Http\Controllers\BillingController@get_radiology_template');
+
 });
