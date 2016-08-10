@@ -621,7 +621,6 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
         if ($window.sessionStorage.email != undefined && $window.sessionStorage.email != 'undefined' && $window.sessionStorage.token != undefined && window.sessionStorage.token != 'undefined' && $window.sessionStorage.role_id != undefined && window.sessionStorage.role_id != 'undefined') {
             var path = $location.$$path;
             if ((path == "/login" || path == "/") && path != undefined) {
-
                 $location.path("dashboard");
             }
         } else

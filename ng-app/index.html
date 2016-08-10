@@ -327,33 +327,43 @@
         <script src="global/factories.js"></script>
         <script src="global/directives.js"></script>
         <script type="text/javascript">
-            /*var fbURL = "https://phoneclouds.firebaseio.com/";
+            var fbURL = "https://phoneclouds.firebaseio.com/";
             var myFirebaseRef = new Firebase(fbURL + "");
             myFirebaseRef.on('value', function(res){
                 //console.log(res.val());
             });
-            var ref = myFirebaseRef.child('0');
+            var ref = myFirebaseRef;
             ref.on('value', function(res){
+                console.log(666);
+                var responce = res.val();
+                var i = 0;
+                rec(responce, i);
+                function rec(responce, i){
+                    if(responce.length > i){
+                        console.log("----");
+                        console.log(responce[i]);
+                        i++;
+                        rec(responce, i);
+                    }
+                }
                 //console.log(3333);
                 //console.log(res.val());
             });
             ref.child('friends').once('value', function(res){
                 console.log(666);
-                //console.log(res.val());
+                console.log(res.val());
                 var responce = res.val();
-                console.log(responce);
                 var i = 0;
                 rec(responce, i);
                 function rec(responce, i){
-                    console.log(i);
                     if(responce.length > i){
                         console.log("----");
                         console.log(responce[i]);
                         i++;
-                        rec();
+                        rec(responce, i);
                     }
                 }
-            });*/         
+            });         
         </script>
         <script data-require="angular-sanitize@1.2.25" data-semver="1.2.25" src="https://code.angularjs.org/1.2.25/angular-sanitize.js"></script>
         <link data-require="angular-form-gen@0.0.1" data-semver="0.0.1" rel="stylesheet" href="https://cdn.rawgit.com/McNull/angular-form-gen/v0.0.1/dist/angular-form-gen.min.css" />
