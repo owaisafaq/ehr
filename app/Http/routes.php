@@ -29,10 +29,6 @@ $app->group(['prefix' => 'api'], function () use ($app) {
 
 
 });
-
-
-
-
 $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($app) {
 
 

@@ -1265,6 +1265,7 @@ class ApiController extends Controller
             ->leftJoin('visits', 'patients.id', '=', 'visits.patient_id')
             ->leftJoin('maritial_status', 'patients.marital_status', '=', 'maritial_status.id')
             ->where('patients.id', $patient_id)
+            ->orderby('visits.id','desc')
             // ->where('visit_status', 'queue')
             ->get();
 
