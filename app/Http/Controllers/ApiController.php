@@ -2258,16 +2258,16 @@ class ApiController extends Controller
     {
         $appointment_id = $request->input('appointment_id');
         $appointment = DB::table('appointments')
-                ->select(DB::raw('appointments.id,appointments.department_id,appointments.doctor_id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,start_time,priority,appointments.notes'))
+                ->select(DB::raw('appointments.id,appointments.department_id,appointments.doctor_id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,start_time,priority,appointment_status,appointments.notes'))
                 ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
                 ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
                 ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
                 ->where('appointments.status', 1)
                 ->where('appointments.id', $appointment_id)
                 ->first();
-        if(!empty($appointment)) {
+    /*    if(!empty($appointment)) {
             $appointment->appointment_status = '';
-        }
+        }*/
         return response()->json(['status' => true, 'data' => $appointment]);
 
     }
@@ -2281,7 +2281,7 @@ class ApiController extends Controller
            $offset = $request->input('offset');
            if ($limit > 0 || $offset > 0) {
                $appointments = DB::table('appointments')
-                   ->select(DB::raw('appointments.id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,start_time'))
+                   ->select(DB::raw('appointments.id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,appointment_status,start_time'))
                    ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
                    ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
                    ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
@@ -2294,7 +2294,7 @@ class ApiController extends Controller
                    ->count();
            }else{
                $appointments = DB::table('appointments')
-                   ->select(DB::raw('appointments.id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,start_time'))
+                   ->select(DB::raw('appointments.id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,appointment_status,start_time'))
                    ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
                    ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
                    ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
@@ -2305,10 +2305,10 @@ class ApiController extends Controller
                    ->count();
 
            }
-           foreach ($appointments as $appointment) {
+          /* foreach ($appointments as $appointment) {
 
                $appointment->appointment_status = '';
-           }
+           }*/
 
 
            return response()->json(['status' => true, 'data' => $appointments,'count'=>$count]);
