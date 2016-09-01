@@ -64,6 +64,7 @@ class ApiController extends Controller
             ->select(DB::raw('id,first_name,last_name'))
             // ->select(DB::raw('CONCAT(first_name," ",last_name) AS label,id as value'))
             ->where('first_name', 'like', "$name%")
+            ->orWhere("id", "LIKE", "%$name%")
             ->where('plan_id', 1)
             ->where('status', 1)
             ->get();
