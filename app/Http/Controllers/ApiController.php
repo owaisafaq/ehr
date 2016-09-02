@@ -2359,6 +2359,7 @@ class ApiController extends Controller
                 'other_reasons' => $other_reason,
                // 'end_time' => $end_time,
                 'priority' => $priority,
+                'appointment_status' => 'pending',
                 'created_at' => $currentdatetime
 
             ]
