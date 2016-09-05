@@ -2854,8 +2854,11 @@ class ApiController extends Controller
     public function get_templates_categories(Request $request)
     {
 
+        $template_type = $request->input('template_type');
+
         $categories = DB::table('template_categories')
             ->select(DB::raw('id,name,description'))
+            ->where('template_type',$template_type)
             ->where('status', 1)
             ->get();
 
@@ -2899,24 +2902,21 @@ class ApiController extends Controller
 
     public function add_template_category(Request $request)
     {
-
-
         $name = $request->input('name');
         $description = $request->input('description');
+        $template_type = $request->input('template_type');
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
         DB::table('template_categories')
             ->insert(
-                ['name' => $name,
+                ['template_type'=> $template_type,
+                    'name' => $name,
                     'description' => $description,
                     'created_at' => $currentdatetime
-
                 ]
             );
         return response()->json(['status' => true, 'message' => 'Category Added Successfully']);
-
-
     }
 
 

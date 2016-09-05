@@ -1841,6 +1841,7 @@ $api = new api();
 $api->name = "Get Templates Categories";
 $api->url = HOST . 'get_templates_categories';
 $api->method = "GET";
+$api->params->template_type = "1";
 $api->params->token = "123435";
 
 
@@ -1864,6 +1865,7 @@ $api = new api();
 $api->name = "Add Template Category";
 $api->url = HOST . 'add_template_category';
 $api->method = "POST";
+$api->params->template_type = "1";
 $api->params->name = "test";
 $api->params->description = "test";
 $api->params->token = "123435";
