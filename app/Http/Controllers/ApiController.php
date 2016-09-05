@@ -2785,7 +2785,7 @@ class ApiController extends Controller
             ->leftJoin('template_categories', 'template_categories.id', '=', 'templates.category_id')
             ->select(DB::raw('templates.id,templates.name,templates.description,template_categories.name as category,templates.template'))
             ->where('templates.status', 1)
-            ->where('templates.category_id', $category_id)
+           // ->where('templates.category_id', $category_id)
             ->get();
 
         return response()->json(['status' => true, 'data' => $templates]);
