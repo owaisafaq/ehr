@@ -2780,11 +2780,14 @@ class ApiController extends Controller
     public function get_templates(Request $request)
     {
         $category_id = $request->input('category_id');
+        $template_type  = $request->input('template_type');
 
         $templates = DB::table('templates')
             ->leftJoin('template_categories', 'template_categories.id', '=', 'templates.category_id')
+            ->leftJoin('template_types', 'template_types.id', '=', 'template_categories.template_type')
             ->select(DB::raw('templates.id,templates.name,templates.description,template_categories.name as category,templates.template'))
             ->where('templates.status', 1)
+            ->where('template_categories.template_type', $template_type)
            // ->where('templates.category_id', $category_id)
             ->get();
 
@@ -2869,8 +2872,6 @@ class ApiController extends Controller
 
     public function delete_template_category(Request $request)
     {
-
-
         $category_id = $request->input('category_id');
 
         $currentdatetime = date("Y-m-d  H:i:s");
@@ -2881,19 +2882,13 @@ class ApiController extends Controller
             ->get();
 
         if (count($templates) > 0) {
-
             return response()->json(['status' => false, 'message' => 'This Category is used by various templates']);
-
         }
-
 
         DB::table('template_categories')
             ->where('id', $category_id)
             ->update(
-                ['status' => 0,
-                    'updated_at' => $currentdatetime
-
-                ]
+                ['status' => 0, 'updated_at' => $currentdatetime]
             );
         return response()->json(['status' => true, 'message' => 'Category Deleted Successfully']);
 
