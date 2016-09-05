@@ -2465,7 +2465,6 @@ class ApiController extends Controller
                 'followup_parent_id' => $followup_parent_id,
                 'type' => 'folder',
                 'created_at' => $currentdatetime
-
             ]
         );
 
@@ -2479,9 +2478,16 @@ class ApiController extends Controller
     public function clinical_progress_note_templates(Request $request)
     {
 
-        $templates = DB::table('note_templates')
-            ->select(DB::raw('id,name'))
-            ->where('status', 1)
+        $category_id = $request->input('category_id');
+        $template_type  = $request->input('template_type');
+
+        $templates = DB::table('templates')
+            ->leftJoin('template_categories', 'template_categories.id', '=', 'templates.category_id')
+            ->leftJoin('template_types', 'template_types.id', '=', 'template_categories.template_type')
+            ->select(DB::raw('templates.id,templates.name,templates.description,template_categories.name as category,templates.template'))
+            ->where('templates.status', 1)
+            ->where('template_categories.template_type', $template_type)
+            ->where('templates.category_id', $category_id)
             ->get();
 
         return response()->json(['status' => true, 'data' => $templates]);
@@ -2513,28 +2519,20 @@ class ApiController extends Controller
 
         $visit_id = $request->input('visit_id');
 
+        $template_id = $request->input('template_id');
+
+        $value = $request->input('value');
+
         $currentdatetime = date("Y-m-d  H:i:s");
 
-        $notes = html_entity_decode($request->input('clinical_notes'));
-
-        $clinical_notes = json_decode($notes, true);
-
-
-        foreach ($clinical_notes as $id => $patient_clinical_notes) {
-            /*            echo "ID: ".$id." --- ";
-                        echo "Val: ".$patient_clinical_notes."<br>";*/
-
-            DB::table('patient_clinical_notes')->insert(
-                ['patient_id' => $patient_id,
-                    'visit_id' => $visit_id,
-                    'field_id' => $id,
-                    'value' => $patient_clinical_notes,
-                    'created_at' => $currentdatetime
-
-                ]
-            );
-
-        }
+        DB::table('patient_clinical_notes')->insert(
+            ['patient_id' => $patient_id,
+                'visit_id' => $visit_id,
+                'template_id' => $template_id,
+                'value' => $value,
+                'created_at' => $currentdatetime
+            ]
+        );
 
 
         return response()->json(['status' => true, 'message' => 'Clinical Notes Added Successfully']);
