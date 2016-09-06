@@ -688,11 +688,11 @@ class OtherController extends Controller
         }
 
         $data = array(
-                  "encounter" => $encounter,
-                  "triage" => $triage,
-                  "physician" => $physician,
-                  "checkout" => $checkout
-              );
+            "encounter" => $encounter,
+            "triage" => $triage,
+            "physician" => $physician,
+            "checkout" => $checkout
+        );
 
         return response()->json(['status' => true, 'data' => $data,'is_exist'=>$is_exist]);
     }
@@ -728,6 +728,33 @@ class OtherController extends Controller
           return response()->json(['status' => true, 'data' => $appointments]);
 
       }
+
+
+    public function move_appointment(Request $request)
+    {
+
+        $appointment_id = $request->input('appointment_id');
+
+        $appointment = DB::table('appointments')
+            ->select(DB::raw('*'))
+            ->where('id', $appointment_id)
+            ->first();
+
+        DB::table('visits')->insert(
+                ['patient_id' => $appointment->patient_id,
+                    'department_id' => $appointment->department_id,
+                    'encounter_class' => 'Outpatient',
+                    'encounter_type' => 'Followup visit',
+                    'whom_to_see' => $appointment->doctor_id,
+                    'created_at' =>  date("Y-m-d  H:i:s")]);
+
+
+        return response()->json(['status' => true, 'message' => 'Appointment Moved Successfully']);
+
+    }
+
+
+
 
 }
 

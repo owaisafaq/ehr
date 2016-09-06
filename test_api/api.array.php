@@ -2572,3 +2572,14 @@ $api->params->template = "";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+
+//Move Appointment to Visit
+$api = new api();
+$api->name = "Move Appointment to Visit";
+$api->url = HOST . 'move_appointment';
+$api->method = "POST";
+$api->params->appointment_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;

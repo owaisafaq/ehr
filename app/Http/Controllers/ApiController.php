@@ -2543,8 +2543,6 @@ class ApiController extends Controller
 
     public function checkout_patient(Request $request)
     {
-
-
         $patient_id = $request->input('patient_id');
 
         $visit_id = $request->input('visit_id');
