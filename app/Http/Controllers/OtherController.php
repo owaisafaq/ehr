@@ -749,6 +749,7 @@ class OtherController extends Controller
                     'whom_to_see' => $appointment->doctor_id,
                     'created_at' =>  date("Y-m-d  H:i:s")]);
 
+        DB::table('appointments')->where('id','=', $appointment_id)->delete();
 
         return response()->json(['status' => true, 'message' => 'Appointment Moved Successfully']);
 
@@ -771,7 +772,8 @@ class OtherController extends Controller
             ->first();
 
         $email = $address->email;
-        $mobile_number = $address->mobile_number; //$address->mobile_number;
+       // $mobile_number = $address->mobile_number; //$address->mobile_number;
+          $mobile_nubmer = '923333608229';
 
         $message = "Please Come to the Hospital on your pre sheduled time and date";
 
