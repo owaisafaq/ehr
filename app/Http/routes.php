@@ -91,6 +91,7 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->post('delete_patient_appointments','App\Http\Controllers\ApiController@delete_patient_appointments');
     $app->get('appointment_dates','App\Http\Controllers\OtherController@appointment_dates');
     $app->post('move_appointment','App\Http\Controllers\OtherController@move_appointment');
+    $app->post('appointment_reminder','App\Http\Controllers\OtherController@appointment_reminder');
 
 
     $app->post('add_resources','App\Http\Controllers\ApiController@add_resources');

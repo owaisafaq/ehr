@@ -2583,3 +2583,15 @@ $api->params->appointment_id = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+
+
+//Appointment Reminder
+$api = new api();
+$api->name = "Appointment Reminder";
+$api->url = HOST . 'appointment_reminder';
+$api->method = "POST";
+$api->params->appointment_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;

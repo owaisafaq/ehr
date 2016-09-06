@@ -13,6 +13,7 @@ use Illuminate\Http\Response as IlluminateResponse;
 
 use Illuminate\Support\Facades\File;
 use DB;
+use PHPMailer;
 
 
 class OtherController extends Controller
@@ -750,6 +751,73 @@ class OtherController extends Controller
 
 
         return response()->json(['status' => true, 'message' => 'Appointment Moved Successfully']);
+
+    }
+
+    public function appointment_reminder(Request $request){
+
+        $appointment_id = $request->input('appointment_id');
+
+        $patient = DB::table('appointments')
+            ->select(DB::raw('patient_id'))
+            ->where('id', $appointment_id)
+            ->first();
+
+        $patient_id  = $patient->patient_id;
+
+        $address = DB::table('patient_address')
+            ->select(DB::raw('email,mobile_number'))
+            ->where('patient_id', $patient_id)
+            ->first();
+
+        $email = $address->email;
+        $mobile_number = $address->mobile_number; //$address->mobile_number;
+
+        $message = "Please Come to the Hospital on your pre sheduled time and date";
+
+        $mail = new PHPMailer(true); // notice the \  you have to use root namespace here
+        try {
+            $mail->isSMTP(); // tell to use smtp
+            $mail->CharSet = "utf-8"; // set charset to utf8
+            $mail->SMTPAuth = true;  // use smpt auth
+            $mail->SMTPSecure = "tls"; // or ssl
+            $mail->Host = "smtp.gmail.com";
+            $mail->Port = `587`; // most likely something different for you. This is the mailtrap.io port i use for testing.
+            $mail->Username = "aploskhan@gmail.com";
+            $mail->Password = "Aplos@221";
+            $mail->setFrom('smovaishassan12@hotmail.com');
+            $mail->Subject = "Message From Ehr";
+            $mail->MsgHTML($message);
+            $mail->addAddress($email);
+            $mail->send();
+
+        } catch (phpmailerException $e) {
+            dd($e);
+        } catch (Exception $e) {
+            dd($e);
+        }
+
+        $url = 'https://rest.nexmo.com/sms/json?' . http_build_query(
+            [
+              'api_key' =>  '8cab0920',
+              'api_secret' => 'cee30fefca2a9839',
+              'to' => $mobile_number,
+              'from' => '441632960061',
+              'text' => $message
+            ]
+        );
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+
+  /*      $url = 'https://rest.nexmo.com/sms/json?api_key=8cab0920&api_secret=cee30fefca2a9839&from=NEXMO&to='.$phone_number.'&text=Please Come to the Hospital on your pre sheduled time and date';
+
+        $json = file_get_contents($url); // get the data from Google Maps API
+
+        return $json;*/
+
+        return response()->json(['status' => true, 'message' => 'Reminder Sent Successfully']);
 
     }
 
