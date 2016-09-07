@@ -103,28 +103,28 @@ class PDFController extends Controller
 
         $message = "Invoice Data";
 
-              $mail = new PHPMailer(true); // notice the \  you have to use root namespace here
-              try {
-                  $mail->isSMTP(); // tell to use smtp
-                  $mail->CharSet = "utf-8"; // set charset to utf8
-                  $mail->SMTPAuth = true;  // use smpt auth
-                  $mail->SMTPSecure = "tls"; // or ssl
-                  $mail->Host = "smtp.gmail.com";
-                  $mail->Port = `587`; // most likely something different for you. This is the mailtrap.io port i use for testing.
-                  $mail->Username = "aploskhan@gmail.com";
-                  $mail->Password = "Aplos@221";
-                  $mail->setFrom('smovaishassan12@hotmail.com');
-                  $mail->AddAttachment($path);
-                  $mail->Subject = "Message From Ehr";
-                  $mail->MsgHTML($message);
-                  $mail->addAddress($email_address);
-                  $mail->send();
+        $mail = new PHPMailer(true); // notice the \  you have to use root namespace here
+        try {
+            $mail->isSMTP(); // tell to use smtp
+            $mail->CharSet = "utf-8"; // set charset to utf8
+            $mail->SMTPAuth = true;  // use smpt auth
+            $mail->SMTPSecure = "tls"; // or ssl
+            $mail->Host = "smtp.gmail.com";
+            $mail->Port = `587`; // most likely something different for you. This is the mailtrap.io port i use for testing.
+            $mail->Username = "aploskhan@gmail.com";
+            $mail->Password = "Aplos@221";
+            $mail->setFrom('smovaishassan12@hotmail.com');
+            $mail->AddAttachment($path);
+            $mail->Subject = "Message From Ehr";
+            $mail->MsgHTML($message);
+            $mail->addAddress($email_address);
+            $mail->send();
 
-               } catch (phpmailerException $e) {
-                  dd($e);
-               } catch (Exception $e) {
-                              dd($e);
-               }
+        } catch (phpmailerException $e) {
+            dd($e);
+        } catch (Exception $e) {
+            dd($e);
+        }
 
         return response()->json(['status' => true, 'message' => 'Email Send Successfully']);
 
