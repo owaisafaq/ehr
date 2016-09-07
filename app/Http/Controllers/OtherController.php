@@ -446,10 +446,10 @@ class OtherController extends Controller
     public function ward_occupancy(Request $request)
     {
         $ward_id = $request->input('ward_id');
-        $limit = $request->input('limit');
-        $offset = $request->input('offset');
+/*        $limit = $request->input('limit');
+        $offset = $request->input('offset');*/
 
-        if ($limit > 0 || $offset > 0) {
+    /*    if ($limit > 0 || $offset > 0) {
             $beds = DB::table('beds')
                 ->leftJoin('patients_admitted', 'beds.patient_id', '=', 'patients_admitted.patient_id')
                 ->leftJoin('patients', 'patients.id', '=', 'patients_admitted.patient_id')
@@ -466,7 +466,7 @@ class OtherController extends Controller
                 ->where('beds.status', 1)
                 ->where('beds.ward_id', $ward_id)
                 ->count();
-        } else {
+        }*/ // else {
             $beds = DB::table('beds')
                 ->leftJoin('patients_admitted', 'beds.patient_id', '=', 'patients_admitted.patient_id')
                 ->leftJoin('patients', 'patients.id', '=', 'patients_admitted.patient_id')
@@ -476,7 +476,7 @@ class OtherController extends Controller
                 ->get();
 
             $count = count($beds);
-        }
+      //  }
         foreach ($beds as $bed) {
             if ($bed->sex == 1) {
                 $bed->gender = 'Male';
