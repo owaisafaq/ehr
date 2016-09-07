@@ -2595,3 +2595,14 @@ $api->params->appointment_id = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+
+//Get Clinical Notes Pdf
+$api = new api();
+$api->name = "Get Clinical Notes Pdf";
+$api->url = HOST . 'get_clinical_notes_pdf';
+$api->method = "POST";
+$api->params->patient_clinical_notes_id = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
