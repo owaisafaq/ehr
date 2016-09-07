@@ -2606,3 +2606,25 @@ $api->params->patient_clinical_notes_id = "";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+//Add Patient Beds
+$api = new api();
+$api->name = "Add Patient Beds";
+$api->url = HOST . 'add_patient_beds';
+$api->method = "POST";
+$api->params->ward_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Delete Patient Bed
+$api = new api();
+$api->name = "Delete Patient Bed";
+$api->url = HOST . 'delete_patient_bed';
+$api->method = "POST";
+$api->params->ward_id = "1";
+$api->params->bed_id = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;

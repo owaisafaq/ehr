@@ -190,6 +190,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
      $app->post('move_patient','App\Http\Controllers\OtherController@move_patient');
      $app->get('all_wards','App\Http\Controllers\OtherController@all_wards');
      $app->get('ward_beds','App\Http\Controllers\OtherController@ward_beds');
+     $app->post('add_patient_beds','App\Http\Controllers\OtherController@add_patient_beds');
+     $app->post('delete_patient_bed','App\Http\Controllers\OtherController@delete_patient_bed');
 
 });
 $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($app) {

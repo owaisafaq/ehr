@@ -823,6 +823,85 @@ class OtherController extends Controller
 
     }
 
+    public function add_patient_beds(Request $request)
+    {
+        $ward_id = $request->input('ward_id');
+
+        $wards = DB::table('wards')
+            ->select(DB::raw('number_of_beds,available_beds'))
+            ->where('wards.status', 1)
+            ->where('id', $ward_id)
+            ->first();
+
+        $available_beds = $wards->available_beds + 1;
+        $number_of_beds = $wards->number_of_beds + 1;
+
+        DB::table('wards')
+            ->where('id', $ward_id)
+            ->update(['available_beds' => $available_beds, 'number_of_beds' => $number_of_beds, 'updated_at' => date("Y-m-d  H:i:s")]);
+
+        DB::table('beds')
+            ->insert(['ward_id' => $ward_id, 'bed_status' => 'available', 'created_at' => date("Y-m-d  H:i:s")]);
+
+        return response()->json(['status' => true, 'message' => 'Bed Add Successfully']);
+
+
+    }
+
+
+    public function delete_patient_bed(Request $request)
+    {
+        $ward_id = $request->input('ward_id');
+        $bed_id = $request->input('bed_id');
+
+        $beds = DB::table('beds')
+            ->select(DB::raw('bed_status'))
+            ->where('status', 1)
+            ->where('id', $bed_id)
+            ->first();
+
+        if ($beds->bed_status == 'occupied') {
+
+            return response()->json(['status' => false, 'message' => 'This Bed Can not be deleted']);
+
+        }
+
+        DB::table('beds')->where('id', '=', $bed_id)->delete();
+
+
+        $wards = DB::table('wards')
+            ->select(DB::raw('number_of_beds,available_beds,number_of_beds_closed'))
+            ->where('wards.status', 1)
+            ->where('id', $ward_id)
+            ->first();
+
+        if ($beds->bed_status == 'available') {
+
+            $available_beds = $wards->available_beds - 1;
+            $number_of_beds = $wards->number_of_beds - 1;
+
+            DB::table('wards')
+                ->where('id', $ward_id)
+                ->update(['available_beds' => $available_beds, 'number_of_beds' => $number_of_beds, 'updated_at' => date("Y-m-d  H:i:s")]);
+
+        }
+
+        if ($beds->bed_status == 'closed') {
+
+            $number_of_beds_closed = $wards->number_of_beds_closed - 1;
+            $number_of_beds = $wards->number_of_beds - 1;
+
+            DB::table('wards')
+                ->where('id', $ward_id)
+                ->update(['number_of_beds_closed' => $number_of_beds_closed, 'number_of_beds' => $number_of_beds, 'updated_at' => date("Y-m-d  H:i:s")]);
+        }
+
+
+
+        return response()->json(['status' => true, 'message' => 'Bed Deleted Successfully']);
+
+
+    }
 
 
 
