@@ -126,8 +126,48 @@ class PDFController extends Controller
                               dd($e);
                }
 
-
         return response()->json(['status' => true, 'message' => 'Email Send Successfully']);
+
+    }
+
+    public function get_clinical_notes_pdf(Request $request){
+
+        $arr = array();
+        $id = $request->input('patient_clinical_notes_id');
+
+        $db = DB::table('patient_clinical_notes')
+            ->leftJoin('templates', 'templates.id', '=', 'patient_clinical_notes.template_id')
+            ->select('patient_clinical_notes.value', 'templates.template')
+            ->where('patient_clinical_notes.id', $id)->first();
+
+        $clinical_notes_values = json_decode($db->value);
+
+        $template = json_decode($db->template);
+        foreach ($template->fields as $temp) {
+            foreach ($clinical_notes_values as $k => $v) {
+                if ($temp->name == $k) {
+                    array_push($arr, ['value' => $v, 'field' => $temp,]);
+                }
+            }
+        }
+
+        $data = ['data'=>$arr];
+
+        $view =  app()->make('view')->make('clinical_notes_pdf', $data)->render();
+
+        $pdf = PDF::loadHTML($view);
+
+        $path = base_path().'/public/patient_archive/clinical_notes.pdf';
+
+        $pdf->save($path);
+
+        $file_archive = url('/').'/patient_archive/clinical_notes.pdf';
+
+        echo json_encode(array(
+            'status' => true,
+            'data' => $file_archive,
+
+        ), JSON_UNESCAPED_SLASHES);
 
 
     }
