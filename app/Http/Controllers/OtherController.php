@@ -903,6 +903,62 @@ class OtherController extends Controller
 
     }
 
+    public function edit_patient_bed(Request $request){
+
+        $ward_id = $request->input('ward_id');
+        $bed_id = $request->input('bed_id');
+        $status = $request->input('status');
+
+
+        $beds = DB::table('beds')
+               ->select(DB::raw('bed_status'))
+               ->where('status', 1)
+               ->where('id', $bed_id)
+               ->first();
+
+        if ($beds->bed_status == 'occupied' || $status == 'occupied') {
+
+            return response()->json(['status' => false, 'message' => 'This Bed Can not be updated']);
+
+        }
+
+        DB::table('beds')
+            ->where('id', $bed_id)
+            ->update(['bed_status' => $status,'updated_at' => date("Y-m-d  H:i:s")]);
+
+
+        $wards = DB::table('wards')
+            ->select(DB::raw('number_of_beds,available_beds,number_of_beds_closed'))
+            ->where('wards.status', 1)
+            ->where('id', $ward_id)
+            ->first();
+
+        if ($status == 'available') {
+
+            $available_beds = $wards->available_beds + 1;
+            $number_of_beds_closed = $wards->number_of_beds_closed - 1;
+
+            DB::table('wards')
+                ->where('id', $ward_id)
+                ->update(['available_beds'=> $available_beds,'number_of_beds_closed'=> $number_of_beds_closed,'updated_at' => date("Y-m-d  H:i:s")]);
+
+        }
+
+        if ($status == 'closed') {
+
+            $number_of_beds_closed = $wards->number_of_beds_closed + 1;
+            $available_beds = $wards->available_beds - 1;
+            DB::table('wards')
+                ->where('id', $ward_id)
+                ->update(['number_of_beds_closed' => $number_of_beds_closed,'available_beds' => $available_beds,'updated_at' => date("Y-m-d  H:i:s")]);
+        }
+
+
+        return response()->json(['status' => true, 'message' => 'Bed Updated Successfully']);
+
+
+    }
+
 
 
 }

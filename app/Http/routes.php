@@ -192,6 +192,7 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
      $app->get('ward_beds','App\Http\Controllers\OtherController@ward_beds');
      $app->post('add_patient_beds','App\Http\Controllers\OtherController@add_patient_beds');
      $app->post('delete_patient_bed','App\Http\Controllers\OtherController@delete_patient_bed');
+     $app->post('edit_patient_bed','App\Http\Controllers\OtherController@edit_patient_bed');
 
 });
 $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($app) {

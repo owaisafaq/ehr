@@ -2628,3 +2628,16 @@ $api->params->bed_id = "";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+
+//Edit Patient Bed
+$api = new api();
+$api->name = "Edit Patient Bed";
+$api->url = HOST . 'edit_patient_bed';
+$api->method = "POST";
+$api->params->ward_id = "1";
+$api->params->bed_id = "";
+$api->params->status = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
