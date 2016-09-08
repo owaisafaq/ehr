@@ -938,6 +938,8 @@ $api->name = "Clinical Progress Note Templates";
 $api->url = HOST . 'clinical_progress_note_templates';
 $api->method = "GET";
 $api->description = "Clinical Progress Note Templates";
+$api->params->category_id = "1";
+$api->params->template_type = "1";
 $api->params->limit = "0";
 $api->params->offset = "0";
 $api->params->token = "123";
@@ -968,7 +970,8 @@ $api->method = "POST";
 $api->description = "Add Patient Clinical Notes";
 $api->params->patient_id = "1";
 $api->params->visit_id = "1";
-$api->params->clinical_notes = "";
+$api->params->template_id = "";
+$api->params->value = "";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -1801,7 +1804,8 @@ $api = new api();
 $api->name = "Get Templates";
 $api->url = HOST . 'get_templates';
 $api->method = "GET";
-$api->params->category_id = "";
+$api->params->template_type = "1";
+//$api->params->category_id = "";
 $api->params->token = "123435";
 
 
@@ -1841,6 +1845,7 @@ $api = new api();
 $api->name = "Get Templates Categories";
 $api->url = HOST . 'get_templates_categories';
 $api->method = "GET";
+$api->params->template_type = "1";
 $api->params->token = "123435";
 
 
@@ -1864,6 +1869,7 @@ $api = new api();
 $api->name = "Add Template Category";
 $api->url = HOST . 'add_template_category';
 $api->method = "POST";
+$api->params->template_type = "1";
 $api->params->name = "test";
 $api->params->description = "test";
 $api->params->token = "123435";
@@ -2563,6 +2569,75 @@ $api->method = "POST";
 $api->params->template_id = "1";
 $api->params->investigation_type = "1";
 $api->params->template = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Move Appointment to Visit
+$api = new api();
+$api->name = "Move Appointment to Visit";
+$api->url = HOST . 'move_appointment';
+$api->method = "POST";
+$api->params->appointment_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+
+//Appointment Reminder
+$api = new api();
+$api->name = "Appointment Reminder";
+$api->url = HOST . 'appointment_reminder';
+$api->method = "POST";
+$api->params->appointment_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Get Clinical Notes Pdf
+$api = new api();
+$api->name = "Get Clinical Notes Pdf";
+$api->url = HOST . 'get_clinical_notes_pdf';
+$api->method = "POST";
+$api->params->patient_clinical_notes_id = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Add Patient Beds
+$api = new api();
+$api->name = "Add Patient Beds";
+$api->url = HOST . 'add_patient_beds';
+$api->method = "POST";
+$api->params->ward_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Delete Patient Bed
+$api = new api();
+$api->name = "Delete Patient Bed";
+$api->url = HOST . 'delete_patient_bed';
+$api->method = "POST";
+$api->params->ward_id = "1";
+$api->params->bed_id = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Edit Patient Bed
+$api = new api();
+$api->name = "Edit Patient Bed";
+$api->url = HOST . 'edit_patient_bed';
+$api->method = "POST";
+$api->params->ward_id = "1";
+$api->params->bed_id = "";
+$api->params->status = "";
 $api->params->token = "123435";
 
 $api_arr [] = $api;

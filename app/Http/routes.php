@@ -29,10 +29,6 @@ $app->group(['prefix' => 'api'], function () use ($app) {
 
 
 });
-
-
-
-
 $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($app) {
 
 
@@ -94,6 +90,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->post('update_patient_appointments','App\Http\Controllers\ApiController@update_patient_appointments');
     $app->post('delete_patient_appointments','App\Http\Controllers\ApiController@delete_patient_appointments');
     $app->get('appointment_dates','App\Http\Controllers\OtherController@appointment_dates');
+    $app->post('move_appointment','App\Http\Controllers\OtherController@move_appointment');
+    $app->post('appointment_reminder','App\Http\Controllers\OtherController@appointment_reminder');
 
 
     $app->post('add_resources','App\Http\Controllers\ApiController@add_resources');
@@ -107,6 +105,7 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->get('clinical_progress_note_templates','App\Http\Controllers\ApiController@clinical_progress_note_templates');
     $app->get('clinical_progress_note_fields','App\Http\Controllers\ApiController@clinical_progress_note_fields');
     $app->post('add_patient_clinical_notes','App\Http\Controllers\ApiController@add_patient_clinical_notes');
+    $app->post('get_clinical_notes_pdf','App\Http\Controllers\PDFController@get_clinical_notes_pdf');
 
     $app->post('checkout_patient','App\Http\Controllers\ApiController@checkout_patient');
 
@@ -191,6 +190,9 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
      $app->post('move_patient','App\Http\Controllers\OtherController@move_patient');
      $app->get('all_wards','App\Http\Controllers\OtherController@all_wards');
      $app->get('ward_beds','App\Http\Controllers\OtherController@ward_beds');
+     $app->post('add_patient_beds','App\Http\Controllers\OtherController@add_patient_beds');
+     $app->post('delete_patient_bed','App\Http\Controllers\OtherController@delete_patient_bed');
+     $app->post('edit_patient_bed','App\Http\Controllers\OtherController@edit_patient_bed');
 
 });
 $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($app) {

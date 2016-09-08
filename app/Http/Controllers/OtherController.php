@@ -13,6 +13,7 @@ use Illuminate\Http\Response as IlluminateResponse;
 
 use Illuminate\Support\Facades\File;
 use DB;
+use PHPMailer;
 
 
 class OtherController extends Controller
@@ -445,10 +446,10 @@ class OtherController extends Controller
     public function ward_occupancy(Request $request)
     {
         $ward_id = $request->input('ward_id');
-        $limit = $request->input('limit');
-        $offset = $request->input('offset');
+/*        $limit = $request->input('limit');
+        $offset = $request->input('offset');*/
 
-        if ($limit > 0 || $offset > 0) {
+    /*    if ($limit > 0 || $offset > 0) {
             $beds = DB::table('beds')
                 ->leftJoin('patients_admitted', 'beds.patient_id', '=', 'patients_admitted.patient_id')
                 ->leftJoin('patients', 'patients.id', '=', 'patients_admitted.patient_id')
@@ -465,7 +466,7 @@ class OtherController extends Controller
                 ->where('beds.status', 1)
                 ->where('beds.ward_id', $ward_id)
                 ->count();
-        } else {
+        }*/ // else {
             $beds = DB::table('beds')
                 ->leftJoin('patients_admitted', 'beds.patient_id', '=', 'patients_admitted.patient_id')
                 ->leftJoin('patients', 'patients.id', '=', 'patients_admitted.patient_id')
@@ -475,7 +476,7 @@ class OtherController extends Controller
                 ->get();
 
             $count = count($beds);
-        }
+      //  }
         foreach ($beds as $bed) {
             if ($bed->sex == 1) {
                 $bed->gender = 'Male';
@@ -688,11 +689,11 @@ class OtherController extends Controller
         }
 
         $data = array(
-                  "encounter" => $encounter,
-                  "triage" => $triage,
-                  "physician" => $physician,
-                  "checkout" => $checkout
-              );
+            "encounter" => $encounter,
+            "triage" => $triage,
+            "physician" => $physician,
+            "checkout" => $checkout
+        );
 
         return response()->json(['status' => true, 'data' => $data,'is_exist'=>$is_exist]);
     }
@@ -728,6 +729,237 @@ class OtherController extends Controller
           return response()->json(['status' => true, 'data' => $appointments]);
 
       }
+
+
+    public function move_appointment(Request $request)
+    {
+
+        $appointment_id = $request->input('appointment_id');
+
+        $appointment = DB::table('appointments')
+            ->select(DB::raw('*'))
+            ->where('id', $appointment_id)
+            ->first();
+
+        DB::table('visits')->insert(
+                ['patient_id' => $appointment->patient_id,
+                    'department_id' => $appointment->department_id,
+                    'encounter_class' => 'Outpatient',
+                    'encounter_type' => 'Followup visit',
+                    'whom_to_see' => $appointment->doctor_id,
+                    'created_at' =>  date("Y-m-d  H:i:s")]);
+
+        DB::table('appointments')->where('id','=', $appointment_id)->delete();
+
+        return response()->json(['status' => true, 'message' => 'Appointment Moved Successfully']);
+
+    }
+
+    public function appointment_reminder(Request $request){
+
+        $appointment_id = $request->input('appointment_id');
+
+        $patient = DB::table('appointments')
+            ->select(DB::raw('patient_id'))
+            ->where('id', $appointment_id)
+            ->first();
+
+        $patient_id  = $patient->patient_id;
+
+        $address = DB::table('patient_address')
+            ->select(DB::raw('email,mobile_number'))
+            ->where('patient_id', $patient_id)
+            ->first();
+
+        $email = $address->email;
+       // $mobile_number = $address->mobile_number; //$address->mobile_number;
+          $mobile_nubmer = '923333608229';
+
+        $message = "Please Come to the Hospital on your pre sheduled time and date";
+
+        $mail = new PHPMailer(true); // notice the \  you have to use root namespace here
+        try {
+            $mail->isSMTP(); // tell to use smtp
+            $mail->CharSet = "utf-8"; // set charset to utf8
+            $mail->SMTPAuth = true;  // use smpt auth
+            $mail->SMTPSecure = "tls"; // or ssl
+            $mail->Host = "smtp.gmail.com";
+            $mail->Port = `587`; // most likely something different for you. This is the mailtrap.io port i use for testing.
+            $mail->Username = "aploskhan@gmail.com";
+            $mail->Password = "Aplos@221";
+            $mail->setFrom('smovaishassan12@hotmail.com');
+            $mail->Subject = "Message From Ehr";
+            $mail->MsgHTML($message);
+            $mail->addAddress($email);
+            $mail->send();
+
+        } catch (phpmailerException $e) {
+            dd($e);
+        } catch (Exception $e) {
+            dd($e);
+        }
+
+        $url = 'https://rest.nexmo.com/sms/json?' . http_build_query(
+            [
+              'api_key' =>  '8cab0920',
+              'api_secret' => 'cee30fefca2a9839',
+              'to' => $mobile_number,
+              'from' => '441632960061',
+              'text' => $message
+            ]
+        );
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+
+  /*      $url = 'https://rest.nexmo.com/sms/json?api_key=8cab0920&api_secret=cee30fefca2a9839&from=NEXMO&to='.$phone_number.'&text=Please Come to the Hospital on your pre sheduled time and date';
+
+        $json = file_get_contents($url); // get the data from Google Maps API
+
+        return $json;*/
+
+        return response()->json(['status' => true, 'message' => 'Reminder Sent Successfully']);
+
+    }
+
+    public function add_patient_beds(Request $request)
+    {
+        $ward_id = $request->input('ward_id');
+
+        $wards = DB::table('wards')
+            ->select(DB::raw('number_of_beds,available_beds'))
+            ->where('wards.status', 1)
+            ->where('id', $ward_id)
+            ->first();
+
+        $available_beds = $wards->available_beds + 1;
+        $number_of_beds = $wards->number_of_beds + 1;
+
+        DB::table('wards')
+            ->where('id', $ward_id)
+            ->update(['available_beds' => $available_beds, 'number_of_beds' => $number_of_beds, 'updated_at' => date("Y-m-d  H:i:s")]);
+
+        DB::table('beds')
+            ->insert(['ward_id' => $ward_id, 'bed_status' => 'available', 'created_at' => date("Y-m-d  H:i:s")]);
+
+        return response()->json(['status' => true, 'message' => 'Bed Add Successfully']);
+
+
+    }
+
+
+    public function delete_patient_bed(Request $request)
+    {
+        $ward_id = $request->input('ward_id');
+        $bed_id = $request->input('bed_id');
+
+        $beds = DB::table('beds')
+            ->select(DB::raw('bed_status'))
+            ->where('status', 1)
+            ->where('id', $bed_id)
+            ->first();
+
+        if ($beds->bed_status == 'occupied') {
+
+            return response()->json(['status' => false, 'message' => 'This Bed Can not be deleted']);
+
+        }
+
+        DB::table('beds')->where('id', '=', $bed_id)->delete();
+
+
+        $wards = DB::table('wards')
+            ->select(DB::raw('number_of_beds,available_beds,number_of_beds_closed'))
+            ->where('wards.status', 1)
+            ->where('id', $ward_id)
+            ->first();
+
+        if ($beds->bed_status == 'available') {
+
+            $available_beds = $wards->available_beds - 1;
+            $number_of_beds = $wards->number_of_beds - 1;
+
+            DB::table('wards')
+                ->where('id', $ward_id)
+                ->update(['available_beds' => $available_beds, 'number_of_beds' => $number_of_beds, 'updated_at' => date("Y-m-d  H:i:s")]);
+
+        }
+
+        if ($beds->bed_status == 'closed') {
+
+            $number_of_beds_closed = $wards->number_of_beds_closed - 1;
+            $number_of_beds = $wards->number_of_beds - 1;
+
+            DB::table('wards')
+                ->where('id', $ward_id)
+                ->update(['number_of_beds_closed' => $number_of_beds_closed, 'number_of_beds' => $number_of_beds, 'updated_at' => date("Y-m-d  H:i:s")]);
+        }
+
+
+
+        return response()->json(['status' => true, 'message' => 'Bed Deleted Successfully']);
+
+
+    }
+
+    public function edit_patient_bed(Request $request){
+
+        $ward_id = $request->input('ward_id');
+        $bed_id = $request->input('bed_id');
+        $status = $request->input('status');
+
+
+        $beds = DB::table('beds')
+               ->select(DB::raw('bed_status'))
+               ->where('status', 1)
+               ->where('id', $bed_id)
+               ->first();
+
+        if ($beds->bed_status == 'occupied' || $status == 'occupied') {
+
+            return response()->json(['status' => false, 'message' => 'This Bed Can not be updated']);
+
+        }
+
+        DB::table('beds')
+            ->where('id', $bed_id)
+            ->update(['bed_status' => $status,'updated_at' => date("Y-m-d  H:i:s")]);
+
+
+        $wards = DB::table('wards')
+            ->select(DB::raw('number_of_beds,available_beds,number_of_beds_closed'))
+            ->where('wards.status', 1)
+            ->where('id', $ward_id)
+            ->first();
+
+        if ($status == 'available') {
+
+            $available_beds = $wards->available_beds + 1;
+            $number_of_beds_closed = $wards->number_of_beds_closed - 1;
+
+            DB::table('wards')
+                ->where('id', $ward_id)
+                ->update(['available_beds'=> $available_beds,'number_of_beds_closed'=> $number_of_beds_closed,'updated_at' => date("Y-m-d  H:i:s")]);
+
+        }
+
+        if ($status == 'closed') {
+
+            $number_of_beds_closed = $wards->number_of_beds_closed + 1;
+            $available_beds = $wards->available_beds - 1;
+            DB::table('wards')
+                ->where('id', $ward_id)
+                ->update(['number_of_beds_closed' => $number_of_beds_closed,'available_beds' => $available_beds,'updated_at' => date("Y-m-d  H:i:s")]);
+        }
+
+
+        return response()->json(['status' => true, 'message' => 'Bed Updated Successfully']);
+
+
+    }
+
+
 
 }
 

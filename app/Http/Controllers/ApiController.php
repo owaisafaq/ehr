@@ -64,6 +64,7 @@ class ApiController extends Controller
             ->select(DB::raw('id,first_name,last_name'))
             // ->select(DB::raw('CONCAT(first_name," ",last_name) AS label,id as value'))
             ->where('first_name', 'like', "$name%")
+            ->orWhere("id", "LIKE", "%$name%")
             ->where('plan_id', 1)
             ->where('status', 1)
             ->get();
@@ -1265,6 +1266,7 @@ class ApiController extends Controller
             ->leftJoin('visits', 'patients.id', '=', 'visits.patient_id')
             ->leftJoin('maritial_status', 'patients.marital_status', '=', 'maritial_status.id')
             ->where('patients.id', $patient_id)
+            ->orderby('visits.id','desc')
             // ->where('visit_status', 'queue')
             ->get();
 
@@ -1347,11 +1349,15 @@ class ApiController extends Controller
         $patient_plan = DB::table('hospital_plan')
             ->leftJoin('patients', 'patients.hospital_plan', '=', 'hospital_plan.id')
             ->leftJoin('plan_details', 'plan_details.plan_id', '=', 'hospital_plan.id')
-            ->select(DB::raw('hospital_plan.name,plan_details.is_principal,plan_details.is_dependant,plan_details.id as plan_id,plan_details.hmo,plan_details.policies,plan_details.insurance_id,plan_details.description,plan_details.notes'))
+            ->leftJoin('hmo', 'hmo.id', '=', 'plan_details.hmo')
+            ->leftJoin('policies', 'policies.id', '=', 'plan_details.policies')
+            ->leftJoin('categories', 'categories.id', '=', 'plan_details.category')
+            ->leftJoin('retainership', 'plan_details.retainership', '=', 'retainership.id')
+            ->select(DB::raw('hospital_plan.name,plan_details.is_principal,plan_details.id as patient_plan_id,plan_details.is_dependant,hospital_plan.id as plan_id,hmo.name as hmo,categories.name as category,retainership.name as retainership,policies.name as policies,plan_details.insurance_id,plan_details.description,plan_details.notes'))
             ->where('patients.status', 1)
             ->where('plan_details.patient_id', $patient_id)
             ->where('plan_details.status', 1)
-            ->groupby('patients.id')
+            ->orderby('plan_details.id','desc')
             ->first();
 
 
@@ -1586,7 +1592,7 @@ class ApiController extends Controller
             ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
             ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.plan_id')
             ->leftJoin('blood_group', 'blood_group.id', '=', 'patients.blood_group')
-            ->select(DB::raw('patients.id,patients.patient_image,patients.first_name,patients.middle_name,patients.last_name,patients.date_of_birth,patients.sex,patients.age,religion.name as religion,maritial_status.name as marital_status,hospital_plan.name as hospital_plan,patient_address.mobile_number,patient_address.email,patient_kin.fullname as next_to_kin,patient_address.house_number,patient_address.street,blood_group.name as blood_group'))
+            ->select(DB::raw('patients.id,patients.patient_image,patients.first_name,patients.middle_name,patients.last_name,patients.date_of_birth,patients.sex,patients.age,religion.name as religion,maritial_status.name as marital_status,hospital_plan.name as hospital_plan,patient_unit_number,patient_address.mobile_number,patient_address.email,patient_kin.fullname as next_to_kin,patient_address.house_number,patient_address.street,blood_group.name as blood_group'))
             ->where('patients.id', $patient_id)
             // ->where('patient_address.address_type', 'contact')
             ->where('patients.status', 1)
@@ -2253,16 +2259,16 @@ class ApiController extends Controller
     {
         $appointment_id = $request->input('appointment_id');
         $appointment = DB::table('appointments')
-                ->select(DB::raw('appointments.id,appointments.department_id,appointments.doctor_id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,start_time,end_time,priority,appointments.notes'))
+                ->select(DB::raw('appointments.id,appointments.department_id,appointments.doctor_id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,start_time,priority,appointment_status,appointments.notes'))
                 ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
                 ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
                 ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
                 ->where('appointments.status', 1)
                 ->where('appointments.id', $appointment_id)
                 ->first();
-        if(!empty($appointment)) {
+    /*    if(!empty($appointment)) {
             $appointment->appointment_status = '';
-        }
+        }*/
         return response()->json(['status' => true, 'data' => $appointment]);
 
     }
@@ -2276,11 +2282,12 @@ class ApiController extends Controller
            $offset = $request->input('offset');
            if ($limit > 0 || $offset > 0) {
                $appointments = DB::table('appointments')
-                   ->select(DB::raw('appointments.id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,start_time'))
+                   ->select(DB::raw('appointments.id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,appointment_status,start_time'))
                    ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
                    ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
                    ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
                    ->where('appointments.status', 1)
+                   ->orderby('appointments.created_at','desc')
                    ->skip($offset)->take($limit)
                    //->where('appointments.patient_id', $patient_id)
                    ->get();
@@ -2289,21 +2296,22 @@ class ApiController extends Controller
                    ->count();
            }else{
                $appointments = DB::table('appointments')
-                   ->select(DB::raw('appointments.id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,start_time'))
+                   ->select(DB::raw('appointments.id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,appointment_status,start_time'))
                    ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
                    ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
                    ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
                    ->where('appointments.status', 1)
+                   ->orderby('appointments.created_at','desc')
                    ->get();
                $count = DB::table('appointments')
                    ->where('status',1)
                    ->count();
 
            }
-           foreach ($appointments as $appointment) {
+          /* foreach ($appointments as $appointment) {
 
                $appointment->appointment_status = '';
-           }
+           }*/
 
 
            return response()->json(['status' => true, 'data' => $appointments,'count'=>$count]);
@@ -2349,8 +2357,9 @@ class ApiController extends Controller
                 'notes' => $notes,
                 'doctor_id' => $doctor,
                 'other_reasons' => $other_reason,
-                'end_time' => $end_time,
+               // 'end_time' => $end_time,
                 'priority' => $priority,
+                'appointment_status' => 'pending',
                 'created_at' => $currentdatetime
 
             ]
@@ -2403,7 +2412,7 @@ class ApiController extends Controller
                     'notes' => $notes,
                     'doctor_id' => $doctor,
                     'other_reasons' => $other_reason,
-                    'end_time' => $end_time,
+                   // 'end_time' => $end_time,
                     'priority' => $priority,
                     'updated_at' => $currentdatetime
 
@@ -2456,7 +2465,6 @@ class ApiController extends Controller
                 'followup_parent_id' => $followup_parent_id,
                 'type' => 'folder',
                 'created_at' => $currentdatetime
-
             ]
         );
 
@@ -2470,9 +2478,16 @@ class ApiController extends Controller
     public function clinical_progress_note_templates(Request $request)
     {
 
-        $templates = DB::table('note_templates')
-            ->select(DB::raw('id,name'))
-            ->where('status', 1)
+        $category_id = $request->input('category_id');
+        $template_type  = $request->input('template_type');
+
+        $templates = DB::table('templates')
+            ->leftJoin('template_categories', 'template_categories.id', '=', 'templates.category_id')
+            ->leftJoin('template_types', 'template_types.id', '=', 'template_categories.template_type')
+            ->select(DB::raw('templates.id,templates.name,templates.description,template_categories.name as category,templates.template'))
+            ->where('templates.status', 1)
+            ->where('template_categories.template_type', $template_type)
+            ->where('templates.category_id', $category_id)
             ->get();
 
         return response()->json(['status' => true, 'data' => $templates]);
@@ -2504,28 +2519,20 @@ class ApiController extends Controller
 
         $visit_id = $request->input('visit_id');
 
+        $template_id = $request->input('template_id');
+
+        $value = $request->input('value');
+
         $currentdatetime = date("Y-m-d  H:i:s");
 
-        $notes = html_entity_decode($request->input('clinical_notes'));
-
-        $clinical_notes = json_decode($notes, true);
-
-
-        foreach ($clinical_notes as $id => $patient_clinical_notes) {
-            /*            echo "ID: ".$id." --- ";
-                        echo "Val: ".$patient_clinical_notes."<br>";*/
-
-            DB::table('patient_clinical_notes')->insert(
-                ['patient_id' => $patient_id,
-                    'visit_id' => $visit_id,
-                    'field_id' => $id,
-                    'value' => $patient_clinical_notes,
-                    'created_at' => $currentdatetime
-
-                ]
-            );
-
-        }
+        DB::table('patient_clinical_notes')->insert(
+            ['patient_id' => $patient_id,
+                'visit_id' => $visit_id,
+                'template_id' => $template_id,
+                'value' => $value,
+                'created_at' => $currentdatetime
+            ]
+        );
 
 
         return response()->json(['status' => true, 'message' => 'Clinical Notes Added Successfully']);
@@ -2536,8 +2543,6 @@ class ApiController extends Controller
 
     public function checkout_patient(Request $request)
     {
-
-
         $patient_id = $request->input('patient_id');
 
         $visit_id = $request->input('visit_id');
@@ -2771,12 +2776,15 @@ class ApiController extends Controller
     public function get_templates(Request $request)
     {
         $category_id = $request->input('category_id');
+        $template_type  = $request->input('template_type');
 
         $templates = DB::table('templates')
             ->leftJoin('template_categories', 'template_categories.id', '=', 'templates.category_id')
+            ->leftJoin('template_types', 'template_types.id', '=', 'template_categories.template_type')
             ->select(DB::raw('templates.id,templates.name,templates.description,template_categories.name as category,templates.template'))
             ->where('templates.status', 1)
-            ->where('templates.category_id', $category_id)
+            ->where('template_categories.template_type', $template_type)
+           // ->where('templates.category_id', $category_id)
             ->get();
 
         return response()->json(['status' => true, 'data' => $templates]);
@@ -2845,8 +2853,11 @@ class ApiController extends Controller
     public function get_templates_categories(Request $request)
     {
 
+        $template_type = $request->input('template_type');
+
         $categories = DB::table('template_categories')
             ->select(DB::raw('id,name,description'))
+            ->where('template_type',$template_type)
             ->where('status', 1)
             ->get();
 
@@ -2857,8 +2868,6 @@ class ApiController extends Controller
 
     public function delete_template_category(Request $request)
     {
-
-
         $category_id = $request->input('category_id');
 
         $currentdatetime = date("Y-m-d  H:i:s");
@@ -2869,19 +2878,13 @@ class ApiController extends Controller
             ->get();
 
         if (count($templates) > 0) {
-
             return response()->json(['status' => false, 'message' => 'This Category is used by various templates']);
-
         }
-
 
         DB::table('template_categories')
             ->where('id', $category_id)
             ->update(
-                ['status' => 0,
-                    'updated_at' => $currentdatetime
-
-                ]
+                ['status' => 0, 'updated_at' => $currentdatetime]
             );
         return response()->json(['status' => true, 'message' => 'Category Deleted Successfully']);
 
@@ -2890,24 +2893,21 @@ class ApiController extends Controller
 
     public function add_template_category(Request $request)
     {
-
-
         $name = $request->input('name');
         $description = $request->input('description');
+        $template_type = $request->input('template_type');
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
         DB::table('template_categories')
             ->insert(
-                ['name' => $name,
+                ['template_type'=> $template_type,
+                    'name' => $name,
                     'description' => $description,
                     'created_at' => $currentdatetime
-
                 ]
             );
         return response()->json(['status' => true, 'message' => 'Category Added Successfully']);
-
-
     }
 
 
