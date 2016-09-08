@@ -372,6 +372,15 @@ class OtherController extends Controller
                         'description' => $description,
                         'updated_at' => date("Y-m-d  H:i:s")]
                 );
+
+            DB::table('beds')->where('ward_id', '=', $ward_id)->delete();
+
+            for ($i = 1; $i <= $number_of_beds; $i++) {
+
+                DB::table('beds')->insert(['ward_id' => $ward_id, 'bed_status' => 'available', 'created_at' => date("Y-m-d  H:i:s")]);
+            }
+
+
             return response()->json(['status' => true, 'message' => 'Ward Updated Successfully']);
 
         } else {
@@ -384,6 +393,13 @@ class OtherController extends Controller
                         'description' => $description,
                         'created_at' => date("Y-m-d  H:i:s")]
                 );
+
+            $ward_id = DB::getPdo()->lastInsertId();
+
+            for ($i = 1; $i <= $number_of_beds; $i++) {
+
+                DB::table('beds')->insert(['ward_id' => $ward_id, 'bed_status' => 'available', 'created_at' => date("Y-m-d  H:i:s")]);
+            }
 
             return response()->json(['status' => true, 'message' => 'Ward Added Successfully']);
 
