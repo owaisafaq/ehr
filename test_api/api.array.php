@@ -2643,8 +2643,6 @@ $api->params->token = "123435";
 $api_arr [] = $api;
 
 
-
-
 //Patients Discharged
 $api = new api();
 $api->name = "Patients Discharged";

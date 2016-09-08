@@ -187,6 +187,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
      $app->get('ward_occupancy','App\Http\Controllers\OtherController@ward_occupancy');
      $app->get('patients_admitted','App\Http\Controllers\OtherController@patients_admitted');
      $app->post('patient_discharge','App\Http\Controllers\OtherController@patient_discharge');
+     $app->get('patients_discharged','App\Http\Controllers\OtherController@patients_discharged');
+
      $app->post('move_patient','App\Http\Controllers\OtherController@move_patient');
      $app->get('all_wards','App\Http\Controllers\OtherController@all_wards');
      $app->get('ward_beds','App\Http\Controllers\OtherController@ward_beds');

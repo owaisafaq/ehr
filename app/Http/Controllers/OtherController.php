@@ -980,6 +980,25 @@ class OtherController extends Controller
 
     }
 
+    public function patients_discharged(Request $request){
+
+        $current_date = date("Y-m-d  H:i:s");
+
+        $patients_admitted = DB::table('patients_admitted pa')
+            ->leftJoin('wards w', 'w.id', '=', 'pa.ward_id')
+            ->select(DB::raw('w.name,pa.patient_id,
+            (SELECT count(*) from patients_admitted  where patient_id = pa.patient_id  and updated_at >  '.$current_date -1 .'  ) as 24_hour_count and is_discharged = 1,
+            (SELECT count(*) from patients_admitted  where patient_id = pa.patient_id  and updated_at >  '.$current_date -1 .' AND  updated_at <  '.$current_date -2 .' ) as bewteen_24_48 and is_discharged = 1 ,
+            (SELECT count(*) from patients_admitted  where patient_id = pa.patient_id  and updated_at >  '.$current_date -1 .' AND  updated_at <  '.$current_date -2 .' ) as bewteen_24_48 is_discharged = 1'))
+            ->where('pa.is_discharged', 1)
+            ->get();
+
+
+        return response()->json(['status' => true, 'data'=>$patients_admitted]);
+
+
+    }
+
 
 
 }
