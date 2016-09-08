@@ -153,10 +153,10 @@
                                     </div>  
 
                                     <div class="col-lg-3">
-                                        <label>old patient id</label>
+                                        <label ng-if="PI.unit_number != ''">old patient id</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <label class="txt-style-4">Phone Number</label>
+                                        <label class="txt-style-4" ng-if="PI.unit_number != ''">{{PI.unit_number}}</label>
                                     </div>
 
                                     <div class="col-lg-3">

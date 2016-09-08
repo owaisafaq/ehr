@@ -16,6 +16,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 	function dropDownSuccess(res){
 		if(res.status == true){
 			$scope.encountersDropdownData = res.data;
+			console.log(res);
 		}
 	}
 

@@ -1,35 +1,22 @@
 var AppEHR = angular.module('AppEHR');
 
-/*
-AppEHR.controller('templates', ['$scope', '$rootScope', function($scope, $rootScope){
-
-    console.log('sadsadasdsad');
-    $rootScope.pageTitle = "EHR - Settings";
-
-
-}]);*/
-
-
 AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', 'getTemplates' ,'AddTemplate', 'getTemplateCategory', 'AddTemplateCategory','$timeout', 'DeleteTempCategory' , 'DeleteTemplate', function($scope, $rootScope, mySchema, $window, getTemplates, AddTemplate, getTemplateCategory, AddTemplateCategory,$timeout, DeleteTempCategory, DeleteTemplate){
     $scope.myForm = {
         schema: mySchema
     };
     $scope.cat_unique={};
     $scope.catt_unique ={};
+    $scope.templateLists = [];
+
     $rootScope.pageTitle = "EHR - Inventory";
 
     $scope.saveForm = function() {
-
-
         $scope.hideLoader = 'show';
         //$scope.updateEncounterBtn = true;
         //console.log($scope.displayInfo.patient_id);
-
-
         var catName = $.grep($scope.categories, function (categories) {
             return categories.id == $scope.template_cat_id;
         })[0].name;
-
         var addTemplate={
             token: $window.sessionStorage.token,
             name: $scope.template_name,
@@ -37,12 +24,10 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
             category_id: $scope.template_cat_id,
             template: angular.toJson(mySchema),
             category :catName
-
         }
-
+        console.log(addTemplate);
         angular.copy(addTemplate,$scope.cat_unique);
         AddTemplate.save(addTemplate, AddTemplateSuccess,AddTemplateFailure);
-
     }
 
     function AddTemplateSuccess(res) {
@@ -66,15 +51,18 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
 
 
     getTemplates.get({
-        token: $window.sessionStorage.token
+        token: $window.sessionStorage.token,
+        template_type: 2
     }, getTemplateSuccess, getTemplateFailure);
 
     function getTemplateSuccess(res) {
         if (res.status == true) {
+            console.log(res);
             if(res.data.length == 0){
                 $('#noRecordFound').modal('show');
                 return true;
             }
+            console.log(res.data);
             $scope.templateLists = res.data;
         }
     }
@@ -84,7 +72,7 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
         $('#internetError').modal('show');
     }
 
-    getTemplateCategory.get({token: $window.sessionStorage.token}, TemplateCategorySuccess, TemplateCategoryFailed);
+    getTemplateCategory.get({token: $window.sessionStorage.token, template_type: 2}, TemplateCategorySuccess, TemplateCategoryFailed);
 
     function TemplateCategorySuccess(res) {
         if (res.status == true) {
@@ -109,9 +97,9 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
                 token: $window.sessionStorage.token,
                 name: category.cat_name,
                 description: category.cat_desc,
-
+                template_type: 2
             }
-            angular.copy(addCateogry,$scope.catt_unique);
+            //angular.copy(addCateogry,$scope.catt_unique);
             AddTemplateCategory.save(addCateogry, CategorySuccess, CategoryFailure);
         }
     }
@@ -121,8 +109,9 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
     function CategorySuccess(res) {
         console.log(res);
         if (res.status == true) {
+            getTemplateCategory.get({token: $window.sessionStorage.token, template_type: 2}, TemplateCategorySuccess, TemplateCategoryFailed);
             $rootScope.loader = "hide";
-            $scope.categories.push($scope.catt_unique);
+            //$scope.categories.push($scope.catt_unique);
             console.log($scope.CategoryLists);
             $timeout(function () {
                 $('#addcategory').modal('hide');
@@ -143,14 +132,10 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
         console.log(catID);
         if ( window.confirm("Are you Sure you want to delete?") ) {
             DeleteTempCategory.save({token: $window.sessionStorage.token, category_id: catID}, deleteCategoryInfoSuccess, deleteCategoryInfoFailure);
-
             function deleteCategoryInfoSuccess(res) {
                 if (res.status == true) {
                     $rootScope.loader = "hide";
-                    getTemplateCategory.get({token: $window.sessionStorage.token}, TemplateCategorySuccess, TemplateCategoryFailed);
-
-
-
+                    getTemplateCategory.get({token: $window.sessionStorage.token, template_type: 2}, TemplateCategorySuccess, TemplateCategoryFailed);
                 }else{
                    alert(res.message);
                 }
@@ -160,7 +145,6 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
                 console.log(error);
                 $('#internetError').modal('show');
             }
-
         }
     }
 
@@ -173,7 +157,7 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
                 if (res.status == true) {
                     $rootScope.loader = "hide";
                     getTemplates.get({
-                        token: $window.sessionStorage.token
+                        token: $window.sessionStorage.token, template_type: 2
                     }, getTemplateSuccess, getTemplateFailure);
 
 

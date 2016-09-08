@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('labTestReport', ['$scope', '$rootScope', 'mySchema', '$routeParams', '$window', 'getTemplateCategories', 'getTemplates', 'getLabTestInfo', 'getTemplateData','saveTemplateValues', '$timeout', function($scope, $rootScope, mySchema, $routeParams, $window, getTemplateCategories, getTemplates, getLabTestInfo, getTemplateData, saveTemplateValues, $timeout){
+AppEHR.controller('labTestReport', ['$scope', '$rootScope', '$routeParams', '$window', 'getTemplateCategories', 'getTemplates', 'getLabTestInfo', 'getTemplateData','saveTemplateValues', '$timeout', function($scope, $rootScope, $routeParams, $window, getTemplateCategories, getTemplates, getLabTestInfo, getTemplateData, saveTemplateValues, $timeout){
 	$rootScope.pageTitle = "EHR - Lab Order Reporting";
     $scope.myFormData = {}; // Something to store the input at.
     $scope.mySchema = {}; // Expose the schema on the scope.
@@ -34,10 +34,12 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', 'mySchema', '$routeP
     $scope.getCategoriesTemplates = function (categoryID){ // get Templates from Categories
         getTemplates.get({
             token : $window.sessionStorage.token,
-            category_id : categoryID
+            category_id : categoryID,
+            template_type: 2
         },getTemplatesSuccess,getTemplatesFailure);
     };
     function getTemplatesSuccess(res){ // on success
+        console.log(res);
         $scope.templates = res.data;
         $scope.have_templates = true; // if there are templates in selected category
     }
@@ -47,13 +49,16 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', 'mySchema', '$routeP
     }
 
     $scope.getTemplateData = function (templateID){ // get form fields of selected template
+        console.log(templateID);
         getTemplateData.get({
             token : $window.sessionStorage.token,
-            template_id : templateID
+            template_id : templateID,
+            template_type: 2
         },getTemplateDataSuccess,getTemplateDataFailure);
         $scope.templateSelected = true;
     };
     function getTemplateDataSuccess(res){ // on success
+        console.log(res);
         $scope.selectedTemplate = res.data;
         $scope.mySchema = JSON.parse(res.data.template);
     }

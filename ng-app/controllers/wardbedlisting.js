@@ -55,7 +55,7 @@ AppEHR.controller('wardBedListingController', ['$scope', '$rootScope', '$window'
             if(res.status == true){
                 $rootScope.loader = "hide";
                 $scope.ward = res.data;
-                $scope.ward.id = "WRD"+res.data.id;
+                $scope.ward.id = /*"WRD"+*/res.data.id;
                 setTimeout(function () {
                 $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
                 },100)
@@ -160,6 +160,12 @@ AppEHR.controller('wardBedListingController', ['$scope', '$rootScope', '$window'
         }, getWardsSuccess, getWardsFailure);
     }
 
+    $scope.editformsubmission = function(){
+        if($scope.submitted == true && $scope.editForm.$invalid == true ){
+            return true;
+        }
+        return false;
+    };
     $scope.addformsubmission = function(){
         if($scope.submitted == true && $scope.addForm.$invalid == true ){
             return true;
@@ -191,6 +197,11 @@ AppEHR.controller('wardBedListingController', ['$scope', '$rootScope', '$window'
 			console.log(error);
             $('#internetError').modal('show');
 		}
+    }
+
+    $scope.bedShematic = function(){
+        console.log($scope.wardID);
+        $window.location.href = "#/wards-bed-shematic/" + $scope.wardID;
     }
 
 }]);

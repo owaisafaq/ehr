@@ -134,7 +134,7 @@
                     <div class="col-lg-3 select-con">
                         <select class="form-control" name="cpn" ng-model="move.CPN" ng-class="{true: 'error'}[submitted && moveForm.cpn.$invalid]" required placeholder="Select">
                             <option value=""></option>
-                            <option value="{{depart.id}}" ng-repeat="depart in encountersDropdownData.departments">{{depart.name}}</option>
+                            <option value="{{depart.id}}" ng-repeat="depart in encountersDropdownData.departments" ng-selected="depart.id == selectedPatientToMove.department_id">{{depart.name}}</option>
                         </select>
                         <p class="help-block PIValid" ng-show="submitted && moveForm.cpn.$error.required">Required</p>
                     </div>

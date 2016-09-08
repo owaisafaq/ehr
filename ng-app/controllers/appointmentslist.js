@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$window', 'GetAppointmentsByPatient', 'GetPatientInfo', 'AddAppointments', 'DeleteAppointments', 'UpdateAppointments', 'DropDownData', 'GetOneAppointment', function($scope, $rootScope, $window, GetAppointmentsByPatient, GetPatientInfo, AddAppointments, DeleteAppointments, UpdateAppointments, DropDownData, GetOneAppointment){
+AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$window', 'GetAppointmentsByPatient', 'GetPatientInfo', 'AddAppointments', 'DeleteAppointments', 'UpdateAppointments', 'DropDownData', 'GetOneAppointment', 'FindAppointments', 'AddEncounter', '$timeout', 'MoveAppointment', 'ReminderAppointment', function($scope, $rootScope, $window, GetAppointmentsByPatient, GetPatientInfo, AddAppointments, DeleteAppointments, UpdateAppointments, DropDownData, GetOneAppointment, FindAppointments, AddEncounter, $timeout, MoveAppointment, ReminderAppointment){
 	$rootScope.pageTitle = "EHR - Appointments List";
 	$rootScope.loader = "show";
 	$scope.allAppointments = [];
@@ -14,7 +14,11 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
 	$scope.priorities = priorities;
 	$scope.reason = reason;
 	$scope.searchBar = true;
+    $scope.EncounterSpinner = "hide";
 	$scope.PatientSearch = serverPath;
+    $scope.encounterFields = {};
+    $scope.addEncounter = {};
+    $scope.searchByAppointmentViewBy = false;
 	GetAppointmentsByPatient.get({
 		token: $window.sessionStorage.token, 
 		limit: $scope.itemsPerPage, 
@@ -23,6 +27,7 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
 
 	function allAppointmentsSuccess(res){
 		$rootScope.loader = "hide";
+        console.log(res);
 		if(res.status == true){
 			if(res.data.length == 0){
 				$scope.modalHeading = "Result";
@@ -34,6 +39,15 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
 			}
 			$scope.allAppointments = res.data;
 			$scope.appointmentCount = res.count;
+            DropDownData.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id}, dropDownSuccess, dropDownFailed);
+            function dropDownSuccess(res){
+                if(res.status == true){
+                    $scope.headerEncountersDropdownData = res.data;
+                }
+            }
+            function dropDownFailed(error){
+                console.log(error);
+            }
 		}
 	}
 	function allAppointmentsFailure(error){
@@ -91,6 +105,10 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
 
         function getAppointmentSuccess(res){
         	if(res.status == true){
+                console.log(res);
+                angular.copy(res.data, $scope.encounterFields);
+                $scope.addEncounter.department = $scope.encounterFields.department_id;
+                $scope.addEncounter.wts = $scope.encounterFields.doctor_id;
         		$scope.updateAppointment.appointmentSearch = res.data.first_name + " " + res.data.last_name;
         		$scope.updateAppointment.patientID = res.data.patient_id;
         		$scope.updateAppointment.department = res.data.department_id;
@@ -99,12 +117,14 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
         		$scope.updateAppointment.date = res.data.pick_date;
         		$scope.updateAppointment.otherReason = res.data.other_reasons;
         		$scope.updateAppointment.startTime = res.data.start_time;
-        		$scope.updateAppointment.endTime = res.data.end_time;
+        		//$scope.updateAppointment.endTime = res.data.end_time;
         		$scope.updateAppointment.notes = res.data.notes;
         		$scope.updateAppointment.priority = res.data.priority;
         		setTimeout(function () {
 		            $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
-		        },100)
+                    console.log(11111);
+		        },100);
+                
         	}
         }
 
@@ -125,7 +145,25 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
     };*/
 
     $scope.findBy = function(){
-    	$scope.searchBar = false;
+        $scope.searchBar = false;
+        $scope.searchByAppointmentViewBy = true;
+        /*FindAppointments.get({
+            token: $window.sessionStorage.token
+        }, findAppointmentsSuccess, findAppointmentsFailure);*/
+    }
+
+    function findAppointmentsSuccess(res){
+        $rootScope.loader = "hide";
+        if(res.status == true){
+            $scope.modalHeading = "Successful";
+            $scope.modalMessage = "Appointment Deleted";
+            $("#deleteConfirm").modal('hide');
+            $("#noResultFound").modal('show');
+        }
+    }
+    function findAppointmentsFailure(error){
+        $('#internetError').modal('show');
+        console.log(error);
     }
 
     $scope.curPage = 0;
@@ -177,51 +215,61 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
     }
 
     $scope.addformsubmission = function(){
-        if($scope.submitted == true && $scope.addForm.$invalid == true ){
+        if($scope.submitted == true && $scope.myFormAdd.$invalid == true ){
             return true;
         }
         return false;
     };
-
+    /*$scope.updateformsubmission = function(){
+        if($scope.submitted == true && $scope.myForm.$invalid == true ){
+            return true;
+        }
+        return false;
+    };
+*/
     $scope.createAppointments = function(dataToBeAdded){
-    	$scope.disabledButton = "true";
-    	$rootScope.loader = "show";
-    	AddAppointments.save({
-    		token: $window.sessionStorage.token,
-    		patient_id: dataToBeAdded.appointmentSearch,
-    		//visit_id: $scope.encounterID,
-    		department: dataToBeAdded.department,
-    		reason: dataToBeAdded.reason,
-    		date: dataToBeAdded.date,
-    		start_time: dataToBeAdded.startTime,
-    		notes: dataToBeAdded.notes,
-    		doctor: dataToBeAdded.doctor,
-    		other_reason: dataToBeAdded.otherReason,
-    		end_time: dataToBeAdded.endTime,
-    		priority: dataToBeAdded.priority
-    	}, createAppointmentSuccess, createAppointmentFailure);
+        if(dataToBeAdded.appointmentSearch != undefined && dataToBeAdded.department != undefined && dataToBeAdded.reason != undefined && dataToBeAdded.date != undefined && dataToBeAdded.startTime != undefined && dataToBeAdded.notes != undefined && dataToBeAdded.doctor != undefined && dataToBeAdded.priority != undefined){
+        	$scope.disabledButton = "true";
+        	$rootScope.loader = "show";
+        	AddAppointments.save({
+        		token: $window.sessionStorage.token,
+        		patient_id: dataToBeAdded.appointmentSearch,
+        		//visit_id: $scope.encounterID,
+        		department: dataToBeAdded.department,
+        		reason: dataToBeAdded.reason,
+        		date: dataToBeAdded.date,
+        		start_time: dataToBeAdded.startTime,
+        		notes: dataToBeAdded.notes,
+        		doctor: dataToBeAdded.doctor,
+        		other_reason: dataToBeAdded.otherReason,
+        		//end_time: dataToBeAdded.endTime,
+        		priority: dataToBeAdded.priority
+        	}, createAppointmentSuccess, createAppointmentFailure);
 
-    	function createAppointmentSuccess(res){
-    		console.log(res);
-    		if(res.status == true){
-    			$scope.modalHeading = "Successful";
-    			$scope.modalMessage = "New Appointment Created";
-    			$('#noResultFound').modal('show');
-    			$('#createAppointment').modal('hide');
-    			$scope.appointment = {};
-    			$scope.submitted = false;
-    			GetAppointmentsByPatient.get({
-					token: $window.sessionStorage.token, 
-					limit: $scope.itemsPerPage, 
-					offset: 0
-				}, allAppointmentsSuccess, allAppointmentsFailure);
+        	function createAppointmentSuccess(res){
+        		console.log(res);
+        		if(res.status == true){
+        			$scope.modalHeading = "Successful";
+        			$scope.modalMessage = "New Appointment Created";
+        			$('#noResultFound').modal('show');
+        			$('#createAppointment').modal('hide');
+        			$scope.appointment = {};
+        			$scope.submitted = false;
+        			GetAppointmentsByPatient.get({
+    					token: $window.sessionStorage.token, 
+    					limit: $scope.itemsPerPage, 
+    					offset: 0
+    				}, allAppointmentsSuccess, allAppointmentsFailure);
 
-    		}
-    	}
-    	function createAppointmentFailure(error){
-            $('#internetError').modal('show');
-    		console.log(error);
-    	}
+        		}
+        	}
+        	function createAppointmentFailure(error){
+                $rootScope.loader = "hide";
+                $('#internetError').modal('show');
+                
+        		console.log(error);
+        	}
+        }
     }
 
     $scope.updateAppointments = function(dataToBeUpdated){
@@ -238,7 +286,7 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
     		notes: dataToBeUpdated.notes,
     		doctor: dataToBeUpdated.doctor,
     		other_reason: dataToBeUpdated.otherReason,
-    		end_time: dataToBeUpdated.endTime,
+    		//end_time: dataToBeUpdated.endTime,
     		priority: dataToBeUpdated.priority
     	}, updateAppointmentSuccess, updateAppointmentFailure);
 
@@ -263,10 +311,47 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
     		}
     	}
     	function updateAppointmentFailure(error){
+            $rootScope.loader = "hide";
             $('#internetError').modal('show');
     		console.log(error);
     	}
     }
+
+    /*$scope.EncounterAdd = function(dataToBeAdded){
+        $scope.EncounterSpinner = "show";
+        AddEncounter.save({
+            token: $window.sessionStorage.token, 
+            patient_id: $rootScope.HEADERSEARCHPATIENTID,
+            department_id: dataToBeAdded.department,
+            encounter_class: dataToBeAdded.class,
+            encounter_type: dataToBeAdded.type,
+            whom_to_see: dataToBeAdded.wts,
+            decscribe_whom_to_see : dataToBeAdded.describeWTS
+        }, encounterSuccess, encounterFailed);
+        function encounterSuccess(res){
+            if(res.status == true){
+                //console.log(res);
+                $scope.EncounterSpinner = "hide";
+                $rootScope.headerHideLoader = "hide";
+                $rootScope.headerMessageType = "alert-success";
+                $rootScope.headerErrorMessage = "Appointment Successfully converted to Encounter";
+                $rootScope.headerErrorSymbol = "fa fa-check";// 
+                $rootScope.headerMessage = true;
+                $rootScope.headerSubmitted = false;
+                $('#autocomplete2').val('');
+                $timeout(function(){
+                    $rootScope.headerMessage = false;
+                    $rootScope.encounterHeaderSearchBar = true;
+                    $('.create_counter_header').addClass('hide');
+                    $('#appointmentEncounter').modal('hide');
+                }, 2000);
+            }
+        }
+        function encounterFailed(error){
+            console.log(error);
+        }
+    }*/
+
 
     $('#findPatient').on('input', function(){
         var input = $('#findPatient').val();
@@ -309,4 +394,65 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
             }
         }
     });
+
+    $scope.convertAppointments = function(){
+        $rootScope.loader = "show";
+        MoveAppointment.save({
+            token: $window.sessionStorage.token, 
+            appointment_id: $scope.appointmentID
+        }, moveAppointmentSuccess, moveAppointmentFailure);
+        function moveAppointmentSuccess(res){
+            console.log(res);
+            $rootScope.loader = "hide";
+            $('#confirmation').modal('hide');
+            if(res.status == true){
+                $scope.buttonDisabled = true;
+                GetAppointmentsByPatient.get({
+                    token: $window.sessionStorage.token, 
+                    limit: $scope.itemsPerPage, 
+                    offset: 0
+                }, allAppointmentsSuccess, allAppointmentsFailure);
+            }
+        }
+        function moveAppointmentFailure(error){
+            console.log(error);
+            $rootScope.loader = "hide";
+        }
+    }
+
+    $scope.reminder = function(){
+        $scope.confirmReminder = false;
+        $scope.modalHeading = "Confirmation";
+        $scope.modalMessage = "Do you want to Remind a Patient?";
+        $('#confirmReminder').modal('show');
+    }
+
+    $scope.reminderSuccess = function(){
+        $rootScope.loader = "show";
+        console.log($scope.appointmentID);
+        ReminderAppointment.save({
+            token: $window.sessionStorage.token, 
+            appointment_id: $scope.appointmentID
+        }, reminderAppointmentSuccess, reminderAppointmentFailure);
+        function reminderAppointmentSuccess(res){
+            console.log(res);
+            $rootScope.loader = "hide";
+            $('#confirmReminder').modal('hide');
+            if(res.status == true){
+                $scope.confirmReminder = true;
+                $scope.modalHeading = "Succeded";
+                $scope.modalMessage = "Reminded to patient";
+                $scope.buttonDisabled = true;
+                GetAppointmentsByPatient.get({
+                    token: $window.sessionStorage.token, 
+                    limit: $scope.itemsPerPage, 
+                    offset: 0
+                }, allAppointmentsSuccess, allAppointmentsFailure);
+            }
+        }
+        function reminderAppointmentFailure(error){
+            console.log(error);
+            $rootScope.loader = "hide";
+        }
+    }
 }]);

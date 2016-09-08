@@ -17,6 +17,7 @@ AppEHR.controller('wardsDischargeSummaryController', ['$scope', '$rootScope','$w
 		limit: $scope.itemsPerPage
 	}, admitPatientSucess, admitPatientFailure);
 	function admitPatientSucess(res){
+		console.log(res);
 		$rootScope.loader = "hide";
 		if(res.status == true){
 			if(res.data.length == 0){
@@ -64,6 +65,12 @@ AppEHR.controller('wardsDischargeSummaryController', ['$scope', '$rootScope','$w
 	$scope.admitPatientSelected = function(index){
 		$scope.disabledButton = false;
 		$scope.selectedPatientToMove = $scope.allAdmitPatient[index];
+		//var exData = $scope.selectedPatientToMove.expected_discharge_date.split(' ');
+		//$scope.selectedPatientToMove.expected_discharge_date = exData[1].slice(0, -3);
+		console.log($scope.selectedPatientToMove.expected_discharge_date);
+		setTimeout(function () {
+            $('select').not('.search-ajax').select2({minimumResultsForSearch: Infinity});
+        }, 1000)
 		console.log($scope.selectedPatientToMove);
 	}
 
