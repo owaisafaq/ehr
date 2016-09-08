@@ -2269,6 +2269,7 @@ class ApiController extends Controller
                    ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
                    ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
                    ->where('appointments.status', 1)
+                   ->where('patients.status', 1)
                    ->orderby('appointments.created_at','desc')
                    ->skip($offset)->take($limit)
                    //->where('appointments.patient_id', $patient_id)
@@ -2283,6 +2284,7 @@ class ApiController extends Controller
                    ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
                    ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
                    ->where('appointments.status', 1)
+                   ->where('patients.status', 1)
                    ->orderby('appointments.created_at','desc')
                    ->get();
                $count = DB::table('appointments')
