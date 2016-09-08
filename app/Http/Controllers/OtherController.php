@@ -771,9 +771,9 @@ class OtherController extends Controller
             ->where('patient_id', $patient_id)
             ->first();
 
-        $email = $address->email;
-       // $mobile_number = $address->mobile_number; //$address->mobile_number;
-          $mobile_nubmer = '923333608229';
+          $email = $address->email;
+          $mobile_number = $address->mobile_number; //$address->mobile_number;
+         // $mobile_nubmer = '923333608229';
 
         $message = "Please Come to the Hospital on your pre sheduled time and date";
 
