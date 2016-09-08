@@ -2641,3 +2641,15 @@ $api->params->status = "";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+
+
+
+//Patients Discharged
+$api = new api();
+$api->name = "Patients Discharged";
+$api->url = HOST . 'patients_discharged';
+$api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
