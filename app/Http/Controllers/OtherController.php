@@ -450,6 +450,7 @@ class OtherController extends Controller
                 ->where('wards.status', 1)
                 ->get();
         }
+
         foreach ($data as $bed) {
             $bed->patients_wating = '';
             $bed->expected_discharge_date = '';
@@ -493,12 +494,16 @@ class OtherController extends Controller
 
             $count = count($beds);
       //  }
+        $i=1;
         foreach ($beds as $bed) {
             if ($bed->sex == 1) {
                 $bed->gender = 'Male';
             } else {
                 $bed->gender = 'FeMale';
             }
+            $bed->id = $i;
+            $i++;
+
         }
 
         return response()->json(['status' => true, 'data' => $beds, 'count' => $count]);
