@@ -271,7 +271,6 @@ class ApiController extends Controller
             ->update(
                 ['status' => 0,
                     'updated_at' => $currentdatetime
-
                 ]
             );
 
@@ -331,7 +330,6 @@ class ApiController extends Controller
                 'local_goverment_area' => $local_goverment_area,
                 'postal_code' => $postal_code,
                 'created_at' => $currentdatetime
-
             ]
         );
 
@@ -374,7 +372,6 @@ class ApiController extends Controller
                     'local_goverment_area' => '',
                     'postal_code' => $permanent_postalCode,
                     'created_at' => $currentdatetime
-
                 ]
             );
 
@@ -451,7 +448,6 @@ class ApiController extends Controller
                         'country' => $kin_country,
                         'postal_code' => $kin_postal_code,
                         'updated_at' => $currentdatetime
-
                     ]
                 );
 
@@ -478,7 +474,6 @@ class ApiController extends Controller
                     'country' => $kin_country,
                     'postal_code' => $kin_postal_code,
                     'created_at' => $currentdatetime
-
                 ]
             );
 
@@ -539,7 +534,6 @@ class ApiController extends Controller
                         'state' => $employer_state,
                         'country' => $employer_country,
                         'updated_at' => $currentdatetime
-
                     ]
                 );
 
@@ -564,7 +558,6 @@ class ApiController extends Controller
                     'state' => $employer_state,
                     'country' => $employer_country,
                     'created_at' => $currentdatetime
-
                 ]
             );
 
@@ -615,7 +608,6 @@ class ApiController extends Controller
                 'password' => $password_user,
                 'role_id' => $user_role_id,
                 'created_at' => $currentdatetime
-
             ]
         );
 
@@ -717,7 +709,6 @@ class ApiController extends Controller
                 'whom_to_see' => $whom_to_see,
                 'decscribe_whom_to_see' => $decscribe_whom_to_see,
                 'created_at' => $currentdatetime
-
             ]
         );
 
@@ -1065,7 +1056,6 @@ class ApiController extends Controller
                             'dependant_id' => $patient_id,
                             'relationship' => $relationship,
                             'created_at' => $currentdatetime
-
                         ]
                     );
                 }
@@ -1124,7 +1114,6 @@ class ApiController extends Controller
                         'category' => $category,
                         'notes' => $notes,
                         'created_at' => $currentdatetime
-
                     ]
                 );
 
@@ -1143,7 +1132,6 @@ class ApiController extends Controller
                             'dependant_id' => $patient_id,
                             'relationship' => $relationship,
                             'created_at' => $currentdatetime
-
                         ]
                     );
                 }
@@ -1215,7 +1203,6 @@ class ApiController extends Controller
                 'file' => $fileName,
                 'file_name' => $original_name,
                 'created_at' => $currentdatetime
-
             ]
         );
 
@@ -1244,7 +1231,6 @@ class ApiController extends Controller
             ->update(
                 ['file_name' => $file_name,
                     'updated_at' => $currentdatetime
-
                 ]
             );
 
@@ -1391,7 +1377,6 @@ class ApiController extends Controller
             "patient_kin" => $patient_kin,
             "patient_employeer" => $patient_employers,
             "hospital_plan" => $patient_plan
-
         );
 
         return response()->json(['status' => true, 'data' => $data,'is_valid'=>$patient_valid]);
@@ -1444,7 +1429,6 @@ class ApiController extends Controller
                 'bmi_height' => $bmi_height,
                 'notes' => $notes,
                 'created_at' => $currentdatetime
-
             ]
         );
 
@@ -1955,7 +1939,6 @@ class ApiController extends Controller
                 'from_date' => $from_date,
                 'medication_status' => $medication_status,
                 'created_at' => $currentdatetime
-
             ]
         );
 
@@ -2041,7 +2024,6 @@ class ApiController extends Controller
                 'medicine_status' => $medicine_status,
                 'to_date' => $to_date,
                 'created_at' => $currentdatetime
-
             ]
         );
 
@@ -2361,7 +2343,6 @@ class ApiController extends Controller
                 'priority' => $priority,
                 'appointment_status' => 'pending',
                 'created_at' => $currentdatetime
-
             ]
         );
 
@@ -2415,7 +2396,6 @@ class ApiController extends Controller
                    // 'end_time' => $end_time,
                     'priority' => $priority,
                     'updated_at' => $currentdatetime
-
                 ]
             );
 
@@ -2559,7 +2539,6 @@ class ApiController extends Controller
             ->update(
                 ['visit_status' => 'checkout',
                     'updated_at' => $currentdatetime
-
                 ]
             );
 
@@ -2569,7 +2548,6 @@ class ApiController extends Controller
                 'reason' => $reason,
                 'notes' => $notes,
                 'created_at' => $currentdatetime
-
             ]
         );
 
@@ -2588,7 +2566,6 @@ class ApiController extends Controller
                     'pick_date' => $pick_date,
                     'pick_time' => $pick_time,
                     'created_at' => $currentdatetime
-
                 ]
             );
         }
@@ -2611,7 +2588,6 @@ class ApiController extends Controller
                     'admit_date' => $admit_date,
                     'start_time' => $start_time,
                     'created_at' => $currentdatetime
-
                 ]
             );
 
@@ -2681,32 +2657,22 @@ class ApiController extends Controller
             ->update(
                 ['visit_status' => 'checkout',
                     'updated_at' => $currentdatetime
-
                 ]
             );
 
 
         if ($request->file('refered_file')) {
-
-
             if ($request->file('refered_file')->isValid()) {
-
-
                 $destinationPath = base_path() . '/public/refered_patient_files'; // upload path
                 $extension = $request->file('refered_file')->getClientOriginalExtension(); // getting image extension
                 $fileName = time() . '.' . $extension; // renameing image
 
                 $request->file('refered_file')->move($destinationPath, $fileName); // uploading file to given path
-
-
             } else {
-
                 $fileName = '';
-
             }
 
         } else {
-
             $fileName = '';
         }
 
@@ -2725,7 +2691,6 @@ class ApiController extends Controller
                 'medication_list' => $medication_list,
                 'medicines' => $medicines,
                 'created_at' => $currentdatetime
-
             ]
         );
 
@@ -2817,7 +2782,6 @@ class ApiController extends Controller
             ->update(
                 ['status' => 0,
                     'updated_at' => $currentdatetime
-
                 ]
             );
         return response()->json(['status' => true, 'message' => 'Template Deleted Successfully']);
@@ -2842,7 +2806,6 @@ class ApiController extends Controller
                     'description' => $description,
                     'template' => $template,
                     'created_at' => $currentdatetime
-
                 ]
             );
         return response()->json(['status' => true, 'message' => 'Template Added Successfully']);
@@ -2951,7 +2914,6 @@ class ApiController extends Controller
                     'patient_id' => $patient_id,
                     'prescription_status' => 'in progress',
                     'created_at' => $currentdatetime
-
                 ]
             );
 
@@ -3014,7 +2976,6 @@ class ApiController extends Controller
                         'reffills' => $patient_prescription->reffills,
                         'pharmacy' => $patient_prescription->pharmacy,
                         'created_at' => $currentdatetime
-
                     ]
                 );
 
@@ -3046,7 +3007,6 @@ class ApiController extends Controller
                         'reffills' => $patient_prescription->reffills,
                         'pharmacy' => $patient_prescription->pharmacy,
                         'created_at' => $currentdatetime
-
                     ]
                 );
 
@@ -3189,7 +3149,6 @@ class ApiController extends Controller
                     'reffills' => $reffills,
                     'pharmacy' => $pharmacy,
                     'updated_at' => $currentdatetime
-
                 ]
             );
 
