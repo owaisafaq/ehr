@@ -15,8 +15,8 @@
                 </div> 
                 <button type="button" class="delete button-custom pull-right" ng-hide="buttonDisabled" data-toggle="modal" data-target="#deleteConfirm">remove</button>
                 <button type="button" class="edit button-custom pull-right" ng-hide="buttonDisabled" data-toggle="modal" data-target="#updateWard">Update</button>
-                <button class="add button-custom pull-right " data-toggle="modal" data-target="#createWard">Add</button>
-                <button type="button"  data-toggle="modal" data-target="#addclinical" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-20 margin-top-5">create bed shematic</button>
+                <button class="add button-custom pull-right" data-toggle="modal" data-target="#createWard">Add</button>
+                <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-20 margin-top-5" ng-hide="buttonDisabled" ng-click="bedShematic();">Bed shematic</button>
             </div>
             <div class="card-body col-lg-12">
                 <div>
@@ -78,8 +78,7 @@
                             <label>Ward Number</label>
                         </div>
                         <div class="col-lg-4">
-                            <input type="text" class="form-control" name="wardno" ng-model="addWard.date" ng-class="{true: 'error'}[submitted && addForm.date.$invalid]" disabled>
-                            <p class="help-block PIValid" ng-show="submitted && addForm.wardno.$error.required">Required</p>
+                            <input type="text" class="form-control" ng-model="addWard.date"disabled>
                         </div>
                         <div class="col-lg-2">
                             <label>Ward</label>
@@ -133,22 +132,22 @@
             <div class="modal-header pop_head">
                 <h2>Update Ward</h2>
             </div>
-            <form class="custom-form" name="addForm" ng-model="myForm" novalidate ng-submit="updateWard(ward);">
+            <form class="custom-form" name="editForm" ng-model="editForm" novalidate ng-submit="updateWard(ward);">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-2">
                             <label>Ward Number</label>
                         </div>
                         <div class="col-lg-4">
-                            <input type="text" class="form-control" name="wardno" ng-model="ward.id" ng-class="{true: 'error'}[submitted && addForm.date.$invalid]" disabled>
-                            <p class="help-block PIValid" ng-show="submitted && addForm.wardno.$error.required">Required</p>
+                            <input type="text" class="form-control" name="wardno" ng-model="ward.id" ng-class="{true: 'error'}[submitted && editForm.date.$invalid]" disabled>
+                            <p class="help-block PIValid" ng-show="submitted && editForm.wardno.$error.required">Required</p>
                         </div>
                         <div class="col-lg-2">
                             <label>Ward</label>
                         </div>
                         <div class="col-lg-4">
-                            <input type="text" class="form-control" name="name" ng-model="ward.name" ng-class="{true: 'error'}[submitted && addForm.name.$invalid]" required>
-                            <p class="help-block PIValid" ng-show="submitted && addForm.name.$error.required">Required</p>
+                            <input type="text" class="form-control" name="name" ng-model="ward.name" ng-class="{true: 'error'}[submitted && editForm.name.$invalid]" required>
+                            <p class="help-block PIValid" ng-show="submitted && editForm.name.$error.required">Required</p>
                         </div>
                     </div>
                     <div class="row">
@@ -156,18 +155,18 @@
                             <label>Speciality</label>
                         </div>
                         <div class="col-lg-4">
-                            <select class="form-control" name="speciality" placeholder="Select" ng-model="ward.department_id" ng-class="{true: 'error'}[submitted && addForm.speciality.$invalid]" required>
+                            <select class="form-control" name="speciality" placeholder="Select" ng-model="ward.department_id" ng-class="{true: 'error'}[submitted && editForm.speciality.$invalid]" required>
                                 <option value=""></option>
                                 <option value="{{dd.id}}" ng-repeat="dd in dropDownData.departments" ng-selected="dd.id == ward.department_id">{{dd.name}}</option>
                             </select>
-                            <p class="help-block PIValid" ng-show="submitted && addForm.speciality.$error.required">Required</p>
+                            <p class="help-block PIValid" ng-show="submitted && editForm.speciality.$error.required">Required</p>
                         </div>
                         <div class="col-lg-2">
                             <label>Number of beds</label>
                         </div>
                         <div class="col-lg-4">
-                            <input type="text" class="form-control" name="beds" ng-model="ward.number_of_beds" ng-class="{true: 'error'}[submitted && addForm.beds.$invalid]" required numbers-only>
-                            <p class="help-block PIValid" ng-show="submitted && addForm.beds.$error.required">Required</p>
+                            <input type="text" class="form-control" name="beds" ng-model="ward.number_of_beds" ng-class="{true: 'error'}[submitted && editForm.beds.$invalid]" required numbers-only>
+                            <p class="help-block PIValid" ng-show="submitted && editForm.beds.$error.required">Required</p>
                         </div>
                     </div>
                     <div class="row">
@@ -176,14 +175,14 @@
                         </div>
                         <div class="col-lg-12">
                             <div class="input-group col-lg-12">
-                                <textarea ng-model="ward.description" name="desc" required ng-class="{true: 'error'}[submitted && addForm.desc.$invalid]"></textarea>
+                                <textarea ng-model="ward.description" name="desc" required ng-class="{true: 'error'}[submitted && editForm.desc.$invalid]"></textarea>
                             </div>
-                            <p class="help-block PIValid" ng-show="submitted && addForm.desc.$error.required">Required</p>
+                            <p class="help-block PIValid" ng-show="submitted && editForm.desc.$error.required">Required</p>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;" ng-disabled="addformsubmission()">Save</button>
+                    <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;" ng-disabled="editformsubmission()">Save</button>
                     <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal" ng-disabled="OrderBtn">Cancel</button>
                 </div>
             </form>

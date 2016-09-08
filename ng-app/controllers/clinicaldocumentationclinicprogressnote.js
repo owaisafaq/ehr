@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootScope', '$window', '$routeParams', 'GetPatientInfo', 'ClinicalProgressNotesFields', 'GetTemplatesDropDown', 'SetClinicalProgressNotes', 'PatienPrescription', 'GetPrescription', 'GetAllMedications', 'DropDownData', 'CheckoutPatient', 'GetMedicineUnits', function($scope, $rootScope, $window, $routeParams, GetPatientInfo, ClinicalProgressNotesFields, GetTemplatesDropDown, SetClinicalProgressNotes, PatienPrescription, GetPrescription, GetAllMedications, DropDownData, CheckoutPatient, GetMedicineUnits){
+AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootScope', '$window', '$routeParams', 'GetPatientInfo', 'ClinicalProgressNotesFields', 'GetTemplatesDropDown', 'SetClinicalProgressNotes', 'PatienPrescription', 'GetPrescription', 'GetAllMedications', 'DropDownData', 'CheckoutPatient', 'GetMedicineUnits', 'getTemplateCategory', 'getTemplates', 'getTemplateData',function($scope, $rootScope, $window, $routeParams, GetPatientInfo, ClinicalProgressNotesFields, GetTemplatesDropDown, SetClinicalProgressNotes, PatienPrescription, GetPrescription, GetAllMedications, DropDownData, CheckoutPatient, GetMedicineUnits, getTemplateCategory, getTemplates, getTemplateData){
 	$rootScope.pageTitle = "EHR - Clinical Documentation - Clinic Progress Note";
 	$scope.displayInfo = {};
 	$scope.templates = {};
@@ -10,7 +10,11 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 	$scope.selectedRow = false;
 	$rootScope.loader = "show";
   $scope.message = false;
+  $scope.showAccordion = false;
+  $scope.templateDisabled = true;
   $scope.PID = "/"+$routeParams.patientID;
+  $scope.mySchema = {}; // Expose the schema on the scope.
+  $scope.myFormData = {}; // Something to store the input at.
 	//$scope.medicationDropDowns = medicationDropDowns;
     //$scope.pharmacyDataDropDown = pharmacyDataDropDown;
     $scope.MedicationData = [];
@@ -18,7 +22,34 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
     //$scope.buildInstructionObject = buildInstructionObject;
 	/*{{field = field + 1}}*/
 	GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID}, getPatientSuccess, getPatientFailure);
-	GetTemplatesDropDown.get({token: $window.sessionStorage.token}, getTemplateDropDownSuccess, getTemplateDropDownFailure);
+  getTemplateCategory.get({token: $window.sessionStorage.token, template_type: 1}, TemplateCategorySuccess, TemplateCategoryFailed);
+
+    function TemplateCategorySuccess(res) {
+        if (res.status == true) {
+            $scope.categories = res.data;
+        } else {
+            console.log(res);
+        }
+    }
+
+    function TemplateCategoryFailed(error) {
+        console.log(error);
+        $('#internetError').modal('show');
+    }
+  $scope.selectCategory = function(selectedCategory){
+    console.log(selectedCategory);
+    $scope.selectedCategory = selectedCategory;
+    $scope.templateDisabled = false;
+    getTemplates.get({
+        token: $window.sessionStorage.token,
+        template_type: 1,
+        category_id: selectedCategory,
+        offset: 10,
+        limit: 0
+    }, getTemplateDropDownSuccess, getTemplateDropDownFailure);
+
+/*    GetTemplatesDropDown.get({token: $window.sessionStorage.token, category_id: selectedCategory, template_type: 1}, getTemplateDropDownSuccess, getTemplateDropDownFailure);
+*/  }
 
 	function getPatientSuccess(res){
 		if(res.status == true){
@@ -55,8 +86,10 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 	}
 
 	function getTemplateDropDownSuccess(res){
+    console.log(res);
 		if(res.status == true){
 			$scope.templates = res.data;
+      //$scope.mySchema = JSON.parse(res.data[0].template);
 		}
 	}
 
@@ -68,17 +101,26 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 
 	// get templates
 	$scope.getTemplates = function(tempId){
+    $scope.tempId = tempId;
 		$rootScope.loader = "show";
 		$scope.selectedRow = true;
-		ClinicalProgressNotesFields.get({token: $window.sessionStorage.token, template_id: tempId}, getTemplatesSuccess, getTemplatesFailure);
-		function getTemplatesSuccess(res){
+		//ClinicalProgressNotesFields.get({token: $window.sessionStorage.token, template_id: tempId, template_type: 1}, getTemplatesSuccess, getTemplatesFailure);
+    getTemplateData.get({
+        token : $window.sessionStorage.token,
+        template_id : tempId,
+        template_type: 1
+    },getTemplateSuccess,getTemplateDataFailure);
+		function getTemplateSuccess(res){
+      console.log(res.data[0]);
 			if(res.status == true){
-				$scope.templateFields = res.data;
+				$scope.templateFields = res.data[0];
+        $scope.mySchema = JSON.parse(res.data.template);
+        $scope.showAccordion = true;
 				$rootScope.loader = "hide";
 			}
 		}
 
-		function getTemplatesFailure(error){
+		function getTemplateDataFailure(error){
 			$rootScope.loader = "hide";
       $('#internetError').modal('show');
 			console.log(error);
@@ -89,12 +131,12 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 	*/
 	$scope.saveClinicalNotes = function(data){
 		$rootScope.loader = "show";
-		SetClinicalProgressNotes.save({token: $window.sessionStorage.token, clinical_notes:data, patient_id: $routeParams.patientID, visit_id: $scope.displayInfo.encounter_id}, saveClinicalSuccess, saveClinicalFailure);
+		SetClinicalProgressNotes.save({token: $window.sessionStorage.token, value:data, patient_id: $routeParams.patientID, visit_id: $scope.displayInfo.encounter_id, template_id: $scope.tempId}, saveClinicalSuccess, saveClinicalFailure);
 
 		function saveClinicalSuccess(res){
 			$rootScope.loader = "hide";
 			if(res.status == true){
-
+        $('#successModal').modal('show');
 			}
 		}
 

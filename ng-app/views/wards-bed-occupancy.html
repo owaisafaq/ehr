@@ -10,18 +10,18 @@
                         <thead>
                             <tr>
                                 <th>SN</th>
-                                <th>speciality</th>
-                                <th>Ward</th>
-                                <th>total beds</th>
-                                <th>available beds</th>
-                                <th>closed/unavailable</th>
-                                <th>occupied beds</th>
-                                <th>patients waiting for beds</th>
-                                <th>expected discharge</th>
+                                <th>speciality <a href="javascript:void(0);" class="pull-right" ng-click="sortingBySpeciality()"><i class="fa {{sortingClassSpeciality}}" aria-hidden="true"></i></a></th>
+                                <th>Ward <a href="javascript:void(0);" class="pull-right" ng-click="sortingByWard()"><i class="fa {{sortingClassWard}}" aria-hidden="true"></i></a></th>
+                                <th>total beds <a href="javascript:void(0);" class="pull-right" ng-click="sortingTBeds()"><i class="fa {{sortingClassTBeds}}" aria-hidden="true"></i></a></th>
+                                <th>available beds <a href="javascript:void(0);" class="pull-right" ng-click="sortingByABeds()"><i class="fa {{sortingClassABeds}}" aria-hidden="true"></i></a></th>
+                                <th>closed/unavailable <a href="javascript:void(0);" class="pull-right" ng-click="sortingByClosed()"><i class="fa {{sortingClassClosed}}" aria-hidden="true"></i></a></th>
+                                <th>occupied beds <a href="javascript:void(0);" class="pull-right" ng-click="sortingByOccupied()"><i class="fa {{sortingClassOccupied}}" aria-hidden="true"></i></a></th>
+                                <th>patients waiting for beds <a href="javascript:void(0);" class="pull-right" ng-click="sortingWaiting()"><i class="fa {{sortingClassWaiting}}" aria-hidden="true"></i></a></th>
+                                <th>expected discharge <a href="javascript:void(0);" class="pull-right" ng-click="sortingExpected()"><i class="fa {{sortingClassExpected}}" aria-hidden="true"></i></a></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="beds in allBedOccupancy">
+                            <tr ng-repeat="beds in allBedOccupancy | orderBy:sortOrder">
                                 <td>{{$index+1}}</td>
                                 <td>{{beds.speciality}}</td>
                                 <td>{{beds.name}}</td>

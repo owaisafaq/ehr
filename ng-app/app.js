@@ -190,7 +190,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', function 
                         }
                     }
                 }).
-                when('/wards-bed-occupancy/:wardID', {
+                when('/wards-bed-occupancy', {
                     templateUrl: 'views/wards-bed-occupancy.html',
                     controller: 'wardsBedOccupancyController',
                     resolve: {
@@ -443,6 +443,17 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', function 
                         }
                     }
                 }).
+                when('/clinical-progress-template', {
+                    templateUrl: 'views/clinical-progress-template.html',
+                    controller: 'clinicalProgressTemplate',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/clinicalprogresstemplate.js").then(function() {
+                            });
+                        }
+                    }
+                }).
                 when('/patient-pool-area', {
                     templateUrl: 'views/patient-pool-area.html',
                     controller: 'patientPoolArea',
@@ -460,7 +471,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', function 
     }]);
 AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData, $timeout) {
     if (sessionStorage.length == 0) {
-        console.log(1111111111111111);
+        //console.log(1111111111111111);
 //            var path = $location.$$path;
 //            if ((path == "/login" || path == "/") && path != undefined) {
 //                $location.path("patient-registration/");
@@ -547,7 +558,7 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
     }
     
     $rootScope.encounterHeaderBar = function(){
-        console.log('ookok');
+        //console.log('ookok');
         $rootScope.headerHideLoader = "hide";
         $rootScope.encounterHeaderSearchBar = false;
         $('.create_counter_header').removeClass('hide');
@@ -555,6 +566,7 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
         function dropDownSuccess(res){
             if(res.status == true){
                 $rootScope.headerEncountersDropdownData = res.data;
+                //console.log($rootScope.headerEncountersDropdownData);
             }
         }
         function dropDownFailed(error){
@@ -580,7 +592,7 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
         }, encounterSuccess, encounterFailed);
         function encounterSuccess(res){
             if(res.status == true){
-                console.log(res);
+                //console.log(res);
                 $rootScope.headerHideLoader = "hide";
                 $rootScope.headerMessageType = "alert-success";
                 $rootScope.headerErrorMessage = res.message;
@@ -623,10 +635,9 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
             if ((path == "/login" || path == "/") && path != undefined) {
                 $location.path("dashboard");
             }
-        } else
-            $location.path("login");
-        console.log("here")
-        console.log(localStorage.getItem('sessionStorage'))
+        } else $location.path("login");
+        //console.log("here")
+        //console.log(localStorage.getItem('sessionStorage'))
         $rootScope.PI = {};
     });
     $rootScope.loadView = function (object) {
@@ -643,21 +654,21 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
     $rootScope.$on('$viewContentLoaded', function () {
         // transfers sessionStorage from one tab to another
         var sessionStorage_transfer = function (event) {
-            console.log("working")
-            console.log(sessionStorage)
+            //console.log("working")
+            //console.log(sessionStorage)
             if (!event) {
                 event = window.event;
             } // ie suq
             if (!event.newValue)
                 return;          // do nothing if no value to work with
             if (event.key == 'getSessionStorage') {
-                console.log("working if")
+                //console.log("working if")
                 // another tab asked for the sessionStorage -> send it
                 localStorage.setItem('sessionStorage', JSON.stringify(sessionStorage));
                 // the other tab should now have it, so we're done with it.
                 localStorage.removeItem('sessionStorage');  // <- could do short timeout as well.
             } else if (event.key == 'sessionStorage' && !sessionStorage.length) {
-                console.log("working else")
+                //console.log("working else")
                 // another tab sent data <- get it
                 var data = JSON.parse(event.newValue);
                 for (var key in data) {
@@ -678,17 +689,17 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
         }
         // listen for changes to localStorage
         if (window.addEventListener) {
-            console.log("working 1")
-            console.log(sessionStorage)
+            //console.log("working 1")
+            //console.log(sessionStorage)
             window.addEventListener("storage", sessionStorage_transfer, false);
         } else {
-            console.log("working 1 else")
+            //console.log("working 1 else")
             window.attachEvent("onstorage", sessionStorage_transfer);
         }
         // Ask other tabs for session storage (this is ONLY to trigger event)
         if (!sessionStorage.length) {
-            console.log("working 2")
-            console.log(sessionStorage)
+            //console.log("working 2")
+            //console.log(sessionStorage)
             localStorage.setItem('getSessionStorage', 'foobar');
             localStorage.removeItem('getSessionStorage', 'foobar');
         }
@@ -721,7 +732,7 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
                     }
                     else {
                         $.each(data['data'], function (index, item) {
-                            console.log(item);
+                            //console.log(item);
                             myResults.push({
                                 'id': item.id,
                                 'text': item.first_name + " " + item.last_name
@@ -796,7 +807,11 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
         })
     });
     //$rootScope.html = '<div ng-include="\'utils/script-file.html\'"></div>';
-    $rootScope.html = '<script src="assets/js/libs/jquery-ui/jquery-ui.min.js"></script><script src="assets/js/libs/bootstrap/bootstrap.min.js"></script><script src="assets/js/libs/spin.js/spin.min.js"></script><script src="assets/js/libs/autosize/jquery.autosize.min.js"></script><script src="assets/js/libs/nanoscroller/jquery.nanoscroller.min.js"></script><script src="assets/js/core/source/App.js"></script><script src="assets/js/core/source/AppNavigation.js"></script><script src="assets/js/core/source/AppOffcanvas.js"></script><script src="assets/js/core/source/AppCard.js"></script><script src="assets/js/core/source/AppForm.js"></script><script src="assets/js/core/source/AppNavSearch.js"></script><script src="assets/js/core/source/AppVendor.js"></script><script src="assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script><script src="assets/js/core/demo/Demo.js"></script><script src="assets/js/core/source/script.js" type="text/javascript"></script><script src="assets/js/libs/select2/select2.min.js" type="text/javascript"></script><script src="assets/js/libs/inputmask/jquery.inputmask.bundle.min.js"></script><script src="assets/js/libs/bootstrap-timepicker/bootstrap-timepicker.js" type="text/javascript"></script>';
+    $rootScope.html = '<script src="assets/js/libs/jquery-ui/jquery-ui.min.js"></script><script src="assets/js/libs/bootstrap/bootstrap.min.js"></script><script src="assets/js/libs/spin.js/spin.min.js"></script><script src="assets/js/libs/autosize/jquery.autosize.min.js"></script><script src="assets/js/libs/nanoscroller/jquery.nanoscroller.min.js"></script><script src="assets/js/core/source/App.js"></script><script src="assets/js/core/source/AppNavigation.js"></script><script src="assets/js/core/source/AppOffcanvas.js"></script><script src="assets/js/core/source/AppCard.js"></script><script src="assets/js/core/source/AppForm.js"></script><script src="assets/js/core/source/AppNavSearch.js"></script><script src="assets/js/core/source/AppVendor.js"></script><script src="assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script><script src="assets/js/core/source/script.js" type="text/javascript"></script><script src="assets/js/libs/select2/select2.min.js" type="text/javascript"></script><script src="assets/js/libs/inputmask/jquery.inputmask.bundle.min.js"></script><script src="assets/js/libs/bootstrap-timepicker/bootstrap-timepicker.js" type="text/javascript"></script><script src="assets/js/core/demo/Demo.js"></script><script src="assets/js/libs/moment/moment.min.js"></script><script src="assets/js/libs/fullcalendar/fullcalendar.min.js"></script><script src="assets/js/core/demo/DemoCalendar.js"></script>';
+        // <script src="assets/js/core/demo/Demo.js"></script>
+        // <script src="assets/js/libs/moment/moment.min.js"></script>
+        // <script src="assets/js/libs/fullcalendar/fullcalendar.min.js"></script>
+        // <script src="assets/js/core/demo/DemoCalendar.js"></script>
     // on change
     $rootScope.getSearchPatientForHeader = function(string){
         console.log(string);

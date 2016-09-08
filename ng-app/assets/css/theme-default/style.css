@@ -1669,6 +1669,7 @@ BED Occupancy
 }
 .bed-box:hover{
     background: #526f82;
+    cursor: pointer;
 }
 .bed-box:hover > span{
     color: #fff;
@@ -2942,7 +2943,7 @@ form .progress {
     width: 100%!important;
 }
 .clinical-footer{
-    background-color: #eee;
+    background-color: #56aeea;
 }
 .white{
     background-color: #a2a6b9!important;
@@ -3037,4 +3038,90 @@ margin-left: -180px;
 }
 .preloader{
     width: 130px;
+}
+.missed{
+    background-color: #ff3333!important;
+    color: #FFF!important;
+}
+.blue{
+    color: #005b9a!important;
+}
+.invisible{
+    visibility: hidden;
+}
+.yellow:focus{
+    background-color: #FAFFBD!important;
+}
+.yellow:active{
+    background-color: #FAFFBD!important;
+}
+.green{
+    background-color: green!important;
+}
+/*
+Dynaimic Form
+*/
+.dynamic-custom-form .control-label{
+    font-size: 12px;
+    opacity: 1;
+    text-transform: uppercase;
+    margin-top: 18px;
+    line-height: 12px;
+    color: #56aeea;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+.dynamic-custom-form .form-control{
+    border: 1px solid #56aeea;
+    padding-left: 5px;
+}
+.appoint-detail .bed-info {
+    top: 120px;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+.appoint-detail:hover .bed-info {
+    opacity: 1;
+    visibility: visible;
+    top: 160px;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+.appoint-detail .bed-info:before {
+    content: "\f0d8";
+    left: 0;
+    top: -17px;
+    color: #fff;
+    right: 0;
+    margin: auto;
+    text-align: center;
+}
+#encounterScroll{
+    max-height: 500px;
+    overflow: auto;
+}
+
+.button-custom-white{
+    display: inline-block;
+    border-radius: 100%;
+    margin-right: 8px;
+    font-size: 13px;
+    color: #516e81;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    padding-top: 30px;
+    line-height: 13px;
+    border-radius: 0 !important;
+}
+.bed-selected, .bed-selected > .txt5, .bed-selected > .txt6, .bed-selected > .txt7{
+    background: #526f82;
+    color: #fff!important;
+}
+.success{
+    color: green!important;
+    text-align: center!important;
 }

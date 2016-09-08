@@ -1,6 +1,7 @@
 var AppEHR = angular.module('AppEHR');
 AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', 'PatientInformation', 'fileUpload', '$location', '$filter', 'Upload', '$timeout', 'PatientRegistrationAddress', 'PatientRegistrationKin', 'PatientRegistrationEmployer', '$routeParams', 'GetPatientAllData', 'PatienPlanSaveData', '$compile', '$http', 'GetArchives', 'RemoveArchives', 'EditArchives', 'AddFolderArchives', 'ListFolderArchives', 'GetResourcesByFolderArchives', 'DeleteFolderArchives', 'EditFolderArchives', 'SaveFiles', 'fileUpload', 'FolderUpContent', 'FolderUpFolders', function ($rootScope, $scope, $window, Countries, States, GetLocalGovermentArea, City, DropDownData, PatientInformation, fileUpload, $location, $filter, Upload, $timeout, PatientRegistrationAddress, PatientRegistrationKin, PatientRegistrationEmployer, $routeParams, GetPatientAllData, PatienPlanSaveData, $compile, $http, GetArchives, RemoveArchives, EditArchives, AddFolderArchives, ListFolderArchives, GetResourcesByFolderArchives, DeleteFolderArchives, EditFolderArchives, SaveFiles, fileUpload, FolderUpContent, FolderUpFolders) {
         $rootScope.pageTitle = "EHR - Patient Registration";
+        //$rootScope.loader = "show";
         $scope.PI = $rootScope.PI;
         $scope.PI.adress = {};
         $scope.PI.kin = {};
@@ -305,7 +306,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
         // patient information API
         $scope.validatePatientInfo = function (PI) {
-            if (PI.first_name != undefined && PI.last_name != undefined && PI.date_of_birth != undefined && PI.age != undefined && PI.sex != undefined) {
+            if (PI.first_name != undefined && PI.last_name != undefined && PI.date_of_birth != undefined && PI.age != undefined && PI.sex != undefined && PI.maritial_status != undefined && PI.patient_state != undefined) {
                 var dataToBeAdded = {
                     token: $window.sessionStorage.token,
                     patient_unit_number: $scope.PI.patient_unit_number == undefined ? '' : $scope.PI.patient_unit_number,
@@ -777,10 +778,18 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 $scope.PI.patient_plan = {};
                 $scope.PI.patient_plan.hospital_plan = {};
                 if(res.data.hospital_plan != undefined){
+                    console.log($scope.dropDownData);
+                    $scope.HPUpdate = res.data.hospital_plan;
+                    $scope.MI.insurance_id = $scope.HPUpdate.insurance_id;
+                    $scope.MI.description = $scope.HPUpdate.description;
+                    $scope.RI.retainer_data = $scope.HPUpdate.retainership;
+                    $scope.RI.category = $scope.HPUpdate.category = 1;
+                    $scope.RI.notes = $scope.HPUpdate.notes;
+                    console.log($scope.HPUpdate);
                     $scope.dataToBeAdded.updatePatientPlan = {};
                     $scope.PI.patient_plan.hospital_plan.plan_id = res.data.hospital_plan.plan_id;
                     $scope.dataToBeAdded.updatePatientPlan = res.data.hospital_plan;
-                    console.log($scope.dataToBeAdded);
+                    //console.log($scope.dataToBeAdded);
                     if(res.data.hospital_plan.plan_id == "1"){
                         $scope.flag_to_show_retainer_update = false;
                         $scope.flag_to_show_nhis_update = false;
@@ -805,7 +814,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         function archiveSuccess(res) {
             if (res.status == true) {
                 $scope.archives = res.data;
-                console.log(res.data);
+                //console.log(res.data);
             }
         }
 
@@ -836,7 +845,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             var i = 1;
             angular.forEach(files, function (file) {
                 if(dp != undefined){
-                    console.log('dp1');
+                    //console.log('dp1');
                     $scope.imageUploading = false;
                     $scope.patientImageProgress = true;
                     file.upload = Upload.upload({
@@ -858,10 +867,10 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     $scope.patientImageProgress = false;
                     $timeout(function () {
                         file.result = response.data;
-                        console.log(response);
+                        //console.log(response);
                         if(dp != undefined) $scope.PI.file = response.data.image;
                         if(files.length == i){
-                            console.log($scope.PI.file);
+                            //console.log($scope.PI.file);
                             $scope.saveAndClose = false;
                         }
                         i++;
@@ -876,7 +885,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             });
         }
         $scope.listAfterUploaded = function () {
-            console.log("followupParentId"+$scope.followupParentId);
+            //console.log("followupParentId"+$scope.followupParentId);
             GetResourcesByFolderArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, followup_parent_id: $scope.followupParentId}, nestedFolderSuccess, nestedFolderFailure);
             ListFolderArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, followup_parent_id: $scope.followupParentId}, listFolderSuccess, listFolderFailure);
         }
@@ -892,11 +901,11 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             if (removeId != undefined) {
                 $scope.removeItemId = removeId;
                 if ($('.file_uploads .active').parent('.folder_create_con').length > 0) { // folder
-                    console.log("if " + $scope.removeItemId);
+                    //console.log("if " + $scope.removeItemId);
                     DeleteFolderArchives.get({token: $window.sessionStorage.token, /*$window.sessionStorage.patient_id*/ resource_id: removeId}, deleteFolderSuccess, deleteFolderFailure);
                 } else {
                     $rootScope.loader = 'show';
-                    console.log("else " + $scope.removeItemId);
+                    //console.log("else " + $scope.removeItemId);
                     RemoveArchives.get({
                         token: $window.sessionStorage.token, 
                         patient_id: $window.sessionStorage.patient_id, 
@@ -1220,6 +1229,56 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 $scope.dataToBeAdded.dependents = depedants_values_new
                 $scope.dataToBeAdded.description = $scope.MI.description == undefined ? '' : $scope.MI.description
                 $('#nhis').modal('hide');
+                $('#nhisUpdate').modal('hide');
+                if($routeParams.patientID == undefined){
+                    $scope.flag_to_show_nhis = true;
+                }else{
+                    $scope.flag_to_show_nhis = false;
+                }
+                
+            }
+        }
+
+        $scope.modal_nhisUpdate_Data = function(MI){
+            console.log(MI);
+            var depedants_values = [];
+            $scope.depedants_values_with_name = [];
+            var depedants_values_new = [];
+            $('#nhisUpdate .dependant_list > div').each(function () {
+                var id = $(this).children('.chip').data('id')
+                var chip_name = $(this).children('.chip').text();
+                depedants_values.push({
+                    "dependent_id": "" + id + "",
+                    "relationship": $(this).find('select[name=dependant_relationship]').val()
+                });
+                depedants_values_new = JSON.stringify(depedants_values);
+                $scope.HPUpdate.dependant = $scope.depedants_values_with_name.push({dependent_id: id, dependent_name: chip_name})
+            })
+            console.log($scope.depedants_values_with_name)
+            console.log($scope.HPUpdate.dependant)
+            $rootScope.valid_relationship = false;
+            var check_val = $('#nhisUpdate input[name=select_speciality]:checked').val();
+            if (check_val == "dependant") {
+                if ($('#nhisUpdate .principal_list .chip').length > 0) {
+                    $rootScope.do_valid_nhis = false;
+                }else {
+                    $rootScope.do_valid_nhis = true;
+                }
+                console.log($rootScope.do_valid_nhis);
+                $scope.dataToBeAdded.principal_patient_id = $('#nhisUpdate .principal_list .chip').data('id')
+                $scope.dataToBeAdded.principal_patient_name = $('#nhisUpdate .principal_list .chip').text()
+                $scope.dataToBeAdded.relationship = $scope.MI.principal_relationship == undefined ? '' : $scope.MI.principal_relationship
+            }
+
+            if ($('form[name=form_modal_1]').find('.error').length == 0) {
+                $scope.dataToBeAdded.hmo = $scope.MI.hmo == undefined ? '' : $scope.MI.hmo;
+                $scope.dataToBeAdded.policies = $scope.MI.policies == undefined ? '' : $scope.MI.policies;
+                $scope.dataToBeAdded.is_principal = $scope.MI.select_speciality == "principal" ? $scope.MI.select_speciality : '0'
+                $scope.dataToBeAdded.is_dependant = $scope.MI.select_speciality == "dependant" ? $scope.MI.select_speciality : '0'
+                $scope.dataToBeAdded.insurance_id = $scope.MI.insurance_id == undefined ? '' : $scope.MI.insurance_id
+                $scope.dataToBeAdded.dependents = depedants_values_new
+                $scope.dataToBeAdded.description = $scope.MI.description == undefined ? '' : $scope.MI.description
+                $('#nhisUpdate').modal('hide');
                 if($routeParams.patientID == undefined){
                     $scope.flag_to_show_nhis = true;
                 }else{
@@ -1238,6 +1297,17 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     $('#nhis .dependant_list').append($compile('<div class="col-lg-12 no-padding"><div class="chip" data-id="' + id_chip + '">' + $('#s2id_get_val_dependant_nhis .select2-chosen').html() + '<i class="md-close"></i></div><div class="col-lg-3"><select ng-class="{true : \'error\'}[checkValidate_nhis && dependant_model_relationship_' + index_name + ' == 0]" ng-init="dependant_model_relationship_' + index_name + ' = 0" required ng-model="dependant_model_relationship_' + index_name + '" name="dependant_relationship" ng-options="relationships.name for relationships in dropDownData.relationships track by relationships.id" class="form-control" placeholder="Select Relationship"><option value=""></option></select><span class="help-block PIValid alignError" ng-show="checkValidate_nhis && dependant_model_relationship_' + index_name + ' == 0">Required</span></div></div>')($scope));
                     $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
                     $("#get_val_dependant_nhis").select2('data', null);
+                }
+            }
+        }
+        $scope.add_dependant_value_update = function () {
+            var id_chip = $("#get_val_dependant_nhisUpdate").val();
+            if (id_chip !== "") {
+                if ($('#nhisUpdate .dependant_list .chip[data-id="' + id_chip + '"').length == 0) {
+                    index_name = index_name + 1
+                    $('#nhisUpdate .dependant_list').append($compile('<div class="col-lg-12 no-padding"><div class="chip" data-id="' + id_chip + '">' + $('#s2id_get_val_dependant_nhisUpdate .select2-chosen').html() + '<i class="md-close"></i></div><div class="col-lg-3"><select ng-class="{true : \'error\'}[checkValidate_nhis && dependant_model_relationship_' + index_name + ' == 0]" ng-init="dependant_model_relationship_' + index_name + ' = 0" required ng-model="dependant_model_relationship_' + index_name + '" name="dependant_relationship" ng-options="relationships.name for relationships in dropDownData.relationships track by relationships.id" class="form-control" placeholder="Select Relationship"><option value=""></option></select><span class="help-block PIValid alignError" ng-show="checkValidate_nhis && dependant_model_relationship_' + index_name + ' == 0">Required</span></div></div>')($scope));
+                    $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
+                    $("#get_val_dependant_nhisUpdate").select2('data', null);
                 }
             }
         }
@@ -1260,7 +1330,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             var depedants_values_new = [];
 
             $('#relationship .dependant_list > div').each(function () {
-                console.log("thee")
+                console.log("thee");
                 var id = $(this).children('.chip').data('id')
                 var chip_name = $(this).children('.chip').text();
 

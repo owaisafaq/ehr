@@ -53,12 +53,15 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }, getPatientInfoSuccess, getPatientInfoFailure);
         function getPatientInfoSuccess(res) {
             if (res.status == true) {
+                console.log("hello");
+                console.log(res);
                 /*console.log(res.data.date_of_birth);
                 var dob = new Date(res.data.date_of_birth);
                 var dobArr = dob.toDateString().split(' ');
                 console.log(dob);
                 $scope.PI.date_of_birth = dobArr[1] + ' ' + dobArr[2] + ' ' + dobArr[3];
                 console.log($scope.PI.date_of_birth);*/
+                $scope.PI.unit_number = res.data.patient_unit_number;
                 $scope.PI.date_of_birth = res.data.date_of_birth;
                 $scope.PI.first_name = res.data.first_name;
                 $scope.PI.middle_name = res.data.middle_name;

@@ -2100,3 +2100,123 @@ AppEHR.factory("PatientPoolArea", function ($resource) {
     };
     return MakeInactive;
 });
+AppEHR.factory("AppointmentCalender", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'appointment_dates', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("FindAppointments", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'appointment_dates', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("GetCategories", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'appointment_dates', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("MoveAppointment", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'move_appointment', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("ReminderAppointment", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'appointment_reminder', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("AddBed", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_patient_beds', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("DeleteBed", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'delete_patient_bed', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("EditBed", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'edit_patient_bed', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return MakeInactive;
+});

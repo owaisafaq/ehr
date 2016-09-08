@@ -36,16 +36,19 @@
             </div>
             <div class="table-header col-lg-12">
                 <div class="col-lg-12 no-padding">
-                    <span class="txt-style-3 pull-left text-uppercase">search appointment</span>
+                    <!-- <span class="txt-style-3 pull-left text-uppercase">search appointment</span> -->
+                    <!-- <div class="col-lg-2 pull-right no-margin">
+                        <input class="search_field" type="text" ng-model="appointmentSearchableDropDown" placeholder="Search" id="findPatient" data-source="{{PatientSearch}}search_patient" ng-show="searchByAppointmentViewBy">
+                    </div> -->
                     <div class="col-lg-2 pull-right no-margin">
-                        <select class="form-control" ng-model="filterType" ng-change="findBy();" placeholder="View Appointment By">
+                        <select class="form-control" ng-model="filterType" ng-change="findBy();" placeholder="View Appointments By">
                             <option value=""></option>
-                            <option value="patient_id">Patient ID</option>
-                            <option value="doctor">Doctor</option>
                             <option value="pick_date">Date</option>
+                            <option value="doctor">To See</option>
+                            <option value="department">By Department</option>
                         </select>
                     </div>
-                    <div class="header-search margin-right-0 pull-left">
+                    <div class="header-search margin-right-0 col-lg-2 pull-right" ng-show="searchByAppointmentViewBy">
                         <button type="submit">
                             <i class="fa fa-search"></i>
                         </button>
@@ -55,14 +58,14 @@
             </div>
             <div class="card-body col-lg-12">
                 <div class="icons_con">
-                    <button class="calendar button-custom">Encounter</button>
-                    <button class="notification button-custom">Notification</button>
+                    <button class="calendar button-custom" ng-hide="buttonDisabled" data-target="#confirmation" data-toggle="modal">Encounter</button>
+                    <button class="notification button-custom" ng-hide="buttonDisabled" ng-click="reminder();">Reminder</button>
                     <button class="edit button-custom" ng-hide="buttonDisabled" data-toggle="modal" data-target="#updateAppointment">Update</button>
                     <button class="delete button-custom" ng-hide="buttonDisabled" data-toggle="modal" data-target="#deleteConfirm">Delete</button>
                     <button data-toggle="modal" data-target="#createAppointment" class="add button-custom">ADD</button>
                 </div>
                 <div>
-                    <table class="table table-striped no-margin table-custom">
+                    <table class="table no-margin table-custom">
                         <thead>
                             <tr>
                                 <th></th>
@@ -76,7 +79,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="appointment in allAppointments | filter:searchAppointment:strict">
+                            <tr class="appoint-detail" ng-repeat="appointment in allAppointments | filter:searchAppointment">
+                            
                                 <td align="center">
                                     <div class="radio radio-styled">
                                         <label>
@@ -85,15 +89,33 @@
                                         </label>
                                     </div>
                                 </td>
-                                <td>{{appointment.patient_id}}</td>
-                                <td>{{appointment.first_name}} {{appointment.last_name}}</td>
+                                <td><a class="blue" href="#/patient-summary-demographics/{{appointment.patient_id}}">{{appointment.patient_id}}</a></td>
+                                <td>{{appointment.first_name}} {{appointment.last_name}}
+                                <!-- <div class="bed-info ng-scope">
+                                    <div class="col-lg-12">
+                                        <span class="txt-style-4">Name</span>
+                                        <span class="txt-style-3 capitalize ng-binding">{{appointment.first_name}}</span>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span class="txt-style-4">To See</span>
+                                        <span class="txt-style-3 ng-binding">{{appointment.doctor}}</span>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <span class="txt-style-4">Department</span>
+                                        <span class="txt-style-3 ng-binding">{{appointment.department}}</span>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <span class="txt-style-4">Expected Discharge Date</span>
+                                        <span class="txt-style-3 pull-left ng-binding">{{appointment.pick_date}}</span><span class="txt-style-3 pull-left"></span>
+                                    </div>
+                                </div> -->
+                                </td>
                                 <td>{{appointment.doctor}}</td>
                                 <td>{{appointment.department}}</td>
                                 <td>{{appointment.other_reasons}}</td>
                                 <td>{{appointment.pick_date}}</td>
-                                <td>{{appointment.appointment_status}}</td>
+                                <td class="{{appointment.appointment_status == 'missed' ? 'missed' : 'green'}}"></td>
                             </tr>
-
                         </tbody>
                     </table>
                     <div class="pagination pagination-centered" ng-show="appointmentCount">
@@ -120,14 +142,14 @@
             <div class="modal-header pop_head">
                 <h2>Create Appointment</h2>
             </div>
-            <form class="custom-form" name="addForm" ng-model="myForm" novalidate ng-submit="createAppointments(appointment);">
+            <form class="custom-form" name="myFormAdd" ng-model="myFormAdd" novalidate ng-submit="createAppointments(appointment);">
                 <div class="modal-body">
                     <div class="row">
                         <div class="header-search margin-right-0 col-lg-4">
                             <button type="submit">
                                 <i class="fa fa-search"></i>
                             </button>
-                            <input class="search_field" type="text" ng-model="appointment.appointmentSearch" placeholder="Search by Name or Patient Id" id="findPatient" data-source="{{PatientSearch}}search_patient" name="FindPatient" ng-class="{true: 'error'}[submitted && addForm.FindPatient.$invalid]" required>
+                            <input class="search_field" type="text" ng-model="appointment.appointmentSearch" placeholder="Search by Name or Patient Id" id="findPatient" data-source="{{PatientSearch}}search_patient" name="FindPatient" ng-class="{true: 'error'}[submitted && myFormAdd.FindPatient.$invalid]" required>
                         </div>
                     </div>
                     <div class="row">
@@ -135,21 +157,21 @@
                             <label>Department</label>
                         </div>
                         <div class="col-lg-4">
-                            <select class="form-control" ng-model="appointment.department" placeholder="Select" name="depart" ng-class="{true: 'error'}[submitted && addForm.depart.$invalid]" required>
+                            <select class="form-control" ng-model="appointment.department" placeholder="Select" name="depart" ng-class="{true: 'error'}[submitted && myFormAdd.depart.$invalid]" required>
                                 <option value=""></option>
                                 <option ng-repeat="d in dropdownData.departments" value="{{ d.id }}">{{ d.name }}</option>
                             </select>
-                            <p class="help-block PIValid" ng-show="submitted && addForm.depart.$error.required">Required</p>
+                            <p class="help-block PIValid" ng-show="submitted && myFormAdd.depart.$error.required">Required</p>
                         </div>
                         <div class="col-lg-2">
                             <label>Whom To See</label>
                         </div>
                         <div class="col-lg-4">
-                            <select class="form-control" ng-model="appointment.doctor" placeholder="Select" name="wts" ng-class="{true: 'error'}[submitted && addForm.wts.$invalid]" required>
+                            <select class="form-control" ng-model="appointment.doctor" placeholder="Select" name="wts" ng-class="{true: 'error'}[submitted && myFormAdd.wts.$invalid]" required>
                                 <option value=""></option>
                                 <option ng-repeat="d in dropdownData.doctors" value="{{ d.id }}">{{ d.name }}</option>
                             </select>
-                            <p class="help-block PIValid" ng-show="submitted && addForm.wts.$error.required">Required</p>
+                            <p class="help-block PIValid" ng-show="submitted && myFormAdd.wts.$error.required">Required</p>
                         </div>
                     </div>
                     <div class="row">
@@ -158,11 +180,11 @@
                                 <label>Reason</label>
                             </div>
                             <div class="col-lg-8 margin-bottom-30">
-                                <select class="form-control" ng-model="appointment.reason" placeholder="Select" name="reason" ng-class="{true: 'error'}[submitted && addForm.reason.$invalid]" required>
+                                <select class="form-control" ng-model="appointment.reason" placeholder="Select" name="reason" ng-class="{true: 'error'}[submitted && myFormAdd.reason.$invalid]" required>
                                     <option value=""></option>
                                     <option ng-repeat="r in reason" value="{{ r.name }}">{{ r.name }}</option>
                                 </select>
-                                <p class="help-block PIValid" ng-show="submitted && addForm.reason.$error.required">Required</p>
+                                <p class="help-block PIValid" ng-show="submitted && myFormAdd.reason.$error.required">Required</p>
                             </div>
                               <div class="col-lg-4">
                                 <label>Date</label>
@@ -170,41 +192,51 @@
                             <div class="col-lg-8">
                                 <div class="input-group date select-date col-lg-12">
                                     <div class="input-group-content">
-                                        <input type="text" class="form-control" name="date" placeholder="Select Date"  ng-model="appointment.date" ng-class="{true: 'error'}[submitted && addForm.date.$invalid]" required>
+                                        <input type="text" class="form-control" name="date" placeholder="Select Date"  ng-model="appointment.date" ng-class="{true: 'error'}[submitted && myFormAdd.date.$invalid]" required>
                                     </div>
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
-                                <p class="help-block PIValid" ng-show="submitted && addForm.date.$error.required">Required</p>
+                                <p class="help-block PIValid" ng-show="submitted && myFormAdd.date.$error.required">Required</p>
                             </div>
                         </div>
                         <div class="col-lg-2">
                             <label>Other Reason</label>
                         </div>
                         <div class="col-lg-4">
-                            <textarea ng-model="appointment.otherReason" name="otherReason" placeholder="Describe here" ng-class="{true: 'error'}[submitted && addForm.otherReason.$invalid]" required></textarea>
-                            <p class="help-block PIValid" ng-show="submitted && addForm.otherReason.$error.required">Required</p>
+                            <textarea ng-model="appointment.otherReason" name="otherReason" placeholder="Describe here" ng-class="{true: 'error'}[submitted && myFormAdd.otherReason.$invalid]" required></textarea>
+                            <p class="help-block PIValid" ng-show="submitted && myFormAdd.otherReason.$error.required">Required</p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-2">
-                            <label>Start Time</label>
+                            <label>Time</label>
                         </div>
                         <div class="col-lg-4">
                             <div class="input-group bootstrap-timepicker col-lg-12">
-                                <input type="text" class="form-control input-small timepicker"  ng-model="appointment.startTime" name="starttime" ng-class="{true: 'error'}[submitted && addForm.starttime.$invalid]" required>
+                                <input type="text" class="form-control input-small timepicker"  ng-model="appointment.startTime" name="starttime" ng-class="{true: 'error'}[submitted && myFormAdd.starttime.$invalid]" required>
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                             </div>
-                            <p class="help-block PIValid" ng-show="submitted && addForm.starttime.$error.required">Required</p>
+                            <p class="help-block PIValid" ng-show="submitted && myFormAdd.starttime.$error.required">Required</p>
                         </div>
-                        <div class="col-lg-2">
+                        <!-- <div class="col-lg-2">
                             <label>End Time</label>
                         </div>
                         <div class="col-lg-4">
                             <div class="input-group bootstrap-timepicker col-lg-12">
-                                <input type="text" class="form-control input-small timepicker"  ng-model="appointment.endTime" name="endtime" ng-class="{true: 'error'}[submitted && addForm.endtime.$invalid]" required>
+                                <input type="text" class="form-control input-small timepicker"  ng-model="appointment.endTime" name="endtime" ng-class="{true: 'error'}[submitted && myFormAdd.endtime.$invalid]" required>
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                             </div>
-                            <p class="help-block PIValid" ng-show="submitted && addForm.endtime.$error.required">Required</p>
+                            <p class="help-block PIValid" ng-show="submitted && myFormAdd.endtime.$error.required">Required</p>
+                        </div> -->
+                        <div class="col-lg-2">
+                            <label>Task Priority</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <select class="form-control" ng-model="appointment.priority" placeholder="Select Priority" name="task" ng-class="{true: 'error'}[submitted && myFormAdd.task.$invalid]" required>
+                                <option value=""></option>
+                                <option ng-repeat="p in priorities" value="{{ p.name }}">{{ p.name }}</option>
+                            </select>
+                            <p class="help-block PIValid" ng-show="submitted && myFormAdd.task.$error.required">Required</p>
                         </div>
                     </div>
                     <div class="row">
@@ -212,24 +244,15 @@
                             <label>Notes</label>
                         </div>
                         <div class="col-lg-4">
-                            <textarea ng-model="appointment.notes" placeholder="Write here" name="notes" ng-class="{true: 'error'}[submitted && addForm.notes.$invalid]" required></textarea>
-                            <p class="help-block PIValid" ng-show="submitted && addForm.notes.$error.required">Required</p>
+                            <textarea ng-model="appointment.notes" placeholder="Write here" name="notes" ng-class="{true: 'error'}[submitted && myFormAdd.notes.$invalid]" required></textarea>
+                            <p class="help-block PIValid" ng-show="submitted && myFormAdd.notes.$error.required">Required</p>
                         </div>
-                        <div class="col-lg-2">
-                            <label>Task Priority</label>
-                        </div>
-                        <div class="col-lg-4">
-                            <select class="form-control" ng-model="appointment.priority" placeholder="Select Priority" name="task" ng-class="{true: 'error'}[submitted && addForm.task.$invalid]" required>
-                                <option value=""></option>
-                                <option ng-repeat="p in priorities" value="{{ p.name }}">{{ p.name }}</option>
-                            </select>
-                            <p class="help-block PIValid" ng-show="submitted && addForm.task.$error.required">Required</p>
-                        </div>
+                        
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;" ng-disabled="addformsubmission()">create</button>
-                    <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal" ng-disabled="OrderBtn">Cancel</button>
+                    <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal" ng-disabled="OrderBtn" ng-click="submitted = false;">Cancel</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -248,7 +271,7 @@
                             <button type="submit">
                                 <i class="fa fa-search"></i>
                             </button>
-                            <input class="search_field" type="text" ng-model="updateAppointment.appointmentSearch" placeholder="Search by Name or Patient Id" id="findPatient" data-source="{{PatientSearch}}search_patient" name="FindPatient" ng-class="{true: 'error'}[submitted && addForm.FindPatient.$invalid]" required>
+                            <input class="search_field" type="text" ng-model="updateAppointment.appointmentSearch" placeholder="Search by Name or Patient Id" id="findPatientUpdate" data-source="{{PatientSearch}}search_patient" name="FindPatient" ng-class="{true: 'error'}[submitted && addForm.FindPatient.$invalid]" required disabled="true">
                             <input type="hidden" ng-model="updateAppointment.patientID"/>
                         </div>
                     </div>
@@ -318,7 +341,7 @@
                             </div>
                             <p class="help-block PIValid" ng-show="submitted && addForm.starttime.$error.required">Required</p>
                         </div>
-                        <div class="col-lg-2">
+                        <!-- <div class="col-lg-2">
                             <label>End Time</label>
                         </div>
                         <div class="col-lg-4">
@@ -327,16 +350,7 @@
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                             </div>
                             <p class="help-block PIValid" ng-show="submitted && addForm.endtime.$error.required">Required</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-2">
-                            <label>Notes</label>
-                        </div>
-                        <div class="col-lg-4">
-                            <textarea ng-model="updateAppointment.notes" placeholder="Write here" name="notes" ng-class="{true: 'error'}[submitted && addForm.notes.$invalid]" required></textarea>
-                            <p class="help-block PIValid" ng-show="submitted && addForm.notes.$error.required">Required</p>
-                        </div>
+                        </div> -->
                         <div class="col-lg-2">
                             <label>Task Priority</label>
                         </div>
@@ -348,9 +362,19 @@
                             <p class="help-block PIValid" ng-show="submitted && addForm.task.$error.required">Required</p>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <label>Notes</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <textarea ng-model="updateAppointment.notes" placeholder="Write here" name="notes" ng-class="{true: 'error'}[submitted && addForm.notes.$invalid]" required></textarea>
+                            <p class="help-block PIValid" ng-show="submitted && addForm.notes.$error.required">Required</p>
+                        </div>
+                        
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;" ng-disabled="addformsubmission()">Save</button>
+                    <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;" ng-disabled="updateformsubmission()">Save</button>
                     <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal" ng-disabled="OrderBtn">Cancel</button>
                 </div>
             </form>
@@ -384,6 +408,39 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" ng-click="deleteAppointments()">Yes</button>
                 <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">No</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade medium-modal" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Confirmation</h2>
+            </div>
+            <div class="modal-body">
+                <p>Do you want to Convert?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" ng-click="convertAppointments()">Yes</button>
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">No</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade" id="confirmReminder" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>{{modalHeading}}</h2>
+            </div>
+            <div class="modal-body">
+                <p>{{modalMessage}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" ng-click="reminderSuccess()" ng-hide="confirmReminder">Yes</button>
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal" ng-hide="confirmReminder">No</button>
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal" ng-show="confirmReminder">No</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

@@ -129,4 +129,5 @@ $(document).ready(function () {
         var width = index / (length - 1) * 100;
         $('#cancelOrder2 .form-wizard-horizontal .progress .progress-bar-primary').css('width', width + '%');
     });
+
 });
