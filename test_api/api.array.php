@@ -49,6 +49,30 @@ $api->params->token = "123";
 
 $api_arr [] = $api;
 
+
+// Search Doctor
+$api = new api();
+$api->name = "Search Doctor";
+$api->url = HOST . 'search_doctor';
+$api->method = "POST";
+$api->description = "Search Doctor";
+$api->params->name = "owais";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Search Department
+$api = new api();
+$api->name = "Search Department";
+$api->url = HOST . 'search_department';
+$api->method = "POST";
+$api->description = "Search Department";
+$api->params->name = "owais";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
 /*// Login to app
 $api = new api();
 $api->name = "Register Patient";
@@ -2323,6 +2347,39 @@ $api->method = "GET";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+//Appointment Date Patients
+$api = new api();
+$api->name = "Appointment Dates Patients";
+$api->url = HOST . 'appointment_dates_patients';
+$api->method = "GET";
+$api->params->patient_id = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Appointment Date Doctors
+$api = new api();
+$api->name = "Appointment Dates Doctors";
+$api->url = HOST . 'appointment_dates_doctors';
+$api->method = "GET";
+$api->params->doctor_id = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Appointment Date Department
+$api = new api();
+$api->name = "Appointment Dates Departments";
+$api->url = HOST . 'appointment_dates_departments';
+$api->method = "GET";
+$api->params->department_id = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
 
 //Add Billing Category
 $api = new api();

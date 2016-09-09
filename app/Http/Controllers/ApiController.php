@@ -56,10 +56,7 @@ class ApiController extends Controller
 
     public function search_patient(Request $request)
     {
-
-
         $name = $request->input('name');
-
         $patients = DB::table('patients')
             ->select(DB::raw('id,first_name,last_name'))
             // ->select(DB::raw('CONCAT(first_name," ",last_name) AS label,id as value'))
@@ -68,28 +65,68 @@ class ApiController extends Controller
             ->where('plan_id', 1)
             ->where('status', 1)
             ->get();
-
-
         if (empty($patients)) {
-
             $patient = array(
                 "id" => '0',
                 "first_name" => "",
                 "last_name" => "",
-            );
+                );
 
             return response()->json(['status' => false, 'data' => $patient]);
+        } else {
+            return response()->json(['status' => true, 'data' => $patients]);
+        }
+    }
 
+
+    public function search_doctor(Request $request)
+    {
+        $name = $request->input('name');
+
+        $doctors = DB::table('doctors')
+            ->select(DB::raw('id,name'))
+            ->where('name', 'like', "%$name%")
+            ->orWhere("id", "LIKE", "%$name%")
+            ->where('status', 1)
+            ->get();
+
+        if (empty($doctors)) {
+            $doctors = array(
+                "id" => '0',
+                "name" => ""
+            );
+            return response()->json(['status' => false, 'data' => $doctors]);
 
         } else {
-
-            return response()->json(['status' => true, 'data' => $patients]);
-
-
+            return response()->json(['status' => true, 'data' => $doctors]);
         }
 
-
     }
+
+    public function search_department(Request $request)
+     {
+         $name = $request->input('name');
+
+         $departments = DB::table('departments')
+             ->select(DB::raw('id,name'))
+             ->where('name', 'like', "%$name%")
+             ->orWhere("id", "LIKE", "%$name%")
+             ->where('status', 1)
+             ->get();
+
+         if (empty($departments)) {
+             $departments = array(
+                 "id" => '0',
+                 "name" => ""
+             );
+             return response()->json(['status' => false, 'data' => $departments]);
+
+         } else {
+             return response()->json(['status' => true, 'data' => $departments]);
+         }
+
+     }
+
 
     public function add_patient(Request $request)
     {
@@ -1454,7 +1491,7 @@ class ApiController extends Controller
                 ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
                 ->leftJoin('departments', 'departments.id', '=', 'visits.department_id')
                 ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
-                ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,visits.created_at'))
+                ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,visits.created_at,patients.status'))
                 ->orderby('visits.id', 'desc')
                 ->where('visits.patient_id', '!=', 'null')
                 ->where('visits.visit_status', '!=', 'checkout')
@@ -1463,12 +1500,11 @@ class ApiController extends Controller
                 ->skip($offset)->take($limit)
                 ->get();
 
-
             $count = DB::table('visits')
                 ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
                 ->leftJoin('departments', 'departments.id', '=', 'visits.department_id')
                 ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
-                ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,visits.created_at'))
+                ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,visits.created_at,patients.status'))
                 ->orderby('visits.id', 'desc')
                 ->where('visits.patient_id', '!=', 'null')
                 ->where('visits.visit_status', '!=', 'checkout')
@@ -1482,12 +1518,13 @@ class ApiController extends Controller
                 ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
                 ->leftJoin('departments', 'departments.id', '=', 'visits.department_id')
                 ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
-                ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,visits.created_at'))
+                ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,visits.created_at,patients.status'))
                 ->orderby('visits.id', 'desc')
                 ->where('visits.patient_id', '!=', 'null')
                 ->where('visits.visit_status', '!=', 'checkout')
                 ->where('visits.status', '1')
                 ->where('patients.status', '1')
+                ->skip($offset)->take($limit)
                 ->get();
 
             $count = count($visit_history);

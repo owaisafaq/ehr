@@ -751,6 +751,53 @@ class OtherController extends Controller
 
       }
 
+    public function appointment_dates_patients(Request $request){
+
+          $patient_id = $request->input('patient_id');
+
+          $appointments = DB::table('appointments')
+              ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
+              ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
+              ->select(DB::raw('appointments.id,appointments.pick_date,appointments.start_time,doctors.name,CONCAT(patients.first_name," ",patients.last_name) AS patient_name'))
+              ->where('appointments.patient_id',$patient_id)
+              ->orderby('pick_date','desc')
+              ->get();
+          return response()->json(['status' => true, 'data' => $appointments]);
+
+      }
+
+
+    public function appointment_dates_doctors(Request $request)
+    {
+
+        $doctor_id = $request->input('doctor_id');
+
+        $appointments = DB::table('appointments')
+            ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
+            ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
+            ->select(DB::raw('appointments.id,appointments.pick_date,appointments.start_time,doctors.name,CONCAT(patients.first_name," ",patients.last_name) AS patient_name'))
+            ->where('appointments.doctor_id', $doctor_id)
+            ->orderby('pick_date', 'desc')
+            ->get();
+        return response()->json(['status' => true, 'data' => $appointments]);
+
+    }
+
+
+
+    public function appointment_dates_departments(Request $request)
+    {
+        $department_id = $request->input('department_id');
+        $appointments = DB::table('appointments')
+            ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
+            ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
+            ->select(DB::raw('appointments.id,appointments.pick_date,appointments.start_time,doctors.name,CONCAT(patients.first_name," ",patients.last_name) AS patient_name'))
+            ->where('appointments.department_id', $department_id)
+            ->orderby('pick_date', 'desc')
+            ->get();
+        return response()->json(['status' => true, 'data' => $appointments]);
+
+    }
 
     public function move_appointment(Request $request)
     {
@@ -984,14 +1031,17 @@ class OtherController extends Controller
 
         $current_date = date("Y-m-d  H:i:s");
 
-        $patients_admitted = DB::table('patients_admitted pa')
-            ->leftJoin('wards w', 'w.id', '=', 'pa.ward_id')
-            ->select(DB::raw('w.name,pa.patient_id,
-            (SELECT count(*) from patients_admitted  where patient_id = pa.patient_id  and updated_at >  '.$current_date -1 .'  ) as 24_hour_count and is_discharged = 1,
-            (SELECT count(*) from patients_admitted  where patient_id = pa.patient_id  and updated_at >  '.$current_date -1 .' AND  updated_at <  '.$current_date -2 .' ) as bewteen_24_48 and is_discharged = 1 ,
-            (SELECT count(*) from patients_admitted  where patient_id = pa.patient_id  and updated_at >  '.$current_date -1 .' AND  updated_at <  '.$current_date -2 .' ) as bewteen_24_48 is_discharged = 1'))
+        $patients_admitted = DB::table('patients_admitted AS pa')
+            //->leftJoin('wards', 'w.id', '=', 'pa.ward_id')
+            ->select(DB::raw('pa.patient_id,
+            (SELECT count(*) from patients_admitted  where patient_id = pa.patient_id  and updated_at >  '.$current_date -1 .'  ) as 24_hour_count and is_discharged = 1'))
             ->where('pa.is_discharged', 1)
             ->get();
+
+        dd('check');
+        dd(DB::getQueryLog());
+
+      //  dd($patients_admitted);
 
 
         return response()->json(['status' => true, 'data'=>$patients_admitted]);
