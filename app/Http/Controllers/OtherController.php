@@ -1030,16 +1030,19 @@ class OtherController extends Controller
     public function patients_discharged(Request $request){
 
         $current_date = date("Y-m-d  H:i:s");
+        $within_24 = $current_date -1;
+        $within_48 = $current_date -2;
 
         $patients_admitted = DB::table('patients_admitted AS pa')
-            //->leftJoin('wards', 'w.id', '=', 'pa.ward_id')
-            ->select(DB::raw('pa.patient_id,
-            (SELECT count(*) from patients_admitted  where patient_id = pa.patient_id  and updated_at >  '.$current_date -1 .'  ) as 24_hour_count and is_discharged = 1'))
+            ->leftJoin('wards', 'wards.id', '=', 'pa.ward_id')
+            ->select(DB::raw('pa.patient_id,wards.name,
+            (SELECT count(*) from patients_admitted  where patient_id= pa.patient_id and updated_at > '. $within_24. ' and is_discharged = 1) as 24_hour_count,
+            (SELECT count(*) from patients_admitted  where patient_id= pa.patient_id and updated_at < '. $within_48. ' and is_discharged = 1) as 48_hour_count,
+            (SELECT count(*) from patients_admitted  where patient_id= pa.patient_id and updated_at < '. $within_48. ' and  updated_at > '. $within_24. ' and is_discharged = 1) as 24_to_48_count'))
             ->where('pa.is_discharged', 1)
             ->get();
 
-        dd('check');
-        dd(DB::getQueryLog());
+        //dd(DB::getQueryLog());
 
       //  dd($patients_admitted);
 
