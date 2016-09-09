@@ -867,7 +867,7 @@ class OtherController extends Controller
             dd($e);
         }
 
-        $url = 'https://rest.nexmo.com/sms/json?' . http_build_query(
+/*        $url = 'https://rest.nexmo.com/sms/json?' . http_build_query(
             [
               'api_key' =>  '8cab0920',
               'api_secret' => 'cee30fefca2a9839',
@@ -879,9 +879,10 @@ class OtherController extends Controller
 
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($ch);
+        $response = curl_exec($ch);*/
 
-  /*      $url = 'https://rest.nexmo.com/sms/json?api_key=8cab0920&api_secret=cee30fefca2a9839&from=NEXMO&to='.$phone_number.'&text=Please Come to the Hospital on your pre sheduled time and date';
+    /*   $url = 'http://www.smslive247.com/http/index.aspx?cmd=sendmsg&sessionid=xxx&message=you have an appointment
+       &sender=xxx&sendto=xxx&msgtype=0';
 
         $json = file_get_contents($url); // get the data from Google Maps API
 

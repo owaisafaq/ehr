@@ -2312,7 +2312,13 @@ class ApiController extends Controller
                    //->where('appointments.patient_id', $patient_id)
                    ->get();
                $count = DB::table('appointments')
-                   ->where('status',1)
+                   ->select(DB::raw('appointments.id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,appointment_status,start_time'))
+                   ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
+                   ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
+                   ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
+                   ->where('appointments.status', 1)
+                   ->where('patients.status', 1)
+                   ->orderby('appointments.created_at', 'desc')
                    ->count();
            }else{
                $appointments = DB::table('appointments')
@@ -2325,16 +2331,20 @@ class ApiController extends Controller
                    ->orderby('appointments.created_at','desc')
                    ->get();
                $count = DB::table('appointments')
-                   ->where('status',1)
-                   ->count();
+                     ->select(DB::raw('appointments.id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,appointment_status,start_time'))
+                     ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
+                     ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
+                     ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
+                     ->where('appointments.status', 1)
+                     ->where('patients.status', 1)
+                     ->orderby('appointments.created_at', 'desc')
+                     ->count();
 
            }
           /* foreach ($appointments as $appointment) {
 
                $appointment->appointment_status = '';
            }*/
-
-
            return response()->json(['status' => true, 'data' => $appointments,'count'=>$count]);
 
        }
