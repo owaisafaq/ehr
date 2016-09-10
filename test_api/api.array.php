@@ -1836,6 +1836,17 @@ $api->params->token = "123435";
 $api_arr [] = $api;
 
 
+//Get Template
+$api = new api();
+$api->name = "Get Template";
+$api->url = HOST . 'get_template';
+$api->method = "GET";
+$api->params->template_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
 //Delete Template
 $api = new api();
 $api->name = "Delete Template";

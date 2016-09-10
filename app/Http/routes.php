@@ -156,6 +156,7 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->post('add_lab_template_types','App\Http\Controllers\OrderController@add_lab_template_types');
     $app->post('delete_lab_template_types','App\Http\Controllers\OrderController@delete_lab_template_types');
     $app->get('get_templates','App\Http\Controllers\ApiController@get_templates');
+    $app->get('get_template','App\Http\Controllers\ApiController@get_template');
     $app->post('delete_template','App\Http\Controllers\ApiController@delete_template');
     $app->post('add_template','App\Http\Controllers\ApiController@add_template');
     $app->post('edit_template','App\Http\Controllers\ApiController@edit_template');

@@ -1037,20 +1037,15 @@ class OtherController extends Controller
         $patients_admitted = DB::table('patients_admitted AS pa')
             ->leftJoin('wards', 'wards.id', '=', 'pa.ward_id')
             ->select(DB::raw('pa.patient_id,wards.name,
-            (SELECT count(*) from patients_admitted  where patient_id= pa.patient_id and updated_at > '. $within_24. ' and is_discharged = 1) as 24_hour_count,
-            (SELECT count(*) from patients_admitted  where patient_id= pa.patient_id and updated_at < '. $within_48. ' and is_discharged = 1) as 48_hour_count,
-            (SELECT count(*) from patients_admitted  where patient_id= pa.patient_id and updated_at < '. $within_48. ' and  updated_at > '. $within_24. ' and is_discharged = 1) as 24_to_48_count'))
+            (SELECT count(*) from patients_admitted  where patient_id= pa.patient_id and updated_at > '. $within_24. ' and is_discharged = 1) as twentyfour_hour_count,
+            (SELECT count(*) from patients_admitted  where patient_id= pa.patient_id and updated_at < '. $within_48. ' and is_discharged = 1) as fourtyeight_hour_count,
+            (SELECT count(*) from patients_admitted  where patient_id= pa.patient_id and updated_at < '. $within_48. ' and  updated_at > '. $within_24. ' and is_discharged = 1) as twentyfour_to_fourtyeight'))
             ->where('pa.is_discharged', 1)
             ->get();
-
         //dd(DB::getQueryLog());
-
       //  dd($patients_admitted);
 
-
         return response()->json(['status' => true, 'data'=>$patients_admitted]);
-
-
     }
 
 

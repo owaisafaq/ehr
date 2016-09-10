@@ -2839,8 +2839,6 @@ class ApiController extends Controller
 
     public function add_template(Request $request)
     {
-
-
         $name = $request->input('name');
         $category_id = $request->input('category_id');
         $description = $request->input('description');
@@ -2859,8 +2857,33 @@ class ApiController extends Controller
             );
         return response()->json(['status' => true, 'message' => 'Template Added Successfully']);
 
+    }
+
+
+    public function edit_template(Request $request)
+    {
+        $template_id = $request->input('template_id');
+        $name = $request->input('name');
+        $category_id = $request->input('category_id');
+        $description = $request->input('description');
+        $template = $request->input('template');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+        DB::table('templates')
+            ->where('id',$template_id)
+            ->update(
+                ['name' => $name,
+                    'category_id' => $category_id,
+                    'description' => $description,
+                    'template' => $template,
+                    'updated_at' => $currentdatetime
+                ]
+            );
+        return response()->json(['status' => true, 'message' => 'Template Updated Successfully Successfully']);
 
     }
+
 
     public function get_templates_categories(Request $request)
     {
