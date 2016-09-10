@@ -2906,7 +2906,7 @@ class ApiController extends Controller
 
         $template = DB::table('templates')
             ->leftJoin('template_categories','templates.category_id', '=', 'template_categories.id')
-            ->select(DB::raw('templates.id,template_categories.name as category,templates.category_id,templates.description,templates.template'))
+            ->select(DB::raw('templates.id,templates.name,template_categories.name as category,templates.category_id,templates.description,templates.template'))
             ->where('templates.id',$template_id)
             ->where('templates.status', 1)
             ->first();
