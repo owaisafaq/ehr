@@ -1881,6 +1881,7 @@ $api->name = "Edit Template";
 $api->url = HOST . 'edit_template';
 $api->method = "POST";
 $api->params->template_id = "1";
+$api->params->name = "";
 $api->params->category_id = "1";
 $api->params->description = "test";
 $api->params->template = "Lab";
