@@ -809,6 +809,18 @@ class OtherController extends Controller
             ->where('id', $appointment_id)
             ->first();
 
+        $visit_count = DB::table('visits')
+            ->select(DB::raw('*'))
+            ->where('patient_id', $appointment->patient_id)
+            ->where('visit_status', '!=', 'checkout')
+            ->where('status', 1)
+            ->count();
+
+        if ($visit_count >= 1) {
+            return response()->json(['status' => false, 'message' => 'Appointment can not be moved']);
+        }
+
+
         DB::table('visits')->insert(
                 ['patient_id' => $appointment->patient_id,
                     'department_id' => $appointment->department_id,
