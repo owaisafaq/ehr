@@ -59,9 +59,10 @@ class ApiController extends Controller
         $name = $request->input('name');
         $patients = DB::table('patients')
             ->select(DB::raw('id,first_name,last_name'))
-            // ->select(DB::raw('CONCAT(first_name," ",last_name) AS label,id as value'))
-            ->where('first_name', 'like', "$name%")
-            ->orWhere("id", "LIKE", "%$name%")
+            ->where( function ($q) use ($name) {
+                $q->where('first_name','LIKE',"$name%")
+                    ->orWhere('id','LIKE',"%$name%");
+                        })
             ->where('plan_id', 1)
             ->where('status', 1)
             ->get();
@@ -85,8 +86,10 @@ class ApiController extends Controller
 
         $doctors = DB::table('doctors')
             ->select(DB::raw('id,name'))
-            ->where('name', 'like', "%$name%")
-            ->orWhere("id", "LIKE", "%$name%")
+            ->where(function ($q) use ($name) {
+                $q->where('first_name', 'LIKE', "$name%")
+                    ->orWhere('id', 'LIKE', "%$name%");
+            })
             ->where('status', 1)
             ->get();
 
@@ -109,8 +112,10 @@ class ApiController extends Controller
 
          $departments = DB::table('departments')
              ->select(DB::raw('id,name'))
-             ->where('name', 'like', "%$name%")
-             ->orWhere("id", "LIKE", "%$name%")
+             ->where(function ($q) use ($name) {
+                 $q->where('first_name', 'LIKE', "$name%")
+                     ->orWhere('id', 'LIKE', "%$name%");
+             })
              ->where('status', 1)
              ->get();
 
