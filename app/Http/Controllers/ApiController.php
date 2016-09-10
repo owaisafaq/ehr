@@ -2900,6 +2900,21 @@ class ApiController extends Controller
 
     }
 
+    public function get_template(Request $request){
+
+        $template_id= $request->input('template_id');
+
+        $template = DB::table('templates')
+            ->leftJoin('template_categories','templates.category_id', '=', 'template_categories.id')
+            ->select(DB::raw('templates.id,template_categories.name as category,templates.category_id,templates.description,templates.template'))
+            ->where('templates.id',$template_id)
+            ->where('templates.status', 1)
+            ->first();
+
+        return response()->json(['status' => true, 'data' => $template]);
+
+    }
+
 
     public function delete_template_category(Request $request)
     {
