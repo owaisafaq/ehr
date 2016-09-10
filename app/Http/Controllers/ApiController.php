@@ -738,6 +738,17 @@ class ApiController extends Controller
         $currentdatetime = date("Y-m-d  H:i:s");
 
 
+        $visit_count = DB::table('visits')
+             ->select(DB::raw('*'))
+             ->where('patient_id', $patient_id)
+             ->where('visit_status','!=','checkout')
+             ->where('status', 1)
+             ->count();
+
+        if ($visit_count >= 1) {
+            return response()->json(['status' => false, 'message' => 'New Visit can not be created']);
+        }
+
         DB::table('visits')->insert(
             ['patient_id' => $patient_id,
                 'department_id' => $department_id,
