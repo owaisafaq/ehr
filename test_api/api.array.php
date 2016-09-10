@@ -1854,7 +1854,6 @@ $api = new api();
 $api->name = "Add Template";
 $api->url = HOST . 'add_template';
 $api->method = "POST";
-$api->params->name = "test";
 $api->params->category_id = "1";
 $api->params->description = "test";
 $api->params->template = "Lab";
@@ -1862,6 +1861,23 @@ $api->params->token = "123435";
 
 
 $api_arr [] = $api;
+
+
+
+//Edit  Template
+$api = new api();
+$api->name = "Edit Template";
+$api->url = HOST . 'edit_template';
+$api->method = "POST";
+$api->params->template_id = "1";
+$api->params->category_id = "1";
+$api->params->description = "test";
+$api->params->template = "Lab";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
 
 
 //Get Templates Categories
