@@ -1306,7 +1306,7 @@ class ApiController extends Controller
             ->leftJoin('maritial_status', 'patients.marital_status', '=', 'maritial_status.id')
             ->where('patients.id', $patient_id)
             ->where('visit_status','!=' ,'checkout')
-           // ->where('encounter_status','1')
+            //->where('encounter_status','1')
             ->orderby('visits.id','desc')
             ->get();
 
@@ -1324,6 +1324,11 @@ class ApiController extends Controller
         if ($patients[0]->visit_status == 'queue') {
 
             $is_visit = 1;
+        }
+
+        if($patient[0]->encounter_status == 0){
+
+            $is_visit = 0;
         }
 
 
@@ -1511,6 +1516,7 @@ class ApiController extends Controller
                 ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,visits.created_at,patients.status'))
                 ->orderby('visits.id', 'desc')
                 ->where('visits.patient_id', '!=', 'null')
+                ->where('visits.patient_id', $patient_id)
                 ->where('visits.visit_status', '!=', 'checkout')
                 ->where('visits.status', '1')
                 ->where('patients.status', '1')
@@ -1524,6 +1530,7 @@ class ApiController extends Controller
                 ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,visits.created_at,patients.status'))
                 ->orderby('visits.id', 'desc')
                 ->where('visits.patient_id', '!=', 'null')
+                ->where('visits.patient_id', $patient_id)
                 ->where('visits.visit_status', '!=', 'checkout')
                 ->where('visits.status', '1')
                 ->where('patients.status', '1')
@@ -1538,6 +1545,7 @@ class ApiController extends Controller
                 ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,visits.created_at,patients.status'))
                 ->orderby('visits.id', 'desc')
                 ->where('visits.patient_id', '!=', 'null')
+                ->where('visits.patient_id', $patient_id)
                 ->where('visits.visit_status', '!=', 'checkout')
                 ->where('visits.status', '1')
                 ->where('patients.status', '1')
