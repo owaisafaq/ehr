@@ -1229,8 +1229,6 @@ class ApiController extends Controller
 
     public function add_patient_archive(Request $request)
     {
-
-
         $archive = $request->file('patient_archive');
         $destinationPath = base_path() . '/public/patient_archive';
         $original_name = $archive->getClientOriginalName();
@@ -1240,7 +1238,6 @@ class ApiController extends Controller
         if (!$archive->isValid()) {
             return response()->json(['status' => false, 'message' => 'Invalid File']);
         }
-
 
         $archive->move($destinationPath, $fileName);
         $patient_id = $request->input('patient_id');
@@ -1310,7 +1307,7 @@ class ApiController extends Controller
             ->orderby('visits.id','desc')
             ->get();
 
-        $is_visit = 0;
+        $is_visit = 1;
 
         if ($patients[0]->sex == 1) {
 
@@ -1321,17 +1318,13 @@ class ApiController extends Controller
             $patients[0]->sex = 'female';
         }
 
-        if ($patients[0]->visit_status == 'queue') {
-
-            $is_visit = 1;
-        }
-
-        if($patient[0]->encounter_status == 0 || $patient[0]->encounter_status != 'null'){
+        if($patients[0]->encounter_status != '1'){
 
             $is_visit = 0;
         }
 
-        if ($patient[0]->visit_status == 'null' || $patient[0]->visit_status == 'checkout') {
+
+        if ($patients[0]->visit_status == 'null' || $patients[0]->visit_status == 'checkout') {
 
             $is_visit = 0;
         }
