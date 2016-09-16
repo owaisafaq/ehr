@@ -1305,7 +1305,7 @@ class ApiController extends Controller
             ->leftJoin('visits', 'patients.id', '=', 'visits.patient_id')
             ->leftJoin('maritial_status', 'patients.marital_status', '=', 'maritial_status.id')
             ->where('patients.id', $patient_id)
-            ->where('visit_status','!=' ,'checkout')
+            //->where('visit_status','!=' ,'checkout')
             //->where('encounter_status','1')
             ->orderby('visits.id','desc')
             ->get();
@@ -1326,7 +1326,12 @@ class ApiController extends Controller
             $is_visit = 1;
         }
 
-        if($patient[0]->encounter_status == 0){
+        if($patient[0]->encounter_status == 0 || $patient[0]->encounter_status != 'null'){
+
+            $is_visit = 0;
+        }
+
+        if ($patient[0]->visit_status == 'null' || $patient[0]->visit_status == 'checkout') {
 
             $is_visit = 0;
         }
