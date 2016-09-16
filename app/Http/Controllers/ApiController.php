@@ -1301,12 +1301,13 @@ class ApiController extends Controller
         $logo_image = url('/') . '/uploaded_images/';
 
         $patients = DB::table('patients')
-            ->select('patients.*', 'visits.id as encounter_id', 'visits.created_at as visit_created_at', 'visits.visit_status', 'maritial_status.name as marital_status')
+            ->select('patients.*', 'visits.id as encounter_id', 'visits.created_at as visit_created_at', 'visits.visit_status', 'maritial_status.name as marital_status','visits.status as encounter_status')
             ->leftJoin('visits', 'patients.id', '=', 'visits.patient_id')
             ->leftJoin('maritial_status', 'patients.marital_status', '=', 'maritial_status.id')
             ->where('patients.id', $patient_id)
+            ->where('visit_status','!=' ,'checkout')
+           // ->where('encounter_status','1')
             ->orderby('visits.id','desc')
-            // ->where('visit_status', 'queue')
             ->get();
 
         $is_visit = 0;
