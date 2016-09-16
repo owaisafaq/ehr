@@ -1533,6 +1533,7 @@ class ApiController extends Controller
               //  ->where('visits.patient_id', $patient_id)
                 ->where('visits.visit_status', '!=', 'checkout')
                 ->where('visits.status', '1')
+                ->where('visits.status', '1')
                 ->where('patients.status', '1')
                 ->count();
 
