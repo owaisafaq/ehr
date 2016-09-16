@@ -2158,6 +2158,7 @@ $api->url = HOST . 'add_immunization';
 $api->method = "POST";
 $api->params->patient_id = "1";
 $api->params->name = "";
+$api->params->immunization_date = "2016-06-15";
 $api->params->token = "123435";
 
 $api_arr [] = $api;

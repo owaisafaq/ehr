@@ -185,12 +185,14 @@ class OtherController extends Controller
     {
         $patient_id = $request->input('patient_id');
         $name = $request->input('name');
+        $immunization_date= $request->input('immunization_date');
+
         DB::table('patient_immunizations')
             ->insert(
                 ['patient_id' => $patient_id,
                     'name' => $name,
+                    'immunization_date'=>$immunization_date,
                     'created_at' => date("Y-m-d  H:i:s")
-
                 ]
             );
 
