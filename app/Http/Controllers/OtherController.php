@@ -881,31 +881,33 @@ class OtherController extends Controller
             dd($e);
         }
 
-/*        $url = 'https://rest.nexmo.com/sms/json?' . http_build_query(
+        $url = 'http://www.smslive247.com/http/index.aspx?' . http_build_query(
             [
-              'api_key' =>  '8cab0920',
-              'api_secret' => 'cee30fefca2a9839',
-              'to' => $mobile_number,
-              'from' => '441632960061',
-              'text' => $message
+                'cmd' => 'sendquickmsg',
+                'owneremail' => 'Ibikunle@gmail.com',
+                'subacct' => 'AGISMOBILE',
+                'subacctpwd' => 'agisadmin',
+                'message' => $message,
+                'sender' => 'Ehr',
+                'sendto' => $mobile_number,
+                'msgtype' => 0
             ]
         );
 
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($ch);*/
+        $response = curl_exec($ch);
 
     /*   $url = 'http://www.smslive247.com/http/index.aspx?cmd=sendmsg&sessionid=xxx&message=you have an appointment
-       &sender=xxx&sendto=xxx&msgtype=0';
+         &sender=xxx&sendto=xxx&msgtype=0';
 
-        $url = 'http://www.smslive247.com/http/index.aspx?cmd=sendquickmsg&owneremail=you@demo.com
-            &subacct=family&subacctpwd=secret&message=my+first+message&sender=ME&sendto=080570
-            71234&msgtype=0';
+        $url = "http://www.smslive247.com/http/index.aspx?cmd=sendquickmsg&owneremail=Ibikunle@gmail.com
+            &subacct=AGISMOBILE&subacctpwd=agisadmin&message='.$message.'&sender=Ehr&sendto='.$mobile_number.'&msgtype=0";
 
         $json = file_get_contents($url); // get the data from Google Maps API
 
-        return $json;*/
-
+        return $json;
+    */
         return response()->json(['status' => true, 'message' => 'Reminder Sent Successfully']);
 
     }
