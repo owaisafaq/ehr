@@ -898,6 +898,10 @@ class OtherController extends Controller
     /*   $url = 'http://www.smslive247.com/http/index.aspx?cmd=sendmsg&sessionid=xxx&message=you have an appointment
        &sender=xxx&sendto=xxx&msgtype=0';
 
+        $url = 'http://www.smslive247.com/http/index.aspx?cmd=sendquickmsg&owneremail=you@demo.com
+            &subacct=family&subacctpwd=secret&message=my+first+message&sender=ME&sendto=080570
+            71234&msgtype=0';
+
         $json = file_get_contents($url); // get the data from Google Maps API
 
         return $json;*/
