@@ -2021,14 +2021,14 @@ class ApiController extends Controller
         if ($limit > 0 || $offset > 0) {
 
             $patient_supplements = DB::table('medicines')
-                ->select(DB::raw('id,supplements,dosage,frequency,intake,from_date,to_date,medicine_status'))
+                ->select(DB::raw('id,visit_id,supplements,dosage,frequency,intake,from_date,to_date,medicine_status'))
                 ->where('patient_id', $patient_id)
                 ->where('status', '1')
                 ->skip($offset)->take($limit)
                 ->get();
 
             $count = DB::table('medicines')
-                ->select(DB::raw('id,supplements,dosage,frequency,intake,from_date,to_date,medicine_status'))
+                ->select(DB::raw('id,visit_id,supplements,dosage,frequency,intake,from_date,to_date,medicine_status'))
                 ->where('patient_id', $patient_id)
                 ->where('status', '1')
                 ->count();
@@ -2037,7 +2037,7 @@ class ApiController extends Controller
         } else {
 
             $patient_supplements = DB::table('medicines')
-                ->select(DB::raw('id,supplements,dosage,frequency,intake,from_date,to_date,medicine_status'))
+                ->select(DB::raw('id,visit_id,supplements,dosage,frequency,intake,from_date,to_date,medicine_status'))
                 ->where('patient_id', $patient_id)
                 ->where('status', '1')
                 ->get();
@@ -2056,6 +2056,8 @@ class ApiController extends Controller
 
 
         $patient_id = $request->input('patient_id');
+
+        $visit_id = $request->input('visit_id');
 
         $supplements = $request->input('supplements');
 
@@ -2078,6 +2080,7 @@ class ApiController extends Controller
 
         DB::table('medicines')->insert(
             ['patient_id' => $patient_id,
+                'visit_id' =>$visit_id,
                 'supplements' => $supplements,
                 'dosage' => $dosage,
                 'frequency' => $frequency,
@@ -2166,6 +2169,7 @@ class ApiController extends Controller
     {
 
         $patient_id = $request->input('patient_id');
+        $visit_id = $request->input('visit_id');
         $allergy_type = $request->input('allergy_type');
         $allergies = $request->input('allergies');
         $severity = $request->input('severity');
@@ -2178,6 +2182,7 @@ class ApiController extends Controller
 
         DB::table('patient_allergies')->insert([
             'patient_id' => $patient_id,
+            'visit_id' => $visit_id,
             'allergy_type' => $allergy_type,
             'allergies' => $allergies,
             'observed_on' => $observed_on,
