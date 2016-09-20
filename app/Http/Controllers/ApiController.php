@@ -1475,7 +1475,6 @@ class ApiController extends Controller
         DB::table('patient_vitals')->insert(
             ['patient_id' => $patient_id,
                 'visit_id' => $visit_id,
-                'visit_status' => 'triage',
                 'systolic_mm_hg' => $systolic_mm_hg,
                 'diastolic_mm_hg' => $diastolic_mm_hg,
                 'pulse' => $pulse,
@@ -1490,9 +1489,11 @@ class ApiController extends Controller
             ]
         );
 
+        DB::table('visits')
+            ->where('id', $visit_id)
+            ->update(['visit_status' => 'triage', 'updated_at' => date("Y-m-d  H:i:s")]);
 
         return response()->json(['status' => true, 'message' => 'Patient Vitals Added Successfully']);
-
 
     }
 
