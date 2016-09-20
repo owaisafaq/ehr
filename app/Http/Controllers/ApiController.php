@@ -3020,7 +3020,6 @@ class ApiController extends Controller
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
-
         DB::table('patient_prescription')
             ->insert(
                 ['visit_id' => $visit_id,
@@ -3029,6 +3028,10 @@ class ApiController extends Controller
                     'created_at' => $currentdatetime
                 ]
             );
+
+        DB::table('visits')
+            ->where('id', $visit_id)
+            ->update(['visit_status' => 'physician', 'updated_at' => date("Y-m-d  H:i:s")]);
 
 
         $prescription_id = DB::getPdo()->lastInsertId();
