@@ -1091,21 +1091,17 @@ class OtherController extends Controller
     }
 
     public function patients_discharged(Request $request){
-
-        $current_date = date("Y-m-d  H:i:s");
-        $within_24 = $current_date -1;
-        $within_48 = $current_date -2;
-
+        $within_24 = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . ' +1 day'));
+        $within_48 = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . ' +2 day'));
         $patients_admitted = DB::table('patients_admitted AS pa')
             ->leftJoin('wards', 'wards.id', '=', 'pa.ward_id')
             ->select(DB::raw('pa.patient_id,wards.name,wards.available_beds as empty,
-            (SELECT count(*) from patients_admitted  where patient_id= pa.patient_id and updated_at > '. $within_24. ' and is_discharged = 1) as twentyfour_hour_count,
-            (SELECT count(*) from patients_admitted  where patient_id= pa.patient_id and updated_at < '. $within_48. ' and is_discharged = 1) as fourtyeight_hour_count,
-            (SELECT count(*) from patients_admitted  where patient_id= pa.patient_id and updated_at < '. $within_48. ' and  updated_at > '. $within_24. ' and is_discharged = 1) as twentyfour_to_fourtyeight'))
-            ->where('pa.is_discharged', 1)
+            (SELECT count(*) from patients_admitted  where patient_id= pa.patient_id and expected_discharge_date > "'.$within_48.'" and is_discharged = 0) as over_fourtyeight_hour_count,
+            (SELECT count(*) from patients_admitted  where patient_id= pa.patient_id and expected_discharge_date < "'.$within_48.'" and is_discharged = 0) as under_fourtyeight_hour_count,
+            (SELECT count(*) from patients_admitted  where patient_id= pa.patient_id and expected_discharge_date < "'.$within_48.'" and  expected_discharge_date > "'.$within_24.'" and is_discharged = 0) as twentyfour_to_fourtyeight'))
+            ->where('pa.is_discharged', 0)
             ->get();
-        //dd(DB::getQueryLog());
-      //  dd($patients_admitted);
+
 
         return response()->json(['status' => true, 'data'=>$patients_admitted]);
     }
