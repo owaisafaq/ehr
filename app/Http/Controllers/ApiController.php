@@ -3266,7 +3266,7 @@ class ApiController extends Controller
                     'pharmacy' => $pharmacy,
                     'updated_at' => $currentdatetime
                 ]
-            );
+            )   ;
 
 
         return response()->json(['status' => true, 'message' => 'Prescrpition Updated Successfully']);
