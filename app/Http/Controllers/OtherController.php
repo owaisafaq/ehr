@@ -1044,7 +1044,12 @@ class OtherController extends Controller
         if ($status == 'available') {
 
             $available_beds = $wards->available_beds + 1;
-            $number_of_beds_closed = $wards->number_of_beds_closed - 1;
+
+            if ($wards->number_of_beds_closed != 0) {
+                $number_of_beds_closed = $wards->number_of_beds_closed - 1;
+            } else {
+                $number_of_beds_closed = $wards->number_of_beds_close;
+            }
 
             DB::table('wards')
                 ->where('id', $ward_id)
@@ -1055,7 +1060,12 @@ class OtherController extends Controller
         if ($status == 'closed') {
 
             $number_of_beds_closed = $wards->number_of_beds_closed + 1;
-            $available_beds = $wards->available_beds - 1;
+            if ($wards->available_beds != 0) {
+                $available_beds = $wards->available_beds - 1;
+            } else {
+                $available_beds = $wards->available_beds;
+            }
+
             DB::table('wards')
                 ->where('id', $ward_id)
                 ->update(['number_of_beds_closed' => $number_of_beds_closed,'available_beds' => $available_beds,'updated_at' => date("Y-m-d  H:i:s")]);
