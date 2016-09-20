@@ -1475,6 +1475,7 @@ class ApiController extends Controller
         DB::table('patient_vitals')->insert(
             ['patient_id' => $patient_id,
                 'visit_id' => $visit_id,
+                'visit_status' => 'triage',
                 'systolic_mm_hg' => $systolic_mm_hg,
                 'diastolic_mm_hg' => $diastolic_mm_hg,
                 'pulse' => $pulse,
