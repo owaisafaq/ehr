@@ -4,7 +4,7 @@ require 'api.class.php';
 //define('HOST', 'http://131.107.100.10/ehr/public/api/');
 //define('HOST', 'http://localhost/ehr/public/api/');
 //define('HOST', 'http://demoz.online/ehr/public/api/');
-define('HOST', 'http://demoz.online/staging/ehr/public/api/');
+define('HOST', 'http://demoz.online/dev/ehr/public/api/');
 define('APP', '');
 define('ROUTE', '');
 
@@ -2293,6 +2293,18 @@ $api->url = HOST . 'patients_admitted';
 $api->method = "GET";
 $api->params->offset = "0";
 $api->params->limit = "5";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Update Discharge Date
+$api = new api();
+$api->name = "Update Discharge Date";
+$api->url = HOST . 'update_discharge_date';
+$api->method = "POST";
+$api->params->patient_admitted_id = "";
+$api->params->expected_discharge_date = "2016-09-08 09:36:00";
 $api->params->token = "123435";
 
 $api_arr [] = $api;

@@ -562,6 +562,18 @@ class OtherController extends Controller
         return response()->json(['status' => true, 'data' => $data, 'count' => $count]);
     }
 
+    public function update_discharge_date(Request $request){
+        $id = $request->input('patient_admitted_id');
+        $expected_discharge_date = $request->input('expected_discharge_date');
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+        DB::table('patients_admitted')
+               ->where('id', $id)
+               ->update(array('expected_discharge_date' => $expected_discharge_date, 'updated_at' => $currentdatetime));
+
+        return response()->json(['status' => true, 'message' => 'Patient Discharge Date Updated Successfully']);
+    }
+
     public function patient_discharge(Request $request)
     {
 
