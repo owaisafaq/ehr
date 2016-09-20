@@ -1934,7 +1934,7 @@ class ApiController extends Controller
                             ->get();*/
 
             $patient_medications = DB::table('patient_prescription')
-                ->select(DB::raw('id as prescription,created_at as prescription_date,prescription_status'))
+                ->select(DB::raw('id as prescription,created_at as prescription_date,prescription_status,visit_id'))
                 ->where('patient_prescription.patient_id', $patient_id)
                 ->where('status', 1)
                 ->skip($offset)->take($limit)
@@ -1949,7 +1949,7 @@ class ApiController extends Controller
                             ->count();*/
 
             $count = DB::table('patient_prescription')
-                ->select(DB::raw('id as prescription,created_at as prescription_date,prescription_status'))
+                ->select(DB::raw('id as prescription,created_at as prescription_date,prescription_status,visit_id'))
                 ->where('patient_prescription.patient_id', $patient_id)
                 ->where('status', 1)
                 ->count();
@@ -1965,7 +1965,7 @@ class ApiController extends Controller
                             ->get();*/
 
             $patient_medications = DB::table('patient_prescription')
-                ->select(DB::raw('id as prescription,created_at as prescription_date,prescription_status'))
+                ->select(DB::raw('id as prescription,created_at as prescription_date,prescription_status,visit_id'))
                 ->where('patient_prescription.patient_id', $patient_id)
                 ->where('status', 1)
                 ->get();
