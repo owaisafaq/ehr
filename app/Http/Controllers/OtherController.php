@@ -851,6 +851,7 @@ class OtherController extends Controller
         $address = DB::table('patient_address')
             ->select(DB::raw('email,mobile_number'))
             ->where('patient_id', $patient_id)
+            ->where('address_type', 'contact')
             ->first();
 
           $email = $address->email;
