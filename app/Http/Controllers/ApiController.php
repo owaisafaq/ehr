@@ -3164,35 +3164,41 @@ class ApiController extends Controller
 
     public function get_prescription_list(Request $request)
     {
-
-
         $limit = $request->input('limit');
         $offset = $request->input('offset');
+        $pharmacy_id = $request->input('pharmacy_id');
 
         $prescriptions = DB::table('patient_prescription')
+            ->leftJoin('patient_prescription_medicine', 'patient_prescription.id', '=', 'patient_prescription_medicine.prescription_id')
             ->leftJoin('patients', 'patients.id', '=', 'patient_prescription.patient_id')
             ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.hospital_plan')
             ->select(DB::raw('patient_prescription.id,patient_prescription.patient_id,patients.first_name,patients.last_name,patient_prescription.visit_id,hospital_plan.name as patient_plan,patient_prescription.total_amount,patient_prescription.paid,patient_prescription.prescription_status'))
             ->where('patient_prescription.status', 1)
+            ->where('patient_prescription_medicine.pharmacy', $pharmacy_id)
             ->skip($offset)->take($limit)
             ->get();
 
 
         $count = DB::table('patient_prescription')
+            ->leftJoin('patient_prescription_medicine', 'patient_prescription.id', '=', 'patient_prescription_medicine.prescription_id')
             ->leftJoin('patients', 'patients.id', '=', 'patient_prescription.patient_id')
             ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.hospital_plan')
             ->select(DB::raw('patient_prescription.id,patient_prescription.patient_id,patients.first_name,patients.last_name,patient_prescription.visit_id,hospital_plan.name as patient_plan,patient_prescription.total_amount,patient_prescription.paid,patient_prescription.prescription_status'))
             ->where('patient_prescription.status', 1)
+            ->where('patient_prescription_medicine.pharmacy', $pharmacy_id)
             ->count();
 
 
         if ($offset == 0 && $limit == 0) {
 
             $prescriptions = DB::table('patient_prescription')
+                ->leftJoin('patient_prescription_medicine', 'patient_prescription.id', '=', 'patient_prescription_medicine.prescription_id')
                 ->leftJoin('patients', 'patients.id', '=', 'patient_prescription.patient_id')
                 ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.hospital_plan')
                 ->select(DB::raw('patient_prescription.id,patient_prescription.patient_id,patients.first_name,patients.last_name,patient_prescription.visit_id,hospital_plan.name as patient_plan,patient_prescription.total_amount,patient_prescription.paid,patient_prescription.prescription_status'))
                 ->where('patient_prescription.status', 1)
+                ->where('patient_prescription_medicine.pharmacy', $pharmacy_id)
+                ->skip($offset)->take($limit)
                 ->get();
 
             $count = count($prescriptions);
@@ -3200,7 +3206,6 @@ class ApiController extends Controller
         }
 
         return response()->json(['status' => true, 'data' => $prescriptions, 'count' => $count]);
-
 
     }
 

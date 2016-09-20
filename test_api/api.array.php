@@ -2058,6 +2058,7 @@ $api->url = HOST . 'get_prescription_list';
 $api->method = "GET";
 $api->params->offset = "1";
 $api->params->limit = "1";
+$api->params->pharmacy_id = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
