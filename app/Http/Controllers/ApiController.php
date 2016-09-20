@@ -3207,10 +3207,7 @@ class ApiController extends Controller
 
     public function get_prescription(Request $request)
     {
-
         $prescription_id = $request->input('precription_id');
-
-
         $prescriptions = DB::table('patient_prescription')
             ->leftJoin('patient_prescription_medicine', 'patient_prescription_medicine.prescription_id', '=', 'patient_prescription.id')
             ->select(DB::raw('*,patient_prescription_medicine.id as prescribe_medication_id'))
@@ -3266,7 +3263,7 @@ class ApiController extends Controller
                     'pharmacy' => $pharmacy,
                     'updated_at' => $currentdatetime
                 ]
-            )   ;
+            );
 
 
         return response()->json(['status' => true, 'message' => 'Prescrpition Updated Successfully']);
