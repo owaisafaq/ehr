@@ -966,8 +966,18 @@ class OtherController extends Controller
 
         if ($beds->bed_status == 'available') {
 
-            $available_beds = $wards->available_beds - 1;
-            $number_of_beds = $wards->number_of_beds - 1;
+            if ($wards->available_beds != 0) {
+                $available_beds = $wards->available_beds - 1;
+            } else {
+                $available_beds = $wards->available_beds;
+            }
+
+            if ($wards->number_of_beds != 0) {
+                $number_of_beds = $wards->number_of_beds - 1;
+            }else{
+                $number_of_beds = $wards->number_of_beds;
+            }
+
 
             DB::table('wards')
                 ->where('id', $ward_id)
@@ -977,8 +987,17 @@ class OtherController extends Controller
 
         if ($beds->bed_status == 'closed') {
 
-            $number_of_beds_closed = $wards->number_of_beds_closed - 1;
-            $number_of_beds = $wards->number_of_beds - 1;
+            if ($wards->number_of_beds_closed != 0) {
+                $number_of_beds_closed = $wards->number_of_beds_closed - 1;
+            } else {
+                $number_of_beds_closed = $wards->number_of_beds_close;
+            }
+
+            if ($wards->number_of_beds != 0) {
+                $number_of_beds = $wards->number_of_beds - 1;
+            } else {
+                $number_of_beds = $wards->number_of_beds;
+            }
 
             DB::table('wards')
                 ->where('id', $ward_id)
