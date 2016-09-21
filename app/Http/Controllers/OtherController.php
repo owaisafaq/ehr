@@ -719,7 +719,7 @@ class OtherController extends Controller
             ->get();
 
         $is_exist = 1;
-        if(empty($encounter) || empty($triage) || empty($physician) || empty($checkout)){
+        if(empty($encounter) && empty($triage) && empty($physician) && empty($checkout)){
             $is_exist = 0;
         }
 
