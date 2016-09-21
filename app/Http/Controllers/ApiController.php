@@ -2709,7 +2709,7 @@ class ApiController extends Controller
 
         $visit_id = $request->input('visit_id');
 
-        $department_id = $request->input('department_id');
+       // $department_id = $request->input('department_id');
 
         $doctor_id = $request->input('doctor_id');
 
@@ -2767,7 +2767,7 @@ class ApiController extends Controller
                 'patient_id' => $patient_id,
                 'visit_id' => $visit_id,
                 'attachment' => $fileName,
-                'department_id' => $department_id,
+               // 'department_id' => $department_id,
                 'doctor' => $doctor_id,
                 'provisional_diagnosis' => $provisional_diagnosis,
                 'reason_referal' => $reason_referal,
