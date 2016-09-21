@@ -2705,8 +2705,6 @@ class ApiController extends Controller
 
     public function add_patient_referel(Request $request)
     {
-
-
         $patient_id = $request->input('patient_id');
 
         $visit_id = $request->input('visit_id');
@@ -2722,6 +2720,8 @@ class ApiController extends Controller
         $history = $request->input('history');
 
         $investigations = $request->input('investigations');
+
+        $referal_type = $request->input('referal_type');
 
         $allergies = $request->input('allergies');
 
@@ -2756,9 +2756,15 @@ class ApiController extends Controller
             $fileName = '';
         }
 
+        if($referal_type == 'internal'){
+            $external_referal_email = '';
+        }else{
+            $external_referal_email = $request->input('external_referal_email');
+        }
 
         DB::table('patient_referels')->insert(
-            ['patient_id' => $patient_id,
+            [   'referal_type'=>$referal_type,
+                'patient_id' => $patient_id,
                 'visit_id' => $visit_id,
                 'attachment' => $fileName,
                 'department_id' => $department_id,
@@ -2766,18 +2772,15 @@ class ApiController extends Controller
                 'provisional_diagnosis' => $provisional_diagnosis,
                 'reason_referal' => $reason_referal,
                 'history' => $history,
-                'allergies' => $allergies,
+               // 'allergies' => $allergies,
                 'investigations' => $investigations,
-                'medication_list' => $medication_list,
-                'medicines' => $medicines,
-                'created_at' => $currentdatetime
-            ]
+               // 'medication_list' => $medication_list,
+               // 'medicines' => $medicines,
+                'external_referal_email' => $external_referal_email,
+                'created_at' => $currentdatetime]
         );
 
-
         return response()->json(['status' => true, 'message' => "Patient Referel Added Successfully"]);
-
-
     }
 
     public function add_manufacturer(Request $request)
