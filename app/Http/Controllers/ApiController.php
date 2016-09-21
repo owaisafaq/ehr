@@ -2574,7 +2574,6 @@ class ApiController extends Controller
 
     public function add_patient_clinical_notes(Request $request)
     {
-
         $patient_id = $request->input('patient_id');
 
         $visit_id = $request->input('visit_id');
@@ -2594,10 +2593,9 @@ class ApiController extends Controller
             ]
         );
 
+        $id = DB::getPdo()->lastInsertId();
 
-        return response()->json(['status' => true, 'message' => 'Clinical Notes Added Successfully']);
-
-
+        return response()->json(['status' => true,'message' => 'Clinical Notes Added Successfully','clinical_notes_id'=>$id]);
     }
 
 
