@@ -19,6 +19,13 @@ use PHPMailer;
 
 class PDFController extends Controller
 {
+
+    public function __construct(Request $request)
+    {
+        header('Access-Control-Allow-Origin: *');
+        date_default_timezone_set("Africa/Lagos");
+    }
+
     public function get_lab_test_pdf(Request $request)
     {
         $arr = array();
