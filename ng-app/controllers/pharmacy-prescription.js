@@ -1,17 +1,20 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('pharmacyPrescription', ['$scope', '$rootScope', '$window', 'PharmacyPrescription', function($scope, $rootScope, $window, PharmacyPrescription){
+AppEHR.controller('pharmacyPrescription', ['$scope', '$rootScope', '$window', 'PharmacyPrescription', '$routeParams', function($scope, $rootScope, $window, PharmacyPrescription, $routeParams){
 	$rootScope.pageTitle = "EHR - Pharmacy";
 	$scope.action = '';
 	$scope.hideOptionsStrip = true;
 	$rootScope.loader = 'show';
     $scope.offset = 0;
     $scope.itemsPerPage = 15;
+    console.log($routeParams.pharmacyID);
+    $scope.pharmacyID = $routeParams.pharmacyID;
 
 	PharmacyPrescription.get({
         token: $window.sessionStorage.token,
         offset: $scope.offset,
-        limit: $scope.itemsPerPage
+        limit: $scope.itemsPerPage,
+        pharmacy_id: $scope.pharmacyID
     }, pharmanyListSuccess, pharmanyListFailure);
 
 	function pharmanyListSuccess(res){

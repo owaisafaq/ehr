@@ -8,9 +8,10 @@
                 <div class="pull-left">
                     <span class="txt-style-3 pull-left text-uppercase">admit patient</span>
                 </div> 
-                <button type="button" class="discharge_patient button-custom pull-right" data-toggle="modal" data-target="#addclinical" ng-hide="disabledButton">Discharge Patient</button>
-                <button class="move_patient button-custom pull-right" data-toggle="modal" data-target="#movepatient" ng-hide="disabledButton">Move Patient</button>
-                <button type="button" class="edit button-custom pull-right" data-toggle="modal" data-target="#vital-signs" ng-hide="disabledButton">EDIT</button>
+                <button type="button" class="discharge_patient button-custom pull-right" ng-hide="disabledButton" data-target="#dischargePatient" data-toggle="modal">Discharge Patient</button>
+                <button class="move_patient button-custom pull-right" data-target="#movepatient" data-toggle="modal" ng-hide="disabledButton">Move Patient</button>
+                <button type="button" class="edit button-custom pull-right" ng-hide="editbutton" ng-click="editAdmitPatient();" >EDIT</button>
+                <button type="button" class="edit button-custom pull-right" ng-hide="SaveButton" ng-click="updateAdmitPatient();">SAVE</button>
             </div>
             <div class="card-body card-body-2 col-lg-12">
                 <div>
@@ -31,14 +32,23 @@
                                 <td align="center">
                                     <div class="radio radio-styled">
                                         <label>
-                                            <input type="radio" name="checked" ng-model="action" ng-click="admitPatientSelected($index);">
+                                            <input type="radio" name="checked" ng-model="action" ng-click="admitPatientSelected($index, admin.id);">
                                             <span></span>
                                         </label>
                                     </div>
                                 </td>
-                                <td>ID{{admin.patient_id}}</td>
+                                <td><a class="blue" href="#/patient-summary-demographics/{{admin.patient_id}}">PA-{{admin.patient_id}}</a></td>
                                 <td>{{admin.first_name}}</td>
-                                <td>{{admin.expected_discharge_date}}</td>
+                                <td>
+                                <div class="input-group date select-date">
+                                    <div class="input-group-content">
+                                        <input type="text" class="form-control" name="date" placeholder="Select Date" ng-model="updateDischargeDate[$index]" ng-init="edit[$index] = false; updateDischargeDate[$index]=admin.expected_discharge_date" ng-disabled="edit[$index] == false">
+                                        <!-- <input type="text" name="date_of_birth" class="form-control" placeholder="Pick Date" ng-model="updateDischargeDate[$index]" ng-init="edit[$index] = false; updateDischargeDate[$index]=admin.expected_discharge_date" ng-disabled="edit[$index] == false" ng-value="admin.expected_discharge_date"/> -->
+                                    </div>
+                                    <!-- <span class="input-group-addon"><i class="fa fa-calendar"></i></span> -->
+                                </div>
+                                </td>
+                                
                                 <td>{{admin.speciality}}</td>
                                 <td>{{admin.ward}}</td>
                                 <td>{{admin.bed}}</td>
@@ -84,26 +94,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>ID04145</td>
-                                <td>John</td>
-                                <td>15-02-2016</td>
-                                <td>Surgery</td>
-                                <td>General</td>
-                            </tr>
-                            <tr>
-                                <td>ID04145</td>
-                                <td>John</td>
-                                <td>15-02-2016</td>
-                                <td>Surgery</td>
-                                <td>General</td>
-                            </tr>
-                            <tr>
-                                <td>ID04145</td>
-                                <td>John</td>
-                                <td>15-02-2016</td>
-                                <td>Surgery</td>
-                                <td>General</td>
+                            <tr ng-repeat="summary in dischargeSummary">
+                                <td>{{summary.name}}</td>
+                                <td>{{summary.empty}}</td>
+                                <td>{{summary.twentyfour_hour_count}}</td>
+                                <td>{{summary.twentyfour_to_fourtyeight}}</td>
+                                <td>{{summary.fourtyeight_hour_count}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -132,9 +128,10 @@
                         <label>to specialty</label>
                     </div>
                     <div class="col-lg-3 select-con">
+                    <!-- ng-selected="depart.id == selectedPatientToMove.department_id" -->
                         <select class="form-control" name="cpn" ng-model="move.CPN" ng-class="{true: 'error'}[submitted && moveForm.cpn.$invalid]" required placeholder="Select">
                             <option value=""></option>
-                            <option value="{{depart.id}}" ng-repeat="depart in encountersDropdownData.departments" ng-selected="depart.id == selectedPatientToMove.department_id">{{depart.name}}</option>
+                            <option value="{{depart.id}}" ng-repeat="depart in encountersDropdownData.departments">{{depart.name}}</option>
                         </select>
                         <p class="help-block PIValid" ng-show="submitted && moveForm.cpn.$error.required">Required</p>
                     </div>
@@ -189,174 +186,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade" id="addclinical" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-mid">
-        <div class="modal-content">
-            <form class="custom-form">
-                <div class="modal-header pop_head">
-                    <h2>Clinical Notes</h2>
-                </div>
-                <div class="modal-body pull-left">
-                    <div class="col-lg-3">
-                        <label>Ward Number</label>
-                    </div>
-                    <div class="col-lg-3">
-                        <label class="txt-style-4 pull-left">Ward Number</label>
-                    </div>
-                    <div class="col-lg-3">
-                        <label>ward</label>
-                    </div>
-                    <div class="col-lg-3">
-                        <input type="text" placeholder="Ward">
-                    </div>
-                    <div class="col-lg-3">
-                        <label>speciality</label>
-                    </div>
-                    <div class="col-lg-3">
-                        <select class="form-control">                                
-                            <option>Select</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                    </div>
-                    <div class="col-lg-3">
-                        <label>number of beds</label>
-                    </div>
-                    <div class="col-lg-3">
-                        <input type="text" placeholder="06">
-                    </div>
-                    <div class="col-lg-12">
-                        <label>Description</label>
-                    </div>
-                    <div class="col-lg-12">
-                        <textarea placeholder="Write Here"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default button-style-1">Ok</button>
-                    <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
-                </div>
-            </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<div class="modal fade big-modal" id="vital-signs" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header pop_head">
-                <h2>Vitals Signs</h2>
-            </div>
-            <div class="modal-body">
-                <form class="custom-form">
-                    <div class="row">
-                        <div class="row no-margin">
-                            <div class="col-lg-4">
-                                <div class="col-lg-12">
-                                    <label class="label-style">Blood Pressure (mm Hg)</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label>systolic (mm hg)</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <input type="text" placeholder="systolic (mm hg)" />
-                                </div>
-                                <div class="col-lg-6">
-                                    <label>diastolic (mm hg)</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <input type="text" placeholder="diastolic (mm hg)" />
-                                </div>
-                            </div>
 
-                            <div class="col-lg-4">
-                                <div class="col-lg-12">
-                                    <label class="label-style">Pulse Rate (min/bpm)</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label>pulse</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <input type="text" placeholder="pulse" />
-                                </div>
-                                <div class="col-lg-12">
-                                    <label class="label-style">Pulse Rate (min/bpm)</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label>respiratory rate</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <input type="text" placeholder="respiratory rate" />
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4">
-                                <div class="col-lg-12">
-                                    <label class="label-style">Respiratory Rate (br/min)</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label>temperature (c)</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <input type="text" placeholder="temperature (c)" />
-                                </div>
-                                <div class="col-lg-6">
-                                    <label>temperature (f)</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <input type="text" placeholder="temperature (f)" />
-                                </div>
-                            </div>
-                        </div>
-                        <!--<div class="row">-->
-                        <div class="col-lg-12">
-                            <label class="col-lg-12 label-style no-margin">BMI (kg / m^2)</label>
-                            <div class="col-lg-5 pull-right">
-                                <div class="pull-right">
-                                    <a class="txt-style-4" href="javascript:;">Attach</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                                    <a class="txt-style-4" href="javascript:;">Past Notes</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!--</div>-->
-                        <div class="col-lg-4">
-                            <div class="col-lg-6">
-                                <label>result</label>
-                            </div>
-                            <div class="col-lg-6">
-                                <input type="text" placeholder="result" />
-                            </div>
-                            <div class="col-lg-6">
-                                <label>weight (kg)</label>
-                            </div>
-                            <div class="col-lg-6">
-                                <input type="text" placeholder="weight (kg)" />
-                            </div>
-
-                            <div class="col-lg-6">
-                                <label>height (cm)</label>
-                            </div>
-                            <div class="col-lg-6">
-                                <input type="text" placeholder="height (cm)" />
-                            </div>
-                        </div>
-                        <div class="col-lg-8">
-                            <div class="col-lg-3">
-                                <label>Notes</label>
-                            </div>
-                            <div class="col-lg-9">
-                                <textarea placeholder="Write Your Text Here"></textarea>
-                            </div>
-                        </div>
-
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default button-style-1">Ok</button>
-                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 <div class="modal fade" id="noResultFound" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -368,6 +198,22 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade" id="dischargePatient" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Confirmation</h2>
+            </div>
+            <div class="modal-body">
+                <p>Do you want to Dischange a Patient?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" ng-click="dischagePatient();">YES</button>
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">NO</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

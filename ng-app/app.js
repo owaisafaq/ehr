@@ -344,7 +344,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', function 
                         }
                     }
                 }).
-                when('/pharmacy-prescription', {
+                when('/pharmacy-prescription/:pharmacyID', {
                     templateUrl: 'views/pharmacy-prescription.html',
                     controller: 'pharmacyPrescription',
                     resolve: {
@@ -522,13 +522,18 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
                                     }
                                 },
                                 select: function(event, ui) {
-                                    $('#autocomplete2').val(ui.item.label);
-                                    var selectId = ui.item.value;
-                                    //$rootScope.HEADERSEARCHPATIENTID = selectId;
-                                    getter(selectId);
-                                    $('.headerWithSwitchingImages').removeClass('ng-hide');
-                                    $('.headerWithSwitchingImages').removeClass('hide');
-                                    $('.headerleftOptions').removeClass('ng-hide');
+                                    if(ui.item.value.length > 8){
+                                        console.log("itsmine");
+                                        $('#autocomplete2').val('');
+                                    }else{
+                                        $('#autocomplete2').val(ui.item.label);
+                                        var selectId = ui.item.value;
+                                        //$rootScope.HEADERSEARCHPATIENTID = selectId;
+                                        getter(selectId);
+                                        $('.headerWithSwitchingImages').removeClass('ng-hide');
+                                        $('.headerWithSwitchingImages').removeClass('hide');
+                                        $('.headerleftOptions').removeClass('ng-hide');
+                                    }
                                     //window.location.href = "#/patient-summary-demographics/"+selectId;
                                     return false;
                                 }

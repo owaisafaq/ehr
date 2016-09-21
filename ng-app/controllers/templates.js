@@ -1,17 +1,21 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', 'getTemplates' ,'AddTemplate', 'getTemplateCategory', 'AddTemplateCategory','$timeout', 'DeleteTempCategory' , 'DeleteTemplate', function($scope, $rootScope, mySchema, $window, getTemplates, AddTemplate, getTemplateCategory, AddTemplateCategory,$timeout, DeleteTempCategory, DeleteTemplate){
+AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', 'getTemplates' ,'AddTemplate', 'getTemplateCategory', 'AddTemplateCategory','$timeout', 'DeleteTempCategory' , 'DeleteTemplate', 'GetEditTemplate', 'EditTemplate',  function($scope, $rootScope, mySchema, $window, getTemplates, AddTemplate, getTemplateCategory, AddTemplateCategory,$timeout, DeleteTempCategory, DeleteTemplate, GetEditTemplate, EditTemplate){
     $scope.myForm = {
         schema: mySchema
     };
+    $scope.EditForm = {
+        schema: mySchema
+    };
+    $rootScope.loader = "show";
     $scope.cat_unique={};
     $scope.catt_unique ={};
     $scope.templateLists = [];
 
-    $rootScope.pageTitle = "EHR - Inventory";
+    $rootScope.pageTitle = "EHR - Lab Templates";
 
     $scope.saveForm = function() {
-        $scope.hideLoader = 'show';
+        $rootScope.hideLoader = 'show';
         //$scope.updateEncounterBtn = true;
         //console.log($scope.displayInfo.patient_id);
         var catName = $.grep($scope.categories, function (categories) {
@@ -34,17 +38,90 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
         console.log(res);
         if (res.status == true) {
             $rootScope.loader = "hide";
-
+            $scope.myForm.schema = [];
+            $scope.template_name = '';
+            $scope.template_cat_id = '';
+            $scope.template_description = '';
             $scope.templateLists.push($scope.cat_unique);
 
             $(".addtemplates").hide();
             $(".main_templates").show();
-
-
         }
     }
 
     function AddTemplateFailure(error) {
+        console.log(error);
+        $('#internetError').modal('show');
+    }
+
+    $scope.updateTemplate = function() {
+        $scope.hideLoader = 'show';
+        //$scope.updateEncounterBtn = true;
+        //console.log($scope.displayInfo.patient_id);
+        /*var catName = $.grep($scope.categories, function (categories) {
+            return categories.id == $scope.template_cat_id;
+        })[0].name;*/
+        //console.log($scope.EditForm.schema);
+        var editTemplate = {
+            token: $window.sessionStorage.token,
+            name: $scope.Edittemplate_name,
+            description: $scope.Edittemplate_description,
+            category_id: $scope.Edittemplate_cat_id,
+            template_id: $scope.templateID,
+            template: angular.toJson($scope.EditForm.schema),
+            template_type: 1
+        }
+        console.log(editTemplate);
+        //angular.copy(editTemplate,$scope.cat_unique);
+        EditTemplate.save(editTemplate, EditTemplateSuccess,EditTemplateFailure);
+    }
+
+    $scope.editMyTemplate = function(templateID){
+        $scope.templateID = templateID;
+        $scope.hideLoader = 'show';
+        GetEditTemplate.save({token: $window.sessionStorage.token, template_id: templateID}, getOneTemplateSuccess, getOneTemplateFailure);
+    }
+
+    function getOneTemplateSuccess(res) {
+        if (res.status == true) {
+            $rootScope.loader = "hide";
+            console.log(res);
+            $(".main_templates").hide();
+            $(".editTemplateTab").show();
+            $scope.Edittemplate_name = res.data.name;
+            $scope.Edittemplate_description = res.data.description;
+            $scope.Edittemplate_cat_id = res.data.category_id;
+            $scope.EditForm.schema = JSON.parse(res.data.template);
+            setTimeout(function () {
+                $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
+            },500);
+        }
+    }
+
+    function getOneTemplateFailure(error) {
+        console.log(error);
+        $('#internetError').modal('show');
+    }
+
+    function EditTemplateSuccess(res) {
+        console.log(res);
+        if (res.status == true) {
+            $rootScope.loader = "hide";
+            $scope.myForm.schema = [];
+            $scope.Editemplate_name = '';
+            $scope.Edittemplate_cat_id = '';
+            $scope.Editemplate_description = '';
+            getTemplates.get({
+                token: $window.sessionStorage.token,
+                template_type: 2
+            }, getTemplateSuccess, getTemplateFailure);
+            //$scope.templateLists.push($scope.cat_unique);
+            $(".editTemplateTab").hide();
+            $(".main_templates").show();
+        }
+    }
+
+    function EditTemplateFailure(error) {
         console.log(error);
         $('#internetError').modal('show');
     }
@@ -57,7 +134,8 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
 
     function getTemplateSuccess(res) {
         if (res.status == true) {
-            console.log(res);
+            //console.log(res);
+            $rootScope.loader = "hide";
             if(res.data.length == 0){
                 $('#noRecordFound').modal('show');
                 return true;

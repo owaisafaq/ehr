@@ -115,6 +115,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         function getPatientMedicationSuccess(res) {
             if (res.status == true) {
+                console.log(res, "medications");
                 $rootScope.loader = "hide";
                 $scope.medications = res.data;
                 $scope.medicationsCount = res.count;
@@ -223,9 +224,11 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
             patient_id: $routeParams.patientID
         }, GetSupplementsSuccess, GetSupplementsFailure);
         function GetSupplementsSuccess(res) {
+            console.log(res, "aaaaaaaaaaaa");
             if (res.status == true) {
                 $rootScope.loader = 'hide';
                 $scope.supplementsCount = res.count;
+
                 $scope.supplements = res.data;
             }
         }
@@ -245,6 +248,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         function GetAllergiesSuccess(res) {
             if (res.status == true) {
                 $rootScope.loader = "hide";
+                console.log(res, 'bbb');
                 $scope.allergies = res.data;
                 $scope.allergiesCount = res.count;
             }
@@ -315,10 +319,8 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
         $scope.Calculatebmi = function () {
             $scope.vital.result = ($scope.vital.weight) / (($scope.vital.height / 100) * ($scope.vital.height / 100));
-            console.log("aasdas")
         }
         $scope.removeAllergy = function (ED) {
-            console.log("thre")
             $scope.removeAllergyData = {
                 patient_id: $routeParams.patientID,
                 allergy_id: ED.id,
@@ -413,7 +415,6 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
                     DeleteFolderArchives.get({token: $window.sessionStorage.token, /*$window.sessionStorage.patient_id*/ resource_id: removeId}, deleteFolderSuccess, deleteFolderFailure);
                 } else {
                     $rootScope.loader = 'show';
-                    console.log(removeId);
                     RemoveArchives.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID, patient_fie_id: removeId}, removeArchiveSuccess, removeArchiveFailure);
                 }
             }
@@ -689,6 +690,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
             if (angular.equals({}, dataToBeAdded) == false) {
                 console.log(dataToBeAdded.status);
                 ADDSupplements.save({
+                    visit_id: $scope.encounterID,
                     token: $window.sessionStorage.token,
                     patient_id: $routeParams.patientID,
                     supplements: dataToBeAdded.supplementName,
@@ -724,6 +726,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
             if (angular.equals({}, dataToBeAdded) == false) {
                 console.log(dataToBeAdded)
                 $scope.addallergyData = {
+                    visit_id: $scope.encounterID,
                     token: $window.sessionStorage.token,
                     patient_id: $routeParams.patientID,
                     allergy_type: dataToBeAdded.allergyType,
@@ -741,7 +744,8 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         function addAllergySuccess(res) {
             console.log(res);
             if (res.status == true) {
-                $scope.addAllergy = {};
+                //$scope.addAllergy = {};
+                $scope.allergie = {};
                 $('#addallergies').modal('hide');
                 GetAllergies.get({
                     token: $window.sessionStorage.token,
@@ -755,15 +759,17 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
             console.log(error);
         }
 
-        $scope.addImmunizations = function(name){
-            if(name != undefined && name != ''){
+        $scope.addImmunizations = function(name, date){
+            if(name != undefined && name != '' && date != '' && date != undefined){
                 //$scope.immunizations.push({id: immunizations.length+1, name: name});
                 AddImmunization.save({
                     token: $window.sessionStorage.token,
                     name: name,
+                    immunization_date: date,
                     patient_id: $scope.PID
                 }, addImmunizationsSuccess, addImmunizationsFailure);
                 $scope.immunizationName = '';
+                $scope.immunizationDate = '';
                 function addImmunizationsSuccess(res) {
                     if (res.status == true) {
                         console.log(res);

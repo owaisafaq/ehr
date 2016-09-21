@@ -217,13 +217,14 @@
                                 </select> -->
                             </div>
                             <div class="col-lg-2">
-                                <input type="text" placeholder="Phone Number" name="phone_number" ng-model="PI.adress.phone_number" class="maskPhone" data-inputmask="'mask': '99-9999999'" required />
+                                <input type="text" placeholder="Phone Number" name="phone_number" ng-model="PI.adress.phone_number" class="maskPhone yellow" data-inputmask="'mask': '99-9999999'" required/>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" numbers-only placeholder="Mobile Number" name="mobile_number" ng-model="PI.adress.mobile_number" my-Maxlength="11" class="maskMobile" required/>
+                                <input type="text" numbers-only placeholder="Mobile Number" name="mobile_number" ng-model="PI.adress.mobile_number" my-Maxlength="11" class="maskMobile yellow" required/>
+                                <p class="help-block PIValid" ng-show="userForm.mobile_number.$error.required">Required</p>
                             </div>
                             <div class="col-lg-3">
-                                <input type="email" placeholder="Email" name="email" ng-model="PI.adress.email" required/>
+                                <input type="email" placeholder="Email" name="email" ng-model="PI.adress.email" required class="yellow"/>
                                 <p ng-show="userForm.email.$error.email" class="help-block PIValid">Invalid email.</p>
                             </div>
 
@@ -231,12 +232,12 @@
                                 <label>address</label>
                             </div>
                             <div class="col-lg-9">
-                                <input type="text" placeholder="House Number" ng-model="PI.adress.house_number"/>
+                                <input type="text" placeholder="House Number" ng-model="PI.adress.house_number" class="yellow"/>
                             </div>
                             <div class="col-lg-3">
                             </div>
                             <div class="col-lg-9">
-                                <input type="text" placeholder="Street" ng-model="PI.adress.street"/>
+                                <input type="text" placeholder="Street" ng-model="PI.adress.street" class="yellow"/>
                             </div>
 
                             <div class="col-lg-3">
@@ -269,7 +270,7 @@
                                 </select>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" numbers-only placeholder="Post Code" ng-model="PI.adress.postal_code"/> 
+                                <input type="text" numbers-only placeholder="Post Code" ng-model="PI.adress.postal_code" class="yellow"/> 
                             </div>
 
                             <div class="col-lg-3">
@@ -281,7 +282,7 @@
                                 <div class="col-lg-3">
                                     <div class="checkbox checkbox-styled">
                                         <label>
-                                            <input type="checkbox" ng-change="isChecked(PI.sameAsAbove);" ng-model="PI.sameAsAbove">
+                                            <input type="checkbox" ng-change="isChecked(PI.sameAsAbove);" ng-model="PI.sameAsAbove" class="yellow">
                                             <span>Same As Above</span>
                                         </label>
                                     </div>
@@ -297,25 +298,25 @@
                                     </select>
                                 </div>
                                 <div class="col-lg-2">
-                                    <input type="text" numbers-only placeholder="Phone Number" ng-model="PI.adress.permanent_phonenumber" class="maskPhone"/>
+                                    <input type="text" numbers-only placeholder="Phone Number" ng-model="PI.adress.permanent_phonenumber" class="maskPhone yellow"/>
                                 </div>
                                 <div class="col-lg-3">
-                                    <input type="text" numbers-only placeholder="Mobile Number" ng-model="PI.adress.permanent_mobilenumber" class="maskMobile" my-Maxlength="11"/>
+                                    <input type="text" numbers-only placeholder="Mobile Number" ng-model="PI.adress.permanent_mobilenumber" class="maskMobile yellow" my-Maxlength="11"/>
                                 </div>
                                 <div class="col-lg-3">
-                                    <input type="email" placeholder="Email" name="permanent_email" ng-model="PI.adress.permanent_email" required/> 
+                                    <input type="email" placeholder="Email" name="permanent_email" ng-model="PI.adress.permanent_email" required class="yellow"/> 
                                     <p ng-show="userForm.permanent_email.$error.email" class="help-block PIValid">Invalid email.</p>
                                 </div>
                                 <div class="col-lg-3">
                                     <label>address</label>
                                 </div>
                                 <div class="col-lg-9">
-                                    <input type="text" placeholder="House Number" ng-model="PI.adress.permanent_housenumber"/>
+                                    <input type="text" placeholder="House Number" ng-model="PI.adress.permanent_housenumber" class="yellow"/>
                                 </div>
                                 <div class="col-lg-3">
                                 </div>
                                 <div class="col-lg-9">
-                                    <input type="text" placeholder="Street" ng-model="PI.adress.permanent_street"/>
+                                    <input type="text" placeholder="Street" ng-model="PI.adress.permanent_street" class="yellow"/>
                                 </div>
                                 <div class="col-lg-3">
                                     <label>Country/State</label>  
@@ -343,7 +344,7 @@
                                 </div>
 
                                 <div class="col-lg-3">
-                                    <input type="text" numbers-only placeholder="Post Code" ng-model="PI.adress.permanent_postalCode"/> 
+                                    <input type="text" numbers-only placeholder="Post Code" ng-model="PI.adress.permanent_postalCode" class="yellow"/> 
                                 </div>
                             </div>
                         </div>
@@ -360,13 +361,13 @@
                                 <label>Full Name</label>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" alphabets-only placeholder="First Name" ng-model="PI.kin.kin_fullname"/>
+                                <input type="text" alphabets-only placeholder="First Name" ng-model="PI.kin.kin_fullname" class="yellow"/>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" alphabets-only placeholder="Middle Name" ng-model="PI.kin.kin_middlename"/>
+                                <input type="text" alphabets-only placeholder="Middle Name" ng-model="PI.kin.kin_middlename" class="yellow"/>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" alphabets-only placeholder="Last Name" ng-model="PI.kin.kin_lastname"/>
+                                <input type="text" alphabets-only placeholder="Last Name" ng-model="PI.kin.kin_lastname" class="yellow"/>
                             </div>
 
                             <div class="col-lg-3">
@@ -380,31 +381,31 @@
                                 </select>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" alphabets-only placeholder="Others" ng-model="PI.kin.others"/>
+                                <input type="text" alphabets-only placeholder="Others" ng-model="PI.kin.others" class="yellow"/>
                             </div>
                             <div class="col-lg-3">
                                 <label>contact numbers</label>  
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" numbers-only placeholder="Phone Number" ng-model="PI.kin.kin_phone_number" class="maskPhone"/>
+                                <input type="text" numbers-only placeholder="Phone Number" ng-model="PI.kin.kin_phone_number" class="maskPhone yellow"/>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" numbers-only placeholder="Mobile Number" ng-model="PI.kin.kin_mobile_number" class="maskMobile"/>
+                                <input type="text" numbers-only placeholder="Mobile Number" ng-model="PI.kin.kin_mobile_number" class="maskMobile yellow"/>
                             </div>
                             <div class="col-lg-3">
-                                <input type="email" placeholder="Email" name="kin_email" ng-model="PI.kin.kin_email"/>
+                                <input type="email" placeholder="Email" name="kin_email" ng-model="PI.kin.kin_email" class="yellow"/>
                                 <p ng-show="userForm2.kin_email.$error.email" class="help-block PIValid">Invalid email.</p>
                             </div>
                             <div class="col-lg-3">
                                 <label>address</label>  
                             </div>
                             <div class="col-lg-9">
-                                <input type="text" placeholder="House Number" ng-model="PI.kin.kin_house_number"/>
+                                <input type="text" placeholder="House Number" ng-model="PI.kin.kin_house_number" class="yellow"/>
                             </div>
                             <div class="col-lg-3">
                             </div>
                             <div class="col-lg-9">
-                                <input type="text" placeholder="Street" ng-model="PI.kin.kin_street"/>
+                                <input type="text" placeholder="Street" ng-model="PI.kin.kin_street" class="yellow"/>
                             </div>
                             <div class="col-lg-3">
                                 <label>Country/State</label>  
@@ -443,7 +444,7 @@
                                 </select>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" numbers-only placeholder="Post Code" ng-model="PI.kin.kin_postal_code"/>
+                                <input type="text" numbers-only placeholder="Post Code" ng-model="PI.kin.kin_postal_code" class="yellow"/>
                             </div>
                         </div>
                     </form>
@@ -459,25 +460,25 @@
                                 <label>Employer</label>
                             </div>
                             <div class="col-lg-9">
-                                <input type="text" alphabets-only placeholder="Employer Name" ng-model="PI.employer.employer_name" />
+                                <input type="text" alphabets-only placeholder="Employer Name" ng-model="PI.employer.employer_name" class="yellow"/>
                             </div>
                             <div class="col-lg-3">
                                 <label>Occupation</label>
                             </div>
                             <div class="col-lg-9">
-                                <input type="text" alphabets-only placeholder="Add Occupation" ng-model="PI.employer.employer_occupation"/>
+                                <input type="text" alphabets-only placeholder="Add Occupation" ng-model="PI.employer.employer_occupation" class="yellow"/>
                             </div>
                             <div class="col-lg-3">
                                 <label>contact</label>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" numbers-only placeholder="Phone Number" ng-model="PI.employer.employer_phone_number" class="maskPhone"/>
+                                <input type="text" numbers-only placeholder="Phone Number" ng-model="PI.employer.employer_phone_number" class="maskPhone" class="yellow"/>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" numbers-only placeholder="Mobile Number" ng-model="PI.employer.employer_mobile_number" class="maskMobile"/>
+                                <input type="text" numbers-only placeholder="Mobile Number" ng-model="PI.employer.employer_mobile_number" class="maskMobile yellow"/>
                             </div>
                             <div class="col-lg-3">
-                                <input type="email" placeholder="Email" name="employer_email" ng-model="PI.employer.employer_email" required/> 
+                                <input type="email" placeholder="Email" name="employer_email" ng-model="PI.employer.employer_email" required class="yellow"/> 
                                 <p ng-show="userForm3.employer_email.$error.email" class="help-block PIValid">Invalid email.</p>
                             </div>
 
@@ -485,12 +486,12 @@
                                 <label>address</label>
                             </div>
                             <div class="col-lg-9">
-                                <input type="text" placeholder="House Number" ng-model="PI.employer.employer_house_number"/>
+                                <input type="text" placeholder="House Number" ng-model="PI.employer.employer_house_number" class="yellow"/>
                             </div>
                             <div class="col-lg-3">
                             </div>
                             <div class="col-lg-9">
-                                <input type="text" placeholder="Street" ng-model="PI.employer.employer_street"/>
+                                <input type="text" placeholder="Street" ng-model="PI.employer.employer_street" class="yellow"/>
                             </div>
                             <div class="col-lg-3">
                                 <label>Country/State</label>  

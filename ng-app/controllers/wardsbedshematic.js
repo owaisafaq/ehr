@@ -15,6 +15,7 @@ AppEHR.controller('wardsBedShematicController', ['$scope', '$rootScope', '$windo
 
 	function bedOccupancySuccess(res){
 		$rootScope.loader = "hide";
+        console.log(res);
 		if(res.status == true){
             if(res.data.length == 0){
                 $scope.modalHeading = "Result";
@@ -108,10 +109,10 @@ AppEHR.controller('wardsBedShematicController', ['$scope', '$rootScope', '$windo
     }
 
     $scope.deleteBed = function(bedID){
-        $routeParams.loader = "show";
+        $rootScope.loader = "show";
         DeleteBed.save({token: $window.sessionStorage.token, ward_id: $routeParams.wardID, bed_id: $scope.BEDID}, deleteBedSuccess, deleteBedFailure);
         function deleteBedSuccess(res){
-            $routeParams.loader = "hide";
+            $rootScope.loader = "hide";
             console.log(res);
             if(res.status == true){
                 $('#removeBed').modal('hide');
@@ -132,15 +133,28 @@ AppEHR.controller('wardsBedShematicController', ['$scope', '$rootScope', '$windo
     }
 
     $scope.updateBed = function(bedStatus){
-        console.log(bedStatus, $scope.BEDID);
+        console.log($scope.bedStatus);
         $rootScope.loader = "show";
-        EditBed.save({token: $window.sessionStorage.token, ward_id: $routeParams.wardID, bed_id:$scope.BEDID, status: bedStatus}, updateBedSuccess, updateBedFailure);
+        if($scope.bedStatus == "available"){
+            $scope.bedStatus = "closed";
+            console.log($scope.bedStatus, 1);
+        }else if($scope.bedStatus == "closed"){
+            $scope.bedStatus = "available";
+            console.log($scope.bedStatus, 2);
+        }else{
+            $scope.bedStatus = $scope.bedStatus;
+        }
+        console.log($scope.bedStatus);
+        EditBed.save({token: $window.sessionStorage.token, ward_id: $routeParams.wardID, bed_id:$scope.BEDID, status: $scope.bedStatus}, updateBedSuccess, updateBedFailure);
         function updateBedSuccess(res){
             $rootScope.loader = "hide";
             console.log(res);
             if(res.status == true){
                 $scope.errorClass = "success";
                 $scope.statusMsg = "Status Successfully Changed";
+                $('.delete').hide();
+                $('.edit').hide();
+                $('#editBed').modal('hide');
                 WardOccupancy.get({
                     token: $window.sessionStorage.token,
                     ward_id: $routeParams.wardID

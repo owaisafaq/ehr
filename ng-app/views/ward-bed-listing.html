@@ -10,7 +10,7 @@
                         <button type="submit">
                             <i class="fa fa-search"></i>
                         </button>
-                        <input class="search_field" ng-model="search" type="text" placeholder="Search for ward">
+                        <input class="search_field" ng-model="search.name" type="text" placeholder="Search for ward">
                     </div>
                 </div> 
                 <button type="button" class="delete button-custom pull-right" ng-hide="buttonDisabled" data-toggle="modal" data-target="#deleteConfirm">remove</button>
@@ -24,14 +24,14 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>ward</th>
-                                <th>speciality</th>
-                                <th>number of beds</th>
+                                <th>ward <a href="javascript:void(0);" class="pull-right" ng-click="sortingByWard()"><i class="fa {{sortingWard}}" aria-hidden="true"></i></a></th>
+                                <th>speciality <a href="javascript:void(0);" class="pull-right" ng-click="sortingBySpeciality()"><i class="fa {{sortingSpeciality}}" aria-hidden="true"></i></a></th>
+                                <th>number of beds <a href="javascript:void(0);" class="pull-right" ng-click="sortingByBeds()"><i class="fa {{sortingBeds}}" aria-hidden="true"></i></a></th>
                                 <th>description</th>    
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="ward in allWards | filter:search">
+                            <tr ng-repeat="ward in allWards | filter:search | orderBy:sortOrder">
                                 <td align="center">
                                     <div class="radio radio-styled">
                                         <label>

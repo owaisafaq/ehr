@@ -2,10 +2,10 @@
     <section class="idCardPrint">
         <div class="card" ng-class='{true:"custom-card"}[patientInfo]'>
             <div class="card-head card-head-custom {{hospital_plan}}" ng-show="patientInfo">
-                <div class="col-lg-2">
+                <!-- <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Encounter ID</label>
-                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.encounter_id}}</span>
-                </div>
+                    <span class="txt-style-2 col-lg-12 capitalize">E{{displayInfo.encounter_id}}</span>
+                </div> -->
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
                     <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.first_name}}</span>
@@ -14,11 +14,11 @@
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Number</label>
                     <span class="txt-style-2 col-lg-12">PA-{{displayInfo.patient_id}}</span>
                 </div>
-                <div class="col-lg-1">
+                <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Age</label>
-                    <span class="txt-style-2 col-lg-12">{{displayInfo.age}}</span>
+                    <span class="txt-style-2 col-lg-12">{{displayInfo.age}} Years</span>
                 </div>
-                <div class="col-lg-1">
+                <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Sex</label>
                     <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.sex}}</span>
                 </div>
@@ -107,7 +107,7 @@
                                         </label>
                                     </div>
                                 </td>
-                                <td>PA-{{patientList.id}}</td>
+                                <td><a class="blue" href="#/patient-summary-demographics/{{patientList.id}}">PA-{{patientList.id}}</a></td>
                                 <td>{{patientList.first_name}}</td>
                                 <td>{{patientList.last_name}}</td>
                                 <td>{{patientList.date_of_birth}}</td>

@@ -3103,6 +3103,18 @@ Dynaimic Form
     max-height: 500px;
     overflow: auto;
 }
+#triageScroll{
+    max-height: 500px;
+    overflow: auto;
+}
+#physicianScroll{
+    max-height: 500px;
+    overflow: auto;
+}
+#checkoutScroll{
+    max-height: 500px;
+    overflow: auto;
+}
 
 .button-custom-white{
     display: inline-block;
@@ -3124,4 +3136,8 @@ Dynaimic Form
 .success{
     color: green!important;
     text-align: center!important;
+}
+.no-padding{
+    padding-right: 0px!important;
+    padding-left: 0px!important;
 }

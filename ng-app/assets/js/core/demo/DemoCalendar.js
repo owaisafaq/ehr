@@ -127,12 +127,12 @@
                 }
             },
             events: [
-                {
+                /*{
                     title: 'Birthday Party',
                     start: new Date(y, m, d + 1, 19, 0),
                     end: new Date(y, m, d + 1, 22, 30),
                     allDay: false
-                }
+                }*/
             ],
             eventRender: function (event, element) {
                 element.find('#date-title').html(element.find('span.fc-event-title').text());
