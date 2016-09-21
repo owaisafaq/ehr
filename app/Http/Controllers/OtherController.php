@@ -185,12 +185,14 @@ class OtherController extends Controller
     {
         $patient_id = $request->input('patient_id');
         $name = $request->input('name');
+        $immunization_date= $request->input('immunization_date');
+
         DB::table('patient_immunizations')
             ->insert(
                 ['patient_id' => $patient_id,
                     'name' => $name,
+                    'immunization_date'=>$immunization_date,
                     'created_at' => date("Y-m-d  H:i:s")
-
                 ]
             );
 
@@ -372,6 +374,15 @@ class OtherController extends Controller
                         'description' => $description,
                         'updated_at' => date("Y-m-d  H:i:s")]
                 );
+
+            DB::table('beds')->where('ward_id', '=', $ward_id)->delete();
+
+            for ($i = 1; $i <= $number_of_beds; $i++) {
+
+                DB::table('beds')->insert(['ward_id' => $ward_id, 'bed_status' => 'available', 'created_at' => date("Y-m-d  H:i:s")]);
+            }
+
+
             return response()->json(['status' => true, 'message' => 'Ward Updated Successfully']);
 
         } else {
@@ -384,6 +395,13 @@ class OtherController extends Controller
                         'description' => $description,
                         'created_at' => date("Y-m-d  H:i:s")]
                 );
+
+            $ward_id = DB::getPdo()->lastInsertId();
+
+            for ($i = 1; $i <= $number_of_beds; $i++) {
+
+                DB::table('beds')->insert(['ward_id' => $ward_id, 'bed_status' => 'available', 'created_at' => date("Y-m-d  H:i:s")]);
+            }
 
             return response()->json(['status' => true, 'message' => 'Ward Added Successfully']);
 
@@ -434,6 +452,7 @@ class OtherController extends Controller
                 ->where('wards.status', 1)
                 ->get();
         }
+
         foreach ($data as $bed) {
             $bed->patients_wating = '';
             $bed->expected_discharge_date = '';
@@ -470,19 +489,23 @@ class OtherController extends Controller
             $beds = DB::table('beds')
                 ->leftJoin('patients_admitted', 'beds.patient_id', '=', 'patients_admitted.patient_id')
                 ->leftJoin('patients', 'patients.id', '=', 'patients_admitted.patient_id')
-                ->select(DB::raw('beds.id,beds.bed_status,patients.first_name,patients.middle_name,patients.last_name,patients.date_of_birth,patients.sex,patients_admitted.expected_discharge_date'))
+                ->select(DB::raw('beds.id as patient_bed_id,beds.bed_status,patients.first_name,patients.middle_name,patients.last_name,patients.date_of_birth,patients.sex,patients_admitted.expected_discharge_date'))
                 ->where('beds.status', 1)
                 ->where('beds.ward_id', $ward_id)
                 ->get();
 
             $count = count($beds);
       //  }
+        $i=1;
         foreach ($beds as $bed) {
             if ($bed->sex == 1) {
                 $bed->gender = 'Male';
             } else {
                 $bed->gender = 'FeMale';
             }
+            $bed->id = $i;
+            $i++;
+
         }
 
         return response()->json(['status' => true, 'data' => $beds, 'count' => $count]);
@@ -537,6 +560,18 @@ class OtherController extends Controller
             $count = count($data);
         }
         return response()->json(['status' => true, 'data' => $data, 'count' => $count]);
+    }
+
+    public function update_discharge_date(Request $request){
+        $id = $request->input('patient_admitted_id');
+        $expected_discharge_date = $request->input('expected_discharge_date');
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+        DB::table('patients_admitted')
+               ->where('id', $id)
+               ->update(array('expected_discharge_date' => $expected_discharge_date, 'updated_at' => $currentdatetime));
+
+        return response()->json(['status' => true, 'message' => 'Patient Discharge Date Updated Successfully']);
     }
 
     public function patient_discharge(Request $request)
@@ -730,6 +765,53 @@ class OtherController extends Controller
 
       }
 
+    public function appointment_dates_patients(Request $request){
+
+          $patient_id = $request->input('patient_id');
+
+          $appointments = DB::table('appointments')
+              ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
+              ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
+              ->select(DB::raw('appointments.id,appointments.pick_date,appointments.start_time,doctors.name,CONCAT(patients.first_name," ",patients.last_name) AS patient_name'))
+              ->where('appointments.patient_id',$patient_id)
+              ->orderby('pick_date','desc')
+              ->get();
+          return response()->json(['status' => true, 'data' => $appointments]);
+
+      }
+
+
+    public function appointment_dates_doctors(Request $request)
+    {
+
+        $doctor_id = $request->input('doctor_id');
+
+        $appointments = DB::table('appointments')
+            ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
+            ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
+            ->select(DB::raw('appointments.id,appointments.pick_date,appointments.start_time,doctors.name,CONCAT(patients.first_name," ",patients.last_name) AS patient_name'))
+            ->where('appointments.doctor_id', $doctor_id)
+            ->orderby('pick_date', 'desc')
+            ->get();
+        return response()->json(['status' => true, 'data' => $appointments]);
+
+    }
+
+
+
+    public function appointment_dates_departments(Request $request)
+    {
+        $department_id = $request->input('department_id');
+        $appointments = DB::table('appointments')
+            ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
+            ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
+            ->select(DB::raw('appointments.id,appointments.pick_date,appointments.start_time,doctors.name,CONCAT(patients.first_name," ",patients.last_name) AS patient_name'))
+            ->where('appointments.department_id', $department_id)
+            ->orderby('pick_date', 'desc')
+            ->get();
+        return response()->json(['status' => true, 'data' => $appointments]);
+
+    }
 
     public function move_appointment(Request $request)
     {
@@ -740,6 +822,18 @@ class OtherController extends Controller
             ->select(DB::raw('*'))
             ->where('id', $appointment_id)
             ->first();
+
+        $visit_count = DB::table('visits')
+            ->select(DB::raw('*'))
+            ->where('patient_id', $appointment->patient_id)
+            ->where('visit_status', '!=', 'checkout')
+            ->where('status', 1)
+            ->count();
+
+        if ($visit_count >= 1) {
+            return response()->json(['status' => false, 'message' => 'Appointment can not be moved']);
+        }
+
 
         DB::table('visits')->insert(
                 ['patient_id' => $appointment->patient_id,
@@ -769,11 +863,12 @@ class OtherController extends Controller
         $address = DB::table('patient_address')
             ->select(DB::raw('email,mobile_number'))
             ->where('patient_id', $patient_id)
+            ->where('address_type', 'contact')
             ->first();
 
-        $email = $address->email;
-       // $mobile_number = $address->mobile_number; //$address->mobile_number;
-          $mobile_nubmer = '923333608229';
+          $email = $address->email;
+          $mobile_number = $address->mobile_number; //$address->mobile_number;
+         // $mobile_nubmer = '923333608229';
 
         $message = "Please Come to the Hospital on your pre sheduled time and date";
 
@@ -783,11 +878,11 @@ class OtherController extends Controller
             $mail->CharSet = "utf-8"; // set charset to utf8
             $mail->SMTPAuth = true;  // use smpt auth
             $mail->SMTPSecure = "tls"; // or ssl
-            $mail->Host = "smtp.gmail.com";
-            $mail->Port = `587`; // most likely something different for you. This is the mailtrap.io port i use for testing.
-            $mail->Username = "aploskhan@gmail.com";
-            $mail->Password = "Aplos@221";
-            $mail->setFrom('smovaishassan12@hotmail.com');
+            $mail->Host = env('MAIL_HOST');
+            $mail->Port = env('MAIL_PORT'); // most likely something different for you. This is the mailtrap.io port i use for testing.
+            $mail->Username = env('MAIL_USERNAME');
+            $mail->Password = env('MAIL_PASSWORD');
+            $mail->setFrom(env('MAIL_FROM'));
             $mail->Subject = "Message From Ehr";
             $mail->MsgHTML($message);
             $mail->addAddress($email);
@@ -799,13 +894,16 @@ class OtherController extends Controller
             dd($e);
         }
 
-        $url = 'https://rest.nexmo.com/sms/json?' . http_build_query(
+        $url = 'http://www.smslive247.com/http/index.aspx?' . http_build_query(
             [
-              'api_key' =>  '8cab0920',
-              'api_secret' => 'cee30fefca2a9839',
-              'to' => $mobile_number,
-              'from' => '441632960061',
-              'text' => $message
+                'cmd' => 'sendquickmsg',
+                'owneremail' => 'Ibikunle@gmail.com',
+                'subacct' => 'AGISMOBILE',
+                'subacctpwd' => 'agisadmin',
+                'message' => $message,
+                'sender' => 'Ehr',
+                'sendto' => $mobile_number,
+                'msgtype' => 0
             ]
         );
 
@@ -813,12 +911,16 @@ class OtherController extends Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($ch);
 
-  /*      $url = 'https://rest.nexmo.com/sms/json?api_key=8cab0920&api_secret=cee30fefca2a9839&from=NEXMO&to='.$phone_number.'&text=Please Come to the Hospital on your pre sheduled time and date';
+    /*   $url = 'http://www.smslive247.com/http/index.aspx?cmd=sendmsg&sessionid=xxx&message=you have an appointment
+         &sender=xxx&sendto=xxx&msgtype=0';
+
+        $url = "http://www.smslive247.com/http/index.aspx?cmd=sendquickmsg&owneremail=Ibikunle@gmail.com
+            &subacct=AGISMOBILE&subacctpwd=agisadmin&message='.$message.'&sender=Ehr&sendto='.$mobile_number.'&msgtype=0";
 
         $json = file_get_contents($url); // get the data from Google Maps API
 
-        return $json;*/
-
+        return $json;
+    */
         return response()->json(['status' => true, 'message' => 'Reminder Sent Successfully']);
 
     }
@@ -877,8 +979,18 @@ class OtherController extends Controller
 
         if ($beds->bed_status == 'available') {
 
-            $available_beds = $wards->available_beds - 1;
-            $number_of_beds = $wards->number_of_beds - 1;
+            if ($wards->available_beds != 0) {
+                $available_beds = $wards->available_beds - 1;
+            } else {
+                $available_beds = $wards->available_beds;
+            }
+
+            if ($wards->number_of_beds != 0) {
+                $number_of_beds = $wards->number_of_beds - 1;
+            }else{
+                $number_of_beds = $wards->number_of_beds;
+            }
+
 
             DB::table('wards')
                 ->where('id', $ward_id)
@@ -888,8 +1000,17 @@ class OtherController extends Controller
 
         if ($beds->bed_status == 'closed') {
 
-            $number_of_beds_closed = $wards->number_of_beds_closed - 1;
-            $number_of_beds = $wards->number_of_beds - 1;
+            if ($wards->number_of_beds_closed != 0) {
+                $number_of_beds_closed = $wards->number_of_beds_closed - 1;
+            } else {
+                $number_of_beds_closed = $wards->number_of_beds_close;
+            }
+
+            if ($wards->number_of_beds != 0) {
+                $number_of_beds = $wards->number_of_beds - 1;
+            } else {
+                $number_of_beds = $wards->number_of_beds;
+            }
 
             DB::table('wards')
                 ->where('id', $ward_id)
@@ -936,7 +1057,12 @@ class OtherController extends Controller
         if ($status == 'available') {
 
             $available_beds = $wards->available_beds + 1;
-            $number_of_beds_closed = $wards->number_of_beds_closed - 1;
+
+            if ($wards->number_of_beds_closed != 0) {
+                $number_of_beds_closed = $wards->number_of_beds_closed - 1;
+            } else {
+                $number_of_beds_closed = $wards->number_of_beds_close;
+            }
 
             DB::table('wards')
                 ->where('id', $ward_id)
@@ -947,7 +1073,12 @@ class OtherController extends Controller
         if ($status == 'closed') {
 
             $number_of_beds_closed = $wards->number_of_beds_closed + 1;
-            $available_beds = $wards->available_beds - 1;
+            if ($wards->available_beds != 0) {
+                $available_beds = $wards->available_beds - 1;
+            } else {
+                $available_beds = $wards->available_beds;
+            }
+
             DB::table('wards')
                 ->where('id', $ward_id)
                 ->update(['number_of_beds_closed' => $number_of_beds_closed,'available_beds' => $available_beds,'updated_at' => date("Y-m-d  H:i:s")]);
@@ -957,6 +1088,22 @@ class OtherController extends Controller
         return response()->json(['status' => true, 'message' => 'Bed Updated Successfully']);
 
 
+    }
+
+    public function patients_discharged(Request $request){
+        $within_24 = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . ' +1 day'));
+        $within_48 = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . ' +2 day'));
+        $patients_admitted = DB::table('patients_admitted AS pa')
+            ->leftJoin('wards', 'wards.id', '=', 'pa.ward_id')
+            ->select(DB::raw('pa.patient_id,wards.name,wards.available_beds as empty,
+            (SELECT count(*) from patients_admitted  where patient_id= pa.patient_id and expected_discharge_date > "'.$within_48.'" and is_discharged = 0) as over_fourtyeight_hour_count,
+            (SELECT count(*) from patients_admitted  where patient_id= pa.patient_id and expected_discharge_date < "'.$within_48.'" and is_discharged = 0) as under_fourtyeight_hour_count,
+            (SELECT count(*) from patients_admitted  where patient_id= pa.patient_id and expected_discharge_date < "'.$within_48.'" and  expected_discharge_date > "'.$within_24.'" and is_discharged = 0) as twentyfour_to_fourtyeight'))
+            ->where('pa.is_discharged', 0)
+            ->get();
+
+
+        return response()->json(['status' => true, 'data'=>$patients_admitted]);
     }
 
 

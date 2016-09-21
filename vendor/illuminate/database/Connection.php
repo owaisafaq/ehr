@@ -97,7 +97,7 @@ class Connection implements ConnectionInterface
      *
      * @var bool
      */
-    protected $loggingQueries = false;
+    protected $loggingQueries = true;
 
     /**
      * Indicates if the connection is in a "dry run".

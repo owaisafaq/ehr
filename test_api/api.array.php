@@ -4,7 +4,7 @@ require 'api.class.php';
 //define('HOST', 'http://131.107.100.10/ehr/public/api/');
 //define('HOST', 'http://localhost/ehr/public/api/');
 //define('HOST', 'http://demoz.online/ehr/public/api/');
-define('HOST', 'http://demoz.online/staging/ehr/public/api/');
+define('HOST', 'http://demoz.online/dev/ehr/public/api/');
 define('APP', '');
 define('ROUTE', '');
 
@@ -44,6 +44,30 @@ $api->name = "Search Patient";
 $api->url = HOST . 'search_patient';
 $api->method = "POST";
 $api->description = "Search Patient";
+$api->params->name = "owais";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Search Doctor
+$api = new api();
+$api->name = "Search Doctor";
+$api->url = HOST . 'search_doctor';
+$api->method = "POST";
+$api->description = "Search Doctor";
+$api->params->name = "owais";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Search Department
+$api = new api();
+$api->name = "Search Department";
+$api->url = HOST . 'search_department';
+$api->method = "POST";
+$api->description = "Search Department";
 $api->params->name = "owais";
 $api->params->token = "123";
 
@@ -624,8 +648,9 @@ $api = new api();
 $api->name = "Add Supplements";
 $api->url = HOST . 'add_patient_supplements';
 $api->method = "POST";
-$api->description = "Get Supplements";
+$api->description = "Add Supplements";
 $api->params->patient_id = "1";
+$api->params->visit_id = "1";
 $api->params->supplements = "Paracetamol";
 $api->params->manufacturer = "manufacturer";
 $api->params->dosage = "10";
@@ -682,6 +707,7 @@ $api->url = HOST . 'add_patient_allergies';
 $api->method = "POST";
 $api->description = "Add Patient Allergie";
 $api->params->patient_id = "1";
+$api->params->visit_id = "1";
 $api->params->allergy_type = "severe";
 $api->params->allergies = "tobaco";
 $api->params->severity = "high";
@@ -1812,6 +1838,17 @@ $api->params->token = "123435";
 $api_arr [] = $api;
 
 
+//Get Template
+$api = new api();
+$api->name = "Get Template";
+$api->url = HOST . 'get_template';
+$api->method = "GET";
+$api->params->template_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
 //Delete Template
 $api = new api();
 $api->name = "Delete Template";
@@ -1830,7 +1867,6 @@ $api = new api();
 $api->name = "Add Template";
 $api->url = HOST . 'add_template';
 $api->method = "POST";
-$api->params->name = "test";
 $api->params->category_id = "1";
 $api->params->description = "test";
 $api->params->template = "Lab";
@@ -1838,6 +1874,24 @@ $api->params->token = "123435";
 
 
 $api_arr [] = $api;
+
+
+
+//Edit  Template
+$api = new api();
+$api->name = "Edit Template";
+$api->url = HOST . 'edit_template';
+$api->method = "POST";
+$api->params->template_id = "1";
+$api->params->name = "";
+$api->params->category_id = "1";
+$api->params->description = "test";
+$api->params->template = "Lab";
+$api->params->token = "123435";
+
+
+$api_arr [] = $api;
+
 
 
 //Get Templates Categories
@@ -2006,6 +2060,7 @@ $api->url = HOST . 'get_prescription_list';
 $api->method = "GET";
 $api->params->offset = "1";
 $api->params->limit = "1";
+$api->params->pharmacy_id = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
@@ -2106,6 +2161,7 @@ $api->url = HOST . 'add_immunization';
 $api->method = "POST";
 $api->params->patient_id = "1";
 $api->params->name = "";
+$api->params->immunization_date = "2016-06-15";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
@@ -2245,6 +2301,18 @@ $api->params->token = "123435";
 $api_arr [] = $api;
 
 
+//Update Discharge Date
+$api = new api();
+$api->name = "Update Discharge Date";
+$api->url = HOST . 'update_discharge_date';
+$api->method = "POST";
+$api->params->patient_admitted_id = "";
+$api->params->expected_discharge_date = "2016-09-08 09:36:00";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
 //Discharge Patient
 $api = new api();
 $api->name = "Discharge Patient";
@@ -2323,6 +2391,39 @@ $api->method = "GET";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+//Appointment Date Patients
+$api = new api();
+$api->name = "Appointment Dates Patients";
+$api->url = HOST . 'appointment_dates_patients';
+$api->method = "GET";
+$api->params->patient_id = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Appointment Date Doctors
+$api = new api();
+$api->name = "Appointment Dates Doctors";
+$api->url = HOST . 'appointment_dates_doctors';
+$api->method = "GET";
+$api->params->doctor_id = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Appointment Date Department
+$api = new api();
+$api->name = "Appointment Dates Departments";
+$api->url = HOST . 'appointment_dates_departments';
+$api->method = "GET";
+$api->params->department_id = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
 
 //Add Billing Category
 $api = new api();
@@ -2638,6 +2739,16 @@ $api->method = "POST";
 $api->params->ward_id = "1";
 $api->params->bed_id = "";
 $api->params->status = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Patients Discharged
+$api = new api();
+$api->name = "Patients Discharged";
+$api->url = HOST . 'patients_discharged';
+$api->method = "GET";
 $api->params->token = "123435";
 
 $api_arr [] = $api;

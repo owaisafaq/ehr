@@ -21,6 +21,8 @@ $app->group(['prefix' => 'api'], function () use ($app) {
     $app->post('register_user','App\Http\Controllers\ApiController@register_user');
     $app->post('user_login','App\Http\Controllers\ApiController@user_login');
     $app->post('search_patient', 'App\Http\Controllers\ApiController@search_patient');
+    $app->post('search_doctor', 'App\Http\Controllers\ApiController@search_doctor');
+    $app->post('search_department', 'App\Http\Controllers\ApiController@search_department');
     $app->post('add_patient_archive','App\Http\Controllers\ApiController@add_patient_archive');
     $app->options('add_patient_archive','App\Http\Controllers\ApiController@optadd_patient_archive');
     $app->post('update_patient_archive','App\Http\Controllers\ApiController@update_patient_archive');
@@ -90,6 +92,9 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->post('update_patient_appointments','App\Http\Controllers\ApiController@update_patient_appointments');
     $app->post('delete_patient_appointments','App\Http\Controllers\ApiController@delete_patient_appointments');
     $app->get('appointment_dates','App\Http\Controllers\OtherController@appointment_dates');
+    $app->get('appointment_dates_patients','App\Http\Controllers\OtherController@appointment_dates_patients');
+    $app->get('appointment_dates_doctors','App\Http\Controllers\OtherController@appointment_dates_doctors');
+    $app->get('appointment_dates_departments','App\Http\Controllers\OtherController@appointment_dates_departments');
     $app->post('move_appointment','App\Http\Controllers\OtherController@move_appointment');
     $app->post('appointment_reminder','App\Http\Controllers\OtherController@appointment_reminder');
 
@@ -151,8 +156,10 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->post('add_lab_template_types','App\Http\Controllers\OrderController@add_lab_template_types');
     $app->post('delete_lab_template_types','App\Http\Controllers\OrderController@delete_lab_template_types');
     $app->get('get_templates','App\Http\Controllers\ApiController@get_templates');
+    $app->get('get_template','App\Http\Controllers\ApiController@get_template');
     $app->post('delete_template','App\Http\Controllers\ApiController@delete_template');
     $app->post('add_template','App\Http\Controllers\ApiController@add_template');
+    $app->post('edit_template','App\Http\Controllers\ApiController@edit_template');
     $app->get('get_templates_categories','App\Http\Controllers\ApiController@get_templates_categories');
     $app->post('delete_template_category','App\Http\Controllers\ApiController@delete_template_category');
     $app->post('add_template_category','App\Http\Controllers\ApiController@add_template_category');
@@ -186,7 +193,10 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
      $app->get('bed_occupancy','App\Http\Controllers\OtherController@bed_occupancy');
      $app->get('ward_occupancy','App\Http\Controllers\OtherController@ward_occupancy');
      $app->get('patients_admitted','App\Http\Controllers\OtherController@patients_admitted');
+     $app->post('update_discharge_date','App\Http\Controllers\OtherController@update_discharge_date');
      $app->post('patient_discharge','App\Http\Controllers\OtherController@patient_discharge');
+     $app->get('patients_discharged','App\Http\Controllers\OtherController@patients_discharged');
+
      $app->post('move_patient','App\Http\Controllers\OtherController@move_patient');
      $app->get('all_wards','App\Http\Controllers\OtherController@all_wards');
      $app->get('ward_beds','App\Http\Controllers\OtherController@ward_beds');

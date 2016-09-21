@@ -109,11 +109,11 @@ class PDFController extends Controller
             $mail->CharSet = "utf-8"; // set charset to utf8
             $mail->SMTPAuth = true;  // use smpt auth
             $mail->SMTPSecure = "tls"; // or ssl
-            $mail->Host = "smtp.gmail.com";
-            $mail->Port = `587`; // most likely something different for you. This is the mailtrap.io port i use for testing.
-            $mail->Username = "aploskhan@gmail.com";
-            $mail->Password = "Aplos@221";
-            $mail->setFrom('smovaishassan12@hotmail.com');
+            $mail->Host = env('MAIL_HOST');
+            $mail->Port = env('MAIL_PORT'); // most likely something different for you. This is the mailtrap.io port i use for testing.
+            $mail->Username = env('MAIL_USERNAME');
+            $mail->Password = env('MAIL_PASSWORD');
+            $mail->setFrom(env('MAIL_FROM'));
             $mail->AddAttachment($path);
             $mail->Subject = "Message From Ehr";
             $mail->MsgHTML($message);
