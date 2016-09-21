@@ -3141,3 +3141,21 @@ Dynaimic Form
     padding-right: 0px!important;
     padding-left: 0px!important;
 }
+/*===============
+Referral Popup
+===============*/
+#referral .modal-body > div{
+    margin-bottom: 20px;
+}
+#referral .modal-footer{
+    padding-left: 50px;
+    padding-right: 50px;
+}
+#referral .checkbox label{
+    width: 100%;
+}
+.stick-bottom-footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
