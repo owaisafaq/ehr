@@ -874,6 +874,22 @@ AppEHR.factory("GetAllInventory", function ($resource) {
     return InventoryLists;
 });
 
+AppEHR.factory("AddMoreStock", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_inventory', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var InventoryLists = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return InventoryLists;
+});
+
 AppEHR.factory("GetAllSuppliers", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'get_inventory_suppliers', params, {
