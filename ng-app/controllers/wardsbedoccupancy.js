@@ -12,7 +12,7 @@ AppEHR.controller('wardsBedOccupancyController', ['$scope', '$rootScope', '$wind
     $scope.flagOccupied = false;
     $scope.flagWaiting = false;
     $scope.flagExpected = false;
-    $scope.sortingClassSpeciality = $scope.sortingClassWard = $scope.sortingClassTBeds = $scope.sortingClassABeds = $scope.sortingClassClosed = $scope.sortingClassClosed = $scope.sortingClassWaiting = $scope.sortingClassExpected = "fa-caret-down";
+    $scope.sortingClassSpeciality = $scope.sortingClassWard = $scope.sortingClassTBeds = $scope.sortingClassABeds = $scope.sortingClassClosed = $scope.sortingClassClosed = $scope.sortingClassWaiting = $scope.sortingClassExpected = $scope.sortingClassOccupied = "fa-caret-down";
     BedOccupancy.get({
         token: $window.sessionStorage.token, 
         ward_id: $routeParams.wardID,
@@ -29,6 +29,12 @@ AppEHR.controller('wardsBedOccupancyController', ['$scope', '$rootScope', '$wind
                 return true;
             }
             $scope.allBedOccupancy = res.data;
+            for(var k = 0; k < $scope.allBedOccupancy.length; k++){
+                $scope.allBedOccupancy[k].number_of_beds = parseFloat($scope.allBedOccupancy[k].number_of_beds);
+                $scope.allBedOccupancy[k].available_beds = parseFloat($scope.allBedOccupancy[k].available_beds);
+                $scope.allBedOccupancy[k].number_of_beds_closed = parseFloat($scope.allBedOccupancy[k].number_of_beds_closed);
+                $scope.allBedOccupancy[k].number_of_beds_occupied = parseFloat($scope.allBedOccupancy[k].number_of_beds_occupied);
+            }
             $scope.bedCount = res.count;
         }
     }
@@ -58,30 +64,30 @@ AppEHR.controller('wardsBedOccupancyController', ['$scope', '$rootScope', '$wind
             offset: (pageSize * curPage), limit: $scope.itemsPerPage
         }, bedOccupanySuccess, bedOccupanyFailure);
     }
-    
+    $scope.sortOrder = '';
     $scope.sortingBySpeciality = function(){
         if($scope.flagSpeciality == false){
-            console.log(1);
             $scope.sortingClassSpeciality = "fa-caret-up";
-            $scope.sortOrderSpeciality = "-speciality";
+            $scope.sortOrder = "speciality";
             $scope.flagSpeciality = true;
+            console.log(1, $scope.sortOrder);
         }else{
-            console.log(2);
             $scope.flagSpeciality = false;
-            $scope.sortOrderSpeciality = "speciality";
+            $scope.sortOrder = "-speciality";
             $scope.sortingClassSpeciality = "fa-caret-down";
+            console.log(2, $scope.sortOrder);
         }
     }
     $scope.sortingByWard = function(){
         if($scope.flagWard == false){
             console.log(1);
             $scope.sortingClassWard = "fa-caret-up";
-            $scope.sortOrderWard = "-name";
+            $scope.sortOrder = "name";
             $scope.flagWard = true;
         }else{
             console.log(2);
             $scope.flagWard = false;
-            $scope.sortOrderWard = "name";
+            $scope.sortOrder = "-name";
             $scope.sortingClassWard = "fa-caret-down";
         }
     }
@@ -89,12 +95,12 @@ AppEHR.controller('wardsBedOccupancyController', ['$scope', '$rootScope', '$wind
         if($scope.flagTBeds == false){
             console.log(1);
             $scope.sortingClassTBeds = "fa-caret-up";
-            $scope.sortOrderTBeds = "-number_of_beds";
+            $scope.sortOrder = "number_of_beds";
             $scope.flagTBeds = true;
         }else{
             console.log(2);
             $scope.flagTBeds = false;
-            $scope.sortOrderTBeds = "number_of_beds";
+            $scope.sortOrder = "-number_of_beds";
             $scope.sortingClassTBeds = "fa-caret-down";
         }
     }
@@ -102,12 +108,12 @@ AppEHR.controller('wardsBedOccupancyController', ['$scope', '$rootScope', '$wind
         if($scope.flagABeds == false){
             console.log(1);
             $scope.sortingClassABeds = "fa-caret-up";
-            $scope.sortOrderABeds = "-available_beds";
+            $scope.sortOrder = "available_beds";
             $scope.flagABeds = true;
         }else{
             console.log(2);
             $scope.flagABeds = false;
-            $scope.sortOrderABeds = "available_beds";
+            $scope.sortOrder = "-available_beds";
             $scope.sortingClassABeds = "fa-caret-down";
         }
     }
@@ -115,38 +121,38 @@ AppEHR.controller('wardsBedOccupancyController', ['$scope', '$rootScope', '$wind
         if($scope.flagClossed == false){
             console.log(1);
             $scope.sortingClassClosed = "fa-caret-up";
-            $scope.sortOrderClosed = "-number_of_beds_closed";
+            $scope.sortOrder = "number_of_beds_closed";
             $scope.flagClossed = true;
         }else{
             console.log(2);
             $scope.flagClossed = false;
-            $scope.sortOrderClosed = "number_of_beds_closed";
+            $scope.sortOrder = "-number_of_beds_closed";
             $scope.sortingClassClosed = "fa-caret-down";
         }
     }
     $scope.sortingByOccupied = function(){
         if($scope.flagOccupied == false){
             console.log(1);
-            $scope.sortingClassClosed = "fa-caret-up";
-            $scope.sortOrderClosed = "-number_of_beds_occupied";
+            $scope.sortingClassOccupied = "fa-caret-up";
+            $scope.sortOrder = "number_of_beds_occupied";
             $scope.flagOccupied = true;
         }else{
             console.log(2);
             $scope.flagOccupied = false;
-            $scope.sortOrderClosed = "number_of_beds_occupied";
-            $scope.sortingClassClosed = "fa-caret-down";
+            $scope.sortOrder = "-number_of_beds_occupied";
+            $scope.sortingClassOccupied = "fa-caret-down";
         }
     }
     $scope.sortingWaiting = function(){
         if($scope.flagWaiting == false){
             console.log(1);
             $scope.sortingClassWaiting = "fa-caret-up";
-            $scope.sortOrderWaiting = "-patients_wating";
+            $scope.sortOrder = "patients_wating";
             $scope.flagWaiting = true;
         }else{
             console.log(2);
             $scope.flagWaiting = false;
-            $scope.sortOrderWaiting = "patients_wating";
+            $scope.sortOrder = "-patients_wating";
             $scope.sortingClassWaiting = "fa-caret-down";
         }
     }
@@ -154,12 +160,12 @@ AppEHR.controller('wardsBedOccupancyController', ['$scope', '$rootScope', '$wind
         if($scope.flagExpected == false){
             console.log(1);
             $scope.sortingClassExpected = "fa-caret-up";
-            $scope.sortOrderExpected = "-expected_discharge_date";
+            $scope.sortOrder = "expected_discharge_date";
             $scope.flagExpected = true;
         }else{
             console.log(2);
             $scope.flagExpected = false;
-            $scope.sortOrderExpected = "expected_discharge_date";
+            $scope.sortOrder = "-expected_discharge_date";
             $scope.sortingClassExpected = "fa-caret-down";
         }
     }

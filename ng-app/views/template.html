@@ -12,7 +12,6 @@
                 <div class="tab-pane active" id="template">
                     <div class="main_templates">
                         <div class="table-header row background-none margin-bot-70">
-
                             <div class="pull-right">
                                 <button class="add button-custom pull-right templates">New Template</button>
                             </div>
@@ -27,15 +26,12 @@
                             </div>
                         </div>
                         <form class="custom-form">
-
-
                             <table class="table table-striped no-margin table-custom table-custom_big billing_table">
                                 <thead>
                                     <tr>
                                         <th>Template Name</th>
                                         <th>Category</th>
                                         <th>Description</th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -46,7 +42,7 @@
                                             <span>{{templateList.description}}</span>
                                             <div class="billing_actions"><a href="javascript:;" class="setting-button"></a>
                                                 <div class="tool-tip_popup">
-                                                    <a href="javascript:;">Edit</a>
+                                                    <a href="javascript:;" ng-click="editMyTemplate(templateList.id)">Edit</a>
                                                     <a href="javascript:;"   ng-click="templateDeleted(templateList.id)">Delete</a>
                                                 </div>
                                             </div>
@@ -143,6 +139,74 @@
                         </div>
 
 
+                    </div>
+                    <div class="editTemplateTab">
+                        <!-- <div class="table-header row background-none margin-bot-70">
+                            <div class="pull-right">
+                                <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Edit Template</button>
+                            </div>
+                            <div class="pull-right">
+                                <div class="header-search pull-left margin-top-10">
+                                    <button type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                    <input class="search_field" type="text" placeholder="Search Template">
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="custom-form">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <label>Template Name</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" name="template_name" id="Edittemplate_name"  ng-model="Edittemplate_name">
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <label>Description</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" name="description" id="Editdescription" ng-model="Edittemplate_description">
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <label>Category</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <select class="form-control" name="editcategories"  ng-model="Edittemplate_cat_id">
+                                        <option>Select Category</option>
+                                        <option ng-repeat='category in categories' value='{{category.id}}'>{{category.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div fg-tabs class="needs-some-more-space custom_template">
+                                <div fg-tabs-pane="Schema Editor" class="scehme">
+                                    <form class="form-horizontal" name="EditForm.$state">
+                                        <div fg-edit
+                                             fg-schema="EditForm.schema">
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div fg-tabs-pane="Form Preview" class="f_preview">
+                                    <form novalidate class="form-horizontal" name="previewForm" ng-init="EditForm.$data = EditForm.schema">
+                                        <fieldset>
+                                            <!-- Magic starts here -->
+                                            <div fg-form
+                                                 fg-form-data="EditForm.$data"
+                                                 fg-schema="EditForm.schema">
+                                            </div>
+                                            <!-- Magic ends here -->
+                                        </fieldset>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="margin-top-30">                                
+                                <input type="button" class="btn button-style-1 button-style-1_a pull-right" name="cancel_addtemplate" id="cancel_edittemplate" value="Cancel" >
+                                <input type="button" class="btn btn-default button-style-1 pull-right margin-right-10" name="saveForm" value="Save" ng-click="updateTemplate()" >
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -252,20 +316,26 @@
 </div><!-- /.modal -->
 
 <script>
+    $(document).ready(function () {
+        $(".addtemplates").hide();
+        $(".editTemplateTab").hide();
+        $(".templates").click(function () {
+            $(".main_templates").hide();
+            $(".addtemplates").show();
+        });
 
-            $(document).ready(function () {
-                $(".addtemplates").hide();
-                $(".templates").click(function () {
-                    $(".main_templates").hide();
-                    $(".addtemplates").show();
-                });
+        $("#cancel_addtemplate").click(function () {
+            $("#template_name").val('');
+            $("#description").val('');
+            $(".addtemplates").hide();
+            $(".main_templates").show();
+        });
+        $("#cancel_edittemplate").click(function () {
+            //$("#Edittemplate_name").val('');
+            //$("#Editdescription").val('');
+            $(".editTemplateTab").hide();
+            $(".main_templates").show();
+        });
 
-                $("#cancel_addtemplate").click(function () {
-                    $("#template_name").val('');
-                    $("#description").val('');
-                    $(".addtemplates").hide();
-                    $(".main_templates").show();
-                });
-
-            });
+    });
 </script>

@@ -8,7 +8,11 @@ AppEHR.controller('wardBedListingController', ['$scope', '$rootScope', '$window'
     $scope.dropDownData = [];
 	$scope.buttonDisabled = true;
 	$rootScope.loader = "show";
+    $scope.sortingWard = $scope.sortingBeds = $scope.sortingSpeciality = "fa-caret-down";
 	$scope.itemsPerPage = 15;
+    $scope.flagWard = false;
+    $scope.flagSpeciality = false;
+    $scope.flagBeds = false;
 	GetAllWards.get({
 		token: $window.sessionStorage.token, 
 		limit: $scope.itemsPerPage, 
@@ -26,7 +30,10 @@ AppEHR.controller('wardBedListingController', ['$scope', '$rootScope', '$window'
                 $scope.wardsCount = 0;
                 return true;
             }
-			$scope.allWards = res.data;
+            $scope.allWards = res.data;
+            for(var k = 0; k < $scope.allWards.length; k++){
+                $scope.allWards[k].number_of_beds = parseFloat($scope.allWards[k].number_of_beds);
+            }
 			$scope.wardsCount = res.count;
 		}
 	}
@@ -202,6 +209,48 @@ AppEHR.controller('wardBedListingController', ['$scope', '$rootScope', '$window'
     $scope.bedShematic = function(){
         console.log($scope.wardID);
         $window.location.href = "#/wards-bed-shematic/" + $scope.wardID;
+    }
+
+    $scope.sortingByWard = function(){
+        if($scope.flagWard == false){
+            $scope.sortingWard = "fa-caret-up";
+            $scope.sortOrder = "-name";
+            $scope.flagWard = true;
+            console.log(1, $scope.sortOrder);
+        }else{
+            $scope.flagWard = false;
+            $scope.sortOrder = "name";
+            $scope.sortingWard = "fa-caret-down";
+            console.log(2, $scope.sortOrder);
+        }
+    }
+
+    $scope.sortingBySpeciality = function(){
+        if($scope.flagSpeciality == false){
+            $scope.sortingSpeciality = "fa-caret-up";
+            $scope.sortOrder = "-speciality";
+            $scope.flagSpeciality = true;
+            console.log(1, $scope.sortOrder);
+        }else{
+            $scope.flagSpeciality = false;
+            $scope.sortOrder = "speciality";
+            $scope.sortingSpeciality = "fa-caret-down";
+            console.log(2, $scope.sortOrder);
+        }
+    }
+
+    $scope.sortingByBeds = function(){
+        if($scope.flagBeds == false){
+            $scope.sortingBeds = "fa-caret-up";
+            $scope.sortOrder = "-number_of_beds";
+            $scope.flagBeds = true;
+            console.log(1, $scope.sortOrder, $scope.flagBeds);
+        }else{
+            $scope.flagBeds = false;
+            $scope.sortOrder = "number_of_beds";
+            $scope.sortingBeds = "fa-caret-down";
+            console.log(2, $scope.sortOrder, $scope.flagBeds);
+        }
     }
 
 }]);

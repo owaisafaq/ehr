@@ -119,6 +119,7 @@
                                 </div>
                             </div>
                             <div class="heading-bar col-lg-12 no-margin">Stock Details</div>
+                            <button class="add button-custom pull-right add_stock_button">Add Stock</button>
                             <table class="table table-striped no-margin table-custom table-custom_big">
                                 <thead>
                                     <tr>
@@ -517,6 +518,153 @@
                                                 </div>
                                             </form>
                                         </div>
+
+
+                    <!--Add stock-->
+
+                    <div class="add_stock">
+                        <form class="custom-form" id="addStock" ng-submit="AddStock(addStock);"  >
+                            <div class="row">
+                                <h2 class="h2-style_1">Add More Stock </h2>
+                                <div class="col-lg-12">
+                                    <label class="label-style">Enter Stock Details</label>
+                                </div>
+
+
+                                <div class="col-lg-3">
+                                    <label>Stock Received date</label>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="input-group date select-date">
+                                        <div class="input-group-content">
+                                            <input type="text" class="form-control" ng-model="addStock.recvd_date" placeholder="Pick Date" required >
+                                        </div>
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label>supplier</label>
+                                </div>
+                                <div class="col-lg-3">
+
+
+
+
+
+                                    <select class="form-control" ng-model="addStock.supp_id" required  >
+                                        <option>Select supplier</option>
+
+                                        <option ng-repeat="supplier in SuppplierLists" value="{{supplier.id}}">
+                                            {{supplier.name}}
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <label>batch number</label>
+                                </div>
+                                <div class="col-lg-3">
+                                    <input type="text" placeholder="" ng-model="addStock.batch_number" required  />
+                                </div>
+                                <div class="col-lg-3">
+                                    <label>expiry date</label>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="input-group date select-date">
+                                        <div class="input-group-content">
+                                            <input type="text" class="form-control" ng-model="addStock.expiry_date" placeholder="Pick Date" required >
+                                        </div>
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label>quantity</label>
+                                </div>
+                                <div class="col-lg-3">
+                                    <input type="text" ng-model="addStock.quantity" required />
+                                </div>
+                                <div class="col-lg-3">
+                                    <label>cost Price/item</label>
+                                </div>
+                                <div class="col-lg-3">
+                                    <input type="text"  ng-model="addStock.price" required />
+                                </div>
+                                <div class="col-lg-3">
+                                    <label>manufacturer</label>
+                                </div>
+                                <div class="col-lg-3">
+                                    <select class="form-control" ng-model="addStock.manufacturer_id" required >
+                                        <option value="">Select Manufacturer</option>
+                                        <option value="1">Manufacturer 1</option>
+                                        <option value="2">Manufacturer 2</option>
+                                        <option value="3">Manufacturer 3</option>
+                                        <option value="4">Manufacturer 4</option>
+                                        <option value="5">Manufacturer 5</option>
+
+                                    </select>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label>Pharmacy</label>
+                                </div>
+                                <div class="col-lg-3">
+
+                                    <select class="form-control" ng-model="addStock.pharmacy_id" required  >
+
+                                        <option>Select Pharmacy</option>
+                                        <option ng-repeat="pharmacy in PharmacyLists" value="{{pharmacy.id}}">
+                                            {{pharmacy.name}}
+                                        </option>
+
+
+
+                                    </select>
+
+
+
+
+
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <label>pack</label>
+                                </div>
+                                <div class="col-lg-3">
+                                    <select class="form-control" ng-model="addStock.pack" required >
+                                        <option>Select Pack</option>
+                                        <option>Pack 1</option>
+                                        <option>Pack 2</option>
+                                        <option>Pack 3</option>
+                                        <option>Pack 4</option>
+
+                                    </select>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label>reference number</label>
+                                </div>
+                                <div class="col-lg-3">
+                                    <input type="text" ng-model="addStock.ref_no" placeholder=""  required />
+                                </div>
+                                <div class="col-lg-3">
+                                    <label>tax</label>
+                                </div>
+                                <div class="col-lg-3" >
+                                    <input type="text" ng-model="addStock.tax" placeholder="" required />
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <button type="submit" class="btn btn-default button-style-1">Add</button>
+                                    <button type="button" class="btn button-style-1 button-style-1_a cancel_add" >Cancel</button>
+                                </div>
+
+
+                            </div>
+
+                    </form>
+                    </div>
+
+                    <!--Add stock-->
+
+
                 </div>
                 <div class="tab-pane" id="suppliers">
                     <div class="table-header row background-none">
@@ -894,13 +1042,6 @@
                         </div>
 
 
-
-
-
-
-
-
-
                         <div class="col-lg-3">
                             <label>Mobile</label>
                         </div>
@@ -1168,6 +1309,7 @@ Edit Supplier Modal-->
                 $(".add-drug-supplements").hide();
                 $(".add-drug-others").hide();
                 $(".edit_prod").hide();
+                $(".add_stock").hide();
 
 
 
@@ -1179,6 +1321,7 @@ Edit Supplier Modal-->
                     $(".inv_header").hide();
                     $("#stock_det").hide();
                     $(".edit_prod").hide();
+                    $(".add_stock").hide();
                     $(".add-drug-supplements").show();
 
                 });
@@ -1190,8 +1333,22 @@ Edit Supplier Modal-->
                     $(".inventory_detail").hide();
                     $(".inv_header").hide();
                     $("#stock_det").hide();
+                    $(".add_stock").hide();
                     $(".add-drug-supplements").hide();
                     $(".edit_prod").show();
+
+                });
+
+
+                $(".add_stock_button").click(function () {
+
+                    // alert("here");
+                    $(".inventory_detail").hide();
+                    $(".inv_header").hide();
+                    $("#stock_det").hide();
+                    $(".add_stock").show();
+                    $(".add-drug-supplements").hide();
+                    $(".edit_prod").hide();
 
                 });
 
@@ -1205,6 +1362,7 @@ Edit Supplier Modal-->
                     $(".add-drug-supplements").hide();
                     $(".edit_prod").hide();
                     $(".add-drug-others").hide();
+                    $(".add_stock").hide();
                     $(".inventory_detail").show();
                     $(".inv_header").show();
 

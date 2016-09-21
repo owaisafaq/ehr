@@ -2,15 +2,15 @@
     <section>
         <div class="card custom-card">
             <div class="card-head card-head-custom card-color-2">
-                <h2 class="h2-style pull-left">Bed Occupancy Ward {{wardID}}</h2>
+                <h2 class="h2-style pull-left">Bed Occupancy Ward WRD{{wardID}}</h2>
                 <button data-toggle="modal" class="add button-custom-white pull-right" ng-click="newBed();">ADD</button>
                 <button class="delete button-custom-white pull-right" data-toggle="modal" data-target="#removeBed">Remove</button>
                 <button class="edit button-custom-white pull-right" data-toggle="modal" data-target="#editBed">Edit</button>
             </div>
             <div class="card-body col-lg-12 bed-box-con">
-                <div class="bed-box" ng-repeat="beds in allBedOccupancy" ng-click="statusValue(beds.bed_status)" status="{{beds.bed_status}}" id="{{beds.id}}" ng-click="selectBed(beds.id)">
+                <div class="bed-box" ng-repeat="beds in allBedOccupancy" ng-click="statusValue(beds.bed_status)" status="{{beds.bed_status}}" id="{{beds.patient_bed_id}}" ng-click="selectBed(beds.id)">
                     <span class="txt5">Bed No.</span>
-                    <span class="txt6">{{beds.id}}</span>
+                    <span class="txt6">BED{{beds.id}}</span>
                     <img ng-if="beds.bed_status == 'available'" ng-src="assets/img/bed_available.png">
                     <img ng-if="beds.bed_status == 'occupied'" ng-src="assets/img/bed_occupied.png">
                     <img ng-if="beds.bed_status == 'closed'" ng-src="assets/img/bed_close.png">
@@ -86,50 +86,41 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
-                <h2>Select Status to Update</h2>
+                <h2>Confirmation</h2>
             </div>
             <div class="modal-body">
-                <span class="{{errorClass}}">{{statusMsg}}</span>
-                <div class="col-lg-12">
-                <form name="myFormAdd">
-                    <select ng-model="bedStatus" class="form-control" required name="bedstatus">
-                        <option value="">Select</option>
-                        <option value="available">Available</option>
-                        <option value="occupied">Occupied</option>
-                        <option value="closed">Closed</option>
-                    </select>
-                    <span ng-show="myFormAdd.bedstatus.$invalid" class="error-msg pull-right">Required</span>
-                </form>
-                </div>
-                <!-- <div class="col-lg-4">
-                    <div class="radio radio-styled">
-                        <label>
-                            <input type="radio" name="status" ng-model="bedStatus1" ng-checked="'available' == status" ng-value="available">
-                            <span>Available</span>
-                        </label>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="radio radio-styled">
-                        <label>
-                            <input type="radio" name="status" ng-model="bedStatus2" ng-checked="'occupied' == status" ng-value="occupied">
-                            <span>Occupied</span>
-                        </label>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="radio radio-styled">
-                        <label>
-                            <input type="radio" name="status" ng-model="bedStatus3" ng-checked="'closed' == status" ng-value="closed">
-                            <span>Closed</span>
-                        </label>
-                    </div>
-                </div>
-            </div> -->
+                <p>Are you sure you want to change status?</p>
+            </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default button-style-1" ng-click="submitted = true; updateBed(bedStatus);" ng-disabled="myFormAdd.bedstatus.$invalid">save</button>
-                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">cancel</button>
+                <button type="button" class="btn btn-default button-style-1" ng-click="updateBed(bedStatus);">YES</button>
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">NO</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<!-- <div class="modal fade" id="editBed" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Confirmation</h2>
+            </div>
+            <div class="modal-body">
+                <span class="{{errorClass}}">Are you sure you want to change status?</span>
+                <div class="col-lg-12">
+                    <form name="myFormAdd">
+                        <select ng-model="bedStatus" class="form-control" required name="bedstatus">
+                            <option value="">Select</option>
+                            <option value="available">Available</option>
+                            <option value="occupied">Occupied</option>
+                            <option value="closed">Closed</option>
+                        </select>
+                        <span ng-show="myFormAdd.bedstatus.$invalid" class="error-msg pull-right">Required</span>
+                    </form>
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" ng-click="submitted = true; updateBed(bedStatus);" ng-disabled="myFormAdd.bedstatus.$invalid">save</button>
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">cancel</button>
+            </div>
+        </div>
+    </div>
+</div> -->

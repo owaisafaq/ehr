@@ -1,163 +1,164 @@
 <div id="content">
-    <div class="card">
-        <div class="card-body col-lg-9 border-right">
-            <div class="row">
-                <!-- BEGIN CALENDAR EVENTS -->
-                <div class="col-sm-3 no-padding">
-                    <h2>Draggable Events</h2>
-                    <div class="checkbox checkbox-styled">
-                        <label>
-                            <input id="drop-remove" type="checkbox" checked>
-                            <span>Remove after drop</span>
-                        </label>
+    <section>
+        <div class="card">
+            <div class="card-body col-lg-12 border-right">
+                <div class="row">
+                    <div class="col-lg-4">
+                        Search by Patient Name
+                         <input class="search_field" type="text" placeholder="Search" id="findPatient" data-source="{{PatientSearch}}search_patient" name="FindPatient"> 
                     </div>
-                    <br/>
-                    <ul class="list divider-full-bleed list-events">
-                        <li class="tile event-color-6" data-class-name="event-color-6">
-                            <div class="tile-content">
-                                <div class="tile-text">Appointment @ 07:00 AM</div>
+                    <div class="col-lg-4">
+                        Search by speciality
+                        <input class="search_field" type="text" placeholder="Search" id="departmentSearch" data-source="{{PatientSearch}}search_department" name="FindSpeciality">
+                    </div>
+                    <div class="col-lg-4">
+                        Search by To See
+                        <input class="search_field" type="text" placeholder="Search" id="doctorSearch" data-source="{{PatientSearch}}search_doctor" name="FindToSee">
+                    </div>
+                    <div class="icons_con">
+                        <button data-toggle="modal" data-target="#createAppointment" class="add button-custom">ADD Appointment</button>
+                    </div>
+                    <!-- BEGIN CALENDAR -->
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-body no-padding">
+                                <div id="calendar"></div>
                             </div>
-                        </li>
-                        <li class="tile event-color-5" data-class-name="event-color-5">
-                            <div class="tile-content">
-                                <div class="tile-text">Appointment @ 08:00 AM</div>
-                            </div>
-                        </li>
-                        <li class="tile event-color-4" data-class-name="event-color-4">
-                            <div class="tile-content">
-                                <div class="tile-text">Appointment @ 09:00 AM</div>
-                            </div>
-                        </li>
-                        <li class="tile event-color-3" data-class-name="event-color-3">
-                            <div class="tile-content">
-                                <div class="tile-text">Appointment @ 10:00 AM</div>
-                            </div>
-                        </li>
-                        <li class="tile event-color-2" data-class-name="event-color-2">
-                            <div class="tile-content">
-                                <div class="tile-text">Appointment @ 11:00 AM</div>
-                            </div>
-                        </li>
-                        <li class="tile event-color-1" data-class-name="event-color-1">
-                            <div class="tile-content">
-                                <div class="tile-text">Appointment @ 12:00 AM</div>
-                            </div>
-                        </li>
-                    </ul>
-                </div><!--end .col -->
-                <!-- END CALENDAR EVENTS -->
-
-                <!-- BEGIN CALENDAR -->
-                <div class="col-sm-9">
-                    <div class="card">
-                        <div class="card-body no-padding">
-                            <div id="calendar"></div>
-                        </div><!--end .card-body -->
-                    </div><!--end .card -->
-                </div><!--end .col -->
-                <!-- END CALENDAR -->
-
-            </div><!--end .row -->
-        </div><!--end .card-body -->
-        <div class="col-lg-3">
-            <div id="small-calendar" class="pull-right"></div>
-            <div class="col-lg-12 no-padding pull-right box-style-1 margin-bottom-xxl">
-                <div class="headbar-custom">
-                    <h2>View By Whom To See</h2>
-                </div>
-                <div class="col-lg-12">
-                    <div class="checkbox checkbox-styled">
-                        <label>
-                            <input type="checkbox" value="">
-                            <span>Dr. Jay Rodriguez</span>
-                        </label>
+                        </div>
                     </div>
-
-                    <div class="checkbox checkbox-styled">
-                        <label>
-                            <input type="checkbox" value="">
-                            <span>Dr. Mali O</span>
-                        </label>
-                    </div>
-
-                    <div class="checkbox checkbox-styled">
-                        <label>
-                            <input type="checkbox" value="">
-                            <span>Dr. Maryanne</span>
-                        </label>
-                    </div>
-
-                    <div class="checkbox checkbox-styled">
-                        <label>
-                            <input type="checkbox" value="">
-                            <span>Dr. O Jay</span>
-                        </label>
-                    </div>
-
-                    <div class="checkbox checkbox-styled">
-                        <label>
-                            <input type="checkbox" value="">
-                            <span>Dr Simpson</span>
-                        </label>
-                    </div>
-
-                    <div class="checkbox checkbox-styled">
-                        <label>
-                            <input type="checkbox" value="">
-                            <span>Dr. Bob Marley</span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-12 no-padding pull-right box-style-1 margin-bottom-xxl">
-                <div class="headbar-custom">
-                    <h2>View By Department</h2>
-                </div>
-                <div class="col-lg-12">
-                    <div class="checkbox checkbox-styled">
-                        <label>
-                            <input type="checkbox" value="">
-                            <span>Eye Clinic</span>
-                        </label>
-                    </div>
-
-                    <div class="checkbox checkbox-styled">
-                        <label>
-                            <input type="checkbox" value="">
-                            <span>GOPD</span>
-                        </label>
-                    </div>
-
-                    <div class="checkbox checkbox-styled">
-                        <label>
-                            <input type="checkbox" value="">
-                            <span>Lab</span>
-                        </label>
-                    </div>
-
-                    <div class="checkbox checkbox-styled">
-                        <label>
-                            <input type="checkbox" value="">
-                            <span>Maternity</span>
-                        </label>
-                    </div>
-
-                    <div class="checkbox checkbox-styled">
-                        <label>
-                            <input type="checkbox" value="">
-                            <span>Antenatal</span>
-                        </label>
-                    </div>
-
-                    <div class="checkbox checkbox-styled">
-                        <label>
-                            <input type="checkbox" value="">
-                            <span>Postnatal</span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><!--end .card -->
+                </div><!--end .row -->
+            </div><!--end .card-body -->
+            <!-- <div class="col-lg-3">
+                <div id="small-calendar" class="pull-right"></div>
+            </div> -->
+        </div><!--end .card -->
+        
+    </section>
 </div>
+<div class="modal fade" id="noResultFound" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Result</h2>
+            </div>
+            <div class="modal-body">
+                <p>No Result Found</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade big-modal" id="createAppointment" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Create Appointment</h2>
+            </div>
+            <form class="custom-form" name="myFormAdd" ng-model="myFormAdd" novalidate ng-submit="createAppointments(appointment);">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="header-search margin-right-0 col-lg-4">
+                            <button type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            <input class="search_field findPatient" type="text" ng-model="appointment.appointmentSearch" placeholder="Search by Name or Patient Id" data-source="{{PatientSearch}}search_patient" name="FindPatient" ng-class="{true: 'error'}[submitted && myFormAdd.FindPatient.$invalid]" required>
+                            <input type="hidden" ng-model="appointment.selectedPatientID" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <label>Speciality</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <select class="form-control" ng-model="appointment.department" placeholder="Select" name="depart" ng-class="{true: 'error'}[submitted && myFormAdd.depart.$invalid]" required>
+                                <option value=""></option>
+                                <option ng-repeat="d in dropdownData.departments" value="{{ d.id }}">{{ d.name }}</option>
+                            </select>
+                            <p class="help-block PIValid" ng-show="submitted && myFormAdd.depart.$error.required">Required</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <label>Whom To See</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <select class="form-control" ng-model="appointment.doctor" placeholder="Select" name="wts" ng-class="{true: 'error'}[submitted && myFormAdd.wts.$invalid]" required>
+                                <option value=""></option>
+                                <option ng-repeat="d in dropdownData.doctors" value="{{ d.id }}">{{ d.name }}</option>
+                            </select>
+                            <p class="help-block PIValid" ng-show="submitted && myFormAdd.wts.$error.required">Required</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 no-padding">
+                            <div class="col-lg-4">
+                                <label>Reason</label>
+                            </div>
+                            <div class="col-lg-8 margin-bottom-30">
+                                <select class="form-control" ng-model="appointment.reason" placeholder="Select" name="reason" ng-class="{true: 'error'}[submitted && myFormAdd.reason.$invalid]" required>
+                                    <option value=""></option>
+                                    <option ng-repeat="r in reason" value="{{ r.name }}">{{ r.name }}</option>
+                                </select>
+                                <p class="help-block PIValid" ng-show="submitted && myFormAdd.reason.$error.required">Required</p>
+                            </div>
+                              <div class="col-lg-4">
+                                <label>Date</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="input-group date select-date col-lg-12">
+                                    <div class="input-group-content">
+                                        <input type="text" class="form-control" name="date" placeholder="Select Date"  ng-model="appointment.date" ng-class="{true: 'error'}[submitted && myFormAdd.date.$invalid]" required>
+                                    </div>
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
+                                <p class="help-block PIValid" ng-show="submitted && myFormAdd.date.$error.required">Required</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <label>Other Reason</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <textarea ng-model="appointment.otherReason" name="otherReason" placeholder="Describe here"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <label>Time</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="input-group bootstrap-timepicker col-lg-12">
+                                <input type="text" class="form-control input-small timepicker"  ng-model="appointment.startTime" name="starttime" ng-class="{true: 'error'}[submitted && myFormAdd.starttime.$invalid]" required>
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                            </div>
+                            <p class="help-block PIValid" ng-show="submitted && myFormAdd.starttime.$error.required">Required</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <label>Task Priority</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <select class="form-control" ng-model="appointment.priority" placeholder="Select Priority" name="task" >
+                                <option value=""></option>
+                                <option ng-repeat="p in priorities" value="{{ p.name }}">{{ p.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <label>Notes</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <textarea ng-model="appointment.notes" placeholder="Write here" name="notes" ></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;" ng-disabled="addformsubmission()">create</button>
+                    <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal" ng-disabled="OrderBtn" ng-click="submitted = false;">Cancel</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script src="assets/js/libs/fullcalendar/fullcalendar.min.js"></script>
+<script src="assets/js/core/demo/DemoCalendar.js"></script>
+<script>$('#small-calendar').datepicker({todayHighlight: true});</script>

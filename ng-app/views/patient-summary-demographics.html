@@ -4,7 +4,7 @@
             <div class="card-head card-head-custom {{hospital_plan}}">
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Encounter ID</label>
-                    <span class="txt-style-2 col-lg-12 capitalize">{{encounterID == undefined ? EID : encounterID}}</span>
+                    <span class="txt-style-2 col-lg-12 capitalize">E{{encounterID == undefined ? EID : encounterID}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
@@ -63,10 +63,17 @@
                             <div id="accordion3-3" class="collapse">
                                 <div class="card-body">
                                     <textarea ng-model="immunizationName" placeholder="Immunization" required></textarea>
-                                    <button class="btn button-style-1 pull-right" ng-click="addImmunizations(immunizationName);">Add</button>
+                                    <div class="input-group date select-date col-lg-12">
+                                        <div class="input-group-content">
+                                            <input type="text" class="form-control" placeholder="Select Date" ng-model="immunizationDate">
+                                        </div>
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                    <button class="btn button-style-1 pull-right" ng-click="addImmunizations(immunizationName, immunizationDate);">Add</button>
                                     <ul class="ulli ulli_3 col-lg-12">
-                                        <li class="col-lg-12" ng-repeat="immunization in immunizations">
+                                        <li class="col-lg-12 capitalize" ng-repeat="immunization in immunizations">
                                             {{immunization.name}}
+                                            {{immunization.immunization_date}}
                                             <span class="pull-right delete-icon" ng-click="removeImmunization(immunization.id);"><img src="assets/img/cross.png" /></span><!-- immunizations.splice($index, 1) -->
                                         </li>
                                     </ul>
@@ -207,7 +214,7 @@
                                     <div class="col-lg-3">
                                         <label>email</label>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-3 no-padding">
                                         <label class="txt-style-4 text-lowercase">{{PI.email}}</label>
                                     </div>
                                     <div class="col-lg-3">
@@ -254,7 +261,7 @@
                         <tbody>
                             <tr ng-repeat="encounter in encounters">
                                 <td>{{encounter.created_at}}</td>
-                                <td>{{encounter.id}}</td>
+                                <td>E{{encounter.id}}</td>
                                 <td>{{encounter.encounter_type}}</td>
                                 <td>{{encounter.first_name}}</td>
                                 <td>{{encounter.diagosis}}</td>
@@ -303,6 +310,7 @@
                     <table class="table table-striped no-margin table-custom table-custom_big">
                         <thead>
                             <tr>
+                                <th>Visit ID</th>
                                 <th>date/time</th>
                                 <th>Temperature</th>
                                 <th>bp</th>
@@ -313,6 +321,7 @@
                         </thead>
                         <tbody>
                             <tr data-ng-repeat="vital in vitals">
+                                <td>{{vital.visit_id}}</td>
                                 <td>{{vital.created_at}}</td>
                                 <td>{{vital.temperature_c}}<span ng-show="vital.temperature_c != ''">&#8451; </span>{{vital.temperature_f}}<span ng-show="vital.temperature_f != ''">&#8457;</span></td>
                                 <td>{{vital.systolic_mm_hg}}<span ng-show="vital.systolic_mm_hg != '' && vital.diastolic_mm_hg != ''">/</span>{{vital.diastolic_mm_hg}}<span ng-show="vital.systolic_mm_hg != '' && vital.diastolic_mm_hg != ''">mmHg</span></td>
@@ -353,6 +362,7 @@
                     <table class="table table-striped no-margin table-custom table-custom_big">
                         <thead>
                             <tr>
+                                <th>Visit ID</th>
                                 <th>prescription</th>
                                 <th>Date</th>
                                 <!-- <th>to date</th> -->
@@ -361,6 +371,7 @@
                         </thead>
                         <tbody>
                             <tr data-ng-repeat="medication in medications">
+                                <td>{{medication.visit_id}}</td>
                                 <td>{{medication.prescription}}</td>
                                 <td>{{medication.prescription_date}}</td>
                                 <td>{{medication.prescription_status}}</td>
@@ -397,6 +408,7 @@
                     <table class="table table-striped no-margin table-custom table-custom_big">
                         <thead>
                             <tr>
+                                <th>Visit ID</th>
                                 <th>supplements</th>
                                 <th>dosage</th>
                                 <th>frequency</th>
@@ -408,6 +420,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="supplement in supplements.slice(supplementbegin, supplementend)">
+                                <td>{{supplement.visit_id}}</td>
                                 <td>{{supplement.supplements}}</td>
                                 <td>{{supplement.dosage}}</td>
                                 <td>{{supplement.frequency}}</td>
@@ -447,6 +460,7 @@
                     <table class="table table-striped no-margin table-custom table-custom_big editable_table selectAndDateTable">
                         <thead>
                             <tr>
+                                <th>Visit ID</th>
                                 <th>allergy type</th>
                                 <th>allergies</th>
                                 <th>severity</th>
@@ -458,6 +472,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="allergie in allergies">
+                                <td>{{allergie.visit_id}}</td>
                                 <td><input type="text" ng-model="allergie.allergy_type" ng-init="edit[$index] = false" ng-disabled="edit[$index] == false" /></td>
                                 <td><input type="text" ng-model="allergie.allergies" ng-disabled="edit[$index] == false" /></td>
                                 <td><input type="text" ng-model="allergie.severity" ng-disabled="edit[$index] == false" />
@@ -960,7 +975,7 @@
 
                         </div>
                         <div class="col-lg-1">
-                            <button class="add button-custom add_manufacturer"></button>
+                            <button class="add button-custom add_manufacturer" type="button"></button>
                         </div>
                         <div class="col-lg-4">
                             <input type="text" placeholder="" name="" required ng-model="addSupplement.addmanu"/>

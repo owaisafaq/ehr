@@ -148,7 +148,7 @@
                             <ul>
                                 <li><a href="#/lab-order-listing/"><span class="title">Lab Order Listing</span></a></li>
                                 <li><a href="#/lab-order-history"><span class="title">Lab Order History</span></a></li>
-                                <li><a href="#/templates"><span class="title">Templates</span></a></li>
+                                <!-- <li><a href="#/templates"><span class="title">Templates</span></a></li> -->
                             </ul>
                         </li>
 
@@ -189,12 +189,12 @@
                                 <span class="title">Templates</span>
                             </a>
                         </li> -->
-                        <li>
+                        <!-- <li>
                             <a href="#/pharmacy-prescription" >
                                 <div class="gui-icon"><i class="md md-local-pharmacy"></i></div>
                                 <span class="title">Pharmacy Prescription</span>
                             </a>
-                        </li><!--end /menu-li -->
+                        </li> -->
                         <!-- BEGIN EMAIL -->
                         <li class="gui-folder">
                             <a>
@@ -340,7 +340,7 @@
                         <h2>Error</h2>
                     </div>
                     <div class="modal-body">
-                        <p class="error-header"><!-- Oops! Something Went Wrong --> Internet Connection Lost</p>
+                        <p class="error-header">Oops! Something Went Wrong</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default button-style-1" ng-click="internetError();" >Refresh</button>
@@ -370,13 +370,4 @@
         <script data-require="showdown@0.3.*" data-semver="0.3.1" src="//cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
         <script data-require="angular-markdown-text@0.0.2" data-semver="0.0.2" src="https://cdn.rawgit.com/McNull/angular-markdown-text/v0.0.2/dist/angular-markdown-text.min.js"></script>
     </body>
-    <script>
-    function init() {
-    var imgDefer = document.getElementsByTagName('img');
-    for (var i=0; i<imgDefer.length; i++) {
-    if(imgDefer[i].getAttribute('data-src')) {
-    imgDefer[i].setAttribute('src',imgDefer[i].getAttribute('data-src'));
-    } } $('img').removeClass('invisible'); }
-    window.onload = init;
-    </script> 
 </html>

@@ -41,7 +41,7 @@
                             <header>prescription assessment</header>
                             <div class="pull-right accordian-header-info">
                                 <label>Encounter Id</label>
-                                <span>{{prescription_data.visit_id}}</span>
+                                <span>E{{prescription_data.visit_id}}</span>
                                 <label>Date</label>
                                 <span>{{prescription_data.date[0]}}</span>
                                 <label>Provider</label>
@@ -56,6 +56,7 @@
                                     <button type="button" class="delete button-custom pull-right" ng-show="removePrescription" data-toggle="modal" data-target="#confirmation">remove medication</button>
                                     <button type="button" ng-click="updateDispense()" class="update button-custom pull-right">update medication</button>
                                     <button data-toggle="modal" data-target="#addmedication" class="add button-custom pull-right">add medication</button>
+                                    <button type="button" class="dispense_pharmacy button-custom pull-right">dispense pharmacy</button>
                                 </div>
                                 <table class="table table-striped no-margin table-custom table-custom_big editable_table">
                                     <thead>

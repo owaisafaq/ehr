@@ -24,8 +24,8 @@
                     </div>
                 </div>
                 <div ng-hide="hideOptionsStrip">
-                    <button type="button" class="dispense_pharmacy button-custom pull-right">dispense pharmacy</button>
-                    <button type="button" class="update button-custom pull-right">update pharmacy</button>
+                    
+                   <!--  <button type="button" class="update button-custom pull-right">update pharmacy</button> -->
                     <button type="button" class="print button-custom pull-right">print prescription</button>
                     <button class="notes button-custom pull-right" ng-click="goToPrescription();">view prescription</button>
                 </div>
@@ -52,9 +52,9 @@
                                             <span></span>
                                         </label>
                                     </div></td>
-                                <td>{{allpharmacy.patient_id}}</td>
+                                <td><a class="blue" href="#/patient-summary-demographics/{{allpharmacy.patient_id}}">PA-{{allpharmacy.patient_id}}</a></td>
                                 <td>{{allpharmacy.first_name}} {{allpharmacy.first_last}}</td>
-                                <td>{{allpharmacy.visit_id}}</td>
+                                <td>E{{allpharmacy.visit_id}}</td>
                                 <td>{{allpharmacy.patient_plan}}</td>
                                 <td>{{allpharmacy.total_amount}}</td>
                                 <td>{{allpharmacy.prescription_status}}</td>

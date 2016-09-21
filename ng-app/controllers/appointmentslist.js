@@ -161,6 +161,7 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
             $("#noResultFound").modal('show');
         }
     }
+
     function findAppointmentsFailure(error){
         $('#internetError').modal('show');
         console.log(error);
@@ -233,7 +234,7 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
         	$rootScope.loader = "show";
         	AddAppointments.save({
         		token: $window.sessionStorage.token,
-        		patient_id: dataToBeAdded.appointmentSearch,
+        		patient_id: dataToBeAdded.selectedPatientID,
         		//visit_id: $scope.encounterID,
         		department: dataToBeAdded.department,
         		reason: dataToBeAdded.reason,
@@ -354,6 +355,7 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
 
 
     $('#findPatient').on('input', function(){
+
         var input = $('#findPatient').val();
         if(input != undefined || input != ''){
             if(input.length == 0){
@@ -365,7 +367,7 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
                     dataType: "json",
                     type: "POST",
                     delay: 500,
-                    minLength: 2,
+                    minLength: 1,
                     data: {name: input},
                     success: function (patients) {
                         $("#findPatient").autocomplete({
@@ -373,19 +375,25 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
                                 if(patients.status == true){
                                     response($.map(patients.data, function (value, key) {
                                         return {
-                                            label: value.first_name == "" || value.first_name == undefined ? "No patient found" : value.first_name + " " + value.last_name,
+                                            label: value.first_name == "" || value.first_name == undefined ? "No patient found" : value.id + " - " + value.first_name + " " + value.last_name,
                                             value: value.id == "" ? '0' : value.id
                                         }
                                     }));
+                                    //$( "#findPatient" ).autocomplete( "close" );
                                     patients.data = [];
+                                    $('#findPatient').data()=null;
                                 }else{
+                                    $(this).data().term = null;
                                     response({label:"No Patient Found"});
                                     patients.data = [];
                                 }
                             },
                             select: function(event, ui) {
                                 $('#findPatient').val(ui.item.label);
-                                $scope.appointment.appointmentSearch = ui.item.value;
+                                console.log(ui.item.label);
+                                $scope.appointment.appointmentSearch = ui.item.label;
+                                $scope.selectedPatientID = $scope.appointment.appointmentSearch.split(' - ');
+                                $scope.appointment.selectedPatientID = $scope.selectedPatientID[0];
                                 return false;
                             }
                         });
@@ -412,6 +420,10 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
                     limit: $scope.itemsPerPage, 
                     offset: 0
                 }, allAppointmentsSuccess, allAppointmentsFailure);
+            }else{
+                $scope.modalHeading = "Result";
+                $scope.modalMessage = res.message;
+                $('#noResultFound').modal('show');
             }
         }
         function moveAppointmentFailure(error){

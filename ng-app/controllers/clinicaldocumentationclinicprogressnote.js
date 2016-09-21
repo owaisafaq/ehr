@@ -11,6 +11,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 	$rootScope.loader = "show";
   $scope.message = false;
   $scope.showAccordion = false;
+  $scope.disabledFooterButton = true;
   $scope.templateDisabled = true;
   $scope.PID = "/"+$routeParams.patientID;
   $scope.mySchema = {}; // Expose the schema on the scope.
@@ -39,7 +40,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
   $scope.selectCategory = function(selectedCategory){
     console.log(selectedCategory);
     $scope.selectedCategory = selectedCategory;
-    $scope.templateDisabled = false;
+    
     getTemplates.get({
         token: $window.sessionStorage.token,
         template_type: 1,
@@ -88,6 +89,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 	function getTemplateDropDownSuccess(res){
     console.log(res);
 		if(res.status == true){
+      $scope.templateDisabled = false;
 			$scope.templates = res.data;
       //$scope.mySchema = JSON.parse(res.data[0].template);
 		}
@@ -111,9 +113,10 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
         template_type: 1
     },getTemplateSuccess,getTemplateDataFailure);
 		function getTemplateSuccess(res){
-      console.log(res.data[0]);
+      console.log(res,"hello");
 			if(res.status == true){
-				$scope.templateFields = res.data[0];
+				$scope.templateFields = res.data;
+        $scope.disabledFooterButton = false;
         $scope.mySchema = JSON.parse(res.data.template);
         $scope.showAccordion = true;
 				$rootScope.loader = "hide";

@@ -382,7 +382,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         // patient address API
         $scope.validatePatientAddress = function (PIAdress) {
             //console.log(angular.equals({}, PIAdress));
-            if (angular.equals({}, PIAdress) == false) {
+            if (PIAdress.mobile_number != undefined) {
                 $rootScope.loader = 'show';
                 var dataToBeAdded = {
                     token: $window.sessionStorage.token,
@@ -456,8 +456,10 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     }
                 }
             } else {
-                $scope.disabledTabKin = 'active';
-                $scope.disabledTabAdress = '';
+                if(PIAdress.mobile_number != undefined){
+                    $scope.disabledTabKin = 'active';
+                    $scope.disabledTabAdress = '';    
+                }
             }
         }
 
@@ -611,10 +613,51 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         // age calculation with respect to DOB
         $scope.calculateAge = function (birthday) { // birthday is a date
             var splitDate = birthday.split('-');
+            todayDate = new Date();
+            todayYear = todayDate.getFullYear();
+            todayMonth = todayDate.getMonth()+1;
+            var abc = todayYear - splitDate[0];
+            var abcmonth = todayMonth - splitDate[1];
+            console.log("monthdiff",abcmonth);
+            if(abc != 0){
+                $scope.birthdate = new Date(splitDate[0], splitDate[1], splitDate[2]);
+                var ageDifMs = Date.now() - $scope.birthdate.getTime();
+                var ageDate = new Date(ageDifMs); // miliseconds from epoch
+                $scope.PI.age = Math.abs(ageDate.getUTCFullYear() - 1970);
+            }else{
+                birthday=birthday.split("-"); 
+                var dobMonth= birthday[1]; 
+                var dobDay= birthday[2];
+                var dobYear= birthday[0];
+                var now = new Date();
+                var nowDay= now.getDate();
+                var nowMonth = now.getMonth() + 1;  //jan=0 so month+1
+                var nowYear= now.getFullYear();
+
+                var ageyear = nowYear- dobYear;
+                var agemonth = nowMonth - dobMonth;
+                var ageday = nowDay- dobDay;
+
+                if (agemonth < 0) {
+                   ageyear--;
+                   agemonth = (12 + agemonth);
+                }
+                if (nowDay< dobDay) {
+                  agemonth--;
+                  ageday = 30 + ageday;
+                }
+                if(agemonth > 0)
+                    $scope.PI.age = agemonth + " month" + (agemonth > 1 ? 's ' : ' ') + ageday + " day" + (ageday > 1 ? 's' : '');
+                else
+                    $scope.PI.age = ageday + " day" + (ageday > 1 ? 's' : '');
+                //var val = ageyear + "-" + agemonth + "-" + ageday;
+                console.log($scope.PI.age);
+            }
+            /*var splitDate = birthday.split('-');
             $scope.birthdate = new Date(splitDate[0], splitDate[1], splitDate[2]);
             var ageDifMs = Date.now() - $scope.birthdate.getTime();
             var ageDate = new Date(ageDifMs); // miliseconds from epoch
-            $scope.PI.age = Math.abs(ageDate.getUTCFullYear() - 1970);
+            $scope.PI.age = Math.abs(ageDate.getUTCFullYear() - 1970);*/
         }
 
         $scope.uploadPic = function (file) {
@@ -682,6 +725,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         GetResourcesByFolderArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, followup_parent_id: $scope.followupParentId}, nestedFolderSuccess, nestedFolderFailure);
 
         function patientEditSuccess(res) {
+            console.log("patinetedit",res);
             if (res.status == true) {
                 if(res.is_valid == 0){
                     $scope.modalHeading = "Invalid";
@@ -723,6 +767,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 $scope.PI.refered_name = res.data.patient_info.refered_name;
 
                 if (res.data.patient_address[0] != undefined) {
+                    console.log(res.data.patient_address[0].email, "muzammil");
                     $scope.PI.adress.phone_number = res.data.patient_address[0].phone_number;
                     $scope.PI.adress.mobile_number = res.data.patient_address[0].mobile_number;
                     $scope.PI.adress.house_number = res.data.patient_address[0].house_number;

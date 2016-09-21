@@ -37,7 +37,7 @@
             <div class="table-header col-lg-12">
                 <div class="col-lg-12 no-padding table-header-2">
                     <span class="txt-style-3 pull-left text-uppercase">Encounter id</span>
-                    <span class="txt-style-4 pull-left">{{displayInfo.encounter_id}}</span>
+                    <span class="txt-style-4 pull-left">E{{displayInfo.encounter_id}}</span>
                     <span class="txt-style-3 pull-left text-uppercase">date of service</span>
                     <span class="txt-style-4 pull-left">{{displayInfo.visit_created_at}}</span>
                     <div class="pull-left header-checkboxes" ng-hide="true">
@@ -80,7 +80,7 @@
             <div class="card-body col-lg-12 accordian-body-con">
                 <div class="col-lg-12 pull-right no-padding" ng-init="field = 1">
                     <div class="panel-group custom-accordian" id="accordion3" ng-show="showAccordion">
-                        <div class="card panel expanded">{{templateFields}}
+                        <div class="card panel expanded">
                             <!--data-parent="#accordion4" data-target="#accordion4"-->
                             <div class="card-head card-head-sm" data-toggle="collapse" >
                                 <header>{{templateFields.name}}</header>
@@ -158,6 +158,12 @@
                                         <li>
                                             <a href="!#" data-toggle="modal" data-target="#addmedication">Prescription</a> 
                                         </li>
+                                        <li>
+                                            <a href="!#">Radiology</a> 
+                                        </li>
+                                        <li>
+                                            <a href="!#">procedure</a> 
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -170,17 +176,119 @@
                 </div>
             </div><!--end .card-body -->
             <div class="clinical-footer card-color-2">
-                <button type="button" class="check-out button-custom pull-right open-custom_pop" ng-hide="disabledEncounterButton" data-toggle="modal" data-target="#checkout">Checkout Patient</button>
-                <button type="button" class="assign button-custom pull-right" ng-hide="disabledEncounterButton">Assign</button>
-                <button type="button" data-toggle="modal" data-target="#neworder" class="finalize-report button-custom pull-right" ng-show="selectedRow">Finalize Report</button>
-                <button type="button" ng-click="openCreateEncounter();" class="view-report button-custom pull-right open-custom_pop" ng-show="selectedRow">Preview Report</button>
-                <button type="button" class="save button-custom pull-right" ng-show="selectedRow" ng-click="saveClinicalNotes(myFormData);">Save Changes</button>
-                <button type="button" data-toggle="modal" data-target="#neworder" class="add button-custom pull-right" ng-hide="disabledEncounterButton">Add Attachment</button>
-                <button type="button" data-toggle="modal" data-target="#neworder" class="refer-patient button-custom pull-right" ng-hide="disabledEncounterButton">Refer Patient</button>
+                
+            </div>
+            <div class="table-header col-lg-12 stick-bottom-footer">
+                <div class="col-lg-12 no-padding table-header-2">
+<!--                    <span class="txt-style-3 pull-left text-uppercase">test by</span>
+                    <span class="txt-style-4 pull-left">Avil Trump</span>
+                    <span class="txt-style-3 pull-left text-uppercase">signed off by</span>
+                    <span class="txt-style-4 pull-left">Donald Trump</span>-->
+                    <div class="pull-right">
+                        <button type="button" class="check-out button-custom open-custom_pop" ng-disabled="disabledFooterButton" data-toggle="modal" data-target="#checkout">Checkout Patient</button>
+                        <button type="button" data-toggle="modal" data-target="#neworder" class="finalize-report button-custom " ng-show="selectedRow">Finalize Report</button>
+                        <button type="button" ng-click="openCreateEncounter();" class="view-report button-custom pull-right open-custom_pop" ng-show="selectedRow">Preview Report</button>
+                        <button type="button" class="save button-custom" ng-show="selectedRow" ng-click="saveClinicalNotes(myFormData);">Save Changes</button>
+                        <button type="button" data-toggle="modal" data-target="#neworder" class="add button-custom pull-right" ng-hide="disabledEncounterButton">Add Attachment</button>
+                        <button type="button" data-toggle="modal" data-target="#referral" class="refer-patient button-custom pull-right" >Refer Patient</button>
+                        <!--ng-disabled="disabledFooterButton"-->
+                    </div>
+                </div>
             </div>
         </div><!--end .card -->
     </section>
 </div>
+<div class="modal fade big-modal" id="referral" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Referral</h2>
+            </div>
+            <form class="custom-form" name="form_modal_1" novalidate ng-submit="">
+                <div class="modal-body col-xs-12">
+                    <div class="row margin-0">
+                    <div class="col-lg-3">
+                        <label>Referral</label>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="radio radio-styled col-lg-3">
+                            <label>
+                                <input type="radio" name="select_speciality" value="principal">
+                                <span>Internal</span>
+                            </label>
+                        </div>
+                        <div class="radio radio-styled col-lg-3">
+                            <label>
+                                <input type="radio" name="select_speciality" value="dependant">
+                                <span>External</span>
+                            </label>
+                        </div>
+                    </div>
+                        </div>
+                    <div class="col-lg-3">
+                        <label>refer to specialty</label>
+                    </div>
+                    <div class="col-lg-3">
+                        <input type="text" class="form-control" />
+                    </div>
+
+                    <div class="col-lg-3">
+                        <label>External referral</label>
+                    </div>
+                    <div class="col-lg-3">
+                        <input type="text" class="form-control" placeholder="Enter Email" />
+                    </div>
+                    
+                    <div class="col-lg-3">
+                        <label>provisional diagnosis</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" placeholder="obtain from the clinical documentation" />
+                    </div>
+                    
+                    <div class="col-lg-3">
+                        <label>reason for referral</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <textarea class="form-control"></textarea>
+                    </div>
+                    <div class="col-lg-3">
+                        <label>history</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <textarea class="form-control" placeholder="Obtained from the clinical documentation"></textarea>
+                    </div>
+                    
+                    <div class="col-lg-3">
+                        <label>investigations</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <textarea class="form-control"></textarea>
+                    </div>
+                    
+<!--                    <div class="col-lg-3">
+                        <label>add attachments</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <span class="plus-button"><i class="fa fa-plus"></i></span>
+                    </div>-->
+                </div>
+                <div class="modal-footer">
+                    <div class="checkbox checkbox-styled pull-left">
+                        <label class="col-xs-12">
+                                <input type="checkbox" value="">
+                                <span class="text-left">Send Medication List, Diagnosis and Allergies</span>
+                            </label>
+                        </div>
+                    <button type="submit" class="btn btn-default button-style-1" >refer</button>
+                    <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
 <div class="modal fade big-modal" id="addmedication" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

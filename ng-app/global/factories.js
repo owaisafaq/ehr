@@ -874,6 +874,22 @@ AppEHR.factory("GetAllInventory", function ($resource) {
     return InventoryLists;
 });
 
+AppEHR.factory("AddMoreStock", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_inventory', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var InventoryLists = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return InventoryLists;
+});
+
 AppEHR.factory("GetAllSuppliers", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'get_inventory_suppliers', params, {
@@ -2208,6 +2224,126 @@ AppEHR.factory("DeleteBed", function ($resource) {
 AppEHR.factory("EditBed", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'edit_patient_bed', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("DischargePatient", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'patient_discharge', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("DischargeSummaryByWards", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'patients_discharged', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("SearchByPatient", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'appointment_dates_patients', params, {
+            save: {method: 'GET'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("SearchByDoctors", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'appointment_dates_doctors', params, {
+            save: {method: 'GET'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("SearchByDepartment", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'appointment_dates_departments', params, {
+            save: {method: 'GET'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("GetEditTemplate", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_template', params, {
+            save: {method: 'GET'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("EditTemplate", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'edit_template', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("UpdateDischargeDate", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'update_discharge_date', params, {
             save: {method: 'POST'}
         });
         return res2;
