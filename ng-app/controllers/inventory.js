@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllInventory','GetAllSuppliers','AddCategory','GetAllCategories','AddSupplier','GetSingleSupplier','UpdateSuppliers','GetSingleCategory','GetSingleStock','updateCategory','DeleteCategory','DeleteSupplier','AddInventory','AddProduct','DeleteInventory','GetSingleProduct','GetAllPharmacies','GetReorderLevel','updateReorderLevel','GetProduct','ProductUpdate','Countries','States','City','$timeout', function($scope, $rootScope,$window,$routeParams,GetAllInventory,GetAllSuppliers,AddCategory,GetAllCategories,AddSupplier,GetSingleSupplier,UpdateSuppliers,GetSingleCategory,GetSingleStock,updateCategory,DeleteCategory,DeleteSupplier,AddInventory,AddProduct,DeleteInventory,GetSingleProduct,GetAllPharmacies,GetReorderLevel,updateReorderLevel,GetProduct,ProductUpdate,Countries,States,City,$timeout){
+AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllInventory','GetAllSuppliers','AddCategory','GetAllCategories','AddSupplier','GetSingleSupplier','UpdateSuppliers','GetSingleCategory','GetSingleStock','updateCategory','DeleteCategory','DeleteSupplier','AddInventory','AddProduct','DeleteInventory','GetSingleProduct','GetAllPharmacies','GetReorderLevel','updateReorderLevel','GetProduct','ProductUpdate','Countries','States','City','AddMoreStock','$timeout', function($scope, $rootScope,$window,$routeParams,GetAllInventory,GetAllSuppliers,AddCategory,GetAllCategories,AddSupplier,GetSingleSupplier,UpdateSuppliers,GetSingleCategory,GetSingleStock,updateCategory,DeleteCategory,DeleteSupplier,AddInventory,AddProduct,DeleteInventory,GetSingleProduct,GetAllPharmacies,GetReorderLevel,updateReorderLevel,GetProduct,ProductUpdate,Countries,States,City,AddMoreStock,$timeout){
 	$rootScope.pageTitle = "EHR - Inventory";
 	$scope.displayInfo = {};
 	$rootScope.loader = "show";
@@ -292,6 +292,74 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 	 }
 	 */
 
+
+
+	//Add Stock
+
+	$scope.AddStock = function (stock) {
+		console.log($scope.productID);
+		console.log(stock);
+
+		if (angular.equals({}, category) == false) {
+			$scope.hideLoader = 'show';
+			//$scope.updateEncounterBtn = true;
+			//console.log($scope.displayInfo.patient_id);
+			var addStock={
+		 product_id:$scope.productID,
+		 pharmacy_id:stock.pharmacy_id,
+		 manufacturer_id:stock.manufacturer_id,
+		 dept_id:"1",
+		 supplier_id:stock.supp_id,
+		 received_date:stock.recvd_date,
+		 batch_no:stock.batch_number,
+		 ref_no:stock.ref_no,
+		 expiry:stock.expiry_date,
+		 quantity:stock.quantity,
+		 order_quantity:"",
+		 cost_per_item:stock.price,
+		 pack:stock.pack,
+		 token:$window.sessionStorage.token,
+
+		 }
+			AddMoreStock.get(addStock, AddStockSuccess, AddStockFailure);
+
+
+		}
+	};
+
+	function AddStockSuccess(res) {
+		if (res.status == true) {
+
+			GetSingleStock.get({token: $window.sessionStorage.token, product_id: $scope.productID}, getStockInfoSuccess, getStockInfoFailure);
+			function getStockInfoSuccess(res) {
+				if (res.status == true) {
+					//console.log(res);
+					$rootScope.loader = "hide";
+					//$scope.SupplierSelected = true;
+					$scope.selectedStocks = res.data;
+					console.log($scope.selectedStocks);
+					$(".inventory_detail").hide();
+					$(".add_stock").hide();
+					$("#stock_det").show();
+
+
+				}
+			}
+			function getStockInfoFailure(error) {
+				$rootScope.loader = "hide";
+				$('#internetError').modal('show');
+				console.log(error);
+			}
+
+
+		}
+	}
+
+	function AddStockFailure(error) {
+
+		console.log(error);
+	}
+	//Add stock
 
 
 

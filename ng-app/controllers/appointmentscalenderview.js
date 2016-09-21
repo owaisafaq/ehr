@@ -32,7 +32,8 @@ AppEHR.controller('appointmentsCalenderController', ['$scope', '$rootScope', '$w
 			 });
             if($scope.refreshCal == true){
                 //$('#calendar').fullCalendar( 'rerenderEvents' );
-                $('#calendar').fullCalendar( 'rerenderEvents', event, true);
+                $('#calendar').fullCalendar( 'removeEvents');
+                $('#calendar').fullCalendar( 'addEventSource', event, true);
             }else $('#calendar').fullCalendar( 'addEventSource', event, true);
 		}
 	}
@@ -210,7 +211,9 @@ AppEHR.controller('appointmentsCalenderController', ['$scope', '$rootScope', '$w
 
     
     $scope.createAppointments = function(dataToBeAdded){
-        if(dataToBeAdded.appointmentSearch != undefined && dataToBeAdded.department != undefined && dataToBeAdded.reason != undefined && dataToBeAdded.date != undefined && dataToBeAdded.startTime != undefined && dataToBeAdded.notes != undefined && dataToBeAdded.doctor != undefined && dataToBeAdded.priority != undefined){
+
+        if(dataToBeAdded.appointmentSearch != undefined && dataToBeAdded.department != undefined && dataToBeAdded.reason != undefined && dataToBeAdded.date != undefined && dataToBeAdded.startTime != undefined && dataToBeAdded.doctor != undefined){
+            console.log(dataToBeAdded);
             $rootScope.loader = "show";
             AddAppointments.save({
                 token: $window.sessionStorage.token,
@@ -220,11 +223,11 @@ AppEHR.controller('appointmentsCalenderController', ['$scope', '$rootScope', '$w
                 reason: dataToBeAdded.reason,
                 date: dataToBeAdded.date,
                 start_time: dataToBeAdded.startTime,
-                notes: dataToBeAdded.notes,
+                notes: dataToBeAdded.notes == undefined ? '' : dataToBeAdded.notes,
                 doctor: dataToBeAdded.doctor,
-                other_reason: dataToBeAdded.otherReason,
+                other_reason: dataToBeAdded.otherReason == undefined ? '' : dataToBeAdded.otherReason,
                 //end_time: dataToBeAdded.endTime,
-                priority: dataToBeAdded.priority
+                priority: dataToBeAdded.priority == undefined ? '' : dataToBeAdded.priority != undefined
             }, createAppointmentSuccess, createAppointmentFailure);
 
             function createAppointmentSuccess(res){
