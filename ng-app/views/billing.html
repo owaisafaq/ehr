@@ -54,25 +54,25 @@
                 <div class="tab-pane active" id="generate">
 
                     <div class="table-header row background-none">
-                        <div class="col-lg-7"></div>
-                        <div class="col-lg-3">
-                            <div class="col-lg-2">
-                                <span class="txt-style-3 pull-left text-uppercase billing_period">period</span>
+                        
+                        <div class="pull-right">
+                            <div class="header-search billing_search pull-left margin-right-0">
+                                <button type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <input class="search_field" type="text" placeholder="Patient Name or Id" ng-model="search_all_bill">
                             </div>
-                            <div class="col-lg-10">
+                        </div>
+                        <div class="pull-right col-lg-7">
+                            <div class="pull-right col-lg-3">
                                 <select class="form-control">
                                     <option>All</option>
                                     <option>Cheque</option>
                                     <option>type 3</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="header-search billing_search pull-left">
-                                <button type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                                <input class="search_field" type="text" placeholder="Patient Name or Id" ng-model="search_all_bill">
+                            <div class="pull-right">
+                                <span class="txt-style-3 pull-left text-uppercase billing_period">period</span>
                             </div>
                         </div>
                     </div>

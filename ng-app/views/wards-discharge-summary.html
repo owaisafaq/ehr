@@ -15,7 +15,7 @@
             </div>
             <div class="card-body card-body-2 col-lg-12">
                 <div>
-                    <table class="table table-striped no-margin table-custom">
+                    <table class="table table-striped no-margin table-custom selectAndDateTable editable_table">
                         <thead>
                             <tr>
                                 <th></th>
@@ -40,13 +40,19 @@
                                 <td><a class="blue" href="#/patient-summary-demographics/{{admin.patient_id}}">PA-{{admin.patient_id}}</a></td>
                                 <td>{{admin.first_name}}</td>
                                 <td>
-                                <div class="input-group date select-date">
+<!--                                <div class="input-group date select-date">
                                     <div class="input-group-content">
                                         <input type="text" class="form-control" name="date" placeholder="Select Date" ng-model="updateDischargeDate[$index]" ng-init="edit[$index] = false; updateDischargeDate[$index]=admin.expected_discharge_date" ng-disabled="edit[$index] == false">
-                                        <!-- <input type="text" name="date_of_birth" class="form-control" placeholder="Pick Date" ng-model="updateDischargeDate[$index]" ng-init="edit[$index] = false; updateDischargeDate[$index]=admin.expected_discharge_date" ng-disabled="edit[$index] == false" ng-value="admin.expected_discharge_date"/> -->
+                                         <input type="text" name="date_of_birth" class="form-control" placeholder="Pick Date" ng-model="updateDischargeDate[$index]" ng-init="edit[$index] = false; updateDischargeDate[$index]=admin.expected_discharge_date" ng-disabled="edit[$index] == false" ng-value="admin.expected_discharge_date"/> 
                                     </div>
-                                    <!-- <span class="input-group-addon"><i class="fa fa-calendar"></i></span> -->
-                                </div>
+                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
+                                </div>-->
+                                    
+                                    <div class="input-group date select-date my-date-picker">
+                                        <div class="input-group-content">
+                                            <input type="text" name="date_of_birth" my-date-picker ng-model="updateDischargeDate[$index]" class="form-control" required placeholder="Pick Date" ng-disabled="edit[$index] == false" ng-init="edit[$index] = false; updateDischargeDate[$index]=admin.expected_discharge_date" ng-disabled="edit[$index] == false" />
+                                        </div>
+                                    </div>
                                 </td>
                                 
                                 <td>{{admin.speciality}}</td>

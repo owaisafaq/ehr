@@ -1633,6 +1633,9 @@ Patient Plan
     background-color: #ddecf8;
     color: #516e81;
     font-weight: bold;
+    float: left;
+    width: 100%;
+    margin: 0;
 }
 
 /*MUZAMMIL CODE END*/
@@ -2949,77 +2952,77 @@ form .progress {
     background-color: #a2a6b9!important;
 }
 .dashboard{
-margin: 0;
-padding-top:30px; 
+    margin: 0;
+    padding-top:30px; 
 }
 .dashboard a{
     text-decoration: none;
 }
 .dashboard .card{
-background: #fff;
--webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33);
-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33);
-text-align: center;
+    background: #fff;
+    -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33);
+    text-align: center;
 }
 .dashboard .card span:not(.color-circle){
-display: block;
+    display: block;
 }
 .dashboard .card span.textstyle-1{
-margin-top: 15px;
-letter-spacing: 1px;
+    margin-top: 15px;
+    letter-spacing: 1px;
 }
 .color-circle{
-display: inline-block;
-background-color: #005b9a;
-padding: 17px 13px;
-border-radius: 100%;
+    display: inline-block;
+    background-color: #005b9a;
+    padding: 17px 13px;
+    border-radius: 100%;
 }
 .textstyle-1{
-font-size: 14px;
-color: #272939;
-text-transform: uppercase;
+    font-size: 14px;
+    color: #272939;
+    text-transform: uppercase;
 }
 .textstyle-2{
-font-size: 28px;
-color: #272939;
-font-weight: bold;
-line-height: 34px;
+    font-size: 28px;
+    color: #272939;
+    font-weight: bold;
+    line-height: 34px;
 }
 .login{
-right: 0;
-left: 0;
-position: relative;
-height: 21em;
-top: 50%;
-float: left;
-transform: translateY(-50%);
--webkit-transform: translateY(-50%);
--moz-transform: translateY(-50%);
-bottom: auto;
+    right: 0;
+    left: 0;
+    position: relative;
+    height: 21em;
+    top: 50%;
+    float: left;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    bottom: auto;
 }
 .username{
-font-size: 11px;
-letter-spacing: 1px;
+    font-size: 11px;
+    letter-spacing: 1px;
 }
 .logo {
-font-size: 27px;
+    font-size: 27px;
 }
 .sign-in-heading {
-margin-bottom: 15px;
-margin-top: -8px;
-font-size: 13px;
+    margin-bottom: 15px;
+    margin-top: -8px;
+    font-size: 13px;
 }
 .wrapper{
-background-repeat: no-repeat;
-background-position: left 0 center;
-background-size: auto;
-background: none;
-height: 100vh;
+    background-repeat: no-repeat;
+    background-position: left 0 center;
+    background-size: auto;
+    background: none;
+    height: 100vh;
 }
 .login_image{
-height: 100vh;
-float: left;
-margin-left: -180px;
+    height: 100vh;
+    float: left;
+    margin-left: -180px;
 }
 .disabled-header-option{
     cursor: not-allowed;
@@ -3100,21 +3103,21 @@ Dynaimic Form
     text-align: center;
 }
 #encounterScroll{
+    /*height: 58vh;*/
+    /*overflow: auto;*/
+}
+/*#triageScroll{
     max-height: 500px;
     overflow: auto;
-}
-#triageScroll{
-    max-height: 500px;
-    overflow: auto;
-}
-#physicianScroll{
+}*/
+/*#physicianScroll{
     max-height: 500px;
     overflow: auto;
 }
 #checkoutScroll{
     max-height: 500px;
     overflow: auto;
-}
+}*/
 
 .button-custom-white{
     display: inline-block;
@@ -3158,4 +3161,64 @@ Referral Popup
     position: fixed;
     bottom: 0;
     left: 0;
+}
+/*==========
+Pagination
+===========*/
+.pagination ul{
+    margin: 0;
+}
+.pagination > li{
+    float: left;
+}
+.pagination > li.next-page button,.pagination > li.prev-page button{
+    padding: 0;
+    background: transparent !important;
+    border:none;
+    color: #9fb0c0;
+    padding: 2px 0;
+}
+.pagination > li > span.pagination-detail{
+    font-size: 13px;
+    color: #9fb0c0;
+    border:none;
+    font-weight: bold;
+}
+.pagination > li > span.pagination-detail input[type=text]{
+    width: 30px;
+    text-align: center;
+    border: none;
+    background: #e7ecf1;
+    margin: 0 10px;
+    color: #2d3b48;
+}
+.pagination > li > span.pagination-detail .space-both-side{
+    margin-right: 10px;
+}
+.pagination > li > a, .pagination > li > span{
+    background: transparent !important;
+}
+.pagination > li > span {
+    padding-left: 1px 15px;   
+}
+#encounterScroll.nano{
+    width: 25%;
+    overflow: hidden;
+}
+.mCSB_inside>.mCSB_container{
+    margin-right: 0;
+}
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+    width: 4px;
+    background-color: #AFB3C3 !important;
+}
+/*.mCSB_dragger_onDrag{
+    background-color: #AFB3C3 !important;
+    width: 4px;
+}*/
+.mCSB_scrollTools .mCSB_draggerRail{
+    background: transparent;
+}
+.mCSB_scrollTools{
+    width: 5px;
 }
