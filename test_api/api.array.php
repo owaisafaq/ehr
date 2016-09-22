@@ -2780,3 +2780,13 @@ $api->params->lab_test_id = "";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+//Signoff Clinical Report
+$api = new api();
+$api->name = "Signoff Clinical Report";
+$api->url = HOST . 'signoff_clinical_report';
+$api->method = "POST";
+$api->params->patient_clinical_notes_id = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;

@@ -144,7 +144,7 @@ class PDFController extends Controller
 
         $db = DB::table('patient_clinical_notes')
             ->leftJoin('templates', 'templates.id', '=', 'patient_clinical_notes.template_id')
-            ->select('patient_clinical_notes.value', 'templates.template')
+            ->select('patient_clinical_notes.value', 'templates.template','signoff')
             ->where('patient_clinical_notes.id', $id)->first();
 
         $clinical_notes_values = json_decode($db->value);
@@ -183,7 +183,7 @@ class PDFController extends Controller
         echo json_encode(array(
             'status' => true,
             'data' => $file_archive,
-            'is_signup' => 0
+            'is_signup' => $db->signoff
 
         ), JSON_UNESCAPED_SLASHES);
 
@@ -200,4 +200,14 @@ class PDFController extends Controller
 
     }
 
+    public function signoff_clinical_report(Request $request){
+        $id = $request->input('patient_clinical_notes_id');
+        DB::table('patient_clinical_notes')
+              ->where('id', $id)
+              ->update(
+                  ['signoff' => 1]
+              );
+        return response()->json(['status' => true, 'message' => 'Report signed off Successfully']);
+
+    }
 }
