@@ -2765,8 +2765,7 @@ class ApiController extends Controller
                 ]
             );
 
-
-        if ($request->file('refered_file')) {
+ /*       if ($request->file('refered_file')) {
             if ($request->file('refered_file')->isValid()) {
                 $destinationPath = base_path() . '/public/refered_patient_files'; // upload path
                 $extension = $request->file('refered_file')->getClientOriginalExtension(); // getting image extension
@@ -2779,7 +2778,7 @@ class ApiController extends Controller
 
         } else {
             $fileName = '';
-        }
+        }*/
 
         if($referal_type == 'internal'){
             $external_referal_email = '';
@@ -2791,7 +2790,7 @@ class ApiController extends Controller
             [   'referal_type'=>$referal_type,
                 'patient_id' => $patient_id,
                 'visit_id' => $visit_id,
-                'attachment' => $fileName,
+               // 'attachment' => $fileName,
                // 'department_id' => $department_id,
                 'doctor' => $doctor_id,
                 'provisional_diagnosis' => $provisional_diagnosis,
