@@ -2619,7 +2619,7 @@ class ApiController extends Controller
             ->update(
             ['patient_id' => $patient_id,
                 'visit_id' => $visit_id,
-                'template_id' => $template_id,
+                //'template_id' => $template_id,
                 'value' => $value,
                 'updated_at' => $currentdatetime
             ]
