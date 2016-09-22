@@ -30,6 +30,8 @@ $app->group(['prefix' => 'api'], function () use ($app) {
     $app->options('upload_patient_image','App\Http\Controllers\ApiController@optupload_patient_image');
     $app->options('add_clinical_notes_attachments','App\Http\Controllers\ApiController@opt_add_clinical_notes_attachments');
     $app->post('add_clinical_notes_attachments','App\Http\Controllers\ApiController@add_clinical_notes_attachments');
+    $app->options('add_referal_attachments','App\Http\Controllers\ApiController@opt_add_referal_attachments');
+    $app->post('add_referal_attachments','App\Http\Controllers\ApiController@add_referal_attachments');
 
 });
 $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($app) {
@@ -277,5 +279,10 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->get('get_radiology_templates','App\Http\Controllers\BillingController@get_radiology_templates');
     $app->post('delete_radiology_template','App\Http\Controllers\BillingController@delete_radiology_template');
     $app->get('get_radiology_template','App\Http\Controllers\BillingController@get_radiology_template');
+
+
+    $app->post('signoff_lab_report','App\Http\Controllers\PDFController@signoff_lab_report');
+
+
 
 });

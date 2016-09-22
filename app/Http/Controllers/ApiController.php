@@ -2589,6 +2589,11 @@ class ApiController extends Controller
         return response()->json(['status' => true,'message' => 'Clinical Notes Added Successfully','clinical_notes_id'=>$id]);
     }
 
+    public function opt_add_clinical_notes_attachments(Request $request)
+    {
+        return response()->json(['status' => true, 'message' => 'success']);
+    }
+
     public function add_clinical_notes_attachments(Request $request){
 
         $archive = $request->file('attachment');
@@ -2620,11 +2625,37 @@ class ApiController extends Controller
 
     }
 
-    public function opt_add_clinical_notes_attachments(Request $request)
+    public function opt_add_referal_attachments(Request $request)
     {
         return response()->json(['status' => true, 'message' => 'success']);
     }
 
+
+    public function add_referal_attachments(Request $request)
+    {
+        $archive = $request->file('attachment');
+        $destinationPath = base_path() . '/public/refered_patient_files';
+        $original_name = $archive->getClientOriginalName();
+
+        $extension = $archive->getClientOriginalExtension(); // getting image extension
+        $fileName = rand() . time() . '.' . $extension; // renameing image
+        if (!$archive->isValid()) {
+            return response()->json(['status' => false, 'message' => 'Invalid File']);
+        }
+
+        $archive->move($destinationPath, $fileName);
+        $patient_id = $request->input('patient_id');
+        $visit_id = $request->input('visit_id');
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+        DB::table('patient_referels')
+            ->where('patient_id', $patient_id)
+            ->where('visit_id', $visit_id)
+            ->update(['attachment'=> $fileName] );
+
+        return response()->json(['status' => true, 'message' => 'Attachments Uploaded']);
+
+    }
 
     public function checkout_patient(Request $request)
     {

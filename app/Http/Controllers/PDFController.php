@@ -32,9 +32,10 @@ class PDFController extends Controller
         $id = $request->input('lab_test_id');
 
         $db = DB::table('patient_lab_test_values')
-            ->select('template_values','template')
+            ->select('patient_lab_test_values.id','template_values','template','signoff')
             ->leftJoin('templates','templates.id','=','patient_lab_test_values.template_id')
             ->where('lab_test', $id)->first();
+
 
        $template_values = json_decode($db->template_values);
         $template = json_decode($db->template);
@@ -85,7 +86,8 @@ class PDFController extends Controller
         echo json_encode(array(
             'status' => true,
             'data' => $file_archive,
-            'is_signup' => 0
+            'is_signup' => $db->signoff,
+            'lab_test_id'=>$db->id
 
         ), JSON_UNESCAPED_SLASHES);
 
@@ -181,9 +183,21 @@ class PDFController extends Controller
         echo json_encode(array(
             'status' => true,
             'data' => $file_archive,
+            'is_signup' => 0
 
         ), JSON_UNESCAPED_SLASHES);
 
+    }
+
+    public function signoff_lab_report(Request $request){
+        $id = $request->input('lab_test_id');
+        DB::table('patient_lab_test_values')
+              ->where('id', $id)
+              ->update(
+                  ['signoff' => 1]
+              );
+        return response()->json(['status' => true, 'message' => 'Report signed off Successfully']);
 
     }
+
 }

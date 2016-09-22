@@ -2769,3 +2769,14 @@ $api->method = "GET";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+
+//Signoff Lab Report
+$api = new api();
+$api->name = "Signoff Lab Report";
+$api->url = HOST . 'signoff_lab_report';
+$api->method = "POST";
+$api->params->lab_test_id = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
