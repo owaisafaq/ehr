@@ -207,7 +207,7 @@ class PDFController extends Controller
               ->update(
                   ['signoff' => 1]
               );
-        return response()->json(['status' => true, 'message' => 'Report signed off Successfully']);
+        return response()->json(['status' => true, 'message' => 'Report signed off Successfully','is_signoff'=>1]);
 
     }
 }

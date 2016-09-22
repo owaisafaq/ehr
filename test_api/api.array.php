@@ -2790,3 +2790,15 @@ $api->params->patient_clinical_notes_id = "";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+
+//check clinical notes status
+$api = new api();
+$api->name = "check clinical notes status";
+$api->url = HOST . 'check_clinical_notes_status';
+$api->method = "POST";
+$api->params->patient_id = "";
+$api->params->visit_id = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;

@@ -3347,5 +3347,24 @@ class ApiController extends Controller
         return response()->json(['status' => true, 'data' => $medicines]);
     }
 
+    public function check_clinical_notes_status(Request $request)
+    {
+
+        $patient_id = $request->input('patient_id');
+        $visit_id = $request->input('visit_id');
+
+        $status = DB::table('patient_clinical_notes')
+            ->select(DB::raw('signoff'))
+            ->where('patient_id', $patient_id)
+            ->where('visit_id', $visit_id)
+            ->first();
+
+        if(empty($status)){
+            $signoff = 0;
+        }
+       $signoff = $status->signoff;
+
+        return response()->json(['status' => true, 'signoff' => $signoff]);
+    }
 }
 
