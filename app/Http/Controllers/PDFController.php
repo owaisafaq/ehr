@@ -57,16 +57,17 @@ class PDFController extends Controller
 
         // All The Patient info is here just uncomment it when required
 
-/*        $patient = DB::table('patient_lab_test_values')
+
+       $patient = DB::table('patient_lab_test_values')
              ->select(DB::raw('patients.id,CONCAT(patients.first_name," ",patients.last_name) AS patient_name,CONCAT("' . $logo_image . '",patients.patient_image) as patient_image,patients.age,patients.date_of_birth,maritial_status.name as marital_status,(CASE WHEN (sex = 1) THEN "Male" ELSE "Female" END) as gender'))
              ->leftJoin('lab_orders', 'lab_orders.id', '=', 'patient_lab_test_values.lab_order_id')
              ->leftJoin('patients', 'patients.id', '=', 'lab_orders.patient_id')
              ->leftJoin('maritial_status', 'patients.marital_status', '=', 'maritial_status.id')
              ->where('lab_test', $id)->first();
 
-       array_push($arr,['patient'=>$patient]);*/
+      // array_push($arr,['patient'=>$patient]);
 
-        $data = ['data'=>$arr];
+        $data = ['data'=>$arr,'patient'=>$patient];
 
         $view =  app()->make('view')->make('report_pdf', $data)->render();
 //    return $view;
@@ -84,6 +85,7 @@ class PDFController extends Controller
         echo json_encode(array(
             'status' => true,
             'data' => $file_archive,
+            'is_signup' => 0
 
         ), JSON_UNESCAPED_SLASHES);
 
@@ -91,9 +93,6 @@ class PDFController extends Controller
 
 
     public function send_invoice_email(Request $request){
-
-
-
         $invoice_id = $request->input('invoice_id');
         $email_address = $request->input('email_address');
 
@@ -104,7 +103,6 @@ class PDFController extends Controller
         $pdf = PDF::loadHTML($view);
 
         $path = base_path().'/public/patient_archive/invoice.pdf';
-
 
         $pdf->save($path);
 
