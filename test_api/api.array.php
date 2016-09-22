@@ -1002,6 +1002,20 @@ $api->params->token = "123";
 
 $api_arr [] = $api;
 
+// Update Patient Clinical Notes
+$api = new api();
+$api->name = "Update Patient Clinical Notes";
+$api->url = HOST . 'update_patient_clinical_notes';
+$api->method = "POST";
+$api->description = "Update Patient Clinical Notes";
+$api->params->clinical_notes_id = "1";
+$api->params->patient_id = "1";
+$api->params->visit_id = "1";
+$api->params->template_id = "";
+$api->params->value = "";
+$api->params->token = "123";
+
+$api_arr [] = $api;
 
 // Add Clinical Notes Attachments
 $api = new api();

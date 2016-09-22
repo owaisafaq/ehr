@@ -2575,6 +2575,16 @@ class ApiController extends Controller
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
+        $data = DB::table('patient_clinical_notes')
+            ->select(DB::raw('*'))
+            ->where('visit_id', $visit_id)
+            ->first();
+
+        if (!empty($data)) {
+            return response()->json(['status' => false, 'message' => 'This Encounter already contains clinical information']);
+        }
+
+
         DB::table('patient_clinical_notes')->insert(
             ['patient_id' => $patient_id,
                 'visit_id' => $visit_id,
@@ -2586,7 +2596,36 @@ class ApiController extends Controller
 
         $id = DB::getPdo()->lastInsertId();
 
-        return response()->json(['status' => true,'message' => 'Clinical Notes Added Successfully','clinical_notes_id'=>$id]);
+        return response()->json(['status' => true,'message' => 'Clinical Notes Added Successfully']);
+    }
+
+
+    public function update_patient_clinical_notes(Request $request)
+    {
+        $clinical_notes_id = $request->input('clinical_notes_id');
+
+        $patient_id = $request->input('patient_id');
+
+        $visit_id = $request->input('visit_id');
+
+        $template_id = $request->input('template_id');
+
+        $value = $request->input('value');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+        DB::table('patient_clinical_notes')
+            ->where('id',$clinical_notes_id)
+            ->update(
+            ['patient_id' => $patient_id,
+                'visit_id' => $visit_id,
+                'template_id' => $template_id,
+                'value' => $value,
+                'updated_at' => $currentdatetime
+            ]
+        );
+
+        return response()->json(['status' => true,'message' => 'Clinical Notes Updated Successfully']);
     }
 
     public function opt_add_clinical_notes_attachments(Request $request)
@@ -3370,18 +3409,7 @@ class ApiController extends Controller
             ->select('patient_clinical_notes.value', 'templates.template')
             ->where('patient_clinical_notes.id', $status->id)->first();
 
-        $clinical_notes_values = json_decode($data->value);
-
-        $template = json_decode($data->template);
-        foreach ($template->fields as $temp) {
-            foreach ($clinical_notes_values as $k => $v) {
-                if ($temp->name == $k) {
-                    array_push($arr, ['value' => $v, 'field' => $temp,]);
-                }
-            }
-        }
-
-        return response()->json(['status' => true, 'signoff' => $signoff,'data'=>$arr]);
+        return response()->json(['status' => true, 'signoff' => $signoff,'data'=>$data->value,'template'=>$data->template,'clinical_notes_id'=>$status->id]);
     }
 }
 
