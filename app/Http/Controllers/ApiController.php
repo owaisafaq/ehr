@@ -3349,22 +3349,39 @@ class ApiController extends Controller
 
     public function check_clinical_notes_status(Request $request)
     {
-
         $patient_id = $request->input('patient_id');
         $visit_id = $request->input('visit_id');
 
         $status = DB::table('patient_clinical_notes')
-            ->select(DB::raw('signoff'))
+            ->select(DB::raw('id,signoff,value,template_id'))
             ->where('patient_id', $patient_id)
             ->where('visit_id', $visit_id)
             ->first();
 
         if(empty($status)){
             $signoff = 0;
+            return response()->json(['status' => true, 'signoff' => $signoff,'data'=>array()]);
         }
-       $signoff = $status->signoff;
+        $signoff = $status->signoff;
 
-        return response()->json(['status' => true, 'signoff' => $signoff]);
+        $arr = array();
+        $data = DB::table('patient_clinical_notes')
+            ->leftJoin('templates', 'templates.id', '=', 'patient_clinical_notes.template_id')
+            ->select('patient_clinical_notes.value', 'templates.template')
+            ->where('patient_clinical_notes.id', $status->id)->first();
+
+        $clinical_notes_values = json_decode($data->value);
+
+        $template = json_decode($data->template);
+        foreach ($template->fields as $temp) {
+            foreach ($clinical_notes_values as $k => $v) {
+                if ($temp->name == $k) {
+                    array_push($arr, ['value' => $v, 'field' => $temp,]);
+                }
+            }
+        }
+
+        return response()->json(['status' => true, 'signoff' => $signoff,'data'=>$arr]);
     }
 }
 
