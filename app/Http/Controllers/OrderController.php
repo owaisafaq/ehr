@@ -21,23 +21,15 @@ class OrderController extends Controller
 
     public function __construct(Request $request)
     {
-
         header('Access-Control-Allow-Origin: *');
         date_default_timezone_set("Africa/Lagos");
 
         if ($request->input('token')) {
-
-
             $token = $request->input('token');
-
             $user_id = JWTAuth::authenticate($token)->id;
 
-
             if (!isset($user_id)) {
-
                 return response()->json(['status' => false, 'message' => 'Invalid Token']);
-
-
             }
 
             $user_status = DB::table('users')
@@ -45,23 +37,16 @@ class OrderController extends Controller
                 ->where('id', $user_id)
                 ->first();
 
-
             if ($user_status->user_status == 'block') {
-
-
                 return response()->json(['status' => false, 'message' => 'This user is Blocked']);
-
             }
-
         }
-
 
     }
 
 
     protected function checkToken($token, $user_id)
     {
-
         $user_from_token = JWTAuth::authenticate($token)->id;
         if ($user_id != $user_from_token) {
 
@@ -73,11 +58,7 @@ class OrderController extends Controller
 
     public function get_lab_tests(Request $request)
     {
-
-
         $lab = $request->input('lab');
-
-
         $lab_test = DB::table('lab_tests')
             ->select(DB::raw('*'))
             ->where('lab_tests.status', 1)
@@ -85,8 +66,6 @@ class OrderController extends Controller
             ->get();
 
         return response()->json(['status' => true, 'data' => $lab_test]);
-
-
     }
 
 
@@ -372,8 +351,6 @@ class OrderController extends Controller
 
     public function add_lab_order(Request $request)
     {
-
-
         $patient_id = $request->input('patient_id');
 
         $lab = $request->input('lab');
@@ -389,7 +366,6 @@ class OrderController extends Controller
         $notes = $request->input('notes');
 
         $currentdatetime = date("Y-m-d  H:i:s");
-
 
         DB::table('lab_orders')->insert(
             ['patient_id' => $patient_id,
