@@ -164,6 +164,7 @@ class OrderController extends Controller
     public function get_patient_lab_orders(Request $request)
     {
         $patient_id = $request->input('patient_id');
+        $visit_id = $request->input('visit_id');
         $limit = $request->input('limit');
         $offset = $request->input('offset');
 
@@ -179,6 +180,7 @@ class OrderController extends Controller
                 ->where('lab_orders.status', 1)
                 ->where('patients.status', 1)
                 ->where('patients.id', $patient_id)
+                ->where('lab_orders.visit_id', $visit_id)
                 ->groupby('lab_orders.id')
                 ->skip($offset)->take($limit)
                 ->get();
@@ -193,6 +195,7 @@ class OrderController extends Controller
                 ->where('lab_orders.status', 1)
                 ->where('patients.status', 1)
                 ->where('patients.id', $patient_id)
+                ->where('lab_orders.visit_id', $visit_id)
                 ->groupby('lab_orders.id')
                 ->get();
             $count = count($count);
@@ -207,6 +210,7 @@ class OrderController extends Controller
                 ->where('lab_orders.status', 1)
                 ->where('patients.status', 1)
                 ->where('patients.id', $patient_id)
+                ->where('lab_orders.visit_id', $visit_id)
                 ->groupby('lab_orders.id')
                 ->get();
             $count = count($orders);
@@ -353,6 +357,8 @@ class OrderController extends Controller
     {
         $patient_id = $request->input('patient_id');
 
+        $visit_id = $request->input('visit_id');
+
         $lab = $request->input('lab');
 
         $lab_tests = html_entity_decode($request->input('lab_test'));
@@ -369,16 +375,15 @@ class OrderController extends Controller
 
         DB::table('lab_orders')->insert(
             ['patient_id' => $patient_id,
+                'visit_id' => $visit_id,
                 'lab' => $lab,
                 'clinical_information' => $clinical_information,
                 'diagnosis' => $diagnosis,
                 'notes' => $notes,
                 'order_status' => 'created',
                 'created_at' => $currentdatetime
-
             ]
         );
-
 
         $order_id = DB::getPdo()->lastInsertId();
 
@@ -389,12 +394,10 @@ class OrderController extends Controller
                     'lab_test' => $test->lab_test,
                     'priority' => $test->priority,
                     'created_at' => $currentdatetime
-
                 ]
             );
 
         }
-
 
         return response()->json(['status' => true, 'message' => 'Lab Orders Added Successfully', 'order_id' => $order_id]);
 
