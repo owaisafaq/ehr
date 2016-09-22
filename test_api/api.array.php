@@ -1045,6 +1045,7 @@ $api->url = HOST . 'add_patient_referel';
 $api->method = "POST";
 $api->description = "Add Patient Referel";
 $api->params->patient_id = "1";
+$api->params->visit_id = "1";
 $api->params->referal_type = "internal";
 $api->params->external_referal_email = "test@gmail.com";
 //$api->params->department_id = "1";

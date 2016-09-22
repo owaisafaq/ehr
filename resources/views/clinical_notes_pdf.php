@@ -137,7 +137,7 @@ and open the template in the editor.
     <body>
         <div class="container">
             <div class="col-lg-12">
-                <?php //print_r($data); ?>
+                <?php /*print_r($patient); */?>
                 <div class="patient_summary_2 label-style-con">
                     <div class="col-lg-12 margin-bottom-xxl">
                         <h2 class="pull-left">Hospital Logo</h2>
@@ -146,109 +146,48 @@ and open the template in the editor.
                     <div class="patient_summary col-lg-12">
                         <div class="row">
                             <div class="col-lg-2 text-center">
-                               <img src="../assets/img/profile_pic.jpg" alt=""/>
+                               <img src="http://demoz.online/dev/ehr/public/uploaded_images/1217237911469607697.png" alt=""/>
                             </div>
-                            <div class="col-lg-10">-
+                            <div class="col-lg-10">
                                 <div class="col-lg-12">
-                                    <label class="label-style-2">Elton John</label>-
+                                    <label class="label-style-2"><?php echo $patient->patient_name?></label>
                                 </div>
-                               <div class="col-lg-3">-
+                               <div class="col-lg-3">
                                     <label>patient id</label>
 -                                </div>
-                               <div class="col-lg-3">-->
-                                   <label class="txt-style-4">90189191</label>
+                               <div class="col-lg-3">
+                                   <label class="txt-style-4"><?php echo $patient->id?></label>
                                </div>
 
                              <div class="col-lg-3">
                                    <label>age</label>
                                </div>
                                <div class="col-lg-3">
-                                   <label class="txt-style-4">35</label>
+                                   <label class="txt-style-4"><?php echo $patient->age?></label>
                                </div>
 
                                <div class="col-lg-3">
                                    <label>Gender</label>
                                </div>
-                                <div class="col-lg-3">-->
-                                    <label class="txt-style-4">Male</label>
+                                <div class="col-lg-3">
+                                    <label class="txt-style-4"><?php echo $patient->gender?></label>
                                 </div>
-                              <div class="col-lg-3">-->
+                              <div class="col-lg-3">
                                    <label>Marital Status</label>
                               </div>
-                               <div class="col-lg-3">-->
-                                    <label class="txt-style-4">Single</label>
+                               <div class="col-lg-3">
+                                    <label class="txt-style-4"><?php echo $patient->marital_status?></label>
                                 </div>
 
                               <div class="col-lg-3">
                                    <label>date of birth</label>
                                </div>
-                                <div class="col-lg-3">-->
-                                  <label class="txt-style-4">October 10 1981</label>
+                                <div class="col-lg-3">
+                                  <label class="txt-style-4"><?php echo $patient->date_of_birth?></label>
                                </div>
-                            </div>-
+                            </div>
                       </div>
-<!--                        <div class="row">-->
-<!--                            <div class="col-lg-12 no-padding">-->
-<!--                                <div class="col-lg-3">-->
-<!--                                    <label>Report Type</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-9">-->
-<!--                                    <label class="txt-style-4">Discharge Letter</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-3 clear">-->
-<!--                                    <label>Department of Paediatrics</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-3">-->
-<!--                                    <label class="txt-style-4"><b>Direct Line</b>&nbsp;&nbsp;01942-2644170</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-3">-->
-<!--                                    <label>Fax Number</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-3">-->
-<!--                                    <label class="txt-style-4">01942-2644176</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-3 clear">-->
-<!--                                    <label>Reciever</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-9">-->
-<!--                                    <label class="txt-style-4 col-lg-12 no-padding margin-bottom-xl">Dr. Foster, The GP Practice 999 Wigan Lane, WIGAN.</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-3">-->
-<!--                                    <label>Patient</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-9">-->
-<!--                                    <label class="txt-style-4">The House Street ST, Wetherfield,</label>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="row">-->
-<!--                            <div class="col-lg-12 no-padding">-->
-<!--                                <div class="col-lg-3">-->
-<!--                                    <label>Admission Details</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-9">-->
-<!--                                    <label class="txt-style-4 col-lg-12 no-padding margin-bottom-xl">2/7 ago he was admittd with croup. He came back with fever, coryzeal symptoms anscongested tonsils. He was started on peniccline.</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-3">-->
-<!--                                    <label>Admission Date/ Time</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-9">-->
-<!--                                    <label class="txt-style-4 col-lg-12 no-padding margin-bottom-xl">24/03/2016 from Upper Johnsone Ward, RAEI</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-3 clear">-->
-<!--                                    <label>Discharge Date</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-9">-->
-<!--                                    <label class="txt-style-4 col-lg-12 no-padding margin-bottom-xl">25/03/2016 from Upper Johnsone Ward, RAEI</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-3 clear">-->
-<!--                                    <label>Discharge Consultant</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-9">-->
-<!--                                    <label class="txt-style-4 col-lg-12 no-padding margin-bottom-xl">DR RG Levy</label>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
+
                         <div class="row">
                             <div class="col-lg-12 no-padding">
                                     <?php foreach ($data as $d){ ?>

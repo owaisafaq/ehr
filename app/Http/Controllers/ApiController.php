@@ -2756,7 +2756,6 @@ class ApiController extends Controller
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
-
         DB::table('visits')
             ->where('id', $visit_id)
             ->update(
@@ -2790,18 +2789,14 @@ class ApiController extends Controller
             [   'referal_type'=>$referal_type,
                 'patient_id' => $patient_id,
                 'visit_id' => $visit_id,
-               // 'attachment' => $fileName,
-               // 'department_id' => $department_id,
                 'doctor' => $doctor_id,
                 'provisional_diagnosis' => $provisional_diagnosis,
                 'reason_referal' => $reason_referal,
                 'history' => $history,
-               // 'allergies' => $allergies,
                 'investigations' => $investigations,
-               // 'medication_list' => $medication_list,
-               // 'medicines' => $medicines,
                 'external_referal_email' => $external_referal_email,
-                'created_at' => $currentdatetime]
+                'created_at' => $currentdatetime
+            ]
         );
 
         return response()->json(['status' => true, 'message' => "Patient Referel Added Successfully"]);

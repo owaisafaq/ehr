@@ -165,9 +165,10 @@ class PDFController extends Controller
             ->leftJoin('maritial_status', 'patients.marital_status', '=', 'maritial_status.id')
             ->where('patient_clinical_notes.id', $id)->first();
 
-        array_push($arr, ['patient' => $patient]);
+       // array_push($arr, ['patient' => $patient]);
 
-        $data = ['data'=>$arr];
+
+        $data = ['data'=>$arr,'patient'=>$patient];
 
         $view =  app()->make('view')->make('clinical_notes_pdf', $data)->render();
 

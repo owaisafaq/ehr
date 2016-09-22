@@ -29,7 +29,7 @@ $app->group(['prefix' => 'api'], function () use ($app) {
     $app->post('upload_patient_image', 'App\Http\Controllers\ApiController@upload_patient_image');
     $app->options('upload_patient_image','App\Http\Controllers\ApiController@optupload_patient_image');
     $app->options('add_clinical_notes_attachments','App\Http\Controllers\ApiController@opt_add_clinical_notes_attachments');
-
+    $app->post('add_clinical_notes_attachments','App\Http\Controllers\ApiController@add_clinical_notes_attachments');
 
 });
 $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($app) {
@@ -111,7 +111,7 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->get('clinical_progress_note_templates','App\Http\Controllers\ApiController@clinical_progress_note_templates');
     $app->get('clinical_progress_note_fields','App\Http\Controllers\ApiController@clinical_progress_note_fields');
     $app->post('add_patient_clinical_notes','App\Http\Controllers\ApiController@add_patient_clinical_notes');
-    $app->post('add_clinical_notes_attachments','App\Http\Controllers\ApiController@add_clinical_notes_attachments');
+  //  $app->post('add_clinical_notes_attachments','App\Http\Controllers\ApiController@add_clinical_notes_attachments');
     $app->post('get_clinical_notes_pdf','App\Http\Controllers\PDFController@get_clinical_notes_pdf');
 
     $app->post('checkout_patient','App\Http\Controllers\ApiController@checkout_patient');
