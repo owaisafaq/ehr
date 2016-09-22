@@ -315,12 +315,10 @@ class OrderController extends Controller
 
     public function get_lab_order(Request $request)
     {
-
-
         $order_id = $request->input('order_id');
 
         $orders = DB::table('lab_orders')
-            ->select(DB::raw('lab_orders.id,lab_orders.patient_id,patients.first_name as patient_name,lab_orders.order_status,labs.name as lab_name,patients.age,patients.marital_status,patients.sex,maritial_status.name as marital_status'))
+            ->select(DB::raw('lab_orders.id,lab_orders.patient_id,patients.first_name as patient_name,lab_orders.order_status,labs.name as lab_name,patients.age,patients.marital_status,patients.sex,maritial_status.name as marital_status,lab_orders.created_at'))
             ->leftJoin('patients', 'lab_orders.patient_id', '=', 'patients.id')
             ->leftJoin('labs', 'labs.id', '=', 'lab_orders.lab')
             ->leftJoin('lab_order_tests', 'lab_order_tests.lab_order_id', '=', 'lab_orders.id')
@@ -338,6 +336,7 @@ class OrderController extends Controller
             $orders->gender = 'female';
         }
 
+        $orders->barcode = "http://demoz.online/php-barcode-master/barcode.php?text=$orders->id";
 
         $tests = DB::table('lab_tests')
             ->select(DB::raw('lab_tests.id as test_id,lab_tests.name as test_name,lab_tests.cost,priority,lab_order_tests.test_status,lab_order_tests.id as lab_order_test_id'))
