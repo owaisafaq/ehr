@@ -1499,8 +1499,6 @@ class ApiController extends Controller
 
     public function get_patient_visit_history(Request $request)
     {
-
-
         $patient_id = $request->input('patient_id');
 
         $limit = $request->input('limit');
@@ -1565,8 +1563,6 @@ class ApiController extends Controller
 
     public function get_patient_vital_history(Request $request)
     {
-
-
         $patient_id = $request->input('patient_id');
 
         $limit = $request->input('limit');
@@ -1607,7 +1603,6 @@ class ApiController extends Controller
 
     public function update_visit_status(Request $request)
     {
-
         $visit_id = $request->input('visit_id');
 
         $status = $request->input('status');
@@ -1626,8 +1621,6 @@ class ApiController extends Controller
 
     public function get_patient_demographics(Request $request)
     {
-
-
         $patient_id = $request->input('patient_id');
 
         $logo_image = url('/') . '/uploaded_images/';
@@ -1655,9 +1648,7 @@ class ApiController extends Controller
             $demographics->gender = 'FeMale';
         }
 
-
         return response()->json(['status' => true, 'data' => $demographics]);
-
     }
 
 
@@ -2596,6 +2587,42 @@ class ApiController extends Controller
         $id = DB::getPdo()->lastInsertId();
 
         return response()->json(['status' => true,'message' => 'Clinical Notes Added Successfully','clinical_notes_id'=>$id]);
+    }
+
+    public function add_clinical_notes_attachments(Request $request){
+
+        $archive = $request->file('attachment');
+        $destinationPath = base_path() . '/public/patient_archive';
+        $original_name = $archive->getClientOriginalName();
+
+        $extension = $archive->getClientOriginalExtension(); // getting image extension
+        $fileName = rand() . time() . '.' . $extension; // renameing image
+        if (!$archive->isValid()) {
+            return response()->json(['status' => false, 'message' => 'Invalid File']);
+        }
+
+        $archive->move($destinationPath, $fileName);
+        $patient_id = $request->input('patient_id');
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+        DB::table('resources')->insert(
+            ['patient_id' => $patient_id,
+                'type' => 'file',
+                'name' => $original_name,
+                'followup_parent_id' => 0,
+                'file' => $fileName,
+                'file_name' => $original_name,
+                'created_at' => $currentdatetime
+            ]
+        );
+
+        return response()->json(['status' => true, 'message' => 'Attachments Uploaded']);
+
+    }
+
+    public function opt_add_clinical_notes_attachments(Request $request)
+    {
+        return response()->json(['status' => true, 'message' => 'success']);
     }
 
 

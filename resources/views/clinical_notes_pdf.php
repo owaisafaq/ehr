@@ -144,49 +144,49 @@ and open the template in the editor.
                         <h2 class="pull-right txt-style-5 hospital-pop-date"><?php echo date('Y-m-d'); ?></h2>
                     </div>
                     <div class="patient_summary col-lg-12">
-<!--                        <div class="row">-->
-<!--                            <div class="col-lg-2 text-center">-->
-<!--                                <img src="../assets/img/profile_pic.jpg" alt=""/>                                -->
-<!--                            </div>-->
-<!--                            <div class="col-lg-10">-->
-<!--                                <div class="col-lg-12">-->
-<!--                                    <label class="label-style-2">Elton John</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-3">-->
-<!--                                    <label>patient id</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-3">-->
-<!--                                    <label class="txt-style-4">90189191</label>-->
-<!--                                </div>-->
-<!---->
-<!--                                <div class="col-lg-3">-->
-<!--                                    <label>age</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-3">-->
-<!--                                    <label class="txt-style-4">35</label>-->
-<!--                                </div>-->
-<!---->
-<!--                                <div class="col-lg-3">-->
-<!--                                    <label>Gender</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-3">-->
-<!--                                    <label class="txt-style-4">Male</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-3">-->
-<!--                                    <label>Marital Status</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-3">-->
-<!--                                    <label class="txt-style-4">Single</label>-->
-<!--                                </div>-->
-<!---->
-<!--                                <div class="col-lg-3">-->
-<!--                                    <label>date of birth</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-3">-->
-<!--                                    <label class="txt-style-4">October 10 1981</label>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
+                        <div class="row">
+                            <div class="col-lg-2 text-center">
+                               <img src="../assets/img/profile_pic.jpg" alt=""/>
+                            </div>
+                            <div class="col-lg-10">-
+                                <div class="col-lg-12">
+                                    <label class="label-style-2">Elton John</label>-
+                                </div>
+                               <div class="col-lg-3">-
+                                    <label>patient id</label>
+-                                </div>
+                               <div class="col-lg-3">-->
+                                   <label class="txt-style-4">90189191</label>
+                               </div>
+
+                             <div class="col-lg-3">
+                                   <label>age</label>
+                               </div>
+                               <div class="col-lg-3">
+                                   <label class="txt-style-4">35</label>
+                               </div>
+
+                               <div class="col-lg-3">
+                                   <label>Gender</label>
+                               </div>
+                                <div class="col-lg-3">-->
+                                    <label class="txt-style-4">Male</label>
+                                </div>
+                              <div class="col-lg-3">-->
+                                   <label>Marital Status</label>
+                              </div>
+                               <div class="col-lg-3">-->
+                                    <label class="txt-style-4">Single</label>
+                                </div>
+
+                              <div class="col-lg-3">
+                                   <label>date of birth</label>
+                               </div>
+                                <div class="col-lg-3">-->
+                                  <label class="txt-style-4">October 10 1981</label>
+                               </div>
+                            </div>-
+                      </div>
 <!--                        <div class="row">-->
 <!--                            <div class="col-lg-12 no-padding">-->
 <!--                                <div class="col-lg-3">-->
@@ -256,7 +256,7 @@ and open the template in the editor.
                                         <label><?php echo $d['field']->displayName;  //echo 'Mr Suriya';?></label>
                                     </div>
                                     <div class="col-lg-9">
-                                        <label><?php echo $d['value']; ?></label>
+                                        <label class="txt-style-4 col-lg-12 no-padding margin-bottom-xl"><?php echo $d['value']; ?></label>
                                     </div>
                                     <?php } ?>
 <!--                                <div class="col-lg-3">-->

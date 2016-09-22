@@ -1003,6 +1003,19 @@ $api->params->token = "123";
 $api_arr [] = $api;
 
 
+// Add Clinical Notes Attachments
+$api = new api();
+$api->name = "Add Clinical Notes Attachments";
+$api->url = HOST . 'add_clinical_notes_attachments';
+$api->method = "POST";
+$api->description = "Add Clinical Notes Attachments";
+$api->params->patient_id = "1";
+$api->params->image = "attachment";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
 // Checkout Patient
 $api = new api();
 $api->name = "Checkout Patient";
