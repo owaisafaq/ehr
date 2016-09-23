@@ -696,6 +696,37 @@ class OrderController extends Controller
 
     }
 
+
+    public function update_lab_test_values(Request $request)
+    {
+
+        $lab_order_id = $request->input('lab_order_id');
+
+        $lab_test_id = $request->input('lab_test_id');
+
+        $template_id = $request->input('template_id');
+
+        $lab_test_values = html_entity_decode($request->input('lab_test_values'));
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+        $lab_test = json_decode($lab_test_values);
+
+        DB::table('patient_lab_test_values')
+            ->where('lab_test', $lab_test_id)
+            ->update(
+                ['template_values' => $lab_test_values,
+                    'template_id' => $template_id,
+                    'created_at' => $currentdatetime
+                ]
+            );
+
+
+        return response()->json(['status' => true, 'message' => 'Lab Report Added Sucessfully']);
+
+    }
+
+
     public function get_lab_test_details(Request $request)
     {
 

@@ -133,6 +133,7 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->post('update_lab_test','App\Http\Controllers\OrderController@update_lab_test');
     $app->get('get_lab_test_fields','App\Http\Controllers\OrderController@get_lab_test_fields');
     $app->post('add_lab_test_values','App\Http\Controllers\OrderController@add_lab_test_values');
+    $app->post('update_lab_test_values','App\Http\Controllers\OrderController@update_lab_test_values');
     $app->get('get_lab_test_templates','App\Http\Controllers\OrderController@get_lab_test_templates');
     $app->post('add_lab_test_templates','App\Http\Controllers\OrderController@add_lab_test_templates');
     $app->post('update_lab_test_templates','App\Http\Controllers\OrderController@update_lab_test_templates');
