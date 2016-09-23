@@ -2670,6 +2670,43 @@ class ApiController extends Controller
     }
 
 
+    public function add_lab_order_attachments(Request $request){
+
+        $archive = $request->file('attachment');
+        $destinationPath = base_path() . '/public/patient_archive';
+        $original_name = $archive->getClientOriginalName();
+
+        $extension = $archive->getClientOriginalExtension(); // getting image extension
+        $fileName = rand() . time() . '.' . $extension; // renameing image
+        if (!$archive->isValid()) {
+            return response()->json(['status' => false, 'message' => 'Invalid File']);
+        }
+
+        $archive->move($destinationPath, $fileName);
+        $patient_id = $request->input('patient_id');
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+        DB::table('resources')->insert(
+            ['patient_id' => $patient_id,
+                'type' => 'file',
+                'name' => $original_name,
+                'followup_parent_id' => 0,
+                'file' => $fileName,
+                'file_name' => $original_name,
+                'created_at' => $currentdatetime
+            ]
+        );
+
+        return response()->json(['status' => true, 'message' => 'Attachments Uploaded']);
+
+    }
+
+    public function opt_add_lab_order_attachments(Request $request)
+    {
+        return response()->json(['status' => true, 'message' => 'success']);
+    }
+
+
     public function add_referal_attachments(Request $request)
     {
         $archive = $request->file('attachment');

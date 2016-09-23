@@ -32,7 +32,8 @@ $app->group(['prefix' => 'api'], function () use ($app) {
     $app->post('add_clinical_notes_attachments','App\Http\Controllers\ApiController@add_clinical_notes_attachments');
     $app->options('add_referal_attachments','App\Http\Controllers\ApiController@opt_add_referal_attachments');
     $app->post('add_referal_attachments','App\Http\Controllers\ApiController@add_referal_attachments');
-
+    $app->options('add_lab_order_attachments','App\Http\Controllers\ApiController@opt_add_lab_order_attachments');
+    $app->post('add_lab_order_attachments','App\Http\Controllers\ApiController@add_lab_order_attachments');
 });
 $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($app) {
 
