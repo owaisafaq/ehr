@@ -330,6 +330,24 @@ class OrderController extends Controller
             ->where('lab_order_tests.lab_order_id', $orders->id)
             ->get();
 
+        foreach($tests as $test){
+
+            $test_status = DB::table('patient_lab_test_values')
+                ->select(DB::raw('signoff'))
+                ->where('lab_test', $test->lab_order_test_id)
+                ->first();
+
+            if(empty($test_status)){
+               $test->signoff = 0;
+            }
+            if($test_status->signoff == 0){
+                $test->signoff = 0;
+            }
+            if ($test_status->signoff == 1) {
+                $test->signoff = 1;
+            }
+
+        }
 
         $test_cost = DB::table('lab_tests')
             ->select(DB::raw('IFNULL(SUM(lab_tests.cost),0) as cost,count(lab_order_tests.lab_test) as totaltests'))
