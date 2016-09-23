@@ -146,7 +146,7 @@ and open the template in the editor.
                     <div class="patient_summary col-lg-12">
                         <div class="row">
                             <div class="col-lg-2 text-center">
-                               <img src="http://demoz.online/dev/ehr/public/uploaded_images/1217237911469607697.png" alt=""/>
+                               <img src="<?php echo $patient->patient_image; ?>" alt=""/>
                             </div>
                             <div class="col-lg-10">
                                 <div class="col-lg-12">
