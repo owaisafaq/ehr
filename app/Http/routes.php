@@ -286,7 +286,9 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
 
     $app->post('signoff_lab_report','App\Http\Controllers\PDFController@signoff_lab_report');
     $app->post('signoff_clinical_report','App\Http\Controllers\PDFController@signoff_clinical_report');
+
     $app->post('check_clinical_notes_status','App\Http\Controllers\ApiController@check_clinical_notes_status');
+    $app->post('check_lab_orders_status','App\Http\Controllers\OrderController@check_lab_orders_status');
 
 
 

@@ -2818,3 +2818,15 @@ $api->params->visit_id = "";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+
+
+//check lab orders status
+$api = new api();
+$api->name = "check lab orders status";
+$api->url = HOST . 'check_lab_orders_status';
+$api->method = "POST";
+$api->params->lab_order_test_id = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;

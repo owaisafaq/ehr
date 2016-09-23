@@ -863,5 +863,28 @@ class OrderController extends Controller
 
     }
 
+    public function check_lab_orders_status(Request $request)
+      {
+          $lab_order_test_id =  $request->input('lab_order_test_id');
+
+          $status = DB::table('patient_lab_test_values')
+              ->select(DB::raw('id,signoff,template_values,template_id'))
+              ->where('lab_test', $lab_order_test_id)
+              ->first();
+
+          if(empty($status)){
+              $signoff = 0;
+              return response()->json(['status' => true, 'signoff' => $signoff,'data'=>array()]);
+          }
+          $signoff = $status->signoff;
+
+          $data = DB::table('patient_lab_test_values')
+              ->leftJoin('templates', 'templates.id', '=', 'patient_lab_test_values.template_id')
+              ->select('patient_lab_test_values.template_values', 'templates.template','templates.name')
+              ->where('patient_lab_test_values.id', $status->id)->first();
+
+          return response()->json(['status' => true, 'signoff' => $signoff,'data'=>$data->template_values,'template'=>$data->template,'template_name'=>$data->name]);
+      }
+
 }
 
