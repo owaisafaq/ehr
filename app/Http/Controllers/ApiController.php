@@ -961,6 +961,7 @@ class ApiController extends Controller
         $labs = DB::table('labs')
             ->select(DB::raw('id,name'))
             ->where('status', 1)
+            ->where('name','!=','radiology')
             ->get();
 
         $pharmacy = DB::table('pharmacy')
