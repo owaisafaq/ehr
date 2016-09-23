@@ -125,6 +125,7 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->get('get_lab_tests','App\Http\Controllers\OrderController@get_lab_tests');
     $app->get('get_lab_test_details','App\Http\Controllers\OrderController@get_lab_test_details');
     $app->get('get_all_lab_orders','App\Http\Controllers\OrderController@get_all_lab_orders');
+    $app->get('get_all_radiology_lab_orders','App\Http\Controllers\OrderController@get_all_radiology_lab_orders');
     $app->get('get_patient_lab_orders','App\Http\Controllers\OrderController@get_patient_lab_orders');
     $app->get('get_lab_order','App\Http\Controllers\OrderController@get_lab_order');
     $app->post('add_lab_order','App\Http\Controllers\OrderController@add_lab_order');
