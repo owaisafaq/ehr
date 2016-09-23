@@ -85,6 +85,7 @@ class OrderController extends Controller
                 ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
                 ->where('lab_orders.status', 1)
                 ->where('patients.status', 1)
+                ->where('labs.name','!=','radiology')
                 ->groupby('lab_orders.id')
                 ->skip($offset)->take($limit)
                 ->get();
@@ -98,6 +99,7 @@ class OrderController extends Controller
                 ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
                 ->where('lab_orders.status', 1)
                 ->where('patients.status', 1)
+                ->where('labs.name','!=','radiology')
                 ->groupby('lab_orders.id')
                 ->get();
 
@@ -114,6 +116,7 @@ class OrderController extends Controller
                 ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
                 ->where('lab_orders.status', 1)
                 ->where('patients.status', 1)
+                ->where('labs.name','!=','radiology')
                 ->groupby('lab_orders.id')
                 ->get();
 
