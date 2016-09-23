@@ -253,10 +253,15 @@ class OrderController extends Controller
             $orders[$key]->total_test = $test_cost->totaltests;
             $orders[$key]->lab_tests = $tests;
 
+
+            $patient = DB::table('patients')
+                ->select(DB::raw('CONCAT(patients.first_name," ",patients.last_name) AS patient_name'))
+                ->where('id', $patient_id)->first();
+
             //$apetizer_product_items[]=$product_item;
         }
 
-        return response()->json(['status' => true, 'data' => $orders,'count'=>$count]);
+        return response()->json(['status' => true, 'data' => $orders,'count'=>$count,'patient_name'=>$patient->patient_name]);
 
 
     }
@@ -338,13 +343,16 @@ class OrderController extends Controller
                 ->first();
 
             if(empty($test_status)){
-               $test->signoff = 0;
+                $test->signoff = 0;
+                $test->template_exists = 0;
             }
             if($test_status->signoff == 0){
                 $test->signoff = 0;
+                $test->template_exists = 1;
             }
             if ($test_status->signoff == 1) {
                 $test->signoff = 1;
+                $test->template_exists = 1;
             }
 
         }
