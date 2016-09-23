@@ -911,10 +911,10 @@ class OrderController extends Controller
 
           $data = DB::table('patient_lab_test_values')
               ->leftJoin('templates', 'templates.id', '=', 'patient_lab_test_values.template_id')
-              ->select('patient_lab_test_values.template_values', 'templates.template','templates.name')
+              ->select('patient_lab_test_values.template_values', 'templates.template','templates.name','patient_lab_test_values.template_id')
               ->where('patient_lab_test_values.id', $status->id)->first();
 
-          return response()->json(['status' => true, 'signoff' => $signoff,'data'=>$data->template_values,'template'=>$data->template,'template_name'=>$data->name]);
+          return response()->json(['status' => true, 'signoff' => $signoff,'data'=>$data->template_values,'template'=>$data->template,'template_name'=>$data->name,'template_id'=>$data->template_id]);
       }
 
 }
