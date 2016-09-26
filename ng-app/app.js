@@ -234,7 +234,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', function 
                         }
                     }
                 }).
-                when('/lab-order-listing/:patientID', {
+                when('/lab-order-listing/:patientID/:encounterID', {
                     templateUrl: 'views/lab-order-listing.html',
                     controller: 'labOrderListing',
                     resolve: {
@@ -461,6 +461,17 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', function 
                         load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/patientpoolarea.js").then(function() {
+                            });
+                        }
+                    }
+                }).
+                when('/radiology/:patientID/:encounterID', {
+                    templateUrl: 'views/radiology.html',
+                    controller: 'radiology',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/radiology.js").then(function() {
                             });
                         }
                     }

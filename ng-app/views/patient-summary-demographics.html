@@ -666,14 +666,14 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade" id="addpatient" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="addpatient" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Add Vitals</h2>
             </div>
             <div class="modal-body">
-                <p>Continue to Add Patient Vitals</p>
+                <p class="modal-subtext">Continue to Add Patient Vitals</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-target="#vital-signs" data-toggle="modal" data-dismiss="modal">Ok</button>
@@ -859,7 +859,7 @@
 </div><!-- /.modal -->
 
 
-<div class="modal fade big-modal" id="addallergies" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_3" id="addallergies" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -867,8 +867,8 @@
             </div>
             <div class="modal-body">
                 <form class="custom-form" novalidate ng-submit="addAllergy(allergie)">
-                    <div class="row">
-
+                    <!--<div class="row">-->
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Type</label>
                         </div>
@@ -886,7 +886,8 @@
                         <div class="col-lg-4">
                             <input ng-model="allergie.allergy" type="text" placeholder="" name="" required/>
                         </div>
-
+</div>
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Severity</label>
                         </div>
@@ -909,7 +910,8 @@
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                             </div>
                         </div>
-
+</div>
+                     <div class="row margin-bottom-xxl">
 
                         <div class="col-lg-3">
                             <label>Status</label>
@@ -928,8 +930,8 @@
                         <div class="col-lg-4">
                             <input ng-model="allergie.reaction" type="text" placeholder="" name="" required/>
                         </div>
-
-                    </div>
+                     </div>
+                    <!--</div>-->
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-default button-style-1">Add</button>
                         <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
@@ -945,7 +947,7 @@
 
 </div><!-- /.modal -->
 
-<div class="modal fade big-modal" id="addsuplemets" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_3" id="addsuplemets" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -953,16 +955,16 @@
             </div>
             <div class="modal-body">
                 <form class="custom-form" novalidate ng-submit="addSupplements(addSupplement)">
-                    <div class="row">
-
+                    <!--<div class="row">-->
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Supplement</label>
                         </div>
                         <div class="col-lg-6">
                             <input type="text" placeholder="" name="" required ng-model="addSupplement.supplementName"/>
                         </div>
-                        <div class="col-lg-3"></div>
-
+                        </div>
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3 clear">
                             <label>Manufacturer</label>
                         </div>
@@ -974,6 +976,7 @@
                             </select>
 
                         </div>
+                        
                         <div class="col-lg-1">
                             <button class="add button-custom add_manufacturer" type="button"></button>
                         </div>
@@ -981,9 +984,10 @@
                             <input type="text" placeholder="" name="" required ng-model="addSupplement.addmanu"/>
                         </div>
                         <div class="col-lg-1">
-                            <button type="button" class="btn btn-default button-style-1 margin-0">Add</button>
+                            <button type="button" class="btn btn-default button-style-1 margin-0 padding-less">Add</button>
                         </div>
-
+</div>
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3 clear">
                             <label>From Date</label>
                         </div>
@@ -1007,8 +1011,9 @@
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                             </div>
                         </div>
+                        </div>
 
-
+ <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Dosage</label>
                         </div>
@@ -1022,9 +1027,8 @@
                                 <option value="3">3</option>
                             </select>
                         </div>
-                        <div class="col-lg-3"></div>
-
-
+ </div>
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3 clear">
                             <label>Frequency</label>
                         </div>
@@ -1045,9 +1049,9 @@
                                 <option value="3">3</option>
                             </select>
                         </div>
-                        <div class="col-lg-3"></div>
-
-                        <div class="col-lg-9">
+                        </div>
+ <div class="row margin-bottom-xxl">
+                        <div class="col-lg-9 col-lg-offset-3">
                             <div class="checkbox checkbox-styled">
                                 <label>
                                     <input type="checkbox" value="" ng-model="addSupplement.status">
@@ -1055,8 +1059,9 @@
                                 </label>
                             </div>
                         </div>
+ </div>
 
-                    </div>
+                    <!--</div>-->
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-default button-style-1">Add</button>
                         <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
@@ -1080,7 +1085,8 @@
             </div>
             <div class="modal-body">
                 <form class="custom-form" novalidate ng-submit="savePharmacyPopUp()">
-                    <div class="row">
+                    <!--<div class="row">-->
+                        <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Medication</label>
                         </div>
@@ -1090,7 +1096,8 @@
                                 <option ng-selected="MedicationData.medication == medicationDropData.id" value="{{medicationDropData.id}}" ng-repeat="medicationDropData in allMedications">{{medicationDropData.supplements}}</option>
                             </select>
                         </div>                                              
-
+</div>
+                     <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>SIG</label>
                         </div>
@@ -1101,6 +1108,8 @@
                             <!--open_sig-->
                             <a href="!#" class="setting-button button-custom pull-right" data-toggle="modal" data-target="#addsig"></a>
                         </div>
+                     </div>
+                    <div class="row margin-bottom-xxl">
 
                         <div class="col-lg-3">
                             <label>Dispense</label>
@@ -1115,7 +1124,8 @@
                         <div class="col-lg-3">
                             <input ng-model="MedicationData.reffills" type="text" placeholder="" />
                         </div>
-
+                        </div>
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Pharmacy</label>
                         </div>
@@ -1125,21 +1135,24 @@
                                 <option ng-selected="MedicationData.pharmacy == pharmacyDataDrop.id" value="{{pharmacyDataDrop.id}}" ng-repeat="pharmacyDataDrop in allPharmacies">{{pharmacyDataDrop.name}}</option>
                             </select>
                         </div>
+                        </div>
+                    <div class="row margin-bottom-xxl">
+                    
                         <div class="col-lg-3 clear">
                             <label>Note Of Pharmacy</label>
                         </div>
                         <div class="col-lg-9">
                             <input ng-model="MedicationData.note_of_pharmacy" type="text" placeholder="" required/>
                         </div>
+</div>
 
-
-                        <div class="col-lg-3"></div>
-                        <div class="col-lg-9">
+                    <div class="row margin-bottom-xxl">
+                        <div class="col-lg-9 col-lg-offset-3">
                             <button ng-hide="showUpdate" type="button" ng-click="addMedication()" class="btn btn-default pull-left button-style-1">Add</button>
                             <button type="button" ng-show="showUpdate" ng-click="addMedication(1)" class="btn btn-default pull-left button-style-1">Update</button>
                         </div>
-
-                    </div>
+</div>
+                    <!--</div>-->
 
                     <div class="medication_list">
                         <div class="row med_row" ng-repeat="medicationDataPush in medicationsDataPush">

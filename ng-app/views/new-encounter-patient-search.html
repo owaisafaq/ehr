@@ -66,7 +66,7 @@
                                     <label>clinic facility / Dept</label>
                                 </div>
                                 <div class="col-lg-6">
-                                    <select class="form-control" ng-class="{true: 'error'}[submitted && encounterFormAdd.department.$invalid]" name="department" ng-model="addEncounter.department" placeholder="Select" required>
+                                    <select class="form-control" ng-class="{true: 'error'}[submitted && encounterFormAdd.department.$invalid]" name="department" ng-model="addEncounter.department" placeholder="Select Facility/Dept" required>
                                         <option value=""></option>
                                         <!-- <option value="1">1</option>
                                         <option value="2">2</option> -->
@@ -79,7 +79,7 @@
                                     <label>encounter class</label>
                                 </div>
                                 <div class="col-lg-6">
-                                    <select class="form-control" ng-class="{true: 'error'}[submitted && encounterFormAdd.class.$invalid]" name="class" ng-model="addEncounter.class" placeholder="Select" required>
+                                    <select class="form-control" ng-class="{true: 'error'}[submitted && encounterFormAdd.class.$invalid]" name="class" ng-model="addEncounter.class" placeholder="Select Class" required>
                                         <option value=""></option>
                                         <!-- <option ng-repeat="class in eclass" value="{{class.id}}">{{class.name}}</option> -->
                                         <option value="Emergency">Emergency</option>
@@ -96,7 +96,7 @@
                                     <label>encounter type</label>
                                 </div>
                                 <div class="col-lg-6">
-                                    <select class="form-control" ng-class="{true: 'error'}[submitted && encounterFormAdd.type.$invalid]" name="type" ng-model="addEncounter.type" placeholder="Select" required>
+                                    <select class="form-control" ng-class="{true: 'error'}[submitted && encounterFormAdd.type.$invalid]" name="type" ng-model="addEncounter.type" placeholder="Select Type" required>
                                         <option value=""></option>
                                         <!-- <option ng-repeat="type in types" value="{{type.id}}">{{type.name}}</option> -->
                                         <option value="Consultation">Consultation</option>
@@ -111,7 +111,7 @@
                                     <label>whom to see</label>
                                 </div>
                                 <div class="col-lg-6">
-                                    <select class="form-control" ng-class="{true: 'error'}[submitted && encounterFormAdd.wts.$invalid]" name="wts" ng-model="addEncounter.wts" placeholder="Select whom to see" required>
+                                    <select class="form-control" ng-class="{true: 'error'}[submitted && encounterFormAdd.wts.$invalid]" name="wts" ng-model="addEncounter.wts" placeholder="Select Whom To See" required>
                                         <option value=""></option>
                                         <option ng-repeat="wts in encountersDropdownData.doctors" value="{{wts.id}}">{{wts.name}}</option>
                                         <!-- <option value="1">1</option>
@@ -123,7 +123,7 @@
                                     <label>Reason of Visit</label>
                                 </div>
                                 <div class="col-lg-6">
-                                    <textarea  ng-model="addEncounter.describeWTS"></textarea>
+                                    <textarea  ng-model="addEncounter.describeWTS" placeholder="Reason of Visit"></textarea>
                                 </div> 
 
                                 <div class="col-lg-12">
