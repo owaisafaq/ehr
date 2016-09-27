@@ -15,10 +15,8 @@ class BillingController extends Controller
 {
     public function __construct(Request $request)
     {
-
         header('Access-Control-Allow-Origin: *');
         date_default_timezone_set("Africa/Lagos");
-
     }
     public function get_all_bills()
     {
@@ -48,13 +46,10 @@ class BillingController extends Controller
             ->get();
 
             return response()->json(['status' => true, 'message' => 'Invoices found', 'data' => $bills]);
-
-
     }
 
     public function update_invoice(Request $request)
     {
-
         $invoice_id = $request->input('invoice_id');
 
         $due = $request->input('amount_paid');
@@ -105,7 +100,6 @@ class BillingController extends Controller
 
             return response()->json(['status' => true, 'message' => 'Invoice Updated successfully']);
 
-
         }
 
 
@@ -113,7 +107,6 @@ class BillingController extends Controller
 
     public function get_invoice_data(Request $request)
     {
-
         $invoice_id = $request->input('invoice_id');
 
         $data = DB::table('invoice')
@@ -128,13 +121,10 @@ class BillingController extends Controller
 
 
         if ($data->sex == 1) {
-
-            $data->gender = 'Male';
+            $data->gender = 'male';
         } else {
-            $data->gender = 'FeMale';
-
+            $data->gender = 'female';
         }
-
 
         $data->provider = 'Doctor James';
 
@@ -145,7 +135,6 @@ class BillingController extends Controller
 
     public function get_invoice_status(Request $request)
     {
-
         $invoice_id = $request->input('invoice_id');
 
         $data = DB::table('invoice')
@@ -162,8 +151,6 @@ class BillingController extends Controller
 
     public function get_billing_data(Request $request)
     {
-
-
         $bill_id = $request->input('bill_id');
 
         $data = DB::table('billing')

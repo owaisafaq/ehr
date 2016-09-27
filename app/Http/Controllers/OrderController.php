@@ -168,6 +168,8 @@ class OrderController extends Controller
      {
          $limit = $request->input('limit');
          $offset = $request->input('offset');
+         $patient_id = $request->input('patient_id');
+         $visit_id = $request->input('visit_id');
 
          if ($limit > 0 || $offset > 0) {
 
@@ -181,6 +183,8 @@ class OrderController extends Controller
                  ->where('lab_orders.status', 1)
                  ->where('patients.status', 1)
                  ->where('labs.name','radiology')
+                 ->where('lab_orders.patient_id',$patient_id)
+                 ->where('lab_orders.visit_id',$visit_id)
                  ->groupby('lab_orders.id')
                  ->skip($offset)->take($limit)
                  ->get();
@@ -195,6 +199,8 @@ class OrderController extends Controller
                  ->where('lab_orders.status', 1)
                  ->where('patients.status', 1)
                  ->where('labs.name','radiology')
+                 ->where('lab_orders.patient_id',$patient_id)
+                 ->where('lab_orders.visit_id',$visit_id)
                  ->groupby('lab_orders.id')
                  ->get();
 
@@ -212,6 +218,8 @@ class OrderController extends Controller
                  ->where('lab_orders.status', 1)
                  ->where('patients.status', 1)
                  ->where('labs.name','radiology')
+                 ->where('lab_orders.patient_id', $patient_id)
+                 ->where('lab_orders.visit_id', $visit_id)
                  ->groupby('lab_orders.id')
                  ->get();
 
@@ -226,10 +234,8 @@ class OrderController extends Controller
              //$lab_orders->test_name = 'Blood Test';
 
              if ($lab_orders->sex == 1) {
-
                  $lab_orders->gender = 'male';
              } else {
-
                  $lab_orders->gender = 'female';
              }
 
@@ -323,10 +329,8 @@ class OrderController extends Controller
             //$lab_orders->test_name = 'Blood Test';
 
             if ($lab_orders->sex == 1) {
-
                 $lab_orders->gender = 'male';
             } else {
-
                 $lab_orders->gender = 'female';
             }
 
@@ -363,7 +367,6 @@ class OrderController extends Controller
 
     public function get_lab_order_history(Request $request)
     {
-
         $orders = DB::table('lab_orders')
             ->select(DB::raw('lab_orders.id,lab_orders.patient_id,patients.first_name as patient_name,lab_orders.order_status,labs.name as lab_name,patients.age,patients.marital_status,patients.sex,maritial_status.name as marital_status, lab_orders.created_at,lab_orders.updated_at'))
             ->leftJoin('patients', 'lab_orders.patient_id', '=', 'patients.id')
@@ -387,10 +390,8 @@ class OrderController extends Controller
 
 
             if ($lab_orders->sex == 1) {
-
                 $lab_orders->gender = 'male';
             } else {
-
                 $lab_orders->gender = 'female';
             }
 
@@ -415,10 +416,8 @@ class OrderController extends Controller
             ->where('lab_orders.id', $order_id)
             ->first();
         if ($orders->sex == 1) {
-
             $orders->gender = 'male';
         } else {
-
             $orders->gender = 'female';
         }
 
@@ -529,8 +528,6 @@ class OrderController extends Controller
 
     public function cancel_lab_order(Request $request)
     {
-
-
         $order_id = $request->input('order_id');
         $order_status = $request->input('order_status');
         $reason = $request->input('reason');
@@ -549,15 +546,12 @@ class OrderController extends Controller
 
         return response()->json(['status' => true, 'message' => 'Lab Orders Canceled Successfully']);
 
-
     }
 
 
     public function update_lab_test(Request $request)
     {
-
-
-       // $lab_id = $request->input('lab_test');
+        // $lab_id = $request->input('lab_test');
         $lab_order_test_id = $request->input('lab_test');
         $status = $request->input('status');
 
@@ -573,13 +567,11 @@ class OrderController extends Controller
 
         return response()->json(['status' => true, 'message' => 'Lab Test Updated Successfully']);
 
-
     }
 
 
     public function get_lab_test_templates(Request $request)
     {
-
         $category_id = $request->input('category_id');
 
         $lab_templates = DB::table('templates')
@@ -649,7 +641,6 @@ class OrderController extends Controller
 
     public function get_lab_test_fields(Request $request)
     {
-
         $template_id = $request->input('lab_template');
 
         $template_fields = DB::table('lab_test_fields')
@@ -660,14 +651,11 @@ class OrderController extends Controller
 
 
         return response()->json(['status' => true, 'data' => $template_fields]);
-
-
     }
 
 
     public function add_lab_test_values(Request $request)
     {
-
         $lab_order_id = $request->input('lab_order_id');
 
         $lab_test_id = $request->input('lab_test_id');
@@ -699,12 +687,11 @@ class OrderController extends Controller
 
     public function update_lab_test_values(Request $request)
     {
-
         $lab_order_id = $request->input('lab_order_id');
 
         $lab_test_id = $request->input('lab_test_id');
 
-         $template_id = $request->input('template_id');
+        $template_id = $request->input('template_id');
 
         $lab_test_values = html_entity_decode($request->input('lab_test_values'));
 
@@ -745,11 +732,9 @@ class OrderController extends Controller
             ->first();
 
         if ($lab_test->sex == 1) {
-
-            $lab_test->gender = 'Male';
+            $lab_test->gender = 'male';
         } else {
-
-            $lab_test->gender = 'FeMale';
+            $lab_test->gender = 'female';
         }
 
         $test_status = DB::table('patient_lab_test_values')
@@ -775,8 +760,6 @@ class OrderController extends Controller
     // LAB Template Category
     public function get_lab_template_categories(Request $request)
     {
-
-
         $lab_categories = DB::table('template_categories')
             ->select(DB::raw('id,name'))
             ->where('template_categories.status', 1)
@@ -883,7 +866,6 @@ class OrderController extends Controller
 
     public function get_template_details(Request $request)
     {
-
         $template_id = $request->input('template_id');
 
         $details = DB::table('templates')

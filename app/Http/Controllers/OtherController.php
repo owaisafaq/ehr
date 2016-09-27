@@ -18,8 +18,6 @@ use PHPMailer;
 
 class OtherController extends Controller
 {
-
-
     public function __construct(Request $request)
     {
         header('Access-Control-Allow-Origin: *');
@@ -576,7 +574,6 @@ class OtherController extends Controller
 
     public function patient_discharge(Request $request)
     {
-
         $patient_id = $request->input('patient_id');
 
         $ward = DB::table('patients_admitted')
@@ -676,12 +673,10 @@ class OtherController extends Controller
 
         return response()->json(['status' => true, 'message' => 'Patient Moved Successfully']);
 
-
     }
 
     public function patients_pool_area(Request $request)
     {
-
         $encounter = DB::table('visits')
             ->select(DB::raw('CONCAT(patients.first_name," ",patients.last_name) AS patient_name,visits.id'))
             ->leftJoin('patients', 'visits.patient_id', '=', 'patients.id')
@@ -783,7 +778,6 @@ class OtherController extends Controller
 
     public function appointment_dates_doctors(Request $request)
     {
-
         $doctor_id = $request->input('doctor_id');
 
         $appointments = DB::table('appointments')
@@ -794,10 +788,7 @@ class OtherController extends Controller
             ->orderby('pick_date', 'desc')
             ->get();
         return response()->json(['status' => true, 'data' => $appointments]);
-
     }
-
-
 
     public function appointment_dates_departments(Request $request)
     {

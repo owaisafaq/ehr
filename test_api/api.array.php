@@ -1237,6 +1237,19 @@ $api->params->token = "123";
 $api_arr [] = $api;
 
 
+// Get All Radiology Lab Orders
+$api = new api();
+$api->name = "Get All Radiology Lab Orders";
+$api->url = HOST . 'get_all_radiology_lab_orders';
+$api->method = "GET";
+$api->description = "Get All Lab Radiology Orders";
+$api->params->limit = "0";
+$api->params->offset = "0";
+$api->params->patient_id = "0";
+$api->params->visit_id = "0";
+$api->params->token = "123";
+
+$api_arr [] = $api;
 
 // Get Patient Lab Orders
 $api = new api();

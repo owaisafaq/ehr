@@ -15,10 +15,8 @@ class InventoryAPIController extends Controller
 {
     public function __construct(Request $request)
     {
-
         header('Access-Control-Allow-Origin: *');
         date_default_timezone_set("Africa/Lagos");
-
     }
     //Categories APIs.
     public function get_categories(){
@@ -465,7 +463,6 @@ class InventoryAPIController extends Controller
 
     public function add_product_inventory(Request $request){
 
-
          $group = $request->input('group');
          $product_name = $request->input('product_name');
          $trade_name = $request->input('trade_name');
@@ -528,8 +525,6 @@ class InventoryAPIController extends Controller
                 return response()->json(['status' => false, 'message' => "Product Inventory Added Successfully"], 200);
 
             }
-
-
     }
 
 
@@ -553,14 +548,11 @@ class InventoryAPIController extends Controller
         }
 
         DB::table('stock')->where('id', $stock_id)->update(
-            [ 'stock_status'=>$status, 'updated_at'=> $currentdatetime
-            ]
+            [ 'stock_status'=>$status, 'updated_at'=> $currentdatetime]
         );
 
 
         return response()->json(['status' => true, 'message' => "Stock Updated Successfully"]);
-
-
     }
     
     

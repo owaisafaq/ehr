@@ -3392,7 +3392,6 @@ class ApiController extends Controller
 
     public function update_prescription(Request $request)
     {
-
         $prescribe_medication_id = $request->input('prescribe_medication_id');
         $prescription_id = $request->input('precription_id');
         $medication = $request->input('medication');
@@ -3424,7 +3423,6 @@ class ApiController extends Controller
 
     public function get_patient_medications(Request $request)
     {
-
         $patient_id = $request->input('patient_id');
         $medicines = DB::table('medicines')
             ->select(DB::raw('id,supplements'))
