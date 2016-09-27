@@ -2574,6 +2574,8 @@ class ApiController extends Controller
 
         $value = $request->input('value');
 
+        $diagnosis = $request->input('diagnosis');
+
         $currentdatetime = date("Y-m-d  H:i:s");
 
         $data = DB::table('patient_clinical_notes')
@@ -2591,6 +2593,7 @@ class ApiController extends Controller
                 'visit_id' => $visit_id,
                 'template_id' => $template_id,
                 'value' => $value,
+                'diagnosis' => $diagnosis,
                 'created_at' => $currentdatetime
             ]
         );
@@ -2613,6 +2616,8 @@ class ApiController extends Controller
 
         $value = $request->input('value');
 
+        $diagnosis = $request->input('diagnosis');
+
         $currentdatetime = date("Y-m-d  H:i:s");
 
         DB::table('patient_clinical_notes')
@@ -2622,6 +2627,7 @@ class ApiController extends Controller
                 'visit_id' => $visit_id,
                 //'template_id' => $template_id,
                 'value' => $value,
+                'diagnosis' => $diagnosis,
                 'updated_at' => $currentdatetime
             ]
         );

@@ -919,5 +919,15 @@ class OrderController extends Controller
           return response()->json(['status' => true, 'signoff' => $signoff,'data'=>$data->template_values,'template'=>$data->template,'template_name'=>$data->name,'template_id'=>$data->template_id, 'category_id' => $data->category_id,'doctor'=> 'DR James','test_by'=>'alex','date_of_service'=>'10th May']);
       }
 
+    public function get_diagnosis(Request $request){
+
+        $diagnosis = DB::table('diagnosis')
+            ->select(DB::raw('id,name'))
+            ->get();
+
+        return response()->json(['status' => true, 'data' => $diagnosis]);
+
+    }
+
 }
 

@@ -998,6 +998,7 @@ $api->params->patient_id = "1";
 $api->params->visit_id = "1";
 $api->params->template_id = "";
 $api->params->value = "";
+$api->params->diagnosis = "0";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -1013,6 +1014,7 @@ $api->params->patient_id = "1";
 $api->params->visit_id = "1";
 $api->params->template_id = "";
 $api->params->value = "";
+$api->params->diagnosis = "0";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -2841,6 +2843,17 @@ $api->method = "POST";
 $api->params->lab_test_id = "";
 $api->params->template_id = "";
 $api->params->lab_test_values = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+
+//Get Diagnosis
+$api = new api();
+$api->name = "Get Diagnosis";
+$api->url = HOST . 'get_diagnosis';
+$api->method = "GET";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
