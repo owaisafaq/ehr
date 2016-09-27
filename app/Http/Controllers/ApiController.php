@@ -1037,8 +1037,6 @@ class ApiController extends Controller
 
     public function add_patient_plan(Request $request)
     {
-
-
         $patient_id = $request->input('patient_id');
 
         $plan_id = $request->input('plan_id');
@@ -1058,8 +1056,7 @@ class ApiController extends Controller
         }
 
 
-        if ($plan_id == 1) {
-
+        if ($plan_id == 1 || $plan_id == 4) {
 
             DB::table('patients')
                 ->where('id', $patient_id)
@@ -1070,7 +1067,6 @@ class ApiController extends Controller
         } else {
 
             if ($plan_id == 2) {
-
 
                 $hmo = $request->input('hmo');
 
@@ -1096,7 +1092,6 @@ class ApiController extends Controller
                         'insurance_id' => $insurance_id,
                         'description' => $description,
                         'created_at' => $currentdatetime
-
                     ]
                 );
 
@@ -1135,7 +1130,6 @@ class ApiController extends Controller
                                 'dependant_id' => $dependent->dependent_id,
                                 'relationship' => $dependent->relationship,
                                 'created_at' => $currentdatetime
-
                             ]
                         );
 
@@ -1150,7 +1144,6 @@ class ApiController extends Controller
             }
 
             if ($plan_id == 3) {
-
 
                 $retainership = $request->input('retainership');
 
@@ -1201,7 +1194,6 @@ class ApiController extends Controller
                     $dependents = $request->input('dependents');
 
                     $patient_dependents = json_decode($dependents);
-
 
                     foreach ($patient_dependents as $dependent) {
 
@@ -1271,8 +1263,6 @@ class ApiController extends Controller
 
     public function update_patient_archive(Request $request)
     {
-
-
         $patient_id = $request->input('patient_id');
 
         $currentdatetime = date("Y-m-d  H:i:s");
@@ -1349,7 +1339,6 @@ class ApiController extends Controller
 
     public function get_visits()
     {
-
         $visits = DB::table('visits')
             ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
             ->select(DB::raw('patients.id,first_name,middle_name,last_name'))
@@ -1360,7 +1349,6 @@ class ApiController extends Controller
 
 
         return response()->json(['status' => true, 'data' => $visits]);
-
     }
 
 
@@ -1743,8 +1731,6 @@ class ApiController extends Controller
 
     public function list_resources_back(Request $request)
     {
-
-
         $patient_id = $request->input('patient_id');
 
         $followup_parent_id = $request->input('followup_parent_id');
@@ -2765,6 +2751,12 @@ class ApiController extends Controller
                     'updated_at' => $currentdatetime
                 ]
             );
+
+
+        DB::table('visits')
+            ->where('id', $visit_id)
+            ->where('visit_status','!=','checkout')
+            ->update(['status' => 0,'updated_at' => $currentdatetime]);
 
 
         DB::table('patient_checkout')->insert(
