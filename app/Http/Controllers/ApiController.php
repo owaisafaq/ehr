@@ -3444,10 +3444,10 @@ class ApiController extends Controller
         $arr = array();
         $data = DB::table('patient_clinical_notes')
             ->leftJoin('templates', 'templates.id', '=', 'patient_clinical_notes.template_id')
-            ->select('patient_clinical_notes.value', 'templates.template','templates.name')
+            ->select('patient_clinical_notes.value', 'templates.template','templates.name','templates.category_id','patient_clinical_notes.template_id')
             ->where('patient_clinical_notes.id', $status->id)->first();
 
-        return response()->json(['status' => true, 'signoff' => $signoff,'data'=>$data->value,'template'=>$data->template,'clinical_notes_id'=>$status->id,'template_name'=>$data->name]);
+        return response()->json(['status' => true, 'signoff' => $signoff,'data'=>$data->value,'template'=>$data->template,'clinical_notes_id'=>$status->id,'template_name'=>$data->name,'template_id'=>$data->template_id,'category_id'=>$data->category_id,'doctor'=> 'DR James','test_by'=>'alex','date_of_service'=>'10th May']);
     }
 }
 

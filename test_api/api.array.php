@@ -2830,3 +2830,17 @@ $api->params->lab_order_test_id = "";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+
+
+//update lab orders
+$api = new api();
+$api->name = "update lab orders";
+$api->url = HOST . 'update_lab_test_values';
+$api->method = "POST";
+$api->params->lab_test_id = "";
+$api->params->template_id = "";
+$api->params->lab_test_values = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;

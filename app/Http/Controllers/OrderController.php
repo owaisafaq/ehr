@@ -704,13 +704,15 @@ class OrderController extends Controller
 
         $lab_test_id = $request->input('lab_test_id');
 
-        $template_id = $request->input('template_id');
+         $template_id = $request->input('template_id');
 
         $lab_test_values = html_entity_decode($request->input('lab_test_values'));
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
         $lab_test = json_decode($lab_test_values);
+
+     //   dd('here');
 
         DB::table('patient_lab_test_values')
             ->where('lab_test', $lab_test_id)
@@ -722,7 +724,7 @@ class OrderController extends Controller
             );
 
 
-        return response()->json(['status' => true, 'message' => 'Lab Report Added Sucessfully']);
+        return response()->json(['status' => true, 'message' => 'Lab Report updated  Sucessfully']);
 
     }
 
@@ -733,7 +735,7 @@ class OrderController extends Controller
         $lab_test_id = $request->input('lab_test_id');
 
         $lab_test = DB::table('lab_tests')
-            ->select('lab_order_tests.id','lab_tests.name','lab_tests.lonic_code','lab_tests.cost','lab_tests.lab','lab_order_tests.test_status', 'lab_order_tests.lab_order_id', 'patients.first_name', 'patients.last_name', 'patients.id as patient_id', 'patients.age', 'patients.sex', 'maritial_status.name as marital_status')
+            ->select('lab_order_tests.id','lab_tests.name','lab_tests.lonic_code','lab_tests.cost','lab_tests.lab','lab_order_tests.test_status', 'lab_order_tests.lab_order_id', 'patients.first_name', 'patients.last_name', 'patients.id as patient_id', 'patients.age', 'patients.sex', 'maritial_status.name as marital_status','lab_orders.visit_id')
             ->leftJoin('lab_order_tests', 'lab_order_tests.lab_test', '=', 'lab_tests.id')
             ->leftJoin('lab_orders', 'lab_orders.id', '=', 'lab_order_tests.lab_order_id')
             ->leftJoin('patients', 'patients.id', '=', 'lab_orders.patient_id')
@@ -911,10 +913,10 @@ class OrderController extends Controller
 
           $data = DB::table('patient_lab_test_values')
               ->leftJoin('templates', 'templates.id', '=', 'patient_lab_test_values.template_id')
-              ->select('patient_lab_test_values.template_values', 'templates.template','templates.name','patient_lab_test_values.template_id')
+              ->select('patient_lab_test_values.template_values', 'templates.template','templates.name','patient_lab_test_values.template_id','templates.category_id')
               ->where('patient_lab_test_values.id', $status->id)->first();
 
-          return response()->json(['status' => true, 'signoff' => $signoff,'data'=>$data->template_values,'template'=>$data->template,'template_name'=>$data->name,'template_id'=>$data->template_id]);
+          return response()->json(['status' => true, 'signoff' => $signoff,'data'=>$data->template_values,'template'=>$data->template,'template_name'=>$data->name,'template_id'=>$data->template_id, 'category_id' => $data->category_id,'doctor'=> 'DR James','test_by'=>'alex','date_of_service'=>'10th May']);
       }
 
 }
