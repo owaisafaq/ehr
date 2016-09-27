@@ -754,6 +754,11 @@ class ApiController extends Controller
             return response()->json(['status' => false, 'message' => 'New Visit can not be created']);
         }
 
+        DB::table('visits')
+            ->where('patient_id',$patient_id)
+            ->update(['status' => 0,'updated_at' => $currentdatetime]);
+
+
         DB::table('visits')->insert(
             ['patient_id' => $patient_id,
                 'department_id' => $department_id,
@@ -1646,7 +1651,7 @@ class ApiController extends Controller
 
         } else {
 
-            $demographics->gender = 'FeMale';
+            $demographics->gender = 'Female';
         }
 
         return response()->json(['status' => true, 'data' => $demographics]);
