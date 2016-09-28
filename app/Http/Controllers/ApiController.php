@@ -754,7 +754,7 @@ class ApiController extends Controller
                 'encounter_type' => $encounter_type,
                 'whom_to_see' => $whom_to_see,
                 'decscribe_whom_to_see' => $decscribe_whom_to_see,
-               // 'reason_of_visit'=>$reason_of_visit,
+                'reason_of_visit'=>$reason_of_visit,
                 'created_at' => $currentdatetime
             ]
         );
@@ -801,7 +801,7 @@ class ApiController extends Controller
                     'encounter_type' => $encounter_type,
                     'whom_to_see' => $whom_to_see,
                     'decscribe_whom_to_see' => $decscribe_whom_to_see,
-                    // 'reason_of_visit'=>$reason_of_visit,
+                     'reason_of_visit'=>$reason_of_visit,
                     'updated_at' => $currentdatetime
 
                 ]
@@ -3399,6 +3399,21 @@ class ApiController extends Controller
             ->where('patient_clinical_notes.id', $status->id)->first();
 
         return response()->json(['status' => true, 'signoff' => $signoff,'data'=>$data->value,'template'=>$data->template,'clinical_notes_id'=>$status->id,'template_name'=>$data->name,'template_id'=>$data->template_id,'category_id'=>$data->category_id,'doctor'=> 'DR James','test_by'=>'alex','date_of_service'=>'10th May','diagnosis'=>$data->diagnosis]);
+    }
+    public function get_prescription_medicines(Request $request){
+        $data = DB::table('inventory_products')
+            ->select(DB::raw('id,name'))
+            ->where('group','Drugs')
+            ->get();
+        return response()->json(['status' => true, 'data' => $data]);
+    }
+    public function get_prescription_supplements(Request $request){
+        $data = DB::table('inventory_products')
+            ->select(DB::raw('id,name'))
+            ->where('status', 1)
+            ->where('group','Supplements')
+            ->get();
+        return response()->json(['status' => true, 'data' => $data]);
     }
 }
 

@@ -294,5 +294,10 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->get('get_diagnosis','App\Http\Controllers\OrderController@get_diagnosis');
 
 
+    //prescription dropdown
+    $app->get('get_prescription_medicines','App\Http\Controllers\ApiController@get_prescription_medicines');
+    $app->get('get_prescription_supplements','App\Http\Controllers\ApiController@get_prescription_supplements');
+
+
 
 });

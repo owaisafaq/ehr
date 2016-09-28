@@ -2872,3 +2872,23 @@ $api->method = "GET";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+
+//Get Prescription Medicines
+$api = new api();
+$api->name = "Get Prescription Medicines";
+$api->url = HOST . 'get_prescription_medicines';
+$api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Get Prescription Supplements
+$api = new api();
+$api->name = "Get Prescription Supplements";
+$api->url = HOST . 'get_prescription_supplements';
+$api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
