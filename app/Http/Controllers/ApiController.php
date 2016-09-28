@@ -3137,6 +3137,7 @@ class ApiController extends Controller
                 ->insert(
                     ['prescription_id' => $prescription_id,
                         'medication' => $patient_prescription->medication,
+                        'supplements' => 1,
                         'sig' => $patient_prescription->sig,
                         'dispense' => $patient_prescription->dispense,
                         'reffills' => $patient_prescription->reffills,
