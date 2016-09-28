@@ -1380,7 +1380,7 @@ class ApiController extends Controller
             ->leftJoin('policies', 'policies.id', '=', 'plan_details.policies')
             ->leftJoin('categories', 'categories.id', '=', 'plan_details.category')
             ->leftJoin('retainership', 'plan_details.retainership', '=', 'retainership.id')
-            ->select(DB::raw('hospital_plan.name,plan_details.is_principal,plan_details.id as patient_plan_id,plan_details.is_dependant,hospital_plan.id as plan_id,hmo.name as hmo,categories.name as category,retainership.name as retainership,policies.name as policies,plan_details.insurance_id,plan_details.description,plan_details.notes'))
+            ->select(DB::raw('hospital_plan.name,plan_details.is_principal,plan_details.id as patient_plan_id,plan_details.is_dependant,hospital_plan.id as plan_id,hmo.name as hmo,hmo.id as hmo_id,categories.name as category,retainership.name as retainership,policies.name as policies,plan_details.insurance_id,plan_details.description,plan_details.notes'))
             ->where('patients.status', 1)
             ->where('plan_details.patient_id', $patient_id)
             ->where('plan_details.status', 1)
