@@ -1628,7 +1628,7 @@ class ApiController extends Controller
             ->leftJoin('patient_kin', 'patient_kin.patient_id', '=', 'patients.id')
             ->leftJoin('religion', 'religion.id', '=', 'patients.religion')
             ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
-            ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.plan_id')
+            ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.hospital_plan')
             ->leftJoin('blood_group', 'blood_group.id', '=', 'patients.blood_group')
             ->select(DB::raw('patients.id,patients.patient_image,patients.first_name,patients.middle_name,patients.last_name,patients.date_of_birth,patients.sex,patients.age,religion.name as religion,maritial_status.name as marital_status,hospital_plan.name as hospital_plan,patient_unit_number,patient_address.mobile_number,patient_address.email,patient_kin.fullname as next_to_kin,patient_address.house_number,patient_address.street,blood_group.name as blood_group'))
             ->where('patients.id', $patient_id)
@@ -1638,11 +1638,8 @@ class ApiController extends Controller
 
 
         if ($demographics->sex == 1) {
-
             $demographics->gender = 'Male';
-
         } else {
-
             $demographics->gender = 'Female';
         }
 
