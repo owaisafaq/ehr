@@ -321,6 +321,7 @@ $api->params->encounter_class = "123";
 $api->params->encounter_type = "123";
 $api->params->whom_to_see = "1";
 $api->params->decscribe_whom_to_see = "123";
+$api->params->reason_of_visit = "";
 $api->params->token = "123";
 
 
@@ -339,6 +340,7 @@ $api->params->encounter_class = "123";
 $api->params->encounter_type = "123";
 $api->params->whom_to_see = "1";
 $api->params->decscribe_whom_to_see = "123";
+$api->params->reason_of_visit = "";
 $api->params->token = "123";
 
 $api_arr [] = $api;

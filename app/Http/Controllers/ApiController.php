@@ -63,9 +63,10 @@ class ApiController extends Controller
                 $q->where('first_name','LIKE',"$name%")
                     ->orWhere('id','LIKE',"%$name%");
                         })
-            ->where('plan_id', 1)
-            ->where('status', 1)
+            //->where('hospital_plan',1)
+            ->where('status',1)
             ->get();
+
         if (empty($patients)) {
             $patient = array(
                 "id" => '0',
@@ -723,6 +724,8 @@ class ApiController extends Controller
 
         $decscribe_whom_to_see = $request->input('decscribe_whom_to_see');
 
+        $reason_of_visit = $request->input('reason_of_visit');
+
         $token = $request->input('token');
 
         $currentdatetime = date("Y-m-d  H:i:s");
@@ -751,6 +754,7 @@ class ApiController extends Controller
                 'encounter_type' => $encounter_type,
                 'whom_to_see' => $whom_to_see,
                 'decscribe_whom_to_see' => $decscribe_whom_to_see,
+               // 'reason_of_visit'=>$reason_of_visit,
                 'created_at' => $currentdatetime
             ]
         );
@@ -781,6 +785,8 @@ class ApiController extends Controller
 
         $decscribe_whom_to_see = $request->input('decscribe_whom_to_see');
 
+        $reason_of_visit = $request->input('reason_of_visit');
+
         $token = $request->input('token');
 
         $currentdatetime = date("Y-m-d  H:i:s");
@@ -795,6 +801,7 @@ class ApiController extends Controller
                     'encounter_type' => $encounter_type,
                     'whom_to_see' => $whom_to_see,
                     'decscribe_whom_to_see' => $decscribe_whom_to_see,
+                    // 'reason_of_visit'=>$reason_of_visit,
                     'updated_at' => $currentdatetime
 
                 ]
@@ -1390,12 +1397,27 @@ class ApiController extends Controller
                     ->leftJoin('relationships', 'patient_dependants.relationship', '=', 'relationships.id')
                     ->select(DB::raw('patient_dependants.plan_detail_id,patient_dependants.dependant_id,patient_dependants.relationship,patients.first_name,patients.middle_name,patients.last_name,relationships.name as dependent_relationship'))
                     ->where('patient_dependants.status', 1)
-                    ->where('plan_detail_id', $patient_plan->plan_id)
+                    ->where('plan_detail_id', $patient_plan->patient_plan_id)
                     ->where('patient_dependants.principal_id', $patient_id)
                     ->get();
 
                 $patient_plan->dependents = $dependents;
             }
+
+            if ($patient_plan->is_dependant == 1) {
+
+                $principal = DB::table('patient_dependants')
+                    ->leftJoin('patients', 'patients.id', '=', 'patient_dependants.principal_id')
+                    ->leftJoin('relationships', 'patient_dependants.relationship', '=', 'relationships.id')
+                    ->select(DB::raw('patient_dependants.plan_detail_id,patient_dependants.dependant_id,patient_dependants.relationship,patients.first_name,patients.middle_name,patients.last_name,relationships.name as dependent_relationship'))
+                    ->where('patient_dependants.status', 1)
+                    ->where('plan_detail_id', $patient_plan->patient_plan_id)
+                    ->where('patient_dependants.dependant_id', $patient_id)
+                    ->first();
+
+                $patient_plan->principal = $principal;
+            }
+
         }
 
         $patient_valid = 0;
@@ -1487,7 +1509,7 @@ class ApiController extends Controller
                 ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
                 ->leftJoin('departments', 'departments.id', '=', 'visits.department_id')
                 ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
-                ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,visits.created_at,patients.status'))
+                ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,visits.created_at,patients.status,visits.reason_of_visit'))
                 ->orderby('visits.id', 'desc')
                 ->where('visits.patient_id', '!=', 'null')
               //  ->where('visits.patient_id', $patient_id)
@@ -1501,7 +1523,7 @@ class ApiController extends Controller
                 ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
                 ->leftJoin('departments', 'departments.id', '=', 'visits.department_id')
                 ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
-                ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,visits.created_at,patients.status'))
+                ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,visits.created_at,patients.status,visits.reason_of_visit'))
                 ->orderby('visits.id', 'desc')
                 ->where('visits.patient_id', '!=', 'null')
               //  ->where('visits.patient_id', $patient_id)
@@ -1517,7 +1539,7 @@ class ApiController extends Controller
                 ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
                 ->leftJoin('departments', 'departments.id', '=', 'visits.department_id')
                 ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
-                ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,visits.created_at,patients.status'))
+                ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,visits.created_at,patients.status,visits.reason_of_visit'))
                 ->orderby('visits.id', 'desc')
                 ->where('visits.patient_id', '!=', 'null')
               //  ->where('visits.patient_id', $patient_id)
@@ -1653,7 +1675,7 @@ class ApiController extends Controller
             ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
             ->leftJoin('departments', 'departments.id', '=', 'visits.department_id')
             ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
-            ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,departments.id as department_id,visits.created_at'))
+            ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,departments.id as department_id,visits.created_at,visits.reason_of_visit'))
             ->where('visits.patient_id', '!=', 'null')
             ->where('visits.visit_status', '!=', 'checkout')
             ->where('visits.status', '1')
