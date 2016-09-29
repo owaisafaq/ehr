@@ -188,10 +188,10 @@ class ApiController extends Controller
         $patient_id = $request->input('patient_id');
 
         $fileName = $request->input('patient_image');
+        $image_name = $request->input('image_name');
 
 
         if (isset($patient_id)) {
-
 
             DB::table('patients')
                 ->where('id', $patient_id)
@@ -202,6 +202,7 @@ class ApiController extends Controller
                     'age' => $age,
                     'sex' => $sex,
                     'patient_image' => $fileName,
+                    'image_name' => $image_name,
                     'marital_status' => $marital_status,
                     'religion' => $religion,
                     'father_firstname' => $father_firstname,
@@ -234,6 +235,7 @@ class ApiController extends Controller
                     'age' => $age,
                     'sex' => $sex,
                     'patient_image' => $fileName,
+                    'image_name' => $image_name,
                    // 'plan_id' => 1,
                     'marital_status' => $marital_status,
                     'religion' => $religion,
@@ -279,11 +281,9 @@ class ApiController extends Controller
             return response()->json(['status' => false, 'message' => 'Invalid image']);
         }
 
-
         $image->move($destinationPath, $fileName);
 
-
-        return response()->json(['status' => true, 'message' => "Patient Image Uploaded Successfully", "image" => $fileName]);
+        return response()->json(['status' => true, 'message' => "Patient Image Uploaded Successfully", "image" => $fileName,'name'=> $original_name]);
 
 
     }
@@ -1294,6 +1294,10 @@ class ApiController extends Controller
             ->orderby('visits.id','desc')
             ->get();
 
+        foreach ($patients as $patient) {
+            $patient->barcode = "http://demoz.online/php-barcode-master/barcode.php?text=$patient->id";
+        }
+
         $is_visit = 1;
 
         if ($patients[0]->sex == 1) {
@@ -1306,25 +1310,16 @@ class ApiController extends Controller
         }
 
         if($patients[0]->encounter_status != '1'){
-
             $is_visit = 0;
+            return response()->json(['status' => true, 'data' => $patients[0], 'is_visit' => $is_visit]);
         }
 
 
         if ($patients[0]->visit_status == 'null' || $patients[0]->visit_status == 'checkout') {
-
             $is_visit = 0;
+            return response()->json(['status' => true, 'data' => $patients[0], 'is_visit' => $is_visit]);
         }
-
-
-        foreach ($patients as $patient) {
-
-            $patient->barcode = "http://demoz.online/php-barcode-master/barcode.php?text=$patient->id";
-        }
-
-        return response()->json(['status' => true, 'data' => $patients[0], 'is_visit' => $is_visit]);
-
-
+        return response()->json(['status' => true, 'data' => $patients[0],'is_visit'=> $is_visit,'visit_id'=>$patients[0]->encounter_id]);
     }
 
 
@@ -1643,7 +1638,28 @@ class ApiController extends Controller
             $demographics->gender = 'Female';
         }
 
-        return response()->json(['status' => true, 'data' => $demographics]);
+
+        $visit = DB::table('visits')
+            ->select(DB::raw('id,visit_status'))
+            ->where('patient_id',$patient_id)
+            ->where('status', 1)
+            ->orderby('id','desc')
+            ->first();
+
+        if(empty($visit)){
+            $is_visit = 0;
+            return response()->json(['status' => true, 'data' => $demographics,'is_visit'=>$is_visit]);
+        }
+        if($visit->visit_status=='checkout'){
+            $is_visit = 0;
+            return response()->json(['status' => true, 'data' => $demographics,'is_visit'=>$is_visit]);
+        }
+        if($visit->visit_status !='checkout'){
+            $is_visit = 1;
+            return response()->json(['status' => true, 'data' => $demographics,'is_visit'=>$is_visit,'visit_id'=>$visit->id ]);
+        }
+
+
     }
 
 
