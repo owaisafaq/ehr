@@ -187,6 +187,7 @@ class InventoryAPIController extends Controller
             ->leftJoin('inventory_products','inventory_products.id','=','stock.product_id')
             ->leftJoin('inventory_categories','inventory_products.cat_id','=','inventory_categories.id')
             ->where(['stock.status'=>1])
+            ->groupby('stock.product_id')
             ->get();
         if($stock){
             return response()->json(['status' => true, 'message' => "Stock Found.", 'data'=>$stock], 200);
@@ -471,6 +472,16 @@ class InventoryAPIController extends Controller
          $cat_id = $request->input('cat_id');
          $strength = $request->input('strength');
          $dose_from = $request->input('dose_from');
+
+
+        $product = DB::table('inventory_products')
+            ->select(DB::raw('*'))
+            ->where('name',$product_name)
+            ->count();
+
+        if ($product > 0) {
+            return response()->json(['status' => false, 'message' => "Product with same name exists already"], 200);
+        }
 
          $id = DB::table('inventory_products')->insertGetId(
              [
