@@ -2186,9 +2186,8 @@ class ApiController extends Controller
 
         if ($limit > 0 || $offset > 0) {
 
-
             $visits = DB::table('visits')
-                ->select(DB::raw('visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name'))
+                ->select(DB::raw('visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name,visits.reason_of_visit'))
                 ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
                 ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
                 ->where('visits.patient_id', $patient_id)
@@ -2196,7 +2195,7 @@ class ApiController extends Controller
                 ->get();
 
             $count = DB::table('visits')
-                ->select(DB::raw('visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name'))
+                ->select(DB::raw('visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name,visits.reason_of_visit'))
                 ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
                 ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
                 ->where('visits.patient_id', $patient_id)->count();
@@ -2204,7 +2203,7 @@ class ApiController extends Controller
         } else {
 
             $visits = DB::table('visits')
-                ->select(DB::raw('visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name'))
+                ->select(DB::raw('visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name,visits.reason_of_visit'))
                 ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
                 ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
                 ->where('visits.patient_id', $patient_id)
