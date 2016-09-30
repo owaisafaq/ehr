@@ -18,8 +18,6 @@ use PHPMailer;
 
 class OtherController extends Controller
 {
-
-
     public function __construct(Request $request)
     {
         header('Access-Control-Allow-Origin: *');
@@ -576,7 +574,6 @@ class OtherController extends Controller
 
     public function patient_discharge(Request $request)
     {
-
         $patient_id = $request->input('patient_id');
 
         $ward = DB::table('patients_admitted')
@@ -676,12 +673,10 @@ class OtherController extends Controller
 
         return response()->json(['status' => true, 'message' => 'Patient Moved Successfully']);
 
-
     }
 
     public function patients_pool_area(Request $request)
     {
-
         $encounter = DB::table('visits')
             ->select(DB::raw('CONCAT(patients.first_name," ",patients.last_name) AS patient_name,visits.id'))
             ->leftJoin('patients', 'visits.patient_id', '=', 'patients.id')
@@ -719,7 +714,7 @@ class OtherController extends Controller
             ->get();
 
         $is_exist = 1;
-        if(empty($encounter) || empty($triage) || empty($physician) || empty($checkout)){
+        if(empty($encounter) && empty($triage) && empty($physician) && empty($checkout)){
             $is_exist = 0;
         }
 
@@ -783,7 +778,6 @@ class OtherController extends Controller
 
     public function appointment_dates_doctors(Request $request)
     {
-
         $doctor_id = $request->input('doctor_id');
 
         $appointments = DB::table('appointments')
@@ -794,10 +788,7 @@ class OtherController extends Controller
             ->orderby('pick_date', 'desc')
             ->get();
         return response()->json(['status' => true, 'data' => $appointments]);
-
     }
-
-
 
     public function appointment_dates_departments(Request $request)
     {
@@ -866,32 +857,34 @@ class OtherController extends Controller
             ->where('address_type', 'contact')
             ->first();
 
-          $email = $address->email;
-          $mobile_number = $address->mobile_number; //$address->mobile_number;
+        $email = $address->email;
+        $mobile_number = $address->mobile_number; //$address->mobile_number;
          // $mobile_nubmer = '923333608229';
 
         $message = "Please Come to the Hospital on your pre sheduled time and date";
 
-        $mail = new PHPMailer(true); // notice the \  you have to use root namespace here
-        try {
-            $mail->isSMTP(); // tell to use smtp
-            $mail->CharSet = "utf-8"; // set charset to utf8
-            $mail->SMTPAuth = true;  // use smpt auth
-            $mail->SMTPSecure = "tls"; // or ssl
-            $mail->Host = env('MAIL_HOST');
-            $mail->Port = env('MAIL_PORT'); // most likely something different for you. This is the mailtrap.io port i use for testing.
-            $mail->Username = env('MAIL_USERNAME');
-            $mail->Password = env('MAIL_PASSWORD');
-            $mail->setFrom(env('MAIL_FROM'));
-            $mail->Subject = "Message From Ehr";
-            $mail->MsgHTML($message);
-            $mail->addAddress($email);
-            $mail->send();
+        if($email !='') {
+            $mail = new PHPMailer(true); // notice the \  you have to use root namespace here
+            try {
+                $mail->isSMTP(); // tell to use smtp
+                $mail->CharSet = "utf-8"; // set charset to utf8
+                $mail->SMTPAuth = true;  // use smpt auth
+                $mail->SMTPSecure = "tls"; // or ssl
+                $mail->Host = env('MAIL_HOST');
+                $mail->Port = env('MAIL_PORT'); // most likely something different for you. This is the mailtrap.io port i use for testing.
+                $mail->Username = env('MAIL_USERNAME');
+                $mail->Password = env('MAIL_PASSWORD');
+                $mail->setFrom(env('MAIL_FROM'));
+                $mail->Subject = "Message From Ehr";
+                $mail->MsgHTML($message);
+                $mail->addAddress($email);
+                $mail->send();
 
-        } catch (phpmailerException $e) {
-            dd($e);
-        } catch (Exception $e) {
-            dd($e);
+            } catch (phpmailerException $e) {
+                dd($e);
+            } catch (Exception $e) {
+                dd($e);
+            }
         }
 
         $url = 'http://www.smslive247.com/http/index.aspx?' . http_build_query(
