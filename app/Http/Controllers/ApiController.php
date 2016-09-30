@@ -2076,7 +2076,7 @@ class ApiController extends Controller
                 'dosage' => $dosage,
                 'frequency' => $frequency,
                 'intake' => $intake,
-                'manufacturer' => $manufacturer,
+               // 'manufacturer' => $manufacturer,
                 'from_date' => $from_date,
                 'medicine_status' => $medicine_status,
                 'to_date' => $to_date,
