@@ -494,14 +494,14 @@ class OtherController extends Controller
 
             $count = count($beds);
       //  }
-        $i=0001;
+        $i= 1;
         foreach ($beds as $bed) {
             if ($bed->sex == 1) {
                 $bed->gender = 'Male';
             } else {
-                $bed->gender = 'FeMale';
+                $bed->gender = 'Female';
             }
-            $bed->id = $i;
+            $bed->id = '000'.$i;
             $i++;
 
         }
