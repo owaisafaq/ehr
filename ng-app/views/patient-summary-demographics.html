@@ -584,7 +584,7 @@
 </section>
 </div>
 <!-- ARCHIVE -->
-<div class="modal fade" id="fileUploader" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="fileUploader" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -650,14 +650,14 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- DELETE -->
-<div class="modal fade" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Confirmation</h2>
             </div>
             <div class="modal-body">
-                <p>Do you want to Delete?</p>
+                <p class="modal-subtext">Do you want to Delete?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-toggle="modal" ng-click="deleteArchive();" data-dismiss="modal">Ok</button>
@@ -666,14 +666,14 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade" id="addpatient" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="addpatient" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Add Vitals</h2>
             </div>
             <div class="modal-body">
-                <p>Continue to Add Patient Vitals</p>
+                <p class="modal-subtext">Continue to Add Patient Vitals</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-target="#vital-signs" data-toggle="modal" data-dismiss="modal">Ok</button>
@@ -682,7 +682,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade big-modal" id="vital-signs" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_3" id="vital-signs" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -693,13 +693,13 @@
                     <div class="row">
                         <div class="row no-margin">
                             <div class="col-lg-4" >
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <label class="label-style">Blood Pressure (mm Hg)</label>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>systolic (mm hg)</label>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 margin-bottom-xxl">
                                     <input type="text" placeholder="systolic (mm hg)"  ng-class="{
                                             true
                                             : 'error'}[vital.diastolic != undefined && vital.systolic == undefined]" ng-model="vital.systolic" numbers-only required/>
@@ -717,13 +717,13 @@
                             </div>
 
                             <div class="col-lg-4">
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <label class="label-style">Pulse Rate (min/bpm)</label>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>pulse</label>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 margin-bottom-xxl">
                                     <input type="text" placeholder="pulse" ng-model="vital.pulse" numbers-only/>
                                 </div>
                                 <!-- <div class="col-lg-12">
@@ -738,13 +738,13 @@
                             </div>
 
                             <div class="col-lg-4">
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <label class="label-style">Respiratory Rate (br/min)</label>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>temperature (c)</label>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 margin-bottom-xxl">
                                     <input type="text" placeholder="temperature (c)" ng-model="vital.temperaturec" numbers-only ng-keyup="GetTempcVal()"/>
                                 </div>
                                 <div class="col-lg-6">
@@ -757,7 +757,7 @@
                         </div>
                         <!--<div class="row">-->
                         <div class="col-lg-12">
-                            <label class="col-lg-12 label-style no-margin">BMI (kg / m^2)</label>
+                            <label class="col-lg-12 label-style margin-bottom-xxl margin-top-10">BMI (kg / m^2)</label>
                             <!-- <div class="col-lg-5 pull-right">
                                 <div class="pull-right">
                                     <a class="txt-style-4" href="javascript:;">Attach</a>&nbsp;&nbsp;|&nbsp;&nbsp;
@@ -770,13 +770,13 @@
                             <div class="col-lg-6">
                                 <label>result</label>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 margin-bottom-xxl">
                                 <input type="text" placeholder="0" ng-model="vital.result" readonly/>
                             </div>
                             <div class="col-lg-6">
                                 <label>weight (kg)</label>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 margin-bottom-xxl">
                                 <input type="text" ng-class="{true: 'error'}[vital.weight == undefined && vital.height != undefined]" placeholder="weight (kg)" ng-model="vital.weight" numbers-only ng-keyup="Calculatebmi()" required/>
                                 <p ng-show="vital.weight == undefined && vital.height != undefined" class="help-block PIValid">Required</p>
                             </div>
@@ -789,7 +789,7 @@
                                 <p ng-show="vital.height == undefined && vital.weight != undefined" class="help-block PIValid">Required</p>
                             </div>
                         </div>
-                        <div class="col-lg-8">
+                        <div class="col-lg-8 margin-bottom-xxl">
                             <div class="col-lg-3">
                                 <label>Notes</label>
                             </div>
@@ -808,14 +808,14 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </div>
-<div class="modal fade" id="addclinical" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="addclinical" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Clinical Notes</h2>
             </div>
             <div class="modal-body">
-                <p>Continue to Add Clinical Notes</p>
+                <p class="modal-subtext">Continue to Add Clinical Notes</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-toggle="modal" ng-click="clinicalNote();">Ok</button>
@@ -825,14 +825,14 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Error</h2>
             </div>
             <div class="modal-body">
-                <p>{{errorMessage}}</p>
+                <p class="modal-subtext">{{errorMessage}}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-toggle="modal" data-dismiss="modal">Ok</button>
@@ -841,14 +841,14 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div class="modal fade" id="removeAllergy" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="removeAllergy" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Confirmation</h2>
             </div>
             <div class="modal-body">
-                <p>Are you Sure want to delete?</p>
+                <p class="modal-subtext">Are you Sure want to delete?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-toggle="modal" data-dismiss="modal" ng-click="doDelete()">Ok</button>
@@ -859,7 +859,7 @@
 </div><!-- /.modal -->
 
 
-<div class="modal fade big-modal" id="addallergies" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_3" id="addallergies" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -867,8 +867,8 @@
             </div>
             <div class="modal-body">
                 <form class="custom-form" novalidate ng-submit="addAllergy(allergie)">
-                    <div class="row">
-
+                    <!--<div class="row">-->
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Type</label>
                         </div>
@@ -886,7 +886,8 @@
                         <div class="col-lg-4">
                             <input ng-model="allergie.allergy" type="text" placeholder="" name="" required/>
                         </div>
-
+</div>
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Severity</label>
                         </div>
@@ -909,7 +910,8 @@
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                             </div>
                         </div>
-
+</div>
+                     <div class="row margin-bottom-xxl">
 
                         <div class="col-lg-3">
                             <label>Status</label>
@@ -928,8 +930,8 @@
                         <div class="col-lg-4">
                             <input ng-model="allergie.reaction" type="text" placeholder="" name="" required/>
                         </div>
-
-                    </div>
+                     </div>
+                    <!--</div>-->
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-default button-style-1">Add</button>
                         <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
@@ -945,7 +947,7 @@
 
 </div><!-- /.modal -->
 
-<div class="modal fade big-modal" id="addsuplemets" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_3" id="addsuplemets" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -953,16 +955,16 @@
             </div>
             <div class="modal-body">
                 <form class="custom-form" novalidate ng-submit="addSupplements(addSupplement)">
-                    <div class="row">
-
+                    <!--<div class="row">-->
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Supplement</label>
                         </div>
                         <div class="col-lg-6">
                             <input type="text" placeholder="" name="" required ng-model="addSupplement.supplementName"/>
                         </div>
-                        <div class="col-lg-3"></div>
-
+                        </div>
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3 clear">
                             <label>Manufacturer</label>
                         </div>
@@ -974,6 +976,7 @@
                             </select>
 
                         </div>
+                        
                         <div class="col-lg-1">
                             <button class="add button-custom add_manufacturer" type="button"></button>
                         </div>
@@ -981,9 +984,10 @@
                             <input type="text" placeholder="" name="" required ng-model="addSupplement.addmanu"/>
                         </div>
                         <div class="col-lg-1">
-                            <button type="button" class="btn btn-default button-style-1 margin-0">Add</button>
+                            <button type="button" class="btn btn-default button-style-1 margin-0 padding-less">Add</button>
                         </div>
-
+</div>
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3 clear">
                             <label>From Date</label>
                         </div>
@@ -1007,8 +1011,9 @@
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                             </div>
                         </div>
+                        </div>
 
-
+ <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Dosage</label>
                         </div>
@@ -1022,9 +1027,8 @@
                                 <option value="3">3</option>
                             </select>
                         </div>
-                        <div class="col-lg-3"></div>
-
-
+ </div>
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3 clear">
                             <label>Frequency</label>
                         </div>
@@ -1045,9 +1049,9 @@
                                 <option value="3">3</option>
                             </select>
                         </div>
-                        <div class="col-lg-3"></div>
-
-                        <div class="col-lg-9">
+                        </div>
+ <div class="row margin-bottom-xxl">
+                        <div class="col-lg-9 col-lg-offset-3">
                             <div class="checkbox checkbox-styled">
                                 <label>
                                     <input type="checkbox" value="" ng-model="addSupplement.status">
@@ -1055,8 +1059,9 @@
                                 </label>
                             </div>
                         </div>
+ </div>
 
-                    </div>
+                    <!--</div>-->
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-default button-style-1">Add</button>
                         <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
@@ -1080,7 +1085,8 @@
             </div>
             <div class="modal-body">
                 <form class="custom-form" novalidate ng-submit="savePharmacyPopUp()">
-                    <div class="row">
+                    <!--<div class="row">-->
+                        <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Medication</label>
                         </div>
@@ -1090,7 +1096,8 @@
                                 <option ng-selected="MedicationData.medication == medicationDropData.id" value="{{medicationDropData.id}}" ng-repeat="medicationDropData in allMedications">{{medicationDropData.supplements}}</option>
                             </select>
                         </div>                                              
-
+</div>
+                     <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>SIG</label>
                         </div>
@@ -1101,6 +1108,8 @@
                             <!--open_sig-->
                             <a href="!#" class="setting-button button-custom pull-right" data-toggle="modal" data-target="#addsig"></a>
                         </div>
+                     </div>
+                    <div class="row margin-bottom-xxl">
 
                         <div class="col-lg-3">
                             <label>Dispense</label>
@@ -1115,7 +1124,8 @@
                         <div class="col-lg-3">
                             <input ng-model="MedicationData.reffills" type="text" placeholder="" />
                         </div>
-
+                        </div>
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Pharmacy</label>
                         </div>
@@ -1125,21 +1135,24 @@
                                 <option ng-selected="MedicationData.pharmacy == pharmacyDataDrop.id" value="{{pharmacyDataDrop.id}}" ng-repeat="pharmacyDataDrop in allPharmacies">{{pharmacyDataDrop.name}}</option>
                             </select>
                         </div>
+                        </div>
+                    <div class="row margin-bottom-xxl">
+                    
                         <div class="col-lg-3 clear">
                             <label>Note Of Pharmacy</label>
                         </div>
                         <div class="col-lg-9">
                             <input ng-model="MedicationData.note_of_pharmacy" type="text" placeholder="" required/>
                         </div>
+</div>
 
-
-                        <div class="col-lg-3"></div>
-                        <div class="col-lg-9">
+                    <div class="row margin-bottom-xxl">
+                        <div class="col-lg-9 col-lg-offset-3">
                             <button ng-hide="showUpdate" type="button" ng-click="addMedication()" class="btn btn-default pull-left button-style-1">Add</button>
                             <button type="button" ng-show="showUpdate" ng-click="addMedication(1)" class="btn btn-default pull-left button-style-1">Update</button>
                         </div>
-
-                    </div>
+</div>
+                    <!--</div>-->
 
                     <div class="medication_list">
                         <div class="row med_row" ng-repeat="medicationDataPush in medicationsDataPush">
@@ -1220,7 +1233,7 @@
                                 <div class="col-lg-12">
                                     <label>Dose</label>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <select class="form-control" ng-model="buildInstructions.dose" placeholder="Select">
                                         <option></option>
                                         <option ng-repeat="dose in medicineUnits.dosage" value="{{dose.dosage}}">{{dose.dosage}}</option>
@@ -1229,7 +1242,7 @@
                                 <div class="col-lg-12">
                                     <label>Route</label>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <select class="form-control" ng-model="buildInstructions.route" placeholder="Select">
                                         <option></option>
                                         <option ng-repeat="route in medicineUnits.route" value="{{route.route}}">{{route.route}}</option>
@@ -1238,7 +1251,7 @@
                                 <div class="col-lg-12">
                                     <label>Direction</label>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <select class="form-control" ng-model="buildInstructions.direction" placeholder="Select">
                                         <option></option>
                                         <option ng-repeat="direction in medicineUnits.direction" value="{{direction.direction}}">{{direction.direction}}</option>
@@ -1251,7 +1264,7 @@
                                 <div class="col-lg-12">
                                     <label>Unit</label>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <select class="form-control" ng-model="buildInstructions.unit" placeholder="Select">
                                         <option></option>
                                         <option ng-repeat="unit in medicineUnits.unit" value="{{unit.unit}}">{{unit.unit}}</option>
@@ -1260,7 +1273,7 @@
                                 <div class="col-lg-12">
                                     <label>Frequency</label>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <select class="form-control" ng-model="buildInstructions.frequency" placeholder="Select">
                                         <option></option>
                                         <option ng-repeat="frequency in medicineUnits.frequency" value="{{frequency.frequency}}">{{frequency.frequency}}</option>
@@ -1269,7 +1282,7 @@
                                 <div class="col-lg-12">
                                     <label>Duration</label>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <select class="form-control" ng-model="buildInstructions.duration" placeholder="Select">
                                         <option></option>
                                         <option ng-repeat="duration in medicineUnits.duration" value="{{duration.duration}}">{{duration.duration}}</option>
@@ -1278,7 +1291,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer row">
                         <button type="button" class="btn btn-default update_sig button-style-1" ng-click="addSIG(buildInstructions);">Update</button>
                         <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
                     </div>
@@ -1352,10 +1365,13 @@
                                 <textarea class="margin-bottom-lg" placeholder="Write Here..."  ng-model="CO.note"></textarea>
                             </div>
                         </div>
-                        <div id="admitPatient" class="row">
+                        <div id="admitPatient" class="">
+                            <div class="row margin-bottom-xxl">
                             <div class="col-lg-12">
                                 <span class="txt-style-4">Presenting Complaint: Captured from Clinical Note</span>
                             </div>
+                                </div>
+                            <div class="row margin-bottom-xxl">
                             <div class="col-lg-3">
                                 <label>to specialty</label>
                             </div>
@@ -1377,6 +1393,8 @@
                                 </select>
                                 <button class="ward-button"></button>
                             </div>
+                            </div>
+                            <div class="row margin-bottom-xxl">
                             <div class="col-lg-3">
                                 <label>Admitted DATE</label>
                             </div>
@@ -1392,11 +1410,14 @@
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                                 </div>
                             </div>
+                            </div>
+                            <div class="row">
 
                             <div class="col-lg-12">
                                 <label class="margin-bottom-xl">Note</label>
                                 <textarea class="margin-bottom-lg" placeholder="Write Here..."  ng-model="CO.note"></textarea>
                             </div>
+                        </div>
                         </div>
                         <div id="dead" class="row">
                             <div class="col-lg-12">

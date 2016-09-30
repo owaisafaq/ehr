@@ -942,7 +942,7 @@
 
 
 
-<div class="modal fade big-modal" id="process_payment" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="process_payment" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -950,35 +950,29 @@
             </div>
             <div class="modal-body">
                 <form class="custom-form" ng-submit="ProcessingPayment(AmountPaid,invoice_id);">
-                    <div class="row">
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Invoice ID</label>
                         </div>
-                        <div class="col-lg-3">
-
+                        <div class="col-lg-9">
                             <input type="text" placeholder="" ng-model="AmountPaid.inv_id"  value="{{invoice_id}}"  readonly/>
                         </div>
-
-
                     </div>
                     <div class="row">
                         <div class="col-lg-3">
                             <label>Amount Paid</label>
                         </div>
-                        <div class="col-lg-3">
-
+                        <div class="col-lg-9">
                             <input type="text" placeholder=""   ng-model="AmountPaid.amount_paid"  required/>
                         </div>
-
-
-
-
                     </div>
 
 
-                    <div class="modal-footer">
+                    <div class="modal-footer row">
+                        <div class="row">
                         <button type="submit" class="btn btn-default button-style-1">Mark as Paid</button>
                         <button type="button" class="btn button-style-1 button-style-1_a hide_print_inovice" data-dismiss="modal">Cancel</button>
+                        </div>
                     </div>
                 </form>
 
@@ -992,42 +986,30 @@
 </div><!-- /.modal -->
 
 
-<div class="modal fade big-modal" id="paid_modal" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="paid_modal" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Paid </h2>
             </div>
             <div class="modal-body">
-
-
                 <form class="custom-form" ng-submit="ProcessingPayment(AmountPaid,invoice_id);">
                     <div class="row">
                         <div class="col-lg-3">
                             <label>Invoice ID</label>
                         </div>
-                        <div class="col-lg-3">
-
+                        <div class="col-lg-9">
                             <input type="text" placeholder="" ng-model="AmountPaid.inv_id"  value="{{invoice_id}}"  readonly/>
                         </div>
-
-
                     </div>
 
                     <div class="row">
-                        <h2>Your Invoice Has Been Paid </h2>
-
-
+                        <div class="col-lg-12 margin-top-30">
+                            <p class="modal-subtext text-center">Your Invoice Has Been Paid </p>
+                        </div>
                     </div>
-
-
-
-
-
-
                     <div class="modal-footer">
-
-                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">OK</button>
+                        <button type="button" class="btn button-style-1" data-dismiss="modal">OK</button>
 
                     </div>
                 </form>
@@ -1043,7 +1025,7 @@
 </div><!-- /.modal -->
 
 
-<div class="modal fade big-modal" id="send_invoice" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_2" id="send_invoice" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -1051,49 +1033,31 @@
             </div>
             <div class="modal-body">
                 <form class="custom-form" ng-submit="SendInvoice(sendData,invoice_id);">
-                    <div class="row">
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Patient ID</label>
                         </div>
-                        <div class="col-lg-3">
-
+                        <div class="col-lg-9">
                             <input type="text" placeholder="" ng-model="sendData.inv_id"  value="{{selectedPatient.id}}"  readonly/>
                         </div>
-
-
                     </div>
-                    <div class="row">
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Patient Name</label>
                         </div>
-                        <div class="col-lg-3">
-
-                            <input type="text" placeholder=""   ng-model="sendData.amount_paid" value="{{selectedPatient.first_name}}"  readonly/>
+                        <div class="col-lg-9">
+                            <input type="text" placeholder="" ng-model="sendData.amount_paid" value="{{selectedPatient.first_name}}"  readonly/>
                         </div>
-
-
-
-
                     </div>
-
-
                     <div class="row">
                         <div class="col-lg-3">
                             <label>Email </label>
                         </div>
-                        <div class="col-lg-3">
-
-                            <input type="email" placeholder=""   ng-model="sendData.email"   />
+                        <div class="col-lg-9">
+                            <input type="email" placeholder="" ng-model="sendData.email"   />
                         </div>
-
-
-
-
                     </div>
-
-
-
-                    <div class="modal-footer">
+                    <div class="modal-footer row">
                         <button type="submit" class="btn btn-default button-style-1">Send Email</button>
                         <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
                     </div>
@@ -1115,14 +1079,14 @@
 
 
 
-<div class="modal fade" id="addpatient" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="addpatient" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Add Vitals</h2>
             </div>
             <div class="modal-body">
-                <p>Continue to Add Patient Vitals</p>
+                <p class="modal-subtext">Continue to Add Patient Vitals</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-toggle="modal" data-target="#vital-signs" data-dismiss="modal">Ok</button>
@@ -1131,7 +1095,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade big-modal" id="vital-signs" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade" id="vital-signs" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -1139,16 +1103,16 @@
             </div>
             <div class="modal-body">
                 <form class="custom-form" name="vitalForm" novalidate ng-submit="validateVitals(vital);">
-                    <div class="row">
-                        <div class="row no-margin">
+                    <!--<div class="row">-->
+                        <div class="row">
                             <div class="col-lg-4" >
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <label class="label-style">Blood Pressure (mm Hg)</label>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>systolic (mm hg)</label>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 margin-bottom-xxl">
                                     <input type="text" placeholder="systolic (mm hg)"  ng-class="{
                                             true
                                             : 'error'}[vital.diastolic != undefined && vital.systolic == undefined]" ng-model="vital.systolic" numbers-only required/>
@@ -1166,13 +1130,13 @@
                             </div>
 
                             <div class="col-lg-4">
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <label class="label-style">Pulse Rate (min/bpm)</label>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>pulse</label>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 margin-bottom-xxl">
                                     <input type="text" placeholder="pulse" ng-model="vital.pulse" numbers-only/>
                                 </div>
                                 <!-- <div class="col-lg-12">
@@ -1187,13 +1151,13 @@
                             </div>
 
                             <div class="col-lg-4">
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <label class="label-style">Respiratory Rate (br/min)</label>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>temperature (c)</label>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 margin-bottom-xxl">
                                     <input type="text" placeholder="temperature (c)" ng-model="vital.temperaturec" numbers-only ng-keyup="GetTempcVal()"/>
                                 </div>
                                 <div class="col-lg-6">
@@ -1204,28 +1168,31 @@
                                 </div>
                             </div>
                         </div>
-                        <!--<div class="row">-->
-                        <div class="col-lg-12">
-                            <label class="col-lg-12 label-style no-margin">BMI (kg / m^2)</label>
+                     <div class="row">
+                        <!--<div class="col-lg-12 margin-bottom-xxl">-->
+                           
                             <!-- <div class="col-lg-5 pull-right">
                                 <div class="pull-right">
                                     <a class="txt-style-4" href="javascript:;">Attach</a>&nbsp;&nbsp;|&nbsp;&nbsp;
                                     <a class="txt-style-4" href="javascript:;">Past Notes</a>
                                 </div>
                             </div> -->
-                        </div>
+                        <!--</div>-->
                         <!--</div>-->
                         <div class="col-lg-4">
+                            <div class="col-lg-12 margin-bottom-xxl margin-top-10">
+                             <label class="label-style">BMI (kg / m^2)</label>
+                             </div>
                             <div class="col-lg-6">
                                 <label>result</label>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 margin-bottom-xxl">
                                 <input type="text" placeholder="0" ng-model="vital.result" readonly/>
                             </div>
                             <div class="col-lg-6">
                                 <label>weight (kg)</label>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 margin-bottom-xxl">
                                 <input type="text" ng-class="{true: 'error'}[vital.weight == undefined && vital.height != undefined]" placeholder="weight (kg)" ng-model="vital.weight" numbers-only ng-keyup="Calculatebmi()" required/>
                                 <p ng-show="vital.weight == undefined && vital.height != undefined" class="help-block PIValid">Required</p>
                             </div>
@@ -1233,12 +1200,12 @@
                             <div class="col-lg-6">
                                 <label>height (cm)</label>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 margin-bottom-xxl">
                                 <input type="text" ng-class="{true: 'error'}[vital.height == undefined && vital.weight != undefined]" placeholder="height (cm)" ng-model="vital.height" ng-keyup="Calculatebmi()" numbers-only required />
                                 <p ng-show="vital.height == undefined && vital.weight != undefined" class="help-block PIValid">Required</p>
                             </div>
                         </div>
-                        <div class="col-lg-8">
+                        <div class="col-lg-8 margin-bottom-xxl margin-top-50">
                             <div class="col-lg-3">
                                 <label>Notes</label>
                             </div>
@@ -1246,25 +1213,26 @@
                                 <textarea placeholder="Write Your Text Here" ng-model="vital.notes"></textarea>
                             </div>
                         </div>
+                        </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;">Save</button>
                             <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
                         </div>
 
-                    </div>
+                    <!--</div>-->
                 </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </div>
-<div class="modal fade" id="noResultFound" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="noResultFound" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Result</h2>
             </div>
             <div class="modal-body">
-                <p>No Result Found</p>
+                <p class="modal-subtext">No Result Found</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
@@ -1273,7 +1241,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div class="modal fade" id="simpleModal1" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_2" id="simpleModal1" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-mid">
         <form class="custom-form" ng-submit="checkout(CO)">
             <div class="modal-content">
@@ -1341,10 +1309,13 @@
                                 <textarea class="margin-bottom-lg" placeholder="Write Here..." ng-model="CO.note"></textarea>
                             </div>
                         </div>
-                        <div id="admitPatient" class="row">
+                        <div id="admitPatient" class="">
+                            <div class="row margin-bottom-xxl">
                             <div class="col-lg-12">
                                 <span class="txt-style-4">Presenting Complaint: Captured from Clinical Note</span>
                             </div>
+                                </div>
+                            <div class="row margin-bottom-xxl">
                             <div class="col-lg-3">
                                 <label>to specialty</label>
                             </div>
@@ -1366,6 +1337,8 @@
                                 </select>
                                 <a class="ward-button"></a>
                             </div>
+                                </div>
+                            <div class="row margin-bottom-xxl">
                             <div class="col-lg-3">
                                 <label>Admitted DATE</label>
                             </div>
@@ -1381,11 +1354,13 @@
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                                 </div>
                             </div>
-
+                            </div>
+                            <div class="row margin-bottom-xxl">
                             <div class="col-lg-12">
                                 <label class="margin-bottom-xl">Note</label>
                                 <textarea class="margin-bottom-lg" placeholder="Write Here..." ng-model="CO.note"></textarea>
                             </div>
+                                </div>
                         </div>
                         <div id="dead" class="row">
                             <div class="col-lg-12">

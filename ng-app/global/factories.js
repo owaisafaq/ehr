@@ -2356,3 +2356,33 @@ AppEHR.factory("UpdateDischargeDate", function ($resource) {
     };
     return MakeInactive;
 });
+AppEHR.factory("orderReport", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_lab_test_pdf', params, {
+            save: {method: 'GET'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("Dosignoff", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'signoff_lab_report', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
