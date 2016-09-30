@@ -2002,25 +2002,28 @@ class ApiController extends Controller
         if ($limit > 0 || $offset > 0) {
 
             $patient_supplements = DB::table('medicines')
-                ->select(DB::raw('id,visit_id,supplements,dosage,frequency,intake,from_date,to_date,medicine_status'))
-                ->where('patient_id', $patient_id)
-                ->where('status', '1')
+                ->leftJoin('inventory_products', 'inventory_products.id', '=', 'medicines.supplements')
+                ->select(DB::raw('medicines.id,visit_id,medicines.supplements as supplement_id,inventory_products.name as supplement,dosage,frequency,intake,from_date,to_date,medicine_status'))
+                ->where('medicines.patient_id', $patient_id)
+                ->where('medicines.status', '1')
                 ->skip($offset)->take($limit)
                 ->get();
 
             $count = DB::table('medicines')
-                ->select(DB::raw('id,visit_id,supplements,dosage,frequency,intake,from_date,to_date,medicine_status'))
-                ->where('patient_id', $patient_id)
-                ->where('status', '1')
+                ->leftJoin('inventory_products', 'inventory_products.id', '=', 'medicines.supplements')
+                ->select(DB::raw('medicines.id,visit_id,medicines.supplements as supplement_id,inventory_products.name as supplement,dosage,frequency,intake,from_date,to_date,medicine_status'))
+                ->where('medicines.patient_id', $patient_id)
+                ->where('medicines.status', '1')
                 ->count();
 
 
         } else {
 
             $patient_supplements = DB::table('medicines')
-                ->select(DB::raw('id,visit_id,supplements,dosage,frequency,intake,from_date,to_date,medicine_status'))
-                ->where('patient_id', $patient_id)
-                ->where('status', '1')
+                ->leftJoin('inventory_products', 'inventory_products.id', '=', 'medicines.supplements')
+                ->select(DB::raw('medicines.id,visit_id,medicines.supplements as supplement_id,inventory_products.name as supplement,dosage,frequency,intake,from_date,to_date,medicine_status'))
+                ->where('medicines.patient_id', $patient_id)
+                ->where('medicines.status', '1')
                 ->get();
 
             $count = count($patient_supplements);
