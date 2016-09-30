@@ -766,7 +766,7 @@ class OrderController extends Controller
     public function get_lab_template_categories(Request $request)
     {
         $lab_categories = DB::table('template_categories')
-            ->select(DB::raw('id,name'))
+            ->select(DB::raw('id,name,description'))
             ->where('template_categories.status', 1)
             ->where('template_categories.template_type',2)
             ->get();
