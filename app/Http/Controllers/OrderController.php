@@ -496,6 +496,11 @@ class OrderController extends Controller
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
+        DB::table('visits')
+            ->where('id', $visit_id)
+            ->update(['visit_status' => 'physician', 'updated_at' => date("Y-m-d  H:i:s")]);
+
+
         DB::table('lab_orders')->insert(
             ['patient_id' => $patient_id,
                 'visit_id' => $visit_id,
@@ -761,8 +766,9 @@ class OrderController extends Controller
     public function get_lab_template_categories(Request $request)
     {
         $lab_categories = DB::table('template_categories')
-            ->select(DB::raw('id,name'))
+            ->select(DB::raw('id,name,description'))
             ->where('template_categories.status', 1)
+            ->where('template_categories.template_type',2)
             ->get();
 
         return response()->json(['status' => true, 'data' => $lab_categories]);
@@ -773,7 +779,7 @@ class OrderController extends Controller
     {
         $id = $request->input('cat_id');
         $lab_categories = DB::table('template_categories')
-            ->select(DB::raw('id,name'))
+            ->select(DB::raw('id,name,description'))
             ->where('template_categories.id', $id)
             ->where('template_categories.status', 1)
             ->get();

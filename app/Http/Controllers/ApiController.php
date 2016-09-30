@@ -166,7 +166,6 @@ class ApiController extends Controller
 
         $refered_name = $request->input('refered_name');
 
-
         $patient_unit_number = $request->input('patient_unit_number');
 
         $identity_type = $request->input('identity_type');
@@ -182,6 +181,8 @@ class ApiController extends Controller
         $nationality = $request->input('nationality');
 
         $blood_group = $request->input('blood_group');
+
+        $language = $request->input('language');
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
@@ -219,7 +220,9 @@ class ApiController extends Controller
                     'local_goverment_area' => $patient_local_goverment_area,
                     'tribe' => $tribe,
                     'nationality' => $nationality,
-                    'blood_group' => $blood_group, 'updated_at' => $currentdatetime));
+                    'language' => $language,
+                    'blood_group' => $blood_group,
+                    'updated_at' => $currentdatetime));
 
 
             return response()->json(['status' => true, 'message' => "Patient updated successfully", "patient_id" => $patient_id]);
@@ -253,6 +256,7 @@ class ApiController extends Controller
                     'local_goverment_area' => $patient_local_goverment_area,
                     'tribe' => $tribe,
                     'nationality' => $nationality,
+                    'language' => $language,
                     'blood_group' => $blood_group,
                     'created_at' => $currentdatetime
                 ]
@@ -2002,25 +2006,28 @@ class ApiController extends Controller
         if ($limit > 0 || $offset > 0) {
 
             $patient_supplements = DB::table('medicines')
-                ->select(DB::raw('id,visit_id,supplements,dosage,frequency,intake,from_date,to_date,medicine_status'))
-                ->where('patient_id', $patient_id)
-                ->where('status', '1')
+                ->leftJoin('inventory_products', 'inventory_products.id', '=', 'medicines.supplements')
+                ->select(DB::raw('medicines.id,visit_id,medicines.supplements as supplement_id,inventory_products.name as supplement,dosage,frequency,intake,from_date,to_date,medicine_status'))
+                ->where('medicines.patient_id', $patient_id)
+                ->where('medicines.status', '1')
                 ->skip($offset)->take($limit)
                 ->get();
 
             $count = DB::table('medicines')
-                ->select(DB::raw('id,visit_id,supplements,dosage,frequency,intake,from_date,to_date,medicine_status'))
-                ->where('patient_id', $patient_id)
-                ->where('status', '1')
+                ->leftJoin('inventory_products', 'inventory_products.id', '=', 'medicines.supplements')
+                ->select(DB::raw('medicines.id,visit_id,medicines.supplements as supplement_id,inventory_products.name as supplement,dosage,frequency,intake,from_date,to_date,medicine_status'))
+                ->where('medicines.patient_id', $patient_id)
+                ->where('medicines.status', '1')
                 ->count();
 
 
         } else {
 
             $patient_supplements = DB::table('medicines')
-                ->select(DB::raw('id,visit_id,supplements,dosage,frequency,intake,from_date,to_date,medicine_status'))
-                ->where('patient_id', $patient_id)
-                ->where('status', '1')
+                ->leftJoin('inventory_products', 'inventory_products.id', '=', 'medicines.supplements')
+                ->select(DB::raw('medicines.id,visit_id,medicines.supplements as supplement_id,inventory_products.name as supplement,dosage,frequency,intake,from_date,to_date,medicine_status'))
+                ->where('medicines.patient_id', $patient_id)
+                ->where('medicines.status', '1')
                 ->get();
 
             $count = count($patient_supplements);
@@ -2057,6 +2064,11 @@ class ApiController extends Controller
         $currentdatetime = date("Y-m-d  H:i:s");
 
 
+        DB::table('visits')
+            ->where('id', $visit_id)
+            ->update(['visit_status' => 'physician', 'updated_at' => date("Y-m-d  H:i:s")]);
+
+
         DB::table('medicines')->insert(
             ['patient_id' => $patient_id,
                 'visit_id' =>$visit_id,
@@ -2064,7 +2076,7 @@ class ApiController extends Controller
                 'dosage' => $dosage,
                 'frequency' => $frequency,
                 'intake' => $intake,
-                'manufacturer' => $manufacturer,
+               // 'manufacturer' => $manufacturer,
                 'from_date' => $from_date,
                 'medicine_status' => $medicine_status,
                 'to_date' => $to_date,
@@ -2154,6 +2166,11 @@ class ApiController extends Controller
         $reaction = $request->input('reaction');
 
         $currentdatetime = date("Y-m-d  H:i:s");
+
+
+        DB::table('visits')
+            ->where('id', $visit_id)
+            ->update(['visit_status' => 'triage', 'updated_at' => date("Y-m-d  H:i:s")]);
 
 
         DB::table('patient_allergies')->insert([
@@ -2557,6 +2574,10 @@ class ApiController extends Controller
         if (!empty($data)) {
             return response()->json(['status' => false, 'message' => 'This Encounter already contains clinical information']);
         }
+
+        DB::table('visits')
+            ->where('id', $visit_id)
+            ->update(['visit_status' => 'physician', 'updated_at' => date("Y-m-d  H:i:s")]);
 
 
         DB::table('patient_clinical_notes')->insert(
@@ -3028,13 +3049,41 @@ class ApiController extends Controller
 
         $categories = DB::table('template_categories')
             ->select(DB::raw('id,name,description'))
-            ->where('template_type',$template_type)
+            ->where('template_type',1)
             ->where('status', 1)
             ->get();
 
         return response()->json(['status' => true, 'data' => $categories]);
 
     }
+
+
+    public function get_template_category(Request $request)
+     {
+         $id = $request->input('cat_id');
+         $category = DB::table('template_categories')
+             ->select(DB::raw('id,name,description'))
+             ->where('template_categories.id', $id)
+             ->where('template_categories.status', 1)
+             ->first();
+
+         return response()->json(['status' => true, 'data' => $category]);
+     }
+
+    public function update_template_category(Request $request)
+    {
+        $cat_id = $request->input('cat_id');
+        $desc = $request->input('description');
+        $name = $request->input('category_name');
+        $currentdatetime = date('Y-m-d H:i:s');
+        DB::table('template_categories')
+            ->where('id', $cat_id)
+            ->update(['name' => $name, 'description' => $desc, 'updated_at' => $currentdatetime]);
+
+        return response()->json(['status' => true, 'data' => 'Category Updated.']);
+    }
+
+
 
     public function get_template(Request $request){
 
