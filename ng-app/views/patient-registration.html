@@ -48,11 +48,11 @@
                                 <!--<input type="text" placeholder="Pick Date" />-->
                                 <div class="input-group date select-date">
                                     <div class="input-group-content">
-                                        <input type="text" name="date_of_birth" ng-model="PI.date_of_birth" ng-change="calculateAge(PI.date_of_birth);" ng-class="{true: 'error'}[submitted && userForm1.date_of_birth.$invalid]" class="form-control" required placeholder="Pick Date" class="yellow"/>
-                                        <p class="help-block PIValid" ng-show="submitted && userForm1.date_of_birth.$error.required">Required</p>
+                                        <input type="text" name="date_of_birth" ng-model="PI.date_of_birth" ng-change="calculateAge(PI.date_of_birth);" ng-class="{true: 'error'}[submitted && userForm1.date_of_birth.$invalid]" class="form-control" required placeholder="Pick Date" class="yellow"/>                                        
                                     </div>
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
+                                <p class="help-block PIValid" ng-show="submitted && userForm1.date_of_birth.$error.required">Required</p>
                             </div>
                             <div class="col-lg-3" >
                                 <input type="text" numbers-only placeholder="Age" name="age" ng-disabled="true" ng-model="PI.age" required class="yellow"/>

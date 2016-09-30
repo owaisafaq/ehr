@@ -106,7 +106,7 @@
                             ng-init="begin = (currentPage-1)*numPerPage; end = begin + numPerPage"
                             data-ng-change="begin = (currentPage-1)*numPerPage; end = begin + numPerPage">
                         </pagination> -->
-                    <div class="pagination pagination-centered" ng-show="allEncounterCount">
+<!--                    <div class="pagination pagination-centered" ng-show="allEncounterCount">
                         <ul class="pagination-controle pagination">
                             <li>
                               <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"> &lt; PREV</button>
@@ -118,7 +118,21 @@
                               <button type="button" class="btn btn-primary" ng-disabled="curPage >= allEncounterCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);">NEXT &gt;</button>
                             </li>
                         </ul>
+                    </div>-->
+<div class="pagination pagination-centered pull-right" ng-show="allEncounterCount">
+                        <ul class="pagination-controle pagination">
+                            <li class="prev-page">
+                                <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
+                            </li>                            
+                            <li>
+                                <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumber" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
+                            </li>
+                             <li class="next-page">
+                              <button type="button" class="btn btn-primary" ng-disabled="curPage >= allEncounterCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
+                            </li>
+                        </ul>
                     </div>
+
                 </div>
             </div><!--end .card-body -->
             <!-- <div class="clinical-footer">

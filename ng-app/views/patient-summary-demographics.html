@@ -270,7 +270,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div class="pagination pagination-centered" ng-show="encounterCount">
+<!--                    <div class="pagination pagination-centered" ng-show="encounterCount">
                         <ul class="pagination-controle pagination">
                             <li class="enterKey">
                                 <input type="text" class="keyUpEncounter" width="5px" ng-model="pageNumberEncounter" numbers-only placeholder="Page Number"/>
@@ -285,7 +285,7 @@
                               <button type="button" class="btn btn-primary" ng-disabled="encounterCurPage >= encounterCount/pageSize - 1" ng-click="encounterCurPage = encounterCurPage+1; encounterPaginationNext(pageSize, encounterCurPage);">NEXT &gt;</button>
                             </li>
                         </ul>
-                    </div>
+                    </div>-->
                     <!-- <pagination data-ng-model="visitcurrentPage" total-items="encounters.length"
                                 items-per-page="visitnumPerPage" data-max-size="visitmaxSize" data-boundary-links="true"
                                 ng-init="begin = (visitcurrentPage - 1) * visitnumPerPage;
@@ -293,6 +293,23 @@
                                 data-ng-change="begin = (visitcurrentPage - 1) * visitnumPerPage;
                                                     end = begin + visitnumPerPage">
                     </pagination> -->
+                    
+                    <div class="pagination pagination-centered pull-right" ng-show="encounterCount">
+                        <ul class="pagination-controle pagination">
+                            <li class="prev-page">
+                                <!--<button type="button" class="btn btn-primary" ng-disabled="encounterCurPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>-->
+                                <button type="button" class="btn btn-primary" ng-disabled="encounterCurPage == 0" ng-click="encounterCurPage=encounterCurPage-1; encounterPaginationPrev(pageSize, encounterCurPage);"><i class="fa fa-caret-left"></i></button>
+                            </li>                            
+                            <li>
+                                <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberEncounter" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
+                            </li>
+                             <li class="next-page">
+                              <!--<button type="button" class="btn btn-primary" ng-disabled="curPage >= allEncounterCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>-->
+                              <button type="button" class="btn btn-primary" ng-disabled="encounterCurPage >= encounterCount/pageSize - 1" ng-click="encounterCurPage = encounterCurPage+1; encounterPaginationNext(pageSize, encounterCurPage);"><i class="fa fa-caret-right"></i></button>
+                            </li>
+                        </ul>
+                    </div>
+                    
                 </div>
 
                 <div class="tab-pane" id="health_vitals">
@@ -332,7 +349,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div class="pagination pagination-centered" ng-show="vitalCount">
+<!--                    <div class="pagination pagination-centered" ng-show="vitalCount">
                         <ul class="pagination-controle pagination">
                             <li class="enterKey">
                                 <input type="text" width="5px" class="keyUpVital" ng-model="pageNumberVital" numbers-only placeholder="Page Number"/>
@@ -345,6 +362,21 @@
                             </li>
                             <li>
                               <button type="button" class="btn btn-primary" ng-disabled="vitalCurPage >= vitalCount/pageSize - 1" ng-click="vitalCurPage = vitalCurPage+1; vitalPaginationNext(pageSize, vitalCurPage);">NEXT &gt;</button>
+                            </li>
+                        </ul>
+                    </div>-->
+<div class="pagination pagination-centered pull-right" ng-show="vitalCount">
+                        <ul class="pagination-controle pagination">
+                            <li class="prev-page">
+                                <!--<button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>-->
+                                <button type="button" class="btn btn-primary" ng-disabled="vitalCurPage == 0" ng-click="vitalCurPage=vitalCurPage-1; vitalPaginationPrev(pageSize, vitalCurPage);"><i class="fa fa-caret-left"></i></button>
+                            </li>                            
+                            <li>
+                                <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberVital" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
+                            </li>
+                             <li class="next-page">
+                              <!--<button type="button" class="btn btn-primary" ng-disabled="curPage >= allEncounterCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>-->
+                              <button type="button" class="btn btn-primary" ng-disabled="vitalCurPage >= vitalCount/pageSize - 1" ng-click="vitalCurPage = vitalCurPage+1; vitalPaginationNext(pageSize, vitalCurPage);"><i class="fa fa-caret-right"></i></button>
                             </li>
                         </ul>
                     </div>
@@ -386,7 +418,7 @@
                                 data-ng-change="medicationbegin = (medicationscurrentPage - 1) * medicationnumPerPage;
                                                     medicationend = medicationbegin + medicationnumPerPage">
                     </pagination> -->
-                    <div class="pagination pagination-centered" ng-show="medicationsCount">
+<!--                    <div class="pagination pagination-centered" ng-show="medicationsCount">
                         <ul class="pagination-controle pagination">
                             <li class="enterKey">
                                 <input type="text" width="5px" class="keyUpMedication" ng-model="pageNumberMedication" numbers-only placeholder="Page Number"/>
@@ -399,6 +431,21 @@
                             </li>
                             <li>
                               <button type="button" class="btn btn-primary" ng-disabled="medicationCurPage >= medicationsCount/pageSize - 1" ng-click="medicationCurPage = medicationCurPage+1; medicationPaginationNext(pageSize, medicationCurPage);">NEXT &gt;</button>
+                            </li>
+                        </ul>
+                    </div>-->
+<div class="pagination pagination-centered pull-right" ng-show="medicationsCount">
+                        <ul class="pagination-controle pagination">
+                            <li class="prev-page">
+                                <!--<button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>-->
+                                <button type="button" class="btn btn-primary" ng-disabled="medicationCurPage == 0" ng-click="medicationCurPage=medicationCurPage-1; medicationPaginationNext(pageSize, medicationCurPage);"><i class="fa fa-caret-left"></i></button>
+                            </li>                            
+                            <li>
+                                <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberMedication" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
+                            </li>
+                             <li class="next-page">
+                              <!--<button type="button" class="btn btn-primary" ng-disabled="curPage >= allEncounterCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>-->
+                              <button type="button" class="btn btn-primary" ng-disabled="medicationCurPage >= medicationsCount/pageSize - 1" ng-click="medicationCurPage = medicationCurPage+1; medicationPaginationNext(pageSize, medicationCurPage);"><i class="fa fa-caret-right"></i></button>
                             </li>
                         </ul>
                     </div>
@@ -438,7 +485,7 @@
                                 data-ng-change="supplementbegin = (suplimentscurrentPage - 1) * suplimentsnumPerPage;
                                                     supplementend = supplementbegin + suplimentsnumPerPage">
                     </pagination> -->
-                    <div class="pagination pagination-centered" ng-show="supplementsCount">
+<!--                    <div class="pagination pagination-centered" ng-show="supplementsCount">
                         <ul class="pagination-controle pagination">
                             <li class="enterKey">
                                 <input type="text" width="5px" class="keyUpSupplement" ng-model="pageNumberSupplement" numbers-only placeholder="Page Number"/>
@@ -451,6 +498,19 @@
                             </li>
                             <li>
                               <button type="button" class="btn btn-primary" ng-disabled="supplementsCurPage >= supplementsCount/pageSize - 1" ng-click="supplementsCurPage = supplementsCurPage+1; supplementPaginationNext(pageSize, supplementsCurPage);">NEXT &gt;</button>
+                            </li>
+                        </ul>
+                    </div>-->
+<div class="pagination pagination-centered pull-right" ng-show="supplementsCount">
+                        <ul class="pagination-controle pagination">
+                            <li class="prev-page">
+                                <button type="button" class="btn btn-primary" ng-disabled="supplementsCurPage == 0" ng-click="supplementsCurPage=supplementsCurPage-1; supplementPaginationPrev(pageSize, supplementsCurPage);"><i class="fa fa-caret-left"></i></button>
+                            </li>                            
+                            <li>
+                                <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberSupplement" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
+                            </li>
+                             <li class="next-page">
+                              <button type="button" class="btn btn-primary" ng-disabled="supplementsCurPage >= supplementsCount/pageSize - 1" ng-click="supplementsCurPage = supplementsCurPage+1; supplementPaginationNext(pageSize, supplementsCurPage);"><i class="fa fa-caret-right"></i></button>
                             </li>
                         </ul>
                     </div>
@@ -504,7 +564,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div class="pagination pagination-centered" ng-show="allergiesCount">
+<!--                    <div class="pagination pagination-centered" ng-show="allergiesCount">
                         <ul class="pagination-controle pagination">
                             <li class="enterKey">
                                 <input type="text" width="5px" class="keyUpAllergy" ng-model="pageNumberAllergy" numbers-only placeholder="Page Number"/>
@@ -517,6 +577,21 @@
                             </li>
                             <li>
                               <button type="button" class="btn btn-primary" ng-disabled="allergyCurPage >= allergiesCount/pageSize - 1" ng-click="allergyCurPage = allergyCurPage+1; paginationNext(pageSize, allergyCurPage);">NEXT &gt;</button>
+                            </li>
+                        </ul>
+                    </div>-->
+<div class="pagination pagination-centered pull-right" ng-show="allergiesCount">
+                        <ul class="pagination-controle pagination">
+                            <li class="prev-page">
+                                <!--<button type="button" class="btn btn-primary" ng-disabled="supplementsCurPage == 0" ng-click="supplementsCurPage=supplementsCurPage-1; supplementPaginationPrev(pageSize, supplementsCurPage);"><i class="fa fa-caret-left"></i></button>-->
+                                <button type="button" class="btn btn-primary" ng-disabled="allergyCurPage == 0" ng-click="allergyCurPage=allergyCurPage-1; paginationPrev(pageSize, allergyCurPage);"><i class="fa fa-caret-left"></i></button>
+                            </li>                            
+                            <li>
+                                <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberAllergy" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
+                            </li>
+                             <li class="next-page">
+                              <!--<button type="button" class="btn btn-primary" ng-disabled="supplementsCurPage >= supplementsCount/pageSize - 1" ng-click="supplementsCurPage = supplementsCurPage+1; supplementPaginationNext(pageSize, supplementsCurPage);"><i class="fa fa-caret-right"></i></button>-->
+                              <button type="button" class="btn btn-primary" ng-disabled="allergyCurPage >= allergiesCount/pageSize - 1" ng-click="allergyCurPage = allergyCurPage+1; paginationNext(pageSize, allergyCurPage);"><i class="fa fa-caret-right"></i></button>
                             </li>
                         </ul>
                     </div>
