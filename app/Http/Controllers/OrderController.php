@@ -779,7 +779,7 @@ class OrderController extends Controller
     {
         $id = $request->input('cat_id');
         $lab_categories = DB::table('template_categories')
-            ->select(DB::raw('id,name'))
+            ->select(DB::raw('id,name,description'))
             ->where('template_categories.id', $id)
             ->where('template_categories.status', 1)
             ->get();
