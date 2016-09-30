@@ -496,6 +496,11 @@ class OrderController extends Controller
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
+        DB::table('visits')
+            ->where('id', $visit_id)
+            ->update(['visit_status' => 'physician', 'updated_at' => date("Y-m-d  H:i:s")]);
+
+
         DB::table('lab_orders')->insert(
             ['patient_id' => $patient_id,
                 'visit_id' => $visit_id,

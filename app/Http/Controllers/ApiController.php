@@ -2060,6 +2060,11 @@ class ApiController extends Controller
         $currentdatetime = date("Y-m-d  H:i:s");
 
 
+        DB::table('visits')
+            ->where('id', $visit_id)
+            ->update(['visit_status' => 'physician', 'updated_at' => date("Y-m-d  H:i:s")]);
+
+
         DB::table('medicines')->insert(
             ['patient_id' => $patient_id,
                 'visit_id' =>$visit_id,
@@ -2157,6 +2162,11 @@ class ApiController extends Controller
         $reaction = $request->input('reaction');
 
         $currentdatetime = date("Y-m-d  H:i:s");
+
+
+        DB::table('visits')
+            ->where('id', $visit_id)
+            ->update(['visit_status' => 'triage', 'updated_at' => date("Y-m-d  H:i:s")]);
 
 
         DB::table('patient_allergies')->insert([
@@ -2560,6 +2570,10 @@ class ApiController extends Controller
         if (!empty($data)) {
             return response()->json(['status' => false, 'message' => 'This Encounter already contains clinical information']);
         }
+
+        DB::table('visits')
+            ->where('id', $visit_id)
+            ->update(['visit_status' => 'physician', 'updated_at' => date("Y-m-d  H:i:s")]);
 
 
         DB::table('patient_clinical_notes')->insert(
