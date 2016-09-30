@@ -300,4 +300,9 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
 
 
 
+    //clinical reports template categories
+    $app->post('get_template_category','App\Http\Controllers\ApiController@get_template_category');
+    $app->post('update_template_category','App\Http\Controllers\ApiController@update_template_category');
+
+
 });

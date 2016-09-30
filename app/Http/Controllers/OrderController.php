@@ -768,6 +768,7 @@ class OrderController extends Controller
         $lab_categories = DB::table('template_categories')
             ->select(DB::raw('id,name'))
             ->where('template_categories.status', 1)
+            ->where('template_categories.template_type',2)
             ->get();
 
         return response()->json(['status' => true, 'data' => $lab_categories]);

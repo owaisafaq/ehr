@@ -3049,13 +3049,41 @@ class ApiController extends Controller
 
         $categories = DB::table('template_categories')
             ->select(DB::raw('id,name,description'))
-            ->where('template_type',$template_type)
+            ->where('template_type',1)
             ->where('status', 1)
             ->get();
 
         return response()->json(['status' => true, 'data' => $categories]);
 
     }
+
+
+    public function get_template_category(Request $request)
+     {
+         $id = $request->input('cat_id');
+         $category = DB::table('template_categories')
+             ->select(DB::raw('id,name,description'))
+             ->where('template_categories.id', $id)
+             ->where('template_categories.status', 1)
+             ->first();
+
+         return response()->json(['status' => true, 'data' => $category]);
+     }
+
+    public function update_template_category(Request $request)
+    {
+        $cat_id = $request->input('cat_id');
+        $desc = $request->input('description');
+        $name = $request->input('category_name');
+        $currentdatetime = date('Y-m-d H:i:s');
+        DB::table('template_categories')
+            ->where('id', $cat_id)
+            ->update(['name' => $name, 'description' => $desc, 'updated_at' => $currentdatetime]);
+
+        return response()->json(['status' => true, 'data' => 'Category Updated.']);
+    }
+
+
 
     public function get_template(Request $request){
 
