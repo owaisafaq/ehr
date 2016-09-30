@@ -166,7 +166,6 @@ class ApiController extends Controller
 
         $refered_name = $request->input('refered_name');
 
-
         $patient_unit_number = $request->input('patient_unit_number');
 
         $identity_type = $request->input('identity_type');
@@ -182,6 +181,8 @@ class ApiController extends Controller
         $nationality = $request->input('nationality');
 
         $blood_group = $request->input('blood_group');
+
+        $language = $request->input('language');
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
@@ -219,7 +220,9 @@ class ApiController extends Controller
                     'local_goverment_area' => $patient_local_goverment_area,
                     'tribe' => $tribe,
                     'nationality' => $nationality,
-                    'blood_group' => $blood_group, 'updated_at' => $currentdatetime));
+                    'language' => $language,
+                    'blood_group' => $blood_group,
+                    'updated_at' => $currentdatetime));
 
 
             return response()->json(['status' => true, 'message' => "Patient updated successfully", "patient_id" => $patient_id]);
@@ -253,6 +256,7 @@ class ApiController extends Controller
                     'local_goverment_area' => $patient_local_goverment_area,
                     'tribe' => $tribe,
                     'nationality' => $nationality,
+                    'language' => $language,
                     'blood_group' => $blood_group,
                     'created_at' => $currentdatetime
                 ]
