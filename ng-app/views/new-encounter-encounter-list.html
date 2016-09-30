@@ -204,14 +204,14 @@
         </form>
     </div>
 </div>
-<div class="modal fade" id="addpatient" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="addpatient" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Add Vitals</h2>
             </div>
             <div class="modal-body">
-                <p>Continue to Add Patient Vitals</p>
+                <p class="modal-subtext">Continue to Add Patient Vitals</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-toggle="modal" data-target="#vital-signs" data-dismiss="modal">Ok</button>
@@ -220,7 +220,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade big-modal" id="vital-signs" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_3" id="vital-signs" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -231,13 +231,13 @@
                     <div class="row">
                         <div class="row no-margin">
                             <div class="col-lg-4" >
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <label class="label-style">Blood Pressure (mm Hg)</label>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>systolic (mm hg)</label>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 margin-bottom-xxl">
                                     <input type="text" placeholder="systolic (mm hg)"  ng-class="{
                                             true
                                             : 'error'}[vital.diastolic != undefined && vital.systolic == undefined]" ng-model="vital.systolic" numbers-only required/>
@@ -255,13 +255,13 @@
                             </div>
 
                             <div class="col-lg-4">
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <label class="label-style">Pulse Rate (min/bpm)</label>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>pulse</label>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 margin-bottom-xxl">
                                     <input type="text" placeholder="pulse" ng-model="vital.pulse" numbers-only/>
                                 </div>
                                 <!-- <div class="col-lg-12">
@@ -276,13 +276,13 @@
                             </div>
 
                             <div class="col-lg-4">
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <label class="label-style">Respiratory Rate (br/min)</label>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>temperature (c)</label>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 margin-bottom-xxl">
                                     <input type="text" placeholder="temperature (c)" ng-model="vital.temperaturec" numbers-only ng-keyup="GetTempcVal()"/>
                                 </div>
                                 <div class="col-lg-6">
@@ -295,7 +295,7 @@
                         </div>
                         <!--<div class="row">-->
                         <div class="col-lg-12">
-                            <label class="col-lg-12 label-style no-margin">BMI (kg / m^2)</label>
+                            <label class="col-lg-12 label-style margin-bottom-xxl margin-top-10">BMI (kg / m^2)</label>
                             <!-- <div class="col-lg-5 pull-right">
                                 <div class="pull-right">
                                     <a class="txt-style-4" href="javascript:;">Attach</a>&nbsp;&nbsp;|&nbsp;&nbsp;
@@ -308,13 +308,13 @@
                             <div class="col-lg-6">
                                 <label>result</label>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 margin-bottom-xxl">
                                 <input type="text" placeholder="0" ng-model="vital.result" readonly/>
                             </div>
                             <div class="col-lg-6">
                                 <label>weight (kg)</label>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 margin-bottom-xxl">
                                 <input type="text" ng-class="{true: 'error'}[vital.weight == undefined && vital.height != undefined]" placeholder="weight (kg)" ng-model="vital.weight" numbers-only ng-keyup="Calculatebmi()" required/>
                                 <p ng-show="vital.weight == undefined && vital.height != undefined" class="help-block PIValid">Required</p>
                             </div>
@@ -327,7 +327,7 @@
                                 <p ng-show="vital.height == undefined && vital.weight != undefined" class="help-block PIValid">Required</p>
                             </div>
                         </div>
-                        <div class="col-lg-8">
+                        <div class="col-lg-8 margin-bottom-xxl">
                             <div class="col-lg-3">
                                 <label>Notes</label>
                             </div>
@@ -346,7 +346,7 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </div>
-<div class="modal fade" id="checkout" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_2" id="checkout" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-mid">
         <form class="custom-form">
             <div class="modal-content">
@@ -411,10 +411,13 @@
                                 <textarea class="margin-bottom-lg" placeholder="Write Here..."  ng-model="CO.note"></textarea>
                             </div>
                         </div>
-                        <div id="admitPatient" class="row">
+                        <div id="admitPatient" class="">
+                            <div class="row margin-bottom-xxl">
                             <div class="col-lg-12">
                                 <span class="txt-style-4">Presenting Complaint: Captured from Clinical Note</span>
                             </div>
+                                </div>
+                            <div class="row margin-bottom-xxl">
                             <div class="col-lg-3">
                                 <label>to specialty</label>
                             </div>
@@ -436,6 +439,8 @@
                                 </select>
                                 <button class="ward-button"></button>
                             </div>
+                            </div>
+                            <div class="row margin-bottom-xxl">
                             <div class="col-lg-3">
                                 <label>Admitted DATE</label>
                             </div>
@@ -451,10 +456,12 @@
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                                 </div>
                             </div>
-
+                            </div>
+                            <div class="row">
                             <div class="col-lg-12">
                                 <label class="margin-bottom-xl">Note</label>
                                 <textarea class="margin-bottom-lg" placeholder="Write Here..."  ng-model="CO.note"></textarea>
+                            </div>
                             </div>
                         </div>
                         <div id="dead" class="row">
@@ -474,14 +481,14 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div class="modal fade" id="removeEncounter" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="removeEncounter" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Confirmation</h2>
             </div>
             <div class="modal-body">
-                <p>Are you Sure want to delete?</p>
+                <p class="modal-subtext">Are you Sure want to delete?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-toggle="modal" data-dismiss="modal" ng-click="removeEncounter();">Ok</button>
@@ -490,14 +497,14 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade" id="noRecordFound" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="noRecordFound" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Status</h2>
             </div>
             <div class="modal-body">
-                <p>No Record Found</p>
+                <p class="modal-subtext">No Record Found</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>

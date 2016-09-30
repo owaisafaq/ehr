@@ -123,7 +123,7 @@
     </section>
 </div>
 
-<div class="modal fade" id="print-prescription" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="print-prescription" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -131,7 +131,7 @@
             </div>
             <div class="modal-body">
             <div>
-                <p id="printHeading">Do you want to Print?</p>
+                <p id="printHeading" class="modal-subtext">Do you want to Print?</p>
             </div>
             </div>
             <div class="modal-footer">
@@ -151,14 +151,15 @@
 
 </div><!-- /.modal -->
 
-<div class="modal fade big-modal" id="prescription-query" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_2" id="prescription-query" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <form class="custom-form">
                 <div class="modal-header pop_head">
                     <h2>Prescription Query</h2>
                 </div>
-                <div class="modal-body row">
+                <div class="modal-body">
+                    <div class="row margin-bottom-xxl">
                     <div class="col-lg-3">
                         <label>encounter id</label>
                     </div>
@@ -172,16 +173,20 @@
                     <div class="col-lg-3">
                         <input type="text" value="In Progress" disabled />
                     </div>
+                        </div>
+                    <div class="row margin-bottom-xxl">
 
                     <div class="col-lg-3">
                         <label>Select Doctor</label>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-9">
                         <select class="form-control">
                             <option>Dr Joe Bloggs</option>
                             <option>Dr Bloggs Joe</option>
                         </select>
                     </div>
+                    </div>
+                    <div class="row">
 
                     <div class="col-lg-12">
                         <label>Observation to doctor</label>
@@ -189,7 +194,8 @@
                     <div class="col-lg-12">
                         <textarea></textarea>
                     </div>
-                    <div class="modal-footer row no-margin">
+                    </div>
+                    <div class="modal-footer row">
                         <div class="col-lg-12 no-padding">
                             <button type="button" class="btn btn-default button-style-1">Save</button>
                             <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>

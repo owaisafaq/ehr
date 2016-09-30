@@ -135,24 +135,28 @@
         </div><!--end .card -->
     </section>
 </div>
-<div class="modal fade big-modal" id="createAppointment" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_3" id="createAppointment" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Create Appointment</h2>
             </div>
             <form class="custom-form" name="myFormAdd" ng-model="myFormAdd" novalidate ng-submit="createAppointments(appointment);">
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="header-search margin-right-0 col-lg-4">
+                <div class="row margin-0">
+                    <div class="col-lg-12 margin-top-10">
+                        <div class="col-lg-12">
+                        <div class="header-search margin-right-0 col-lg-12">
                             <button type="submit">
                                 <i class="fa fa-search"></i>
                             </button>
                             <input class="search_field" type="text" ng-model="appointment.appointmentSearch" placeholder="Search by Name or Patient Id" id="findPatient" data-source="{{PatientSearch}}search_patient" name="FindPatient" ng-class="{true: 'error'}[submitted && myFormAdd.FindPatient.$invalid]" required>
                             <input type="hidden" ng-model="appointment.selectedPatientID" />
                         </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="row">
+                <div class="modal-body">
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-2">
                             <label>Speciality</label>
                         </div>
@@ -174,7 +178,7 @@
                             <p class="help-block PIValid" ng-show="submitted && myFormAdd.wts.$error.required">Required</p>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-6 no-padding">
                             <div class="col-lg-4">
                                 <label>Reason</label>
@@ -207,7 +211,7 @@
                             <!-- <p class="help-block PIValid" ng-show="submitted && myFormAdd.otherReason.$error.required">Required</p> -->
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-2">
                             <label>Time</label>
                         </div>
@@ -239,7 +243,7 @@
                             <!-- <p class="help-block PIValid" ng-show="submitted && myFormAdd.task.$error.required">Required</p> -->
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-2">
                             <label>Notes</label>
                         </div>
@@ -258,7 +262,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade big-modal" id="updateAppointment" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_3" id="updateAppointment" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -266,8 +270,8 @@
             </div>
             <form class="custom-form" name="addForm" ng-model="myForm" novalidate ng-submit="updateAppointments(updateAppointment);">
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="header-search margin-right-0 col-lg-4">
+                    <div class="row margin-bottom-xxl">
+                        <div class="header-search margin-right-0 col-lg-12">
                             <button type="submit">
                                 <i class="fa fa-search"></i>
                             </button>
@@ -275,7 +279,7 @@
                             <input type="hidden" ng-model="updateAppointment.patientID"/>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-2">
                             <label>Speciality</label>
                         </div>
@@ -297,7 +301,7 @@
                             <p class="help-block PIValid" ng-show="submitted && addForm.wts.$error.required">Required</p>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-6 no-padding">
                             <div class="col-lg-4">
                                 <label>Reason</label>
@@ -330,7 +334,7 @@
                             <!-- <p class="help-block PIValid" ng-show="submitted && addForm.otherReason.$error.required">Required</p> -->
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-2">
                             <label>Time</label>
                         </div>
@@ -341,16 +345,6 @@
                             </div>
                             <p class="help-block PIValid" ng-show="submitted && addForm.starttime.$error.required">Required</p>
                         </div>
-                        <!-- <div class="col-lg-2">
-                            <label>End Time</label>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="input-group bootstrap-timepicker col-lg-12">
-                                <input type="text" class="form-control input-small timepicker"  ng-model="updateAppointment.endTime" name="endtime" ng-class="{true: 'error'}[submitted && addForm.endtime.$invalid]" required>
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-                            </div>
-                            <p class="help-block PIValid" ng-show="submitted && addForm.endtime.$error.required">Required</p>
-                        </div> -->
                         <div class="col-lg-2">
                             <label>Task Priority</label>
                         </div>
@@ -359,10 +353,9 @@
                                 <option value=""></option>
                                 <option ng-repeat="p in priorities" value="{{ p.name }}" ng-selected="updateAppointment.priority == p.name">{{ p.name }}</option>
                             </select>
-                            <!-- <p class="help-block PIValid" ng-show="submitted && addForm.task.$error.required">Required</p> -->
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-2">
                             <label>Notes</label>
                         </div>
@@ -381,14 +374,14 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade" id="noResultFound" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="noResultFound" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>{{modalHeading}}</h2>
             </div>
             <div class="modal-body">
-                <p class="capitalize">{{modalMessage}}</p>
+                <p class="modal-subtext capitalize">{{modalMessage}}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
@@ -396,51 +389,51 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade" id="deleteConfirm" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="deleteConfirm" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Confirmation</h2>
             </div>
             <div class="modal-body">
-                <p>Do you want to delete?</p>
+                <p class="modal-subtext">Do you want to delete?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" ng-click="deleteAppointments()">Yes</button>
-                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-default button-style-1 button-style-1_a" data-dismiss="modal">No</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade medium-modal" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Confirmation</h2>
             </div>
             <div class="modal-body">
-                <p>Do you want to Convert?</p>
+                <p class="modal-subtext">Do you want to Convert?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" ng-click="convertAppointments()">Yes</button>
-                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-default button-style-1 button-style-1_a" data-dismiss="modal">No</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade" id="confirmReminder" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="confirmReminder" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>{{modalHeading}}</h2>
             </div>
             <div class="modal-body">
-                <p>{{modalMessage}}</p>
+                <p class="modal-subtext">{{modalMessage}}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" ng-click="reminderSuccess()" ng-hide="confirmReminder">Yes</button>
-                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal" ng-hide="confirmReminder">No</button>
-                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal" ng-show="confirmReminder">No</button>
+                <button type="button" class="btn btn-default button-style-1 button-style-1_a" data-dismiss="modal" ng-hide="confirmReminder">No</button>
+                <button type="button" class="btn btn-default button-style-1 button-style-1_a" data-dismiss="modal" ng-show="confirmReminder">No</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

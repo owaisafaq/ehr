@@ -46,14 +46,14 @@
         
     </section>
 </div>
-<div class="modal fade" id="noResultFound" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="noResultFound" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Result</h2>
             </div>
             <div class="modal-body">
-                <p>No Result Found</p>
+                <p class="modal-subtext">No Result Found</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
@@ -61,7 +61,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade big-modal" id="createAppointment" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_3" id="createAppointment" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -69,8 +69,8 @@
             </div>
             <form class="custom-form" name="myFormAdd" ng-model="myFormAdd" novalidate ng-submit="createAppointments(appointment);">
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="header-search margin-right-0 col-lg-4">
+                    <div class="row margin-bottom-xxl">
+                        <div class="header-search margin-right-0 col-lg-12">
                             <button type="submit">
                                 <i class="fa fa-search"></i>
                             </button>
@@ -78,7 +78,7 @@
                             <input type="hidden" ng-model="appointment.selectedPatientID" />
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-2">
                             <label>Speciality</label>
                         </div>
@@ -100,7 +100,7 @@
                             <p class="help-block PIValid" ng-show="submitted && myFormAdd.wts.$error.required">Required</p>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-6 no-padding">
                             <div class="col-lg-4">
                                 <label>Reason</label>
@@ -132,7 +132,7 @@
                             <textarea ng-model="appointment.otherReason" name="otherReason" placeholder="Describe here"></textarea>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-2">
                             <label>Time</label>
                         </div>
@@ -153,7 +153,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-2">
                             <label>Notes</label>
                         </div>

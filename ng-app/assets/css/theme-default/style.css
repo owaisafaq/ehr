@@ -1083,7 +1083,7 @@ Accordian
 }
 .table-header-2 .txt-style-4{
     margin-top: 14px;
-    margin-right: 70px;
+    margin-right: 56px;
     font-weight: bold;
 }
 .table-header-2 .header-checkboxes,.table-header-2 .select-con{
@@ -1432,6 +1432,7 @@ Patient Summary
 }
 .modal-mid .select-con_small .select2-container.form-control{
     width: 67%;
+    float: left;
 }
 .checkout_patient_tab_con > div {
     display: none;
@@ -2752,9 +2753,10 @@ table.billing_table > tbody > tr > td:nth-child(4){vertical-align:bottom;}
     width: 525px;
     height: 297px;
     padding-top: 30px;
+    margin: auto;
+    padding-left: 40px;
 }
 .id_card > div{
-    padding-left: 27px;
     margin-bottom: 15px;
     float: left;
 }
@@ -3325,6 +3327,7 @@ Pagination
     width: 115px;
     height: 36px;
     padding: 0;
+    margin: 0;
 }
 .modal-size_1 .modal-dialog{
     width: 600px;
@@ -3342,4 +3345,10 @@ Pagination
 }
 .modal-size_3 .modal-dialog {
     width: 1120px;
+}
+.modal-size_3 .modal-footer {
+        padding: 15px 40px 40px;
+}
+.margin-bottom-xxl {
+    margin-bottom: 20px !important;
 }
