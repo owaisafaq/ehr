@@ -2779,7 +2779,7 @@ class ApiController extends Controller
             );
         }
 
-        if ($reason == 'Admit Patient') {
+        if ($reason == 'admitPatient') {
 
             $admit_date = $request->input('admit_date');
             $start_time = $request->input('start_time');
@@ -3179,12 +3179,12 @@ class ApiController extends Controller
                 ]
             );
 
+
+        $prescription_id = DB::getPdo()->lastInsertId();
+
         DB::table('visits')
             ->where('id', $visit_id)
             ->update(['visit_status' => 'physician', 'updated_at' => date("Y-m-d  H:i:s")]);
-
-
-        $prescription_id = DB::getPdo()->lastInsertId();
 
 
         foreach ($patient_prescriptions as $patient_prescription) {
