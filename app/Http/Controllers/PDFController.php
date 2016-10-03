@@ -161,15 +161,32 @@ class PDFController extends Controller
         $logo_image = url('/') . '/uploaded_images/';
 
         $patient = DB::table('patient_clinical_notes')
-            ->select(DB::raw('patients.id,CONCAT(patients.first_name," ",patients.last_name) AS patient_name,CONCAT("' . $logo_image . '",patients.patient_image) as patient_image,patients.age,patients.date_of_birth,maritial_status.name as marital_status,(CASE WHEN (sex = 1) THEN "Male" ELSE "Female" END) as gender'))
+            ->select(DB::raw('patients.id,CONCAT(patients.first_name," ",patients.last_name) AS patient_name,CONCAT("' . $logo_image . '",patients.patient_image) as patient_image,patients.age,patients.date_of_birth,maritial_status.name as marital_status,(CASE WHEN (sex = 1) THEN "Male" ELSE "Female" END) as gender,patient_clinical_notes.diagnosis'))
             ->leftJoin('patients', 'patient_clinical_notes.patient_id', '=', 'patients.id')
             ->leftJoin('maritial_status', 'patients.marital_status', '=', 'maritial_status.id')
             ->where('patient_clinical_notes.id', $id)->first();
 
        // array_push($arr, ['patient' => $patient]);
 
+        $diagnosis = array();
 
-        $data = ['data'=>$arr,'patient'=>$patient];
+        if($patient->diagnosis !=''){
+
+            $patient_diagnosis  = preg_replace('/[%\[\]\.\(\)%&-]/s', '', $patient->diagnosis);
+
+            $diagnosis_id = explode(',', $patient_diagnosis);
+
+            foreach($diagnosis_id as $id){
+
+                $name = DB::table('diagnosis')
+                    ->select('name')
+                    ->where('id', $id)->first();
+
+                array_push($diagnosis, ['diagnosis' => $name->name]);
+            }
+        }
+
+        $data = ['data'=>$arr,'patient'=>$patient,'diagnosis'=>$diagnosis];
 
         $view =  app()->make('view')->make('clinical_notes_pdf', $data)->render();
 
