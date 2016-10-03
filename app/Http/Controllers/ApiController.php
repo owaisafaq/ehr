@@ -2753,13 +2753,6 @@ class ApiController extends Controller
                 ]
             );
 
-
-        DB::table('visits')
-            ->where('id', $visit_id)
-            ->where('visit_status','!=','checkout')
-            ->update(['status' => 0,'updated_at' => $currentdatetime]);
-
-
         DB::table('patient_checkout')->insert(
             ['visit_id' => $visit_id,
                 'reason' => $reason,
@@ -2767,7 +2760,6 @@ class ApiController extends Controller
                 'created_at' => $currentdatetime
             ]
         );
-
 
         $checkout = DB::getPdo()->lastInsertId();
 
@@ -2787,7 +2779,7 @@ class ApiController extends Controller
             );
         }
 
-        if ($reason == 'Admit') {
+        if ($reason == 'Admit Patient') {
 
             $admit_date = $request->input('admit_date');
             $start_time = $request->input('start_time');
