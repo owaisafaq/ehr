@@ -11,7 +11,7 @@
             <div class="card-body tab-content col-lg-12 custom-card-body">
                 <div class="tab-pane active" id="template">
                     <div class="main_templates">
-                        <div class="table-header row background-none margin-bot-70">
+                        <div class="table-header row background-none">
                             <div class="pull-right">
                                 <button class="add button-custom pull-right templates">New Template</button>
                             </div>
@@ -40,7 +40,7 @@
                                         <td>{{templateList.category}}</td>
                                         <td>
                                             <span>{{templateList.description}}</span>
-                                            <div class="billing_actions"><a href="javascript:;" class="setting-button"></a>
+                                            <div class="billing_actions pull-right"><a href="javascript:;" class="setting-button"></a>
                                                 <div class="tool-tip_popup">
                                                     <a href="javascript:;" ng-click="editMyTemplate(templateList.id)">Edit</a>
                                                     <a href="javascript:;"   ng-click="templateDeleted(templateList.id)">Delete</a>

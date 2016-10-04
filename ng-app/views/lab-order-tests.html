@@ -59,23 +59,14 @@
                 <div class="modal fade modal-size_3" id="cancelOrder2" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <form class="custom-form" name="updateForm" ng-model="myForm" novalidate ng-submit="updateTestForm();">
-                            <div class="modal-content pull-left">
+                            <div class="modal-content">
                                 <div class="modal-header pop_head">
                                     <h2>Update Status</h2>
                                 </div>
                                 <div class="alert {{messageType}}" role="alert" ng-show="message">
                                     <i class="{{errorSymbol}}"></i> {{errorMessage}}
                                 </div>
-                                <div class="modal-body pull-left">
-                                    <!--<div class="col-lg-12">
-                                        <div class="header-search col-lg-3">
-                                            <button type="submit">
-                                                <i class="fa fa-search"></i>
-                                            </button>
-                                            <input class="search_field" type="text" placeholder="Search by patient id or name" ng-model="PI.search">
-                                        </div>
-                                        <button type="button" class="btn btn-default button-style-1">Add</button>
-                                    </div>-->
+                                <div class="modal-body">
                                     <div class="row margin-bottom-30">
                                     <div class="col-lg-3">
                                         <label>lab order number</label>
@@ -91,6 +82,32 @@
                                         <input type="text" placeholder="{{ selectedTest.test_status }}" disabled="" class="ng-pristine ng-untouched ng-valid ng-empty">
                                     </div>
                                         </div>
+                                    <div class="row margin-bottom-30">
+                                       <div class="col-lg-3">
+                                <label>Collection Date</label>  
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="input-group date select-date">
+                                    <div class="input-group-content">
+                                        <input type="text" name="date_of_birth" ng-model="PI.date_of_birth" ng-change="calculateAge(PI.date_of_birth);" ng-class="{true: 'error'}[submitted && userForm1.date_of_birth.$invalid]" class="form-control" required placeholder="Pick Date" class="yellow"/>                                        
+                                    </div>
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
+                                <p class="help-block PIValid" ng-show="submitted && userForm1.date_of_birth.$error.required">Required</p>
+                            </div>
+                                    
+                            <div class="col-lg-3">
+                                <label>Collection Time</label>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="input-group bootstrap-timepicker col-lg-12">
+                                    <input type="text" class="form-control input-small timepicker"  ng-model="appointment.startTime" name="starttime" ng-class="{true: 'error'}[submitted && myFormAdd.starttime.$invalid]" required>
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                </div>
+                                <p class="help-block PIValid" ng-show="submitted && myFormAdd.starttime.$error.required">Required</p>
+                            </div>
+                                </div>
+                                    <div class="row margin-bottom-xxl">
                                     <div class="col-lg-12 form-wizard form-wizard-horizontal margin-bottom-30">
                                         <div class="form-wizard-nav">
                                             <div class="progress" style="width: 85%;"><div class="progress-bar progress-bar-primary" style="width: 0%;"></div></div>
@@ -104,15 +121,17 @@
                                             </ul>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="modal-footer col-lg-12">
+                                        </div> 
+                                    </div>
+                                <div class="modal-footer">
                                     <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;" ng-disabled="updateTestBtn">Save</button>
                                     <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal" ng-disabled="updateTestBtn">Cancel</button>
                                 </div>
-                            </div><!-- /.modal-content -->
-                        </form>
-                    </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="modal fade big-modal" id="signoff" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content col-lg-12 no-padding">
@@ -318,31 +337,39 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <label>Patient Name</label>
-                                            <label class="txt-style-4">{{ selectedOrder.patient_name }}</label>
+                                            <label class="txt-style-4 margin-bottom-xxl">{{ selectedOrder.patient_name }}</label>
                                         </div>
                                         <div class="col-lg-6">
                                             <label>Patient ID</label>
-                                            <label class="txt-style-4">{{ selectedOrder.patient_id }}</label>
+                                            <label class="txt-style-4 margin-bottom-xxl">{{ selectedOrder.patient_id }}</label>
                                         </div>
 
                                         <div class="col-lg-6">
                                             <label>Gender</label>
-                                            <label class="txt-style-4">{{ selectedOrder.gender }}</label>
+                                            <label class="txt-style-4 margin-bottom-xxl">{{ selectedOrder.gender }}</label>
                                         </div>
                                         <div class="col-lg-6">
                                             <label>Order Number</label>
-                                            <label class="txt-style-4">{{ selectedOrder.id }}</label>
+                                            <label class="txt-style-4 margin-bottom-xxl">{{ selectedOrder.id }}</label>
                                         </div>
                                         <div class="col-lg-6">
                                             <label>Test ID</label>
-                                            <label class="txt-style-4">{{ selectedTest.id }}</label>
+                                            <label class="txt-style-4 margin-bottom-xxl">{{ selectedTest.id }}</label>
                                         </div>
                                         <div class="col-lg-6">
                                             <label>Test</label>
-                                            <label class="txt-style-4">{{ selectedTest.name }}</label>
+                                            <label class="txt-style-4 margin-bottom-xxl">{{ selectedTest.name }}</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label>{{selectedTest.updated_at | date:'MMM dd, yyyy hh:mm a'}}</label>
+                                            <label class="margin-bottom-xxl">{{selectedTest.updated_at | date:'MMM dd, yyyy hh:mm a'}}</label>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label>Collection Date</label>
+                                            <label class="txt-style-4 margin-bottom-xxl">Jan 09, 2016</label>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label>Collection Time</label>
+                                            <label class="txt-style-4">00:00:00</label>
                                         </div>
                                         <div class="col-lg-6">
                                             <img src="assets/img/bar_code.jpg" alt=""/>
