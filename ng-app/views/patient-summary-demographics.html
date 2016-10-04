@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="col-lg-3 pull-right no-padding">
-                <div class="panel-group custom-accordian custom-accordian_2" id="accordion3">
+                <div class="panel-group custom-accordian accordian-max-height custom-accordian_2" id="accordion3">
                     <div class="card panel">
                         <div class="card-head card-head-sm" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-1">
                             <header>Appointments</header>
@@ -47,40 +47,53 @@
                                 <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
                             </div>
                         </div>
-                        <div id="accordion3-1" class="collapse in">
-                            <div class="card-body custom-card-body"><p>Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Dicant vituperata consequuntur.</p>
-                            </div>
+                        <div id="accordion3-1" class="collapse in immunization-accordian">
+                              <div class="card-body custom-body-style-1 scrollbar">
+                                  <form class="custom-form" novalidate>
+                                  <ul class="ulli ulli_3 col-lg-12 margin-left-5 margin-0">
+                                        <li class="col-lg-12 capitalize" ng-repeat="immunization in immunizations">
+                                            {{immunization.name}} - 
+                                            {{immunization.immunization_date}}
+                                            <span class="pull-right delete-icon" ng-click="removeImmunization(immunization.id);"><img src="assets/img/cross.png" /></span><!-- immunizations.splice($index, 1) -->
+                                        </li>
+                                    </ul>
+                                    <!-- <p>Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Dicant vituperata consequuntur.</p> -->
+                                    </form>
+                                </div>
                         </div>
+                        
                     </div><!--end .panel -->
                     <div class="card panel">
-                        <form class="custom-form" novalidate>
+                        
                             <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-3">
                                 <header>Immunizations</header>
                                 <div class="tools">
                                     <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
                                 </div>
                             </div>
-                            <div id="accordion3-3" class="collapse">
-                                <div class="card-body">
+                            <div id="accordion3-3" class="collapse immunization-accordian">
+                                <div class="card-body custom-body-style-1 scrollbar">
+                                    <form class="custom-form" novalidate>
                                     <textarea ng-model="immunizationName" placeholder="Immunization" required></textarea>
-                                    <div class="input-group date select-date col-lg-12">
+                                    <div class="input-group date select-date col-lg-12 margin-bottom-xxl">
                                         <div class="input-group-content">
                                             <input type="text" class="form-control" placeholder="Select Date" ng-model="immunizationDate">
                                         </div>
                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                     </div>
                                     <button class="btn button-style-1 pull-right" ng-click="addImmunizations(immunizationName, immunizationDate);">Add</button>
-                                    <ul class="ulli ulli_3 col-lg-12">
+                                    <ul class="ulli ulli_3 col-lg-12 margin-left-5">
                                         <li class="col-lg-12 capitalize" ng-repeat="immunization in immunizations">
-                                            {{immunization.name}}
+                                            {{immunization.name}} - 
                                             {{immunization.immunization_date}}
                                             <span class="pull-right delete-icon" ng-click="removeImmunization(immunization.id);"><img src="assets/img/cross.png" /></span><!-- immunizations.splice($index, 1) -->
                                         </li>
                                     </ul>
+                                    </form>
                                     <!-- <p>Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Dicant vituperata consequuntur.</p> -->
                                 </div>
                             </div>
-                        </form>
+                        
                     </div><!--end .panel -->
                     <div class="card panel">
                         <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-2">
@@ -90,13 +103,38 @@
                             </div>
                         </div>
                         <div id="accordion3-2" class="collapse">
-                            <div class="card-body"><p>Duo semper accumsan ea, quidam convenire cum cu, oportere maiestatis incorrupte est eu. Soluta audiam timeam ius te, idque gubergren forensibus ad mel, persius urbanitas usu id. Civibus nostrum fabellas mea te, ne pri lucilius iudicabit. Ut cibo semper vituperatoribus vix, cum in error elitr. Vix molestiae intellegat omittantur an, nam cu modo ullum scriptorem.</p>
-                                <p>Quod option numquam vel in, et fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Dicant vituperata consequuntur at sea, mazim commodo</p>
+                            <div class="card-body custom-body-style-1 scrollbar">
+                                <form class="custom-form" novalidate>
+<!--                                <ul class="ulli ulli_3 col-lg-12 margin-left-5">
+                                        <li class="col-lg-12 capitalize" ng-repeat="immunization in immunizations">
+                                            {{immunization.name}} - 
+                                            {{immunization.immunization_date}}
+                                            <span class="pull-right delete-icon" ng-click="removeImmunization(immunization.id);"><img src="assets/img/cross.png" /></span> immunizations.splice($index, 1) 
+                                        </li>
+                                    </ul>-->
+
+<textarea ng-model="immunizationName" placeholder="Immunization" required></textarea>
+                                    <div class="input-group date select-date col-lg-12 margin-bottom-xxl">
+                                        <div class="input-group-content">
+                                            <input type="text" class="form-control" placeholder="Select Date" ng-model="immunizationDate">
+                                        </div>
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                    <button class="btn button-style-1 pull-right" ng-click="addImmunizations(immunizationName, immunizationDate);">Add</button>
+                                    <ul class="ulli ulli_3 col-lg-12 margin-left-5">
+                                        <li class="col-lg-12 capitalize" ng-repeat="immunization in immunizations">
+                                            {{immunization.name}} - 
+                                            {{immunization.immunization_date}}
+                                            <span class="pull-right delete-icon" ng-click="removeImmunization(immunization.id);"><img src="assets/img/cross.png" /></span><!-- immunizations.splice($index, 1) -->
+                                        </li>
+                                    </ul>
+                                </form>
                             </div>
                         </div>
                     </div><!--end .panel -->
 
                     <div class="card panel">
+                         <!--<form class="custom-form" novalidate>-->
                         <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-4">
                             <header>Family & Social History</header>
                             <div class="tools">
@@ -104,10 +142,27 @@
                             </div>
                         </div>
                         <div id="accordion3-4" class="collapse">
-                            <div class="card-body"><p>Duo semper accumsan ea, quidam convenire cum cu, oportere maiestatis incorrupte est eu. Soluta audiam timeam ius te, idque gubergren forensibus ad mel, persius urbanitas usu id. Civibus nostrum fabellas mea te, ne pri lucilius iudicabit. Ut cibo semper vituperatoribus vix, cum in error elitr. Vix molestiae intellegat omittantur an, nam cu modo ullum scriptorem.</p>
-                                <p>Quod option numquam vel in, et fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Dicant vituperata consequuntur at sea, mazim commodo</p>
+                            <div class="card-body custom-body-style-1 scrollbar">
+                                <form class="custom-form" novalidate>
+                                <textarea ng-model="immunizationName" placeholder="Immunization" required></textarea>
+                                    <div class="input-group date select-date col-lg-12 margin-bottom-xxl">
+                                        <div class="input-group-content">
+                                            <input type="text" class="form-control" placeholder="Select Date" ng-model="immunizationDate">
+                                        </div>
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                    <button class="btn button-style-1 pull-right" ng-click="addImmunizations(immunizationName, immunizationDate);">Add</button>
+                                    <ul class="ulli ulli_3 col-lg-12 margin-left-5">
+                                        <li class="col-lg-12 capitalize" ng-repeat="immunization in immunizations">
+                                            {{immunization.name}} - 
+                                            {{immunization.immunization_date}}
+                                            <span class="pull-right delete-icon" ng-click="removeImmunization(immunization.id);"><img src="assets/img/cross.png" /></span><!-- immunizations.splice($index, 1) -->
+                                        </li>
+                                    </ul>
+                                    </form>
                             </div>
                         </div>
+
                     </div><!--end .panel -->
                 </div><!--end .panel-group -->
             </div>
@@ -1510,3 +1565,6 @@
         </form>
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<script>
+
+</script>

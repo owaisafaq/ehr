@@ -1,0 +1,488 @@
+<div id="content">
+    <section>
+        <div class="card margin-0">
+            <div class="card-head">
+                <ul class="nav nav-tabs nav-justified custom-tab" data-toggle="tabs">
+                    <li><a showtab href="#labs">labs</a></li>
+                    <li class="active"><a showtab href="#lab-test-listing">lab test listing</a></li>
+                </ul>
+            </div>
+
+            <div class="card-body tab-content col-lg-12 custom-card-body padding-top-0">                
+                <div class="tab-pane" id="labs">
+                    <!--<div class="card">-->
+                    <!--<div class="card-body">-->
+                    <div class="table-header row background-none inv_header">
+                        <h2 class="heading-style pull-left margin-top-30">Labs</h2>
+                        <div class="pull-right">
+                            <button data-target="#newLab" data-toggle="modal" class="add button-custom pull-right add_inventory">New Lab</button>
+                        </div>
+                        <div class="pull-right">
+                            <div class="header-search pull-left margin-top-10">
+                                <button type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <input class="search_field" type="text" placeholder="Search investigation">
+                            </div>
+                        </div>
+                    </div>
+
+                    <form class="custom-form">
+
+
+                        <table class="table table-striped no-margin table-custom table-custom_big inventory_detail">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Code</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="InventoryList in InventoryLists| filter:search |filter:cat_search">
+                                    <td>{{InventoryList.product_id}}</td>
+                                    <td>{{InventoryList.product_name}}</td>
+                                    <td>{{InventoryList.product_name}}</td>
+                                    <td>
+                                        <div class="billing_actions pull-right"><a href="javascript:;" class="setting-button"></a>
+                                            <div class="tool-tip_popup">
+                                                <a href="javascript:;" ng-click="productDetail(InventoryList.product_id)">Edit</a>
+                                                <a href="javascript:;" ng-click="StockSelectedReorder(InventoryList.product_id)">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <!--muzammil do you code here-->
+                        <div class="pagination pagination-centered pull-right" ng-show="pharmacyCount">
+                            <ul class="pagination-controle pagination">
+                                <li class="prev-page">
+                                    <!--<button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>-->
+                                    <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage = curPage - 1;
+                                                paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
+                                </li>                            
+                                <li>
+                                    <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberPharmacy" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages()}}</span>
+                                </li>
+                                <li class="next-page">
+                                    <!--<button type="button" class="btn btn-primary" ng-disabled="curPage >= patientCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>-->
+                                    <button type="button" class="btn btn-primary" ng-disabled="curPage >= pharmacyCount / pageSize - 1" ng-click="curPage = curPage + 1;
+                                                paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </form>
+                    <!--</div>-->
+                    <!--</div>-->
+                </div>
+
+
+                <div class="tab-pane active" id="lab-test-listing">
+                    <!--<div class="card">-->
+                    <!--<div class="card-body">-->
+                    <div class="table-header row background-none inv_header">
+                        <form class="custom-form">
+                            <div class="row margin-right-0">
+                            <h2 class="heading-style col-lg-12 margin-top-10">Labs Test Listing</h2>
+                                <div class="col-lg-5 margin-top-10 margin-bottom-xl">
+                                    <div class="row">
+                                    <div class="col-lg-2 margin-0">
+                                        <label class="margin-right-10">Select</label>
+                                    </div>
+                                    <div class="col-lg-4 margin-0">
+                                        <select class="form-control" placeholder="By Lab">
+                                            <option></option>
+                                            <option>Sample</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pull-right">
+                                <button data-target="#newlabtest" data-toggle="modal" class="add button-custom pull-right add_inventory">new lab test</button>
+                            </div>
+                            <div class="pull-right">
+                                <div class="header-search pull-left margin-top-10">
+                                    <button type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                    <input class="search_field" type="text" placeholder="Search test">
+                                </div>
+                            </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <form class="custom-form">
+
+
+                        <table class="table table-striped no-margin table-custom table-custom_big inventory_detail">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Code</th>
+                                    <th>Lab</th>
+                                    <th>Cost</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="InventoryList in InventoryLists| filter:search |filter:cat_search">
+                                    <td><a href="#" class="link-style_3">Dental</a></td>
+                                    <td>{{InventoryList.product_name}}</td>
+                                    <td>{{InventoryList.product_name}}</td>
+                                    <td>{{InventoryList.product_name}}</td>
+                                    <td>{{InventoryList.product_name}}</td>
+                                    <td>
+                                        <div class="billing_actions pull-right"><a href="javascript:;" class="setting-button"></a>
+                                            <div class="tool-tip_popup">
+                                                <a href="javascript:;" ng-click="productDetail(InventoryList.product_id)">Edit</a>
+                                                <a href="javascript:;" ng-click="StockSelectedReorder(InventoryList.product_id)">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <!--muzammil do you code here-->
+                        <div class="pagination pagination-centered pull-right" ng-show="pharmacyCount">
+                            <ul class="pagination-controle pagination">
+                                <li class="prev-page">
+                                    <!--<button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>-->
+                                    <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage = curPage - 1;
+                                                paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
+                                </li>                            
+                                <li>
+                                    <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberPharmacy" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages()}}</span>
+                                </li>
+                                <li class="next-page">
+                                    <!--<button type="button" class="btn btn-primary" ng-disabled="curPage >= patientCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>-->
+                                    <button type="button" class="btn btn-primary" ng-disabled="curPage >= pharmacyCount / pageSize - 1" ng-click="curPage = curPage + 1;
+                                                paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </form>
+                    <!--</div>-->
+                    <!--</div>-->
+                </div>
+            </div><!--end .card -->
+        </div>
+    </section>
+</div>
+
+
+<div class="modal fade modal-size_3" id="facility-profile" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>facility profile</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="row margin-bottom-xxl">
+                                <div class="col-lg-4">
+                                    <label>name</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="text" placeholder="" name="" required/>
+                                </div>
+                            </div>
+
+                            <div class="row margin-bottom-xxl">
+                                <div class="col-lg-4">
+                                    <label>type of facility</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="text" placeholder="" name="" required/>
+                                </div>
+                            </div>
+
+                            <div class="row margin-bottom-xxl">
+                                <div class="col-lg-4">
+                                    <label>registration number</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="text" placeholder="" name="" required/>
+                                </div>
+                            </div>
+
+                            <div class="row margin-bottom-xxl">
+                                <div class="col-lg-4">
+                                    <label>category</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="text" placeholder="" name="" required/>
+                                </div>
+                            </div>
+
+                            <div class="row margin-bottom-xxl">
+                                <div class="col-lg-4">
+                                    <label>no of speciality</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="text" placeholder="" name="" required/>
+                                </div>
+                            </div>
+
+                            <div class="row margin-bottom-xxl">
+                                <div class="col-lg-4">
+                                    <label>date of registration</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <!--<input type="text" placeholder="" name="" required/>-->
+                                    <div class="input-group date select-date">
+                                        <div class="input-group-content">
+                                            <input type="text" name="date_of_birth" class="form-control" required placeholder="Pick Date" />                                        
+                                        </div>
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row margin-bottom-xxl">
+                                <div class="col-lg-4">
+                                    <label>name of proprietor</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="text" placeholder="" name="" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="row margin-bottom-xxl">
+                                <div class="col-lg-4">
+                                    <label>address</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="text" placeholder="" name="" required/>
+                                </div>
+                            </div>
+
+                            <div class="row margin-bottom-xxl">
+                                <div class="col-lg-4">
+                                    <label>city</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="text" placeholder="" name="" required/>
+                                </div>
+                            </div>
+
+                            <div class="row margin-bottom-xxl">
+                                <div class="col-lg-4">
+                                    <label>state</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <select class="form-control" placeholder="Select">
+                                        <option></option>
+                                        <option>Sample 1</option>
+                                        <option>Sample 2</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row margin-bottom-xxl">
+                                <div class="col-lg-4">
+                                    <label>country</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <select class="form-control" placeholder="Select">
+                                        <option></option>
+                                        <option>Country 1</option>
+                                        <option>Country 2</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row margin-bottom-xxl">
+                                <div class="col-lg-4">
+                                    <label>phone</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="text" placeholder="" name="" required/>
+                                </div>
+                            </div>
+
+                            <div class="row margin-bottom-xxl">
+                                <div class="col-lg-4">
+                                    <label>email</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="text" placeholder="" name="" required/>
+                                </div>
+                            </div>
+
+                            <div class="row margin-bottom-xxl">
+                                <div class="col-lg-4">
+                                    <label>website</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="text" placeholder="" name="" required/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="modal-footer row">
+                        <button type="button" class="btn btn-default button-style-1">Save</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+
+
+
+            </div><!-- /.modal-content -->
+
+
+        </div><!-- /.modal-dialog -->
+
+    </div><!-- /.modal -->
+</div>
+<div class="modal fade modal-size_2" id="newLab" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>New Lab Test</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form">
+                    <!--<div class="row">-->
+                    <div class="row margin-bottom-xxl">
+                        <div class="col-lg-2">
+                            <label>Name</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" placeholder="" name="" required/>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <label>Code</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" placeholder="" name="" required/>
+                        </div>
+                    </div>
+
+                    <div class="row margin-bottom-xxl">
+                        <div class="col-lg-2">
+                            <label>Cost</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" placeholder="" name="" required/>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <label>Lab</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <select placeholder="Select Lab" class="form-control">
+                                <option></option>
+                                <option>Lab 1</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <label>Description</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <textarea></textarea>
+                        </div>
+                    </div>
+                    <!--</div>-->
+                    <div class="modal-footer row">
+                        <button type="button" class="btn btn-default button-style-1">Add</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div><!-- /.modal-content -->
+
+
+    </div><!-- /.modal-dialog -->
+
+</div><!-- /.modal -->
+
+
+<div class="modal fade modal-size_2" id="newlabtest" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>New Lab Test</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form">
+                    <!--<div class="row">-->
+                    <div class="row margin-bottom-xxl">
+                        <div class="col-lg-2">
+                            <label>Name</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" placeholder="" name="" required/>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <label>Code</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" placeholder="" name="" required/>
+                        </div>
+                    </div>
+                    
+                    <div class="row margin-bottom-xxl">
+                        <div class="col-lg-2">
+                            <label>Cost</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" placeholder="" name="" required/>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <label>Lab</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <select placeholder="Select Lab" class="form-control">
+                                <option></option>
+                                <option>Lab 1</option>
+                                <option>Lab 2</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <label>Description</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <textarea></textarea>
+                        </div>
+                    </div>
+                    <!--</div>-->
+                    <div class="modal-footer row">
+                        <button type="button" class="btn btn-default button-style-1">Add</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div><!-- /.modal-content -->
+
+
+    </div><!-- /.modal-dialog -->
+
+</div><!-- /.modal -->

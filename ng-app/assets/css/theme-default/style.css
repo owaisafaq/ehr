@@ -51,10 +51,13 @@ body{
     margin-bottom: 30px;
 }
 .margin-top-5{
-    margin-top: 5px;
+    margin-top: 5px !important;
 }
 .margin-top-10{
     margin-top: 10px !important;
+}
+.margin-left-5{
+    margin-left: 5px !important;
 }
 input[disabled],textarea[disabled] {
     background: #f6f8fd;
@@ -609,6 +612,7 @@ file upload custom
     text-transform: capitalize;
     font-family: 'SegoeUI-reg';
     line-height: 22px;
+    font-weight: normal;
 }
 .checkbox-styled:not(ie8) input ~ span:before{
     border: 2px solid #edf1f5;
@@ -661,6 +665,10 @@ Table Styling
 }
 .table > thead > tr > th{
     border-bottom: 2px solid #edf1f5;
+    padding: 10px 20px 10px 10px;
+    position: relative;
+    line-height: 16px;
+    vertical-align: middle;
 }
 .button-custom{
     display: inline-block;
@@ -849,6 +857,12 @@ Table Styling
     letter-spacing: 1px;
     font-family: 'sgui-bold';
 }
+.label-style-con label.txt-style-3{
+        color: #0179da;
+        font-size: 12px;
+    font-family: 'sgui-bold';
+    text-transform: uppercase;
+}
 .table-header .txt-style-3{
     margin-right: 20px;
     color: #464c61;
@@ -857,6 +871,9 @@ Table Styling
     font-family: 'sgui-bold';
     line-height: 13px;
     margin-top: 15px;
+}
+.table-header.auto{
+    height: auto;
 }
 .radio-styled:not(ie8) input:checked ~ span:before{
     border-color: #567284;
@@ -956,6 +973,14 @@ Side PopUp
 .table-custom_big thead > tr > th,.table-custom_big tbody > tr > td{
     font-size: 12px;
 }
+.table-custom_big thead > tr > th a{
+    position: absolute;
+    right: 6px;
+    top: 0;
+    bottom: 0;
+    height: 19px;
+    margin: auto;
+}
 .link-style{
     font-size: 14px;
     font-weight: bold;
@@ -973,9 +998,6 @@ Side PopUp
 .card-color-2{
     background: #c8ddee;
 }
-/*.card-color-2 .button-style-2{
-    background: #a2a6b9;    
-}*/
 .card-color-2 .txt-style-2{
     color: #516e81;
 }
@@ -1020,7 +1042,8 @@ Side PopUp
     box-shadow: 0 5px 15px rgba(226, 233, 239, 0.5);
 }
 .modal-size_2 .modal-dialog{
-    width: 840px;
+    max-width: 840px;
+    width: 100%;
 }
 .modal-dialog{
     width: 1160px;
@@ -1085,7 +1108,7 @@ Accordian
 }
 .table-header-2 .txt-style-4{
     margin-top: 14px;
-    margin-right: 56px;
+    margin-right: 44px;
     font-weight: bold;
 }
 .table-header-2 .header-checkboxes,.table-header-2 .select-con{
@@ -2472,6 +2495,7 @@ table.setting_table_cat > tbody > tr > td:nth-child(2) span{float:left;}
     color: #516e81;
     margin-bottom: 2px;
     font-size: 14px;
+    cursor: pointer;
 }
 .txt-style-6{
     font-size: 18px;
@@ -2690,7 +2714,7 @@ table.setting_table_cat > tbody > tr > td:nth-child(2) span{float:left;}
 .btn_can_col span{font-size: 20px;color: red;line-height: 27px;float: right;cursor:pointer;}
 .btn_add{background-color:#43e19c;color:#fff;border-radius:50%;font-size: 20px}
 .btn_add:hover , .btn_add:focus{color:#fff;}
-.margin-0{margin:0;}
+.margin-0{margin:0 !important;}
 .custom-form .price_list > div{margin-bottom:10px;}
 .custom-form .price_list span{color: #003d51;font-weight: 700;font-size:14px;}
 .custom-form .grand_total span{color:#56aeea;font-weight: 700;font-size:14px;}
@@ -2725,6 +2749,7 @@ table.billing_table > tbody > tr > td:nth-child(4){vertical-align:bottom;}
     position: relative;
     top: 3px;
     cursor: pointer;
+    display: inline-block;
 }
 .billing_table{margin-top:20px !important;}
 .billing_actions .setting-button {
@@ -2753,7 +2778,7 @@ table.billing_table > tbody > tr > td:nth-child(4){vertical-align:bottom;}
     opacity: 1;
     visibility: visible;
     top: -13px;
-    right: 5%;
+    right: 110%;
 }
 .margin-bot-70{margin-bottom:70px;}
 
@@ -2883,10 +2908,16 @@ form .progress {
 }
 
 @media print {
+     html, body {
+        height:100%; 
+        overflow: hidden;
+        background: #FFF; 
+        font-size: 9.5pt;
+    }
     .hidden-print {
         display: none !important;
     }
-    .idCardPrint.hidden-print,#addpatient .modal-footer,#addpatient .modal-header, #menubar, #header{
+    #menubar,.idCardPrint.hidden-print,#addpatient .modal-footer,#addpatient .modal-header, #menubar, #header{
         display: none;
     }
     .id_card {
@@ -3212,6 +3243,7 @@ Referral Popup
     position: fixed;
     bottom: 0;
     left: 0;
+    z-index: 2;
 }
 /*==========
 Pagination
@@ -3337,10 +3369,11 @@ Pagination
     margin: 0;
 }
 .modal-size_1 .modal-dialog{
-    width: 600px;
+    max-width: 600px;
+    width: 100%;
 }
 .modal-size_1 .modal-body{
-        padding: 20px 20px 0;
+    padding: 20px 20px 0;
 }
 .modal-size_1 .modal-footer{
     padding: 20px;
@@ -3351,10 +3384,11 @@ Pagination
     width: 100%;
 }
 .modal-size_3 .modal-dialog {
-    width: 1120px;
+    max-width: 1120px;
+    width: 100%;
 }
 .modal-size_3 .modal-footer {
-        padding: 15px 40px 40px;
+    padding: 15px 40px 40px;
 }
 .margin-bottom-xxl {
     margin-bottom: 20px !important;
@@ -3372,4 +3406,278 @@ Pagination
 .sign-in-images img{
     width: calc(100% / 4 - 10px);
     margin-right: 10px;
+}
+.immunization-accordian li .delete-icon{
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    height: 14px;
+}
+.immunization-accordian li .delete-icon img{
+    float: left;
+    margin: 0;
+}
+.show-records{
+    margin-bottom: 20px;
+}
+.show-records > span{
+    font-size: 10px;
+    float: left;
+    color: #b8c0d0;
+    height: 32px;
+     line-height: 32px; 
+}
+.show-records .select2-container{
+    float: left;
+    width: 60px;
+    margin: 0 10px;
+    font-size: 11px;
+}
+.form-builder-styling .form-group .control-label{
+    opacity: 1;
+}
+.form-builder-styling input,.form-builder-styling textarea{
+    margin-bottom: 20px;
+}
+.menubar-foot-panel{
+    opacity: 0;   
+}
+#menubar:hover .menubar-foot-panel{
+    opacity: 1;   
+}
+.form-builder-styling .checkbox-styled{
+    margin-left: -5px;
+}
+.image-uploading-text{
+    bottom: -18px;
+    font-size: 12px;
+    right: 12px;
+    color: #0179da;
+    position: absolute;
+}
+.custom-card .custom-body-style-1{
+    padding: 20px 5px 10px 10px;
+}
+.custom-card .custom-body-style-1 ul{
+    margin: 0;    
+}
+.card-body .ulli_3 li{
+    margin-top: 0;
+}
+.accordian-max-height .card-body{
+    max-height: 250px;
+}
+.card-body .mCSB_inside>.mCSB_container{
+    padding-right: 5px;
+}
+.logo-textStyle{
+    font-size: 36px;
+    color: #b8c0d0;
+    font-family: 'sgui-bold';
+    line-height: 75px;
+    width: 231px;
+    height: 90px;
+    background: #f6f8fd;
+    text-align: center;
+    line-height: 90px;
+}
+.table-upper{
+    display: flex;
+    width: 100%;
+    float: left;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.heading-style{
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'sgui-bold';
+    color: #464c61;
+    margin-top: 13px;
+}
+.box-style-2 .upper-part-box{
+    margin: 15px 0 17px;
+    padding: 0 5px;
+}
+.box-style-2 .upper-part-box .row{
+    margin-bottom: 5px;
+}
+.box-style-2 > div{
+    border: 1px solid #e8ebed;
+}
+.box-style-2 > div .col-lg-4,.box-style-2 > div .col-lg-8{
+    padding: 0 20px 0;
+    margin: 0;
+}
+.box-style-2 > div .colored-bg > div{
+    padding: 10px 20px;
+}
+.box-style-2 > div:nth-child(2){
+    border-left: none;
+}
+.colored-bg{
+    background:#f6f8fd;
+    border-top: 1px solid #e8ebed;
+}
+.modal-open .modal{
+    padding: 0 10px !important; 
+}
+.link-style_3{
+    font-size: 12px;
+    color: #464c61;
+    border-bottom: 2px solid #c5c7cd;
+    text-decoration: none !important; 
+    font-family: 'sgui-bold';
+}
+.link-style_3:hover{
+    color: #4d5369;
+}
+/*Dashboard*/
+.dashboard-new{
+    padding-top: 15px;
+    float: left;
+    width: 100%;
+}
+.dashboard-new .card{
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.2)
+}
+.all-content{
+    display: inline-block;
+}
+.color-style1{
+    background: #4dd0e1;
+}
+.color-style2{
+    background: #4db6ac;
+}
+.color-style3{
+    background: #81c784;
+}
+.color-style4{
+    background: #aed581;
+}
+.all-content span{
+    width: 100%;
+    float: left;
+    text-align: left;
+}
+.all-content span.textstyle-1{
+    color: #fff;
+}
+.all-content span.textstyle-2{
+    color: #fff;
+    font-size: 24px;
+    line-height: 19px;
+    font-family: 'sgui-bold';
+}
+.dashboard-new .card-body{
+    padding: 18px 0 10px 10px;
+}
+.dashboard-new .details{
+    float: left;
+    margin-left: 20px;
+    width: 170px;
+}
+.grid-boxes-style-2{
+    float: left;
+    width: 100%;
+}
+.grid-boxes-style-2 > div{
+    width: calc(100% / 5);
+}
+.circle-img-con{
+   width: 55px;
+   height: 55px;
+   border-radius: 100%;
+   display: inline-block;
+   padding-top: 13px;
+   text-align: center;
+}
+.circle-style1{
+    background: #f06292;
+}
+.circle-style2{
+    background: #ba68c8;
+}
+.circle-style3{
+    background: #7986cb;
+}
+.circle-style4{
+    background: #90caf9;
+}
+.circle-style5{
+    background: #80deea;
+}
+.grid-boxes-style-2 .textstyle-1{
+    font-size: 12px;
+    color: #455168;
+    margin-left: 10px;
+}
+.grid-boxes-style-2 a
+{
+    text-decoration: none !important;
+}
+.grid-boxes-style-2 .card-body{
+        padding: 10px 0 10px 0;
+        text-align: center;
+}
+.pagination-dash input{
+    padding: 0 !important;
+}
+.textstyle-4{
+    color: #455168;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+.bold-text{
+    font-family: 'sgui-bold';
+}
+.scroll-container{
+    max-height: 250px;
+}
+.dash-table-con .card-head,.dash-table-con .mCSB_container{
+    padding: 0 20px !important;
+}
+.dash-table-con .card-head h2{
+    margin: 21px 0;
+}
+.dash-table-con .card-body{
+    padding-top: 0;
+}
+.pagination-dash{
+    margin-bottom: 0;
+    margin-top: 15px;
+}
+.dash-text{
+    font-size: 48px;    
+    float: left;
+    font-family: 'sgui-bold';
+}
+.textstyle-5{
+    font-size: 18px;
+    color: #455168;
+    font-family: 'sgui-bold';
+    line-height: 18px;
+}
+.textstyle-6{
+    font-size: 14px;
+    color: #8491ae;
+    text-transform: uppercase;
+}
+.text-color1{
+    color:#f06292;
+}
+.text-color2{
+    color:#7986cb;
+}
+.text-color3{
+    color:#80deea;
+}
+.dash-card-style-3{
+    margin-top: 10px;
+}
+.dash-card-style-3 .card-body{
+    padding: 18px 0;
 }

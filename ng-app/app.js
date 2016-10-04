@@ -475,6 +475,38 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', function 
                             });
                         }
                     }
+                }).when('/settings-tax-rates', {
+                    templateUrl: 'views/settings-tax-rates.html',
+                    controller: 'settingsTaxRates',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/settings-tax-rates.js").then(function() {
+                            });
+                        }
+                    }
+                })
+                        .when('/settings-facility', {
+                    templateUrl: 'views/settings-facility.html',
+                    controller: 'settingsFacility',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/settings-facility.js").then(function() {
+                            });
+                        }
+                    }
+                })
+                        .when('/settings-labs', {
+                    templateUrl: 'views/settings-labs.html',
+                    controller: 'settingsLabs',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/settings-labs.js").then(function() {
+                            });
+                        }
+                    }
                 }).
                 otherwise({
                     redirectTo: '/dashboard'
@@ -668,6 +700,12 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
     $rootScope.loader = "";
     
     $rootScope.$on('$viewContentLoaded', function () {
+        (function($){
+        $(window).on("load",function(){
+            $(".scrollbar").mCustomScrollbar();
+            $(".scroll-container").mCustomScrollbar();
+        });
+    })(jQuery);
         // transfers sessionStorage from one tab to another
         var sessionStorage_transfer = function (event) {
             //console.log("working")
