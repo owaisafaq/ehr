@@ -3490,18 +3490,16 @@ class ApiController extends Controller
                     }
 
                 }
-
-                $template_values = json_encode($arr);
-
-                DB::table('patient_clinical_notes')
-                    ->where('id', $status->id)
-                    ->update(['value' => $template_values, 'updated_at' => date("Y-m-d  H:i:s")]);
-
             }
 
+            $template_values = json_encode($arr);
+
+            DB::table('patient_clinical_notes')
+                ->where('id', $status->id)
+                ->update(['value' => $template_values, 'updated_at' => date("Y-m-d  H:i:s")]);
+
+
         }
-
-
 
         return response()->json(['status' => true, 'signoff' => $signoff,'data'=>$data->value,'template'=>$data->template,'clinical_notes_id'=>$status->id,'template_name'=>$data->name,'template_id'=>$data->template_id,'category_id'=>$data->category_id,'doctor'=> 'DR James','test_by'=>'alex','date_of_service'=>'10th May','diagnosis'=>$data->diagnosis]);
     }
