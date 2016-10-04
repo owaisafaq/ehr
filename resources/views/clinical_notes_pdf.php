@@ -192,12 +192,34 @@ and open the template in the editor.
                             <div class="col-lg-12 no-padding">
                                     <?php foreach ($data as $d){ ?>
                                     <div class="col-lg-3">
-                                        <label><?php echo $d['field']->displayName;  //echo 'Mr Suriya';?></label>
+                                        <label><?php echo $d['field']->displayName; ?></label>
                                     </div>
                                     <div class="col-lg-9">
-                                        <label class="txt-style-4 col-lg-12 no-padding margin-bottom-xl"><?php echo $d['value']; ?></label>
+
+                                        <?php if ($d['field']->displayName=='Diagnosis'){?>
+
+                                            <?php if (!empty($diagnosis)) { ?>
+
+                                                <?php foreach ($diagnosis as $diagnose) { ?>
+
+                                                    <div class="col-lg-9">
+                                                        <label
+                                                            class="txt-style-4 col-lg-12 no-padding margin-bottom-xl"><?php echo $diagnose['diagnosis']; ?></label>
+                                                    </div>
+                                                <?php }
+
+                                            } ?>
+
+                                        <?php } else{ ?>
+                                        <label
+                                            class="txt-style-4 col-lg-12 no-padding margin-bottom-xl"><?php echo $d['value'];
+
+                                            }?></label>
                                     </div>
                                     <?php } ?>
+
+
+
 <!--                                <div class="col-lg-3">-->
 <!--                                    <label>Primary Diagnosis</label>-->
 <!--                                </div>-->
