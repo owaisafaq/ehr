@@ -229,7 +229,7 @@
                                 <tbody>
                                     <tr>
                                         <td rowspan="4">
-                                            <img src="<?php echo $patient->patient_image; ?>">
+                                            <img style="max-width: 120px; max-height: 120px;" src="<?php echo $patient->patient_image; ?>">
                                         </td>
 
                                         <td>
@@ -283,6 +283,37 @@
                             </table>
                         </td>
                     </tr>
+                    <!--owais do your code here-->
+                    <tr>
+                        <td>
+                            <table style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th style="padding: 10px; text-align: left; background: #ebebeb; font-size: 12px; color: #1a1a1a; font-weight: bold;">Medication</th>
+                                        <th style="padding: 10px; text-align: left; background: #ebebeb; font-size: 12px; color: #1a1a1a; font-weight: bold;">Sig</th>
+                                        <th style="padding: 10px; text-align: left; background: #ebebeb; font-size: 12px; color: #1a1a1a; font-weight: bold;">Dispence</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border:1px solid #ebebeb;">
+                                        <td style="padding: 10px; border-right:1px solid #ebebeb; color: #666666; background: #f9f9f9; font-size: 13px; color: #666666;">Amosicillin oral powder</td>
+                                        <td style="padding: 10px; border-right:1px solid #ebebeb; color: #666666; background: #f9f9f9; font-size: 13px; color: #666666;">5mg 3 times a day aftr a meal for 5 oral route</td>
+                                        <td style="padding: 10px; color: #666666; background: #f9f9f9; font-size: 13px; color: #666666;">15</td>
+                                    </tr>
+                                    <tr style="border:1px solid #ebebeb;">
+                                        <td style="padding: 10px; border-right:1px solid #ebebeb; background: #f9f9f9; font-size: 13px; color: #666666;">Paracetamol Capsule</td>
+                                        <td style="padding: 10px; border-right:1px solid #ebebeb; background: #f9f9f9; font-size: 13px; color: #666666;">5mg 2 times a day aftr a meal for 5 oral route</td>
+                                        <td style="padding: 10px; background: #f9f9f9; font-size: 13px; color: #666666;">10</td>
+                                    </tr>
+                                    <tr style="border:1px solid #ebebeb;">
+                                        <td style="padding: 10px; border-right:1px solid #ebebeb; background: #f9f9f9; font-size: 13px; color: #666666;">Panadol</td>
+                                        <td style="padding: 10px; border-right:1px solid #ebebeb; background: #f9f9f9; font-size: 13px; color: #666666;">5mg 2 times a day aftr a meal for 5 oral route</td>
+                                        <td style="padding: 10px; background: #f9f9f9; font-size: 13px; color: #666666;">12</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
 
                     <tr>
                         <td>
@@ -310,7 +341,8 @@
                                             <h4 style="font-size:12px;color:#1a1a1a;font-weight:bold;"><?php echo $d['field']->displayName; ?></h4>
                                         </td>
                                     </tr>
-                                    <div class="col-lg-9">
+                                    <tr>
+                                    <td style="padding-bottom:20px;">
 
                                         <?php if ($d['field']->displayName == 'Diagnosis'){ ?>
 
@@ -331,7 +363,8 @@
 
                                         <?php }?>
 
-
+                                        </td>
+                                        </tr>
                                         <tr>
                                             <td style="padding-bottom:20px;">
                                                 <p style="<?php if ($d['field']->displayName == 'Diagnosis'){?> display: none; <?php }?>font-size:12px !important;color:#333333;line-height:18px !important;">
@@ -367,7 +400,7 @@
                                 <tr>
                                     <td style="padding-bottom:10px;">
                                         <span style="font-size:12px;color:#1a1a1a;font-weight:bold;">
-                                            Medications
+                                            Immunizations
                                         </span>
                                     </td>
                                 </tr>
