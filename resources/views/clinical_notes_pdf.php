@@ -334,7 +334,7 @@
 
                                         <tr>
                                             <td style="padding-bottom:20px;">
-                                                <p style="font-size:12px !important;color:#333333;line-height:18px !important;">
+                                                <p style="<?php if ($d['field']->displayName == 'Diagnosis'){?> display: none; <?php }?>font-size:12px !important;color:#333333;line-height:18px !important;">
                                                     <?php echo $d['value']; ?>
                                                 </p>
                                             </td>
