@@ -3455,8 +3455,74 @@ class ApiController extends Controller
             ->select('patient_clinical_notes.value', 'templates.template','templates.name','templates.category_id','patient_clinical_notes.template_id','patient_clinical_notes.diagnosis')
             ->where('patient_clinical_notes.id', $status->id)->first();
 
-        return response()->json(['status' => true, 'signoff' => $signoff,'data'=>$data->value,'template'=>$data->template,'clinical_notes_id'=>$status->id,'template_name'=>$data->name,'template_id'=>$data->template_id,'category_id'=>$data->category_id,'doctor'=> 'DR James','test_by'=>'alex','date_of_service'=>'10th May','diagnosis'=>$data->diagnosis]);
+
+        $template_values = json_decode($data->value);
+
+
+        $template = json_decode($data->template);
+
+
+
+        if (empty((array) $template_values)) {
+
+            foreach ($template->fields as $temp) {
+                /*      foreach ($template_values as $k => $v){
+                          if($temp->name != $k){
+                              array_push($arr,[$temp->name]);
+                          }
+                      }*/
+
+                $arr[$temp->name] = '';
+                //array_push($arr,$temp->name);
+
+            }
+
+            $template_values = json_encode($arr);
+
+            DB::table('patient_clinical_notes')
+                     ->where('id',  $status->id)
+                     ->update(['value' => $template_values, 'updated_at' => date("Y-m-d  H:i:s")]);
+
+        } else {
+
+            foreach ($template->fields as $temp) {
+
+
+             //   echo '<pre>';print_r($temp);echo '</pre>';
+
+                foreach ($template_values as $k => $v) {
+
+                   if (ltrim(rtrim($temp->name)) == ltrim(rtrim($k))) {
+                       $arr[$temp->name] = "$v";
+                       break;
+                    }
+                    else{
+                        $arr[$temp->name] = '';
+                       //echo 'WAITING HERE';
+                        //break;
+                    }
+                }
+
+            }
+
+            $template_values = json_encode($arr);
+
+            DB::table('patient_clinical_notes')
+                ->where('id', $status->id)
+                ->update(['value' => $template_values, 'updated_at' => date("Y-m-d  H:i:s")]);
+
+
+        }
+
+        $clinical_notes_new_data = DB::table('patient_clinical_notes')
+            ->select('value')
+            ->where('id', $status->id)->first();
+
+        return response()->json(['status' => true, 'signoff' => $signoff,'data'=>$clinical_notes_new_data->value,'template'=>$data->template,'clinical_notes_id'=>$status->id,'template_name'=>$data->name,'template_id'=>$data->template_id,'category_id'=>$data->category_id,'doctor'=> 'DR James','test_by'=>'alex','date_of_service'=>'10th May','diagnosis'=>$data->diagnosis]);
     }
+
+
+
     public function get_prescription_medicines(Request $request){
         $data = DB::table('inventory_products')
             ->select(DB::raw('id,name'))
