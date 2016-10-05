@@ -180,6 +180,15 @@ class PDFController extends Controller
             ->where('patient_id', $patient->id)
             ->get();
 
+
+        $orders = DB::table('lab_orders')
+            ->select(DB::raw('lab_orders.id,lab_orders.patient_id,labs.name as lab_name'))
+            ->leftJoin('labs', 'labs.id', '=', 'lab_orders.lab')
+            ->where('lab_orders.patient_id', $patient->id)
+            ->where('lab_orders.status', 1)
+            ->get();
+
+
         $diagnosis = array();
 
         if($patient->diagnosis !=''){
@@ -198,7 +207,7 @@ class PDFController extends Controller
             }
         }
 
-        $data = ['data'=>$arr,'patient'=>$patient,'diagnosis'=>$diagnosis,'allergies'=>$allergies,'immunizations'=>$immmunizations];
+        $data = ['data'=>$arr,'patient'=>$patient,'diagnosis'=>$diagnosis,'allergies'=>$allergies,'immunizations'=>$immmunizations,'orders'=>$orders];
 
         $view =  app()->make('view')->make('clinical_notes_pdf', $data)->render();
 
