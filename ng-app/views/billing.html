@@ -1,6 +1,6 @@
 <div id="content">
     <section>
-        <div class="card {{dataStrip}}" ng-class="{true: 'custom-card'}[patientInfo]">
+        <div class="card {{dataStrip}}" ng-class="{true: 'custom - card'}[patientInfo]">
             <div class="card-head card-head-custom {{hospital_plan}} billing hidden-print" ng-show="patientInfo">
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
@@ -54,7 +54,7 @@
                 <div class="tab-pane active" id="generate">
 
                     <div class="table-header row background-none">
-                        
+
                         <div class="pull-right">
                             <div class="header-search billing_search pull-left margin-right-0">
                                 <button type="submit">
@@ -84,7 +84,7 @@
 
                               <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">Invoice Without Consultation</button>
                               <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate">New Invoice</button>
-  -->
+                            -->
                         </div>
                         <span class="txt-style-3 pull-left text-uppercase">Plan</span>
                         <div class="col-lg-2">
@@ -109,37 +109,37 @@
                     <form class="custom-form">
                         <table class="table table-striped no-margin table-custom table-custom_big setting_table">
                             <thead>
-                            <tr>
-                                <th></th>
-                                <th>Bill ID</th>
-                                <th>Date</th>
-                                <th>Encounter No</th>
-                                <th>patient ID</th>
-                                <th>patient name</th>
-                                <th>bill purpose</th>
-                                <th>patient plan</th>
+                                <tr>
+                                    <th></th>
+                                    <th>Bill ID</th>
+                                    <th>Date</th>
+                                    <th>Encounter No</th>
+                                    <th>patient ID</th>
+                                    <th>patient name</th>
+                                    <th>bill purpose</th>
+                                    <th>patient plan</th>
 
-                            </tr>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="Bill in BillListings |filter:search_all_bill |filter:search_plan_bill">
-                                <td align="center">
-                                    <div class="radio radio-styled">
-                                        <label>
-                                            <input type="radio" ng-click="SelectedPatient(Bill.patient_id,Bill.id)" name="optionsRadios" value="option1"><span></span>
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>{{Bill.id}}</td>
-                                <td>{{Bill.created_at}}</td>
-                                <td>E{{Bill.encounter_id}}</td>
-                                <td><a class="blue" href="#/patient-summary-demographics/{{labOrder.patient_id}}">PA-{{Bill.patient_id}}</a></td>
-                                <td>{{Bill.first_name}}</td>
-                                <td>{{Bill.purpose}}</td>
-                                <td>{{Bill.name}}</td>
+                                <tr ng-repeat="Bill in BillListings|filter:search_all_bill |filter:search_plan_bill">
+                                    <td align="center">
+                                        <div class="radio radio-styled">
+                                            <label>
+                                                <input type="radio" ng-click="SelectedPatient(Bill.patient_id, Bill.id)" name="optionsRadios" value="option1"><span></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>{{Bill.id}}</td>
+                                    <td>{{Bill.created_at}}</td>
+                                    <td>E{{Bill.encounter_id}}</td>
+                                    <td><a class="blue" href="#/patient-summary-demographics/{{labOrder.patient_id}}">PA-{{Bill.patient_id}}</a></td>
+                                    <td>{{Bill.first_name}}</td>
+                                    <td>{{Bill.purpose}}</td>
+                                    <td>{{Bill.name}}</td>
 
 
-                            </tr>
+                                </tr>
 
                             </tbody>
                         </table>
@@ -151,12 +151,11 @@
                     <div class="invoice_list">
 
                         <div class="table-header row background-none">
-                            <div class="col-lg-7"></div>
-                            <div class="col-lg-3">
-                                <div class="col-lg-2">
+                            <div class="col-lg-3 col-lg-offset-7">
+                                <div class="col-lg-3">
                                     <span class="txt-style-3 pull-left text-uppercase billing_period">Status</span>
                                 </div>
-                                <div class="col-lg-10">
+                                <div class="col-lg-9">
                                     <select class="form-control" ng-model="search_status" >
                                         <option value="">All</option>
                                         <option>Draft</option>
@@ -182,6 +181,7 @@
                                 <button class="add button-custom pull-right" data-toggle="modal" ng-click="prcessingPaymentClick(invoice_id)">Process Payment</button>
                                 <button class="add button-custom pull-right" ng-click="PrintInvoice(invoice_id)"  >Print Invoice</button>
                                 <button class="add button-custom pull-right" data-toggle="modal" ng-click="SendInvoiceModal(invoice_id)">Send Invoice</button>
+                                <button class="add button-custom pull-right" data-toggle="modal" data-target="#addToBill">Add to Bill</button>
                             </div>
                             <span class="txt-style-3 pull-left text-uppercase">Plan</span>
                             <div class="col-lg-2">
@@ -197,42 +197,40 @@
                         <form class="custom-form">
                             <table class="table table-striped no-margin table-custom table-custom_big setting_table">
                                 <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Date</th>
-                                    <th>Invoice No</th>
-                                    <th>Bill ID</th>
-                                    <th>patient ID</th>
-                                    <th>patient name</th>
-                                    <th>patient plan</th>
-                                    <th>purpose</th>
-                                    <th>amount</th>
-                                    <th>due</th>
-                                    <th>status</th>
-                                </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th>Date</th>
+                                        <th>Invoice No</th>
+                                        <th>patient ID</th>
+                                        <th>patient name</th>
+                                        <th>patient plan</th>
+                                        <th>purpose</th>
+                                        <th>amount</th>
+                                        <th>due</th>
+                                        <th>status</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="Invoice in InvoiceListings |filter:search_all |filter:search_plan |filter:search_status">
-                                    <td align="center">
-                                        <div class="radio radio-styled">
-                                            <label>
-                                                <input type="radio" id="radio-{{Invoice.id}}" ng-click="SelectedPatientWithInvoice(Invoice.patient_id,Invoice.id)" name="optionsRadios"><span></span>
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>{{Invoice.created_at}}</td>
-                                    <td>{{Invoice.id}}</td>
-                                    <td>{{Invoice.bill_id}}</td>
-                                    <td>{{Invoice.patient_id}}</td>
-                                    <td>{{Invoice.first_name}}</td>
-                                    <td>{{Invoice.plan_name}}</td>
-                                    <td>{{Invoice.description}}</td>
-                                    <td>{{Invoice.amount}}</td>
-                                    <td>{{Invoice.due}}</td>
-                                    <td class="{{Invoice.invoice_status}}">{{Invoice.invoice_status | capitalize}}</td>
+                                    <tr ng-repeat="Invoice in InvoiceListings|filter:search_all |filter:search_plan |filter:search_status">
+                                        <td align="center">
+                                            <div class="radio radio-styled">
+                                                <label>
+                                                    <input type="radio" id="radio-{{Invoice.id}}" ng-click="SelectedPatientWithInvoice(Invoice.patient_id, Invoice.id)" name="optionsRadios"><span></span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>{{Invoice.created_at}}</td>
+                                        <td>{{Invoice.id}}</td>
+                                        <td>{{Invoice.patient_id}}</td>
+                                        <td>{{Invoice.first_name}}</td>
+                                        <td>{{Invoice.plan_name}}</td>
+                                        <td>{{Invoice.description}}</td>
+                                        <td>{{Invoice.amount}}</td>
+                                        <td>{{Invoice.due}}</td>
+                                        <td class="{{Invoice.invoice_status}}">{{Invoice.invoice_status| capitalize}}</td>
 
 
-                                </tr>
+                                    </tr>
 
                                 </tbody>
                             </table>
@@ -737,103 +735,103 @@
                     <form class="custom-form">
                         <table class="table table-striped no-margin table-custom table-custom_big receipt_table">
                             <thead>
-                            <tr>
-                                <th></th>
-                                <th>Date</th>
-                                <th>Invoice No</th>
-                                <th>receipt no</th>
-                                <th>patient name</th>
-                                <th>payment method</th>
-                                <th>purpose</th>
-                                <th>amount</th>
-                                <th>refund amount</th>
-                            </tr>
+                                <tr>
+                                    <th></th>
+                                    <th>Date</th>
+                                    <th>Invoice No</th>
+                                    <th>receipt no</th>
+                                    <th>patient name</th>
+                                    <th>payment method</th>
+                                    <th>purpose</th>
+                                    <th>amount</th>
+                                    <th>refund amount</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td align="center">
-                                    <div class="radio radio-styled">
-                                        <label>
-                                            <input type="radio" name="optionsRadios" value="option1"><span></span>
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>14/04/2016  12:00:32</td>
-                                <td>21245421</td>
-                                <td>90189191</td>
-                                <td>Joe Bloggs</td>
-                                <td>Cash</td>
-                                <td>GOPD Consultation</td>
-                                <td>N500</td>
-                                <td>
-                                    <span>N2000</span>
-                                    <div class="receipt_actions"><a href="javascript:;" class="setting-button"></a>
-                                        <div class="tool-tip_popup">
-                                            <a href="javascript:;">View Details</a>
-                                            <a href="javascript:;">Edit</a>
-                                            <a href="javascript:;">Print</a>
-                                            <a href="javascript:;">Void</a>
-                                            <a href="javascript:;">Refund</a>
+                                <tr>
+                                    <td align="center">
+                                        <div class="radio radio-styled">
+                                            <label>
+                                                <input type="radio" name="optionsRadios" value="option1"><span></span>
+                                            </label>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td align="center">
-                                    <div class="radio radio-styled">
-                                        <label>
-                                            <input type="radio" name="optionsRadios" value="option1"><span></span>
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>14/04/2016    12:00:32</td>
-                                <td>875415745</td>
-                                <td>90189191</td>
-                                <td>Joe Bloggs</td>
-                                <td>Cash</td>
-                                <td>GOPD Consultation</td>
-                                <td>N3500</td>
-                                <td>
-                                    <span>N2000</span>
-                                    <div class="receipt_actions"><a href="javascript:;" class="setting-button"></a>
-                                        <div class="tool-tip_popup">
-                                            <a href="javascript:;">View Details</a>
-                                            <a href="javascript:;">Edit</a>
-                                            <a href="javascript:;">Print</a>
-                                            <a href="javascript:;">Void</a>
-                                            <a href="javascript:;">Refund</a>
+                                    </td>
+                                    <td>14/04/2016  12:00:32</td>
+                                    <td>21245421</td>
+                                    <td>90189191</td>
+                                    <td>Joe Bloggs</td>
+                                    <td>Cash</td>
+                                    <td>GOPD Consultation</td>
+                                    <td>N500</td>
+                                    <td>
+                                        <span>N2000</span>
+                                        <div class="receipt_actions"><a href="javascript:;" class="setting-button"></a>
+                                            <div class="tool-tip_popup">
+                                                <a href="javascript:;">View Details</a>
+                                                <a href="javascript:;">Edit</a>
+                                                <a href="javascript:;">Print</a>
+                                                <a href="javascript:;">Void</a>
+                                                <a href="javascript:;">Refund</a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td align="center">
-                                    <div class="radio radio-styled">
-                                        <label>
-                                            <input type="radio" name="optionsRadios" value="option1"><span></span>
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>14/04/2016    12:00:32</td>
-                                <td>2454521</td>
-                                <td>90189191</td>
-                                <td>Joe Bloggs</td>
-                                <td>Cash</td>
-                                <td>Lab Test</td>
-                                <td>N2500</td>
-                                <td>
-                                    <span>N2000</span>
-                                    <div class="receipt_actions"><a href="javascript:;" class="setting-button"></a>
-                                        <div class="tool-tip_popup">
-                                            <a href="javascript:;">View Details</a>
-                                            <a href="javascript:;">Edit</a>
-                                            <a href="javascript:;">Print</a>
-                                            <a href="javascript:;">Void</a>
-                                            <a href="javascript:;">Refund</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <div class="radio radio-styled">
+                                            <label>
+                                                <input type="radio" name="optionsRadios" value="option1"><span></span>
+                                            </label>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                    <td>14/04/2016    12:00:32</td>
+                                    <td>875415745</td>
+                                    <td>90189191</td>
+                                    <td>Joe Bloggs</td>
+                                    <td>Cash</td>
+                                    <td>GOPD Consultation</td>
+                                    <td>N3500</td>
+                                    <td>
+                                        <span>N2000</span>
+                                        <div class="receipt_actions"><a href="javascript:;" class="setting-button"></a>
+                                            <div class="tool-tip_popup">
+                                                <a href="javascript:;">View Details</a>
+                                                <a href="javascript:;">Edit</a>
+                                                <a href="javascript:;">Print</a>
+                                                <a href="javascript:;">Void</a>
+                                                <a href="javascript:;">Refund</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <div class="radio radio-styled">
+                                            <label>
+                                                <input type="radio" name="optionsRadios" value="option1"><span></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>14/04/2016    12:00:32</td>
+                                    <td>2454521</td>
+                                    <td>90189191</td>
+                                    <td>Joe Bloggs</td>
+                                    <td>Cash</td>
+                                    <td>Lab Test</td>
+                                    <td>N2500</td>
+                                    <td>
+                                        <span>N2000</span>
+                                        <div class="receipt_actions"><a href="javascript:;" class="setting-button"></a>
+                                            <div class="tool-tip_popup">
+                                                <a href="javascript:;">View Details</a>
+                                                <a href="javascript:;">Edit</a>
+                                                <a href="javascript:;">Print</a>
+                                                <a href="javascript:;">Void</a>
+                                                <a href="javascript:;">Refund</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </form>
@@ -892,32 +890,32 @@
 
                         <table class="table no-margin table-custom_big reports_table">
                             <thead>
-                            <tr>
-                                <th>Item No</th>
-                                <th>Description</th>
-                                <th>Date</th>
-                                <th>amount</th>
-                            </tr>
+                                <tr>
+                                    <th>Item No</th>
+                                    <th>Description</th>
+                                    <th>Date</th>
+                                    <th>amount</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>21245421</td>
-                                <td>Lorem ipsum Lorem</td>
-                                <td>June 15 2016</td>
-                                <td>N500</td>
-                            </tr>
-                            <tr>
-                                <td>21245421</td>
-                                <td>Lorem ipsum Lorem</td>
-                                <td>June 15 2016</td>
-                                <td>N500</td>
-                            </tr>
-                            <tr>
-                                <td>21245421</td>
-                                <td>Lorem ipsum Lorem</td>
-                                <td>June 15 2016</td>
-                                <td>N500</td>
-                            </tr>
+                                <tr>
+                                    <td>21245421</td>
+                                    <td>Lorem ipsum Lorem</td>
+                                    <td>June 15 2016</td>
+                                    <td>N500</td>
+                                </tr>
+                                <tr>
+                                    <td>21245421</td>
+                                    <td>Lorem ipsum Lorem</td>
+                                    <td>June 15 2016</td>
+                                    <td>N500</td>
+                                </tr>
+                                <tr>
+                                    <td>21245421</td>
+                                    <td>Lorem ipsum Lorem</td>
+                                    <td>June 15 2016</td>
+                                    <td>N500</td>
+                                </tr>
                             </tbody>
                         </table>
 
@@ -949,7 +947,7 @@
                 <h2>Process Payment</h2>
             </div>
             <div class="modal-body">
-                <form class="custom-form" ng-submit="ProcessingPayment(AmountPaid,invoice_id);">
+                <form class="custom-form" ng-submit="ProcessingPayment(AmountPaid, invoice_id);">
                     <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Invoice ID</label>
@@ -970,8 +968,8 @@
 
                     <div class="modal-footer row">
                         <div class="row">
-                        <button type="submit" class="btn btn-default button-style-1">Mark as Paid</button>
-                        <button type="button" class="btn button-style-1 button-style-1_a hide_print_inovice" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-default button-style-1">Mark as Paid</button>
+                            <button type="button" class="btn button-style-1 button-style-1_a hide_print_inovice" data-dismiss="modal">Cancel</button>
                         </div>
                     </div>
                 </form>
@@ -993,7 +991,7 @@
                 <h2>Paid </h2>
             </div>
             <div class="modal-body">
-                <form class="custom-form" ng-submit="ProcessingPayment(AmountPaid,invoice_id);">
+                <form class="custom-form" ng-submit="ProcessingPayment(AmountPaid, invoice_id);">
                     <div class="row">
                         <div class="col-lg-3">
                             <label>Invoice ID</label>
@@ -1032,7 +1030,7 @@
                 <h2>Process Payment</h2>
             </div>
             <div class="modal-body">
-                <form class="custom-form" ng-submit="SendInvoice(sendData,invoice_id);">
+                <form class="custom-form" ng-submit="SendInvoice(sendData, invoice_id);">
                     <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Patient ID</label>
@@ -1095,6 +1093,68 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<div class="modal fade modal-size_1" id="addToBill" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Add to Bill</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form">
+                    <div class="row margin-bottom-xxl">
+                        <div class="radio radio-styled col-lg-6 margin-0">
+                            <label>
+                                <input type="radio" ng-model="product_show" name="selectaddtobill" value="product">
+                                <span>Product</span>
+                            </label>
+                        </div>
+                        <div class="radio radio-styled col-lg-6 margin-0">
+                            <label>
+                                <input type="radio" ng-model="product_show" name="selectaddtobill" value="service">
+                                <span>Service</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row" ng-show="product_show == 'product'">
+                        <div class="col-lg-3">
+                            <label>Select Product</label>
+                        </div>
+                        <div class="col-lg-9 select-con">
+                            <select class="select_searchFields form-control" placeholder="Select Product">
+                                <option value=""></option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3 margin-top-10">
+                            <label>Quantity</label>
+                        </div>
+                        <div class="col-lg-9 margin-top-10">
+                            <input class="form-control" type="number" placeholder="0" />
+                        </div>
+                    </div>
+                    <div class="row" ng-show="product_show == 'service'">
+                        <div class="col-lg-3">
+                            <label>Select Service</label>
+                        </div>
+                        <div class="col-lg-9 select-con">
+                            <select class="select_searchFields form-control" placeholder="Select Service">
+                                <option value=""></option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-toggle="modal" data-target="#vital-signs" data-dismiss="modal">Ok</button>
+                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <div class="modal fade" id="vital-signs" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -1104,85 +1164,85 @@
             <div class="modal-body">
                 <form class="custom-form" name="vitalForm" novalidate ng-submit="validateVitals(vital);">
                     <!--<div class="row">-->
-                        <div class="row">
-                            <div class="col-lg-4" >
-                                <div class="col-lg-12 margin-bottom-xxl">
-                                    <label class="label-style">Blood Pressure (mm Hg)</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label>systolic (mm hg)</label>
-                                </div>
-                                <div class="col-lg-6 margin-bottom-xxl">
-                                    <input type="text" placeholder="systolic (mm hg)"  ng-class="{
+                    <div class="row">
+                        <div class="col-lg-4" >
+                            <div class="col-lg-12 margin-bottom-xxl">
+                                <label class="label-style">Blood Pressure (mm Hg)</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>systolic (mm hg)</label>
+                            </div>
+                            <div class="col-lg-6 margin-bottom-xxl">
+                                <input type="text" placeholder="systolic (mm hg)"  ng-class="{
                                             true
                                             : 'error'}[vital.diastolic != undefined && vital.systolic == undefined]" ng-model="vital.systolic" numbers-only required/>
-                                    <p ng-show="vital.diastolic != undefined && vital.systolic == undefined" class="help-block PIValid">Required</p>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label>diastolic (mm hg)</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <input type="text" placeholder="diastolic (mm hg)" ng-class="{
+                                <p ng-show="vital.diastolic != undefined && vital.systolic == undefined" class="help-block PIValid">Required</p>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>diastolic (mm hg)</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" placeholder="diastolic (mm hg)" ng-class="{
                                             true
                                             : 'error'}[vital.diastolic == undefined && vital.systolic != undefined]" ng-model="vital.diastolic" numbers-only required/>
-                                    <p ng-show="vital.systolic != undefined && vital.diastolic == undefined" class="help-block PIValid">Required</p>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4">
-                                <div class="col-lg-12 margin-bottom-xxl">
-                                    <label class="label-style">Pulse Rate (min/bpm)</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label>pulse</label>
-                                </div>
-                                <div class="col-lg-6 margin-bottom-xxl">
-                                    <input type="text" placeholder="pulse" ng-model="vital.pulse" numbers-only/>
-                                </div>
-                                <!-- <div class="col-lg-12">
-                                    <label class="label-style">Pulse Rate (min/bpm)</label>
-                                </div> -->
-                                <div class="col-lg-6">
-                                    <label>respiratory rate</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <input type="text" placeholder="respiratory rate" ng-model="vital.respiratoryRate" numbers-only/>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4">
-                                <div class="col-lg-12 margin-bottom-xxl">
-                                    <label class="label-style">Respiratory Rate (br/min)</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label>temperature (c)</label>
-                                </div>
-                                <div class="col-lg-6 margin-bottom-xxl">
-                                    <input type="text" placeholder="temperature (c)" ng-model="vital.temperaturec" numbers-only ng-keyup="GetTempcVal()"/>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label>temperature (f)</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <input type="text" placeholder="temperature (f)" ng-model="vital.temperaturef" ng-keyup="GetTempfVal()" numbers-only/>
-                                </div>
+                                <p ng-show="vital.systolic != undefined && vital.diastolic == undefined" class="help-block PIValid">Required</p>
                             </div>
                         </div>
-                     <div class="row">
-                        <!--<div class="col-lg-12 margin-bottom-xxl">-->
-                           
-                            <!-- <div class="col-lg-5 pull-right">
-                                <div class="pull-right">
-                                    <a class="txt-style-4" href="javascript:;">Attach</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                                    <a class="txt-style-4" href="javascript:;">Past Notes</a>
-                                </div>
+
+                        <div class="col-lg-4">
+                            <div class="col-lg-12 margin-bottom-xxl">
+                                <label class="label-style">Pulse Rate (min/bpm)</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>pulse</label>
+                            </div>
+                            <div class="col-lg-6 margin-bottom-xxl">
+                                <input type="text" placeholder="pulse" ng-model="vital.pulse" numbers-only/>
+                            </div>
+                            <!-- <div class="col-lg-12">
+                                <label class="label-style">Pulse Rate (min/bpm)</label>
                             </div> -->
+                            <div class="col-lg-6">
+                                <label>respiratory rate</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" placeholder="respiratory rate" ng-model="vital.respiratoryRate" numbers-only/>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="col-lg-12 margin-bottom-xxl">
+                                <label class="label-style">Respiratory Rate (br/min)</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>temperature (c)</label>
+                            </div>
+                            <div class="col-lg-6 margin-bottom-xxl">
+                                <input type="text" placeholder="temperature (c)" ng-model="vital.temperaturec" numbers-only ng-keyup="GetTempcVal()"/>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>temperature (f)</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" placeholder="temperature (f)" ng-model="vital.temperaturef" ng-keyup="GetTempfVal()" numbers-only/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!--<div class="col-lg-12 margin-bottom-xxl">-->
+
+                        <!-- <div class="col-lg-5 pull-right">
+                            <div class="pull-right">
+                                <a class="txt-style-4" href="javascript:;">Attach</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                                <a class="txt-style-4" href="javascript:;">Past Notes</a>
+                            </div>
+                        </div> -->
                         <!--</div>-->
                         <!--</div>-->
                         <div class="col-lg-4">
                             <div class="col-lg-12 margin-bottom-xxl margin-top-10">
-                             <label class="label-style">BMI (kg / m^2)</label>
-                             </div>
+                                <label class="label-style">BMI (kg / m^2)</label>
+                            </div>
                             <div class="col-lg-6">
                                 <label>result</label>
                             </div>
@@ -1213,11 +1273,11 @@
                                 <textarea placeholder="Write Your Text Here" ng-model="vital.notes"></textarea>
                             </div>
                         </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;">Save</button>
-                            <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;">Save</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
 
                     <!--</div>-->
                 </form>
@@ -1311,56 +1371,56 @@
                         </div>
                         <div id="admitPatient" class="">
                             <div class="row margin-bottom-xxl">
-                            <div class="col-lg-12">
-                                <span class="txt-style-4">Presenting Complaint: Captured from Clinical Note</span>
-                            </div>
+                                <div class="col-lg-12">
+                                    <span class="txt-style-4">Presenting Complaint: Captured from Clinical Note</span>
                                 </div>
-                            <div class="row margin-bottom-xxl">
-                            <div class="col-lg-3">
-                                <label>to specialty</label>
-                            </div>
-                            <div class="col-lg-3 select-con">
-                                <select class="form-control" ng-model="CO.CPN" placeholder="Clinic Progress Notes">
-                                    <option value=""></option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                </select>
-                            </div>
-                            <div class="col-lg-3">
-                                <label>admit to ward</label>
-                            </div>
-                            <div class="col-lg-3 select-con select-con_small">
-                                <select class="form-control" ng-model="CO.ward" placeholder="Select Ward">
-                                    <option value=""></option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                </select>
-                                <a class="ward-button"></a>
-                            </div>
-                                </div>
-                            <div class="row margin-bottom-xxl">
-                            <div class="col-lg-3">
-                                <label>Admitted DATE</label>
-                            </div>
-                            <div class="col-lg-3">
-                                <label class="txt-style-4">April 05, 2016</label>
-                            </div>
-                            <div class="col-lg-3">
-                                <label>Estimated Discharge</label>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="input-group bootstrap-timepicker timepicker col-lg-12">
-                                    <input type="text" class="form-control input-small timepicker" ng-model="CO.discharge">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-                                </div>
-                            </div>
                             </div>
                             <div class="row margin-bottom-xxl">
-                            <div class="col-lg-12">
-                                <label class="margin-bottom-xl">Note</label>
-                                <textarea class="margin-bottom-lg" placeholder="Write Here..." ng-model="CO.note"></textarea>
-                            </div>
+                                <div class="col-lg-3">
+                                    <label>to specialty</label>
                                 </div>
+                                <div class="col-lg-3 select-con">
+                                    <select class="form-control" ng-model="CO.CPN" placeholder="Clinic Progress Notes">
+                                        <option value=""></option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label>admit to ward</label>
+                                </div>
+                                <div class="col-lg-3 select-con select-con_small">
+                                    <select class="form-control" ng-model="CO.ward" placeholder="Select Ward">
+                                        <option value=""></option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                    </select>
+                                    <a class="ward-button"></a>
+                                </div>
+                            </div>
+                            <div class="row margin-bottom-xxl">
+                                <div class="col-lg-3">
+                                    <label>Admitted DATE</label>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label class="txt-style-4">April 05, 2016</label>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label>Estimated Discharge</label>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="input-group bootstrap-timepicker timepicker col-lg-12">
+                                        <input type="text" class="form-control input-small timepicker" ng-model="CO.discharge">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row margin-bottom-xxl">
+                                <div class="col-lg-12">
+                                    <label class="margin-bottom-xl">Note</label>
+                                    <textarea class="margin-bottom-lg" placeholder="Write Here..." ng-model="CO.note"></textarea>
+                                </div>
+                            </div>
                         </div>
                         <div id="dead" class="row">
                             <div class="col-lg-12">

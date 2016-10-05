@@ -8,6 +8,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	$scope.dataStrip = "c";
 	$rootScope.loader = "show";
 	$scope.tabs_sec = 'qqqqq';
+        $scope.product_show= 'product';
 
 	if($routeParams.patientID != undefined){
 		$scope.patientID = $routeParams.patientID;
