@@ -391,10 +391,12 @@
                                 </tr>
                                 <tr>
                                     <td style="padding-bottom:20px;">
-                                        <ul style="font-size:12px;color:#1a1a1a;padding:0 16px;margin: 0;">                                            
-                                            <li>Penicillin - Hives</li>
-                                            <li>Aspirin - Wheezing</li>                                            
-                                            <li>Codeine - Itching and nausea</li>
+                                        <ul style="font-size:12px;color:#1a1a1a;padding:0 16px;margin: 0;">
+
+                                            <?php foreach ($allergies as $allergy) { ?>
+                                            <li><?php $allergy->allergies?></li>
+                                            <?php } ?>
+
                                         </ul>
                                     </td>
                                 </tr>

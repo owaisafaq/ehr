@@ -161,12 +161,19 @@ class PDFController extends Controller
         $logo_image = url('/') . '/uploaded_images/';
 
         $patient = DB::table('patient_clinical_notes')
-            ->select(DB::raw('patients.id,CONCAT(patients.first_name," ",patients.last_name) AS patient_name,CONCAT("' . $logo_image . '",patients.patient_image) as patient_image,patients.age,patients.date_of_birth,maritial_status.name as marital_status,(CASE WHEN (sex = 1) THEN "Male" ELSE "Female" END) as gender,patient_clinical_notes.diagnosis'))
+            ->select(DB::raw('patients.id,CONCAT(patients.first_name," ",patients.last_name) AS patient_name,CONCAT("' . $logo_image . '",patients.patient_image) as patient_image,patients.age,patients.date_of_birth,maritial_status.name as marital_status,(CASE WHEN (sex = 1) THEN "Male" ELSE "Female" END) as gender,patient_clinical_notes.diagnosis,patient_clinical_notes.visit_id'))
             ->leftJoin('patients', 'patient_clinical_notes.patient_id', '=', 'patients.id')
             ->leftJoin('maritial_status', 'patients.marital_status', '=', 'maritial_status.id')
             ->where('patient_clinical_notes.id', $id)->first();
 
        // array_push($arr, ['patient' => $patient]);
+
+        $visit_id = $patient->visit_id;
+
+        $allergies = DB::table('patient_allergies')
+            ->select(DB::raw('*'))
+            ->where('visit_id', $visit_id)
+            ->get();
 
         $diagnosis = array();
 
@@ -186,7 +193,7 @@ class PDFController extends Controller
             }
         }
 
-        $data = ['data'=>$arr,'patient'=>$patient,'diagnosis'=>$diagnosis];
+        $data = ['data'=>$arr,'patient'=>$patient,'diagnosis'=>$diagnosis,'allergies'=>$allergies];
 
         $view =  app()->make('view')->make('clinical_notes_pdf', $data)->render();
 

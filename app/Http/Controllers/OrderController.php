@@ -698,6 +698,8 @@ class OrderController extends Controller
 
         $template_id = $request->input('template_id');
 
+        //$lab_test_values = html_entity_decode($request->input('lab_test_values'));
+
         $lab_test_values = html_entity_decode($request->input('lab_test_values'));
 
         $currentdatetime = date("Y-m-d  H:i:s");
@@ -904,7 +906,56 @@ class OrderController extends Controller
               ->select('patient_lab_test_values.template_values', 'templates.template','templates.name','patient_lab_test_values.template_id','templates.category_id')
               ->where('patient_lab_test_values.id', $status->id)->first();
 
-          return response()->json(['status' => true, 'signoff' => $signoff,'data'=>$data->template_values,'template'=>$data->template,'template_name'=>$data->name,'template_id'=>$data->template_id, 'category_id' => $data->category_id,'doctor'=> 'DR James','test_by'=>'alex','date_of_service'=>'10th May']);
+
+          $template_values = json_decode($data->template_values);
+          $template = json_decode($data->template);
+
+          $arr = array();
+
+          if (empty((array)$template_values)) {
+
+              foreach ($template->fields as $temp) {
+                  $arr[$temp->name] = '';
+              }
+
+              $template_values = json_encode($arr);
+
+              DB::table('patient_lab_test_values')
+                  ->where('id', $status->id)
+                  ->update(['template_values' => $template_values, 'updated_at' => date("Y-m-d  H:i:s")]);
+
+          } else {
+
+              foreach ($template->fields as $temp) {
+
+                  foreach ($template_values as $k => $v) {
+
+                      if (ltrim(rtrim($temp->name)) == ltrim(rtrim($k))) {
+                          $arr[$temp->name] = "$v";
+                          break;
+                      } else {
+                          $arr[$temp->name] = '';
+                          //echo 'WAITING HERE';
+                          //break;
+                      }
+                  }
+
+              }
+
+              $template_values = json_encode($arr);
+
+              DB::table('patient_lab_test_values')
+                     ->where('id', $status->id)
+                     ->update(['template_values' => $template_values, 'updated_at' => date("Y-m-d  H:i:s")]);
+          }
+
+
+          $lab_orders_new_data = DB::table('patient_lab_test_values')
+              ->select('template_values')
+              ->where('id', $status->id)->first();
+
+
+          return response()->json(['status' => true, 'signoff' => $signoff,'data'=>$lab_orders_new_data->template_values,'template'=>$data->template,'template_name'=>$data->name,'template_id'=>$data->template_id, 'category_id' => $data->category_id,'doctor'=> 'DR James','test_by'=>'alex','date_of_service'=>'10th May']);
       }
 
     public function get_diagnosis(Request $request){

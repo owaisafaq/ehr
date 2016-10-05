@@ -3464,7 +3464,6 @@ class ApiController extends Controller
 
         $template_values = json_decode($data->value);
 
-
         $template = json_decode($data->template);
 
 
