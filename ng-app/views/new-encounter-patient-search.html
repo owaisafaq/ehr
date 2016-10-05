@@ -41,18 +41,20 @@
             <div class="table-header col-lg-12">
                 <div class="pull-left">
                     <span class="txt-style-3 pull-left text-uppercase">Encounter List</span>
-                    <!-- <div class="header-search margin-right-0 pull-left">
-                        <button type="submit">
+                     <!--<div class="header-search margin-right-0 pull-right">-->
+                         
+<!--                        <button type="submit">
                             <i class="fa fa-search"></i>
                         </button>
-                        <input class="search_field" type="text" ng-model="search" placeholder="Search for a patient">
-                    </div> -->
+                        <input class="search_field" type="text" ng-model="search" placeholder="Search for a patient">-->
+                    <!--</div>--> 
                 </div>
                 <div class="create_counter">
                     <button type="button" ng-click="goToEncounter();" class="add button-custom pull-right open-custom_pop" ng-if="visitStatus == 1" ng-hide="gotoencounter">Go To Encouter</button>
                     <button type="button" ng-click="openCreateEncounter();" class="add button-custom pull-right open-custom_pop" ng-hide="disabledEncounterButton" ng-if="visitStatus == 0">create encounter</button>
                     <button type="button" class="calendar button-custom pull-right" ng-hide="disabledEncounterButton" data-toggle="modal" data-target="#createAppointment">Create Appointment</button>
                     <button type="button" data-toggle="modal" data-target="#neworder" class="microscope button-custom pull-right" ng-hide="disabledEncounterButton">Order Labs</button>
+                    <button type="button" data-toggle="modal" data-target="#scanbarcode" class="scan-icon button-custom pull-right">scan barcode</button>
                     <div class="counter_pop custom_popup" ng-hide="closePopUp">
                         <div class="pop_head col-lg-12">
                             <h2 class="">Create New Encounter</h2> 
@@ -858,3 +860,22 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </div>
+
+<div class="modal fade modal-size_1" id="scanbarcode" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Insert Bar Code</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form">
+                    <!--<div class="row">-->
+                <input class="form-control" type="text" placeholder="Insert Bar Code" />
+                <!--</div>-->
+                </form>
+            </div>
+             <div class="modal-footer">
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

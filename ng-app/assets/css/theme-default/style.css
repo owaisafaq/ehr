@@ -439,7 +439,7 @@ Menu styling
     font-family: 'sgui-bold';
     font-weight: bold;
 }
-.custom-form input[type=text], .custom-form input[type=email]{
+.custom-form input[type=text], .custom-form input[type=email], .custom-form input[type=number]{
     width: 100%;
     font-size: 14px;
     padding-left: 10px;
@@ -471,7 +471,7 @@ Menu styling
 .custom-form input[type=text]:-ms-input-placeholder,.custom-form textarea::-webkit-input-placeholder  {  
     color:#a2a6b9;
 }
-.select2-container.form-control, .custom-form input[type=text], .custom-form input[type=email]{
+.select2-container.form-control, .custom-form input[type=text], .custom-form input[type=email],.custom-form input[type=number]{
     border: 1px solid #e8ebed;
     height: 32px;
 }
@@ -675,7 +675,7 @@ Table Styling
     border-radius: 100%;
     margin-right: 8px;
     font-size: 12px;
-    color: #56aeea;
+    color: #0179da;
     font-weight: bold;
     text-transform: uppercase;
     border: none;
@@ -719,6 +719,9 @@ Table Styling
 
 .microscope{
     background: url(../..//img/microscope.png) no-repeat top center;
+}
+.scan-icon{
+    background: url(../..//img/scan.png) no-repeat top center;
 }
 .refer-patient{
     background: url(../..//img/refer.png) no-repeat top center;

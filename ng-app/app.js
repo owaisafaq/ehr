@@ -700,12 +700,8 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
     $rootScope.loader = "";
     
     $rootScope.$on('$viewContentLoaded', function () {
-        (function($){
-        $(window).on("load",function(){
             $(".scrollbar").mCustomScrollbar();
             $(".scroll-container").mCustomScrollbar();
-        });
-    })(jQuery);
         // transfers sessionStorage from one tab to another
         var sessionStorage_transfer = function (event) {
             //console.log("working")
