@@ -3176,6 +3176,16 @@ class ApiController extends Controller
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
+
+        $count = DB::table('patient_prescription')
+                  ->select(DB::raw('*'))
+                  ->where('visit_id', $visit_id)
+                  ->count();
+
+        if($count>0){
+            return response()->json(['status' => false, 'message' => 'Prescrpition with this encounter already added']);
+        }
+
         DB::table('patient_prescription')
             ->insert(
                 ['visit_id' => $visit_id,
