@@ -395,6 +395,8 @@ class ApiController extends Controller
 
             $permanent_postalCode = $request->input('permanent_postalCode');
 
+            $permanent_local_goverment_area = $request->input('permanent_local_');
+
 
             DB::table('patient_address')->insert(
                 ['patient_id' => $patient_id,
@@ -407,7 +409,7 @@ class ApiController extends Controller
                     'city' => $permanent_city,
                     'state' => $permanent_state,
                     'country' => $permanent_country,
-                    'local_goverment_area' => '',
+                    'local_goverment_area' => 0,
                     'postal_code' => $permanent_postalCode,
                     'created_at' => $currentdatetime
                 ]

@@ -190,6 +190,7 @@ class PDFController extends Controller
 
         $diagnosis = array();
 
+
         if($patient->diagnosis !=''){
 
             $patient_diagnosis  = preg_replace('/[%\[\]\.\(\)%&-]/s', '', $patient->diagnosis);
@@ -203,7 +204,9 @@ class PDFController extends Controller
                     ->where('id', $id)->first();
 
                 array_push($diagnosis, ['diagnosis' => $name->name]);
+
             }
+
         }
 
         $data = ['data'=>$arr,'patient'=>$patient,'diagnosis'=>$diagnosis,'allergies'=>$allergies,'immunizations'=>$immmunizations,'orders'=>$orders];
