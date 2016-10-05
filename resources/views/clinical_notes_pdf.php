@@ -33,8 +33,8 @@
                 text-decoration: none;
                 border-radius: 35px;
                 letter-spacing: 2px;
-                font-size:24px !important; 
-                letter-spacing:1px; 
+                font-size:24px !important;
+                letter-spacing:1px;
                 padding: 22px 50px;
                 line-height: 24px;
                 font-weight:bold;
@@ -55,7 +55,7 @@
                 font-size: 20px !important;
                 margin: 0px;
                 line-height: 26px;
-            }            
+            }
             .vacancies_con{
                 margin-top: 30px;
             }
@@ -140,16 +140,16 @@
             </table>
             <div style="background-color:#f9fafd;padding:20px;width:100%;box-sizing:border-box;">
 
-                <table border="0"  style="width:100%;background-color:#fff;padding:40px;border-collapse:separate;">             
+                <table border="0"  style="width:100%;background-color:#fff;padding:40px;border-collapse:separate;">
                     <tr>
                         <td>
                             <table style="width:100%;border-bottom:1px solid #ebebeb;border-collapse: separate;padding-bottom: 15px;"  class="wrap header">
                                 <tbody>
                                     <tr>
                                         <td colspan="1" align="right">
-                                            <h1 style="font-size:40px;color:#d0d0d0;display:inline-block;float:left;">LOGO</h1>                                            
+                                            <h1 style="font-size:40px;color:#d0d0d0;display:inline-block;float:left;">LOGO</h1>
                                         </td>
-                                        <td colspan="1" align="center">                                            
+                                        <td colspan="1" align="center">
                                             <h4 style="font-size:18px;color:#999999;display:inline-block;margin-left:10px;float:left;line-height:40px;">Hospital Name</h4>
                                         </td>
 
@@ -171,7 +171,7 @@
                                                     <td align="right">
                                                         <span style="display:block;font-size:12px;color:#b8b8b8;">The House Street ST, Wetherfield, CA 75124 </span>
                                                     </td>
-                                                </tr>                                            
+                                                </tr>
                                             </table>
 
                                         </td>
@@ -191,7 +191,7 @@
                                         </td>
                                     </tr>
                                     <tr style="border:1px solid #ebebeb;padding:10px 20px;">
-                                        <td style="padding: 10px;">                                            
+                                        <td style="padding: 10px;">
                                             <h5 style="font-size: 12px;color:#1a1a1a;display:inline-block;align:left;">Consultant</h5>
                                         </td>
 
@@ -232,7 +232,7 @@
 
                                         <td>
                                             <h4 style="font-size:18px;color:#1a1a1a;text-align:left;"><?php echo $patient->patient_name; ?></h4>
-                                        </td> 
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -303,43 +303,6 @@
 
                                         <?php } ?>
 
-                                        <?php if ($d['field']->displayName == 'Diagnosis') { ?>
-
-                                            <?php if (!empty($diagnosis)) { ?>
-
-                                                <?php foreach ($diagnosis as $diagnose) { ?>
-
-                                                    <tr>
-                                                        <td style="padding-bottom:20px;">
-                                                            <p style="font-size:12px !important;color:#333333;line-height:18px !important;">
-                                                                <?php echo $diagnose['diagnosis']; ?>
-                                                            </p>
-                                                        </td>
-                                                    </tr>
-                                                <?php }
-
-                                            } ?>
-
-                                        <?php } ?>
-
-                                        <?php if ($d['field']->displayName == 'Diagnosis') { ?>
-
-                                            <?php if (!empty($diagnosis)) { ?>
-
-                                                <?php foreach ($diagnosis as $diagnose) { ?>
-
-                                                    <tr>
-                                                        <td style="padding-bottom:20px;">
-                                                            <p style="font-size:12px !important;color:#333333;line-height:18px !important;">
-                                                                <?php echo $diagnose['diagnosis']; ?>
-                                                            </p>
-                                                        </td>
-                                                    </tr>
-                                                <?php }
-
-                                            } ?>
-
-                                        <?php } ?>
 
                                         <tr>
                                             <td style="padding-bottom:20px;">
@@ -352,52 +315,48 @@
 
                                     <?php } ?>
 
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
 
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    <!--owais do your code here-->
-                    <tr>
-                        <td>
-                            <table style="width: 100%;">
-                                <thead>
-                                    <tr>
-                                        <th style="padding: 10px; text-align: left; background: #ebebeb; font-size: 12px; color: #1a1a1a; font-weight: bold;">Order ID:</th>
-                                        <th style="padding: 10px; text-align: left; background: #ebebeb; font-size: 12px; color: #1a1a1a; font-weight: bold;">lab</th>
-                                        <th style="padding: 10px; text-align: left; background: #ebebeb; font-size: 12px; color: #1a1a1a; font-weight: bold;">Ordered By</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <?php foreach ($orders as $order) { ?>
-                                    <tr style="border:1px solid #ebebeb;">
-                                        <td style="padding: 10px; border-right:1px solid #ebebeb; color: #666666; background: #f9f9f9; font-size: 13px; color: #666666;"><?php echo $order->id;?></td>
-                                        <td style="padding: 10px; border-right:1px solid #ebebeb; color: #666666; background: #f9f9f9; font-size: 13px; color: #666666;"><?php echo $order->lab_name; ?></td>
-                                        <td style="padding: 10px; color: #666666; background: #f9f9f9; font-size: 13px; color: #666666;">Dr James</td>
-                                    </tr>
-                                <?php } ?>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
 
                     <tr>
                         <td>
                             <table style="width:100%;/*margin-top:30px;*/box-sizing:border-box;"  class="wrap header">
 
                                 <tr>
+                                    <td style="padding-bottom:10px;">
+                                        <span style="font-size:12px;color:#1a1a1a;font-weight:bold;">
+                                           Immunizations
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <tr>
                                     <td style="padding-bottom:20px;">
-                                        <h4 style="font-size:12px;color:#1a1a1a;font-weight:bold;">History of Present Illness</h4>
+                                        <ul style="font-size:12px;color:#1a1a1a;padding:0 16px;margin:0;">
+                                            <?php foreach ($immunizations as $immunization) { ?>
+                                                <li><?php echo $immunization->name; ?></li>
+                                            <?php } ?>
+                                        </ul>
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td style="padding-bottom:20px;">
+                                        <h4 style="font-size:12px;color:#1a1a1a;font-weight:bold;">Family History</h4>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="padding-bottom:20px;">                                        
+                                    <td style="padding-bottom:20px;">
                                         <p style="font-size:12px !important;color:#333333;line-height:18px !important;">
-                                            Henry Levin, the 7th is a 67 year old male reffered for further asthma management. 
-                                            Onset of asthma in his teens. 
-                                            He was hospotilized twice lst year, and already twice this year. 
+                                            Henry Levin, the 7th is a 67 year old male reffered for further asthma management.
+                                            Onset of asthma in his teens.
+                                            He was hospotilized twice lst year, and already twice this year.
                                             He has not been able to be weaned off steriods for the past several months.
-                                        </p>                                       
+                                        </p>
                                     </td>
                                 </tr>
 
@@ -405,14 +364,14 @@
                                 <tr>
                                     <td style="padding-bottom:10px;">
                                         <span style="font-size:12px;color:#1a1a1a;font-weight:bold;">
-                                            Past Medical History
+                                            Active Problems
                                         </span>
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td style="padding-bottom:20px;">
-                                        <ul style="font-size:12px;color:#1a1a1a;padding:0 16px;margin: 0;">                                            
+                                        <ul style="font-size:12px;color:#1a1a1a;padding:0 16px;margin: 0;">
                                             <li>Asthma</li>
                                             <li>Hypertension ( see HTN. cda for details)</li>
                                             <li>Osteoarthrities. right knee</li>
@@ -420,30 +379,44 @@
                                     </td>
                                 </tr>
 
-
-                                <tr>
-                                    <td style="padding-bottom:10px;">
-                                        <span style="font-size:12px;color:#1a1a1a;font-weight:bold;">
-                                            Immunizations
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="padding-bottom:20px;">    
-                                        <ul style="font-size:12px;color:#1a1a1a;padding:0 16px;margin:0;">                                            
-                                            <?php foreach ($immunizations as $immunization) { ?>
-                                            <li><?php echo $immunization->name ;?></li>
-                                            <?php } ?>
-                                        </ul>
-                                    </td>
-                                </tr>
-
-
-
                             </table>
                         </td>
                     </tr>
-                </table>              
+
+
+                    <!--owais do your code here-->
+                    <tr>
+                        <td>
+                            <table style="width: 100%;">
+                                <thead>
+                                <tr>
+                                    <th style="padding: 10px; text-align: left; background: #ebebeb; font-size: 12px; color: #1a1a1a; font-weight: bold;">
+                                        Order ID:
+                                    </th>
+                                    <th style="padding: 10px; text-align: left; background: #ebebeb; font-size: 12px; color: #1a1a1a; font-weight: bold;">
+                                        lab
+                                    </th>
+                                    <th style="padding: 10px; text-align: left; background: #ebebeb; font-size: 12px; color: #1a1a1a; font-weight: bold;">
+                                        Ordered By
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php foreach ($orders as $order) { ?>
+                                    <tr style="border:1px solid #ebebeb;">
+                                        <td style="padding: 10px; border-right:1px solid #ebebeb; color: #666666; background: #f9f9f9; font-size: 13px; color: #666666;"><?php echo $order->id; ?></td>
+                                        <td style="padding: 10px; border-right:1px solid #ebebeb; color: #666666; background: #f9f9f9; font-size: 13px; color: #666666;"><?php echo $order->lab_name; ?></td>
+                                        <td style="padding: 10px; color: #666666; background: #f9f9f9; font-size: 13px; color: #666666;">
+                                            Dr James
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+
+                </table>
             </div>
         </div>
     </body>
