@@ -180,7 +180,6 @@ class PDFController extends Controller
             ->where('patient_id', $patient->id)
             ->get();
 
-
         $orders = DB::table('lab_orders')
             ->select(DB::raw('lab_orders.id,lab_orders.patient_id,labs.name as lab_name'))
             ->leftJoin('labs', 'labs.id', '=', 'lab_orders.lab')
