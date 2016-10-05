@@ -766,6 +766,12 @@ class ApiController extends Controller
 
         $visit_id = DB::getPdo()->lastInsertId();
 
+        DB::table('billing')->insert(
+                 ['patient_id' => $patient_id,
+                     'encounter_id' => $visit_id,
+                     'created_at' => $currentdatetime] );
+
+
         return response()->json(['status' => true, 'message' => 'Visit added successfully', 'visit_id' => $visit_id]);
 
     }
