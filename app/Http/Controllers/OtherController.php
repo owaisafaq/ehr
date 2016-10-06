@@ -489,6 +489,7 @@ class OtherController extends Controller
                 ->leftJoin('patients', 'patients.id', '=', 'patients_admitted.patient_id')
                 ->select(DB::raw('beds.id as patient_bed_id,beds.bed_status,patients.first_name,patients.middle_name,patients.last_name,patients.date_of_birth,patients.sex,patients_admitted.expected_discharge_date'))
                 ->where('beds.status', 1)
+                ->groupby('beds.id')
                //    ->where('patients_admitted.is_discharged',0)
                 ->where('beds.ward_id', $ward_id)
                 ->get();
