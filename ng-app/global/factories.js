@@ -2462,6 +2462,7 @@ AppEHR.factory("UpdatePatientClinicalNotes", function ($resource) {
     };
     return MakeInactive;
 });
+
 AppEHR.factory("orderReport", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'get_lab_test_pdf', params, {
@@ -2646,6 +2647,21 @@ AppEHR.factory("UpdateClinicalTempCategory", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'update_template_category', params, {
             get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("PrescriptionPDF", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_prescription_pdf', params, {
+            get: {method: 'GET'}
         });
         return res2;
     }

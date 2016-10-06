@@ -299,14 +299,14 @@ p<div id="content">
     </section>
 </div>
 
-<div class="modal fade" id="addpatient" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="addpatient" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Add Vitals</h2>
             </div>
             <div class="modal-body">
-                <p>Continue to Add Patient Vitals</p>
+                <p class="modal-subtext">Continue to Add Patient Vitals</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-toggle="modal" data-target="#vital-signs" data-dismiss="modal">Ok</button>
@@ -315,7 +315,7 @@ p<div id="content">
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade big-modal" id="vital-signs" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_3" id="vital-signs" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -323,16 +323,16 @@ p<div id="content">
             </div>
             <div class="modal-body">
                 <form class="custom-form" name="vitalForm" novalidate ng-submit="validateVitals(vital);">
-                    <div class="row">
-                        <div class="row no-margin">
+                    <!--<div class="row">-->
+                        <div class="row">
                             <div class="col-lg-4" >
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <label class="label-style">Blood Pressure (mm Hg)</label>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>systolic (mm hg)</label>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 margin-bottom-xxl">
                                     <input type="text" placeholder="systolic (mm hg)"  ng-class="{
                                             true
                                             : 'error'}[vital.diastolic != undefined && vital.systolic == undefined]" ng-model="vital.systolic" numbers-only required/>
@@ -341,22 +341,20 @@ p<div id="content">
                                 <div class="col-lg-6">
                                     <label>diastolic (mm hg)</label>
                                 </div>
-                                <div class="col-lg-6">
-                                    <input type="text" placeholder="diastolic (mm hg)" ng-class="{
-                                            true
-                                            : 'error'}[vital.diastolic == undefined && vital.systolic != undefined]" ng-model="vital.diastolic" numbers-only required/>
+                                <div class="col-lg-6 margin-bottom-xxl">
+                                    <input type="text" placeholder="diastolic (mm hg)" ng-class="{true:'error'}[vital.diastolic == undefined && vital.systolic != undefined]" ng-model="vital.diastolic" numbers-only required/>
                                     <p ng-show="vital.systolic != undefined && vital.diastolic == undefined" class="help-block PIValid">Required</p>
                                 </div>
                             </div>
 
                             <div class="col-lg-4">
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <label class="label-style">Pulse Rate (min/bpm)</label>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>pulse</label>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 margin-bottom-xxl">
                                     <input type="text" placeholder="pulse" ng-model="vital.pulse" numbers-only/>
                                 </div>
                                 <!-- <div class="col-lg-12">
@@ -365,51 +363,54 @@ p<div id="content">
                                 <div class="col-lg-6">
                                     <label>respiratory rate</label>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 margin-bottom-xxl">
                                     <input type="text" placeholder="respiratory rate" ng-model="vital.respiratoryRate" numbers-only/>
                                 </div>
                             </div>
 
                             <div class="col-lg-4">
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <label class="label-style">Respiratory Rate (br/min)</label>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>temperature (c)</label>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 margin-bottom-xxl">
                                     <input type="text" placeholder="temperature (c)" ng-model="vital.temperaturec" numbers-only ng-keyup="GetTempcVal()"/>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>temperature (f)</label>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 margin-bottom-xxl">
                                     <input type="text" placeholder="temperature (f)" ng-model="vital.temperaturef" ng-keyup="GetTempfVal()" numbers-only/>
                                 </div>
                             </div>
                         </div>
-                        <!--<div class="row">-->
-                        <div class="col-lg-12">
-                            <label class="col-lg-12 label-style no-margin">BMI (kg / m^2)</label>
+                        <div class="row">
+                        <!--<div class="col-lg-12 margin-bottom-xxl">-->
+                           
                             <!-- <div class="col-lg-5 pull-right">
                                 <div class="pull-right">
                                     <a class="txt-style-4" href="javascript:;">Attach</a>&nbsp;&nbsp;|&nbsp;&nbsp;
                                     <a class="txt-style-4" href="javascript:;">Past Notes</a>
                                 </div>
                             </div> -->
-                        </div>
+                        <!--</div>-->
                         <!--</div>-->
                         <div class="col-lg-4">
+                            <div class="col-lg-12 margin-bottom-xxl margin-top-10">
+                             <label class="label-style">BMI (kg / m^2)</label>
+                             </div>
                             <div class="col-lg-6">
                                 <label>result</label>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 margin-bottom-xxl">
                                 <input type="text" placeholder="0" ng-model="vital.result" readonly/>
                             </div>
                             <div class="col-lg-6">
                                 <label>weight (kg)</label>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 margin-bottom-xxl">
                                 <input type="text" ng-class="{true: 'error'}[vital.weight == undefined && vital.height != undefined]" placeholder="weight (kg)" ng-model="vital.weight" numbers-only ng-keyup="Calculatebmi()" required/>
                                 <p ng-show="vital.weight == undefined && vital.height != undefined" class="help-block PIValid">Required</p>
                             </div>
@@ -417,12 +418,12 @@ p<div id="content">
                             <div class="col-lg-6">
                                 <label>height (cm)</label>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 margin-bottom-xxl">
                                 <input type="text" ng-class="{true: 'error'}[vital.height == undefined && vital.weight != undefined]" placeholder="height (cm)" ng-model="vital.height" ng-keyup="Calculatebmi()" numbers-only required />
                                 <p ng-show="vital.height == undefined && vital.weight != undefined" class="help-block PIValid">Required</p>
                             </div>
                         </div>
-                        <div class="col-lg-8">
+                        <div class="col-lg-8 margin-bottom-xxl margin-top-50">
                             <div class="col-lg-3">
                                 <label>Notes</label>
                             </div>
@@ -430,12 +431,15 @@ p<div id="content">
                                 <textarea placeholder="Write Your Text Here" ng-model="vital.notes"></textarea>
                             </div>
                         </div>
-                        <div class="modal-footer">
+                        </div>
+                        <div class="modal-footer row">
+                            <div class="row">
                             <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;">Save</button>
                             <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                            </div>
                         </div>
 
-                    </div>
+                    <!--</div>-->
                 </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

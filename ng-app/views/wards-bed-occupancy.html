@@ -34,7 +34,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div class="pagination pagination-centered" ng-show="bedCount">
+<!--                    <div class="pagination pagination-centered" ng-show="bedCount">
                         <ul class="pagination-controle pagination">
                             <li>
                               <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"> &lt; PREV</button>
@@ -46,6 +46,21 @@
                               <button type="button" class="btn btn-primary" ng-disabled="curPage >= bedCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);">NEXT &gt;</button>
                             </li>
                         </ul>
+                    </div>-->
+<div class="pagination pagination-centered pull-right" ng-show="bedCount">
+                        <ul class="pagination-controle pagination">
+                            <li class="prev-page">
+                                <!--<button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>-->
+                                <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
+                            </li>                            
+                            <li>
+                                <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumber" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
+                            </li>
+                             <li class="next-page">
+                              <!--<button type="button" class="btn btn-primary" ng-disabled="curPage >= wardsCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>-->
+                              <button type="button" class="btn btn-primary" ng-disabled="curPage >= bedCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
+                            </li>
+                        </ul>
                     </div>
                 <!--</div>-->
                 <div id="grid1" ui-grid="gridOptions" ui-grid-pagination class="grid custom-grid custom-grid_big"></div>
@@ -53,14 +68,14 @@
         </div><!--end .card -->
     </section>
 </div>
-<div class="modal fade" id="noResultFound" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="noResultFound" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>{{modalHeading}}</h2>
             </div>
             <div class="modal-body">
-                <p>{{modalMessage}}</p>
+                <p class="modal-subtext">{{modalMessage}}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>

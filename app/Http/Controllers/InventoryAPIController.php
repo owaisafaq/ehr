@@ -15,10 +15,8 @@ class InventoryAPIController extends Controller
 {
     public function __construct(Request $request)
     {
-
         header('Access-Control-Allow-Origin: *');
         date_default_timezone_set("Africa/Lagos");
-
     }
     //Categories APIs.
     public function get_categories(){
@@ -189,6 +187,7 @@ class InventoryAPIController extends Controller
             ->leftJoin('inventory_products','inventory_products.id','=','stock.product_id')
             ->leftJoin('inventory_categories','inventory_products.cat_id','=','inventory_categories.id')
             ->where(['stock.status'=>1])
+            ->groupby('stock.product_id')
             ->get();
         if($stock){
             return response()->json(['status' => true, 'message' => "Stock Found.", 'data'=>$stock], 200);
@@ -465,7 +464,6 @@ class InventoryAPIController extends Controller
 
     public function add_product_inventory(Request $request){
 
-
          $group = $request->input('group');
          $product_name = $request->input('product_name');
          $trade_name = $request->input('trade_name');
@@ -474,6 +472,16 @@ class InventoryAPIController extends Controller
          $cat_id = $request->input('cat_id');
          $strength = $request->input('strength');
          $dose_from = $request->input('dose_from');
+
+
+        $product = DB::table('inventory_products')
+            ->select(DB::raw('*'))
+            ->where('name',$product_name)
+            ->count();
+
+        if ($product > 0) {
+            return response()->json(['status' => false, 'message' => "Product with same name exists already"], 200);
+        }
 
          $id = DB::table('inventory_products')->insertGetId(
              [
@@ -528,8 +536,6 @@ class InventoryAPIController extends Controller
                 return response()->json(['status' => false, 'message' => "Product Inventory Added Successfully"], 200);
 
             }
-
-
     }
 
 
@@ -553,14 +559,11 @@ class InventoryAPIController extends Controller
         }
 
         DB::table('stock')->where('id', $stock_id)->update(
-            [ 'stock_status'=>$status, 'updated_at'=> $currentdatetime
-            ]
+            [ 'stock_status'=>$status, 'updated_at'=> $currentdatetime]
         );
 
 
         return response()->json(['status' => true, 'message' => "Stock Updated Successfully"]);
-
-
     }
     
     

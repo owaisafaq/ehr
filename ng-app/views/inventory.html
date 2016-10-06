@@ -13,7 +13,7 @@
             <div class="card-body tab-content col-lg-12 custom-card-body">
                 <div class="tab-pane active" id="inventory">
                     <div class="table-header row background-none inv_header">
-                        <div class="col-lg-7">
+                        <div class="col-lg-6">
                             <span class="txt-style-3 pull-left text-uppercase">category</span>
                             <div class="col-lg-2">
                                 <select class="form-control" ng-model="cat_search.category_name">
@@ -90,6 +90,22 @@
 
                             </tbody>
                         </table>
+                        <!--muzammil do you code here-->
+                        <div class="pagination pagination-centered pull-right" ng-show="pharmacyCount">
+                        <ul class="pagination-controle pagination">
+                            <li class="prev-page">
+                                <!--<button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>-->
+                                <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage = curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
+                            </li>                            
+                            <li>
+                                <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberPharmacy" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
+                            </li>
+                             <li class="next-page">
+                              <!--<button type="button" class="btn btn-primary" ng-disabled="curPage >= patientCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>-->
+                              <button type="button" class="btn btn-primary" ng-disabled="curPage >= pharmacyCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
+                            </li>
+                        </ul>
+                    </div>
                         <div class="row" id="stock_det">
                             <div class="heading-bar no-margin col-lg-12 border-bottom-0">Product Details</div>
                             <div class="box-style no-margin border-bottom-0">
@@ -119,7 +135,7 @@
                                 </div>
                             </div>
                             <div class="heading-bar col-lg-12 no-margin">Stock Details</div>
-                            <button class="add button-custom pull-right add_stock_button">Add Stock</button>
+                            <button class="add button-custom pull-right add_stock_button margin-top-30 margin-bottom-xxl">Add Stock</button>
                             <table class="table table-striped no-margin table-custom table-custom_big">
                                 <thead>
                                     <tr>
@@ -144,6 +160,22 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <!--muzammil do you code here-->
+                            <div class="pagination pagination-centered pull-right" ng-show="pharmacyCount">
+                        <ul class="pagination-controle pagination">
+                            <li class="prev-page">
+                                <!--<button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>-->
+                                <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage = curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
+                            </li>                            
+                            <li>
+                                <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberPharmacy" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
+                            </li>
+                             <li class="next-page">
+                              <!--<button type="button" class="btn btn-primary" ng-disabled="curPage >= patientCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>-->
+                              <button type="button" class="btn btn-primary" ng-disabled="curPage >= pharmacyCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
+                            </li>
+                        </ul>
+                    </div>
                         </div>
                     </form>
                     <div class="add-drug-supplements">
@@ -717,6 +749,21 @@
 
                             </tbody>
                         </table>
+                        <div class="pagination pagination-centered pull-right" ng-show="pharmacyCount">
+                        <ul class="pagination-controle pagination">
+                            <li class="prev-page">
+                                <!--<button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>-->
+                                <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage = curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
+                            </li>                            
+                            <li>
+                                <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberPharmacy" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
+                            </li>
+                             <li class="next-page">
+                              <!--<button type="button" class="btn btn-primary" ng-disabled="curPage >= patientCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>-->
+                              <button type="button" class="btn btn-primary" ng-disabled="curPage >= pharmacyCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
+                            </li>
+                        </ul>
+                    </div>
                     </form>
                 </div>
 
@@ -776,6 +823,21 @@
 
                             </tbody>
                         </table>
+                        <div class="pagination pagination-centered pull-right" ng-show="pharmacyCount">
+                        <ul class="pagination-controle pagination">
+                            <li class="prev-page">
+                                <!--<button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>-->
+                                <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage = curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
+                            </li>                            
+                            <li>
+                                <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberPharmacy" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
+                            </li>
+                             <li class="next-page">
+                              <!--<button type="button" class="btn btn-primary" ng-disabled="curPage >= patientCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>-->
+                              <button type="button" class="btn btn-primary" ng-disabled="curPage >= pharmacyCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
+                            </li>
+                        </ul>
+                    </div>
                     </form>
                 </div>
 
@@ -836,7 +898,7 @@
         </div><!--end .card -->
     </section>
 </div>
-<div class="modal fade big-modal" id="addCategory" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_2" id="addCategory" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -844,8 +906,8 @@
             </div>
             <div class="modal-body">
                 <form class="custom-form" ng-submit="AddCategory(category);">
-                    <div class="row">
-                        <div class="row no-margin">
+                    <!--<div class="row">-->
+                        <div class="row margin-bottom-xxl">
                             <div class="col-lg-3">
                                 <label>Group</label>
                             </div>
@@ -876,22 +938,25 @@
                                 </label>
                             </div>
                         </div>
-
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Category Name</label>
                         </div>
                         <div class="col-lg-9">
                             <input type="text" placeholder="" ng-model="category.cat_name" required/>
                         </div>
+                        </div>
+                    <div class="row">
                         <div class="col-lg-12">
                             <label>Description</label>
                         </div>
                         <div class="col-lg-12">
                             <textarea ng-model="category.cat_desc"></textarea>
                         </div>
-
                     </div>
-                    <div class="modal-footer">
+
+                    <!--</div>-->
+                    <div class="modal-footer row">
                         <button type="submit" class="btn btn-default button-style-1">Add</button>
                         <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
                     </div>
@@ -907,7 +972,7 @@
 </div><!-- /.modal -->
 
 
-<div class="modal fade big-modal" id="editCategory" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_2" id="editCategory" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -915,8 +980,8 @@
             </div>
             <div class="modal-body">
                 <form class="custom-form" ng-submit="UpdateCategory(selectedCategory);">
-                    <div class="row">
-                        <div class="row no-margin">
+                    <!--<div class="row">-->
+                        <div class="row margin-bottom-xxl">
                             <div class="col-lg-3">
                                 <label>Group</label>
                             </div>
@@ -947,6 +1012,7 @@
                                 </label>
                             </div>
                         </div>
+                    <div class="row margin-bottom-xxl">
 
                         <div class="col-lg-3">
                             <label>Category Name</label>
@@ -954,15 +1020,18 @@
                         <div class="col-lg-9">
                             <input type="text" placeholder="" ng-model="selectedCategory.cat_name" required/>
                         </div>
+                        </div>
+                    <div class="row">
                         <div class="col-lg-12">
                             <label>Description</label>
                         </div>
                         <div class="col-lg-12">
                             <textarea ng-model="selectedCategory.cat_desc"></textarea>
                         </div>
-
                     </div>
-                    <div class="modal-footer">
+
+                    <!--</div>-->
+                    <div class="modal-footer row">
                         <button type="submit" class="btn btn-default button-style-1">Update</button>
                         <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
                     </div>
@@ -978,7 +1047,7 @@
 </div><!-- /.modal -->
 
 
-<div class="modal fade big-modal" id="addSupplier" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_3" id="addSupplier" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -986,7 +1055,8 @@
             </div>
             <div class="modal-body">
                 <form class="custom-form" ng-submit="AddSupplier(supplier);">
-                    <div class="row">
+                    <!--<div class="row">-->
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Supplier Name</label>
                         </div>
@@ -999,6 +1069,8 @@
                         <div class="col-lg-3">
                             <input type="text" placeholder="" ng-model="supplier.contact_person"  required/>
                         </div>
+                        </div>
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Address Line 1</label>
                         </div>
@@ -1012,7 +1084,8 @@
                         <div class="col-lg-3">
                             <input type="text" placeholder=""  ng-model="supplier.email" required/>
                         </div>
-
+                    </div>
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Address Line 2</label>
                         </div>
@@ -1026,6 +1099,8 @@
                         <div class="col-lg-3">
                             <input type="text" placeholder=""  ng-model="supplier.wphone" required/>
                         </div>
+                    </div>
+                    <div class="row margin-bottom-xxl">
 
                         <div class="col-lg-3">
                             <label>Country</label>
@@ -1048,7 +1123,8 @@
                         <div class="col-lg-3">
                             <input type="text" placeholder=""  ng-model="supplier.mobile" required/>
                         </div>
-
+                    </div>
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>State</label>
                         </div>
@@ -1069,6 +1145,8 @@
                         <div class="col-lg-3">
                             <input type="text" placeholder="" ng-model="supplier.website"  required/>
                         </div>
+                    </div>
+                    <div class="row margin-bottom-xxl">
 
                         <div class="col-lg-3">
                             <label>City</label>
@@ -1095,16 +1173,17 @@
                         <div class="col-lg-3">
                             <input type="text" placeholder=""  ng-model="supplier.post_code" required/>
                         </div>
+                    </div>
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-default button-style-1">Add</button>
-                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
-                    </div>
+<!--                    </div>-->
+                   
                 </form>
 
             </div>
-
+ <div class="modal-footer">
+                        <button type="submit" class="btn btn-default button-style-1">Add</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
         </div><!-- /.modal-content -->
 
 
@@ -1119,7 +1198,7 @@
 Edit Supplier Modal-->
 
 
-<div class="modal fade big-modal" id="editSupplier" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_3" id="editSupplier" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -1127,12 +1206,12 @@ Edit Supplier Modal-->
             </div>
             <div class="modal-body">
                 <form class="custom-form" ng-submit="UpdateSupplier(selectedSupplier);">
-                    <div class="row">
+                    <!--<div class="row">-->
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Supplier Name</label>
                         </div>
                         <div class="col-lg-3">
-
                             <input type="text" placeholder=""   ng-model="selectedSupplier.name" required/>
                         </div>
                         <div class="col-lg-3">
@@ -1141,6 +1220,8 @@ Edit Supplier Modal-->
                         <div class="col-lg-3">
                             <input type="text" placeholder="" ng-model="selectedSupplier.contact_person"    required/>
                         </div>
+                        </div>
+                     <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Address Line 1</label>
                         </div>
@@ -1154,7 +1235,8 @@ Edit Supplier Modal-->
                         <div class="col-lg-3">
                             <input type="text" placeholder=""  ng-model="selectedSupplier.email"  value="Talhdgdsab" />
                         </div>
-
+                     </div>
+                     <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Address Line 2</label>
                         </div>
@@ -1168,7 +1250,8 @@ Edit Supplier Modal-->
                         <div class="col-lg-3">
                             <input type="text" placeholder=""  ng-model="selectedSupplier.work_phone" />
                         </div>
-
+                     </div>
+                     <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>City</label>
                         </div>
@@ -1182,7 +1265,8 @@ Edit Supplier Modal-->
                         <div class="col-lg-3">
                             <input type="text" placeholder=""  ng-model="selectedSupplier.mobile" />
                         </div>
-
+                     </div>
+                     <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>State</label>
                         </div>
@@ -1200,7 +1284,8 @@ Edit Supplier Modal-->
                         <div class="col-lg-3">
                             <input type="text" placeholder="" ng-model="selectedSupplier.website"  required/>
                         </div>
-
+                     </div>
+                     <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Country</label>
                         </div>
@@ -1218,15 +1303,16 @@ Edit Supplier Modal-->
                         <div class="col-lg-3">
                             <input type="text" placeholder=""  ng-model="selectedSupplier.post_code" required/>
                         </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-default button-style-1">Update</button>
-                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
-                    </div>
+                     </div>
+                    <!--</div>-->
+                   
                 </form>
 
             </div>
+             <div class="modal-footer">
+                        <button type="submit" class="btn btn-default button-style-1">Update</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
 
         </div><!-- /.modal-content -->
 
@@ -1238,7 +1324,7 @@ Edit Supplier Modal-->
 
 <!--Update Reorder Level-->
 
-<div class="modal fade big-modal" id="update_reorder" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="update_reorder" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -1246,12 +1332,11 @@ Edit Supplier Modal-->
             </div>
             <div class="modal-body">
                 <form class="custom-form" ng-submit="UpdateReorder(selectedInvnetory,productID);">
-                    <div class="row">
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Product ID</label>
                         </div>
-                        <div class="col-lg-3">
-
+                        <div class="col-lg-9">
                             <input type="text" placeholder=""   value="{{productID}}"  disabled/>
                         </div>
 
@@ -1261,8 +1346,7 @@ Edit Supplier Modal-->
                         <div class="col-lg-3">
                             <label>Reorder Level</label>
                         </div>
-                        <div class="col-lg-3">
-
+                        <div class="col-lg-9">
                             <input type="text" placeholder=""   ng-model="selectedInvnetory.reorder_level" value="{{selectedReorderProduct.reorder_level}}" required/>
                         </div>
 
@@ -1272,9 +1356,11 @@ Edit Supplier Modal-->
                     </div>
 
 
-                    <div class="modal-footer">
+                    <div class="modal-footer row">
+                        <div class="row">
                         <button type="submit" class="btn btn-default button-style-1">Update</button>
                         <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                        </div>
                     </div>
                 </form>
 
@@ -1286,14 +1372,14 @@ Edit Supplier Modal-->
     </div><!-- /.modal-dialog -->
 
 </div><!-- /.modal -->
-<div class="modal fade" id="noRecordFound" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="noRecordFound" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Status</h2>
             </div>
             <div class="modal-body">
-                <p>No Record Found</p>
+                <p class="modal-subtext">No Record Found</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>

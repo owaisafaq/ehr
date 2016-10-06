@@ -321,6 +321,7 @@ $api->params->encounter_class = "123";
 $api->params->encounter_type = "123";
 $api->params->whom_to_see = "1";
 $api->params->decscribe_whom_to_see = "123";
+$api->params->reason_of_visit = "";
 $api->params->token = "123";
 
 
@@ -339,6 +340,7 @@ $api->params->encounter_class = "123";
 $api->params->encounter_type = "123";
 $api->params->whom_to_see = "1";
 $api->params->decscribe_whom_to_see = "123";
+$api->params->reason_of_visit = "";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -998,6 +1000,35 @@ $api->params->patient_id = "1";
 $api->params->visit_id = "1";
 $api->params->template_id = "";
 $api->params->value = "";
+$api->params->diagnosis = "0";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+// Update Patient Clinical Notes
+$api = new api();
+$api->name = "Update Patient Clinical Notes";
+$api->url = HOST . 'update_patient_clinical_notes';
+$api->method = "POST";
+$api->description = "Update Patient Clinical Notes";
+$api->params->clinical_notes_id = "1";
+$api->params->patient_id = "1";
+$api->params->visit_id = "1";
+$api->params->template_id = "";
+$api->params->value = "";
+$api->params->diagnosis = "0";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+// Add Clinical Notes Attachments
+$api = new api();
+$api->name = "Add Clinical Notes Attachments";
+$api->url = HOST . 'add_clinical_notes_attachments';
+$api->method = "POST";
+$api->description = "Add Clinical Notes Attachments";
+$api->params->patient_id = "1";
+$api->params->image = "attachment";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -1032,15 +1063,19 @@ $api->url = HOST . 'add_patient_referel';
 $api->method = "POST";
 $api->description = "Add Patient Referel";
 $api->params->patient_id = "1";
-$api->params->department_id = "1";
+$api->params->visit_id = "1";
+$api->params->referal_type = "internal";
+$api->params->external_referal_email = "test@gmail.com";
+//$api->params->department_id = "1";
 $api->params->doctor_id = "1";
 $api->params->provisional_diagnosis = "";
 $api->params->reason_referal = "";
 $api->params->history = "";
 $api->params->investigations = "";
-$api->params->allergies = "1";
-$api->params->medication_list = "1";
-$api->params->medicines = "1";
+$api->params->refered_file = "";
+//$api->params->allergies = "1";
+//$api->params->medication_list = "1";
+//$api->params->medicines = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -1204,6 +1239,19 @@ $api->params->token = "123";
 $api_arr [] = $api;
 
 
+// Get All Radiology Lab Orders
+$api = new api();
+$api->name = "Get All Radiology Lab Orders";
+$api->url = HOST . 'get_all_radiology_lab_orders';
+$api->method = "GET";
+$api->description = "Get All Lab Radiology Orders";
+$api->params->limit = "0";
+$api->params->offset = "0";
+$api->params->patient_id = "0";
+$api->params->visit_id = "0";
+$api->params->token = "123";
+
+$api_arr [] = $api;
 
 // Get Patient Lab Orders
 $api = new api();
@@ -1212,6 +1260,7 @@ $api->url = HOST . 'get_patient_lab_orders';
 $api->method = "GET";
 $api->description = "Get Patient Lab Orders";
 $api->params->patient_id = "1";
+$api->params->visit_id = "1";
 $api->params->limit = "0";
 $api->params->offset = "0";
 $api->params->token = "123";
@@ -1249,6 +1298,7 @@ $api->url = HOST . 'add_lab_order';
 $api->method = "POST";
 $api->description = "Add Lab Orders";
 $api->params->patient_id = "1";
+$api->params->visit_id = "1";
 $api->params->lab = "1";
 $api->params->lab_test = "1";
 $api->params->clinical_information = "test";
@@ -2749,6 +2799,130 @@ $api = new api();
 $api->name = "Patients Discharged";
 $api->url = HOST . 'patients_discharged';
 $api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Signoff Lab Report
+$api = new api();
+$api->name = "Signoff Lab Report";
+$api->url = HOST . 'signoff_lab_report';
+$api->method = "POST";
+$api->params->lab_test_id = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Signoff Clinical Report
+$api = new api();
+$api->name = "Signoff Clinical Report";
+$api->url = HOST . 'signoff_clinical_report';
+$api->method = "POST";
+$api->params->patient_clinical_notes_id = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//check clinical notes status
+$api = new api();
+$api->name = "check clinical notes status";
+$api->url = HOST . 'check_clinical_notes_status';
+$api->method = "POST";
+$api->params->patient_id = "";
+$api->params->visit_id = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+
+//check lab orders status
+$api = new api();
+$api->name = "check lab orders status";
+$api->url = HOST . 'check_lab_orders_status';
+$api->method = "POST";
+$api->params->lab_order_test_id = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+
+//update lab orders
+$api = new api();
+$api->name = "update lab orders";
+$api->url = HOST . 'update_lab_test_values';
+$api->method = "POST";
+$api->params->lab_test_id = "";
+$api->params->template_id = "";
+$api->params->lab_test_values = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+
+//Get Diagnosis
+$api = new api();
+$api->name = "Get Diagnosis";
+$api->url = HOST . 'get_diagnosis';
+$api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Get Prescription Medicines
+$api = new api();
+$api->name = "Get Prescription Medicines";
+$api->url = HOST . 'get_prescription_medicines';
+$api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Get Prescription Supplements
+$api = new api();
+$api->name = "Get Prescription Supplements";
+$api->url = HOST . 'get_prescription_supplements';
+$api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Get Clinical Notes Template Category
+$api = new api();
+$api->name = "Get Clinical Notes Template Category";
+$api->url = HOST . 'get_template_category';
+$api->method = "POST";
+$api->params->cat_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Update Clinical Notes Template Categories
+$api = new api();
+$api->name = "Update Clinical Notes Template Categories";
+$api->url = HOST . 'update_template_category';
+$api->method = "POST";
+$api->params->cat_id = "1";
+$api->params->category_name = "test";
+$api->params->description = "test";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+
+//Get Prescription Pdf
+$api = new api();
+$api->name = "Get Prescription Pdf";
+$api->url = HOST . 'get_prescription_pdf';
+$api->method = "GET";
+$api->params->prescription_id = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;

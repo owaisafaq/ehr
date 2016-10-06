@@ -1,151 +1,371 @@
 <div id="content">
     <section>
-        <div class="row dashboard">
-            <div class="col-md-3">
-                <a href="#/patient-listing">
-                    <div class="card">
-                        <div class="card-body">
-                            <span class="color-circle"><img  src="assets/img/dashboard/icon-1.png" /></span>
-                            <span class="textstyle-1">patients</span>
-                            <span class="textstyle-2">{{counts.patients_count}}</span>
+        <div class="dashboard-new">
+            <div class="">
+                <div class="col-md-3">
+                    <a href="#/patient-listing">
+                        <div class="card">
+                            <div class="card-body color-style1 text-center">
+                                <div class="all-content">
+                                    <img class="pull-left" src="assets/img/dashboard/icon-1.png" />
+                                    <div class="details">
+                                        <span class="textstyle-1 pull-left">patients</span>
+                                        <span class="textstyle-2 pull-left">{{counts.patients_count}}</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a href="#/new-encounter-patient-search">
+                        <div class="card">
+                            <div class="card-body color-style2 text-center">
+                                <div class="all-content">
+                                    <img class="pull-left" src="assets/img/dashboard/icon-2.png" />
+                                    <div class="details">
+                                        <span class="textstyle-1 pull-left">encounter</span>
+                                        <span class="textstyle-2 pull-left">{{counts.encounter_count}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a href="#/billing">
+                        <div class="card">
+                            <div class="card-body color-style3 text-center">
+                                <div class="all-content">
+                                    <img class="pull-left" src="assets/img/dashboard/icon-4.png" />
+                                    <div class="details">
+                                        <span class="textstyle-1 pull-left">appointments</span>
+                                        <span class="textstyle-2 pull-left">{{counts.billing_count}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a href="#/appointments-list">
+                        <div class="card">
+                            <div class="card-body color-style4 text-center">
+                                <div class="all-content">
+                                    <img class="pull-left" src="assets/img/dashboard/icon-6.png" />
+                                    <div class="details">
+                                        <span class="textstyle-1 pull-left">laboratory</span>
+                                        <span class="textstyle-2 pull-left">{{counts.appointments_count}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
 
-            <div class="col-md-3">
-                <a href="#/new-encounter-patient-search">
-                    <div class="card">
-                        <div class="card-body">
-                            <span class="color-circle"><img  src="assets/img/dashboard/icon-2.png" /></span>
-                            <span class="textstyle-1">encounters</span>
-                            <span class="textstyle-2">{{counts.encounter_count}}</span>
+            <div class="grid-boxes-style-2">
+
+
+                <div class="col-md-3">
+                    <a href="#/patient-pool-area">
+                        <div class="card">
+                            <div class="card-body">
+                                <span class="circle-img-con circle-style1"><img  src="assets/img/dashboard/icon-7.png" /></span>
+                                <span class="textstyle-1">patient pool area</span>
+                            </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a href="#/ward-bed-listing">
+                        <div class="card">
+                            <div class="card-body">
+                                <span class="circle-img-con circle-style2"><img  src="assets/img/dashboard/icon-8.png" /></span>
+                                <span class="textstyle-1">hospital wards</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a href="#/pharmacy">
+                        <div class="card">
+                            <div class="card-body">
+                                <span class="circle-img-con circle-style3"><img  src="assets/img/dashboard/icon-10.png" /></span>
+                                <span class="textstyle-1">pharmacy</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="#/inventory">
+                        <div class="card">
+                            <div class="card-body">
+                                <span class="circle-img-con circle-style4"><img  src="assets/img/dashboard/icon-9.png" /></span>
+                                <span class="textstyle-1">inventory</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a href="#/lab-order-listing">
+                        <div class="card">
+                            <div class="card-body">
+                                <span class="circle-img-con circle-style5"><img  src="assets/img/dashboard/icon-12.png" /></span>
+                                <span class="textstyle-1">billing</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
 
-            <div class="col-md-3">
-                <a href="#/billing">
-                    <div class="card">
-                        <div class="card-body">
-                            <!-- <span class="color-circle"><img src="assets/img/dashboard/icon-3.png" /></span>
-                            <span class="textstyle-1">medical records</span>
-                            <span class="textstyle-2">2500</span> -->
-                            <span class="color-circle"><img  src="assets/img/dashboard/icon-12.png" /></span>
-                            <span class="textstyle-1">Billing</span>
-                            <span class="textstyle-2">{{counts.billing_count}}</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <div class="col-md-3">
-                <a href="#/appointments-list">
-                    <div class="card">
-                        <div class="card-body">
-                            <span class="color-circle"><img  src="assets/img/dashboard/icon-4.png" /></span>
-                            <span class="textstyle-1">appointments</span>
-                            <span class="textstyle-2">{{counts.appointments_count}}</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            
-            
-            
-            <!-- <div class="col-md-3">
-                <a href="#/radiology">
-                    <div class="card">
-                        <div class="card-body">
-                            <span class="color-circle invisible"><img src="" data-src="assets/img/dashboard/icon-5.png" /></span>
-                            <span class="textstyle-1">radiology</span>
-                            <span class="textstyle-2">{{counts.radiology_count}}</span>
-                        </div>
-                    </div>
-                </a>
-            </div> -->
-
-            <div class="col-md-3">
-                <a href="#/lab-order-listing">
-                    <div class="card">
-                        <div class="card-body">
-                            <span class="color-circle"><img  src="assets/img/dashboard/icon-6.png" /></span>
-                            <span class="textstyle-1">laboratory</span>
-                            <span class="textstyle-2">{{counts.laboratory_count}}</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <div class="col-md-3">
-                <a href="#/patient-pool-area">
-                    <div class="card">
-                        <div class="card-body">
-                            <span class="color-circle"><img  src="assets/img/dashboard/icon-7.png" /></span>
-                            <span class="textstyle-1">patient pool area</span>
-                            <span class="textstyle-2">{{counts.patient_pool_area_count}}</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <div class="col-md-3">
-                <a href="#/ward-bed-listing">
-                    <div class="card">
-                        <div class="card-body">
-                            <span class="color-circle"><img  src="assets/img/dashboard/icon-8.png" /></span>
-                            <span class="textstyle-1">hospital wards</span>
-                            <span class="textstyle-2">{{counts.wards_count}}</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            
-            
-            <div class="col-md-3">
-                <a href="#/inventory">
-                    <div class="card">
-                        <div class="card-body">
-                            <span class="color-circle"><img  src="assets/img/dashboard/icon-9.png" /></span>
-                            <span class="textstyle-1">inventory</span>
-                            <span class="textstyle-2">{{counts.inventory_count}}</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <div class="col-md-3">
-                <a href="#/pharmacy">
-                    <div class="card">
-                        <div class="card-body">
-                            <span class="color-circle"><img  src="assets/img/dashboard/icon-10.png" /></span>
-                            <span class="textstyle-1">pharmacy</span>
-                            <span class="textstyle-2">{{counts.pharmacy_count}}</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <!-- <div class="col-md-3">
+            <div class="col-lg-6 dash-table-con">
                 <div class="card">
+                    <div class="card-head">
+                        <h2 class="pull-left bold-text textstyle-4">Today’s Appointments</h2>
+                        <label class="pull-right textstyle-4">21 September 2016</label>
+                    </div>
                     <div class="card-body">
-                        <span class="color-circle invisible"><img src="" data-src="assets/img/dashboard/icon-11.png" /></span>
-                        <span class="textstyle-1">patient registration</span>
-                        <span class="textstyle-2"><br/></span>
+                        <form class="custom-form">
+                            <div class="scroll-container">
+                                <table class="table table-striped no-margin table-custom">
+                                    <thead>
+                                        <tr>
+                                            <th>patient id</th>
+                                            <th>patient name</th>
+                                            <th>time</th>
+                                            <th>whom to see</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                        </tr><tr>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                        </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="pagination pagination-centered pagination-dash pull-right margin-right-20">
+                                <ul class="pagination-controle pagination">
+                                    <li class="prev-page">
+                                        <!--<button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>-->
+                                        <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage = curPage - 1;
+                                                paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
+                                    </li>                            
+                                    <li>
+                                        <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberPharmacy" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>4</span>
+                                    </li>
+                                    <li class="next-page">
+                                        <!--<button type="button" class="btn btn-primary" ng-disabled="curPage >= patientCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>-->
+                                        <button type="button" class="btn btn-primary" ng-disabled="curPage >= pharmacyCount / pageSize - 1" ng-click="curPage = curPage + 1;
+                                                paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </form>
                     </div>
                 </div>
-            </div> -->
+            </div>
 
-            <!-- <div class="col-md-3">
+            <div class="col-lg-6 dash-table-con">
                 <div class="card">
+                    <div class="card-head">
+                        <h2 class="pull-left bold-text textstyle-4">Today’s encounters</h2>
+                        <label class="pull-right textstyle-4">21 September 2016</label>
+                    </div>
                     <div class="card-body">
-                        <span class="color-circle invisible"><img src="" data-src="assets/img/dashboard/icon-12.png" /></span>
-                        <span class="textstyle-1">Billing</span>
-                        <span class="textstyle-2">1500</span>
+                        <form class="custom-form">
+                            <div class="scroll-container">
+                                <table class="table table-striped no-margin table-custom">
+                                    <thead>
+                                        <tr>
+                                            <th>patient id</th>
+                                            <th>patient name</th>
+                                            <th>time</th>
+                                            <th>whom to see</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                        </tr><tr>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                            <td>sample text</td>
+                                        </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="pagination pagination-centered pagination-dash pull-right margin-right-20">
+                                <ul class="pagination-controle pagination">
+                                    <li class="prev-page">
+                                        <!--<button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>-->
+                                        <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage = curPage - 1;
+                                                paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
+                                    </li>                            
+                                    <li>
+                                        <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberPharmacy" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>4</span>
+                                    </li>
+                                    <li class="next-page">
+                                        <!--<button type="button" class="btn btn-primary" ng-disabled="curPage >= patientCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>-->
+                                        <button type="button" class="btn btn-primary" ng-disabled="curPage >= pharmacyCount / pageSize - 1" ng-click="curPage = curPage + 1;
+                                                paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </form>
                     </div>
                 </div>
-            </div> -->
+            </div>
+            <div class="dash-card-style-3">
+        <div class="col-lg-4">
+            <div class="card">      
+                <div class="card-body text-center">      
+                    <div class="all-content">
+                        <h3 class="dash-text text-color1 margin-0">1254</h3>
+                        <div class="details">
+                            <span class="textstyle-5 margin-top-10">Total Visits</span>
+                            <span class="textstyle-6">september</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+            <div class="col-lg-4">
+            <div class="card">      
+                <div class="card-body text-center">      
+                    <div class="all-content">
+                        <h3 class="dash-text text-color2 margin-0">1254</h3>
+                        <div class="details">
+                            <span class="textstyle-5 margin-top-10">Total Prescriptions</span>
+                            <span class="textstyle-6">september</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="col-lg-4">
+            <div class="card">      
+                <div class="card-body text-center">      
+                    <div class="all-content">
+                        <h3 class="dash-text text-color3 margin-0">1254</h3>
+                        <div class="details">
+                            <span class="textstyle-5 margin-top-10">Total Admissions</span>
+                            <span class="textstyle-6">september</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                </div>
+             </div>
     </section>
 </div>
+         

@@ -51,14 +51,14 @@
         </div><!--end .card -->
     </section>
 </div>
-<div class="modal fade" id="noResultFound" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="noResultFound" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>{{modalHeading}}</h2>
             </div>
             <div class="modal-body">
-                <p>{{modalMessage}}</p>
+                <p class="modal-subtext">{{modalMessage}}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
@@ -66,14 +66,14 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade" id="removeBed" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel1" aria-hidden="true">
+<div class="modal fade modal-size_1" id="removeBed" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Confirmation</h2>
             </div>
             <div class="modal-body">
-                <p>Do you want to Delete?</p>
+                <p class="modal-subtext">Do you want to Delete?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" ng-click="deleteBed();">YES</button>
@@ -82,14 +82,14 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade" id="editBed" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel1" aria-hidden="true">
+<div class="modal fade modal-size_1" id="editBed" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Confirmation</h2>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to change status?</p>
+                <p class="modal-subtext">Are you sure you want to change status?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" ng-click="updateBed(bedStatus);">YES</button>

@@ -1,0 +1,110 @@
+<div id="content">
+    <section>
+        <div class="card custom-card">
+            <div class="card-head card-head-custom card-color-2">
+                <h2 class="h2-style col-lg-12">Patient Pool Area</h2>
+            </div>
+            <div class="table-header col-lg-12">
+                <div class="col-lg-12 no-padding">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label class="label-ppa">WAITING AREA</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="label-ppa">VITAL SIGN</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="label-ppa">WITH DOTOR</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="label-ppa">CHECKOUT</label>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+            <div class="row patient-pool-area">
+                <div class="col-lg-3 padding11">
+                    <div class="col-lg-3 ">SN</div>
+                    <div class="col-lg-8">Patient Name</div>
+                </div>
+                <div class="col-lg-3 padding11">
+                    <div class="col-lg-3">SN</div>
+                    <div class="col-lg-8">Patient Name</div>
+                </div>
+                <div class="col-lg-3 padding11">
+                    <div class="col-lg-3">SN</div>
+                    <div class="col-lg-8">Patient Name</div>
+                </div>
+                <div class="col-lg-3 padding11">
+                    <div class="col-lg-3">SN</div>
+                    <div class="col-lg-8">Patient Name</div>
+                </div>
+            </div>
+            <div class="row"><!-- max-height: 50vh; overflow: auto; -->
+                <div class="col-lg-3 ppa-col-3 scrollbar" id="encounterScroll">
+                    <table class="table table-striped no-margin table-custom">
+                        <tr ng-repeat="PPA in patientPoolArea.encounter">
+                            <td class="padding-left" width="5">{{$index+1}}</td>
+                            <td>{{PPA.patient_name}}</td>
+                        </tr>
+                        <p class="text-center" ng-hide="patientPoolArea.encounter.length">No Patient Found</p> 
+                    </table>
+                </div>
+                <div class="col-lg-3 ppa-col-3 scrollbar" id="triageScroll">
+                    <table class="table table-striped no-margin table-custom">
+                        <tr ng-repeat="PPA in patientPoolArea.triage">
+                            <td class="padding-left" width="5">{{$index+1}}</td>
+                            <td>{{PPA.patient_name}}</td>
+                        </tr>
+                        <p class="text-center" ng-hide="patientPoolArea.triage.length">No Patient Found</p>
+                    </table>
+                </div>
+                <div class="col-lg-3 ppa-col-3 scrollbar" id="physicianScroll">
+                    <table class="table table-striped no-margin table-custom">
+                        <tr ng-repeat="PPA in patientPoolArea.physician">
+                            <td class="padding-left" width="5">{{$index+1}}</td>
+                            <td>{{PPA.patient_name}}</td>
+                        </tr>
+                        <p class="text-center" ng-hide="patientPoolArea.physician.length">No Patient Found</p>
+                    </table>
+                </div>
+                <div class="col-lg-3 ppa-col-3 scrollbar" id="checkoutScroll">
+                    <table class="table table-striped no-margin table-custom">
+                        <tr ng-repeat="PPA in patientPoolArea.checkout">
+                            <td class="padding-left" width="5">{{$index+1}}</td>
+                            <td>{{PPA.patient_name}}</td>
+                        </tr>
+                        <p class="text-center" ng-hide="patientPoolArea.checkout.length">No Patient Found</p>
+                    </table>
+                </div>
+            </div>
+        </div><!--end .card -->
+    </section>
+</div>
+<div class="modal fade modal-size_1" id="noResultFound" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>{{modalHeading}}</h2>
+            </div>
+            <div class="modal-body">
+                <p class="modal-subtext">{{modalMessage}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script>
+            $(".scrollbar").mCustomScrollbar();
+    $(window).on('load',function (){
+   var heightLess = $('.headerbar').outerHeight() +
+   $('.card-head-custom').outerHeight() +
+   $('.table-header').outerHeight() +
+   $('.patient-pool-area').outerHeight();
+   heightLess = heightLess + 24;
+  $('.scrollbar').height($(window).height() - heightLess)
+    })        
+    
+    </script>

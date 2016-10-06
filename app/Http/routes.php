@@ -28,8 +28,12 @@ $app->group(['prefix' => 'api'], function () use ($app) {
     $app->post('update_patient_archive','App\Http\Controllers\ApiController@update_patient_archive');
     $app->post('upload_patient_image', 'App\Http\Controllers\ApiController@upload_patient_image');
     $app->options('upload_patient_image','App\Http\Controllers\ApiController@optupload_patient_image');
-
-
+    $app->options('add_clinical_notes_attachments','App\Http\Controllers\ApiController@opt_add_clinical_notes_attachments');
+    $app->post('add_clinical_notes_attachments','App\Http\Controllers\ApiController@add_clinical_notes_attachments');
+    $app->options('add_referal_attachments','App\Http\Controllers\ApiController@opt_add_referal_attachments');
+    $app->post('add_referal_attachments','App\Http\Controllers\ApiController@add_referal_attachments');
+    $app->options('add_lab_order_attachments','App\Http\Controllers\ApiController@opt_add_lab_order_attachments');
+    $app->post('add_lab_order_attachments','App\Http\Controllers\ApiController@add_lab_order_attachments');
 });
 $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($app) {
 
@@ -110,6 +114,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->get('clinical_progress_note_templates','App\Http\Controllers\ApiController@clinical_progress_note_templates');
     $app->get('clinical_progress_note_fields','App\Http\Controllers\ApiController@clinical_progress_note_fields');
     $app->post('add_patient_clinical_notes','App\Http\Controllers\ApiController@add_patient_clinical_notes');
+    $app->post('update_patient_clinical_notes','App\Http\Controllers\ApiController@update_patient_clinical_notes');
+  //  $app->post('add_clinical_notes_attachments','App\Http\Controllers\ApiController@add_clinical_notes_attachments');
     $app->post('get_clinical_notes_pdf','App\Http\Controllers\PDFController@get_clinical_notes_pdf');
 
     $app->post('checkout_patient','App\Http\Controllers\ApiController@checkout_patient');
@@ -119,6 +125,7 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->get('get_lab_tests','App\Http\Controllers\OrderController@get_lab_tests');
     $app->get('get_lab_test_details','App\Http\Controllers\OrderController@get_lab_test_details');
     $app->get('get_all_lab_orders','App\Http\Controllers\OrderController@get_all_lab_orders');
+    $app->get('get_all_radiology_lab_orders','App\Http\Controllers\OrderController@get_all_radiology_lab_orders');
     $app->get('get_patient_lab_orders','App\Http\Controllers\OrderController@get_patient_lab_orders');
     $app->get('get_lab_order','App\Http\Controllers\OrderController@get_lab_order');
     $app->post('add_lab_order','App\Http\Controllers\OrderController@add_lab_order');
@@ -126,6 +133,7 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->post('update_lab_test','App\Http\Controllers\OrderController@update_lab_test');
     $app->get('get_lab_test_fields','App\Http\Controllers\OrderController@get_lab_test_fields');
     $app->post('add_lab_test_values','App\Http\Controllers\OrderController@add_lab_test_values');
+    $app->post('update_lab_test_values','App\Http\Controllers\OrderController@update_lab_test_values');
     $app->get('get_lab_test_templates','App\Http\Controllers\OrderController@get_lab_test_templates');
     $app->post('add_lab_test_templates','App\Http\Controllers\OrderController@add_lab_test_templates');
     $app->post('update_lab_test_templates','App\Http\Controllers\OrderController@update_lab_test_templates');
@@ -275,5 +283,29 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->get('get_radiology_templates','App\Http\Controllers\BillingController@get_radiology_templates');
     $app->post('delete_radiology_template','App\Http\Controllers\BillingController@delete_radiology_template');
     $app->get('get_radiology_template','App\Http\Controllers\BillingController@get_radiology_template');
+
+
+    $app->post('signoff_lab_report','App\Http\Controllers\PDFController@signoff_lab_report');
+    $app->post('signoff_clinical_report','App\Http\Controllers\PDFController@signoff_clinical_report');
+
+    $app->post('check_clinical_notes_status','App\Http\Controllers\ApiController@check_clinical_notes_status');
+    $app->post('check_lab_orders_status','App\Http\Controllers\OrderController@check_lab_orders_status');
+
+    $app->get('get_diagnosis','App\Http\Controllers\OrderController@get_diagnosis');
+
+
+    //prescription dropdown
+    $app->get('get_prescription_medicines','App\Http\Controllers\ApiController@get_prescription_medicines');
+    $app->get('get_prescription_supplements','App\Http\Controllers\ApiController@get_prescription_supplements');
+
+
+
+    //clinical reports template categories
+    $app->post('get_template_category','App\Http\Controllers\ApiController@get_template_category');
+    $app->post('update_template_category','App\Http\Controllers\ApiController@update_template_category');
+
+
+    //Prescription Pdf
+    $app->get('get_prescription_pdf','App\Http\Controllers\PDFController@get_prescription_pdf');
 
 });
