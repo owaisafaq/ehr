@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', 'getTemplates' ,'AddTemplate', 'getTemplateCategory', 'AddTemplateCategory','$timeout', 'DeleteTempCategory' , 'DeleteTemplate', 'GetEditTemplate', 'EditTemplate',  function($scope, $rootScope, mySchema, $window, getTemplates, AddTemplate, getTemplateCategory, AddTemplateCategory,$timeout, DeleteTempCategory, DeleteTemplate, GetEditTemplate, EditTemplate){
+AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', 'getTemplates' ,'AddTemplate', 'getTemplateCategory', 'AddTemplateCategory','$timeout', 'DeleteTempCategory' , 'DeleteTemplate', 'GetEditTemplate', 'EditTemplate', 'GetLabOrderCategory', 'GetTempCategory', 'UpdateTempCategory', function($scope, $rootScope, mySchema, $window, getTemplates, AddTemplate, getTemplateCategory, AddTemplateCategory,$timeout, DeleteTempCategory, DeleteTemplate, GetEditTemplate, EditTemplate, GetLabOrderCategory, GetTempCategory, UpdateTempCategory){
     $scope.myForm = {
         schema: mySchema
     };
@@ -166,7 +166,6 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
     }
 
     $scope.AddCategory = function (category) {
-
         if (angular.equals({}, category) == false) {
             $scope.hideLoader = 'show';
             //$scope.updateEncounterBtn = true;
@@ -181,9 +180,6 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
             AddTemplateCategory.save(addCateogry, CategorySuccess, CategoryFailure);
         }
     }
-
-
-
     function CategorySuccess(res) {
         console.log(res);
         if (res.status == true) {
@@ -203,8 +199,55 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
         console.log(error);
         $('#internetError').modal('show');
     }
+    $scope.editCategoryitems = {};
+    $scope.openEditModal = function(catID){
+        GetTempCategory.get({token: $window.sessionStorage.token, cat_id: catID}, getCategorySuccess, getCategoryFailure);
+        function getCategorySuccess(res){
+            if(res.status == true){
+                console.log(res);
+                //$scope.editCategoryitems = res.data;
+                $scope.editCategoryitems.cat_name = res.data[0].name;
+                $scope.editCategoryitems.cat_desc = res.data[0].description;
+                $scope.editCategoryitems.catID = res.data[0].id;
+            }
+        }
+        function getCategoryFailure(error){
+            console.log(error);
+        }
+        $('#editcategory').modal('show');
+    }
+    $scope.editCategory = function (category) {
+            $rootScope.loader = 'show';
+            //$scope.updateEncounterBtn = true;
+            //console.log($scope.displayInfo.patient_id);
+            var addCateogry = {
+                token: $window.sessionStorage.token,
+                category_name: category.cat_name,
+                description: category.cat_desc,
+                cat_id: $scope.editCategoryitems.catID
+            }
+            //angular.copy(addCateogry,$scope.catt_unique);
+            UpdateTempCategory.get(addCateogry, EditCategorySuccess, CategoryFailure);
+    }
+    function EditCategorySuccess(res) {
+        console.log(res);
+        if (res.status == true) {
+            getTemplateCategory.get({token: $window.sessionStorage.token, template_type: 2}, TemplateCategorySuccess, TemplateCategoryFailed);
+            $rootScope.loader = "hide";
+            //$scope.categories.push($scope.catt_unique);
+            console.log($scope.CategoryLists);
+            $timeout(function () {
+                $('#editcategory').modal('hide');
+                $scope.category = [];
+                $scope.submitted = false;
+            },500);
+        }
+    }
 
-
+    function CategoryFailure(error) {
+        console.log(error);
+        $('#internetError').modal('show');
+    }
 
     $scope.catDeleted = function (catID) {
         console.log(catID);

@@ -10,7 +10,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 	$scope.patientInfo = false;
 	$scope.hideLoader = "hide";
 	$scope.disabledEncounterButton = true;
-	$scope.buttonDisabled = false;
+	$scope.buttonDisabled = true;
 	$scope.itemsPerPage = 15;
 	$scope.allEncounter = [];
 	$scope.appointment = {};
@@ -65,9 +65,11 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 				$scope.displayInfo.marital_status = res.data.marital_status;
 				$scope.EID = res.data.encounter_id;
 				for(var k=0; k < $scope.allEncounter.length; k++){
+                    
 					if($scope.EID == $scope.allEncounter[k].id){
 						$scope.buttonDisabled = true;
-						console.log($scope.allEncounter[k]);
+                        console.log($scope.allEncounter[k].id, $scope.EID, "mm");
+						//console.log($scope.allEncounter[k], $scope.EID);
 					}
 				}
 				$scope.visitStatus = res.is_visit;
@@ -132,7 +134,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
         GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: patientID}, getEncountersSuccess, getEncountersFailure);
         function getEncountersSuccess(res) {
             if (res.status == true) {
-                $scope.buttonDisabled = true;
+                $scope.buttonDisabled = false;
                 $rootScope.loader = "hide";
                 $scope.disabledEncounterButton = false;
                 $scope.patientInfo = true;
@@ -144,6 +146,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
                 $scope.displayInfo.sex = res.data.sex;
                 $scope.displayInfo.marital_status = res.data.marital_status;
                 $scope.hospital_plan = res.data.hospital_plan;
+                $scope.visitStatus = res.is_visit;
                 if($scope.hospital_plan == '1') $scope.hospital_plan = "card-color-1";
                 if($scope.hospital_plan == '2') $scope.hospital_plan = "card-color-2";
                 else $scope.hospital_plan = "card-color-3";
@@ -196,9 +199,10 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 				token: $window.sessionStorage.token, 
 				patient_id: $scope.displayInfo.patient_id,
 				department_id: addEncounter.department,
-				encounter_class: addEncounter.class,
+				encounter_class: addEncounter.class == undefined ? '' : addEncounter.class,
 				encounter_type: addEncounter.type,
 				whom_to_see: addEncounter.wts,
+                reason_of_visit: addEncounter.reason_of_visit == undefined ? '' : addEncounter.reason_of_visit,
 				decscribe_whom_to_see : addEncounter.describeWTS
 			}, encounterSuccess, encounterFailed);
 		}else{
@@ -214,9 +218,10 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
                 patient_id: $scope.displayInfo.patient_id,
                 visit_id: $scope.encounterID == undefined ? $scope.EID : $scope.encounterID,
                 department_id: updateData.department,
-                encounter_class: updateData.class,
+                encounter_class: updateData.class == undefined ? '' : updateData.class,
                 encounter_type: updateData.type,
-                whom_to_see: updateData.wts
+                whom_to_see: updateData.wts,
+                reason_of_visit: updateData.reason_of_visit == undefined ? '' : addEncounter.reason_of_visit
             }, updateEncounterSuccess, updateEncounterFailure);
         }
     }
@@ -225,11 +230,15 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
         if (res.status == true) {
             $scope.hideLoader = 'hide';
             $scope.message = true;
-            $scope.buttonDisabled = false;
+            $scope.buttonDisabled = true;
+            $scope.disabledEncounterButton = true;
             $scope.updateEncounterBtn = false;
             $scope.errorMessage = res.message;
             $scope.messageType = 'alert-success';
             $scope.errorSymbol = 'fa fa-check';
+
+            $scope.disabledEncounterButton = true;
+            $scope.buttonDisabled = true;
             $timeout(function () {
                 $scope.updateEncounterPopUp = false;
             }, 1500);
@@ -268,7 +277,9 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 		console.log(res);
 		if(res.status == true){
 			$scope.submitted = false;
+            $scope.disabledEncounterButton = true;
 			$scope.addEncounterBtn = false;
+            $scope.buttonDisabled = true;
 			$scope.hideLoader = "hide";
 			$scope.messageType = "alert-success";
 			$scope.errorMessage = res.message;
@@ -478,12 +489,16 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
     function checkoutSuccess(res){
     	if(res.status ==  true){
     		console.log(res);
+            $scope.disabledEncounterButton = true;
+            $scope.buttonDisabled = true;
     		$scope.hideLoader = "hide";
 			$scope.messageType = "alert-success";
 			$scope.errorMessage = res.message;
 			$scope.errorSymbol = "fa fa-check";// 
 			$scope.message = true;
 			$scope.buttonDisabled = false;
+            $scope.disabledEncounterButton = true;
+            $scope.buttonDisabled = true;
 			setTimeout(function() {$('#checkout').modal('hide'); $scope.message = false;}, 1000);
 			GetAllEncounters.get({
 		        token: $window.sessionStorage.token,
@@ -523,6 +538,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
         if (res.status == true) {
             $rootScope.loader = "hide";
             if(res.data.length == 0){
+                $scope.allEncounter = [];
                 $('#noRecordFound').modal('show');
                 return true;
             }
@@ -676,10 +692,12 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 
     function getOneEncounterSuccess(res) {
         if (res.status == true) {
+            console.log(res.data, "reason");
             $scope.updateEncounter.department = res.data.department_id;
             $scope.updateEncounter.class = res.data.encounter_class;
             $scope.updateEncounter.type = res.data.encounter_type;
             $scope.updateEncounter.wts = res.data.whom_to_see;
+            $scope.updateEncounter.reason_of_visit = res.data.reason_of_visit;
 
         }
         setTimeout(function () {
@@ -749,6 +767,8 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
             if (res.status == true) {
             	//$scope.buttonDisabled = false;
             	//$scope.action = undefined;
+                /*$scope.disabledEncounterButton = true;
+                $scope.buttonDisabled = true;*/
                 $('#vital-signs').modal('hide');
                 $rootScope.loader = "hide";
                 $scope.vital.systolic = '';

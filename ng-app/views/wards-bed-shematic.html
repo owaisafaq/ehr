@@ -10,7 +10,7 @@
             <div class="card-body col-lg-12 bed-box-con">
                 <div class="bed-box" ng-repeat="beds in allBedOccupancy" ng-click="statusValue(beds.bed_status)" status="{{beds.bed_status}}" id="{{beds.patient_bed_id}}" ng-click="selectBed(beds.id)">
                     <span class="txt5">Bed No.</span>
-                    <span class="txt6">BED{{beds.id}}</span>
+                    <span class="txt6">B{{beds.id}}</span>
                     <img ng-if="beds.bed_status == 'available'" ng-src="assets/img/bed_available.png">
                     <img ng-if="beds.bed_status == 'occupied'" ng-src="assets/img/bed_occupied.png">
                     <img ng-if="beds.bed_status == 'closed'" ng-src="assets/img/bed_close.png">

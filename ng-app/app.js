@@ -87,6 +87,10 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', function 
                         load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/clinicaldocumentationclinicprogressnote.js").then(function() {
+                                /*return $ocLazyLoad.load ("controllers/labOrderListing.js").then(function() {
+                                return    $ocLazyLoad.load ("controllers/radiology.js").then(function() {
+                                    });
+                                });*/
                             });
                         }
                     }
@@ -234,7 +238,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', function 
                         }
                     }
                 }).
-                when('/lab-order-listing/:patientID', {
+                when('/lab-order-listing/:patientID/:encounterID', {
                     templateUrl: 'views/lab-order-listing.html',
                     controller: 'labOrderListing',
                     resolve: {
@@ -278,7 +282,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', function 
                         }
                     }
                 }).
-                when('/lab-test-report/:testID', {
+                when('/lab-test-report/:testID/:labtestid', {
                     templateUrl: 'views/lab-test-report.html',
                     controller: 'labTestReport',
                     resolve: {
@@ -461,6 +465,17 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', function 
                         load: function($templateCache, $ocLazyLoad, $q) {
                             lazyDeferred = $q.defer();
                             return $ocLazyLoad.load ("controllers/patientpoolarea.js").then(function() {
+                            });
+                        }
+                    }
+                }).
+                when('/radiology/:patientID/:encounterID', {
+                    templateUrl: 'views/radiology.html',
+                    controller: 'radiology',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/radiology.js").then(function() {
                             });
                         }
                     }
@@ -710,8 +725,10 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
         }
 
 
-        $('.select-date').datepicker({autoclose: true, todayHighlight: true, format: 'yyyy-mm-dd'});
-        $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
+        var date = new Date();
+        date.setDate(date.getDate()-1);
+        $('.select-date').datepicker({autoclose: true, todayHighlight: true, format: 'yyyy-mm-dd', endDate: date});
+        $('select').not('.select_searchFields,.search-ajax,.chosen-select').select2({minimumResultsForSearch: Infinity});
         $('.select_searchFields').select2();
         $(".maskPhone").inputmask("99-9999999");
         $(".maskMobile").inputmask("99999999999");

@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 // Lab Order Tests Listing
-AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routeParams','getLabOrderInfo','getLabTestInfo','updateTestStatus','$timeout','$location', function ($scope, $rootScope, $window, $routeParams, getLabOrderInfo,getLabTestInfo,updateTestStatus,$timeout,$location) {
+AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routeParams','getLabOrderInfo','getLabTestInfo','updateTestStatus','$timeout','$location', 'Dosignoff', 'orderReport', function ($scope, $rootScope, $window, $routeParams, getLabOrderInfo,getLabTestInfo,updateTestStatus,$timeout,$location, Dosignoff, orderReport) {
     $rootScope.pageTitle = "EHR - Lab Order Test";
     $scope.action = "";
     getLabOrderInfo.get({ // Getting all tests along with order info
@@ -8,8 +8,12 @@ AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routePar
             order_id: $routeParams.orderID},
         getLabOrderInfoSuccess, getLabOrderInfoFailure);
     function getLabOrderInfoSuccess(res) { // on success
+        console.log(res, "[]");
         if (res.status == true) {
             $rootScope.loader = "hide";
+            $scope.signoffStatus = res.data.test[0].signoff;
+            $rootScope.lab_order_test_id = res.data.test[0].lab_order_test_id;
+            $scope.template_exists = res.data.test[0].template_exists;
             $scope.orderSelected = true;
             $scope.selectedOrder = res.data;
         }
@@ -30,6 +34,9 @@ AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routePar
         }, getLabTestInfoSuccess, getLabTestInfoFailure);
         function getLabTestInfoSuccess(res) { // on success
             if (res.status == true) {
+                console.log(res, "ipopopo");
+                $scope.signoffStatus = res.data.signoff;
+                $scope.labtestid = res.data.id;
                 $rootScope.loader = "hide";
                 $scope.testIsSelected = true;
                 $scope.selectedTest = res.data;
@@ -48,6 +55,10 @@ AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routePar
                 }
                 $('#cancelOrder2 .form-wizard-horizontal .progress .progress-bar-primary').css('width', width + '%');
                 $scope.selectedTest.updated_at = new Date($scope.selectedTest.updated_at); // date property for current date
+                orderReport.save({
+                    lab_test_id: $scope.labtestid, //    will place there orderID/21 api is in progress
+                    token: $window.sessionStorage.token
+                }, orderReportSuccess, orderReportFailure);
             }
         }
         function getLabTestInfoFailure(error) { // on failure
@@ -112,6 +123,53 @@ AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routePar
     }
 
     $scope.go = function ( path ) { // method for routing on button click
-        $location.path( path + '/' + $scope.selectedTest.id);
+        $location.path( path + '/' + $scope.selectedTest.id + "/" + $scope.labtestid);
     };
+
+    $scope.insertBarcode = function(status){
+        if(status == true){
+            $scope.visibleImg = true;
+        }else{
+            $scope.visibleImg = false;
+        }
+    }
+
+    $scope.doSignOff = function(){
+        console.log($scope.labtestid);
+        Dosignoff.save({
+            lab_test_id: $scope.labtestid, //    will place there orderID api is in progress
+            token: $window.sessionStorage.token
+        }, signoffSuccess, signoffFailure);
+    }
+    function signoffSuccess(res){
+        if(res.status == true){
+            console.log(res);
+            $scope.signoffStatus = 1;
+            $('#successSignoff').modal('show');
+            $('#confirmModal').modal('hide');
+        }
+    }
+    function signoffFailure(res){
+        console.log(res.data)
+    }
+
+        
+        
+        function orderReportSuccess(res){
+             console.log(res, "report")
+            if (res.status == true) {
+                $scope.labtestid = res.lab_test_id;
+                $('.showPdf').html("<iframe class='abc' src="+res.data+"></iframe>");
+                $scope.signoffStatus = res.is_signup;
+                $scope.signoffId = res.lab_test_id;
+            }
+        }
+        function orderReportFailure(res){
+            console.log(res);
+        }
+
+        $scope.openPrint  = function (){
+            window.print();
+        }
+
 }]);

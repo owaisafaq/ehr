@@ -235,7 +235,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 		console.log("Invoice:"+invoice_id);*/
 		console.log(bill_id);
 
-		if(bill_id=null){
+		if(bill_id==null){
 
 			return false;
 		}

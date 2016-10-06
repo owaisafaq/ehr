@@ -218,9 +218,9 @@
                             <label>Medication</label>
                         </div>
                         <div class="col-lg-9">
-                            <select ng-model="MedicationData.medication" class="form-control" placeholder="Select Medication">
+                            <select ng-model="MedicationData.medication" class="form-control select_searchFields getMedicineName" placeholder="Select Medication">
                                 <option></option>
-                                <option ng-selected="MedicationData.medication == medicationDropData.name" value="{{medicationDropData.id}}" ng-repeat="medicationDropData in allMedications">{{medicationDropData.supplements}}</option>{{allMedications}}
+                                <option ng-selected="MedicationData.medication == medicationDropData.name" value="{{medicationDropData.id}}" ng-repeat="medicationDropData in getDrugs">{{medicationDropData.name}}</option>{{allMedications}}
                             </select>
                         </div>                                              
 
@@ -253,7 +253,7 @@
                             <label>Pharmacy</label>
                         </div>
                         <div class="col-lg-9">
-                            <select ng-model="MedicationData.pharmacy" class="form-control" placeholder="Select Pharmacy">
+                            <select ng-model="MedicationData.pharmacy" class="form-control getpharmacyName" placeholder="Select Pharmacy">
                                 <option></option>
                                 <option ng-selected="MedicationData.pharmacy == pharmacyDataDrop.name" value="{{pharmacyDataDrop.name}}" ng-repeat="pharmacyDataDrop in allPharmacies">{{pharmacyDataDrop.name}}</option>
                             </select>
@@ -282,7 +282,7 @@
                                         <label>Medication</label>
                                     </div>
                                     <div class="col-lg-4">
-                                        <span>{{medicationDataPush.medication}}</span>
+                                        <span>{{medicationDataPush.medicationName}}</span>
                                     </div>
                                     <div class="col-lg-3">
                                         <label>Dispense</label>

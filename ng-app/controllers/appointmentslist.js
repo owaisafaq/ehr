@@ -421,8 +421,8 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
                     offset: 0
                 }, allAppointmentsSuccess, allAppointmentsFailure);
             }else{
-                $scope.modalHeading = "Result";
-                $scope.modalMessage = res.message;
+                $scope.modalHeading = "Error";
+                $scope.modalMessage = "Appointment cannot be converted! Patient has an active encounter";
                 $('#noResultFound').modal('show');
             }
         }

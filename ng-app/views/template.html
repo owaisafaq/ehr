@@ -226,8 +226,6 @@
                         </div>
                     </div>
                     <form class="custom-form">
-
-
                         <table class="table table-striped no-margin table-custom table-custom_big setting_table_cat">
                             <thead>
                                 <tr>
@@ -243,7 +241,7 @@
                                         <div class="settings_actions"><a href="javascript:;" class="setting-button"></a>
                                             <div class="tool-tip_popup">
                                                 <!--<a href="javascript:;">View</a>-->
-                                                <a href="javascript:;">Edit</a>
+                                                <a href="javascript:;" ng-click="openEditModal(category.id);">Edit</a>
                                                 <a href="javascript:;"   ng-click="catDeleted(category.id)">Delete</a>
                                             </div>
                                         </div>
@@ -253,8 +251,6 @@
                         </table>
                     </form>
                 </div>
-
-
             </div><!--end .card-body -->
         </div><!--end .card -->
     </section>
@@ -263,17 +259,51 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
-                <h2>Add Code</h2>
+                <h2>Add Category</h2>
             </div>
             <div class="modal-body">
-                <form class="custom-form"  ng-submit="AddCategory(category);" name="categoryForm">
+                <form class="custom-form"  ng-submit="AddCategory(category);" name="categoryFormAdd">
                     <div class="row">
 
                         <div class="col-lg-3">
                             <label>Name</label>
                         </div>
                         <div class="col-lg-9">
-                            <input type="text" name="cat_name" ng-model="category.cat_name" ng-class="{true: 'error'}[submitted && categoryForm.cat_name.$invalid]" class="form-control" required/>
+                            <input type="text" name="cat_name" ng-model="category.cat_name" ng-class="{true: 'error'}[submitted && categoryFormAdd.cat_name.$invalid]" class="form-control" required/>
+                            <p class="help-block PIValid" ng-show="submitted && categoryFormAdd.cat_name.$error.required">Required</p>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <label>Description</label>
+                        </div>
+                        <div class="col-lg-12">
+                            <textarea  ng-model="category.cat_desc" name="cat_desc" ng-class="{true: 'error'}[submitted && categoryFormAdd.cat_desc.$invalid]" class="form-control" required></textarea>
+                            <p class="help-block PIValid" ng-show="submitted && categoryFormAdd.cat_desc.$error.required">Required</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;" ng-disabled="categoryFormAdd.$invalid">Add</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade big-modal" id="editcategory" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Update Category</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form" ng-submit="editCategory(editCategoryitems);" name="categoryForm">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label>Name</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="text" name="cat_name" ng-model="editCategoryitems.cat_name" ng-class="{true: 'error'}[submitted && categoryForm.cat_name.$invalid]" class="form-control" required/>
                             <p class="help-block PIValid" ng-show="submitted && categoryForm.cat_name.$error.required">Required</p>
                         </div>
 
@@ -281,23 +311,18 @@
                             <label>Description</label>
                         </div>
                         <div class="col-lg-12">
-                            <textarea  ng-model="category.cat_desc" name="cat_desc" ng-class="{true: 'error'}[submitted && categoryForm.cat_desc.$invalid]" class="form-control" required></textarea>
+                            <textarea  ng-model="editCategoryitems.cat_desc" name="cat_desc" ng-class="{true: 'error'}[submitted && categoryForm.cat_desc.$invalid]" class="form-control" required></textarea>
                             <p class="help-block PIValid" ng-show="submitted && categoryForm.cat_desc.$error.required">Required</p>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;" ng-disabled="submitted && categoryForm.$invalid">Add</button>
+                        <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;" ng-disabled="submitted && categoryForm.$invalid">Save</button>
                         <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
                     </div>
                 </form>
-
             </div>
-
         </div><!-- /.modal-content -->
-
-
     </div><!-- /.modal-dialog -->
-
 </div><!-- /.modal -->
 <div class="modal fade" id="noRecordFound" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
