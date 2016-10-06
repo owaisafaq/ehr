@@ -1,242 +1,195 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+<!doctype html>
 <html>
     <head>
-        <title>Lab Orders:</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        <style>
-            .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12{
-                position: relative;
-                min-height: 1px;
-                padding-left: 12px;
-                padding-right: 12px;
-                float:left;
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>EHR - Report</title>
+        <style type="text/css">
+            body {
+                margin: 0px;
+                padding: 0px;
+                font-size: 17px;
+                font-family: Arial, Helvetica, sans-serif;
+                background-color:#fff;
+                color:#000;
             }
-            .col-lg-12 {
-                width: 100%;
+            table {
+                border-collapse: collapse;
+                margin: 0px auto;
+                border: 0px;
             }
-            .col-lg-2 {
-                width: 16.666666666666664%;
-            }
-            .col-lg-3 {
-                width: 25%;
-            }
-            col-lg-9 {
-                width: 75%;
-            }
-            .col-lg-6 {
-                width: 50%;
-            }
-            .col-lg-10 {
-                width: 83.33333333333334%;
-            }
-            .pull-left {
-                float: left !important;
-            }
-            .patient_summary_2 {
-                float: left;
-                width: 100%;
-            }
-            .label-style-con {
-                background: #fff;
-            }
-            .hospital-pop-date {
-                margin-top: 35px;
-            }
-            .txt-style-5 {
-                color: #939598;
-                font-size: 12px;
-            }
-            .pull-right {
-                float: right !important;
-            }
-            .patient_summary_2 .patient_summary {
-                padding: 20px 30px;
-            }
-            .patient_summary_2 .row{border-left: none;border-right: none;border-top: none !important;border-bottom: 1px solid #ebebeb;
-            display:inline-block;padding: 20px 0;margin:0;  }
-            .row{margin-right:-12px;margin-left:-12px;}
-            .patient_summary_2 .patient_summary .row:first-child, .patient_summary_2 .patient_summary .row:last-child {
-                background: #fbfbfb;
-                padding: 20px 10px;
-                border: none !important;
-                display: inline-flex;
-                width: 100%;
-            }
-            .text-center {
-                text-align: center;
-            }
-            .patient_summary_2 .patient_summary label {
-                font-size: 14px;
-                color: #1a1a1a;
-                text-transform: capitalize;
-                height: 22px;
-                width: 236px;
-                margin: 0;
-                line-height: 28px;
-                font-family: 'sgui-bold';
-                font-weight: 700    ;
-            }
-            .clear{clear:both;}
-            .patient_summary_2 .patient_summary label.label-style-2 {
-                font-size: 24px;
-                color: #003d51;
-                width: 100%;
-                text-transform: capitalize;
-                margin: 12px 0;
-                line-height: 28px;
-                font-family: 'sgui-bold';
-            }
-            .patient_summary_2 .patient_summary label.txt-style-4 {
-                font-size: 13px;
-                color: #666666;
-                text-transform: capitalize;
-                font-weight: normal;
-                padding-top: 8px !important;
-                height: 22px;
-                line-height: 14px;
+            h1,h2,h3,h4,h5,h6{
                 margin: 0;
             }
-
-            .no-padding {
-                padding: 0 !important;
+            a, a:focus, a:active, a:hover, a:visited, a:link {
+                color: #fe5151;
+                text-decoration: none;
             }
-            .patient_summary .row > div {
-                margin-bottom: 0;
+            .txt-style1{
+                font-size: 20px !important;
+                color: #212121;
+                line-height: 29px;
             }
-            .patient_summary_2 .patient_summary .col-lg-9 {
-                margin-bottom: 0px !important;
+            p{
+                margin: 0px;
             }
-            .patient_summary_2 label.col-lg-12 {
-                width: 100%;
-            }
-            .margin-bottom-xl {
-                margin-bottom: 10px !important;
-            }
-            .patient_summary_2 .patient_summary .row:last-child {
-                background: #fbfbfb;
-                border: none !important;
-                height: 40px;
-                padding: 5px 0;
-                margin-top: 210px;
-            }
-            .patient_summary_2 .patient_summary .row:last-child > div:first-child {
-                padding-left: 0;
-            }
-            .container{width:90%;display:block;padding:0px 50px;margin:0 auto;}
-
         </style>
     </head>
-
     <body>
-        <div class="container">
-            <div class="col-lg-12">
-                <?php /*print_r($patient); */?>
-                <div class="patient_summary_2 label-style-con">
-                    <div class="col-lg-12 margin-bottom-xxl">
-                        <h2 class="pull-left">Hospital Logo</h2>
-                        <h2 class="pull-right txt-style-5 hospital-pop-date"><?php echo date('Y-m-d'); ?></h2>
-                    </div>
-                    <div class="patient_summary col-lg-12">
-                        <div class="row">
-                            <div class="col-lg-2 text-center">
-                               <img src="<?php echo $patient->patient_image; ?>" alt=""/>
-                            </div>
-                            <div class="col-lg-10">
-                                <div class="col-lg-12">
-                                    <label class="label-style-2"><?php echo $patient->patient_name?></label>
-                                </div>
-                               <div class="col-lg-3">
-                                    <label>patient id</label>
--                                </div>
-                               <div class="col-lg-3">
-                                   <label class="txt-style-4"><?php echo $patient->id?></label>
-                               </div>
+        <div style="background: #fff;width: 715px;margin: 0 auto;">
+            <table style="border-collapse: separate;width: 100%;box-sizing: border-box;padding: 20px;display: block;background-color: #464c61;">
+                <tr>
+                    <td>
+                        <h3 style="color: #fff;">Order Reports Sign Off</h3>
+                    </td>
+                </tr>
+            </table>
+            <div style="background-color:#f9fafd;padding:20px;width:100%;box-sizing:border-box;">
 
-                             <div class="col-lg-3">
-                                   <label>age</label>
-                               </div>
-                               <div class="col-lg-3">
-                                   <label class="txt-style-4"><?php echo $patient->age?></label>
-                               </div>
+                <table border="0"  style="width:100%;background-color:#fff;padding:40px;border-collapse:separate;">
+                    <tr>
+                        <td>
+                            <table style="width:100%;border-collapse: separate;">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="1" align="right">
+                                            <h1 style="font-size:24px;color:#1a1a1a;display:inline-block;float:left;">Hospital Logo</h1>
+                                        </td>
+                                        <td style="line-height:20px;" colspan="1">
+                                            <table align="right">
+                                                <tr>
+                                                    <td align="right">
+                                                        <span style="display:block;font-size:12px;color:#939598;">ABC House, 19 Street, CA</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
 
-                               <div class="col-lg-3">
-                                   <label>Gender</label>
-                               </div>
-                                <div class="col-lg-3">
-                                    <label class="txt-style-4"><?php echo $patient->gender?></label>
-                                </div>
-                              <div class="col-lg-3">
-                                   <label>Marital Status</label>
-                              </div>
-                               <div class="col-lg-3">
-                                    <label class="txt-style-4"><?php echo $patient->marital_status?></label>
-                                </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table style="border-collapse: separate;width: 100%;margin-top: 20px;background-color: #fbfbfb;padding: 20px;box-sizing: border-box;">
+                                <tbody>
+                                    <tr>
+                                        <td rowspan="4">
+                                            <img style="max-width: 120px; max-height: 120px; padding-right: 15px" src="<?php echo $patient->patient_image; ?>" />
+                                        </td>
 
-                              <div class="col-lg-3">
-                                   <label>date of birth</label>
-                               </div>
-                                <div class="col-lg-3">
-                                  <label class="txt-style-4"><?php echo $patient->date_of_birth?></label>
-                               </div>
-                            </div>
-                      </div>
+                                        <td>
+                                            <h4 style="font-size:20px;color:#1a1a1a;text-align:left;"><?php echo $patient->patient_name?></h4>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span style="color:#1a1a1a;font-size:13px;font-weight:600;">Patient ID</span>
+                                        </td>
 
-                        <div class="row">
-                            <div class="col-lg-12 no-padding">
-                                    <?php foreach ($data as $d){ ?>
-                                    <div class="col-lg-3">
-                                        <label><?php echo $d['field']->displayName;  //echo 'Mr Suriya';?></label>
-                                    </div>
-                                    <div class="col-lg-9">
-                                        <label class="txt-style-4 col-lg-12 no-padding margin-bottom-xl"><?php echo $d['value']; ?></label>
-                                    </div>
-                                    <?php } ?>
-<!--                                <div class="col-lg-3">-->
-<!--                                    <label>Primary Diagnosis</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-9">-->
-<!--                                    <label class="txt-style-4 col-lg-12 no-padding margin-bottom-xl">Acute upper respiratory infection</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-3 clear">-->
-<!--                                    <label>Secondary Diagnosis</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-9">-->
-<!--                                    <label class="txt-style-4 col-lg-12 no-padding margin-bottom-xl"></label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-3 clear">-->
-<!--                                    <label>Discharge Medication</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-9">-->
-<!--                                    <label class="txt-style-4 col-lg-12 no-padding margin-bottom-xl">Phenoxymethylpenicillin 125mg/5ml solution 7 day(s) supoly 125m</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-3">-->
-<!--                                    <label>Follow Up</label>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-9">-->
-<!--                                    <label class="txt-style-4 col-lg-12 no-padding margin-bottom-xl">No Follow Up</label>-->
-<!--                                </div>-->
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <label class="txt-style-4 col-lg-12">ABC Hospital, XYZ Street, LMN Bulevard, AB 5432</label>
-                            </div>
-                            <div class="col-lg-6">
-                                <label class="txt-style-4 pull-right text-right">+1 555 555 5555</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                        <td>
+                                            <span style="color:#666666;font-size:13px;"><?php echo $patient->id?></span>
+                                        </td>
+
+                                        <td>
+                                            <span style="color:#1a1a1a;font-size:13px;font-weight:600;">Age</span>
+                                        </td>
+
+                                        <td>
+                                            <span style="color:#666666;font-size:13px;"><?php echo $patient->age?></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span style="color:#1a1a1a;font-size:13px;font-weight:600;">Gender</span>
+                                        </td>
+
+                                        <td>
+                                            <span style="color:#666666;font-size:13px;"><?php echo $patient->gender?></span>
+                                        </td>
+
+                                        <td>
+                                            <span style="color:#1a1a1a;font-size:13px;font-weight:600;">Marital Status</span>
+                                        </td>
+
+                                        <td>
+                                            <span style="color:#666666;font-size:13px;"><?php echo $patient->marital_status?></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span style="color:#1a1a1a;font-size:13px;font-weight:600;">Date of Birth</span>
+                                        </td>
+
+                                        <td>
+                                            <span style="color:#666666;font-size:13px;"><?php echo $patient->date_of_birth?></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 30px; padding-bottom: 30px; border-bottom: 1px solid #ebebeb;">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="font-size: 13px;color:#1a1a1a; width: 30%; padding-bottom: 15px; font-weight: bold;">Report Type</td>
+                                    <td style="font-size: 13px;color:#666666; width: 70%; padding-bottom: 15px;">Discharge Letter</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 13px;color:#1a1a1a; width: 30%; padding-bottom: 15px; font-weight: bold; line-height: 20px;">Department of<br />Paediatrics</td>
+                                    <td style="font-size: 13px;color:#666666; width: 70%; padding-bottom: 15px;"><b>Direct Line</b>&nbsp;01942-2644170 &nbsp;&nbsp;&nbsp;<b>Fax Number</b>&nbsp;01942-2644176</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 13px;color:#1a1a1a; width: 30%; padding-bottom: 15px; font-weight: bold;">Reciever</td>
+                                    <td style="font-size: 13px;color:#666666; width: 70%; padding-bottom: 15px;">Dr. Foster, The GP Practice 999 Wigan Lane, WIGAN. </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 13px;color:#1a1a1a; width: 30%; padding-bottom: 15px; font-weight: bold;">Patient</td>
+                                    <td style="font-size: 13px;color:#666666; width: 70%; padding-bottom: 15px;">The House Street ST, Wetherfield,</td>
+                                </tr>
+                            </table>
+                    </tr>
+
+                    <tr>
+                        <td style="padding-top: 30px; padding-bottom: 30px; border-bottom: 1px solid #ebebeb;">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="font-size: 13px;color:#1a1a1a; width: 30%; padding-bottom: 15px; font-weight: bold;">Admission Details</td>
+                                    <td style="font-size: 13px;color:#666666; width: 70%; padding-bottom: 15px; line-height: 20px;">2/7 ago he was admittd with croup. He came back with fever, coryzeal symptoms ans congested tonsils. He was started on peniccline.</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 13px;color:#1a1a1a; width: 30%; padding-bottom: 15px; font-weight: bold;">Admission Date/ Time</td>
+                                    <td style="font-size: 13px;color:#666666; width: 70%; padding-bottom: 15px;">24/03/2016 from Upper Johnsone Ward, RAEI</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 13px;color:#1a1a1a; width: 30%; padding-bottom: 15px; font-weight: bold;">Discharge Date</td>
+                                    <td style="font-size: 13px;color:#666666; width: 70%; padding-bottom: 15px;">25/03/2016 from Upper Johnsone Ward, RAEI</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 13px;color:#1a1a1a; width: 30%; padding-bottom: 15px; font-weight: bold;">Discharge Consultant</td>
+                                    <td style="font-size: 13px;color:#666666; width: 70%; padding-bottom: 15px;">DR RG Levy</td>
+                                </tr>
+                            </table>
+                    </tr>
+
+                    <tr>
+                        <td style="padding-top: 30px; padding-bottom: 30px; border-bottom: 1px solid #ebebeb;">
+                            <table style="width: 100%;">
+                                <?php foreach ($data as $d){ ?>
+                                <tr>
+                                    <td style="font-size: 13px;color:#1a1a1a; width: 30%; padding-bottom: 15px; font-weight: bold;"><?php echo $d['field']->displayName;?></td>
+                                    <td style="font-size: 13px;color:#666666; width: 70%; padding-bottom: 15px;"><?php echo $d['value']; ?></td>
+                                </tr>
+                                <?php } ?>
+                            </table>
+                    </tr>
+
+                </table>
+
             </div>
-        </div>
 
+        </div>
     </body>
 </html>
-
