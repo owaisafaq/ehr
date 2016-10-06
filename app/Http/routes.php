@@ -305,4 +305,7 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->post('update_template_category','App\Http\Controllers\ApiController@update_template_category');
 
 
+    //Prescription Pdf
+    $app->get('get_prescription_pdf','App\Http\Controllers\PDFController@get_prescription_pdf');
+
 });

@@ -2914,3 +2914,15 @@ $api->params->description = "test";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+
+
+//Get Prescription Pdf
+$api = new api();
+$api->name = "Get Prescription Pdf";
+$api->url = HOST . 'get_prescription_pdf';
+$api->method = "GET";
+$api->params->prescription_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;

@@ -208,7 +208,7 @@ class PDFController extends Controller
             }
 
         }
-
+        
         $data = ['data'=>$arr,'patient'=>$patient,'diagnosis'=>$diagnosis,'allergies'=>$allergies,'immunizations'=>$immmunizations,'orders'=>$orders];
 
         $view =  app()->make('view')->make('clinical_notes_pdf', $data)->render();
@@ -250,5 +250,44 @@ class PDFController extends Controller
               );
         return response()->json(['status' => true, 'message' => 'Report signed off Successfully','is_signoff'=>1]);
 
+    }
+
+    public function get_prescription_pdf(Request $request){
+
+        $prescription_id = $request->input('prescription_id');
+
+        $medication = DB::table('patient_prescription')
+            ->leftJoin('patient_prescription_medicine', 'patient_prescription.id', '=', 'patient_prescription_medicine.prescription_id')
+            ->select('medication', 'supplements', 'sig','dispense','reffills','pharmacy')
+            ->where('patient_prescription.id', $prescription_id)->get();
+
+
+        $logo_image = url('/') . '/uploaded_images/';
+
+        $patient = DB::table('patient_prescription')
+            ->select(DB::raw('patients.id,CONCAT(patients.first_name," ",patients.last_name) AS patient_name,CONCAT("' . $logo_image . '",patients.patient_image) as patient_image,patients.age,patients.date_of_birth,maritial_status.name as marital_status,(CASE WHEN (sex = 1) THEN "Male" ELSE "Female" END) as gender'))
+            ->leftJoin('patients', 'patient_prescription.patient_id', '=', 'patients.id')
+            ->leftJoin('maritial_status', 'patients.marital_status', '=', 'maritial_status.id')
+            ->where('patient_prescription.id', $prescription_id)
+            ->first();
+
+
+        $data = ['medication'=>$medication,'patient'=>$patient];
+
+        $view = app()->make('view')->make('prescription_pdf',$data)->render();
+
+        $pdf = PDF::loadHTML($view);
+
+        $path = base_path() . '/public/patient_archive/prescription_notes.pdf';
+
+        $pdf->save($path);
+
+        $file_archive = url('/') . '/patient_archive/prescription_notes.pdf';
+
+        echo json_encode(array(
+            'status' => true,
+            'data' => $file_archive
+
+        ), JSON_UNESCAPED_SLASHES);
     }
 }
