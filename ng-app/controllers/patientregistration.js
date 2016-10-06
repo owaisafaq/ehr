@@ -106,7 +106,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             $scope.disabledDropdown = true;
             console.log(country, 'country');
             if (country != null) {
-                States.get({token: $window.sessionStorage.token, country_id: country}, stateSuccess, stateFailed);
+                States.get({token: $window.sessionStorage.token, country_id: 1}, stateSuccess, stateFailed);
             } else {
                 if (flag) {
                     $scope.PI.permanent_country = "";
@@ -124,7 +124,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 }
             }
             function stateSuccess(res) {
-                console.log(res, "country");
+                //console.log(res, "country");
                 if (res.status == true && res.data.length > 0) {
                     angular.copy(res.data, $scope.contactAddressStates);
                     angular.copy(res.data, $scope.permanentAddressStates);
@@ -789,12 +789,15 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                /* setTimeout(function () {
                     $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
                 },100);*/
+                setTimeout(function () {
+                    $('select').trigger('change');
+                }, 100);
                 $scope.extra = {};
                 $scope.extra.address = {};
                 if (res.data.patient_address[0] != undefined) {
-                    $scope.addressStateByCountry(res.data.patient_address[0].country, 0);
+                    $scope.addressStateByCountry(/*res.data.patient_address[0].country*/1, 0);
                     //console.log(res.data.patient_address[0].email, "muzammil");
-                    $scope.addressLocalGovtAreaByStates(res.data.patient_address[0].state, 0);
+                    $scope.addressLocalGovtAreaByStates(/*res.data.patient_address[0].state*/1, 0);
                     $scope.PI.adress.phone_number = res.data.patient_address[0].phone_number;
                     $scope.PI.adress.mobile_number = res.data.patient_address[0].mobile_number;
                     $scope.PI.adress.house_number = res.data.patient_address[0].house_number;
@@ -811,13 +814,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     $scope.extra.address.local_goverment_area = res.data.patient_address[0].local_goverment_area;
                     $scope.PI.adress.state = $scope.extra.address.state;
                     $scope.PI.adress.local_goverment_area = $scope.extra.address.local_goverment_area;
-                    setTimeout(function () {
-                    $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
-                    },100);
-                    
-                    //$scope.PI.adress.state = "1";
-                    //$scope.PI.adress.country = "2";
-                    //$scope.PI.adress.local_goverment_area = 1;
+                    /*setTimeout(function () {
+                        $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
+                    },100);*/
                 }
                 if (res.data.patient_address[1] != undefined) {
                     $scope.PI.adress.permanent_phonenumber = res.data.patient_address[1].phone_number == undefined || res.data.patient_address[1].phone_number == '' ? '' : res.data.patient_address[1].phone_number;
@@ -918,13 +917,11 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 }
                 
                 $rootScope.loader = 'hide';
-                setTimeout(function () {
+                /*setTimeout(function () {
                     $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
-                },100);
-                setTimeout(function () {
-                    $('select').trigger('change');
-                }, 100);
-            }return true;
+                },100);*/
+                
+            }//return true;
         }
         function patientEditFailed(error) {
             console.log(error);
@@ -1729,4 +1726,5 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
             }
         }
+        console.log($scope.extra,'11');
     }]);
