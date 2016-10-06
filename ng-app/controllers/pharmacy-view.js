@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription', '$window', 'GetPrescription', '$routeParams', 'PatienPrescriptionUpdate', 'GetPatientInfo', 'GetAllMedications', 'DropDownData', 'DeleteMedication', 'AddMedicationInPrescription', 'GetMedicineUnits', 'CheckoutPatient', function ($scope, $rootScope, PatienPrescription, $window, GetPrescription, $routeParams, PatienPrescriptionUpdate, GetPatientInfo, GetAllMedications, DropDownData, DeleteMedication, AddMedicationInPrescription, GetMedicineUnits, CheckoutPatient) {
+AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription', '$window', 'GetPrescription', '$routeParams', 'PatienPrescriptionUpdate', 'GetPatientInfo', 'GetAllMedications', 'DropDownData', 'DeleteMedication', 'AddMedicationInPrescription', 'GetMedicineUnits', 'CheckoutPatient', "GetPrescriptionSupplements", "GetMedications", 'PrescriptionPDF', function ($scope, $rootScope, PatienPrescription, $window, GetPrescription, $routeParams, PatienPrescriptionUpdate, GetPatientInfo, GetAllMedications, DropDownData, DeleteMedication, AddMedicationInPrescription, GetMedicineUnits, CheckoutPatient, GetPrescriptionSupplements, GetMedications, PrescriptionPDF) {
         $rootScope.pageTitle = "EHR - Pharmacy VIew";
         $scope.PrescriptionView = [];
         $scope.medicationsDataPush = [];
@@ -124,6 +124,8 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         }
         $scope.addMedication = function (checkEdit) {
             var AddMedications = {
+                medicationName: $('.getMedicineName option:selected').text(),
+                pharmacyName: $('.getpharmacyName option:selected').text(),
                 medication: $scope.MedicationData.medication,
                 sig: $scope.MedicationData.sig,
                 dispense: $scope.MedicationData.dispense,
@@ -131,20 +133,24 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                 pharmacy: $scope.MedicationData.pharmacy,
                 note_of_pharmacy: $scope.MedicationData.note_of_pharmacy,
             }
-            $scope.AddButtonOnAddMedication = true;
+            //$scope.AddButtonOnAddMedication = true;
+            console.log(AddMedications);
             $scope.note = $scope.MedicationData.note_of_pharmacy;
-            if (angular.equals({}, AddMedications) == false) {
-                $scope.medicationsDataPush.push(AddMedications);
-                $scope.MedicationData.sig = "";
-                $scope.MedicationData.dispense = "";
-                $scope.MedicationData.reffills = "";
-                $scope.MedicationData.note_of_pharmacy = "";
-                $scope.MedicationData.medication = "";
-                $scope.MedicationData.pharmacy = "";
-                $("#addmedication select").select2("val", "");
-                if (checkEdit == 1) {
-                    $scope.showUpdate = false;
-                }
+            if(AddMedications.medication != undefined && AddMedications.medication != '' && AddMedications.sig != undefined && AddMedications.sig != '' && AddMedications.dispense != undefined && AddMedications.dispense != '' && AddMedications.reffills != undefined && AddMedications.reffills != '' && AddMedications.pharmacy != undefined && AddMedications.pharmacy != '' /*&& AddMedications.note_of_pharmacy != undefined && AddMedications.note_of_pharmacy != ''*/){
+                //if (angular.equals({}, AddMedications) == false) {
+                    console.log('IN');
+                    $scope.medicationsDataPush.push(AddMedications);
+                    $scope.MedicationData.sig = "";
+                    $scope.MedicationData.dispense = "";
+                    $scope.MedicationData.reffills = "";
+                    $scope.MedicationData.note_of_pharmacy = "";
+                    $scope.MedicationData.medication = "";
+                    $scope.MedicationData.pharmacy = "";
+                    $("#addmedication select").select2("val", "");
+                    if (checkEdit == 1) {
+                        $scope.showUpdate = false;
+                    }
+                //}
             }
         }
         $scope.editMedication = function (index) {
@@ -328,6 +334,36 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         function checkoutFailure(error){
             console.log(error);
             $('#internetError').modal('show');
+        }
+        GetPrescriptionSupplements.save({token: $window.sessionStorage.token}, getSupplementSuccess, getSupplementFailure);
+        function getSupplementSuccess(res) {
+            console.log(res, "supp")
+           $scope.getSupp = res.data;
+        }
+        function getSupplementFailure(res) {
+            console.log(res);
+            $('#internetError').modal('show');
+        }
+        GetMedications.save({token: $window.sessionStorage.token}, getMediSuccess, getMediFailure);
+        function getMediSuccess(res) {
+            console.log(res, "drugs")
+           $scope.getDrugs = res.data;
+        }
+        function getMediFailure(res) {
+            console.log(res);
+            $('#internetError').modal('show');
+        }
+
+            PrescriptionPDF.get({token: $window.sessionStorage.token, prescription_id: $scope.prescriptionID}, presSuccess, pressFailure);
+
+        function presSuccess(res){
+            if(res.status == true){
+                console.log(res, 'lll');
+                $('.showPdf').html("<iframe class='abc' src="+res.data+"></iframe>");
+            }
+        }
+        function pressFailure(){
+            
         }
 
     }]);

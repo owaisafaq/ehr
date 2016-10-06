@@ -1507,6 +1507,22 @@ AppEHR.factory("AddTemplate", function ($resource) {
 
 AppEHR.factory("getTemplateCategory", function ($resource) {
     function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_lab_template_categories', params, {
+            save: {method: 'GET'}
+        });
+        return res2;
+    }
+
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("getCliTemplateCategory", function ($resource) {
+    function getResource(params, body) {
         var res2 = $resource(serverPath + 'get_templates_categories', params, {
             save: {method: 'GET'}
         });
@@ -2356,6 +2372,97 @@ AppEHR.factory("UpdateDischargeDate", function ($resource) {
     };
     return MakeInactive;
 });
+AppEHR.factory("ReferralPatient", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_patient_referel', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("ClinicalReport", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_clinical_notes_pdf', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("AddAttachmentClinical", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_clinical_notes_attachments', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("SignOffClinicalProgress", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'signoff_clinical_report', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("CheckClinicalNotesStatus", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'check_clinical_notes_status', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+AppEHR.factory("UpdatePatientClinicalNotes", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'update_patient_clinical_notes', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var MakeInactive = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return MakeInactive;
+});
+
 AppEHR.factory("orderReport", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'get_lab_test_pdf', params, {
@@ -2382,6 +2489,186 @@ AppEHR.factory("Dosignoff", function ($resource) {
         save: function (params, body, success) {
             var res = getResource(params, body);
             return res.save(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("UpdateLabTestValues", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'update_lab_test_values', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("CheckLabOrderStatus", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'check_lab_orders_status', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("GetAllRadiologyLabs", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_all_radiology_lab_orders', params, {
+            save: {method: 'GET'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("GetDiagnosisList", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_diagnosis', params, {
+            save: {method: 'GET'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("GetMedications", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_prescription_medicines', params, {
+            save: {method: 'GET'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("GetPrescriptionSupplements", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_prescription_supplements', params, {
+            save: {method: 'GET'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("GetLabOrderCategory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_lab_template_category', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("GetTempCategory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_lab_template_category', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("UpdateTempCategory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'update_lab_template_category', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("GetClinicalTempCategory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_template_category', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("UpdateClinicalTempCategory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'update_template_category', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("PrescriptionPDF", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_prescription_pdf', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
         }
     };
     return patientRegistrationEmployer;

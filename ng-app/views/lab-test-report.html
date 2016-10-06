@@ -59,20 +59,20 @@
                         </div>
                     </div>-->
                     <div class="col-lg-2 pull-left select-con">
-                        <select class="form-control" ng-model="templateCategory" placeholder="Select Template Category" ng-change="getCategoriesTemplates(templateCategory)">
+                        <select class="form-control" ng-model="templateCategory" placeholder="Select Template Category" ng-change="getCategoriesTemplates(templateCategory)" ng-disabled="is_signoff == 1">
                             <option value=""></option>
-                            <option ng-repeat="category in templateCategories" value="{{ category.id }}">{{ category.name }}</option>
+                            <option ng-repeat="category in templateCategories" value="{{ category.id }}" ng-selected="category.id == templateCategory">{{ category.name }}</option>
                         </select>
                     </div>
                     <div class="col-lg-2 pull-right select-con" ng-show="have_templates">
-                        <select class="form-control" ng-model="templateID" data-placeholder="Select Template" ng-change="getTemplateData(templateID)">
+                        <select class="form-control" ng-model="templateID" data-placeholder="Select Template" ng-change="getTemplateData(templateID)" ng-disabled="is_signoff == 1">
                             <option value=""></option>
-                            <option value="{{ template.id }}" ng-repeat="template in templates">{{ template.name }}</option>
+                            <option value="{{ template.id }}" ng-repeat="template in templates" ng-selected="template.id == templateID">{{ template.name }}</option>
                         </select>
                     </div>
                 </div> 
             </div>
-            <form class="custom-form" ng-show="templateSelected" name="exampleForm" ng-submit="SaveTemplateValues();">
+            <form class="custom-form" ng-show="templateSelected" name="exampleForm" ng-submit="">
                 <div class="card-body col-lg-12 accordian-body-con">
                     <div class="col-lg-12 pull-right no-padding">
                         <div class="panel-group custom-accordian" id="accordion3">
@@ -89,7 +89,8 @@
                                 <div class="alert {{messageType}}" role="alert" ng-show="message">
                                     <i class="{{errorSymbol}}"></i> {{errorMessage}}
                                 </div>
-                                <div fg-form fg-form-data="myFormData" fg-schema="mySchema"></div>
+                                <div fg-form fg-form-data="myFormData" fg-schema="mySchema" ng-class="{true: 'disabled-fields'}[is_signoff == 1]" ng-hide="newTemp"></div>
+                                <div fg-form fg-form-data="myFormDataNewTemp" fg-schema="mySchemaNewTemp" ng-class="{true: 'disabled-fields'}[is_signoff == 1]" ng-show="newTemp"></div>
                             </div>
                         </div><!--end .panel-group -->
                     </div>
@@ -98,14 +99,13 @@
                     <div class="col-lg-12 no-padding table-header-2">
                         <span class="txt-style-3 pull-left text-uppercase">test by</span>
                         <span class="txt-style-4 pull-left">Avil Trump</span>
-                        <span class="txt-style-3 pull-left text-uppercase">signed off by</span>
-                        <span class="txt-style-4 pull-left">Donald Trump</span>
+                        <span class="txt-style-3 pull-left text-uppercase" ng-show="is_signoff == 1">signed off by</span>
+                        <span class="txt-style-4 pull-left" ng-show="is_signoff == 1">Donald Trump</span>
                         <div class="pull-right">
-                            <button type="button" class="add button-custom">add attachment</button>
-                            <button type="submit" class="save button-custom" ng-class="{ disabled: myForm.$invalid }">Save Changes</button>
-                            <button type="button" class="report button-custom">view report</button>
-                            <button type="button" class="check-button button-custom">Assign</button>
-                            <button type="button" class="checkout button-custom">check out patient</button>
+                        <button ng-disabled="is_signoff == 1" class="add button-custom pull-right" ngf-select="uploadFiles($files, $invalidFiles)" multiple type="file" ngf-max-size="10MB" ng-hide="disabledEncounterButton" ng-disabled="is_signoff == 1">Add Attachment</button>
+                            <button type="submit" class="save button-custom" ng-class="{ disabled: myForm.$invalid }" ng-disabled="is_signoff == 1" ng-click="SaveTemplateValues(myFormData, myFormDataNewTemp);">Save Changes</button>
+                            <button type="button" class="report button-custom" ng-disabled="is_signoff == 1" data-toggle="modal" data-target="#previewReport">view report</button>
+                            <button type="button" class="checkout button-custom" data-toggle="modal" data-target="#checkout">check out patient</button>
                         </div>
                     </div>
                 </div>
@@ -113,3 +113,207 @@
         </div><!--end .card -->
     </section>
 </div>
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Status</h2>
+            </div>
+            <div class="modal-body">
+                <p>Do you want to Sign Off this Report?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade" id="fileUploadedSuccess" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Status</h2>
+            </div>
+            <div class="modal-body">
+                <p>Attachment Uploaded</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade" id="previewReport"  tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Clinical Progress Report</h2>
+            </div>
+            <div class="modal-body" style="height: 500px;width: 100%;">
+            <div class="icons_con pull-right no-margin">
+                <button class="update button-custom" ng-disabled="is_signoff == 1" data-dismiss="modal">update report</button>
+            </div>
+                <!-- <iframe src="{{previewReport}}" width="500" type='application/pdf'></iframe> -->
+                <div class="showPdf"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" ng-click="doSignOff();" data-dismiss="modal" ng-disabled="is_signoff == 1">SIGNOFF</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade" id="successSignoff" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Status</h2>
+            </div>
+            <div class="modal-body">
+                <p>Report Successfully Signed off</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade" id="checkout" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-mid">
+        <form class="custom-form">
+            <div class="modal-content">
+                <div class="modal-header pop_head">
+                    <h2>Check Out Patient</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12 no-padding margin-bottom-xxl">
+                        <div class="alert {{messageType}}" role="alert" ng-show="message">
+                            <i class="{{errorSymbol}}"></i> {{errorMessage}}
+                        </div>
+                        <div class="radio radio-styled">
+                            <label>
+                                <input type="radio" name="checkoutpatient" value="Noappointment" ng-checked="true" ng-model="CO.reason">
+                                <span>No Appointment</span>
+                            </label>
+                        </div>
+                        <div class="radio radio-styled">
+                            <label>
+                                <input type="radio" name="checkoutpatient" value="followUp" ng-model="CO.reason">
+                                <span>Follow up</span>
+                            </label>
+                        </div>
+                        <div class="radio radio-styled">
+                            <label>
+                                <input type="radio" name="checkoutpatient" value="admitPatient" ng-model="CO.reason">
+                                <span>Admit Patient</span>
+                            </label>
+                        </div>
+                        <div class="radio radio-styled">
+                            <label>
+                                <input type="radio" name="checkoutpatient" value="dead" ng-model="CO.reason">
+                                <span>Dead</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="checkout_patient_tab_con">
+                        <div id="Noappointment" class="active">
+                            <label class="margin-bottom-xl">Note</label>
+                            <textarea placeholder="Write Here..."  ng-model="CO.note"></textarea>
+                        </div>
+                        <div id="followUp" class="row">
+                            <div class="col-lg-2">
+                                <label>DATE</label>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group date select-date col-lg-12">
+                                    <div class="input-group-content">
+                                        <input type="text" class="form-control" placeholder="Select Date"  ng-model="CO.date">
+                                    </div>
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <label>Time</label>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group bootstrap-timepicker timepicker col-lg-12">
+                                    <input type="text" class="form-control input-small timepicker"  ng-model="CO.time">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <label class="margin-bottom-xl">Note</label>
+                                <textarea class="margin-bottom-lg" placeholder="Write Here..."  ng-model="CO.note"></textarea>
+                            </div>
+                        </div>
+                        <div id="admitPatient" class="row">
+                            <div class="col-lg-12">
+                                <span class="txt-style-4">Presenting Complaint: Captured from Clinical Note</span>
+                            </div>
+                            <div class="col-lg-3">
+                                <label>to specialty</label>
+                            </div>
+                            <div class="col-lg-3 select-con">
+                                <select class="form-control" ng-model="CO.department" placeholder="Clinic Progress Notes">
+                                    <option value=""></option>
+                                    <option ng-repeat="s in dropDownDATA.departments" ng-value="s.id">{{s.name}}</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3">
+                                <label>admit to ward</label>
+                            </div>
+                            <div class="col-lg-3 select-con select-con_small">
+                                <select class="form-control" ng-model="CO.ward" placeholder="Select Ward" ng-change="wardSelected(CO.ward);">
+                                    <option value=""></option>
+                                    <option ng-repeat="s in allwards" ng-value="s.id">{{s.name}}</option>
+                                </select>
+                                <div class="ward-button-con">
+                                    <button class="ward-button" type="button"></button>
+                                    <div class="select-bed-dropdown">
+                                        <div class="radio radio-styled" ng-repeat="beds in noOFBeds">
+                                            <div class="radio radio-styled">
+                                                <label>
+                                                    <input type="radio" name="checked" ng-model="action" ng-click="bedSelected(beds.id);">
+                                                    <span>{{beds.id}}</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label>Admitted DATE</label>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="txt-style-4">{{displayInfo.visit_created_at}}</label>
+                            </div>
+                            <div class="col-lg-3">
+                                <label>Estimated Discharge</label>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="input-group bootstrap-timepicker timepicker col-lg-12">
+                                    <input type="text" class="form-control input-small timepicker"  ng-model="CO.time">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <label class="margin-bottom-xl">Note</label>
+                                <textarea class="margin-bottom-lg" placeholder="Write Here..."  ng-model="CO.note"></textarea>
+                            </div>
+                        </div>
+                        <div id="dead" class="row">
+                            <div class="col-lg-12">
+                                <label class="margin-bottom-xl">Note</label>
+                                <textarea class="margin-bottom-lg" placeholder="Write Here..."  ng-model="CO.note"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer padding-right-0">
+                        <button type="button" class="btn btn-default button-style-1 padding11" ng-click="checkoutPatient(CO)">Save & Close</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </form>
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

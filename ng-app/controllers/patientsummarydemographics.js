@@ -1,5 +1,5 @@
 var AppEHR = angular.module('AppEHR');
-AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', 'GetResourcesByFolderArchives', 'ListFolderArchives', 'EditFolderArchives', 'DeleteFolderArchives', 'RemoveArchives', 'Upload', 'SaveFiles', '$timeout', 'DropDownData', 'ADDSupplements', 'ADDAllergy', 'AddFolderArchives','EditArchives', 'PatienPrescription', 'FolderUpContent', 'FolderUpFolders', 'ListImmunization', 'DeleteImmunization', 'AddImmunization', 'GetAllMedications', 'CheckoutPatient', 'GetMedicineUnits', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy, GetResourcesByFolderArchives, ListFolderArchives, EditFolderArchives, DeleteFolderArchives, RemoveArchives, Upload, SaveFiles, $timeout, DropDownData, ADDSupplements, ADDAllergy, AddFolderArchives,EditArchives,PatienPrescription, FolderUpContent,FolderUpFolders, ListImmunization, DeleteImmunization, AddImmunization, GetAllMedications, CheckoutPatient, GetMedicineUnits) {
+AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', 'GetResourcesByFolderArchives', 'ListFolderArchives', 'EditFolderArchives', 'DeleteFolderArchives', 'RemoveArchives', 'Upload', 'SaveFiles', '$timeout', 'DropDownData', 'ADDSupplements', 'ADDAllergy', 'AddFolderArchives','EditArchives', 'PatienPrescription', 'FolderUpContent', 'FolderUpFolders', 'ListImmunization', 'DeleteImmunization', 'AddImmunization', 'GetAllMedications', 'CheckoutPatient', 'GetMedicineUnits', 'GetPrescriptionSupplements', 'GetMedications', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy, GetResourcesByFolderArchives, ListFolderArchives, EditFolderArchives, DeleteFolderArchives, RemoveArchives, Upload, SaveFiles, $timeout, DropDownData, ADDSupplements, ADDAllergy, AddFolderArchives,EditArchives,PatienPrescription, FolderUpContent,FolderUpFolders, ListImmunization, DeleteImmunization, AddImmunization, GetAllMedications, CheckoutPatient, GetMedicineUnits, GetPrescriptionSupplements, GetMedications) {
         $rootScope.pageTitle = "EHR - Patient Summary Demographics";
         $scope.vital = {};
         $scope.PI = {};
@@ -44,9 +44,10 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         //$scope.medicationDropDowns = medicationDropDowns;
         //$scope.pharmacyDataDropDown = pharmacyDataDropDown;
         $scope.medicationsDataPush = [];
+        $scope.patID = $routeParams.patientID;
 
         $scope.PID = $routeParams.patientID;
-        $scope.encounterID = $routeParams.encounterID == undefined ? 1 : $routeParams.encounterID;
+       // $scope.encounterID = $routeParams.encounterID == undefined ? 1 : $routeParams.encounterID;
         PatientDemographics.get({
             token: $window.sessionStorage.token,
             patient_id: $routeParams.patientID
@@ -82,6 +83,9 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
                 $scope.PI.patient_image = res.data.patient_image;
                 $scope.PI.displayImage = patientImageDirectory + res.data.patient_image;
                 $scope.hospital_plan = res.data.hospital_plan;
+                $scope.is_visit = res.is_visit;
+                $scope.encounterID = res.visit_id;
+                console.log('visit id', $scope.encounterID);
                 if($scope.hospital_plan == '1') $scope.hospital_plan = "card-color-1";
                 if($scope.hospital_plan == '2') $scope.hospital_plan = "card-color-2";
                 else $scope.hospital_plan = "card-color-3";
@@ -267,6 +271,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }, GetEncountersByPatientsSuccess, GetEncountersByPatientsFailure);
         function GetEncountersByPatientsSuccess(res) {
             if (res.status == true) {
+                console.log(res, "ecnoutner");
                 $rootScope.loader = "hide";
                 $scope.encounters = res.data;
                 $scope.encounterCount = res.count;
@@ -309,16 +314,21 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
         $scope.GetTempcVal = function () {
             $scope.vital.temperaturef = ($scope.vital.temperaturec - 32) * (5 / 9);
+            $scope.vital.temperaturef = parseFloat($scope.vital.temperaturef).toFixed(2);
         }
         $scope.GetTempfVal = function () {
-            $scope.vital.temperaturec = ($scope.vital.temperaturef * (9 / 5)) + 32
+            $scope.vital.temperaturec = ($scope.vital.temperaturec * (9 / 5)) + 32
+            $scope.vital.temperaturec = parseFloat($scope.vital.temperaturec).toFixed(2);
 
         }
         $scope.parseFloat = function (val) {
             return isNaN(parseFloat(val)) ? 0 : parseFloat(val);
         }
         $scope.Calculatebmi = function () {
-            $scope.vital.result = ($scope.vital.weight) / (($scope.vital.height / 100) * ($scope.vital.height / 100));
+            if($scope.vital.weight != undefined && $scope.vital.height != undefined){
+                $scope.vital.result = ($scope.vital.weight) / (($scope.vital.height / 100) * ($scope.vital.height / 100));
+                $scope.vital.result = parseFloat($scope.vital.result).toFixed(2);
+            }
         }
         $scope.removeAllergy = function (ED) {
             $scope.removeAllergyData = {
@@ -688,7 +698,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
         $scope.addSupplements = function (dataToBeAdded) {
             if (angular.equals({}, dataToBeAdded) == false) {
-                console.log(dataToBeAdded.status);
+                console.log(dataToBeAdded);
                 ADDSupplements.save({
                     visit_id: $scope.encounterID,
                     token: $window.sessionStorage.token,
@@ -699,7 +709,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
                     frequency: dataToBeAdded.frequency,
                     intake: dataToBeAdded.intake,
                     from_date: dataToBeAdded.fromdate,
-                    medicine_status: dataToBeAdded.status == false ? 'Inactive' : 'Active',
+                    medicine_status: dataToBeAdded.status == undefined ? 'Inactive' : 'Active',
                     to_date: dataToBeAdded.todate
                 }, addSupplementsSuccess, addSupplementsFailure);
             }
@@ -952,7 +962,11 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         /*MEDICATION*/
         $scope.addMedication = function (checkEdit) {
+            console.log($scope.MedicationData.medication);
+            //$scope.MedicationData.medicationID = $scope.MedicationData.medication;
            var AddMedications = {
+               medicationName: $('.getMedicineName option:selected').text(),
+               pharmacyName: $('.getpharmacyName option:selected').text(),
                medication: $scope.MedicationData.medication,
                sig: $scope.MedicationData.sig,
                dispense: $scope.MedicationData.dispense,
@@ -961,17 +975,21 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
                note_of_pharmacy: $scope.MedicationData.note_of_pharmacy,
            }
            $scope.note = $scope.MedicationData.note_of_pharmacy;
-           $scope.medicationsDataPush.push(AddMedications);
-           $scope.MedicationData.sig = "";
-           $scope.MedicationData.dispense = "";
-           $scope.MedicationData.reffills = "";
-           $scope.MedicationData.note_of_pharmacy = "";
-           $scope.MedicationData.medication = "";
-           $scope.MedicationData.pharmacy = "";
-           $("#addmedication select").select2("val", "");
-           if (checkEdit == 1) {
-               $scope.showUpdate = false;
-           }
+            if(AddMedications.medication != undefined && AddMedications.medication != '' && AddMedications.sig != undefined && AddMedications.sig != '' && AddMedications.dispense != undefined && AddMedications.dispense != '' && AddMedications.reffills != undefined && AddMedications.reffills != '' && AddMedications.pharmacy != undefined && AddMedications.pharmacy != '' && AddMedications.note_of_pharmacy != undefined && AddMedications.note_of_pharmacy != ''){
+                $scope.medicationsDataPush.push(AddMedications);
+                console.log(100);
+                $scope.MedicationData.sig = "";
+                $scope.MedicationData.dispense = "";
+                $scope.MedicationData.reffills = "";
+                $scope.MedicationData.note_of_pharmacy = "";
+                $scope.MedicationData.medication = "";
+                $scope.MedicationData.pharmacy = "";
+                $("#addmedication select").select2("val", "");
+                if (checkEdit == 1) {
+                    $scope.showUpdate = false;
+                }
+            }
+           
         }
         $scope.editMedication = function (index) {
 
@@ -1192,6 +1210,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
                 department_id: CO.date,
                 ward_id: CO.date
             }
+            console.log(CheckoutDetails);
             CheckoutPatient.save(CheckoutDetails, checkoutSuccess, checkoutSuccessFailure);
         }
         function checkoutSuccess(res) {
@@ -1208,6 +1227,29 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         function checkoutSuccessFailure(res) {
             console.log(res);
             $('#internetError').modal('show');
+        }
+
+        GetPrescriptionSupplements.save({token: $window.sessionStorage.token}, getSupplementSuccess, getSupplementFailure);
+        function getSupplementSuccess(res) {
+            console.log(res, "supp")
+           $scope.getSupp = res.data;
+        }
+        function getSupplementFailure(res) {
+            console.log(res);
+            $('#internetError').modal('show');
+        }
+        GetMedications.save({token: $window.sessionStorage.token}, getMediSuccess, getMediFailure);
+        function getMediSuccess(res) {
+            console.log(res, "drugs")
+           $scope.getDrugs = res.data;
+        }
+        function getMediFailure(res) {
+            console.log(res);
+            $('#internetError').modal('show');
+        }
+
+        $scope.setTwoNumberDecimal = function(){
+            $scope.vital.result = parseFloat($scope.vital.result).toFixed(2);
         }
 
 }]);
