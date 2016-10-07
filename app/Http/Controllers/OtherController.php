@@ -224,6 +224,92 @@ class OtherController extends Controller
         return response()->json(['status' => true, 'message' => 'Immunization Deleted Successfully']);
     }
 
+    public function add_active_problems(Request $request)
+       {
+           $patient_id = $request->input('patient_id');
+           $name = $request->input('name');
+
+           DB::table('active_problems')
+               ->insert(
+                   ['patient_id' => $patient_id,
+                       'name' => $name,
+                       'created_at' => date("Y-m-d  H:i:s")
+                   ]
+               );
+
+           return response()->json(['status' => true, 'message' => 'Active Problems Added Successfully']);
+
+       }
+
+    public function list_active_problems(Request $request)
+     {
+         $patient_id = $request->input('patient_id');
+         $active_problems = DB::table('active_problems')
+             ->select(DB::raw('*'))
+             ->where('status', 1)
+             ->where('patient_id', $patient_id)
+             ->get();
+
+         return response()->json(['status' => true, 'data' => $active_problems]);
+
+     }
+
+
+     public function delete_active_problems(Request $request)
+     {
+         $active_problem_id = $request->input('active_problem_id');
+         DB::table('active_problems')
+             ->where('id', $active_problem_id)
+             ->update(
+                 ['status' => 0, 'updated_at' => date("Y-m-d  H:i:s")]
+             );
+
+         return response()->json(['status' => true, 'message' => 'Active Problem Deleted Successfully']);
+     }
+
+    public function add_family_history(Request $request)
+        {
+            $patient_id = $request->input('patient_id');
+            $name = $request->input('name');
+
+            DB::table('family_history')
+                ->insert(
+                    ['patient_id' => $patient_id,
+                        'name' => $name,
+                        'created_at' => date("Y-m-d  H:i:s")
+                    ]
+                );
+
+            return response()->json(['status' => true, 'message' => 'Family History Added Successfully']);
+
+        }
+
+    public function list_family_history(Request $request)
+      {
+          $patient_id = $request->input('patient_id');
+          $family_history= DB::table('family_history')
+              ->select(DB::raw('*'))
+              ->where('status', 1)
+              ->where('patient_id', $patient_id)
+              ->get();
+
+          return response()->json(['status' => true, 'data' => $family_history]);
+
+      }
+
+    public function delete_family_history(Request $request)
+    {
+        $family_history_id= $request->input('family_history_id');
+        DB::table('family_history')
+            ->where('id', $family_history_id)
+            ->update(
+                ['status' => 0, 'updated_at' => date("Y-m-d  H:i:s")]
+            );
+
+        return response()->json(['status' => true, 'message' => 'Family History Deleted Successfully']);
+    }
+
+
 
     public function remove_patient_precription_medications(Request $request)
     {
