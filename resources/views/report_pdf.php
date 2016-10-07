@@ -130,7 +130,7 @@
                             </table>
                         </td>
                     </tr>
-                    <tr>
+<!--                    <tr>
                         <td style="padding-top: 30px; padding-bottom: 30px; border-bottom: 1px solid #ebebeb;">
                             <table style="width: 100%;">
                                 <tr>
@@ -172,7 +172,7 @@
                                     <td style="font-size: 13px;color:#666666; width: 70%; padding-bottom: 15px;">DR RG Levy</td>
                                 </tr>
                             </table>
-                    </tr>
+                    </tr>-->
 
                     <tr>
                         <td style="padding-top: 30px; padding-bottom: 30px; border-bottom: 1px solid #ebebeb;">

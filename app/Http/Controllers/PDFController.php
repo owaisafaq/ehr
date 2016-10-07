@@ -271,8 +271,13 @@ class PDFController extends Controller
             ->where('patient_prescription.id', $prescription_id)
             ->first();
 
+        $prescription_notes = DB::table('prescription_notes')
+              ->select(DB::raw('note_for_pharmacy'))
+              ->where('prescription_id', $prescription_id)
+              ->first();
 
-        $data = ['medication'=>$medication,'patient'=>$patient];
+
+        $data = ['medication'=>$medication,'patient'=>$patient,'prescription_notes'=>$prescription_notes];
 
         $view = app()->make('view')->make('prescription_pdf',$data)->render();
 

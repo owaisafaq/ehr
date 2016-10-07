@@ -162,7 +162,7 @@
                         </tr>
                     <tr>
                         <td style="padding-bottom: 30px; border-bottom: 1px solid #ebebeb;">
-                            <p style="font-size: 13px; line-height: 20px; color: #999999;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis fermentum tempor orci, id efficitur lacus euismod sed. Nunc nisl risus, vestibulum eget enim a, sollicitudin efficitur neque. Proin non ipsum odio. Donec in justo tortor. Integer et suscipit purus. Mauris pretium nisl vel orci suscipit, volutpat egestas elit pretium. Aenean hendrerit vulputate tempor. Praesent aliquam odio sit amet tortor dapibus, quis laoreet ex faucibus. Aliquam erat volutpat. Pellentesque ac vulputate odio.</p>
+                            <p style="font-size: 13px; line-height: 20px; color: #999999;"><?php echo $prescription_notes->note_for_pharmacy?></p>
                         </td>
                     </tr>
                     <tr>
