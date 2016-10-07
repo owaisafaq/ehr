@@ -724,7 +724,7 @@ class OrderController extends Controller
         //$lab_test_values = html_entity_decode($request->input('lab_test_values'));
 
         $lab_test_values = $request->input('lab_test_values');
-        $lab_test_values = substr($lab_test_values, 1, -1);
+       // $lab_test_values = substr($lab_test_values, 1, -1);
        // $lab_test = json_decode($lab_test_values);
 
         $currentdatetime = date("Y-m-d  H:i:s");
