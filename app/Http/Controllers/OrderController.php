@@ -723,13 +723,11 @@ class OrderController extends Controller
 
         //$lab_test_values = html_entity_decode($request->input('lab_test_values'));
 
-        $lab_test_values = html_entity_decode($request->input('lab_test_values'));
+        $lab_test_values = $request->input('lab_test_values');
+
+       // $lab_test = json_decode($lab_test_values);
 
         $currentdatetime = date("Y-m-d  H:i:s");
-
-        $lab_test = json_decode($lab_test_values);
-
-     //   dd('here');
 
         DB::table('patient_lab_test_values')
             ->where('lab_test', $lab_test_id)
