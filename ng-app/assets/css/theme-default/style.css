@@ -3696,7 +3696,7 @@ Pagination
 .chosen-container, .chosen-container-single{
     display: none!important;
 }
-.chosen-styling .select2-container-multi .select2-choices .select2-search-choice{
+ .chosen-styling .select2-container-multi .select2-choices .select2-search-choice{
     background: #e9ecf4;
     border:1px solid #e9ecf4;
     color: #8491ae;
@@ -3735,4 +3735,13 @@ Pagination
 }
 .select2-container-disabled .select2-choice {
     border:none !important;
+}
+select#autoship_option.ng-hide,select#autoship_option2.ng-hide,select#autoship_option3.ng-hide,#autoship_optionKinRelation.ng-hide,#autoship_optionKinCountry.ng-hide, #autoship_optionKinState.ng-hide, #autoship_optionEmployeCountry.ng-hide, #autoship_optionEmployeState.ng-hide{
+    display: none!important;
+}
+#autoship_option, #autoship_option2, #autoship_option3,#autoship_optionKinRelation, #autoship_optionKinCountry,#autoship_optionKinState,#autoship_optionEmployeCountry,#autoship_optionEmployeState{
+   display: block!important;
+}
+.chosen-styling #autoship_option{
+    display: none !important;
 }
