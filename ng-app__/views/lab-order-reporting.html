@@ -1,0 +1,170 @@
+<div id="content">
+    <section>
+        <div class="card">
+            <div class="table-header col-lg-12">
+                <div class="col-lg-12 no-padding">
+                    <span class="txt-style-3 pull-left text-uppercase">lab orders reports</span>
+                    <div class="col-lg-2 pull-right no-margin">
+                        <a href="#offcanvas-search" data-toggle="offcanvas" data-backdrop="false" class="btn ink-reaction button-style-1 btn-big pull-right margin-right-10">search</a>
+                    </div>
+                    <div class="header-search margin-right-0 pull-left">
+                        <button type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        <input class="search_field search_field_big" type="text" placeholder="Search with patient name or id">
+                    </div>
+                </div> 
+            </div>
+            <div class="card-body col-lg-12">
+                <button class="button-style-3">filter search</button>
+                <div class="icons_con"> 
+                    <button class="email button-custom">email reports</button>
+                    <button class="print button-custom">print reports</button>
+                </div>
+                <div class="col-lg-12 no-padding">
+                    <table class="table table-striped no-margin table-custom">
+                        <thead>
+                            <tr>
+                                <th width="10px"></th>
+                                <th>date</th>
+                                <th>Order no</th>
+                                <th>lab test name</th>
+                                <th>loinic code</th>
+                                <th>lab</th>
+                                <th>ordered by</th>
+                                <th>report</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td align="center">
+                                    <div class="radio radio-styled">
+                                        <label>
+                                            <input type="radio" name="optionsRadios" value="option1">
+                                        </label>
+                                    </div>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><a href="javascript:;" class="link-style">View</a></td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <div class="radio radio-styled">
+                                        <label>
+                                            <input type="radio" name="optionsRadios" value="option1">
+                                        </label>
+                                    </div>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <div class="radio radio-styled">
+                                        <label>
+                                            <input type="radio" name="optionsRadios" value="option1">
+                                        </label>
+                                    </div>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div><!--end .card-body -->
+        </div><!--end .card -->
+    </section>
+    <div class="offcanvas offcanvas_custom">
+
+        <!-- BEGIN OFFCANVAS SEARCH -->
+        <div id="offcanvas-search" class="offcanvas-pane width-8">
+            <div class="offcanvas-head">
+                <header class="txt-style-3 pull-left text-uppercase">lab orders reports</header>
+                <div class="offcanvas-tools">
+                    <a class="btn btn-icon-toggle btn-default-light pull-right" data-dismiss="offcanvas">
+                        <i class="md md-close"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="offcanvas-body no-padding"> 
+                <form class="custom-form">
+                    <div class="col-lg-6">
+                        <label>start date</label>  
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="input-group date select-date">
+                            <div class="input-group-content">
+                                <input type="text" class="form-control" placeholder="Pick Date" ng-model="PI.date_of_birth">
+                            </div>
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <label>end date</label>  
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="input-group date select-date">
+                            <div class="input-group-content">
+                                <input type="text" class="form-control" placeholder="Pick Date" ng-model="PI.date_of_birth">
+                            </div>
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <label>By test type</label>  
+                    </div>
+                    <div class="col-lg-6">
+                        <select class="form-control">
+                            <option>Select Test Type</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <label>ordered by</label>  
+                    </div>
+                    <div class="col-lg-6">
+                        <select class="form-control">
+                            <option>Select Type</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <label>done by</label>  
+                    </div>
+                    <div class="col-lg-6">
+                        <select class="form-control">
+                            <option>Select Type</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                    </div>
+                    <a href="#offcanvas-search" data-toggle="offcanvas" data-backdrop="false" class="btn ink-reaction button-style-1 btn-big pull-right margin-right-10">search</a>
+                </form>
+            </div><!--end .offcanvas-body -->
+        </div><!--end .offcanvas-pane -->
+        <!-- END OFFCANVAS SEARCH -->
+        <!-- END OFFCANVAS CHAT -->
+
+    </div><!--end .offcanvas-->
+</div>
