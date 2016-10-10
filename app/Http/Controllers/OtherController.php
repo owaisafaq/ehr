@@ -226,6 +226,7 @@ class OtherController extends Controller
 
     public function add_active_problems(Request $request)
        {
+           header('Access-Control-Allow-Origin: *');
            $patient_id = $request->input('patient_id');
            $name = $request->input('name');
 
