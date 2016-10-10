@@ -527,6 +527,29 @@ class OrderController extends Controller
 
         }
 
+        $bill = DB::table('billing')
+            ->select(DB::raw('id'))
+            ->where('encounter_id', $visit_id)
+            ->where('status', 1)
+            ->first();
+
+        if (!empty($bill)) {
+
+            $bill_id = $bill->id;
+
+            DB::table('invoice')
+                ->insert(
+                    ['patient_id' => $patient_id,
+                        'bill_id' => $bill_id,
+                        'description' => 'This invoice is generated for Lab Orders',
+                        'amount' => 50,
+                        'invoice_status' => 'pending',
+                        'created_at' => $currentdatetime
+                    ]
+                );
+
+        }
+
         return response()->json(['status' => true, 'message' => 'Lab Orders Added Successfully', 'order_id' => $order_id]);
 
     }
@@ -700,13 +723,11 @@ class OrderController extends Controller
 
         //$lab_test_values = html_entity_decode($request->input('lab_test_values'));
 
-        $lab_test_values = html_entity_decode($request->input('lab_test_values'));
+        $lab_test_values = $request->input('lab_test_values');
+       // $lab_test_values = substr($lab_test_values, 1, -1);
+       // $lab_test = json_decode($lab_test_values);
 
         $currentdatetime = date("Y-m-d  H:i:s");
-
-        $lab_test = json_decode($lab_test_values);
-
-     //   dd('here');
 
         DB::table('patient_lab_test_values')
             ->where('lab_test', $lab_test_id)

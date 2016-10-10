@@ -3231,6 +3231,29 @@ class ApiController extends Controller
             );
 
 
+        $bill = DB::table('billing')
+            ->select(DB::raw('id'))
+            ->where('encounter_id',$visit_id)
+            ->where('status', 1)
+            ->first();
+
+        if (!empty($bill)) {
+
+            $bill_id = $bill->id;
+
+            DB::table('invoice')
+                ->insert(
+                    ['patient_id'=>$patient_id,
+                        'bill_id'=>$bill_id,
+                        'description'=>'This invoice is generated for patient prescription',
+                        'amount'=> 50,
+                        'invoice_status'=>'pending',
+                        'created_at' =>$currentdatetime
+                    ]
+                );
+
+        }
+
         return response()->json(['status' => true, 'message' => 'Prescrpition Added Successfully']);
 
 

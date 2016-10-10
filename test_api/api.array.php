@@ -2238,6 +2238,74 @@ $api->params->token = "123435";
 
 $api_arr [] = $api;
 
+//Add Patient Active Problems
+$api = new api();
+$api->name = "Add Patient Active Problems";
+$api->url = HOST . 'add_active_problems';
+$api->method = "POST";
+$api->params->patient_id = "1";
+$api->params->name = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//List Patient Active Problems
+$api = new api();
+$api->name = "List Patient Active Problems";
+$api->url = HOST . 'list_active_problems';
+$api->method = "GET";
+$api->params->patient_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Delete Patient Active Problems
+$api = new api();
+$api->name = "Delete Patient Active Problems";
+$api->url = HOST . 'delete_active_problems';
+$api->method = "POST";
+$api->params->active_problem_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Add Patient Family History
+$api = new api();
+$api->name = "Add Patient Family History";
+$api->url = HOST . 'add_family_history';
+$api->method = "POST";
+$api->params->patient_id = "1";
+$api->params->name = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//List Patient Family History
+$api = new api();
+$api->name = "List Patient Family History";
+$api->url = HOST . 'list_family_history';
+$api->method = "GET";
+$api->params->patient_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Delete Patient Family History
+$api = new api();
+$api->name = "Delete Patient Family History";
+$api->url = HOST . 'delete_family_history';
+$api->method = "POST";
+$api->params->family_history_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
 
 //Get Patient Medicines
 $api = new api();

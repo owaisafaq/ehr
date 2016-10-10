@@ -189,6 +189,18 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->get('list_immunizations','App\Http\Controllers\OtherController@list_immunizations');
     $app->post('delete_immunization','App\Http\Controllers\OtherController@delete_immunization');
 
+    //active problems
+    $app->post('add_active_problems','App\Http\Controllers\OtherController@add_active_problems');
+    $app->get('list_active_problems','App\Http\Controllers\OtherController@list_active_problems');
+    $app->post('delete_active_problems','App\Http\Controllers\OtherController@delete_active_problems');
+
+    //family history
+    $app->post('add_family_history', 'App\Http\Controllers\OtherController@add_family_history');
+    $app->get('list_family_history', 'App\Http\Controllers\OtherController@list_family_history');
+    $app->post('delete_family_history', 'App\Http\Controllers\OtherController@delete_family_history');
+
+
+
     $app->get('get_medicine_units','App\Http\Controllers\OtherController@get_medicine_units');
     $app->get('get_dashboard_counts','App\Http\Controllers\OtherController@get_dashboard_counts');
     $app->get('patients_pool_area','App\Http\Controllers\OtherController@patients_pool_area');
