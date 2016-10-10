@@ -138,18 +138,22 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
                 //templateCl.fields[i].type = "hidden";
                 //delete templateCl.fields[i];
                 templateCl.fields.splice(i, 1);
+                
+                if(Object.keys(filledVal)[i] == 'Diagnosis'){
+                  delete filledVal.Diagnosis;
+                }
                 //console.log(Object.keys(filledVal)[i], '1', filledVal[Object.keys(filledVal)[i]], templateCl.fields[i].name);
-                console.log(templateCl, 'from diagnosis');
+                console.log(templateCl, 'from diagnosis', filledVal);
                 //i++;
             }else{
                 //console.log(Object.keys(filledVal)[i] == templateCl.fields[i].name, i);
-                  console.log(Object.keys(filledVal)[i], '1', filledVal[Object.keys(filledVal)[i]], templateCl.fields[i].name);
+                console.log(Object.keys(filledVal)[i], '1', filledVal[Object.keys(filledVal)[i]], templateCl.fields[i].name);
                   $scope.renderedTemplate.fields.push({
                     "displayName": templateCl.fields[i].displayName,
                     "name": templateCl.fields[i].name,
                     "type": templateCl.fields[i].type,
                     //"value": filledVal[Object.keys(filledVal)[i]] == undefined ? '' : filledVal[Object.keys(filledVal)[i]],
-                    "value": Object.keys(filledVal)[i] == templateCl.fields[i].name ? filledVal[Object.keys(filledVal)[i]] : '',
+                    "value": Object.keys(filledVal)[i] == templateCl.fields[i].name || Object.keys(filledVal)[i] == templateCl.fields[i].displayName ? filledVal[Object.keys(filledVal)[i]] : '',
                     "validation": templateCl.fields[i].validation
                   });
             }
@@ -157,6 +161,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
           //}
           i++;
         }
+        console.log($scope.renderedTemplate);
         $scope.clinicalNotesID = res.clinical_notes_id;
         if($scope.clinicalNotesID != undefined) $scope.selectedRow = true;
         $scope.is_signoff = res.signoff;
@@ -373,7 +378,9 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
             visit_id: $scope.displayInfo.encounter_id,
             patient_id: $routeParams.patientID
         }, checkClinicalStatusSuccess, checkClinicalStatusFailure);
-			}
+			}else if(res.status == false){
+        $('#erorModal').modal('show');
+      }
 		}
 
 		function saveClinicalFailure(error){
@@ -387,12 +394,14 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
     $scope.addMedication = function (checkEdit) {
        var AddMedications = {
            medication: $scope.MedicationData.medication,
+           medicationName:  $(".medicationNeme option:selected").text(),
            sig: $scope.MedicationData.sig,
            dispense: $scope.MedicationData.dispense,
            reffills: $scope.MedicationData.reffills,
            pharmacy: $scope.MedicationData.pharmacy,
            note_of_pharmacy: $scope.MedicationData.note_of_pharmacy,
        }
+       console.log(AddMedications);
        $scope.note = $scope.MedicationData.note_of_pharmacy;
        $scope.medicationsDataPush.push(AddMedications);
        $scope.MedicationData.sig = "";
@@ -430,10 +439,14 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
     }
 
     function PrescriptionSuccessPop(res) {
+      $rootScope.loader = 'hide';
        if (res.status == true) {
            $('#addmedication').modal('hide');
            $scope.medicationsDataPush = []; 
-            $rootScope.loader = 'hide';
+            
+       }else if(res.status == false){
+        $('#addmedication').modal('hide');
+          $('#statusModal').modal('show');
        }
     }
 
@@ -459,8 +472,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
         }*/
 
         GetAllMedications.get({
-            token: $window.sessionStorage.token,
-            patient_id: $routeParams.patientID
+            token: $window.sessionStorage.token
         }, getAllMedicationsSuccess, getAllMedicationsFailure);
         $scope.allMedications = [];
         $scope.allPharmacies = [];
@@ -833,6 +845,10 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
             $scope.errorSymbol = "fa fa-times";
         }
     }
+    $(".select-bed-dropdown").hide();
+    $(".ward-button").on('click', function(){
+      $(".select-bed-dropdown").toggle();
+    });
     function OrderFailure(error) {
         $('#internetError').modal('show');
         console.log(error);

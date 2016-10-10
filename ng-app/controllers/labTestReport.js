@@ -23,12 +23,12 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', '$routeParams', '$wi
         $scope.visit_id = res.data.visit_id;
         CheckLabOrderStatus.save({
             token: $window.sessionStorage.token,
-            lab_order_test_id: $routeParams.testID
+            lab_order_test_id: $scope.labordertestid
         }, checkClinicalStatusSuccess, checkClinicalStatusFailure);
     }
 
     function checkClinicalStatusSuccess(res){
-        console.log(res, '-----------------------------------', res.category_id, res.template_id);
+        console.log(res, res.category_id, res.template_id);
       if(res.status == true && res.data.length > 0){
         getTemplates.get({
             token : $window.sessionStorage.token,
@@ -38,7 +38,6 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', '$routeParams', '$wi
         $scope.tid = res.template_id;
         $scope.cid = res.category_id;
         $scope.templateID = res.template_id;
-        
 
         $scope.doUpdate = true;
         $rootScope.loader = "hide";
@@ -56,7 +55,7 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', '$routeParams', '$wi
         //console.log("real temp", JSON.parse(res.template));
         var i = 0;
         console.log(filledVal);
-        console.log(templateCl);return true;
+        console.log(templateCl);//return true;
         /*for (var key=0; key<templateCl.fields.length; key++) {
           //if (filledVal.hasOwnProperty(key)) {
             console.log(templateCl.fields[key].name, filledVal);
@@ -79,7 +78,7 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', '$routeParams', '$wi
               $scope.renderedTemplate.fields.push({
                 "displayName": templateCl.fields[i].displayName,
                 "name": templateCl.fields[i].name,
-                "type": templateCl.fields[i].type,
+                "type": templateCl.fields[i].type == "number" ? "text" : templateCl.fields[i].type,
                 "value": Object.keys(filledVal)[i] == templateCl.fields[i].name ? filledVal[Object.keys(filledVal)[i]] : '',
                 "validation": templateCl.fields[i].validation
               });
@@ -186,14 +185,14 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', '$routeParams', '$wi
 
     $scope.SaveTemplateValues = function (addData, updateData){ // Saving Template Values
         $scope.hideLoader = 'show';
-        console.log(JSON.parse(addData), JSON.parse(updateData), $scope.newTemp); return true;
+        console.log(JSON.stringify(addData), (updateData), $scope.newTemp); //return true;
         if($scope.doUpdate == true){
             console.log('update', $scope.labTest.lab_order_id, $scope.labordertestid, $scope.template_id);
             UpdateLabTestValues.save({
                 token : $window.sessionStorage.token,
                 lab_order_id : $scope.labTest.lab_order_id, 
                 lab_test_id : $scope.labordertestid,// lab_order_test_id
-                lab_test_values: $scope.newTemp == true ? updateData : addData,
+                lab_test_values: $scope.newTemp == true ? updateData : JSON.stringify(addData),
                 template_id: $scope.template_id
             }, saveTemplateValuesSuccess, saveTemplateValuesFailure);
         }else{
@@ -221,7 +220,7 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', '$routeParams', '$wi
             },1500);
             CheckLabOrderStatus.save({
                   token: $window.sessionStorage.token,
-                  lab_order_test_id: $routeParams.testID
+                  lab_order_test_id: $scope.labordertestid
             }, checkClinicalStatusSuccess, checkClinicalStatusFailure);
         } else {
             $scope.hideLoader = "hide";

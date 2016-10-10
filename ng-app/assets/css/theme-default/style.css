@@ -708,7 +708,7 @@ Table Styling
     background: url(../..//img/discharge_icn_blue.png) no-repeat top center;
 }
 .notes{
-    background: url(../..//img/notes.jpg) no-repeat top center;
+    background: url(../..//img/notes.png) no-repeat top center;
 }
 .report{
     background: url(../..//img/report.png) no-repeat top center;
@@ -3683,4 +3683,19 @@ Pagination
 }
 .dash-card-style-3 .card-body{
     padding: 18px 0;
+}
+.PI-chozen, .PI-chozen:focus{
+    border: 1px solid #edf1f5;
+    color: #000;
+    height: 32px;
+    background: #FFF;
+}
+.disabled-fields{
+    pointer-events: none;
+}
+.chosen-container, .chosen-container-single{
+    display: none!important;
+}
+#autoship_option, #autoship_option2, #autoship_option3{
+    display: block!important;
 }

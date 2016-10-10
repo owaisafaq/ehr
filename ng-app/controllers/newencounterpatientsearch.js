@@ -221,7 +221,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
                 encounter_class: updateData.class == undefined ? '' : updateData.class,
                 encounter_type: updateData.type,
                 whom_to_see: updateData.wts,
-                reason_of_visit: updateData.reason_of_visit == undefined ? '' : addEncounter.reason_of_visit
+                reason_of_visit: updateData.reason_of_visit == undefined ? '' : updateData.reason_of_visit
             }, updateEncounterSuccess, updateEncounterFailure);
         }
     }
@@ -379,9 +379,10 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
             patient_id: $scope.Order.patient_id,
             lab: $scope.Order.selected_lab,
             lab_test: JSON.stringify($scope.lab_tests),
-            clinical_information: $scope.Order.clinical_information,
-            diagnosis: $scope.Order.diagnosis,
-            notes: $scope.Order.notes
+            clinical_information: '',//$scope.Order.clinical_information,
+            diagnosis: '',//$scope.Order.diagnosis,
+            notes: $scope.Order.notes,
+            visit_id: $scope.encounterID
         }, OrderSuccess, OrderFailure);
     };
     function OrderSuccess(res) {
@@ -403,7 +404,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
                 $('#s2id_autogen3 .select2-chosen').text('Select Lab'); // changing place holder back to its original one
                 $('#neworder').modal('hide');
                 $scope.message = false;
-                $window.location.href = "#/lab-order-listing/" + $scope.search;
+                //$window.location.href = "#/lab-order-listing/" + $scope.PID + "/" + $scope.encounterID;
             },500);
             $scope.orderSelected = false;
         } else {

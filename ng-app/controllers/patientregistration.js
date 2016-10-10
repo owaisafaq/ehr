@@ -54,6 +54,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         $scope.showSubmitButtonPatientPlan = true;
         $scope.patientPlantRadios = false;
         $scope.imageUploading = true;
+        $scope.updateState = false;
         //$scope.PI.identity_type = dropDownInfo.IdType[0].id;
         //$scope.PI.kin_relationship = dropDownInfo.relationship[0].id;
         //$scope.PI.dependant_relationship = dropDownInfo.relationship[0].id;
@@ -80,6 +81,13 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 angular.copy(res.data, $scope.employerCountries);
                 //$scope.countryCode = $scope.contactAddressCountries;
                 angular.copy(res.data, $scope.permanentAddressCountries);
+                $.each(res.data, function(key, value) {
+                  $('#autoship_optionKinCountry').append($("<option></option>").attr("value",value.id).text(value.name));
+                });
+                $.each(res.data, function(key, value) {
+                  $('#autoship_optionEmployeCountry').append($("<option></option>").attr("value",value.id).text(value.name));
+                });
+                
             } else {
                 console.log(res);
             }
@@ -92,8 +100,13 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         DropDownData.get({token: $window.sessionStorage.token}, dropDownSuccess, dropDownFailed);
 
         function dropDownSuccess(res) {
+            console.log("drodowndata", res);
             if (res.status == true) {
                 angular.copy(res.data, $scope.dropDownData);
+                $.each($scope.dropDownData.relationships, function(key, value) {
+                    console.log('autoship_optionKinRelation');
+                  $('#autoship_optionKinRelation').append($("<option></option>").attr("value",value.id).text(value.name));
+                });
             }
         }
 
@@ -106,7 +119,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             $scope.disabledDropdown = true;
             console.log(country, 'country');
             if (country != null) {
-                States.get({token: $window.sessionStorage.token, country_id: 1}, stateSuccess, stateFailed);
+                States.get({token: $window.sessionStorage.token, country_id: country}, stateSuccess, stateFailed);
             } else {
                 if (flag) {
                     $scope.PI.permanent_country = "";
@@ -124,12 +137,19 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 }
             }
             function stateSuccess(res) {
-                //console.log(res, "country");
+                console.log(res, "country");
                 if (res.status == true && res.data.length > 0) {
                     angular.copy(res.data, $scope.contactAddressStates);
                     angular.copy(res.data, $scope.permanentAddressStates);
                     $scope.disabledDropdown = false;
                     console.log(res, 'statesSuccess');
+                    $.each(res.data, function(key, value) {
+                        console.log('oiumki');
+                      $('#autoship_option').append($("<option></option>").attr("value",value.id).text(value.name));
+                      $('#autoship_option3').append($("<option></option>").attr("value",value.id).text(value.name));
+                      $('#autoship_optionKinState').append($("<option></option>").attr("value",value.id).text(value.name));
+                      $('#autoship_optionEmployeState').append($("<option></option>").attr("value",value.id).text(value.name));
+                    });
                 }/*else{
                  
                  }*/
@@ -153,6 +173,10 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
                         angular.copy(res.data, $scope.patientInfolocalGovtArea);
                         angular.copy(res.data, $scope.addresslocalGovtArea);
+                        $.each(res.data, function(key, value) {
+                            console.log('oiumki');
+                          $('#autoship_option2').append($("<option></option>").attr("value",value.id).text(value.name));
+                        });
                         $scope.disabledDropdown = false;
                     } else {
                         $scope.disabledDropdown = false;
@@ -320,7 +344,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     sex: $scope.PI.sex == undefined ? '' : $scope.PI.sex,
                     
                     marital_status: $scope.PI.maritial_status == undefined ? '' : $scope.PI.maritial_status,
-                    patient_local_goverment_area: $scope.PI.patient_local_goverment_area == "" ? $scope.extra : $scope.PI.patient_local_goverment_area,
+                    patient_local_goverment_area: $scope.PI.patient_local_goverment_area == "" ? $scope.extraLGA : $scope.PI.patient_local_goverment_area,
                     religion: $scope.PI.religion == undefined ? '' : $scope.PI.religion,
                     identity_type: $scope.PI.identity_type == undefined ? '' : $scope.PI.identity_type,
                     identity_number: $scope.PI.identity_number == undefined ? '' : $scope.PI.identity_number,
@@ -388,7 +412,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
         // patient address API
         $scope.validatePatientAddress = function (PIAdress) {
-            console.log(PIAdress.state, 'address');
+            console.log(PIAdress);
             if (PIAdress.mobile_number != undefined) {
                 $rootScope.loader = 'show';
                 $scope.PI.adress.mobile_number = $scope.PI.adress.mobile_number.substring(0, 9);
@@ -403,24 +427,24 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     house_number: $scope.PI.adress.house_number == undefined ? '' : $scope.PI.adress.house_number,
                     street: $scope.PI.adress.street == undefined ? '' : $scope.PI.adress.street,
                     country: $scope.PI.adress.country == undefined ? '' : $scope.PI.adress.country,
-                    state: PIAdress.state == undefined ? '' : PIAdress.state,
+                    state: PIAdress.state == undefined ? '' : (PIAdress.state == undefined ? $scope.PI.adress.state.id : $scope.PI.adress.state),
                     city: $scope.PI.adress.city == undefined ? '' : $scope.PI.adress.city,
                     email: $scope.PI.adress.email == undefined ? '' : $scope.PI.adress.email,
                     postal_code: $scope.PI.adress.postal_code == undefined ? '' : $scope.PI.adress.postal_code,
-                    local_goverment_area: $scope.PI.adress.local_goverment_area == undefined ? '' : $scope.PI.adress.local_goverment_area.id,
+                    local_goverment_area: $scope.PI.adress.local_goverment_area == undefined ? $scope.PI.adress.local_goverment_area : ($scope.PI.adress.local_goverment_area.id == undefined ? $scope.PI.adress.local_goverment_area : $scope.PI.adress.local_goverment_area.id),
                     same_as_above: $scope.PI.sameAsAbove == undefined ? '' : $scope.PI.sameAsAbove,
                     permanent_phonenumber: $scope.PI.adress.permanent_phonenumber == undefined ? '' : ($scope.permanentCountryCode == undefined ? '234' : $scope.permanentCountryCode.country_code) + '' + $scope.PI.adress.permanent_phonenumber,
                     permanent_mobilenumber: $scope.PI.adress.permanent_mobilenumber == undefined ? '' : ($scope.permanentCountryCode == undefined ? '234' : $scope.permanentCountryCode.country_code) + '' + $scope.PI.adress.permanent_mobilenumber,
                     permanent_email: $scope.PI.adress.permanent_email == undefined ? '' : $scope.PI.adress.permanent_email,
                     permanent_housenumber: $scope.PI.adress.permanent_housenumber == undefined ? '' : $scope.PI.adress.permanent_housenumber,
                     permanent_street: $scope.PI.adress.permanent_street == undefined ? '' : $scope.PI.adress.permanent_street,
-                    permanent_country: $scope.PI.adress.permanent_country == undefined ? '' : $scope.PI.adress.permanent_country.id,
+                    permanent_country: $scope.PI.adress.permanent_country == undefined ? '' : ($scope.PI.adress.permanent_country.id == undefined ? $scope.PI.adress.permanent_country : $scope.PI.adress.permanent_country.id),
                     //city: $scope.PI.adress.city == undefined ? '' : $scope.PI.adress.city.id,
-                    permanent_state: $scope.PI.adress.permanent_state == undefined ? '' : $scope.PI.adress.permanent_state.id,
+                    permanent_state: $scope.PI.adress.permanent_state == undefined ? '' : ($scope.PI.adress.permanent_state.id == undefined ? $scope.PI.adress.permanent_state : $scope.PI.adress.permanent_state.id),
                     permanent_city: $scope.PI.adress.permanent_city == undefined ? '' : $scope.PI.adress.permanent_city,
                     permanent_postalCode: $scope.PI.adress.permanent_postalCode == undefined ? '' : $scope.PI.adress.permanent_postalCode
                 };
-                console.log(dataToBeAdded); //return true;
+                
                 if ($scope.address_id == undefined) {
                     PatientRegistrationAddress.save(dataToBeAdded, patientAddressSuccess, patientAddressFailed);
                     function patientAddressSuccess(res) {
@@ -446,6 +470,10 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                         $('#internetError').modal('show');
                     }
                 } else {
+                    dataToBeAdded.state = $('#autoship_option').val();
+                    dataToBeAdded.local_goverment_area = $('#autoship_option2').val();
+                    dataToBeAdded.permanent_state = $('#autoship_option3').val();
+                    console.log(dataToBeAdded); //return true;
                     dataToBeAdded.address_id = $scope.address_id;
                     PatientRegistrationAddress.save(dataToBeAdded, patientAddressUpdateSucess, patientAddressUpdateFailed);
                     function patientAddressUpdateSucess(res) {
@@ -477,7 +505,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
         // patient kin API
         $scope.validatePatientKin = function (PIKin) {
-            //console.log(PIKin);
+            console.log(PIKin);
             if (angular.equals({}, PIKin) == false) {
                 $rootScope.loader = 'show';
                 var dataToBeAdded = {
@@ -494,8 +522,8 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     kin_house_number: $scope.PI.kin.kin_house_number == undefined ? '' : $scope.PI.kin.kin_house_number,
                     kin_street: $scope.PI.kin.kin_street == undefined ? '' : $scope.PI.kin.kin_street,
                     kin_country: $scope.PI.kin.kin_country == undefined ? '' : $scope.PI.kin.kin_country.id,
-                    kin_state: $scope.PI.kin.kin_state == undefined ? '' : $scope.PI.kin.kin_state.id,
-                    kin_city: $scope.PI.kin.kin_city == undefined ? '' : $scope.PI.kin.kin_city.id,
+                    kin_state: $scope.PI.kin.kin_state == undefined ? '' : ($scope.PI.kin.kin_state.id == undefined ? $scope.PI.kin.kin_state : '' ),
+                    kin_city: $scope.PI.kin.kin_city == undefined ? '' : $scope.PI.kin.kin_city,
                     kin_postal_code: $scope.PI.kin.kin_postal_code == undefined ? '' : $scope.PI.kin.kin_postal_code
                 };
                 if ($scope.kin_id == undefined) {
@@ -521,7 +549,11 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                         $('#internetError').modal('show');
                     }
                 } else {
+                    dataToBeAdded.kin_relationship = $('#autoship_optionKinRelation').val();
+                    dataToBeAdded.kin_state = $('#autoship_optionKinState').val();
+                    dataToBeAdded.kin_country = $('#autoship_optionKinCountry').val();
                     dataToBeAdded.kin_id = $scope.kin_id;
+                    console.log(dataToBeAdded); //return true;
                     PatientRegistrationKin.save(dataToBeAdded, patientKinUpdateSucess, patientKinUpdateFailed);
                     function patientKinUpdateSucess(res) {
                         if (res.status == true) {
@@ -535,7 +567,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                             $rootScope.loader = 'hide';
                         }
                     }
-
                     function patientKinUpdateFailed(error) {
                         console.log(error);
                         $('#internetError').modal('show');
@@ -564,10 +595,8 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     employer_street: $scope.PI.employer.employer_street == undefined ? '' : $scope.PI.employer.employer_street,
                     employer_country: $scope.PI.employer.employer_country == undefined ? '' : $scope.PI.employer.employer_country.id,
                     employer_state: $scope.PI.employer.employer_state == undefined ? '' : $scope.PI.employer.employer_state.id,
-                    employer_city: $scope.PI.employer.employer_city == undefined ? '' : $scope.PI.employer.employer_city.id
+                    employer_city: $scope.PI.employer.employer_city == undefined ? '' : $scope.PI.employer.employer_city
                 };
-
-
                 if ($scope.employer_id == undefined) {
                     PatientRegistrationEmployer.save(dataToBeAdded, patientEmployerSuccess, patientEmployerFailed);
                     function patientEmployerSuccess(res) {
@@ -592,6 +621,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     }
                 } else {
                     dataToBeAdded.employee_id = $scope.employer_id;
+                    dataToBeAdded.employer_state = $('#autoship_optionEmployeState').val();
+                    dataToBeAdded.employer_country = $('#autoship_optionEmployeCountry').val();
+                    console.log(dataToBeAdded); //return true;
                     PatientRegistrationEmployer.save(dataToBeAdded, patientKinUpdateSucess, patientKinUpdateFailed);
                     function patientKinUpdateSucess(res) {
                         if (res.status == true) {
@@ -695,7 +727,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             });
         }
 
-
         $scope.submit = function (PI) {
             /*var file = $scope.PI.myFile;
              console.log('file is ' + file);
@@ -749,6 +780,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     $('#noResultFound').modal('show');
                     return true;
                 }
+                $scope.updateState = true;
                 //console.log(res.data);
                 //$scope.PI.sameAsAbove = res.data.patient_address[1].length > 0 ? true : false;
                 $scope.PI.sameAsAbove = res.data.patient_address[1] != undefined ? false : true;
@@ -771,7 +803,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 $scope.PI.identity_number = res.data.patient_info.identity_number;
                 $scope.PI.patient_origin = res.data.patient_info.patient_origin;
                 $scope.PI.patient_local_goverment_area = res.data.patient_info.local_goverment_area;
-                $scope.extra = $scope.PI.patient_local_goverment_area;
+                $scope.extraLGA = $scope.PI.patient_local_goverment_area;
                 //console.log($scope.extra,'lgarea');
                 $scope.PI.tribe = res.data.patient_info.tribe;
                 $scope.PI.language = res.data.patient_info.language;
@@ -789,15 +821,12 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                /* setTimeout(function () {
                     $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
                 },100);*/
-                setTimeout(function () {
-                    $('select').trigger('change');
-                }, 100);
                 $scope.extra = {};
                 $scope.extra.address = {};
                 if (res.data.patient_address[0] != undefined) {
-                    $scope.addressStateByCountry(/*res.data.patient_address[0].country*/1, 0);
+                    $scope.addressStateByCountry(1/*res.data.patient_address[0].country*/, 0);
                     //console.log(res.data.patient_address[0].email, "muzammil");
-                    $scope.addressLocalGovtAreaByStates(/*res.data.patient_address[0].state*/1, 0);
+                    $scope.addressLocalGovtAreaByStates(1/*res.data.patient_address[0].state*/, 0);
                     $scope.PI.adress.phone_number = res.data.patient_address[0].phone_number;
                     $scope.PI.adress.mobile_number = res.data.patient_address[0].mobile_number;
                     $scope.PI.adress.house_number = res.data.patient_address[0].house_number;
@@ -814,9 +843,21 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     $scope.extra.address.local_goverment_area = res.data.patient_address[0].local_goverment_area;
                     $scope.PI.adress.state = $scope.extra.address.state;
                     $scope.PI.adress.local_goverment_area = $scope.extra.address.local_goverment_area;
+                    
+                    setTimeout(function () {
+                        $('#autoship_option').val($scope.extra.address.state);
+                        $('#autoship_option2').val(/*$scope.extra.address.local_goverment_area*/3 );
+                    },2000);
                     /*setTimeout(function () {
-                        $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
+                    $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
                     },100);*/
+                    /*$scope.$on('$viewContentLoaded', function(){
+                        $('#updateAddressState').val($scope.extra.address.state);
+                    });*/
+
+                    //$scope.PI.adress.state = "1";
+                    //$scope.PI.adress.country = "2";
+                    //$scope.PI.adress.local_goverment_area = 1;
                 }
                 if (res.data.patient_address[1] != undefined) {
                     $scope.PI.adress.permanent_phonenumber = res.data.patient_address[1].phone_number == undefined || res.data.patient_address[1].phone_number == '' ? '' : res.data.patient_address[1].phone_number;
@@ -830,9 +871,13 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     $scope.PI.adress.permanent_postalCode = res.data.patient_address[1].postal_code;
                     $('.hidePermanentAddress').slideDown(500);
                     //console.log("address2",res.data.patient_address[1]);
+                    $scope.extra.address.permanent_country = res.data.patient_address[1].country;
                     $scope.extra.address.permanent_state = res.data.patient_address[1].state;
                     $scope.PI.adress.permanent_state = $scope.extra.address.permanent_state;
                     //console.log("address2",$scope.extra.address.permanent_state);
+                    setTimeout(function () {
+                        $('#autoship_option3').val($scope.extra.address.permanent_state);
+                    },2000);
                     
                     //$scope.PI.adress.permanent_state = "1";
                     //$scope.PI.adress.permanent_country = "2";
@@ -853,6 +898,12 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     $scope.PI.kin.kin_city = res.data.patient_kin.city;
                     $scope.PI.kin.kin_state = res.data.patient_kin.state;
                     $scope.PI.kin.kin_postal_code = res.data.patient_kin.postal_code;
+                    setTimeout(function () {
+                        $('#autoship_optionKinRelation').val(res.data.patient_kin.relationship);
+                        $('#autoship_optionKinState').val(res.data.patient_kin.state);
+                        $('#autoship_optionKinCountry').val(/*res.data.patient_kin.kin_country*/1);
+                        console.log($('#autoship_optionKinCountry').val(),'countryval');
+                    },2000);
                 }
                 if (res.data.patient_employeer != undefined) {
                     $scope.PI.employer.employer_name = res.data.patient_employeer.name;
@@ -865,6 +916,12 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     $scope.PI.employer.employer_country = res.data.patient_employeer.country;
                     $scope.PI.employer.employer_state = res.data.patient_employeer.state;
                     $scope.PI.employer.employer_city = res.data.patient_employeer.city;
+                    
+                    setTimeout(function () {
+                        $('#autoship_optionEmployeState').val(res.data.patient_employeer.state);
+                        $('#autoship_optionEmployeCountry').val(res.data.patient_employeer.country);
+                        console.log($('#autoship_optionEmployeState').val(),'countryval');
+                    },2000);
                 }
                 //console.log(res.data);
                 $scope.PI.patient_plan = {};
@@ -917,11 +974,13 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 }
                 
                 $rootScope.loader = 'hide';
-                /*setTimeout(function () {
+                setTimeout(function () {
                     $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
-                },100);*/
-                
-            }//return true;
+                },100);
+                setTimeout(function () {
+                    $('select').trigger('change');
+                }, 100);
+            }
         }
         function patientEditFailed(error) {
             console.log(error);
@@ -1726,5 +1785,4 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
             }
         }
-        console.log($scope.extra,'11');
     }]);

@@ -100,7 +100,7 @@
                                             <label>Diagnosis</label>
                                         </div>
                                         <div class="col-lg-9">
-                                            <select class="chosen-select" ng-model="diagnosis" multiple data-placeholder="Choose a Medicine" style="width:100%;" id="autoship_option">
+                                            <select class="chosen-select nun" ng-model="diagnosis" multiple data-placeholder="Choose a Medicine" style="width:100%;display:none!important" id="autoship_option">
                                                 <option value=""></option>
                                                 <!-- <option value="1">+ve</option>
                                                 <option value="2">-ve</option>
@@ -205,7 +205,7 @@
                     <span class="txt-style-3 pull-left text-uppercase">signed off by</span>
                     <span class="txt-style-4 pull-left">Donald Trump</span>-->
                     <div class="pull-right"><!-- ng-disabled="disabledFooterButton" -->
-                        <button type="button" class="check-out button-custom open-custom_pop" ng-disabled="disabledFooterButton" data-toggle="modal" data-target="#checkout">Checkout Patient</button>
+                        <button type="button" class="check-out button-custom open-custom_pop" data-toggle="modal" data-target="#checkout">Checkout Patient</button>
                         <button type="button" ng-click="signOFF();" class="finalize-report button-custom " ng-show="selectedRow" ng-disabled="is_signoff == 1">Sign Off</button>
                         <button type="button" class="view-report button-custom pull-right open-custom_pop" ng-show="enablePreviewreport" data-toggle="modal" data-target="#previewReport" ng-click="openPreviewReport();">Preview Report</button>
                         <button type="button" class="save button-custom" ng-show="selectedRow" ng-click="saveClinicalNotes(myFormData,myFormDataNewTemp);" ng-disabled="is_signoff == 1">Save Changes</button>
@@ -343,9 +343,9 @@
                             <label>Medication</label>
                         </div>
                         <div class="col-lg-9">
-                            <select ng-model="MedicationData.medication" class="form-control" placeholder="Select Medication">
+                            <select ng-model="MedicationData.medication" class="form-control medicationNeme" placeholder="Select Medication">
                                 <option></option>
-                                <option ng-selected="MedicationData.medication == medicationDropData.id" value="{{medicationDropData.id}}" ng-repeat="medicationDropData in allMedications">{{medicationDropData.supplements}}</option>
+                                <option ng-selected="MedicationData.medication == medicationDropData.id" value="{{medicationDropData.id}}" ng-repeat="medicationDropData in allMedications">{{medicationDropData.name}}</option>
                             </select>
                         </div>
                     </div>
@@ -412,7 +412,7 @@
                                         <label>Medication</label>
                                     </div>
                                     <div class="col-lg-4">
-                                        <span>{{medicationDataPush.medication}}</span>
+                                        <span>{{medicationDataPush.medicationName}}</span>
                                     </div>
                                     <div class="col-lg-3">
                                         <label>Dispense</label>
@@ -711,7 +711,22 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade" id="updatesuccessModal" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="erorModal" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Error</h2>
+            </div>
+            <div class="modal-body">
+                <p class="modal-subtext">This Encounter already contains clinical information</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">OK</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade modal-size_1" id="updatesuccessModal" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -726,7 +741,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade" id="previewReport"  tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="previewReport"  tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -994,6 +1009,21 @@
                     <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal" ng-disabled="OrderBtn">Cancel</button>
                 </div>
             </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade modal-size_1" id="statusModal" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Error</h2>
+            </div>
+            <div class="modal-body">
+                <p>Prescrpition with this encounter already added</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">OK</button>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

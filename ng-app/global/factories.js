@@ -1729,7 +1729,7 @@ AppEHR.factory("AddImmunization", function ($resource) {
 });
 AppEHR.factory("GetAllMedications", function ($resource) {
    function getResource(params, body) {
-       var res2 = $resource(serverPath + 'get_patient_medications', params, {
+       var res2 = $resource(serverPath + 'get_prescription_medicines', params, {
            get: {method: 'GET'}
        });
        return res2;
@@ -2662,6 +2662,129 @@ AppEHR.factory("PrescriptionPDF", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'get_prescription_pdf', params, {
             get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("GetPatientAppointment", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_patient_appointments', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("GetAP", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'list_active_problems', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("DeleteAP", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'delete_active_problems', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("ListAP", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'delete_active_problems', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("AddAP", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_active_problems', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+
+
+
+AppEHR.factory("DeleteFamily", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'delete_active_problems', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("ListFamily", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'list_family_history', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("AddAP", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_active_problems', params, {
+            get: {method: 'POST'}
         });
         return res2;
     }
