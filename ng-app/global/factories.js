@@ -2706,7 +2706,7 @@ AppEHR.factory("GetAP", function ($resource) {
 AppEHR.factory("DeleteAP", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'delete_active_problems', params, {
-            get: {method: 'GET'}
+            get: {method: 'POST'}
         });
         return res2;
     }
@@ -2718,9 +2718,9 @@ AppEHR.factory("DeleteAP", function ($resource) {
     };
     return patientRegistrationEmployer;
 });
-AppEHR.factory("ListAP", function ($resource) {
+AppEHR.factory("AddFamily", function ($resource) {
     function getResource(params, body) {
-        var res2 = $resource(serverPath + 'delete_active_problems', params, {
+        var res2 = $resource(serverPath + 'add_family_history', params, {
             get: {method: 'POST'}
         });
         return res2;
@@ -2753,7 +2753,7 @@ AppEHR.factory("AddAP", function ($resource) {
 
 AppEHR.factory("DeleteFamily", function ($resource) {
     function getResource(params, body) {
-        var res2 = $resource(serverPath + 'delete_active_problems', params, {
+        var res2 = $resource(serverPath + 'delete_family_history', params, {
             get: {method: 'POST'}
         });
         return res2;

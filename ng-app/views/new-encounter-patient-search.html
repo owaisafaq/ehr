@@ -1,8 +1,8 @@
 <div id="content">
     <section>
         <div class="card {{dataStrip}}" ng-class="{true: 'custom-card'}[patientInfo]">
-            <div class="card-head card-head-custom {{hospital_plan}}" ng-show="patientInfo">
-                <div class="col-lg-2" ng-show="visitStatus == 0">
+            <div class="card-head card-head-custom adjust-width {{hospital_plan}}" ng-show="patientInfo">
+                <div class="col-lg-2 adjust-1" ng-show="visitStatus == 0">
                     <label class="txt-style-1 text-uppercase col-lg-12">Visit ID</label>
                     <span class="txt-style-2 col-lg-12 capitalize">--</span>
                 </div>
@@ -19,7 +19,7 @@
                     <span class="txt-style-2 col-lg-12">PA-{{displayInfo.patient_id}}</span>
                 </div>
                 <div class="col-lg-1">
-                    <label class="txt-style-1 text-uppercase col-lg-12">Age</label>
+                    <label class="txt-style-1 text-uppercase col-lg-12 adjust-2">Age</label>
                     <span class="txt-style-2 col-lg-12">{{displayInfo.age}} Years</span>
                 </div>
                 <div class="col-lg-1">

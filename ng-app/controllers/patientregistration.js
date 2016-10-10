@@ -416,7 +416,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             if (PIAdress.mobile_number != undefined) {
                 $rootScope.loader = 'show';
                 $scope.PI.adress.mobile_number = $scope.PI.adress.mobile_number.substring(0, 9);
-                $scope.PI.adress.phone_number = $scope.PI.adress.phone_number.substring(0, 9);
+                $scope.PI.adress.phone_number = $scope.PI.adress.phone_number == undefined ? '' : $scope.PI.adress.phone_number.substring(0, 9);
                 $scope.PI.adress.permanent_phonenumber = $scope.PI.adress.permanent_phonenumber!= undefined ? $scope.PI.adress.permanent_phonenumber.substring(0, 9) : '';
                 $scope.PI.adress.phone_number = $scope.PI.adress.phone_number != undefined ? $scope.PI.adress.phone_number.substring(0, 9) : '';
                 var dataToBeAdded = {

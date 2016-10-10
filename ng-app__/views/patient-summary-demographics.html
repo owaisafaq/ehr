@@ -1,0 +1,1285 @@
+<div id="content">
+    <section>
+        <div class="card custom-card">
+            <div class="card-head card-head-custom card-color-4">
+                <div class="col-lg-2">
+                    <label class="txt-style-1 text-uppercase col-lg-12">Encounter ID</label>
+                    <span class="txt-style-2 col-lg-12 capitalize">{{encounterID == undefined ? EID : encounterID}}</span>
+                </div>
+                <div class="col-lg-2">
+                    <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
+                    <span class="txt-style-2 col-lg-12">{{PI.first_name}}</span>
+                </div>
+                <div class="col-lg-2">
+                    <label class="txt-style-1 text-uppercase col-lg-12">Patient Number</label>
+                    <span class="txt-style-2 col-lg-12">PA-{{PI.patient_id}}</span>
+                </div>
+                <div class="col-lg-1">
+                    <label class="txt-style-1 text-uppercase col-lg-12">Age</label>
+                    <span class="txt-style-2 col-lg-12">{{PI.age}}</span>
+                </div>
+                <div class="col-lg-1">
+                    <label class="txt-style-1 text-uppercase col-lg-12">Sex</label>
+                    <span class="txt-style-2 col-lg-12">{{PI.gender}}</span>
+                </div>
+                <div class="col-lg-2">
+                    <label class="txt-style-1 text-uppercase col-lg-12">marital status</label>
+                    <span class="txt-style-2 col-lg-12">{{PI.marital_status}}</span>
+                </div>
+                <div class="col-lg-2">
+                    <a href="javascript:;" class="button-style-2">
+                        <img src="assets/img/content_icn_blue.png" />
+                    </a>
+                    <a href="javascript:;" class="button-style-2">
+                        <img src="assets/img/assign_blue.png" />
+                    </a>
+                    <a href="javascript:;" class="button-style-2">
+                        <img src="assets/img/discharge_icn_blue.png" />
+                    </a>                             
+                </div>
+            </div>
+            <div class="col-lg-3 pull-right no-padding">
+                <div class="panel-group custom-accordian custom-accordian_2" id="accordion3">
+                    <div class="card panel">
+                        <div class="card-head card-head-sm" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-1">
+                            <header>Appointments</header>
+                            <div class="tools">
+                                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+                            </div>
+                        </div>
+                        <div id="accordion3-1" class="collapse in">
+                            <div class="card-body custom-card-body"><p>Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Dicant vituperata consequuntur.</p>
+                            </div>
+                        </div>
+                    </div><!--end .panel -->
+                    <div class="card panel">
+                        <form class="custom-form" novalidate>
+                            <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-3">
+                                <header>Immunizations</header>
+                                <div class="tools">
+                                    <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+                                </div>
+                            </div>
+                            <div id="accordion3-3" class="collapse">
+                                <div class="card-body">
+                                    <textarea ng-model="immunizationName" placeholder="Immunization" required></textarea>
+                                    <button class="btn button-style-1 pull-right" ng-click="addImmunizations(immunizationName);">Add</button>
+                                    <ul class="ulli ulli_3 col-lg-12">
+                                        <li class="col-lg-12" ng-repeat="immunization in immunizations">
+                                            {{immunization.name}}
+                                            <span class="pull-right delete-icon" ng-click="immunizations.splice($index, 1)"><img src="assets/img/cross.png" /></span>
+                                        </li>
+                                    </ul>
+                                    <!-- <p>Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Dicant vituperata consequuntur.</p> -->
+                                </div>
+                            </div>
+                        </form>
+                    </div><!--end .panel -->
+                    <div class="card panel">
+                        <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-2">
+                            <header>Active Problems</header>
+                            <div class="tools">
+                                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+                            </div>
+                        </div>
+                        <div id="accordion3-2" class="collapse">
+                            <div class="card-body"><p>Duo semper accumsan ea, quidam convenire cum cu, oportere maiestatis incorrupte est eu. Soluta audiam timeam ius te, idque gubergren forensibus ad mel, persius urbanitas usu id. Civibus nostrum fabellas mea te, ne pri lucilius iudicabit. Ut cibo semper vituperatoribus vix, cum in error elitr. Vix molestiae intellegat omittantur an, nam cu modo ullum scriptorem.</p>
+                                <p>Quod option numquam vel in, et fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Dicant vituperata consequuntur at sea, mazim commodo</p>
+                            </div>
+                        </div>
+                    </div><!--end .panel -->
+
+                    <div class="card panel">
+                        <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-4">
+                            <header>Family & Social History</header>
+                            <div class="tools">
+                                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+                            </div>
+                        </div>
+                        <div id="accordion3-4" class="collapse">
+                            <div class="card-body"><p>Duo semper accumsan ea, quidam convenire cum cu, oportere maiestatis incorrupte est eu. Soluta audiam timeam ius te, idque gubergren forensibus ad mel, persius urbanitas usu id. Civibus nostrum fabellas mea te, ne pri lucilius iudicabit. Ut cibo semper vituperatoribus vix, cum in error elitr. Vix molestiae intellegat omittantur an, nam cu modo ullum scriptorem.</p>
+                                <p>Quod option numquam vel in, et fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Dicant vituperata consequuntur at sea, mazim commodo</p>
+                            </div>
+                        </div>
+                    </div><!--end .panel -->
+
+                    <!-- <div class="card panel">
+                        <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-5">
+                            <header>Procedures & Hospitalization</header>
+                            <div class="tools">
+                                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+                            </div>
+                        </div>
+                        <div id="accordion3-5" class="collapse">
+                            <div class="card-body"><p>Duo semper accumsan ea, quidam convenire cum cu, oportere maiestatis incorrupte est eu. Soluta audiam timeam ius te, idque gubergren forensibus ad mel, persius urbanitas usu id. Civibus nostrum fabellas mea te, ne pri lucilius iudicabit. Ut cibo semper vituperatoribus vix, cum in error elitr. Vix molestiae intellegat omittantur an, nam cu modo ullum scriptorem.</p>
+                                <p>Quod option numquam vel in, et fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Dicant vituperata consequuntur at sea, mazim commodo</p>
+                            </div>
+                        </div>
+                    </div> --><!--end .panel -->
+
+                    <!-- <div class="card panel">
+                        <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-6">
+                            <header>Injections</header>
+                            <div class="tools">
+                                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+                            </div>
+                        </div>
+                        <div id="accordion3-6" class="collapse">
+                            <div class="card-body"><p>Duo semper accumsan ea, quidam convenire cum cu, oportere maiestatis incorrupte est eu. Soluta audiam timeam ius te, idque gubergren forensibus ad mel, persius urbanitas usu id. Civibus nostrum fabellas mea te, ne pri lucilius iudicabit. Ut cibo semper vituperatoribus vix, cum in error elitr. Vix molestiae intellegat omittantur an, nam cu modo ullum scriptorem.</p>
+                                <p>Quod option numquam vel in, et fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Dicant vituperata consequuntur at sea, mazim commodo</p>
+                            </div>
+                        </div>
+                    </div> --><!--end .panel -->
+                </div><!--end .panel-group -->
+            </div>
+            <div class="card-head col-lg-9 no-padding card-head-auto">
+                <ul class="nav nav-tabs nav-justified custom-tab custom-tab-with-header" data-toggle="tabs">
+                    <li class="active"><a showtab href="#demographics">demographics</a></li>
+                    <li><a showtab href="#encounter_history">encounters</a></li>
+                    <li><a showtab href="#health_vitals">vitals</a></li>
+                    <li><a showtab href="#medications">medications</a></li>
+                    <li><a showtab href="#supplements">supplements</a></li>
+                    <li><a showtab href="#allergies">allergies</a></li>
+                    <li><a showtab href="#archive">documents</a></li>
+                </ul>
+            </div><!--end .card-head -->
+            <div class="card-body tab-content col-lg-9 custom-card-body">
+                <div class="tab-pane active" id="demographics">
+                    <form class="custom-form">
+                        <div class="col-lg-12 margin-bottom-xxl">
+                            <label class="label-style">Patient Summary</label>
+                            <button type="button" data-toggle="modal" class="notes button-custom pull-right" ng-disabled="buttonDisabled" data-target="#addclinical">Clinical Notes</button>
+                        </div>
+                        <div class="patient_summary col-lg-12">
+                            <div class="row">
+                                <div class="col-lg-2 text-center">
+                                    <img src="assets/img/profile_pic.jpg" />
+                                </div>
+                                <div class="col-lg-10">
+                                    <div class="col-lg-12">
+                                        <label class="label-style-2">{{PI.first_name}} {{PI.middle_name}} {{PI.last_name}}</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>date of birth</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label class="txt-style-4">{{PI.date_of_birth}}</label>
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <label>patient id</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label class="txt-style-4">PA-{{PI.patient_id}}</label>
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <label>age</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label class="txt-style-4">{{PI.age}}</label>
+                                    </div>  
+
+                                    <div class="col-lg-3">
+                                        <label>old patient id</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label class="txt-style-4">Phone Number</label>
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <label>Gender</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label class="txt-style-4">{{PI.gender}}</label>
+                                    </div>  
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 no-padding">
+                                    <div class="col-lg-3">
+                                        <label>marital status</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label class="txt-style-4">{{PI.marital_status}}</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>religion</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label class="txt-style-4">{{PI.religion}}</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>patient billing</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label class="txt-style-4">Paid</label>
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <label>next of kin</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label class="txt-style-4">{{PI.next_to_kin| limitTo:15}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 no-padding">
+                                    <div class="col-lg-3">
+                                        <label>mobile no</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label class="txt-style-4">+{{PI.mobile_number}}</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>email</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label class="txt-style-4 text-lowercase">{{PI.email}}</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>address</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label class="txt-style-4">{{PI.house_number}}, {{PI.street}}</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>blood group</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label class="txt-style-4">{{PI.blood_group}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#/patient-registration-update/{{PID}}" class="btn ink-reaction button-style-1 button-style-1 margin-top-30">UPDATE PATIENT DETAILS</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane" id="encounter_history">
+                    <!-- <div class="col-lg-2">
+                        <select ng-model="pageSize" class="form-control" ng-change="selectBoxValue(pageSize);" placeholder="Number of Record">
+                            <option></option>
+                            <option value="15" selected>15</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="50">50</option>
+                        </select>
+                    </div> -->
+                    <table class="table table-striped no-margin table-custom table-custom_big">
+                        <thead>
+                            <tr>
+                                <th>date</th>
+                                <th>ID</th>
+                                <th>type</th>
+                                <th>chief / complaint</th>
+                                <th>diagnosis</th>
+                                <th>consultant</th>
+                                <th>report</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="encounter in encounters">
+                                <td>{{encounter.created_at}}</td>
+                                <td>{{encounter.id}}</td>
+                                <td>{{encounter.encounter_type}}</td>
+                                <td>{{encounter.first_name}}</td>
+                                <td>{{encounter.diagosis}}</td>
+                                <td>{{encounter.name}}</td>
+                                <td>{{encounter.report}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="pagination pagination-centered" ng-show="encounterCount">
+                        <ul class="pagination-controle pagination">
+                            <li class="enterKey">
+                                <input type="text" class="keyUpEncounter" width="5px" ng-model="pageNumberEncounter" numbers-only placeholder="Page Number"/>
+                            </li>
+                            <li>
+                              <button type="button" class="btn btn-primary" ng-disabled="encounterCurPage == 0" ng-click="encounterCurPage=encounterCurPage-1; encounterPaginationPrev(pageSize, encounterCurPage);"> &lt; PREV</button>
+                            </li>
+                            <li>
+                              <span>Page {{encounterCurPage + 1}} of {{ numberOfPagesEncounter() }}</span>
+                            </li>
+                            <li>
+                              <button type="button" class="btn btn-primary" ng-disabled="encounterCurPage >= encounterCount/pageSize - 1" ng-click="encounterCurPage = encounterCurPage+1; encounterPaginationNext(pageSize, encounterCurPage);">NEXT &gt;</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- <pagination data-ng-model="visitcurrentPage" total-items="encounters.length"
+                                items-per-page="visitnumPerPage" data-max-size="visitmaxSize" data-boundary-links="true"
+                                ng-init="begin = (visitcurrentPage - 1) * visitnumPerPage;
+                                                    end = begin + visitnumPerPage"
+                                data-ng-change="begin = (visitcurrentPage - 1) * visitnumPerPage;
+                                                    end = begin + visitnumPerPage">
+                    </pagination> -->
+                </div>
+
+                <div class="tab-pane" id="health_vitals">
+                    <button data-toggle="modal" data-target="#addpatient" class="btn ink-reaction button-style-1 button-style-1 pull-right margin-bottom-xxl">Add Vitals</button>
+                    <!-- <div class="col-lg-2">
+                        <select ng-model="vitalPageSize" class="form-control" ng-change="vitalSelectBoxValue(vitalPageSize);" placeholder="Number of Record">
+                            <option></option>
+                            <option value="15" selected>15</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="50">50</option>
+                        </select>
+                    </div> -->
+                    <table class="table table-striped no-margin table-custom table-custom_big">
+                        <thead>
+                            <tr>
+                                <th>date/time</th>
+                                <th>Temperature</th>
+                                <th>bp</th>
+                                <th>pulse</th>
+                                <th>respiration</th>
+                                <th>bmi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="vital in vitals">
+                                <td>{{vital.created_at}}</td>
+                                <td>{{vital.temperature_c}}<span ng-show="vital.temperature_c != ''">&#8451; </span>{{vital.temperature_f}}<span ng-show="vital.temperature_f != ''">&#8457;</span></td>
+                                <td>{{vital.systolic_mm_hg}}<span ng-show="vital.systolic_mm_hg != '' && vital.diastolic_mm_hg != ''">/</span>{{vital.diastolic_mm_hg}}<span ng-show="vital.systolic_mm_hg != '' && vital.diastolic_mm_hg != ''">mmHg</span></td>
+                                <td>{{vital.pulse}}</td>
+                                <td>{{vital.respiratory_rate}}</td>
+                                <td>{{vital.bmi_result}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="pagination pagination-centered" ng-show="vitalCount">
+                        <ul class="pagination-controle pagination">
+                            <li class="enterKey">
+                                <input type="text" width="5px" class="keyUpVital" ng-model="pageNumberVital" numbers-only placeholder="Page Number"/>
+                            </li>
+                            <li>
+                              <button type="button" class="btn btn-primary" ng-disabled="vitalCurPage == 0" ng-click="vitalCurPage=vitalCurPage-1; vitalPaginationPrev(pageSize, vitalCurPage);"> &lt; PREV</button>
+                            </li>
+                            <li>
+                              <span>Page {{vitalCurPage + 1}} of {{ numberOfPagesVital() }}</span>
+                            </li>
+                            <li>
+                              <button type="button" class="btn btn-primary" ng-disabled="vitalCurPage >= vitalCount/pageSize - 1" ng-click="vitalCurPage = vitalCurPage+1; vitalPaginationNext(pageSize, vitalCurPage);">NEXT &gt;</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- <pagination data-ng-model="vitalscurrentPage" total-items="vitals.length"
+                                items-per-page="vitalsnumPerPage" data-max-size="vitalsmaxSize" data-boundary-links="true"
+                                ng-init="vitalbegin = (vitalscurrentPage - 1) * vitalsnumPerPage;
+                                                    vitalend = vitalbegin + vitalsnumPerPage"
+                                data-ng-change="vitalbegin = (vitalscurrentPage - 1) * vitalsnumPerPage;
+                                                    vitalend = vitalbegin + vitalsnumPerPage">
+                    </pagination> -->
+                </div>
+
+                <div class="tab-pane" id="medications">
+                    <button class="btn ink-reaction button-style-1 button-style-1 pull-right margin-bottom-xxl" data-toggle="modal" data-target="#addmedication">Add Medications</button>
+                    <table class="table table-striped no-margin table-custom table-custom_big">
+                        <thead>
+                            <tr>
+                                <th>prescription</th>
+                                <th>Date</th>
+                                <!-- <th>to date</th> -->
+                                <th>status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="medication in medications">
+                                <td>{{medication.prescription}}</td>
+                                <td>{{medication.prescription_date}}</td>
+                                <td>{{medication.prescription_status}}</td>
+                                <!-- <td>{{medication.status}}</td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- <pagination data-ng-model="medicationscurrentPage" total-items="medications.length"
+                                items-per-page="medicationnumPerPage" data-max-size="medicationmaxSize" data-boundary-links="true"
+                                ng-init="medicationbegin = (medicationscurrentPage - 1) * medicationnumPerPage;
+                                                    medicationend = medicationbegin + medicationnumPerPage"
+                                data-ng-change="medicationbegin = (medicationscurrentPage - 1) * medicationnumPerPage;
+                                                    medicationend = medicationbegin + medicationnumPerPage">
+                    </pagination> -->
+                    <div class="pagination pagination-centered" ng-show="medicationsCount">
+                        <ul class="pagination-controle pagination">
+                            <li class="enterKey">
+                                <input type="text" width="5px" class="keyUpMedication" ng-model="pageNumberMedication" numbers-only placeholder="Page Number"/>
+                            </li>
+                            <li>
+                              <button type="button" class="btn btn-primary" ng-disabled="medicationCurPage == 0" ng-click="medicationCurPage=medicationCurPage-1; medicationPaginationNext(pageSize, medicationCurPage);"> &lt; PREV</button>
+                            </li>
+                            <li>
+                              <span>Page {{medicationCurPage + 1}} of {{ numberOfPagesMedication() }}</span>
+                            </li>
+                            <li>
+                              <button type="button" class="btn btn-primary" ng-disabled="medicationCurPage >= medicationsCount/pageSize - 1" ng-click="medicationCurPage = medicationCurPage+1; medicationPaginationNext(pageSize, medicationCurPage);">NEXT &gt;</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab-pane" id="supplements">
+                    <button data-toggle="modal" data-target="#addsuplemets" class="btn ink-reaction button-style-1 button-style-1 pull-right margin-bottom-xxl">Add Supplements</button>
+                    <table class="table table-striped no-margin table-custom table-custom_big">
+                        <thead>
+                            <tr>
+                                <th>supplements</th>
+                                <th>dosage</th>
+                                <th>frequency</th>
+                                <th>intake type</th>
+                                <th>from date</th>
+                                <th>to date</th>
+                                <th>status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="supplement in supplements.slice(supplementbegin, supplementend)">
+                                <td>{{supplement.supplements}}</td>
+                                <td>{{supplement.dosage}}</td>
+                                <td>{{supplement.frequency}}</td>
+                                <td>{{supplement.intake}}</td>
+                                <td>{{supplement.from_date}}</td>
+                                <td>{{supplement.to_date}}</td>
+                                <td>{{supplement.medicine_status}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- <pagination data-ng-model="suplimentscurrentPage" total-items="supplements.length"
+                                items-per-page="suplimentsnumPerPage" data-max-size="suplimentsmaxSize" data-boundary-links="true"
+                                ng-init="supplementbegin = (suplimentscurrentPage - 1) * suplimentsnumPerPage;
+                                                    supplementend = supplementbegin + suplimentsnumPerPage"
+                                data-ng-change="supplementbegin = (suplimentscurrentPage - 1) * suplimentsnumPerPage;
+                                                    supplementend = supplementbegin + suplimentsnumPerPage">
+                    </pagination> -->
+                    <div class="pagination pagination-centered" ng-show="supplementsCount">
+                        <ul class="pagination-controle pagination">
+                            <li class="enterKey">
+                                <input type="text" width="5px" class="keyUpSupplement" ng-model="pageNumberSupplement" numbers-only placeholder="Page Number"/>
+                            </li>
+                            <li>
+                              <button type="button" class="btn btn-primary" ng-disabled="supplementsCurPage == 0" ng-click="supplementsCurPage=supplementsCurPage-1; supplementPaginationPrev(pageSize, supplementsCurPage);"> &lt; PREV</button>
+                            </li>
+                            <li>
+                              <span>Page {{supplementsCurPage + 1}} of {{ numberOfPagesSupplements() }}</span>
+                            </li>
+                            <li>
+                              <button type="button" class="btn btn-primary" ng-disabled="supplementsCurPage >= supplementsCount/pageSize - 1" ng-click="supplementsCurPage = supplementsCurPage+1; supplementPaginationNext(pageSize, supplementsCurPage);">NEXT &gt;</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab-pane" id="allergies"> 
+                    <button class="btn ink-reaction button-style-1 button-style-1 pull-right margin-bottom-xxl" data-toggle="modal" data-target="#addallergies">Add Allergies</button>
+                    <table class="table table-striped no-margin table-custom table-custom_big editable_table selectAndDateTable">
+                        <thead>
+                            <tr>
+                                <th>allergy type</th>
+                                <th>allergies</th>
+                                <th>severity</th>
+                                <th>observed on</th>
+                                <th>status</th>
+                                <th>reactions</th>
+                                <th width="14%">actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="allergie in allergies">
+                                <td><input type="text" ng-model="allergie.allergy_type" ng-init="edit[$index] = false" ng-disabled="edit[$index] == false" /></td>
+                                <td><input type="text" ng-model="allergie.allergies" ng-disabled="edit[$index] == false" /></td>
+                                <td><input type="text" ng-model="allergie.severity" ng-disabled="edit[$index] == false" />
+                                </td>
+                                <td>
+                                    <div class="input-group date select-date my-date-picker">
+                                        <div class="input-group-content">
+                                            <input type="text" name="date_of_birth" my-date-picker ng-model="allergie.observed_on" class="form-control" required placeholder="Pick Date" ng-disabled="edit[$index] == false" />
+                                        </div>
+                                    </div>
+                                <td>
+                                    <!--ng-options="allergy_detail.name for allergy_detail in dropDownInfo.AllergyType track by allergy_detail.id"-->
+                                    <select my-drop-down class="form-control" ng-model="allergie.allergy_status" placeholder="Select Allergy Status" ng-disabled="edit[$index] == false">
+                                        <!--<option></option>-->
+                                        <option ng-selected="allergie.allergy_status == allergy.name" ng-repeat="allergy in dropDownInfo.AllergyType" value="{{allergy.name}}">{{allergy.name}}</option>
+                                        <!--<option ng-selected="allergie.allergy_status == 'not any more'">Not Any More</option>-->
+                                    </select>
+                                    <!--                                    <select class="form-control select_searchFields" placeholder="ID Type" ng-model="PI.identity_type">
+                                                                            <option value=""></option>
+                                                                            <option ng-repeat="idType in dropDownInfo.IdType" value="{{idType.id}}">{{idType.type}}</option>
+                                                                        </select>-->
+                                </td>
+                                <td><input type="text" ng-model="allergie.reactions" ng-disabled="edit[$index] == false" /></td>
+                                <td>
+                                    <input type="hidden" ng-model="allergie.id" />
+                                    <a ng-show="edit[$index] == false" ng-click="editAllergies($index)" class="link-style" href="javascript:;">Edit</a><a href="javascript:;" ng-show="edit[$index]" ng-click="saveAllergies(allergie, $index)" class="link-style">Save</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+                                    <a class="link-style" data-toggle="modal" data-target="#removeAllergy" href="" ng-click="removeAllergy(allergie)" >Delete</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="pagination pagination-centered" ng-show="allergiesCount">
+                        <ul class="pagination-controle pagination">
+                            <li class="enterKey">
+                                <input type="text" width="5px" class="keyUpAllergy" ng-model="pageNumberAllergy" numbers-only placeholder="Page Number"/>
+                            </li>
+                            <li>
+                              <button type="button" class="btn btn-primary" ng-disabled="allergyCurPage == 0" ng-click="allergyCurPage=allergyCurPage-1; paginationPrev(pageSize, allergyCurPage);"> &lt; PREV</button>
+                            </li>
+                            <li>
+                              <span>Page {{allergyCurPage + 1}} of {{ numberOfPages() }}</span>
+                            </li>
+                            <li>
+                              <button type="button" class="btn btn-primary" ng-disabled="allergyCurPage >= allergiesCount/pageSize - 1" ng-click="allergyCurPage = allergyCurPage+1; paginationNext(pageSize, allergyCurPage);">NEXT &gt;</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab-pane" id="archive">
+                    <div class="col-xs-12">
+                        <div class="icons_con archive_buttons">
+                            <button class="save done-editing button-custom" ng-click="saveArchive();">Save</button>
+                            <button class="edit button-custom" ng-disabled="disableOptionsArchive">Edit</button>
+                            <button class="delete button-custom" data-toggle="modal" data-target="#confirmation" ng-disabled="disableOptionsArchive">Remove</button>
+                            <button data-toggle="modal" data-target="#fileUploader" class="add button-custom">ADD</button>
+                        </div>
+                    </div>
+
+                    <div class="row file_uploads">
+                     <a href="javascript:;" ng-if="followupParentId != '0'" class="btn button-style-1" ng-hide="backButtonArchive" ng-click="backButton();"><i class="fa fa-arrow-up" aria-hidden="true"></i> Folder Up</a>
+                        <div class="col-xs-12 folder_create_con no-padding">
+                            <div class="col-xs-2" data-id="{{folder.id}}" ng-repeat="folder in foldersArchive" ng-dblclick="openFolder();">
+                                <div>
+                                    <img src="assets/img/folder_icon.png" />
+                                    <div class="pull-left">
+                                        <input type="text" disabled value="{{folder.name}}"/>
+                                        <span class="file_date">{{folder.created_at}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="file_create_con col-xs-12 no-padding">
+                            <div class="col-xs-2" data-id="{{archive.id}}" ng-repeat="archive in archives">
+                                <!-- <a href="{{archive.file}}"> -->
+                                <div ng-if="archive.file.slice(-3) == 'pdf'" ng-dblclick="showPDF(archive.file);">
+                                    <div class="file_preview">
+                                        <!-- <img src="assets/img/pdf_icon.png" /> -->
+                                        <object data="{{archive.file}}" type="application/pdf" style="height: 400px;"></object>
+                                    </div>
+                                    <div class="file_lower">
+                                        <img src="assets/img/pdf_icon.png" />
+                                        <div class="pull-left">
+                                            <input type="text" value="{{archive.file_name}}" disabled ng-model="fileRename[$index]"/>
+                                            <span class="file_date">{{archive.created_at}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- </a> -->
+                                <div ng-if="archive.file.slice(-3) == 'jpg' || archive.file.slice(-3) == 'peg' || archive.file.slice(-3) == 'png'">
+                                    <div class="file_preview">
+                                        <img src="{{archive.file}}" />
+                                    </div>
+                                    <div class="file_lower">
+                                        <img src="assets/img/jpg_icon.png" />
+                                        <div class="pull-left">
+                                            <input type="text" value="{{archive.file_name}}" disabled ng-model="fileRename[$index]"/>
+                                            <span class="file_date">{{archive.created_at}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--end .card-body -->
+        </div><!--end .card -->
+    </section>
+</div>
+</section>
+</div>
+<!-- ARCHIVE -->
+<div class="modal fade" id="fileUploader" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Add Archive</h2>
+            </div>
+            <form enctype="multipart/form-data" method="post" name="ArmyForm">
+                <div class="modal-body">
+                    <div class="row text-center">
+                        <div class="select_file_mode">
+                            <a class="{{areaFileActive1}}" href="javascript:;" ng-click="folderArea = false;
+                                            fileArea = true;
+                                            selectType('application/pdf');
+                                            areaFileActive1 = 'active';
+                                            areaFileActive2 = '';
+                                            areaFileActive3 = ''"><img src="assets/img/pdf_big_icon.png" /></a>
+                            <a class="{{areaFileActive2}}" href="javascript:;" ng-click="folderArea = false;
+                                            fileArea = true;
+                                            selectType('image/jpeg, image/png, image/jpg');
+                                            areaFileActive2 = 'active';
+                                            areaFileActive1 = '';
+                                            areaFileActive3 = ''"><img src="assets/img/jpg_big_icon.png" /></a>
+                            <a class="{{areaFileActive3}}" href="javascript:;" ng-click="fileArea = false;
+                                            folderArea = true;
+                                            areaFileActive3 = 'active';
+                                            areaFileActive1 = '';
+                                            areaFileActive2 = '';
+                                            areaFileActive3 = 'active'"><img src="assets/img/folder_icon_big.png" /></a>
+                        </div>
+                    </div>
+                    <div class="show_uploading_format" ng-show="fileArea">
+                        <div class="clear fileuploader_con">
+                            <!-- <input type="file" class="abc" file-model="patient_archive" multiple="multiple" accept="{{fileTypes}}" /> -->
+                            <!-- <input type="file" id="file" name="file" ng-model="files" multiple file-change/> -->
+                            <button class="UploadBtn" ngf-select="uploadFiles($files, $invalidFiles)" multiple accept="{{fileTypes}}" type="file" ngf-max-size="1MB">Upload Files</button>
+                            <!-- <a href="javascript:$('#file_upload').uploadify('upload','*')">Upload Files</a>
+                            <p></p> -->
+                            <i ng-show="ArmyForm.file.$error.maxSize">File too large {{errorFile.size / 5000|number:1}}MB: max 2M</i>
+                            <ul>
+                                <li ng-repeat="f in files" style="font:smaller">{{f.name}} {{f.$errorParam}}
+                                    <span class="progress" ng-show="f.progress >= 0">
+                                        <div style="width:{{f.progress}}%" ng-bind="f.progress + '%'"></div>
+                                    </span>
+                                </li>
+                                <li ng-repeat="f in errFiles" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
+                                </li> 
+                            </ul>
+                            <p>{{fileUploadMessage}}</p>
+                        </div>
+                    </div>
+                    <div class="show_uploading_format" ng-show="folderArea">
+                        <div class="clear">
+                            <input type="text" name="folder_name" ng-model="folderName" />
+                            <button type="button" name="folderButton" class="create_button" ng-click="folderBtn();">Create</button>
+                        </div>
+                        {{archiveSuccessMessage}}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" ng-show="fileArea || folderArea" class="btn btn-default button-style-1" ng-click="listAfterUploaded()" data-dismiss="modal" ng-disabled="saveAndClose">Done</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- DELETE -->
+<div class="modal fade" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Confirmation</h2>
+            </div>
+            <div class="modal-body">
+                <p>Do you want to Delete?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-toggle="modal" ng-click="deleteArchive();" data-dismiss="modal">Ok</button>
+                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade" id="addpatient" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Add Vitals</h2>
+            </div>
+            <div class="modal-body">
+                <p>Continue to Add Patient Vitals</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-target="#vital-signs" data-toggle="modal" data-dismiss="modal">Ok</button>
+                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade big-modal" id="vital-signs" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Vitals Signs</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form" name="vitalForm" novalidate ng-submit="validateVitals(vital);">
+                    <div class="row">
+                        <div class="row no-margin">
+                            <div class="col-lg-4" >
+                                <div class="col-lg-12">
+                                    <label class="label-style">Blood Pressure (mm Hg)</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>systolic (mm hg)</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" placeholder="systolic (mm hg)"  ng-class="{
+                                            true
+                                            : 'error'}[vital.diastolic != undefined && vital.systolic == undefined]" ng-model="vital.systolic" numbers-only required/>
+                                    <p ng-show="vital.diastolic != undefined && vital.systolic == undefined" class="help-block PIValid">Required</p>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>diastolic (mm hg)</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" placeholder="diastolic (mm hg)" ng-class="{
+                                            true
+                                            : 'error'}[vital.diastolic == undefined && vital.systolic != undefined]" ng-model="vital.diastolic" numbers-only required/>
+                                    <p ng-show="vital.systolic != undefined && vital.diastolic == undefined" class="help-block PIValid">Required</p>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="col-lg-12">
+                                    <label class="label-style">Pulse Rate (min/bpm)</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>pulse</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" placeholder="pulse" ng-model="vital.pulse" numbers-only/>
+                                </div>
+                                <!-- <div class="col-lg-12">
+                                    <label class="label-style">Pulse Rate (min/bpm)</label>
+                                </div> -->
+                                <div class="col-lg-6">
+                                    <label>respiratory rate</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" placeholder="respiratory rate" ng-model="vital.respiratoryRate" numbers-only/>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="col-lg-12">
+                                    <label class="label-style">Respiratory Rate (br/min)</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>temperature (c)</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" placeholder="temperature (c)" ng-model="vital.temperaturec" numbers-only ng-keyup="GetTempcVal()"/>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>temperature (f)</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" placeholder="temperature (f)" ng-model="vital.temperaturef" ng-keyup="GetTempfVal()" numbers-only/>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="row">-->
+                        <div class="col-lg-12">
+                            <label class="col-lg-12 label-style no-margin">BMI (kg / m^2)</label>
+                            <!-- <div class="col-lg-5 pull-right">
+                                <div class="pull-right">
+                                    <a class="txt-style-4" href="javascript:;">Attach</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                                    <a class="txt-style-4" href="javascript:;">Past Notes</a>
+                                </div>
+                            </div> -->
+                        </div>
+                        <!--</div>-->
+                        <div class="col-lg-4">
+                            <div class="col-lg-6">
+                                <label>result</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" placeholder="0" ng-model="vital.result" readonly/>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>weight (kg)</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" ng-class="{true: 'error'}[vital.weight == undefined && vital.height != undefined]" placeholder="weight (kg)" ng-model="vital.weight" numbers-only ng-keyup="Calculatebmi()" required/>
+                                <p ng-show="vital.weight == undefined && vital.height != undefined" class="help-block PIValid">Required</p>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label>height (cm)</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" ng-class="{true: 'error'}[vital.height == undefined && vital.weight != undefined]" placeholder="height (cm)" ng-model="vital.height" ng-keyup="Calculatebmi()" numbers-only required />
+                                <p ng-show="vital.height == undefined && vital.weight != undefined" class="help-block PIValid">Required</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="col-lg-3">
+                                <label>Notes</label>
+                            </div>
+                            <div class="col-lg-9">
+                                <textarea placeholder="Write Your Text Here" ng-model="vital.notes"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;">Save</button>
+                            <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+<div class="modal fade" id="addclinical" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Clinical Notes</h2>
+            </div>
+            <div class="modal-body">
+                <p>Continue to Add Clinical Notes</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-toggle="modal" ng-click="clinicalNote();">Ok</button>
+                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="removeAllergy" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Confirmation</h2>
+            </div>
+            <div class="modal-body">
+                <p>Are you Sure want to delete?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-toggle="modal" data-dismiss="modal" ng-click="doDelete()">Ok</button>
+                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div class="modal fade big-modal" id="addallergies" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Add Allergies</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form" novalidate ng-submit="addAllergy(allergie)">
+                    <div class="row">
+
+                        <div class="col-lg-3">
+                            <label>Type</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <select ng-model="allergie.allergyType" class="form-control" placeholder="Select Type">
+                                <option></option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <label>Allergy</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <input ng-model="allergie.allergy" type="text" placeholder="" name="" required/>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Severity</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <select ng-model="allergie.severity" class="form-control" placeholder="Select Severity">
+                                <option></option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <label>Observed On</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="input-group date select-date">
+                                <div class="input-group-content">
+                                    <input ng-model="allergie.observed_on" type="text" class="form-control ng-pristine ng-valid ng-empty ng-touched" placeholder="Pick Date">
+                                </div>
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-3">
+                            <label>Status</label>
+                        </div>
+                        <div class="col-lg-3">
+                           <select ng-model="allergie.status" class="form-control" placeholder="Select Status">
+                               <option></option>
+                               <option value="still exists">still exists</option>
+                               <option value="not any more">not any more</option>
+                           </select>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <label>Reaction</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <input ng-model="allergie.reaction" type="text" placeholder="" name="" required/>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-default button-style-1">Add</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div><!-- /.modal-content -->
+
+
+    </div><!-- /.modal-dialog -->
+
+</div><!-- /.modal -->
+
+<div class="modal fade big-modal" id="addsuplemets" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Add Supplements</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form" novalidate ng-submit="addSupplements(addSupplement)">
+                    <div class="row">
+
+                        <div class="col-lg-3">
+                            <label>Supplement</label>
+                        </div>
+                        <div class="col-lg-6">
+                            <input type="text" placeholder="" name="" required ng-model="addSupplement.supplementName"/>
+                        </div>
+                        <div class="col-lg-3"></div>
+
+                        <div class="col-lg-3 clear">
+                            <label>Manufacturer</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <select class="form-control" ng-model="addSupplement.manufacturer" placeholder="Select Manufacturer">
+                                <option></option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+
+                        </div>
+                        <div class="col-lg-1">
+                            <button class="add button-custom add_manufacturer"></button>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" placeholder="" name="" required ng-model="addSupplement.addmanu"/>
+                        </div>
+                        <div class="col-lg-1">
+                            <button type="button" class="btn btn-default button-style-1 margin-0">Add</button>
+                        </div>
+
+                        <div class="col-lg-3 clear">
+                            <label>From Date</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="input-group date select-date">
+                                <div class="input-group-content">
+                                    <input type="text" class="form-control ng-pristine ng-valid ng-empty ng-touched" placeholder="Pick Date" ng-model="addSupplement.fromdate">
+                                </div>
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>To Date</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="input-group date select-date">
+                                <div class="input-group-content">
+                                    <input type="text" class="form-control ng-pristine ng-valid ng-empty ng-touched" placeholder="Pick Date" ng-model="addSupplement.todate">
+                                </div>
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-3">
+                            <label>Dosage</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" placeholder="" name="" required ng-model="addSupplement.dosage1"/>
+                        </div>
+                        <div class="col-lg-3">
+                            <select class="form-control" ng-model="addSupplement.dosage2" placeholder="Select Dosage">
+                                <option></option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3"></div>
+
+
+                        <div class="col-lg-3 clear">
+                            <label>Frequency</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <select class="form-control" ng-model="addSupplement.frequency" placeholder="Select Frequency">
+                                <option></option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3">
+                            <label>Intake Type</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <select class="form-control" ng-model="addSupplement.intake" placeholder="Select Intake">
+                                <option></option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3"></div>
+
+                        <div class="col-lg-9">
+                            <div class="checkbox checkbox-styled">
+                                <label>
+                                    <input type="checkbox" value="" ng-model="addSupplement.status">
+                                    <span>Is Active</span>
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-default button-style-1">Add</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div><!-- /.modal-content -->
+
+
+    </div><!-- /.modal-dialog -->
+
+</div><!-- /.modal -->
+
+<div class="modal fade big-modal" id="addmedication" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Add Medication</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form" novalidate ng-submit="savePharmacyPopUp()">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label>Medication</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <select ng-model="MedicationData.medication" class="form-control" placeholder="Select Medication">
+                                <option></option>
+                                <option ng-selected="MedicationData.medication == medicationDropData.id" value="{{medicationDropData.id}}" ng-repeat="medicationDropData in medicationDropDowns">{{medicationDropData.name}}</option>
+                            </select>
+                        </div>                                              
+
+                        <div class="col-lg-3">
+                            <label>SIG</label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input ng-model="MedicationData.sig" type="text" placeholder="" />
+                        </div>
+                        <div class="col-lg-1">
+                            <!--open_sig-->
+                            <a href="!#" class="setting-button button-custom pull-right" data-toggle="modal" data-target="#addsig"></a>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Dispense</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input ng-model="MedicationData.dispense" type="text" placeholder="" />
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Refills</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input ng-model="MedicationData.reffills" type="text" placeholder="" />
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Pharmacy</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <select ng-model="MedicationData.pharmacy" class="form-control" placeholder="Select Pharmacy">
+                                <option></option>
+                                <option ng-selected="MedicationData.pharmacy == pharmacyDataDrop.id" value="{{pharmacyDataDrop.id}}" ng-repeat="pharmacyDataDrop in pharmacyDataDropDown">{{pharmacyDataDrop.name}}</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3 clear">
+                            <label>Note Of Pharmacy</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input ng-model="MedicationData.note_of_pharmacy" type="text" placeholder="" required/>
+                        </div>
+
+
+                        <div class="col-lg-3"></div>
+                        <div class="col-lg-9">
+                            <button ng-hide="showUpdate" type="button" ng-click="addMedication()" class="btn btn-default pull-left button-style-1">Add</button>
+                            <button type="button" ng-show="showUpdate" ng-click="addMedication(1)" class="btn btn-default pull-left button-style-1">Update</button>
+                        </div>
+
+                    </div>
+
+                    <div class="medication_list">
+                        <div class="row med_row" ng-repeat="medicationDataPush in medicationsDataPush">
+                            <div class="col-lg-10">
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label>Medication</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>{{medicationDataPush.medication}}</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Dispense</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>{{medicationDataPush.dispense}}</span>
+                                    </div>
+
+                                    <div class="col-lg-2 clear">
+                                        <label>SIG</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>{{medicationDataPush.sig}}</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Pharmacy</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>{{medicationDataPush.pharmacy}}</span>
+                                    </div>
+
+                                    <div class="col-lg-2 clear">
+                                        <label>Note</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>{{medicationDataPush.note_of_pharmacy}}</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Refill</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>{{medicationDataPush.reffills}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <a ng-click="medicationsDataPush.splice($index,1)" href="javascript:;" class="delete remove_med button-custom pull-right"></a>
+                                <a href="javascript:;" ng-click="editMedication($index);" class="edit button-custom pull-right"></a>                            
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-default button-style-1" ng-show="medicationsDataPush != ''">Send</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div><!-- /.modal-content -->
+
+
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div class="modal fade big-modal" id="addsig" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Build Instructions</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label>Dose</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <select class="form-control" ng-model="buildInstructions.dose" placeholder="Select">
+                                        <option></option>
+                                        <option ng-repeat="dose in buildInstructionObject.dose" value="{{dose.name}}">{{dose.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Route</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <select class="form-control" ng-model="buildInstructions.route" placeholder="Select">
+                                        <option></option>
+                                        <option ng-repeat="route in buildInstructionObject.route" value="{{route.name}}">{{route.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Direction</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <select class="form-control" ng-model="buildInstructions.direction" placeholder="Select">
+                                        <option></option>
+                                        <option ng-repeat="direction in buildInstructionObject.direction" value="{{direction.name}}">{{direction.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label>Unit</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <select class="form-control" ng-model="buildInstructions.unit" placeholder="Select">
+                                        <option></option>
+                                        <option ng-repeat="unit in buildInstructionObject.unit" value="{{unit.name}}">{{unit.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Frequency</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <select class="form-control" ng-model="buildInstructions.frequency" placeholder="Select">
+                                        <option></option>
+                                        <option ng-repeat="frequency in buildInstructionObject.frequency" value="{{frequency.name}}">{{frequency.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Duration</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <select class="form-control" ng-model="buildInstructions.duration" placeholder="Select">
+                                        <option></option>
+                                        <option ng-repeat="duration in buildInstructionObject.duration" value="{{duration.name}}">{{duration.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default update_sig button-style-1" ng-click="addSIG(buildInstructions);">Update</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>

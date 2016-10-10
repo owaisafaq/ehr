@@ -1,0 +1,106 @@
+{
+  "_args": [
+    [
+      "angular-ui-router-tabs",
+      "/home/muzammil"
+    ]
+  ],
+  "_from": "angular-ui-router-tabs@latest",
+  "_id": "angular-ui-router-tabs@2.0.0",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/angular-ui-router-tabs",
+  "_nodeVersion": "5.11.0",
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/angular-ui-router-tabs-2.0.0.tgz_1463385067351_0.6615044584032148"
+  },
+  "_npmUser": {
+    "email": "rpocklin@gmail.com",
+    "name": "rpocklin"
+  },
+  "_npmVersion": "3.8.6",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "angular-ui-router-tabs",
+    "raw": "angular-ui-router-tabs",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/angular-ui-router-tabs/-/angular-ui-router-tabs-2.0.0.tgz",
+  "_shasum": "58a28186e1497ed3419095872ab817d1d8b8aed4",
+  "_shrinkwrap": null,
+  "_spec": "angular-ui-router-tabs",
+  "_where": "/home/muzammil",
+  "author": {
+    "email": "rpocklin@gmail.com",
+    "name": "Robert Pocklington"
+  },
+  "bugs": {
+    "url": "https://github.com/rpocklin/ui-router-tabs/issues"
+  },
+  "dependencies": {},
+  "description": "Idiot-proof tab panes with route support using Angular.js + Bootstrap 3 + UI Router.",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-autoprefixer": "~0.7.3",
+    "grunt-cli": "~0.1.13",
+    "grunt-contrib-connect": "~0.8.0",
+    "grunt-contrib-jshint": "~0.7.1",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-jsbeautifier": "^0.2.10",
+    "grunt-karma": "^0.12.2",
+    "grunt-karma-coveralls": "~2.3.0",
+    "jshint-stylish": "~0.1.3",
+    "karma": "^0.13.22",
+    "karma-coverage": "~0.2.4",
+    "karma-jasmine": "~0.1.5",
+    "karma-ng-html2js-preprocessor": "~0.1.0",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "load-grunt-tasks": "~0.6.0",
+    "phantomjs-prebuilt": "^2.1.7",
+    "static-site-generator-webpack-plugin": "^2.0.1",
+    "time-grunt": "~0.2.1"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "58a28186e1497ed3419095872ab817d1d8b8aed4",
+    "tarball": "https://registry.npmjs.org/angular-ui-router-tabs/-/angular-ui-router-tabs-2.0.0.tgz"
+  },
+  "engines": {
+    "node": ">=4.1.0"
+  },
+  "gitHead": "760465b97cc8d42a9d80b6fadce4bfc5d658eb37",
+  "homepage": "http://github.com/rpocklin/ui-router-tabs",
+  "keywords": [
+    "angular",
+    "tabs",
+    "navigation",
+    "ui-router",
+    "bootstrap"
+  ],
+  "license": "MIT",
+  "main": "src/ui-router-tabs.js",
+  "maintainers": [
+    {
+      "email": "rpocklin@gmail.com",
+      "name": "rpocklin"
+    }
+  ],
+  "name": "angular-ui-router-tabs",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/rpocklin/ui-router-tabs.git"
+  },
+  "scripts": {
+    "test": "grunt karma"
+  },
+  "version": "2.0.0"
+}

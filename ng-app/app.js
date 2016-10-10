@@ -768,7 +768,7 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
             localStorage.setItem('getSessionStorage', 'foobar');
             localStorage.removeItem('getSessionStorage', 'foobar');
         }
-
+        setTimeout(function (){$('.select2-input').attr("placeholder", "Type Here");},5000)
 
         var date = new Date();
         date.setDate(date.getDate()-1);

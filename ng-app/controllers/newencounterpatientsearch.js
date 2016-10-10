@@ -477,13 +477,13 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
     		visit_id: $scope.encounterID,
     		reason: $('input:radio[name="checkoutpatient"]:checked').val(),
             notes: $('.checkout_patient_tab_con > div.active textarea').val() == undefined ? '' : $('.checkout_patient_tab_con > div.active textarea').val(),
-    		pick_date: dataToBeAdded.date,
-    		pick_time: dataToBeAdded.time,
-    		admit_date: $scope.admittedDate,
-    		start_time: dataToBeAdded.time,
-    		//department_id: dataToBeAdded.ward,
-    		ward_id: dataToBeAdded.ward,
-    		bed_id: $scope.CO.bedNumber
+    		pick_date: dataToBeAdded.date == undefined ? '' : dataToBeAdded.date,
+    		pick_time: dataToBeAdded.time == undefined ? '' : dataToBeAdded.time,
+    		admit_date: $scope.admittedDate == undefined ? '' : $scope.admittedDate,
+    		start_time: dataToBeAdded.time == undefined ? '' : dataToBeAdded.time,
+    		department_id: dataToBeAdded.CPN == undefined ? '' : dataToBeAdded.CPN,
+    		ward_id: dataToBeAdded.ward == undefined ? '' : dataToBeAdded.ward,
+    		bed_id: $scope.CO.bedNumber == undefined ? '' : $scope.CO.bedNumber
     	}, checkoutSuccess, checkoutFailure);
     }
 
