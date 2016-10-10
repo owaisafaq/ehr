@@ -1,0 +1,156 @@
+<div id="content">
+    <section>
+        <div class="card {{dataStrip}}" ng-class="{true: 'custom-card'}[patientInfo]">
+            <div class="card-head card-head-custom card-color-1" ng-show="patientInfo">
+                <div class="col-lg-3">
+                    <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
+                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.first_name}} {{displayInfo.middle_name}} {{displayInfo.last_name}}</span>
+                </div>
+                <div class="col-lg-2">
+                    <label class="txt-style-1 text-uppercase col-lg-12">Patient Number</label>
+                    <span class="txt-style-2 col-lg-12">PA-{{displayInfo.patient_id}}</span>
+                </div>
+                <div class="col-lg-2">
+                    <label class="txt-style-1 text-uppercase col-lg-12">Age</label>
+                    <span class="txt-style-2 col-lg-12">{{displayInfo.age}} Years</span>
+                </div>
+                <div class="col-lg-1">
+                    <label class="txt-style-1 text-uppercase col-lg-12">Sex</label>
+                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.sex}}</span>
+                </div>
+                <div class="col-lg-2">
+                    <label class="txt-style-1 text-uppercase col-lg-12">marital status</label>
+                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.marital_status}}</span>
+                </div>
+                <div class="col-lg-2">
+                    <a href="javascript:;" class="button-style-2">
+                        <img src="assets/img/content_icn_blue.png" />
+                    </a>
+                    <a href="javascript:;" class="button-style-2">
+                        <img src="assets/img/assign_blue.png" />
+                    </a>
+                    <a href="javascript:;" class="button-style-2">
+                        <img src="assets/img/discharge_icn_blue.png" />
+                    </a>                             
+                </div>
+            </div>
+            <div class="table-header col-lg-12">
+                <div class="pull-left">
+                    <span class="txt-style-3 pull-left text-uppercase">Encounter List</span>
+                    <!-- <div class="header-search margin-right-0 pull-left">
+                        <button type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        <input class="search_field" type="text" ng-model="search" placeholder="Search for a patient">
+                    </div> -->
+                </div>
+                <div class="create_counter">
+                    <button type="button" ng-click="openCreateEncounter();" class="btn ink-reaction button-style-1 pull-right open-custom_pop" ng-disabled="disabledEncounterButton">create encounter</button>
+                    <div class="counter_pop custom_popup" ng-hide="closePopUp">
+                        <div class="pop_head col-lg-12">
+                            <h2 class="">Create New Encounter</h2> 
+                        </div>
+                        <div class="pop_body">
+                            <div class="alert {{messageType}}" role="alert" ng-show="message">
+                                <i class="{{errorSymbol}}"></i> {{errorMessage}}
+                            </div>
+                            <form class="custom-form" name="encounterForm" ng-model="myForm" novalidate ng-submit="validateEncounterForm(addEncounter);" >
+                                <div class="col-lg-6">
+                                    <label>clinic facility / Dept</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <select class="form-control" ng-class="{true: 'error'}[submitted && encounterForm.department.$invalid]" name="department" ng-model="addEncounter.department" placeholder="Select" required>
+                                        <option value=""></option>
+                                        <!-- <option value="1">1</option>
+                                        <option value="2">2</option> -->
+                                        <option ng-repeat="department in encountersDropdownData.departments" value="{{department.id}}">{{department.name}}</option>
+                                    </select>
+                                    <p class="help-block PIValid" ng-show="submitted && encounterForm.department.$error.required">Required</p>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <label>encounter class</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <select class="form-control" ng-class="{true: 'error'}[submitted && encounterForm.class.$invalid]" name="class" ng-model="addEncounter.class" placeholder="Select" required>
+                                        <option value=""></option>
+                                        <!-- <option ng-repeat="class in eclass" value="{{class.id}}">{{class.name}}</option> -->
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                    </select>
+                                    <p class="help-block PIValid" ng-show="submitted && encounterForm.class.$error.required">Required</p>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <label>encounter type</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <select class="form-control" ng-class="{true: 'error'}[submitted && encounterForm.type.$invalid]" name="type" ng-model="addEncounter.type" placeholder="Select" required>
+                                        <option value=""></option>
+                                        <!-- <option ng-repeat="type in types" value="{{type.id}}">{{type.name}}</option> -->
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                    </select>
+                                    <p class="help-block PIValid" ng-show="submitted && encounterForm.type.$error.required">Required</p>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <label>whom to see</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <select class="form-control" ng-class="{true: 'error'}[submitted && encounterForm.wts.$invalid]" name="wts" ng-model="addEncounter.wts" placeholder="Select whom to see" required>
+                                        <option value=""></option>
+                                        <option ng-repeat="wts in encountersDropdownData.doctors" value="{{wts.id}}">{{wts.name}}</option>
+                                        <!-- <option value="1">1</option>
+                                        <option value="2">2</option> -->
+                                    </select>
+                                    <p class="help-block PIValid" ng-show="submitted && encounterForm.wts.$error.required">Required</p>
+                                </div> 
+
+                                <div class="col-lg-12">
+                                <img src="assets/img/loader.gif" class="pull-right encounter-loader {{hideLoader}}"/>
+                                    <div class="pull-right">
+                                        
+                                        <button type="submit" class="btn ink-reaction button-style-1" ng-click="submitted = true;" ng-disabled="addEncounterBtn">create encounter</button>
+                                        <button type="button" class="btn ink-reaction button-style-1 button-style-1_a close_custom_pop" ng-click="closeAddEncounter();" ng-disabled="addEncounterBtn">Cancel</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body col-lg-12">
+                <!-- <input ng-model='filterValue'/><button ng-click='filter()'>Filter</button>
+                <div id="grid1" ui-grid="gridOptions" class="grid"></div> -->
+                <div>
+                    <!-- <table class="table table-striped no-margin table-custom">
+                        <thead>
+                            <tr>
+                                <th width="5"></th>
+                                <th>patient id</th>
+                                <th>full name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="encounter in allEncounters | filter:search">
+                                <td align="center">
+                                    <div class="radio radio-styled">
+                                        <label>
+                                            <input type="radio" name="optionsRadios" ng-modal="action[$index]" value="option1" ng-click="encounterSelected($index);">
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>PA-{{encounter.id}}</td>
+                                <td class="capitalize">{{encounter.first_name}}</td>
+                            </tr>
+                        </tbody>
+                    </table> -->
+                        <input class="encounter-search-bar" ng-change="getSearchPatient(search);" type="text" ng-model="search" placeholder="Search for a patient">
+                    
+                </div>
+            </div><!--end .card-body -->
+        </div><!--end .card -->
+    </section>
+</div>

@@ -1,5 +1,5 @@
 var AppEHR = angular.module('AppEHR');
-AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', 'GetResourcesByFolderArchives', 'ListFolderArchives', 'EditFolderArchives', 'DeleteFolderArchives', 'RemoveArchives', 'Upload', 'SaveFiles', '$timeout', 'DropDownData', 'ADDSupplements', 'ADDAllergy', 'AddFolderArchives','EditArchives', 'PatienPrescription', 'FolderUpContent', 'FolderUpFolders', 'ListImmunization', 'DeleteImmunization', 'AddImmunization', 'GetAllMedications', 'CheckoutPatient', 'GetMedicineUnits', 'GetPrescriptionSupplements', 'GetMedications', 'GetPatientAppointment', 'GetAP', 'DeleteAP', 'AddAP', 'DeleteFamily', 'ListFamily', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy, GetResourcesByFolderArchives, ListFolderArchives, EditFolderArchives, DeleteFolderArchives, RemoveArchives, Upload, SaveFiles, $timeout, DropDownData, ADDSupplements, ADDAllergy, AddFolderArchives,EditArchives,PatienPrescription, FolderUpContent,FolderUpFolders, ListImmunization, DeleteImmunization, AddImmunization, GetAllMedications, CheckoutPatient, GetMedicineUnits, GetPrescriptionSupplements, GetMedications, GetPatientAppointment, GetAP, DeleteAP, AddAP, DeleteFamily, ListFamily) {
+AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', 'GetResourcesByFolderArchives', 'ListFolderArchives', 'EditFolderArchives', 'DeleteFolderArchives', 'RemoveArchives', 'Upload', 'SaveFiles', '$timeout', 'DropDownData', 'ADDSupplements', 'ADDAllergy', 'AddFolderArchives','EditArchives', 'PatienPrescription', 'FolderUpContent', 'FolderUpFolders', 'ListImmunization', 'DeleteImmunization', 'AddImmunization', 'GetAllMedications', 'CheckoutPatient', 'GetMedicineUnits', 'GetPrescriptionSupplements', 'GetMedications', 'GetPatientAppointment', 'GetAP', 'DeleteAP', 'AddAP', 'DeleteFamily', 'ListFamily', 'DeleteAppointments', 'AddFamily', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy, GetResourcesByFolderArchives, ListFolderArchives, EditFolderArchives, DeleteFolderArchives, RemoveArchives, Upload, SaveFiles, $timeout, DropDownData, ADDSupplements, ADDAllergy, AddFolderArchives,EditArchives,PatienPrescription, FolderUpContent,FolderUpFolders, ListImmunization, DeleteImmunization, AddImmunization, GetAllMedications, CheckoutPatient, GetMedicineUnits, GetPrescriptionSupplements, GetMedications, GetPatientAppointment, GetAP, DeleteAP, AddAP, DeleteFamily, ListFamily, DeleteAppointments, AddFamily) {
         $rootScope.pageTitle = "EHR - Patient Summary Demographics";
         $scope.vital = {};
         $scope.PI = {};
@@ -1261,6 +1261,9 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
             console.log(res);
             $('#internetError').modal('show');
         }
+
+
+
         GetAP.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID}, APSuccess, APFailure);
         function APSuccess(res) {
             console.log(res, "AP")
@@ -1270,6 +1273,8 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
             console.log(res);
             $('#internetError').modal('show');
         }
+        
+        
         $scope.removeAP = function(id){
             DeleteAP.get({
                 token: $window.sessionStorage.token,
@@ -1292,10 +1297,11 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
 
         $scope.Addap = function(Aptext){
-            AddAP.get({total: $window.sessionStorage.token, name: Aptext, patient_id: $routeParams.patientID}, Aptextsuccess, Aptextfailure);
+            AddAP.get({token: $window.sessionStorage.token, name: Aptext, patient_id: $routeParams.patientID}, Aptextsuccess, Aptextfailure);
             function Aptextsuccess(res) {
                 if (res.status == true) {
                     console.log(res);
+                    $scope.Aptext = '';
                     GetAP.get({
                         token: $window.sessionStorage.token,
                         patient_id: $routeParams.patientID
@@ -1310,30 +1316,26 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
 
         $scope.removePA = function(id){
-            DeleteImmunization.get({
+            console.log(id,'remove appointment');
+            DeleteAppointments.save({
                 token: $window.sessionStorage.token,
-                immuization_id: id
-            }, deleteImmunizationsSuccess, deleteImmunizationsFailure);
-            function deleteImmunizationsSuccess(res) {
-                if (res.status == true) {
-                    console.log(res);
-                    ListImmunization.get({
-                        token: $window.sessionStorage.token,
-                        patient_id: $routeParams.patientID
-                    }, listImmunizationSuccess, listImmunizationFailure);
+                appointment_id: id
+            }, deleteAppointmentSuccess, deleteAppointmentFailure);
+            function deleteAppointmentSuccess(res){
+                $rootScope.loader = "hide";
+                if(res.status == true){
+                    GetPatientAppointment.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID, offset: 0, limit: 10}, patientAppointmentSuccess, patientAppointmentFailure); 
                 }
             }
-
-            function deleteImmunizationsFailure(error) {
-                console.log(error);
+            function deleteAppointmentFailure(error){
                 $('#internetError').modal('show');
+                console.log(error);
             }
         }
 
         ListFamily.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID}, fSuccess, APFailure);
         function fSuccess(res) {
             console.log(res, "Falimy");
-            
             $scope.Falimy = res.data;
         }
         function APFailure(res) {
@@ -1343,15 +1345,12 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         $scope.removeFamily = function(id){
             DeleteFamily.get({
                 token: $window.sessionStorage.token,
-                active_problem_id: id
+                family_history_id: id
             }, deleteImmunizationsSuccess, deleteImmunizationsFailure);
             function deleteImmunizationsSuccess(res) {
                 if (res.status == true) {
                     console.log(res);
-                    GetAP.get({
-                        token: $window.sessionStorage.token,
-                        patient_id: $routeParams.patientID
-                    }, APSuccess, APFailure);
+                    ListFamily.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID}, fSuccess, APFailure);
                 }
             }
 
@@ -1361,15 +1360,13 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
             }
         }
 
-        $scope.Addap = function(Aptext){
-            AddAP.get({total: $window.sessionStorage.token, name: Aptext, patient_id: $routeParams.patientID}, Aptextsuccess, Aptextfailure);
+        $scope.AddFamily = function(familyText){
+            AddFamily.get({token: $window.sessionStorage.token, name: familyText, patient_id: $routeParams.patientID}, Aptextsuccess, Aptextfailure);
             function Aptextsuccess(res) {
                 if (res.status == true) {
-                    console.log(res);
-                    GetAP.get({
-                        token: $window.sessionStorage.token,
-                        patient_id: $routeParams.patientID
-                    }, APSuccess, APFailure);
+                    $scope.familyName = '';
+                    console.log(res, 'addFamily');
+                    ListFamily.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID}, fSuccess, APFailure);
                 }
             }
 
@@ -1378,6 +1375,4 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
                 $('#internetError').modal('show');
             }
         }
-
-
 }]);

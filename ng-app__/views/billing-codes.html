@@ -1,0 +1,235 @@
+<div id="content">
+    <section>
+        <div class="card">
+            <div class="card-head col-lg-9 no-padding card-head-auto">
+                <ul class="nav nav-tabs nav-justified custom-tab" data-toggle="tabs">
+                    <li class="active"><a showtab href="#billing_codes">Billing Codes</a></li>
+                    <li><a showtab href="#category">Category</a></li>
+                </ul>
+            </div><!--end .card-head -->
+
+            <div class="card-body tab-content col-lg-12 custom-card-body">
+                <div class="tab-pane active" id="billing_codes">                    
+                    <div class="table-header row background-none margin-bot-70">
+                        <div class="col-lg-12 pdng-0">
+                            <h3 class="billing_hdng">Billing Codes and Charges</h3>
+                        </div>
+                        <div class="pull-right">
+                            <button class="add button-custom pull-right" data-toggle="modal" data-target="#addcode">New Code</button>
+                        </div>
+                        <span class="txt-style-3 pull-left text-uppercase">codes</span>
+                        <div class="col-lg-2">
+                            <select class="form-control">
+                                <option>All</option>
+                                <option>Cheque</option>
+                                <option>type 3</option>
+                            </select>
+                        </div>
+                        <div class="pull-right">
+                            <div class="header-search pull-left margin-top-10">
+                                <button type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <input class="search_field" type="text" placeholder="Search Template">
+                            </div>
+                        </div> 
+                    </div>
+                    <form class="custom-form">
+
+
+                        <table class="table table-striped no-margin table-custom table-custom_big billing_table">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Code</th>
+                                    <th>Charge</th>
+                                    <th>Category</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>For reporting lipid profile result</td>
+                                    <td>DOT</td>
+                                    <td>0.00</td>
+                                    <td>
+                                        <span>Category</span>
+                                        <div class="billing_actions"><a href="javascript:;" class="setting-button"></a>
+                                            <div class="tool-tip_popup">
+                                                <a href="javascript:;">Edit</a>
+                                                <a href="javascript:;">Delete</a>     
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>For reporting lipid profile result</td>
+                                    <td>DOT</td>
+                                    <td>0.00</td>
+                                    <td>
+                                        <span>Category</span>
+                                        <div class="billing_actions"><a href="javascript:;" class="setting-button"></a>
+                                            <div class="tool-tip_popup">
+                                                <a href="javascript:;">Edit</a>
+                                                <a href="javascript:;">Delete</a>     
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>                
+
+                <div class="tab-pane" id="category">
+                    <div class="table-header row background-none">
+                        <div class="pull-right">
+                            <button class="add button-custom pull-right" data-toggle="modal" data-target="#addcategory">New Category</button>
+                        </div>
+                        <!--                        <span class="txt-style-3 pull-left text-uppercase">category</span>
+                                                <div class="col-lg-2">
+                                                    <select class="form-control">
+                                                        <option>All</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                    </select>
+                                                </div>-->
+                        <div class="pull-right">
+                            <div class="header-search pull-left margin-top-10">
+                                <button type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <input class="search_field" type="text" placeholder="Search Category">
+                            </div>
+                        </div> 
+                    </div>
+                    <form class="custom-form">
+
+
+                        <table class="table table-striped no-margin table-custom table-custom_big setting_table_cat">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>SOAP</td>
+                                    <td>
+                                        <span>For reporting lipid profile result</span>
+                                        <div class="settings_actions"><a href="javascript:;" class="setting-button"></a>
+                                            <div class="tool-tip_popup">
+                                                <a href="javascript:;">View</a>
+                                                <a href="javascript:;">Edit</a>
+                                                <a href="javascript:;">Delete</a>     
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Custom</td>
+                                    <td>
+                                        <span>For reporting Lagos Antenatal result</span>
+                                        <div class="settings_actions"><a href="javascript:;" class="setting-button"></a>
+                                            <div class="tool-tip_popup">
+                                                <a href="javascript:;">View</a>
+                                                <a href="javascript:;">Edit</a>
+                                                <a href="javascript:;">Delete</a>    
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>HL7</td>
+                                    <td>
+                                        <span>Lorem ipsum Followup</span>
+                                        <div class="settings_actions"><a href="javascript:;" class="setting-button"></a>
+                                            <div class="tool-tip_popup">
+                                                <a href="javascript:;">View</a>
+                                                <a href="javascript:;">Edit</a>
+                                                <a href="javascript:;">Delete</a>  
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+
+              
+            </div><!--end .card-body -->
+        </div><!--end .card -->
+    </section>
+</div>
+<div class="modal fade big-modal" id="addcode" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Add Code</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form">
+                    <div class="row">                       
+
+                        <div class="col-lg-3">
+                            <label>Code</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="text" placeholder="" name="" required/>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <label>Description</label>
+                        </div>
+                        <div class="col-lg-12">
+                            <textarea></textarea>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Charge</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="text" placeholder="" name="" required/>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Category</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <select class="form-control">
+                                <option>Select</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Tax</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <select class="form-control">
+                                <option>Select</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default button-style-1">Add</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div><!-- /.modal-content -->
+
+
+    </div><!-- /.modal-dialog -->
+
+</div><!-- /.modal -->
+
+

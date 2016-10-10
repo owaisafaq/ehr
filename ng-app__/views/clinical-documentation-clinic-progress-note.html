@@ -1,0 +1,359 @@
+<div id="content">
+    <section>
+        <div class="card custom-card">
+            <div class="card-head card-head-custom card-color-3">
+                <div class="col-lg-3">
+                    <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
+                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.first_name}}</span>
+                </div>
+                <div class="col-lg-2">
+                    <label class="txt-style-1 text-uppercase col-lg-12">Patient Number</label>
+                    <span class="txt-style-2 col-lg-12">PA-{{displayInfo.id}}</span>
+                </div>
+                <div class="col-lg-2">
+                    <label class="txt-style-1 text-uppercase col-lg-12">Age</label>
+                    <span class="txt-style-2 col-lg-12">{{displayInfo.age}}</span>
+                </div>
+                <div class="col-lg-1">
+                    <label class="txt-style-1 text-uppercase col-lg-12">Sex</label>
+                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.sex}}</span>
+                </div>
+                <div class="col-lg-2">
+                    <label class="txt-style-1 text-uppercase col-lg-12">marital status</label>
+                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.marital_status}}</span>
+                </div>
+                <div class="col-lg-2">
+                    <a href="javascript:;" class="button-style-2">
+                        <img src="assets/img/content_icn_blue.png" />
+                    </a>
+                    <a href="javascript:;" class="button-style-2">
+                        <img src="assets/img/assign_blue.png" />
+                    </a>
+                    <a href="javascript:;" class="button-style-2">
+                        <img src="assets/img/discharge_icn_blue.png" />
+                    </a>                             
+                </div>
+            </div>
+            <div class="table-header col-lg-12">
+                <div class="col-lg-12 no-padding table-header-2">
+                    <span class="txt-style-3 pull-left text-uppercase">Encounter id</span>
+                    <span class="txt-style-4 pull-left">{{displayInfo.encounter_id}}</span>
+                    <span class="txt-style-3 pull-left text-uppercase">date of service</span>
+                    <span class="txt-style-4 pull-left">{{displayInfo.visit_created_at}}</span>
+                    <div class="pull-left header-checkboxes">
+                        <div class="checkbox checkbox-styled">
+                            <label>
+                                <input type="checkbox" value="">
+                                <span>H & P</span>
+                            </label>
+                        </div>
+
+                        <div class="checkbox checkbox-styled">
+                            <label>
+                                <input type="checkbox" value="">
+                                <span>SOAP Template</span>
+                            </label>
+                        </div>
+
+                        <div class="checkbox checkbox-styled">
+                            <label>
+                                <input type="checkbox" value="true" checked>
+                                <span>Custom Template</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 pull-right select-con">
+                        <select class="form-control" ng-model="template" ng-change="getTemplates(template);" data-placeholder="Select Template">
+                            <option value=""></option>
+                            <option ng-repeat="temp in templates" value="{{temp.id}}">{{temp.name}}</option>
+                        </select>
+                    </div>
+                </div> 
+            </div>
+            <div class="card-body col-lg-12 accordian-body-con">
+                <div class="col-lg-12 pull-right no-padding" ng-init="field = 1">
+                    <div class="panel-group custom-accordian" id="accordion3" ng-repeat="(key, value) in templateFields | groupBy: 'category'">
+                        <div class="card panel expanded">
+                            <div class="card-head card-head-sm" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3{{$index}}">
+                                <header>{{key}}</header>
+                                <div class="tools">
+                                    <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+                                </div>
+                            </div>
+                            <div id="accordion3{{$index}}" class="collapse in">
+                                <div class="card-body">
+                                    <ul class="ulli">
+                                        <li ng-repeat="item in value track by $index">
+                                            <div class="show_textarea">
+                                                <span>{{ item.name}}</span>
+                                                <img src="assets/img/checked.png" />
+                                                <input type="text" ng-model="inputFields[item.id]"/>
+                                                <!-- <input type="text" ng-model="inputFields[$parent.$index][$index+1]"/> -->
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div><!--end .panel -->
+                    </div><!--end .panel-group -->
+                    <div class="panel-group custom-accordian" id="accordion4">
+                        <div class="card panel expanded">
+                            <!--data-parent="#accordion4" data-target="#accordion4"-->
+                            <div class="card-head card-head-sm" data-toggle="collapse" >
+                                <header>More</header>
+                                <div class="tools">
+                                    <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+                                </div>
+                            </div>
+                            <div id="accordion4" class="collapse in">
+                                <div class="card-body">
+                                    <ul class="ulli">
+                                        <li>
+                                            <a href="#/lab-order-listing">Lab order</a>
+                                        </li>
+                                        <li>
+                                            <a href="!#" data-toggle="modal" data-target="#addmedication">Prescription</a> 
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div><!--end .panel -->
+                    </div><!--end .panel-group -->
+
+                    <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right" ng-show="selectedRow">finalize report</button>
+                    <button type="button" data-toggle="modal" data-target="#complaint" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10" ng-show="selectedRow">preview report</button>
+                    <button type="button" data-toggle="modal" data-target="#checkout" class="btn ink-reaction button-style-1 btn-big pull-right margin-right-10" ng-click="saveClinicalNotes(inputFields);" ng-show="selectedRow">save</button>
+                </div>
+            </div><!--end .card-body -->
+        </div><!--end .card -->
+    </section>
+</div>
+<div class="modal fade big-modal" id="addmedication" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Add Medication</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form" novalidate ng-submit="savePharmacyPopUp()">
+                    <div class="row">
+
+                        <div class="col-lg-3">
+                            <label>Medication</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <select ng-model="MedicationData.medication" class="form-control" placeholder="Select Medication">
+                                <option></option>
+                                <option ng-selected="MedicationData.medication == medicationDropData.id" value="{{medicationDropData.id}}" ng-repeat="medicationDropData in medicationDropDowns">{{medicationDropData.name}}</option>
+                            </select>
+                        </div>                                              
+
+                        <div class="col-lg-3">
+                            <label>SIG</label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input ng-model="MedicationData.sig" type="text" placeholder="" />
+                        </div>
+                        <div class="col-lg-1">
+                            <!--open_sig-->
+                            <a href="!#" class="setting-button button-custom pull-right" data-toggle="modal" data-target="#addsig"></a>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Dispense</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input ng-model="MedicationData.dispense" type="text" placeholder="" />
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Refills</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input ng-model="MedicationData.reffills" type="text" placeholder="" />
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Pharmacy</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <select ng-model="MedicationData.pharmacy" class="form-control" placeholder="Select Pharmacy">
+                                <option></option>
+                                <option ng-selected="MedicationData.pharmacy == pharmacyDataDrop.id" value="{{pharmacyDataDrop.id}}" ng-repeat="pharmacyDataDrop in pharmacyDataDropDown">{{pharmacyDataDrop.name}}</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3 clear">
+                            <label>Note Of Pharmacy</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input ng-model="MedicationData.note_of_pharmacy" type="text" placeholder="" required/>
+                        </div>
+
+
+                        <div class="col-lg-3"></div>
+                        <div class="col-lg-9">
+                            <button ng-hide="showUpdate" type="button" ng-click="addMedication()" class="btn btn-default pull-left button-style-1">Add</button>
+                            <button type="button" ng-show="showUpdate" ng-click="addMedication(1)" class="btn btn-default pull-left button-style-1">Update</button>
+                        </div>
+
+                    </div>
+
+                    <div class="medication_list">
+                        <div class="row med_row" ng-repeat="medicationDataPush in medicationsDataPush">
+                            <div class="col-lg-10">
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label>Medication</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>{{medicationDataPush.medication}}</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Dispense</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>{{medicationDataPush.dispense}}</span>
+                                    </div>
+
+                                    <div class="col-lg-2 clear">
+                                        <label>SIG</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>{{medicationDataPush.sig}}</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Pharmacy</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>{{medicationDataPush.pharmacy}}</span>
+                                    </div>
+
+                                    <div class="col-lg-2 clear">
+                                        <label>Note</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span>{{medicationDataPush.note_of_pharmacy}}</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Refill</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span>{{medicationDataPush.reffills}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <a ng-click="medicationsDataPush.splice($index,1)" href="javascript:;" class="delete remove_med button-custom pull-right"></a>
+                                <a href="javascript:;" ng-click="editMedication($index);" class="edit button-custom pull-right"></a>                            
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-default button-style-1" ng-show="medicationsDataPush != ''">Send</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div><!-- /.modal-content -->
+
+
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade big-modal" id="addsig" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Build Instructions</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label>Dose</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <select class="form-control" ng-model="buildInstructions.dose" placeholder="Select">
+                                        <option></option>
+                                        <option ng-repeat="dose in buildInstructionObject.dose" value="{{dose.name}}">{{dose.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Route</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <select class="form-control" ng-model="buildInstructions.route" placeholder="Select">
+                                        <option></option>
+                                        <option ng-repeat="route in buildInstructionObject.route" value="{{route.name}}">{{route.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Direction</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <select class="form-control" ng-model="buildInstructions.direction" placeholder="Select">
+                                        <option></option>
+                                        <option ng-repeat="direction in buildInstructionObject.direction" value="{{direction.name}}">{{direction.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label>Unit</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <select class="form-control" ng-model="buildInstructions.unit" placeholder="Select">
+                                        <option></option>
+                                        <option ng-repeat="unit in buildInstructionObject.unit" value="{{unit.name}}">{{unit.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Frequency</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <select class="form-control" ng-model="buildInstructions.frequency" placeholder="Select">
+                                        <option></option>
+                                        <option ng-repeat="frequency in buildInstructionObject.frequency" value="{{frequency.name}}">{{frequency.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Duration</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <select class="form-control" ng-model="buildInstructions.duration" placeholder="Select">
+                                        <option></option>
+                                        <option ng-repeat="duration in buildInstructionObject.duration" value="{{duration.name}}">{{duration.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default update_sig button-style-1" ng-click="addSIG(buildInstructions);">Update</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<script type="text/javascript">
+    $('body').on('click', '.show_textarea span', function () {
+        $(this).siblings('input[type=text]').toggle();
+        $(this).siblings('input[type=text]').focus();
+    });
+    $('body').on('keyup', '.show_textarea input[type=text]', function (e) {
+        if (e.keyCode == 13) {
+            if ($(this).val() != "") {
+                $(this).trigger("enterKey");
+                $(this).hide();
+                $(this).siblings('img').show();
+            }
+        }
+    });
+</script>
