@@ -51,16 +51,11 @@
                               <div class="card-body custom-body-style-1 scrollbar">
                                   <form class="custom-form" novalidate>
                                   <ul class="ulli ulli_3 col-lg-12 margin-left-5 margin-0">
-                                        <li class="col-lg-12 capitalize">
-                                            Appointments 1
-                                            <span class="pull-right delete-icon"><img src="assets/img/cross.png" /></span><!-- immunizations.splice($index, 1) -->
-                                        </li>
-                                        <li class="col-lg-12 capitalize">
-                                            Appointments 2
-                                            <span class="pull-right delete-icon"><img src="assets/img/cross.png" /></span><!-- immunizations.splice($index, 1) -->
+                                        <li class="col-lg-12 capitalize" ng-repeat="p in patientAppointment">
+                                            Date: {{p.pick_date}}, Speciality: {{p.department}}, Doctor: {{p.doctor}}
+                                            <span class="pull-right delete-icon" ng-click="removePA(p.id);"><img src="assets/img/cross.png" /></span><!-- immunizations.splice($index, 1) -->
                                         </li>
                                     </ul>
-                                    <!-- <p>Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Dicant vituperata consequuntur.</p> -->
                                     </form>
                                 </div>
                         </div>
@@ -116,22 +111,12 @@
                                         </li>
                                     </ul>-->
 
-                                    <textarea ng-model="immunizationName" placeholder="Text goes here..." required></textarea>
-                                   <!--  <div class="input-group date select-date col-lg-12 margin-bottom-xxl">
-                                        <div class="input-group-content">
-                                            <input type="text" class="form-control" placeholder="Select Date" ng-model="immunizationDate">
-                                        </div>
-                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                    </div> -->
-                                    <button class="btn button-style-1 pull-right" >Add</button>
+                                    <textarea ng-model="Aptext" placeholder="Text goes here..." required></textarea>
+                                    <button class="btn button-style-1 pull-right" ng-click="Addap(Aptext);">Add</button>
                                     <ul class="ulli ulli_3 col-lg-12 margin-left-5">
-                                        <li class="col-lg-12 capitalize">
-                                            Active Problems
-                                            <span class="pull-right delete-icon"><img src="assets/img/cross.png" /></span><!-- immunizations.splice($index, 1) -->
-                                        </li>
-                                        <li class="col-lg-12 capitalize">
-                                            Active Problems
-                                            <span class="pull-right delete-icon"><img src="assets/img/cross.png" /></span><!-- immunizations.splice($index, 1) -->
+                                        <li class="col-lg-12 capitalize" ng-repeat="ap in AP">
+                                            {{ap.name}}
+                                            <span class="pull-right delete-icon" ng-click="removeAP(ap.id);"><img src="assets/img/cross.png" /></span><!-- immunizations.splice($index, 1) -->
                                         </li>
                                     </ul>
                                 </form>
@@ -157,21 +142,16 @@
                                         </div>
                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                     </div> -->
-                                    <button class="btn button-style-1 pull-right">Add</button>
+                                    <button class="btn button-style-1 pull-right" ng-click="addFamily">Add</button>
                                     <ul class="ulli ulli_3 col-lg-12 margin-left-5">
-                                        <li class="col-lg-12 capitalize">
-                                            Family & Social History
-                                            <span class="pull-right delete-icon"><img src="assets/img/cross.png" /></span><!-- immunizations.splice($index, 1) -->
-                                        </li>
-                                        <li class="col-lg-12 capitalize">
-                                            Family & Social History
+                                        <li class="col-lg-12 capitalize" ng-repeat="f in Falimy">
+                                            {{f.name}}
                                             <span class="pull-right delete-icon"><img src="assets/img/cross.png" /></span><!-- immunizations.splice($index, 1) -->
                                         </li>
                                     </ul>
                                 </form>
                             </div>
                         </div>
-
                     </div><!--end .panel -->
                 </div><!--end .panel-group -->
             </div>
@@ -336,29 +316,7 @@
                             </tr>
                         </tbody>
                     </table>
-<!--                    <div class="pagination pagination-centered" ng-show="encounterCount">
-                        <ul class="pagination-controle pagination">
-                            <li class="enterKey">
-                                <input type="text" class="keyUpEncounter" width="5px" ng-model="pageNumberEncounter" numbers-only placeholder="Page Number"/>
-                            </li>
-                            <li>
-                              <button type="button" class="btn btn-primary" ng-disabled="encounterCurPage == 0" ng-click="encounterCurPage=encounterCurPage-1; encounterPaginationPrev(pageSize, encounterCurPage);"> &lt; PREV</button>
-                            </li>
-                            <li>
-                              <span>Page {{encounterCurPage + 1}} of {{ numberOfPagesEncounter() }}</span>
-                            </li>
-                            <li>
-                              <button type="button" class="btn btn-primary" ng-disabled="encounterCurPage >= encounterCount/pageSize - 1" ng-click="encounterCurPage = encounterCurPage+1; encounterPaginationNext(pageSize, encounterCurPage);">NEXT &gt;</button>
-                            </li>
-                        </ul>
-                    </div>-->
-                    <!-- <pagination data-ng-model="visitcurrentPage" total-items="encounters.length"
-                                items-per-page="visitnumPerPage" data-max-size="visitmaxSize" data-boundary-links="true"
-                                ng-init="begin = (visitcurrentPage - 1) * visitnumPerPage;
-                                                    end = begin + visitnumPerPage"
-                                data-ng-change="begin = (visitcurrentPage - 1) * visitnumPerPage;
-                                                    end = begin + visitnumPerPage">
-                    </pagination> -->
+
 
                     <div class="pagination pagination-centered pull-right" ng-show="encounterCount">
                         <ul class="pagination-controle pagination">

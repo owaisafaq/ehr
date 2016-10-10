@@ -2781,7 +2781,7 @@ AppEHR.factory("ListFamily", function ($resource) {
     };
     return patientRegistrationEmployer;
 });
-AppEHR.factory("AddAP", function ($resource) {
+/*AppEHR.factory("AddAP", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'add_active_problems', params, {
             get: {method: 'POST'}
@@ -2795,4 +2795,4 @@ AppEHR.factory("AddAP", function ($resource) {
         }
     };
     return patientRegistrationEmployer;
-});
+});*/
