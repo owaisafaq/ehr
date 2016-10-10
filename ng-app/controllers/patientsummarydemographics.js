@@ -1,5 +1,5 @@
 var AppEHR = angular.module('AppEHR');
-AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', 'GetResourcesByFolderArchives', 'ListFolderArchives', 'EditFolderArchives', 'DeleteFolderArchives', 'RemoveArchives', 'Upload', 'SaveFiles', '$timeout', 'DropDownData', 'ADDSupplements', 'ADDAllergy', 'AddFolderArchives','EditArchives', 'PatienPrescription', 'FolderUpContent', 'FolderUpFolders', 'ListImmunization', 'DeleteImmunization', 'AddImmunization', 'GetAllMedications', 'CheckoutPatient', 'GetMedicineUnits', 'GetPrescriptionSupplements', 'GetMedications', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy, GetResourcesByFolderArchives, ListFolderArchives, EditFolderArchives, DeleteFolderArchives, RemoveArchives, Upload, SaveFiles, $timeout, DropDownData, ADDSupplements, ADDAllergy, AddFolderArchives,EditArchives,PatienPrescription, FolderUpContent,FolderUpFolders, ListImmunization, DeleteImmunization, AddImmunization, GetAllMedications, CheckoutPatient, GetMedicineUnits, GetPrescriptionSupplements, GetMedications) {
+AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', 'GetResourcesByFolderArchives', 'ListFolderArchives', 'EditFolderArchives', 'DeleteFolderArchives', 'RemoveArchives', 'Upload', 'SaveFiles', '$timeout', 'DropDownData', 'ADDSupplements', 'ADDAllergy', 'AddFolderArchives','EditArchives', 'PatienPrescription', 'FolderUpContent', 'FolderUpFolders', 'ListImmunization', 'DeleteImmunization', 'AddImmunization', 'GetAllMedications', 'CheckoutPatient', 'GetMedicineUnits', 'GetPrescriptionSupplements', 'GetMedications', 'GetPatientAppointment', 'GetAP', 'DeleteAP', 'AddAP', 'DeleteFamily', 'ListFamily', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy, GetResourcesByFolderArchives, ListFolderArchives, EditFolderArchives, DeleteFolderArchives, RemoveArchives, Upload, SaveFiles, $timeout, DropDownData, ADDSupplements, ADDAllergy, AddFolderArchives,EditArchives,PatienPrescription, FolderUpContent,FolderUpFolders, ListImmunization, DeleteImmunization, AddImmunization, GetAllMedications, CheckoutPatient, GetMedicineUnits, GetPrescriptionSupplements, GetMedications, GetPatientAppointment, GetAP, DeleteAP, AddAP, DeleteFamily, ListFamily) {
         $rootScope.pageTitle = "EHR - Patient Summary Demographics";
         $scope.vital = {};
         $scope.PI = {};
@@ -1251,5 +1251,133 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         $scope.setTwoNumberDecimal = function(){
             $scope.vital.result = parseFloat($scope.vital.result).toFixed(2);
         }
+        GetPatientAppointment.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID, offset: 0, limit: 10}, patientAppointmentSuccess, patientAppointmentFailure);
+
+        function patientAppointmentSuccess(res) {
+            console.log(res, "drugs")
+           $scope.patientAppointment = res.data;
+        }
+        function patientAppointmentFailure(res) {
+            console.log(res);
+            $('#internetError').modal('show');
+        }
+        GetAP.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID}, APSuccess, APFailure);
+        function APSuccess(res) {
+            console.log(res, "AP")
+           $scope.AP = res.data;
+        }
+        function APFailure(res) {
+            console.log(res);
+            $('#internetError').modal('show');
+        }
+        $scope.removeAP = function(id){
+            DeleteAP.get({
+                token: $window.sessionStorage.token,
+                active_problem_id: id
+            }, deleteImmunizationsSuccess, deleteImmunizationsFailure);
+            function deleteImmunizationsSuccess(res) {
+                if (res.status == true) {
+                    console.log(res);
+                    GetAP.get({
+                        token: $window.sessionStorage.token,
+                        patient_id: $routeParams.patientID
+                    }, APSuccess, APFailure);
+                }
+            }
+
+            function deleteImmunizationsFailure(error) {
+                console.log(error);
+                $('#internetError').modal('show');
+            }
+        }
+
+        $scope.Addap = function(Aptext){
+            AddAP.get({total: $window.sessionStorage.token, name: Aptext, patient_id: $routeParams.patientID}, Aptextsuccess, Aptextfailure);
+            function Aptextsuccess(res) {
+                if (res.status == true) {
+                    console.log(res);
+                    GetAP.get({
+                        token: $window.sessionStorage.token,
+                        patient_id: $routeParams.patientID
+                    }, APSuccess, APFailure);
+                }
+            }
+
+            function Aptextfailure(error) {
+                console.log(error);
+                $('#internetError').modal('show');
+            }
+        }
+
+        $scope.removePA = function(id){
+            DeleteImmunization.get({
+                token: $window.sessionStorage.token,
+                immuization_id: id
+            }, deleteImmunizationsSuccess, deleteImmunizationsFailure);
+            function deleteImmunizationsSuccess(res) {
+                if (res.status == true) {
+                    console.log(res);
+                    ListImmunization.get({
+                        token: $window.sessionStorage.token,
+                        patient_id: $routeParams.patientID
+                    }, listImmunizationSuccess, listImmunizationFailure);
+                }
+            }
+
+            function deleteImmunizationsFailure(error) {
+                console.log(error);
+                $('#internetError').modal('show');
+            }
+        }
+
+        ListFamily.get({token: $window.sessionStorage.token, patient_id: $routeParams.patientID}, fSuccess, APFailure);
+        function fSuccess(res) {
+            console.log(res, "Falimy");
+            
+            $scope.Falimy = res.data;
+        }
+        function APFailure(res) {
+            console.log(res);
+            $('#internetError').modal('show');
+        }
+        $scope.removeFamily = function(id){
+            DeleteFamily.get({
+                token: $window.sessionStorage.token,
+                active_problem_id: id
+            }, deleteImmunizationsSuccess, deleteImmunizationsFailure);
+            function deleteImmunizationsSuccess(res) {
+                if (res.status == true) {
+                    console.log(res);
+                    GetAP.get({
+                        token: $window.sessionStorage.token,
+                        patient_id: $routeParams.patientID
+                    }, APSuccess, APFailure);
+                }
+            }
+
+            function deleteImmunizationsFailure(error) {
+                console.log(error);
+                $('#internetError').modal('show');
+            }
+        }
+
+        $scope.Addap = function(Aptext){
+            AddAP.get({total: $window.sessionStorage.token, name: Aptext, patient_id: $routeParams.patientID}, Aptextsuccess, Aptextfailure);
+            function Aptextsuccess(res) {
+                if (res.status == true) {
+                    console.log(res);
+                    GetAP.get({
+                        token: $window.sessionStorage.token,
+                        patient_id: $routeParams.patientID
+                    }, APSuccess, APFailure);
+                }
+            }
+
+            function Aptextfailure(error) {
+                console.log(error);
+                $('#internetError').modal('show');
+            }
+        }
+
 
 }]);
