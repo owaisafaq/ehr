@@ -151,7 +151,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
                   $scope.renderedTemplate.fields.push({
                     "displayName": templateCl.fields[i].displayName,
                     "name": templateCl.fields[i].name,
-                    "type": templateCl.fields[i].type == "number" ? "string" : templateCl.fields[i].type,
+                    "type": templateCl.fields[i].type == "number" ? "text" : templateCl.fields[i].type,
                     //"value": filledVal[Object.keys(filledVal)[i]] == undefined ? '' : filledVal[Object.keys(filledVal)[i]],
                     "value": Object.keys(filledVal)[i] == templateCl.fields[i].name || Object.keys(filledVal)[i] == templateCl.fields[i].displayName ? filledVal[Object.keys(filledVal)[i]] : '',
                     "validation": templateCl.fields[i].validation
