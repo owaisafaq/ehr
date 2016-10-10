@@ -2228,25 +2228,28 @@ class ApiController extends Controller
         if ($limit > 0 || $offset > 0) {
 
             $visits = DB::table('visits')
-                ->select(DB::raw('visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name,visits.reason_of_visit'))
+                ->select(DB::raw('patient_clinical_notes.id as clinical_notes_id, visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name,visits.reason_of_visit'))
                 ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
                 ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
+                ->leftJoin("patient_clinical_notes",   'visits.id', '=', 'patient_clinical_notes.visit_id')
                 ->where('visits.patient_id', $patient_id)
                 ->skip($offset)->take($limit)
                 ->get();
 
             $count = DB::table('visits')
-                ->select(DB::raw('visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name,visits.reason_of_visit'))
+                ->select(DB::raw('patient_clinical_notes.id as clinical_notes_id, visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name,visits.reason_of_visit'))
                 ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
                 ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
+                ->leftJoin("patient_clinical_notes",   'visits.id', '=', 'patient_clinical_notes.visit_id')
                 ->where('visits.patient_id', $patient_id)->count();
 
         } else {
 
             $visits = DB::table('visits')
-                ->select(DB::raw('visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name,visits.reason_of_visit'))
+                ->select(DB::raw('patient_clinical_notes.id as clinical_notes_id,visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name,visits.reason_of_visit'))
                 ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
                 ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
+                ->leftJoin("patient_clinical_notes",   'visits.id', '=', 'patient_clinical_notes.visit_id')
                 ->where('visits.patient_id', $patient_id)
                 ->get();
 
@@ -3575,6 +3578,15 @@ class ApiController extends Controller
             ->select(DB::raw('id,name'))
             ->where('status', 1)
             ->where('group','Supplements')
+            ->get();
+        return response()->json(['status' => true, 'data' => $data]);
+    }
+    public function get_inventory_categories(Request $request)
+    {
+        $data = DB::table('inventory_categories')
+            ->select('*')
+            ->where('cat_group', '=', 'Others')
+            ->orWhere('cat_group', '=', 'Documents')
             ->get();
         return response()->json(['status' => true, 'data' => $data]);
     }
