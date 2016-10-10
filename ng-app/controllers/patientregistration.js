@@ -66,7 +66,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             $scope.successMessage = false;
             $scope.errorMessage = false;
             $scope.showSubmitButton = true;
-            $scope.submitted = false;
+            $scope.submitted.nextOfKinStateByCountry = false;
             $scope.disabledTabInfo = 'active';
             $scope.disabledTabAdress = $scope.disabledTabArchive = $scope.disabledTabKin = $scope.disabledTabEmployer = $scope.disabledTabPatientPlant = "disabled-tabs";
             delete $window.sessionStorage.patient_id;
@@ -216,8 +216,8 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
         // Next of Kin
         $scope.nextOfKinStateByCountry = function (kin) {
-            if (kin != "null") {
-                States.get({token: $window.sessionStorage.token, country_id: kin}, nextOfKinStateSuccess, nextOfKinStateFailed);
+            if (kin != "null") { 
+                States.get({token: $window.sessionStorage.token, country_id: kin.id == undefined ? kin : kin.id}, nextOfKinStateSuccess, nextOfKinStateFailed);
             } else {
                 $scope.PI.kin_state = "null";
                 $scope.nextOfKinStates = [];
@@ -225,6 +225,8 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 $scope.nextOfKinCities = [];
             }
             function nextOfKinStateSuccess(res) {
+                console.log(res);
+                console.log("muttahir")
                 if (res.status == true && res.data.length > 0) {
                     angular.copy(res.data, $scope.nextOfKinStates);
                 }/*else{
@@ -901,7 +903,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     setTimeout(function () {
                         $('#autoship_optionKinRelation').val(res.data.patient_kin.relationship);
                         $('#autoship_optionKinState').val(res.data.patient_kin.state);
-                        $('#autoship_optionKinCountry').val(/*res.data.patient_kin.kin_country*/1);
+                        $('#autoship_optionKinCountry').val(1);
                         console.log($('#autoship_optionKinCountry').val(),'countryval');
                     },2000);
                 }

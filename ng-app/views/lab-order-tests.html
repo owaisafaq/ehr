@@ -410,18 +410,24 @@
                     <div class="col-lg-2">
                         <label>Add Material</label>
                     </div>
-                    <div class="col-lg-9 select-con">
-                        <select class="select_searchFields form-control" placeholder="Select Material">
+                    <div class="col-lg-9 select-con" id="selectInventory">
+                        <select class="select_searchFields form-control" placeholder="Select Material" ng-model="prod_cat_name" ng-options="inventory.cat_name for inventory in allProdByCat track by inventory.id">
                             <option value=""></option>
-                            <option>2</option>
-                            <option>3</option>
                         </select>
                     </div>
                      <div class="col-lg-1">
-                                        <span class="plus"><i class="md-add"></i></span>
+                         <span class="plus" ng-click="addMaterial()"><i class="md-add"></i></span>
                                     </div>
                 </div>
-                <div class="row">
+                    <div class="row margin-bottom-xxl">
+                        <div class="col-lg-2">
+                            <label>Quantity</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input class="form-control" ng-model="prod_quantity" type="text" placeholder="01" numbers-only>
+                        </div>
+                    </div>
+                <div class="row" ng-show="addedMaterial.length > 0">
                     <table class="table table-striped no-margin table-custom">
                         <thead>
                             <tr>
@@ -431,10 +437,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Panadol</td>
-                                <td>$200</td>
-                                <td>5</td>
+                            <!--ng-repeat=""-->
+                            <tr ng-repeat="add in addedMaterial">
+                                <td>{{add.material}}</td>
+                                <td>{{add.cost}}</td>
+                                <td>{{add.quantity}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -442,7 +449,7 @@
                     </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal" ng-click="addMaterials()" ng-disabled="addedMaterial.length == 0">sAVE</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

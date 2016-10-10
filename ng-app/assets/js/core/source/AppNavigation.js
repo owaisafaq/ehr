@@ -307,9 +307,9 @@
 		}
 
 		// Set the correct height
-		var height = $(window).height() - menu.position().top - menu.find('.nano').position().top;
+		//var height = $(window).height() - menu.position().top - menu.find('.nano').position().top;
 		var scroller = menuScroller.closest('.nano');
-		scroller.css({height: height});
+//		scroller.css({height: height});
 
 		// Add the nanoscroller
 		scroller.nanoScroller({preventPageScrolling: true, iOSNativeScrolling: true});
