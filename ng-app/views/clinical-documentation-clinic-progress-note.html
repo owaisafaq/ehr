@@ -96,20 +96,19 @@
                                     <form class="custom-form">
 
                                     <div class="row" ng-show="diagnosisAgaya" ng-class="{true: 'disabled-fields'}[is_signoff == 1]">
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-2">
                                             <label>Diagnosis</label>
                                         </div>
-                                        <div class="col-lg-9">
+                                        <div class="col-lg-9 chosen-styling">
                                             <select class="chosen-select nun" ng-model="diagnosis" multiple data-placeholder="Choose a Medicine" style="width:100%;display:none!important" id="autoship_option">
-                                                <option value=""></option>
                                                 <!-- <option value="1">+ve</option>
                                                 <option value="2">-ve</option>
                                                 <option value="3">Futher test required</option> -->
                                             </select>
                                         </div>
                                     </div>
-                                    <div fg-form fg-form-data="myFormData" fg-schema="mySchema" ng-class="{true: 'disabled-fields'}[is_signoff == 1]" ng-hide="newTemp"></div>
-                                    <div fg-form fg-form-data="myFormDataNewTemp" fg-schema="mySchemaNewTemp" ng-class="{true: 'disabled-fields'}[is_signoff == 1]" ng-show="newTemp"></div>
+                                        <div class="row"><div fg-form fg-form-data="myFormData" fg-schema="mySchema" ng-class="{true: 'disabled-fields'}[is_signoff == 1]" ng-hide="newTemp" class="margin-0"></div></div>
+                                        <div class="row"><div fg-form fg-form-data="myFormDataNewTemp" fg-schema="mySchemaNewTemp" ng-class="{true: 'disabled-fields'}[is_signoff == 1]" class="margin-0" ng-show="newTemp"></div></div>
                                     </form>
                                 </div>
                             </div>
@@ -806,14 +805,15 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade big-modal" id="neworder" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_3" id="neworder" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>New Order</h2>
             </div>
             <form class="custom-form" name="addForm" ng-model="myForm" novalidate ng-submit="testAdded && createOrder(Order);">
-                <div class="modal-body pull-left">
+                <div class="modal-body">
+                    <div class="row margin-bottom-xxl">
                     <div class="col-lg-12">
                         <!-- <select class="form-control select_searchFields" ng-model="Order.patient_id" placeholder="Select Patient" name="patient_id" ng-class="{true: 'error'}[submitted && addForm.patient_id.$invalid]" required ng-hide="withVisit">
                             <option value=""></option>
@@ -822,6 +822,8 @@
                         <input type="text" value="{{prefilledPatientName}}" disabled="true" ng-value="prefilledPatientName">
                         <p class="help-block PIValid" ng-show="submitted && addForm.patient_id.$error.required">Required</p>
                     </div>
+                        </div>
+                    <div class="row margin-bottom-xxl">
                     <div class="col-lg-2">
                         <label>time order created</label>
                     </div>
@@ -838,8 +840,10 @@
                         </select>
                         <p class="help-block PIValid" ng-show="submitted && addForm.selected_lab.$error.required">Required</p>
                     </div>
-                    <div class="col-lg-3"><label></label></div>
-                    <div class="col-lg-3"><label></label></div>
+                        </div>
+                    <!--<div class="col-lg-3"><label></label></div>-->
+                    <!--<div class="col-lg-3"><label></label></div>-->
+                    <div class="row margin-bottom-xxl">
                     <div class="col-lg-2">
                         <label>add lab test {{activeDropdown}}</label>
                     </div>
@@ -858,6 +862,8 @@
                     <div class="col-lg-1">
                         <span class="plus" ng-click="addTest()"><i class="md-add"></i></span>
                     </div>
+                        </div>
+                    <div class="row margin-bottom-xxl">
                     <div class="col-lg-12">
                         <p class="help-block PIValid" ng-show="submitted && !testAdded">Required</p>
                         <table class="table table-striped no-margin table-custom">
@@ -882,6 +888,7 @@
                             </tbody>
                         </table>
                     </div>
+                    </div>
                     <!-- <div class="col-lg-2">
                         <label>Clinical Information</label>
                     </div>
@@ -894,11 +901,13 @@
                     <div class="col-lg-4 margin-bottom-xxl">
                         <input type="text" class="form-control" placeholder="" ng-model="Order.diagnosis" name="diagnosis" ng-class="{true: 'error'}[submitted && addForm.diagnosis.$invalid]" required>
                     </div> -->
+                    <div class="row margin-bottom-xxl">
                     <div class="col-lg-12">
                         <label>add notes</label>
                     </div>
                     <div class="col-lg-12">
                         <textarea placeholder="Write here..." ng-model="Order.notes" name="notes" ng-class="{true: 'error'}[submitted && addForm.notes.$invalid]" required></textarea>
+                    </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -1054,4 +1063,11 @@
             }
         }
     });
+//    $(document).ready(function (){
+//        setTimeout(function (){
+            $('.select2-input').attr("placeholder", "Type Here");
+//            console.log("heerererer")
+//        },1000)
+//    })
+    
 </script>
