@@ -842,7 +842,7 @@ class ApiController extends Controller
 
         $states = DB::table('states')
             ->select(DB::raw('id,name'))
-            ->where('country_id', $country_id)
+           // ->where('country_id', $country_id)
             ->where('status', 1)
             ->get();
 
@@ -871,7 +871,7 @@ class ApiController extends Controller
 
         $local_goverment_area = DB::table('local_goverment_area')
             ->select(DB::raw('id,name'))
-            ->where('state_id', $state_id)
+           // ->where('state_id', $state_id)
             ->where('status', 1)
             ->get();
 
