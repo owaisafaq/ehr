@@ -893,8 +893,8 @@ class ApiController extends Controller
             ->where('status', 1)
             ->get();
 
-        $nationality = DB::table('nationality')
-            ->select(DB::raw('id,name'))
+        $nationality = DB::table('countries')
+            ->select(DB::raw('id,nationality as name'))
             ->where('status', 1)
             ->get();
 
@@ -1382,20 +1382,21 @@ class ApiController extends Controller
 
         $patient_plan = DB::table('hospital_plan')
             ->leftJoin('patients', 'patients.hospital_plan', '=', 'hospital_plan.id')
-            ->leftJoin('plan_details', 'plan_details.plan_id', '=', 'hospital_plan.id')
+            ->leftJoin('plan_details', 'plan_details.patient_id', '=', 'patients.id')
             ->leftJoin('hmo', 'hmo.id', '=', 'plan_details.hmo')
             ->leftJoin('policies', 'policies.id', '=', 'plan_details.policies')
             //->leftJoin('categories', 'categories.id', '=', 'plan_details.category')
             //->leftJoin('retainership', 'plan_details.retainership', '=', 'retainership.id')
             ->select(DB::raw('hospital_plan.name,plan_details.is_principal,plan_details.id as patient_plan_id,plan_details.is_dependant,hospital_plan.id as plan_id,hmo.name as hmo,hmo.id as hmo_id,plan_details.category,plan_details.retainership,policies.name as policies,plan_details.insurance_id,plan_details.description,plan_details.notes'))
             ->where('patients.status', 1)
-            ->where('plan_details.patient_id', $patient_id)
-            ->where('plan_details.status', 1)
+            ->where('patients.id',$patient_id)
+           // ->where('plan_details.patient_id', $patient_id)
+           // ->where('plan_details.status', 1)
             ->orderby('plan_details.id','desc')
             ->first();
 
 
-        if ($patient_plan != 'self' || $patient_plan != 'null') {
+        if ($patient_plan->name != 'self' || $patient_plan != 'null' || $patient_plan->name != 'FHSS' ) {
 
             if ($patient_plan->is_principal == 1) {
 
@@ -2228,12 +2229,14 @@ class ApiController extends Controller
         if ($limit > 0 || $offset > 0) {
 
             $visits = DB::table('visits')
-                ->select(DB::raw('visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name,visits.reason_of_visit'))
+                ->select(DB::raw('patient_clinical_notes.id as clinical_notes_id, visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name,visits.reason_of_visit'))
                 ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
                 ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
+                ->leftJoin("patient_clinical_notes",   DB::raw("TRIM(LEADING 0 FROM visits.id)"), '=', 'patient_clinical_notes.visit_id')
                 ->where('visits.patient_id', $patient_id)
                 ->skip($offset)->take($limit)
                 ->get();
+
 
             $count = DB::table('visits')
                 ->select(DB::raw('visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name,visits.reason_of_visit'))
@@ -2244,9 +2247,10 @@ class ApiController extends Controller
         } else {
 
             $visits = DB::table('visits')
-                ->select(DB::raw('visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name,visits.reason_of_visit'))
+                ->select(DB::raw('patient_clinical_notes.id as clinical_notes_id,visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name,visits.reason_of_visit'))
                 ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
                 ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
+                ->leftJoin("patient_clinical_notes",   DB::raw("TRIM(LEADING 0 FROM visits.id)"), '=', 'patient_clinical_notes.visit_id')
                 ->where('visits.patient_id', $patient_id)
                 ->get();
 
@@ -3575,6 +3579,16 @@ class ApiController extends Controller
             ->select(DB::raw('id,name'))
             ->where('status', 1)
             ->where('group','Supplements')
+            ->get();
+        return response()->json(['status' => true, 'data' => $data]);
+    }
+
+    public function get_inventory_categories(Request $request)
+    {
+        $data = DB::table('inventory_categories')
+            ->select('*')
+            ->where('cat_group', '=', 'Others')
+            ->orWhere('cat_group', '=', 'Documents')
             ->get();
         return response()->json(['status' => true, 'data' => $data]);
     }

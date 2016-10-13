@@ -351,12 +351,9 @@
                                 </tr>
                                 <tr>
                                     <td style="padding-bottom:20px;">
-                                        <p style="font-size:12px !important;color:#333333;line-height:18px !important;">
-                                            Henry Levin, the 7th is a 67 year old male reffered for further asthma management.
-                                            Onset of asthma in his teens.
-                                            He was hospotilized twice lst year, and already twice this year.
-                                            He has not been able to be weaned off steriods for the past several months.
-                                        </p>
+                                        <?php foreach ($family_history as $history) { ?>
+                                        <p style="font-size:12px !important;color:#333333;line-height:18px !important;"><?php echo $history->name; ?></p>
+                                        <?php } ?>
                                     </td>
                                 </tr>
 
@@ -372,9 +369,9 @@
                                 <tr>
                                     <td style="padding-bottom:20px;">
                                         <ul style="font-size:12px;color:#1a1a1a;padding:0 16px;margin: 0;">
-                                            <li>Asthma</li>
-                                            <li>Hypertension ( see HTN. cda for details)</li>
-                                            <li>Osteoarthrities. right knee</li>
+                                            <?php foreach ($active_problems as $problems) { ?>
+                                                <li><?php echo $problems->name; ?></li>
+                                            <?php } ?>
                                         </ul>
                                     </td>
                                 </tr>

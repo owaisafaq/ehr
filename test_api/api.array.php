@@ -2994,3 +2994,23 @@ $api->params->prescription_id = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
+
+//Get Inventory Categories
+$api = new api();
+$api->name = "Get Inventory Categories";
+$api->url = HOST . 'get_inventory_categories';
+$api->method = "GET";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Add Material
+$api = new api();
+$api->name = "Add Material";
+$api->url = HOST . 'add_material';
+$api->method = "POST";
+$api->params->lab_order_id = "1";
+$api->params->material = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
