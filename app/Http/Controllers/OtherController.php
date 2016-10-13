@@ -1192,5 +1192,31 @@ class OtherController extends Controller
 
 
 
+
+    public function add_material(Request $request){
+
+        $lab_order_id = $request->input('lab_order_id');
+        $material = $request->input('material');
+        $patient_materials  = json_decode($material);
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+        foreach ($patient_materials as $materials) {
+
+            DB::table('materials')
+                ->insert(
+                    ['order_id' => $lab_order_id,
+                        'material' => $materials->material,
+                        'cost' => $materials->cost,
+                        'quantity' => $materials->quantity,
+                        'created_at' => $currentdatetime
+                    ]
+                );
+
+        }
+
+        return response()->json(['status' => true, 'message' => 'Material Added Successfully']);
+
+    }
 }
 

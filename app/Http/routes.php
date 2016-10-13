@@ -310,6 +310,9 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->get('get_prescription_medicines','App\Http\Controllers\ApiController@get_prescription_medicines');
     $app->get('get_prescription_supplements','App\Http\Controllers\ApiController@get_prescription_supplements');
 
+    // Add Material Dropdown
+    $app->get('get_inventory_categories','App\Http\Controllers\ApiController@get_inventory_categories');
+
 
 
     //clinical reports template categories
@@ -319,5 +322,8 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
 
     //Prescription Pdf
     $app->get('get_prescription_pdf','App\Http\Controllers\PDFController@get_prescription_pdf');
+
+    //Add Material
+    $app->post('add_material','App\Http\Controllers\OtherController@add_material');
 
 });

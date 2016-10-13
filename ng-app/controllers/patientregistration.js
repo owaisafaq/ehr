@@ -1699,6 +1699,24 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 }
                 console.log($scope.dataToBeAdded);
                 PatienPlanSaveData.save($scope.dataToBeAdded, PlanDataSuccess, PlanDataFailure)
+            }else if ($scope.PP.checkoutpatient == 4)
+            {
+                $scope.dataToBeAdded.retainership = '';
+                $scope.dataToBeAdded.category = '';
+                $scope.dataToBeAdded.notes = '';
+                $scope.dataToBeAdded.hmo = '';
+                $scope.dataToBeAdded.policies = '';
+                $scope.dataToBeAdded.is_principal = '';
+                $scope.dataToBeAdded.is_dependant = '';
+                $scope.dataToBeAdded.principal_patient_id = '';
+                $scope.dataToBeAdded.relationship = '';
+                $scope.dataToBeAdded.dependents = [{}];
+                $rootScope.loader = 'show';
+                if($routeParams.patientID != undefined){
+                    $scope.dataToBeAdded.patient_plan_id = 4;
+                }
+                console.log($scope.dataToBeAdded);
+                PatienPlanSaveData.save($scope.dataToBeAdded, PlanDataSuccess, PlanDataFailure)
             }
             else if ($scope.PP.checkoutpatient == 2)
             {
