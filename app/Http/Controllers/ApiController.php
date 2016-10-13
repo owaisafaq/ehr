@@ -2300,6 +2300,11 @@ class ApiController extends Controller
                 ->count();
 
         }
+        foreach($patients as $patient){
+
+            $patient->id = str_pad($patient->id, 7, '0', STR_PAD_LEFT);
+        }
+
         return response()->json(['status' => true, 'count' => $count, 'data' => $patients]);
 
     }
