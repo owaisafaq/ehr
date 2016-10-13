@@ -49,7 +49,7 @@
                             </div>
                             <div class="col-lg-3">
                                 <!--<input type="text" placeholder="Pick Date" />-->
-                                <div class="input-group date select-date">
+                                <div class="input-group date select-dateAge">
                                     <div class="input-group-content">
                                         <input type="text" name="date_of_birth" ng-model="PI.date_of_birth" ng-change="calculateAge(PI.date_of_birth);" ng-class="{true: 'error'}[submitted && userForm1.date_of_birth.$invalid]" class="form-control" required placeholder="Pick Date" class="yellow"/>
                                         <p class="help-block PIValid" ng-show="submitted && userForm1.date_of_birth.$error.required">Required</p>
@@ -653,8 +653,8 @@
                                     <div class="col-lg-6">
                                         <label>Policies</label>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <label class="txt-style-4">{{dataToBeAdded.policies.name}}</label>
+                                    <div class="col-lg-6"><!-- policiesName -->
+                                        <label class="txt-style-4">{{dataToBeAdded.policies}}</label>
                                     </div>
                                 </div>
                                 <div class="column col-lg-6">
@@ -791,7 +791,7 @@
                             <table ng-show="fromModal" class="table table-striped table-custom margin-bottom-xxl">
                                 <thead>
                                     <tr>
-                                        <th width="50%">patient id 2</th>
+                                        <th width="50%">patient id</th>
                                         <th>Name</th>
                                     </tr>
                                 </thead>
@@ -1055,9 +1055,10 @@
                         <label>Policies</label>
                     </div>
                     <div class="col-lg-3">
-                        <select class="form-control" ng-class="{true: 'error'}[checkValidate_nhis && form_modal_1.policy_dropdown.$invalid]" name="policy_dropdown" data-placeholder="Select Policy" ng-model="MI.policies" ng-options="policy.name for policy in dropDownData.policies track by policy.id" required>
+                        <!-- <select class="form-control" ng-class="{true: 'error'}[checkValidate_nhis && form_modal_1.policy_dropdown.$invalid]" name="policy_dropdown" data-placeholder="Select Policy" ng-model="MI.policies" ng-options="policy.name for policy in dropDownData.policies track by policy.id" required>
                             <option value=""></option>
-                        </select>
+                        </select> -->
+                        <input type="text" name="policy_dropdown" ng-model="MI.policies" ng-class="{true: 'error'}[checkValidate_nhisUpdate && form_modal_1.policy_dropdown.$invalid]">
                         <span class="help-block PIValid" ng-show="checkValidate_nhis && form_modal_1.policy_dropdown.$error.required">Required</span>
                     </div>
                     <div class="col-lg-3">
@@ -1155,10 +1156,11 @@
                         <label>Policies</label>
                     </div>
                     <div class="col-lg-3">
-                        <select class="form-control getPoliciesName" ng-class="{true: 'error'}[checkValidate_nhisUpdate && form_modal_1.policy_dropdown.$invalid]" name="policy_dropdown" data-placeholder="Select Policy" ng-model="MI.policies" required>
+                        <!-- <select class="form-control getPoliciesName" ng-class="{true: 'error'}[checkValidate_nhisUpdate && form_modal_1.policy_dropdown.$invalid]" name="policy_dropdown" data-placeholder="Select Policy" ng-model="MI.policies" required>
                             <option value=""></option>
                             <option value="{{policy.id}}" ng-repeat="policy in dropDownData.policies" value="{{policy.id}}" ng-selected="policy.name == HPUpdate.policies">{{policy.name}}</option>
-                        </select>
+                        </select> -->
+                        <input type="text" name="policy_dropdown" ng-model="MI.policies" ng-class="{true: 'error'}[checkValidate_nhisUpdate && form_modal_1.policy_dropdown.$invalid]">
                         <span class="help-block PIValid" ng-show="checkValidate_nhisUpdate && form_modal_1.policy_dropdown.$error.required">Required</span>
                     </div>
                     <div class="col-lg-3">
