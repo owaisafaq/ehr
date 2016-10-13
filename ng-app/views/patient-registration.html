@@ -595,19 +595,18 @@
                                     <span data-toggle="modal" data-target="#relationship">Retainership</span>
                                 </label>
                             </div>
-                            <div class="">
-                                <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-show="showSubmitButtonPatientPlan" >Save</button>
-                               <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-hide="showSubmitButtonPatientPlan" >Update</button>
-                            </div>
                             <div class="radio radio-styled">
                                 <label>
-                                    <input ng-click="flag_to_show_retainer = false; flag_to_show_nhis = false;" type="radio" ng-init="PP.checkoutpatient = 4" name="checkoutpatient" value="4" checked ng-checked="true" ng-model="PP.checkoutpatient">
+                                    <input ng-click="flag_to_show_retainer = false; flag_to_show_nhis = false;" type="radio" ng-init="PP.checkoutpatient = 4" name="checkoutpatient" value="4" ng-model="PP.checkoutpatient">
                                     <span>FHSS</span>
                                 </label>
                             </div>
+                            <div class="">
+                                <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-show="showSubmitButtonPatientPlan" >Save</button>
+                                <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-hide="showSubmitButtonPatientPlan" >Update</button>
+                            </div>
                         </div>
                         <div class="col-lg-12 radio-style-2-con" ng-show="patientPlantRadios">
-                            
                             <div class="radio radio-styled">
                                 <label>
                                     <input ng-click="flag_to_show_retainer_update = false; flag_to_show_nhis_update = false;" type="radio" ng-init="PP.checkoutpatient = 1" name="checkoutpatient" value="1" ng-checked="HPUpdate.plan_id == '1'" ng-model="PP.checkoutpatient">
@@ -626,18 +625,17 @@
                                     <span data-toggle="modal" data-target="#relationshipUpdate">Retainership</span>
                                 </label>
                             </div>
-                            <div class="">
-                                <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-show="showSubmitButtonPatientPlan" >Save</button>
-                               <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-hide="showSubmitButtonPatientPlan" >Update</button>
-                            </div>
                             <div class="radio radio-styled">
                                 <label>
                                     <input ng-click="flag_to_show_retainer_update = false; flag_to_show_nhis_update = false;" type="radio" ng-init="PP.checkoutpatient = 4" name="checkoutpatient" value="4" ng-checked="HPUpdate.plan_id == '4'" ng-model="PP.checkoutpatient">
                                     <span>FHSS</span>
                                 </label>
                             </div>
+                            <div class="">
+                                <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-show="showSubmitButtonPatientPlan" >Save</button>
+                               <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-hide="showSubmitButtonPatientPlan" >Update</button>
+                            </div>
                         </div>
-
                         <div ng-if="flag_to_show_nhis">
                             <div class="col-lg-12 margin-bottom-xxl no-padding">
                                 <label class="label-style">Patient Summary</label>

@@ -431,9 +431,12 @@
                             </div>
                         </div>
                         <div id="admitPatient" class="row">
+                            <div class="margin-bottom-xxl row">
                             <div class="col-lg-12">
                                 <span class="txt-style-4">Presenting Complaint: Captured from Clinical Note</span>
                             </div>
+                                </div>
+                            <div class="margin-bottom-xxl row">
                             <div class="col-lg-3">
                                 <label>to specialty</label>
                             </div>
@@ -465,6 +468,8 @@
                                     </div>
                                 </div>
                             </div>
+                            </div>
+                            <div class="margin-bottom-xxl row">
                             <div class="col-lg-3">
                                 <label>Admitted DATE</label>
                             </div>
@@ -480,11 +485,13 @@
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                                 </div>
                             </div>
-
+                                </div>
+                            <div class="margin-bottom-xxl row">
                             <div class="col-lg-12">
                                 <label class="margin-bottom-xl">Note</label>
                                 <textarea class="margin-bottom-lg" placeholder="Write Here..." ng-model="CO.note"></textarea>
                             </div>
+                                </div>
                         </div>
                         <div id="dead" class="row">
                             <div class="col-lg-12">
@@ -502,7 +509,7 @@
         </form>
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade big-modal" id="createAppointment" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_3" id="createAppointment" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -510,16 +517,7 @@
             </div>
             <form class="custom-form" name="myFormAdd" ng-model="myFormAdd" novalidate ng-submit="createAppointments(appointment);">
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="header-search margin-right-0 col-lg-4">
-                            <!-- <button type="submit">
-                                <i class="fa fa-search"></i>
-                            </button>
-                            <input class="search_field" type="text" ng-model="appointment.appointmentSearch" placeholder="Search by Name or Patient Id" id="findPatient" data-source="{{PatientSearch}}search_patient" name="FindPatient" ng-class="{true: 'error'}[submitted && myFormAdd.FindPatient.$invalid]" required>
-                            <input type="hidden" ng-model="appointment.selectedPatientID" /> -->
-                        </div>
-                    </div>
-                    <div class="row">
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-2">
                             <label>Speciality</label>
                         </div>
@@ -541,7 +539,7 @@
                             <p class="help-block PIValid" ng-show="submitted && myFormAdd.wts.$error.required">Required</p>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-6 no-padding">
                             <div class="col-lg-4">
                                 <label>Reason</label>
@@ -571,10 +569,9 @@
                         </div>
                         <div class="col-lg-4">
                             <textarea ng-model="appointment.otherReason" name="otherReason" placeholder="Describe here"></textarea><!-- ng-class="{true: 'error'}[submitted && myFormAdd.otherReason.$invalid]" required -->
-                            <!-- <p class="help-block PIValid" ng-show="submitted && myFormAdd.otherReason.$error.required">Required</p> -->
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-2">
                             <label>Time</label>
                         </div>
@@ -585,16 +582,6 @@
                             </div>
                             <p class="help-block PIValid" ng-show="submitted && myFormAdd.starttime.$error.required">Required</p>
                         </div>
-                        <!-- <div class="col-lg-2">
-                            <label>End Time</label>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="input-group bootstrap-timepicker col-lg-12">
-                                <input type="text" class="form-control input-small timepicker"  ng-model="appointment.endTime" name="endtime" ng-class="{true: 'error'}[submitted && myFormAdd.endtime.$invalid]" required>
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-                            </div>
-                            <p class="help-block PIValid" ng-show="submitted && myFormAdd.endtime.$error.required">Required</p>
-                        </div> -->
                         <div class="col-lg-2">
                             <label>Task Priority</label>
                         </div>
@@ -606,7 +593,7 @@
                             <!-- <p class="help-block PIValid" ng-show="submitted && myFormAdd.task.$error.required">Required</p> -->
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-2">
                             <label>Notes</label>
                         </div>
@@ -632,7 +619,7 @@
                 <h2>Confirmation</h2>
             </div>
             <div class="modal-body">
-                <p>Are you Sure want to delete?</p>
+                <p class="modal-subtext">Are you Sure want to delete?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-toggle="modal" data-dismiss="modal" ng-click="removeEncounter();">Ok</button>
@@ -643,7 +630,7 @@
 </div><!-- /.modal -->
 <div class="counter_pop custom_popup update-encounter" ng-show="updateEncounterPopUp">
     <div class="pop_head col-lg-12">
-        <h2 class="">Update Encounter</h2> 
+        <h2>Update Encounter</h2> 
     </div>
     <div class="pop_body">
         <div class="alert {{messageType}}" role="alert" ng-show="message">
@@ -731,7 +718,7 @@
                 <h2>Add Vitals</h2>
             </div>
             <div class="modal-body">
-                <p>Continue to Add Patient Vitals</p>
+                <p class="modal-subtext">Continue to Add Patient Vitals</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-toggle="modal" data-target="#vital-signs" data-dismiss="modal">Ok</button>
@@ -740,7 +727,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade big-modal modal-size_2" id="vital-signs" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_3" id="vital-signs" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -751,13 +738,13 @@
                     <div class="row">
                         <div class="row no-margin">
                             <div class="col-lg-4" >
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <label class="label-style">Blood Pressure (mm Hg)</label>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>systolic (mm hg)</label>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 margin-bottom-xxl">
                                     <input type="text" placeholder="systolic (mm hg)"  ng-class="{
                                             true
                                             : 'error'}[vital.diastolic != undefined && vital.systolic == undefined]" ng-model="vital.systolic" numbers-only required/>
@@ -775,13 +762,13 @@
                             </div>
 
                             <div class="col-lg-4">
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <label class="label-style">Pulse Rate (min/bpm)</label>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>pulse</label>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 margin-bottom-xxl">
                                     <input type="text" placeholder="pulse" ng-model="vital.pulse" numbers-only/>
                                 </div>
                                 <!-- <div class="col-lg-12">
@@ -796,13 +783,13 @@
                             </div>
 
                             <div class="col-lg-4">
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <label class="label-style">Respiratory Rate (br/min)</label>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>temperature (c)</label>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 margin-bottom-xxl">
                                     <input type="text" placeholder="temperature (c)" ng-model="vital.temperaturec" numbers-only ng-keyup="GetTempcVal()"/>
                                 </div>
                                 <div class="col-lg-6">
@@ -815,7 +802,7 @@
                         </div>
                         <!--<div class="row">-->
                         <div class="col-lg-12">
-                            <label class="col-lg-12 label-style no-margin">BMI (kg / m^2)</label>
+                            <label class="col-lg-12 label-style margin-bottom-xxl margin-top-10">BMI (kg / m^2)</label>
                             <!-- <div class="col-lg-5 pull-right">
                                 <div class="pull-right">
                                     <a class="txt-style-4" href="javascript:;">Attach</a>&nbsp;&nbsp;|&nbsp;&nbsp;
@@ -828,13 +815,13 @@
                             <div class="col-lg-6">
                                 <label>result</label>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 margin-bottom-xxl">
                                 <input type="text" placeholder="0" ng-model="vital.result" readonly/>
                             </div>
                             <div class="col-lg-6">
                                 <label>weight (kg)</label>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 margin-bottom-xxl">
                                 <input type="text" ng-class="{true: 'error'}[vital.weight == undefined && vital.height != undefined]" placeholder="weight (kg)" ng-model="vital.weight" numbers-only ng-keyup="Calculatebmi()" required/>
                                 <p ng-show="vital.weight == undefined && vital.height != undefined" class="help-block PIValid">Required</p>
                             </div>
@@ -847,7 +834,7 @@
                                 <p ng-show="vital.height == undefined && vital.weight != undefined" class="help-block PIValid">Required</p>
                             </div>
                         </div>
-                        <div class="col-lg-8">
+                        <div class="col-lg-8 margin-bottom-xxl">
                             <div class="col-lg-3">
                                 <label>Notes</label>
                             </div>
