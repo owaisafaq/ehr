@@ -3268,7 +3268,7 @@ class ApiController extends Controller
 
         $prescribe_medication_id = $request->input('prescribe_medication_id');
         $prescription_id = $request->input('precription_id');
-        $note_of_pharmacy = $request->input('note_of_pharmacy');
+        $note_for_pharmacy = $request->input('note_for_pharmacy');
 
         $prescription = html_entity_decode($request->input('prescription'));
 
@@ -3292,6 +3292,16 @@ class ApiController extends Controller
                 );
 
         }
+
+        DB::table('prescription_notes')->where('prescription_id','=', $prescription_id)->delete();
+
+        DB::table('prescription_notes')
+            ->insert(
+                ['prescription_id' => $prescription_id,
+                    'note_for_pharmacy' => $note_for_pharmacy,
+                    'created_at' => $currentdatetime
+                ]
+            );
 
         return response()->json(['status' => true, 'message' => 'Prescrpition Updated Successfully']);
 
