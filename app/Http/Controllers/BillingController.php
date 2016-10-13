@@ -32,6 +32,13 @@ class BillingController extends Controller
             $bill->id = str_pad($bill->id, 8, '0', STR_PAD_LEFT);
             $bill->encounter_id = str_pad($bill->encounter_id, 8, '0', STR_PAD_LEFT);
             $bill->patient_id = str_pad($bill->patient_id, 7, '0', STR_PAD_LEFT);
+
+            $data = DB::table('billing')
+                ->select(DB::raw('created_at'))
+                ->where('id', $bill->id)
+                ->first();
+
+            $bill->created_at=$data->created_at;
          }
 
 
