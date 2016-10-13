@@ -326,4 +326,9 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     //Add Material
     $app->post('add_material','App\Http\Controllers\OtherController@add_material');
 
+
+    //DashBoard Api's
+    $app->get('get_all_todays_appointments','App\Http\Controllers\OtherController@get_all_todays_appointments');
+    $app->get('get_todays_all_visits','App\Http\Controllers\OtherController@get_todays_all_visits');
+
 });

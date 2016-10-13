@@ -3,8 +3,8 @@
 require 'api.class.php';
 //define('HOST', 'http://131.107.100.10/ehr/public/api/');
 //define('HOST', 'http://localhost/ehr/public/api/');
-//define('HOST', 'http://demoz.online/ehr/public/api/');
-define('HOST', 'http://demoz.online/dev/ehr/public/api/');
+define('HOST', 'http://demoz.online/ehr/public/api/');
+//define('HOST', 'http://demoz.online/dev/ehr/public/api/');
 define('APP', '');
 define('ROUTE', '');
 
@@ -3012,5 +3012,31 @@ $api->method = "POST";
 $api->params->lab_order_id = "1";
 $api->params->material = "";
 $api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+// Get Todays All Appointments
+$api = new api();
+$api->name = "Get Todays All Appointments";
+$api->url = HOST . 'get_all_todays_appointments';
+$api->method = "GET";
+$api->description = "Get Todays All Appointments";
+$api->params->offset = "1";
+$api->params->limit = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Get Todays All Visits
+$api = new api();
+$api->name = "Get Todays All Visits";
+$api->url = HOST . 'get_todays_all_visits';
+$api->method = "GET";
+$api->description = "Get Todays All Visitss";
+$api->params->offset = "1";
+$api->params->limit = "1";
+$api->params->token = "123";
 
 $api_arr [] = $api;
