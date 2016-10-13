@@ -27,6 +27,14 @@ class BillingController extends Controller
             ->where('billing.status', 1)
             ->where('patients.status', 1)
             ->get();
+
+        foreach($bills as $bill){
+            $bill->id = str_pad($bill->id, 8, '0', STR_PAD_LEFT);
+            $bill->encounter_id = str_pad($bill->encounter_id, 8, '0', STR_PAD_LEFT);
+            $bill->patient_id = str_pad($bill->patient_id, 7, '0', STR_PAD_LEFT);
+         }
+
+
         if ($bills) {
             return response()->json(['status' => true, 'message' => 'Bills found', 'data' => $bills]);
 
@@ -44,6 +52,11 @@ class BillingController extends Controller
             ->where('invoice.status', 1)
             ->where('patients.status', 1)
             ->get();
+
+        foreach ($bills as $bill) {
+            $bill->id = str_pad($bill->id, 6, '0', STR_PAD_LEFT);
+            $bill->patient_id = str_pad($bill->patient_id, 7, '0', STR_PAD_LEFT);
+        }
 
             return response()->json(['status' => true, 'message' => 'Invoices found', 'data' => $bills]);
     }

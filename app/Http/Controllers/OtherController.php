@@ -659,6 +659,11 @@ class OtherController extends Controller
                 ->get();
             $count = count($data);
         }
+
+
+        foreach ($data as $patient_data) {
+            $patient_data->patient_id = str_pad($patient_data->patient_id, 7, '0', STR_PAD_LEFT);
+        }
         return response()->json(['status' => true, 'data' => $data, 'count' => $count]);
     }
 

@@ -125,6 +125,8 @@ class OrderController extends Controller
         }
         foreach ($orders as $lab_orders) {
 
+            $lab_orders->patient_id = str_pad($lab_orders->patient_id, 7, '0', STR_PAD_LEFT);
+
             $lab_orders->ordered_by = 'Dr Smith';
             $lab_orders->handled_by = 'James';
             $lab_orders->total_cost = 0;

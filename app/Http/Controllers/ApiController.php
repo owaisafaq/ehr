@@ -1561,6 +1561,13 @@ class ApiController extends Controller
 
         }
 
+
+        foreach ($visit_history as $history) {
+
+            $history->id = str_pad($history->id, 8, '0', STR_PAD_LEFT);
+            $history->patient_id = str_pad($history->patient_id, 7, '0', STR_PAD_LEFT);
+        }
+
         return response()->json(['status' => true, 'data' => $visit_history, 'count' => $count]);
 
 
@@ -1601,6 +1608,12 @@ class ApiController extends Controller
 
             $count = count($data);
         }
+
+
+        foreach ($data as $vital_data) {
+            $vital_data->visit_id = str_pad($vital_data->visit_id, 8, '0', STR_PAD_LEFT);
+        }
+
 
         return response()->json(['status' => true, 'data' => $data, 'count' => $count]);
 
@@ -1970,6 +1983,11 @@ class ApiController extends Controller
 
         }
 
+
+        foreach ($patient_medications as $medication) {
+            $medication->visit_id = str_pad($medication->visit_id, 8, '0', STR_PAD_LEFT);
+        }
+
         return response()->json(['status' => true, 'data' => $patient_medications, 'count' => $count]);
 
     }
@@ -2041,6 +2059,11 @@ class ApiController extends Controller
 
             $count = count($patient_supplements);
 
+        }
+
+
+        foreach ($patient_supplements as $supplement) {
+            $supplement->visit_id = str_pad($supplement->visit_id, 8, '0', STR_PAD_LEFT);
         }
 
         return response()->json(['status' => true, 'data' => $patient_supplements, 'count' => $count]);
@@ -2133,6 +2156,11 @@ class ApiController extends Controller
             $count = count($patient_allergies);
 
         }
+
+        foreach ($patient_allergies as $allergies) {
+            $allergies->visit_id = str_pad($allergies->visit_id, 8, '0', STR_PAD_LEFT);
+        }
+
         return response()->json(['status' => true, 'data' => $patient_allergies, 'count' => $count]);
 
     }
@@ -2260,6 +2288,7 @@ class ApiController extends Controller
 
         foreach ($visits as $visit) {
 
+            $visit->id = str_pad($visit->id, 8, '0', STR_PAD_LEFT);
             $visit->report = '';
             $visit->diagosis = '';
         }
@@ -2377,12 +2406,14 @@ class ApiController extends Controller
                      ->count();
 
            }
-          /* foreach ($appointments as $appointment) {
 
-               $appointment->appointment_status = '';
-           }*/
+           foreach ($appointments as $appointment) {
+
+               $appointment->patient_id = str_pad($appointment->patient_id, 7, '0', STR_PAD_LEFT);
+               //  $appointment->appointment_status = '';
+           }
+
            return response()->json(['status' => true, 'data' => $appointments,'count'=>$count]);
-
        }
 
 
@@ -3408,6 +3439,11 @@ class ApiController extends Controller
 
             $count = count($prescriptions);
 
+        }
+
+        foreach ($prescriptions as $prescription) {
+            $prescription->visit_id = str_pad($prescription->visit_id, 8, '0', STR_PAD_LEFT);
+            $prescription->patient_id = str_pad($prescription->patient_id, 7, '0', STR_PAD_LEFT);
         }
 
         return response()->json(['status' => true, 'data' => $prescriptions, 'count' => $count]);
