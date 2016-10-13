@@ -3745,3 +3745,13 @@ select#autoship_option.ng-hide,select#autoship_option2.ng-hide,select#autoship_o
 .chosen-styling #autoship_option{
     display: none !important;
 }
+.modal-graybar span{
+    float: left;
+    margin-right: 15px;
+}
+.modal-graybar span.txt-style-4{
+    width: 120px;
+}
+.modal-graybar span:last-child{
+    width: 60px;
+}
