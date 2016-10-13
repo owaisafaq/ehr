@@ -178,16 +178,19 @@ class PDFController extends Controller
         $immmunizations = DB::table('patient_immunizations')
             ->select(DB::raw('*'))
             ->where('patient_id', $patient->id)
+            ->where('status', 1)
             ->get();
 
         $active_problems = DB::table('active_problems')
             ->select(DB::raw('*'))
             ->where('patient_id', $patient->id)
+            ->where('status', 1)
             ->get();
 
         $family_history = DB::table('family_history')
             ->select(DB::raw('*'))
             ->where('patient_id', $patient->id)
+            ->where('status', 1)
             ->get();
 
 
