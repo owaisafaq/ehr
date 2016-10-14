@@ -1870,6 +1870,7 @@ $api = new api();
 $api->name = "Get All Invoices";
 $api->url = HOST . 'get_all_invoices';
 $api->method = "GET";
+$api->params->bill_id = "1";
 $api->params->token = "123435";
 
 

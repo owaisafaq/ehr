@@ -21,6 +21,7 @@ class BillingController extends Controller
     public function get_all_bills()
     {
         $bills = DB::table('billing')
+            ->select('billing.id','billing.encounter_id','billing.patient_id','billing.created_at','billing.purpose','billing.bill_status','hospital_plan.name','patients.first_name','patients.middle_name','patients.last_name')
             ->leftJoin('visits', 'visits.id', '=', 'billing.encounter_id')
             ->leftJoin('patients', 'patients.id', '=', 'billing.patient_id')
             ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.hospital_plan')
@@ -32,13 +33,6 @@ class BillingController extends Controller
             $bill->id = str_pad($bill->id, 8, '0', STR_PAD_LEFT);
             $bill->encounter_id = str_pad($bill->encounter_id, 8, '0', STR_PAD_LEFT);
             $bill->patient_id = str_pad($bill->patient_id, 7, '0', STR_PAD_LEFT);
-
-            $data = DB::table('billing')
-                ->select(DB::raw('created_at'))
-                ->where('id', $bill->id)
-                ->first();
-
-            $bill->created_at=$data->created_at;
          }
 
 
@@ -50,12 +44,15 @@ class BillingController extends Controller
         }
     }
 
-    public function get_all_invoices()
+    public function get_all_invoices(Request $request)
     {
+        $bill_id = $request->input('bill_id');
+        //$bill_id = 7;
         $bills = DB::table('invoice')
             ->select('invoice.*', 'hospital_plan.id as plan_id', 'hospital_plan.name as plan_name','patients.first_name','patients.middle_name','patients.last_name')
             ->leftJoin('patients', 'patients.id', '=', 'invoice.patient_id')
             ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.hospital_plan')
+            ->where('invoice.bill_id',$bill_id)
             ->where('invoice.status', 1)
             ->where('patients.status', 1)
             ->get();
