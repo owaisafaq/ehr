@@ -8,11 +8,11 @@
                 </div> -->
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
-                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.first_name}}</span>
+                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.first_name}}{{displayInfo.last_name}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Number</label>
-                    <span class="txt-style-2 col-lg-12">PA-{{displayInfo.patient_id}}</span>
+                    <span class="txt-style-2 col-lg-12">P-{{displayInfo.patient_id}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Age</label>
@@ -107,7 +107,7 @@
                                         </label>
                                     </div>
                                 </td>
-                                <td><a class="blue" href="#/patient-summary-demographics/{{patientList.id}}">PA-{{patientList.id}}</a></td>
+                                <td><a class="blue" href="#/patient-summary-demographics/{{patientList.id}}">P-{{patientList.id}}</a></td>
                                 <td>{{patientList.first_name}}</td>
                                 <td>{{patientList.last_name}}</td>
                                 <td>{{patientList.date_of_birth}}</td>
@@ -168,7 +168,7 @@
 
                         <div class="row">
                             <label class="col-lg-6">Patient ID</label>
-                            <span class="col-lg-6">PA-{{patientID}}</span>
+                            <span class="col-lg-6">P-{{patientID}}</span>
                         </div>
 
                         <label class="col-lg-6">Date of Birth</label>
