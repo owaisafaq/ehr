@@ -406,7 +406,7 @@ class OtherController extends Controller
             ->count();
 
         $lab_order_count = DB::table('lab_orders')
-            ->where('status', 1)
+            ->where('status',1)
             ->count();
 
         $billing_count = DB::table('billing')
@@ -1246,8 +1246,8 @@ class OtherController extends Controller
                 ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
                 ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
                 ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
-                ->whereMonth('appointments.created_at', '=', date('d'))
-                ->where('appointments.status', 1)
+                ->whereDay('appointments.pick_date', '=', date('d'))
+                ->where('appointments.status',1)
                 ->where('patients.status', 1)
                 ->skip($offset)->take($limit)
                 ->get();
@@ -1258,7 +1258,7 @@ class OtherController extends Controller
                 ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
                 ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
                 ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
-                ->whereMonth('appointments.created_at', '=', date('d'))
+                ->whereDay('appointments.pick_date', '=', date('d'))
                 ->where('appointments.status', 1)
                 ->where('patients.status', 1)
                 ->count();
@@ -1268,7 +1268,7 @@ class OtherController extends Controller
                 ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
                 ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
                 ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
-                ->whereMonth('appointments.created_at', '=', date('d'))
+                ->whereDay('appointments.pick_date', '=', date('d'))
                 ->where('appointments.status', 1)
                 ->where('patients.status', 1)
                 ->get();
@@ -1277,7 +1277,7 @@ class OtherController extends Controller
                 ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
                 ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
                 ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
-                ->whereMonth('appointments.created_at', '=', date('d'))
+                ->whereDay('appointments.pick_date', '=', date('d'))
                 ->where('appointments.status', 1)
                 ->where('patients.status', 1)
                 ->count();

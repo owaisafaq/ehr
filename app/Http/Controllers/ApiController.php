@@ -1308,6 +1308,8 @@ class ApiController extends Controller
 
         foreach ($patients as $patient) {
             $patient->barcode = "http://demoz.online/php-barcode-master/barcode.php?text=$patient->id";
+            $patient->encounter_id = str_pad($patient->encounter_id, 8, '0', STR_PAD_LEFT);
+            $patient->id = str_pad($patient->id, 7, '0', STR_PAD_LEFT);
         }
 
         $is_visit = 1;
@@ -1664,6 +1666,8 @@ class ApiController extends Controller
             $demographics->gender = 'Female';
         }
 
+
+        $demographics->id = str_pad($demographics->id, 7, '0', STR_PAD_LEFT);
 
         $visit = DB::table('visits')
             ->select(DB::raw('id,visit_status'))

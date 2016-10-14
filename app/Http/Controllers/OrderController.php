@@ -126,6 +126,9 @@ class OrderController extends Controller
         foreach ($orders as $lab_orders) {
 
             $lab_orders->patient_id = str_pad($lab_orders->patient_id, 7, '0', STR_PAD_LEFT);
+            $lab_orders->id = str_pad($lab_orders->id, 8, '0', STR_PAD_LEFT);
+            $lab_orders->id = 'L'.$lab_orders->id;
+
 
             $lab_orders->ordered_by = 'Dr Smith';
             $lab_orders->handled_by = 'James';
@@ -405,6 +408,7 @@ class OrderController extends Controller
     public function get_lab_order(Request $request)
     {
         $order_id = $request->input('order_id');
+        $order_id = str_replace('L', '', $order_id);
 
         $orders = DB::table('lab_orders')
             ->select(DB::raw('lab_orders.id,lab_orders.patient_id,patients.first_name as patient_name,lab_orders.order_status,labs.name as lab_name,patients.age,patients.marital_status,patients.sex,maritial_status.name as marital_status,lab_orders.created_at'))
@@ -984,7 +988,7 @@ class OrderController extends Controller
     public function get_diagnosis(Request $request){
 
         $diagnosis = DB::table('diagnosis')
-            ->select(DB::raw('id,name'))
+            ->select(DB::raw('id,name,code'))
             ->get();
 
         return response()->json(['status' => true, 'data' => $diagnosis]);

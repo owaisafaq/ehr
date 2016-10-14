@@ -30,6 +30,7 @@ class PDFController extends Controller
     {
         $arr = array();
         $id = $request->input('lab_test_id');
+        $id = str_replace('L', '', $id);
 
         $db = DB::table('patient_lab_test_values')
             ->select('patient_lab_test_values.id','template_values','template','signoff')

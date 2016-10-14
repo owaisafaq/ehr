@@ -3,8 +3,8 @@
 require 'api.class.php';
 //define('HOST', 'http://131.107.100.10/ehr/public/api/');
 //define('HOST', 'http://localhost/ehr/public/api/');
-//define('HOST', 'http://demoz.online/ehr/public/api/');
-define('HOST', 'http://demoz.online/dev/ehr/public/api/');
+define('HOST', 'http://demoz.online/ehr/public/api/');
+//define('HOST', 'http://demoz.online/dev/ehr/public/api/');
 define('APP', '');
 define('ROUTE', '');
 
@@ -1870,6 +1870,7 @@ $api = new api();
 $api->name = "Get All Invoices";
 $api->url = HOST . 'get_all_invoices';
 $api->method = "GET";
+$api->params->bill_id = "1";
 $api->params->token = "123435";
 
 
