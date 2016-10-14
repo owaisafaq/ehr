@@ -406,7 +406,7 @@ class OtherController extends Controller
             ->count();
 
         $lab_order_count = DB::table('lab_orders')
-            ->where('status', 1)
+            ->where('status',1)
             ->count();
 
         $billing_count = DB::table('billing')
