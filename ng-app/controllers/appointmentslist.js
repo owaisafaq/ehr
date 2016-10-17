@@ -202,6 +202,7 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
 				$scope.modalMessage = "Appointment Deleted";
     			$("#deleteConfirm").modal('hide');
     			$("#noResultFound").modal('show');
+                $scope.buttonDisabled = true;
     			GetAppointmentsByPatient.get({
 					token: $window.sessionStorage.token, 
 					limit: $scope.itemsPerPage, 
@@ -229,22 +230,22 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
     };
 */
     $scope.createAppointments = function(dataToBeAdded){
-        if(dataToBeAdded.appointmentSearch != undefined && dataToBeAdded.department != undefined && dataToBeAdded.reason != undefined && dataToBeAdded.date != undefined && dataToBeAdded.startTime != undefined && dataToBeAdded.notes != undefined && dataToBeAdded.doctor != undefined && dataToBeAdded.priority != undefined){
+        if(dataToBeAdded.appointmentSearch != undefined && dataToBeAdded.department != undefined && dataToBeAdded.otherReason != undefined && dataToBeAdded.date != undefined && dataToBeAdded.startTime != undefined && dataToBeAdded.doctor != undefined){
         	$scope.disabledButton = "true";
         	$rootScope.loader = "show";
         	AddAppointments.save({
         		token: $window.sessionStorage.token,
         		patient_id: dataToBeAdded.selectedPatientID,
         		//visit_id: $scope.encounterID,
-        		department: dataToBeAdded.department,
-        		reason: dataToBeAdded.reason,
-        		date: dataToBeAdded.date,
-        		start_time: dataToBeAdded.startTime,
-        		notes: dataToBeAdded.notes,
-        		doctor: dataToBeAdded.doctor,
-        		other_reason: dataToBeAdded.otherReason,
+        		department: dataToBeAdded.department == undefined ? '' : dataToBeAdded.department,
+        		reason: dataToBeAdded.reason == undefined ? '' : dataToBeAdded.reason,
+        		date: dataToBeAdded.date == undefined ? '' : dataToBeAdded.date,
+        		start_time: dataToBeAdded.startTime == undefined ? '' : dataToBeAdded.startTime,
+        		notes: dataToBeAdded.notes == undefined ? '' : dataToBeAdded.notes,
+        		doctor: dataToBeAdded.doctor == undefined ? '' : dataToBeAdded.doctor,
+        		other_reason: dataToBeAdded.otherReason == undefined ? '' : dataToBeAdded.otherReason,
         		//end_time: dataToBeAdded.endTime,
-        		priority: dataToBeAdded.priority
+        		priority: dataToBeAdded.priority == undefined ? '' : dataToBeAdded.priority
         	}, createAppointmentSuccess, createAppointmentFailure);
 
         	function createAppointmentSuccess(res){
@@ -280,15 +281,15 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
     		token: $window.sessionStorage.token,
     		appointment_id: $scope.appointmentID,
     		patient_id: dataToBeUpdated.patientID,
-    		department: dataToBeUpdated.department,
-    		reason: dataToBeUpdated.reason,
-    		date: dataToBeUpdated.date,
-    		start_time: dataToBeUpdated.startTime,
-    		notes: dataToBeUpdated.notes,
-    		doctor: dataToBeUpdated.doctor,
-    		other_reason: dataToBeUpdated.otherReason,
+    		department: dataToBeUpdated.department == undefined ? '' : dataToBeUpdated.department,
+    		reason: dataToBeUpdated.reason == undefined ? '' : dataToBeUpdated.reason,
+    		date: dataToBeUpdated.date == undefined ? '' : dataToBeUpdated.date,
+    		start_time: dataToBeUpdated.startTime == undefined ? '' : dataToBeUpdated.startTime,
+    		notes: dataToBeUpdated.notes == undefined ? '' : dataToBeUpdated.notes,
+    		doctor: dataToBeUpdated.doctor == undefined ? '' : dataToBeUpdated.doctor,
+    		other_reason: dataToBeUpdated.otherReason == undefined ? '' : dataToBeUpdated.otherReason,
     		//end_time: dataToBeUpdated.endTime,
-    		priority: dataToBeUpdated.priority
+    		priority: dataToBeUpdated.priority == undefined ? '' : dataToBeUpdated.priority
     	}, updateAppointmentSuccess, updateAppointmentFailure);
 
     	function updateAppointmentSuccess(res){
