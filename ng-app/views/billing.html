@@ -1101,8 +1101,9 @@
             <div class="modal-header pop_head">
                 <h2>Add to Bill</h2>
             </div>
+            <form class="custom-form" ng-submit="addToBill(addToBillData)">
             <div class="modal-body">
-                <form class="custom-form">
+                
                     <div class="row margin-bottom-xxl">
                         <div class="radio radio-styled col-lg-6 margin-0">
                             <label>
@@ -1122,7 +1123,7 @@
                             <label>Select Product</label>
                         </div>
                         <div class="col-lg-9 select-con">
-                            <select class="select_searchFields form-control" placeholder="Select Product">
+                            <select class="select_searchFields form-control" placeholder="Select Product" ng-model="addToBillData.product">
                                 <option value=""></option>
                                 <option>2</option>
                                 <option>3</option>
@@ -1132,7 +1133,7 @@
                             <label>Quantity</label>
                         </div>
                         <div class="col-lg-9 margin-top-10">
-                            <input class="form-control" type="number" placeholder="0" />
+                            <input class="form-control" type="number" ng-model="addToBillData.quantity" placeholder="0" />
                         </div>
                     </div>
                     <div class="row" ng-show="product_show == 'service'">
@@ -1140,19 +1141,20 @@
                             <label>Select Service</label>
                         </div>
                         <div class="col-lg-9 select-con">
-                            <select class="select_searchFields form-control" placeholder="Select Service">
+                            <select class="select_searchFields form-control" placeholder="Select Service" ng-model="addToBillData.service">
                                 <option value=""></option>
                                 <option>2</option>
                                 <option>3</option>
                             </select>
                         </div>
                     </div>
-                </form>
+                
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default button-style-1" data-toggle="modal" data-target="#vital-signs" data-dismiss="modal">Ok</button>
+                <button type="submit" class="btn btn-default button-style-1">Ok</button>
                 <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
             </div>
+            </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

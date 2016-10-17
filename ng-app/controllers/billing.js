@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData','GetBillInvoices','SendEmail', 'CheckoutPatient', 'deleteInvoice', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData,GetBillInvoices,SendEmail, CheckoutPatient, deleteInvoice){
+AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData','GetBillInvoices','SendEmail', 'CheckoutPatient', 'deleteInvoice', 'AddToBill', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData,GetBillInvoices,SendEmail, CheckoutPatient, deleteInvoice, AddToBill){
 	$rootScope.pageTitle = "EHR - Billing";
 	$scope.BillListings={};
 	$scope.selectedPatient = {};
@@ -423,7 +423,21 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
             console.log(res)
         }
 
+        $scope.addToBill = function(dataToBeAdded){
+        	AddToBill.save({
+        		token: $window.sessionStorage.token,
+        		quantity: dataToBeAdded.quantity == undefined ? '' : dataToBeAdded.quantity,
+        		bill_id: $scope.bill_id,
+        		product_id: dataToBeAdded.product == undefined ? '0' : dataToBeAdded.product,
+        		service_id: dataToBeAdded.service == undefined ? '0' : dataToBeAdded.service
+        	}, addToBillSuccess, checkoutSuccessFailure);
+        }
 
+        function addToBillSuccess(res){
+        	if(res.status == true){
+        		console.log(res);
+        	}
+        }
 
 
 
