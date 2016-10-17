@@ -26,9 +26,9 @@
                     <a href="#/billing/{{displayInfo.patient_id}}" class="button-style-2">
                         <img src="assets/img/content_icn_blue.png" />
                     </a>
-                    <a href="javascript:;" class="button-style-2">
+                    <!-- <a href="javascript:;" class="button-style-2">
                         <img src="assets/img/assign_blue.png" />
-                    </a>
+                    </a> -->
                     <a href="javascript:;" class="button-style-2" data-target="#simpleModal1" data-toggle="modal" class="button-style-2">
                         <img src="assets/img/discharge_icn_blue.png" />
                     </a>                            
@@ -96,16 +96,16 @@
                                         <div class="col-lg-12">
                                             <label>notes from physician</label>
                                         </div>
-                                        <div class="col-lg-12">
-                                            <textarea ng-model="Prescription.notes" disabled></textarea>
+                                        <div class="col-lg-12"> <!-- Prescription.notes -->
+                                            <textarea ng-model="prescriptionPharmacyNotes" disabled></textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 no-padding">
                                         <div class="col-lg-12">
                                             <label>pharmacy note</label>
                                         </div>
-                                        <div class="col-lg-12">
-                                            <textarea ng-model="prescriptionPharmacyNotes" placeholder="We have run out of paracetamol"></textarea>
+                                        <div class="col-lg-12"> <!-- prescriptionPharmacyNotes -->
+                                            <textarea ng-model="Prescription.notes" placeholder="We have run out of paracetamol"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 no-padding save_Pview_button">
