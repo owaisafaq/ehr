@@ -108,8 +108,7 @@ class InventoryAPIController extends Controller
         $post_code = $request->input('post_code');
 
         $id = DB::table('suppliers')->insertGetId(
-            [
-                'name'=>$name,
+            ['name'=>$name,
                 'contact_person'=>$contact_person,
                 'city'=>$city,
                 'state'=>$state,
