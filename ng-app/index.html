@@ -136,20 +136,8 @@
                                 <span class="title">Patient</span>
                             </a>
                             <ul>
-                                <li><a href="#/patient-registration/"><span class="title">Add Patient</span></a></li>
-                                <li><a href="#/patient-listing" ><span class="title">List Patient</span></a></li>
-                            </ul>
-                        </li>
-
-                        <li class="gui-folder">
-                            <a>
-                                <div class="gui-icon"><i class="md md-format-color-fill"></i></div>
-                                <span class="title">Lab Orders</span>
-                            </a>
-                            <ul>
-                                <li><a href="#/lab-order-listing/"><span class="title">Lab Order Listing</span></a></li>
-                                <li><a href="#/lab-order-history"><span class="title">Lab Order History</span></a></li>
-                                <!-- <li><a href="#/templates"><span class="title">Templates</span></a></li> -->
+                                <li><a href="#/patient-listing"><span class="title">Patient listing</span></a></li>
+                                <li><a href="#/patient-registration/"><span class="title">New Patient</span></a></li>
                             </ul>
                         </li>
 
@@ -158,73 +146,38 @@
                                 <div class="gui-icon"><i class="md md-favorite"></i></div>
                                 <span class="title">Encounters</span>
                             </a>
-                        </li><!--end /menu-li -->
-                        <li>
-                            <a href="#/billing" >
-                                <div class="gui-icon"><i class="md md-my-library-books"></i></div>
-                                <span class="title">Billing</span>
-                            </a>
-                        </li><!--end /menu-li -->
-
-                       <!--  <li>
-                            <a href="#/lab-order-listing" >
+                        </li>
+                        
+                        <li class="gui-folder">
+                            <a>
                                 <div class="gui-icon"><i class="md md-format-color-fill"></i></div>
                                 <span class="title">Lab Orders</span>
                             </a>
-                        </li> --><!--end /menu-li -->
-                        <li>
-                            <a href="#/pharmacy" >
-                                <div class="gui-icon"><i class="md md-local-pharmacy"></i></div>
-                                <span class="title">Pharmacy</span>
-                            </a>
-                        </li><!--end /menu-li -->
-                        <li>
-                            <a href="#/inventory" >
-                                <div class="gui-icon"><i class="md md-local-pharmacy"></i></div>
-                                <span class="title">Inventory</span>
-                            </a>
-                        </li><!--end /menu-li -->
-                        <!-- <li>
-                            <a href="#/templates" >
-                                <div class="gui-icon"><i class="md md-local-pharmacy"></i></div>
-                                <span class="title">Templates</span>
-                            </a>
-                        </li> -->
-                        <!-- <li>
-                            <a href="#/pharmacy-prescription" >
-                                <div class="gui-icon"><i class="md md-local-pharmacy"></i></div>
-                                <span class="title">Pharmacy Prescription</span>
-                            </a>
-                        </li> -->
-                        <!-- BEGIN EMAIL -->
+                            <ul>
+                                <li><a href="#/lab-order-listing/"><span class="title">Lab Order Listing</span></a></li>
+                                <li><a href="#/lab-order-history"><span class="title">Lab Order History</span></a></li>
+                            </ul>
+                        </li>
+
                         <li class="gui-folder">
                             <a>
                                 <div class="gui-icon"><i class="md md-event"></i></div>
                                 <span class="title">Appointments</span>
                             </a>
                             <ul>
-                                <li><a href="#/appointments-list"><span class="title">Appointments Listing</span></a></li>
-                                <li><a href="#/appointments-calander-view" ><span class="title">Calendar</span></a></li>
+                                <li><a href="#/appointments-list"><span class="title">Appointment Listing</span></a></li>
+                                <li><a href="#/appointments-calander-view" ><span class="title">Appointment Calendar</span></a></li>
                             </ul>
                         </li>
-
-                        <li class="gui-folder">
-                            <a>
-                                <div class="gui-icon"><i class="md md-event"></i></div>
-                                <span class="title">Templates</span>
-                            </a>
-                            <ul>
-                                <li><a href="#/clinical-progress-template"><span class="title">Clinical Notes Template</span></a></li>
-                                <li><a href="#/templates" ><span class="title">Lab Template</span></a></li>
-                            </ul>
-                        </li>
+                        
                         <li>
                             <a href="#/patient-pool-area" >
                                 <div class="gui-icon"><i class="md md-local-pharmacy"></i></div>
-                                <span class="title">Pool Area</span>
+                                <span class="title">Patient Pool Area</span>
                             </a>
                         </li><!--end /menu-li -->
-                        <li class="gui-folder">
+                        
+                          <li class="gui-folder">
                             <a>
                                 <div class="gui-icon"><i class="md md-event"></i></div>
                                 <span class="title">Ward Management</span>
@@ -235,18 +188,68 @@
                                 <li><a href="#/wards-discharge-summary" ><span class="title">Discharge Summary</span></a></li>
                             </ul>
                         </li>
+                        <li>
+                            <a href="#/billing">
+                                <div class="gui-icon"><i class="md md-local-pharmacy"></i></div>
+                                <span class="title">Billing</span>
+                            </a>
+                        </li><!--end /menu-li -->
                         <li class="gui-folder">
                             <a>
                                 <div class="gui-icon"><i class="md md-event"></i></div>
                                 <span class="title">Settings</span>
                             </a>
                             <ul>
-                                <li><a href="#/settings-facility" ><span class="title">Facility</span></a></li>
-                                <li><a href="#/settings-labs" ><span class="title">Labs</span></a></li>
-                                <li><a href="#/settings-tax-rates"><span class="title">Tax Rates</span></a></li>
-                                <li><a href="#/billing-codes"><span class="title">Billing Codes</span></a></li>
+                                <li><a href="#/dashboard"><span class="title">User Management</span></a></li>
+                                <li class="gui-folder"><a><span class="title">Templates</span></a>
+                                    <ul>
+                                        <li><a href="#/clinical-progress-template"><span class="title">Clinical note templates</span></a></li>
+                                        <li><a href="#/templates"><span class="title">Lab order templates</span></a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#/billing-codes"><span class="title">Billing codes</span></a></li>
+                                <li><a href="#/settings-tax-rates"><span class="title">Tax rates</span></a></li>
+                                <li><a href="#/inventory"><span class="title">Inventory management</span></a></li>
+                                <li><a href="#/pharmacy"><span class="title">Pharmacy management</span></a></li>
+                                <li><a href="#/settings-labs"><span class="title">Lab management</span></a></li>
+                                <li><a href="#/settings-facility"><span class="title">Facility management</span></a></li>
                             </ul>
-                        </li><!--end /menu-li -->
+                        </li>
+                        
+                        
+<!--                        <li>
+                            <a href="#/billing" >
+                                <div class="gui-icon"><i class="md md-my-library-books"></i></div>
+                                <span class="title">Billing</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#/pharmacy" >
+                                <div class="gui-icon"><i class="md md-local-pharmacy"></i></div>
+                                <span class="title">Pharmacy</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#/inventory" >
+                                <div class="gui-icon"><i class="md md-local-pharmacy"></i></div>
+                                <span class="title">Inventory</span>
+                            </a>
+                        </li>
+                        
+
+                        <li class="gui-folder">
+                            <a>
+                                <div class="gui-icon"><i class="md md-event"></i></div>
+                                <span class="title">Templates</span>
+                            </a>
+                            <ul>
+                                <li><a href="#/clinical-progress-template"><span class="title">Clinical Notes Template</span></a></li>
+                                <li><a href="#/templates" ><span class="title">Lab Template</span></a></li>
+                            </ul>
+                        </li>-->
+                      
+                      
+                        
                         <!-- END EMAIL -->
                     </ul><!--end .main-menu -->
 

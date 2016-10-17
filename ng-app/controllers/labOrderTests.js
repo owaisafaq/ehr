@@ -1,8 +1,11 @@
 var AppEHR = angular.module('AppEHR');
 // Lab Order Tests Listing
-AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routeParams','getLabOrderInfo','getLabTestInfo','updateTestStatus','$timeout','$location', 'Dosignoff', 'orderReport', function ($scope, $rootScope, $window, $routeParams, getLabOrderInfo,getLabTestInfo,updateTestStatus,$timeout,$location, Dosignoff, orderReport) {
+AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routeParams','getLabOrderInfo','getLabTestInfo','updateTestStatus','$timeout','$location', 'Dosignoff', 'orderReport','getInventory','AddMaterialByCat', function ($scope, $rootScope, $window, $routeParams, getLabOrderInfo,getLabTestInfo,updateTestStatus,$timeout,$location, Dosignoff, orderReport,getInventory,AddMaterialByCat) {
     $rootScope.pageTitle = "EHR - Lab Order Test";
     $scope.action = "";
+    $scope.allProdByCat = [];
+    $scope.addedMaterial = [];
+    $scope.addedMaterialDB = [];
     getLabOrderInfo.get({ // Getting all tests along with order info
             token: $window.sessionStorage.token,
             order_id: $routeParams.orderID},
@@ -171,5 +174,45 @@ AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routePar
         $scope.openPrint  = function (){
             window.print();
         }
-
+        getInventory.get({
+            token: $window.sessionStorage.token
+        }, getInventorySuccess, getInventoryFailure);
+        function getInventorySuccess(res){
+            $scope.allProdByCat = res.data;
+            console.log("success")
+        }
+        function getInventoryFailure(res){
+            console.log(res);
+            console.log("error")
+        }
+        $scope.addMaterial = function (){
+            $scope.addedMaterial.push({
+                    "material": "" + $scope.prod_cat_name.cat_name + "",
+                    "cost": "" + $scope.prod_quantity * $scope.prod_cat_name.cost + "",
+                    "quantity": $scope.prod_quantity
+                });
+                $scope.addedMaterialDB.push({
+                    "material": "" + $scope.prod_cat_name.id + "",
+                    "cost": "" + $scope.prod_quantity * $scope.prod_cat_name.cost + "",
+                    "quantity": $scope.prod_quantity
+                });
+                $scope.prod_quantity = "";
+                $("#selectInventory select").select2("val", "");
+                
+        }
+        $scope.addMaterials = function (){
+             AddMaterialByCat.save({
+            lab_order_id: $routeParams.orderID,
+            material: JSON.stringify($scope.addedMaterialDB),
+            token: $window.sessionStorage.token,
+        }, addMaterialSuccess, addMaterialFailure);
+        }
+        function addMaterialSuccess(res){
+            console.log(res.message);
+//            console.log("success");
+        }
+        function addMaterialFailure(res){
+            console.log(res.data);
+            console.log("failure");
+        }
 }]);

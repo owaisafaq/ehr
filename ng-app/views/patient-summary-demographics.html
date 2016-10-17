@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Number</label>
-                    <span class="txt-style-2 col-lg-12">PA-{{PI.patient_id}}</span>
+                    <span class="txt-style-2 col-lg-12">P-{{PI.patient_id}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Age</label>
@@ -30,10 +30,10 @@
                     <a href="#/billing/{{PID}}" class="button-style-2">
                         <img src="assets/img/content_icn_blue.png" />
                     </a>
-                    <a href="javascript:;" class="button-style-2">
+                    <!-- <a href="javascript:;" class="button-style-2">
                         <img src="assets/img/assign_blue.png" />
-                    </a>
-                    <a href="javascript:;" class="button-style-2" data-toggle="modal" data-target="#checkout">
+                    </a> -->
+                    <a href="javascript:;" class="button-style-2" data-toggle="modal" data-target="#checkout" >
                         <img src="assets/img/discharge_icn_blue.png" />
                     </a>                             
                 </div>
@@ -62,36 +62,34 @@
 
                     </div><!--end .panel -->
                     <div class="card panel">
-
-                            <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-3">
-                                <header>Immunizations</header>
-                                <div class="tools">
-                                    <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
-                                </div>
+                        <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-3">
+                            <header>Immunizations</header>
+                            <div class="tools">
+                                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
                             </div>
-                            <div id="accordion3-3" class="collapse immunization-accordian">
-                                <div class="card-body custom-body-style-1 scrollbar">
-                                    <form class="custom-form" novalidate>
-                                    <textarea ng-model="immunizationName" placeholder="Immunization" required></textarea>
-                                    <div class="input-group date select-date col-lg-12 margin-bottom-xxl">
-                                        <div class="input-group-content">
-                                            <input type="text" class="form-control" placeholder="Select Date" ng-model="immunizationDate">
-                                        </div>
-                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </div>
+                        <div id="accordion3-3" class="collapse immunization-accordian">
+                            <div class="card-body custom-body-style-1 scrollbar">
+                                <form class="custom-form" novalidate>
+                                <textarea ng-model="immunizationName" placeholder="Immunization" required></textarea>
+                                <div class="input-group date select-date col-lg-12 margin-bottom-xxl">
+                                    <div class="input-group-content">
+                                        <input type="text" class="form-control" placeholder="Select Date" ng-model="immunizationDate">
                                     </div>
-                                    <button class="btn button-style-1 pull-right" ng-click="addImmunizations(immunizationName, immunizationDate);">Add</button>
-                                    <ul class="ulli ulli_3 col-lg-12 margin-left-5">
-                                        <li class="col-lg-12 capitalize" ng-repeat="immunization in immunizations">
-                                            {{immunization.name}} -
-                                            {{immunization.immunization_date}}
-                                            <span class="pull-right delete-icon" ng-click="removeImmunization(immunization.id);"><img src="assets/img/cross.png" /></span><!-- immunizations.splice($index, 1) -->
-                                        </li>
-                                    </ul>
-                                    </form>
-                                    <!-- <p>Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Dicant vituperata consequuntur.</p> -->
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
+                                <button class="btn button-style-1 pull-right" ng-click="addImmunizations(immunizationName, immunizationDate);">Add</button>
+                                <ul class="ulli ulli_3 col-lg-12 margin-left-5">
+                                    <li class="col-lg-12 capitalize" ng-repeat="immunization in immunizations">
+                                        {{immunization.name}} -
+                                        {{immunization.immunization_date}}
+                                        <span class="pull-right delete-icon" ng-click="removeImmunization(immunization.id);"><img src="assets/img/cross.png" /></span><!-- immunizations.splice($index, 1) -->
+                                    </li>
+                                </ul>
+                                </form>
+                                <!-- <p>Per at postea mediocritatem, vim numquam aliquid eu, in nam sale gubergren. Fuisset delicatissimi duo, qui ut animal noluisse erroribus. Ea eum veniam audire. Dicant vituperata consequuntur.</p> -->
                             </div>
-
+                        </div>
                     </div><!--end .panel -->
                     <div class="card panel">
                         <div class="card-head card-head-sm collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-2">
@@ -179,7 +177,7 @@
                                         <label>patient id</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <label class="txt-style-4">PA-{{PI.patient_id}}</label>
+                                        <label class="txt-style-4">P-{{PI.patient_id}}</label>
                                     </div>
 
                                     <div class="col-lg-3">
@@ -297,8 +295,10 @@
                                 <td></td>
                                 <!-- <td>{{encounter.diagosis}}</td> -->
                                 <!-- <td>{{encounter.name}}</td> -->
+                                <!-- ng-click="viewReportPDF(encounter.clinical_notes_id);" -->
+                                <!-- data-target="#patientReport" -->
                                 <td>{{encounter.reason_of_visit}}</td>
-                                <td><a href="#/clinical-documentation-clinic-progress-note/{{patID}}">View</a></td>
+                                <td><a style="cursor: pointer;" ng-click="viewReportPDF(encounter.clinical_notes_id);" data-toggle="modal" data-target="#patientReport">View</a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -810,9 +810,6 @@
                                 <div class="col-lg-6 margin-bottom-xxl">
                                     <input type="text" placeholder="pulse" ng-model="vital.pulse" numbers-only/>
                                 </div>
-                                <div class="col-lg-12">
-                                    <label class="label-style">respiratory Rate (br /min)</label>
-                                </div>
                                 <div class="col-lg-6">
                                     <label>respiratory rate</label>
                                 </div>
@@ -1016,13 +1013,14 @@
                         </div>
                      </div>
                     <!--</div>-->
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-default button-style-1">Add</button>
-                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
-                    </div>
+                    
                 </form>
 
             </div>
+            <div class="modal-footer">
+                        <button type="submit" class="btn btn-default button-style-1">Add</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
 
         </div><!-- /.modal-content -->
 
@@ -1044,13 +1042,12 @@
                         <div class="col-lg-3">
                             <label>Supplement</label>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-9">
                             <select ng-model="addSupplement.supplementName" class="form-control select_searchFields" placeholder="Select Supplement">
                                 <option></option>
                                 <option ng-selected="addSupplement.supplementName == medicationDropData.id" value="{{medicationDropData.id}}" ng-repeat="medicationDropData in getSupp">{{medicationDropData.name}}</option>
                             </select>
                         </div>
-                        <div class="col-lg-3"></div>
 
                         <!-- <div class="col-lg-3 clear">
                             <label>Manufacturer</label>
@@ -1073,7 +1070,7 @@
                         <div class="col-lg-1">
                             <button type="button" class="btn btn-default button-style-1 margin-0">Add</button>
                         </div> -->
-
+</div>  <div class="row margin-bottom-xxl">
                         <div class="col-lg-3 clear">
                             <label>From Date</label>
                         </div>
@@ -1097,7 +1094,7 @@
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                             </div>
                         </div>
-                        </div>
+</div>
 
  <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
@@ -1163,7 +1160,27 @@
 
 </div><!-- /.modal -->
 
-<div class="modal fade big-modal" id="addmedication" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+
+<div class="modal fade modal-size_1" id="patientReport">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Clinical Progress Report</h2>
+            </div>
+            <div class="modal-body">
+                 <div class="icons_con pull-right no-margin">
+                <!-- <button class="update button-custom" ng-disabled="is_signoff == 1">update report</button> -->
+            </div>
+                <div class="showPdf"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">OK</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade modal-size_3" id="addmedication" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -1173,29 +1190,29 @@
                 <form class="custom-form" novalidate ng-submit="savePharmacyPopUp()">
                     <!--<div class="row">-->
                         <div class="row margin-bottom-xxl">
-                        <div class="col-lg-3">
-                            <label>Medication</label>
-                        </div>
-                        <div class="col-lg-9">
-                            <select ng-model="MedicationData.medication" class="form-control getMedicineName select_searchFields" placeholder="Select Medication">
-                                <option></option>
-                                <option ng-selected="MedicationData.medication == medicationDropData.id" value="{{medicationDropData.id}}" ng-repeat="medicationDropData in getDrugs">{{medicationDropData.name}}</option>
-                            </select>
+                            <div class="col-lg-3">
+                                <label>Medication</label>
+                            </div>
+                            <div class="col-lg-9">
+                                <select ng-model="MedicationData.medication" class="form-control getMedicineName select_searchFields" placeholder="Select Medication">
+                                    <option></option>
+                                    <option ng-selected="MedicationData.medication == medicationDropData.id" value="{{medicationDropData.id}}" ng-repeat="medicationDropData in getDrugs">{{medicationDropData.name}}</option>
+                                </select>
+                            </div>
                         </div>
                             <div class="row margin-bottom-xxl">
-                        <div class="col-lg-3">
-                            <label>SIG</label>
-                        </div>
-                        <div class="col-lg-8">
-                            <input ng-model="MedicationData.sig" type="text" placeholder="" />
-                        </div>
-                        <div class="col-lg-1">
-                            <!--open_sig-->
-                            <a href="!#" class="setting-button button-custom pull-right" data-toggle="modal" data-target="#addsig"></a>
-                        </div>
-                     </div>
+                                <div class="col-lg-3">
+                                    <label>SIG</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input ng-model="MedicationData.sig" type="text" placeholder="" />
+                                </div>
+                                <div class="col-lg-1">
+                                    <!--open_sig-->
+                                    <a href="!#" class="setting-button button-custom pull-right" data-toggle="modal" data-target="#addsig"></a>
+                                </div>
+                            </div>
                     <div class="row margin-bottom-xxl">
-
                         <div class="col-lg-3">
                             <label>Dispense</label>
                         </div>
@@ -1209,7 +1226,7 @@
                         <div class="col-lg-3">
                             <input ng-model="MedicationData.reffills" type="text" placeholder="" />
                         </div>
-                        </div>
+                    </div>
                     <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Pharmacy</label>
@@ -1220,23 +1237,22 @@
                                 <option ng-selected="MedicationData.pharmacy == pharmacyDataDrop.id" value="{{pharmacyDataDrop.id}}" ng-repeat="pharmacyDataDrop in allPharmacies">{{pharmacyDataDrop.name}}</option>
                             </select>
                         </div>
-                        </div>
+                    </div>
                     <div class="row margin-bottom-xxl">
-
                         <div class="col-lg-3 clear">
                             <label>Note Of Pharmacy</label>
                         </div>
                         <div class="col-lg-9">
                             <input ng-model="MedicationData.note_of_pharmacy" type="text" placeholder="" required/>
                         </div>
-</div>
+                    </div>
 
                     <div class="row margin-bottom-xxl">
                         <div class="col-lg-9 col-lg-offset-3">
                             <button ng-hide="showUpdate" type="button" ng-click="addMedication()" class="btn btn-default pull-left button-style-1">Add</button>
                             <button type="button" ng-show="showUpdate" ng-click="addMedication(1)" class="btn btn-default pull-left button-style-1">Update</button>
                         </div>
-</div>
+                    </div>
                     <!--</div>-->
 
                     <div class="medication_list">
@@ -1294,17 +1310,13 @@
                         <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
                     </div>
                 </form>
-
             </div>
-
         </div><!-- /.modal-content -->
-
-
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
 
-<div class="modal fade big-modal" id="addsig" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_2" id="addsig" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -1387,16 +1399,19 @@
 </div>
 <div class="modal fade" id="checkout" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-mid">
-        <form class="custom-form">
+        <form class="custom-form" ng-submit="checkoutPatient(CO)">
             <div class="modal-content">
                 <div class="modal-header pop_head">
                     <h2>Check Out Patient</h2>
                 </div>
                 <div class="modal-body">
                     <div class="col-lg-12 no-padding margin-bottom-xxl">
+                        <div class="alert {{messageType}}" role="alert" ng-show="message">
+                            <i class="{{errorSymbol}}"></i> {{errorMessage}}
+                        </div>
                         <div class="radio radio-styled">
                             <label>
-                                <input type="radio" name="checkoutpatient" value="Noappointment" ng-checked="true" ng-model="CO.reason">
+                                <input type="radio" name="checkoutpatient" value="Noappointment" checked>
                                 <span>No Appointment</span>
                             </label>
                         </div>
@@ -1422,7 +1437,7 @@
                     <div class="checkout_patient_tab_con">
                         <div id="Noappointment" class="active">
                             <label class="margin-bottom-xl">Note</label>
-                            <textarea placeholder="Write Here..."  ng-model="CO.note"></textarea>
+                            <textarea placeholder="Write Here..." ng-model="CO.note"></textarea>
                         </div>
                         <div id="followUp" class="row">
                             <div class="col-lg-2">
@@ -1431,7 +1446,7 @@
                             <div class="col-lg-4">
                                 <div class="input-group date select-date col-lg-12">
                                     <div class="input-group-content">
-                                        <input type="text" class="form-control" placeholder="Select Date"  ng-model="CO.date">
+                                        <input type="text" class="form-control" placeholder="Select Date" ng-model="CO.date">
                                     </div>
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
@@ -1441,16 +1456,16 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="input-group bootstrap-timepicker timepicker col-lg-12">
-                                    <input type="text" class="form-control input-small timepicker"  ng-model="CO.time">
+                                    <input type="text" class="form-control input-small timepicker" ng-model="CO.time">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <label class="margin-bottom-xl">Note</label>
-                                <textarea class="margin-bottom-lg" placeholder="Write Here..."  ng-model="CO.note"></textarea>
+                                <textarea class="margin-bottom-lg" placeholder="Write Here..." ng-model="CO.note"></textarea>
                             </div>
                         </div>
-                        <div id="admitPatient" class="">
+                        <div id="admitPatient" class="row">
                             <div class="row margin-bottom-xxl">
                             <div class="col-lg-12">
                                 <span class="txt-style-4">Presenting Complaint: Captured from Clinical Note</span>
@@ -1461,22 +1476,32 @@
                                 <label>to specialty</label>
                             </div>
                             <div class="col-lg-3 select-con">
-                                <select class="form-control" ng-model="CO.ward" placeholder="Clinic Progress Notes">
+                                <select class="form-control" ng-model="CO.CPN" placeholder="Clinic Progress Notes">
                                     <option value=""></option>
-                                    <option>2</option>
-                                    <option>3</option>
+                                    <option value="{{w.id}}" ng-repeat="w in encountersDropdownData.departments">{{w.name}}</option>
                                 </select>
                             </div>
                             <div class="col-lg-3">
                                 <label>admit to ward</label>
-                            </div>
+                            </div><!-- ng-class="{true: 'error'}[submitted && moveForm.ward.$invalid]"  -->
                             <div class="col-lg-3 select-con select-con_small">
-                                <select class="form-control" ng-model="CO.ward" placeholder="Select Ward">
+                                <select class="form-control" name="ward" ng-change="wardSelected(CO.ward);" ng-model="CO.ward" placeholder="Select Ward">
                                     <option value=""></option>
-                                    <option>2</option>
-                                    <option>3</option>
+                                    <option value="{{w.id}}" ng-repeat="w in wardDropdown">{{w.name}}</option>
                                 </select>
-                                <button class="ward-button"></button>
+                                <div class="ward-button-con" ng-hide="wardselect">
+                                    <button class="ward-button" ng-click="showbeds();" type="button"></button>
+                                    <div class="select-bed-dropdown" ng-hide="showBed">
+                                        <div class="radio radio-styled" ng-repeat="beds in noOFBeds">
+                                            <div class="radio radio-styled">
+                                                <label>
+                                                    <input type="radio" name="checked" ng-model="action" ng-click="bedSelected(beds.id);">
+                                                    <span>{{beds.id}}</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             </div>
                             <div class="row margin-bottom-xxl">
@@ -1484,35 +1509,34 @@
                                 <label>Admitted DATE</label>
                             </div>
                             <div class="col-lg-3">
-                                <label class="txt-style-4">April 05, 2016</label>
+                                <label class="txt-style-4">{{admittedDate}}</label>
                             </div>
                             <div class="col-lg-3">
                                 <label>Estimated Discharge</label>
                             </div>
                             <div class="col-lg-3">
                                 <div class="input-group bootstrap-timepicker timepicker col-lg-12">
-                                    <input type="text" class="form-control input-small timepicker"  ng-model="CO.time">
+                                    <input type="text" class="form-control input-small timepicker" ng-model="CO.discharge">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                                 </div>
                             </div>
-                            </div>
-                            <div class="row">
 
                             <div class="col-lg-12">
                                 <label class="margin-bottom-xl">Note</label>
-                                <textarea class="margin-bottom-lg" placeholder="Write Here..."  ng-model="CO.note"></textarea>
+                                <textarea class="margin-bottom-lg" placeholder="Write Here..." ng-model="CO.note"></textarea>
                             </div>
                         </div>
                         </div>
+                        
                         <div id="dead" class="row">
                             <div class="col-lg-12">
                                 <label class="margin-bottom-xl">Note</label>
-                                <textarea class="margin-bottom-lg" placeholder="Write Here..."  ng-model="CO.note"></textarea>
+                                <textarea class="margin-bottom-lg" placeholder="Write Here..." ng-model="CO.note"></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer padding-right-0">
-                        <button type="button" class="btn btn-default button-style-1 padding11" ng-click="checkoutPatient(CO)">Save & Close</button>
+                        <button type="submit" class="btn btn-default button-style-1 padding11">Save & Close</button>
                         <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
@@ -1520,6 +1544,3 @@
         </form>
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<script>
-
-</script>

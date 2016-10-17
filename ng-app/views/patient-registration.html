@@ -49,7 +49,7 @@
                             </div>
                             <div class="col-lg-3">
                                 <!--<input type="text" placeholder="Pick Date" />-->
-                                <div class="input-group date select-date">
+                                <div class="input-group date select-dateAge">
                                     <div class="input-group-content">
                                         <input type="text" name="date_of_birth" ng-model="PI.date_of_birth" ng-change="calculateAge(PI.date_of_birth);" ng-class="{true: 'error'}[submitted && userForm1.date_of_birth.$invalid]" class="form-control" required placeholder="Pick Date" class="yellow"/>
                                         <p class="help-block PIValid" ng-show="submitted && userForm1.date_of_birth.$error.required">Required</p>
@@ -125,20 +125,16 @@
                             <div class="col-lg-3">
                             </div>
                             <div class="col-lg-3">
-                                <select class="form-control select_searchFields" ng-model="PI.patient_state" ng-change="addressLocalGovtAreaByStates(PI.patient_origin, 1);" placeholder="State of Origin" name="origin" ng-class="{true:'error'}[submitted && userForm1.origin.$invalid]" required>
+                                <select class="form-control select_searchFields" ng-model="PI.patient_state" ng-change="addressLocalGovtAreaByStatesIndependent(PI.patient_state, 0);" placeholder="State of Origin" name="origin" ng-class="{true:'error'}[submitted && userForm1.origin.$invalid]" required>
                                     <option value=""></option>
-                                    <option value="2">1</option>
-                                    <option value="3">2</option>
-                                    <!-- <option ng-repeat="state in stateOfOrigin" value="{{state.id}}">{{state.name}}</option> -->
+                                     <option ng-repeat="state in IndependentStates" value="{{state.id}}">{{state.name}}</option> 
                                 </select>
                                 <p class="help-block PIValid" ng-show="submitted && userForm1.origin.$error.required">Required</p>
                             </div>
                             <div class="col-lg-3">
                                 <select class="form-control select_searchFields" ng-model="PI.patient_local_goverment_area" placeholder="Local Government Area">
                                     <option value=""></option>
-                                    <option value="2">1</option>
-                                    <option value="3">2</option>
-                                    <!-- <option ng-repeat="LGA in patientInfolocalGovtArea" value="{{LGA.id}}">{{LGA.name}}</option> -->
+                                     <option ng-repeat="LGA in patientInfolocalGovtAreaIndependent" value="{{LGA.id}}">{{LGA.name}}</option> 
                                 </select>
                                 <input type="hidden" ng-model="PI.local_goverment_area" ng-value="PI.local_goverment_area">
                             </div>
@@ -382,7 +378,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="tab-pane {{disabledTabKin}}" id="kin">
+                <div class="tab-pane  {{disabledTabKin}}" id="kin">
                     <form class="custom-form" name="userForm2" novalidate ng-submit="validatePatientKin(PI.kin);">
                         <div class="row">
                             <div class="col-lg-3">
@@ -595,19 +591,18 @@
                                     <span data-toggle="modal" data-target="#relationship">Retainership</span>
                                 </label>
                             </div>
-                            <div class="">
-                                <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-show="showSubmitButtonPatientPlan" >Save</button>
-                               <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-hide="showSubmitButtonPatientPlan" >Update</button>
-                            </div>
                             <div class="radio radio-styled">
                                 <label>
-                                    <input ng-click="flag_to_show_retainer = false; flag_to_show_nhis = false;" type="radio" ng-init="PP.checkoutpatient = 4" name="checkoutpatient" value="4" checked ng-checked="true" ng-model="PP.checkoutpatient">
+                                    <input ng-click="flag_to_show_retainer = false; flag_to_show_nhis = false;" type="radio" ng-init="PP.checkoutpatient = 4" name="checkoutpatient" value="4" ng-model="PP.checkoutpatient">
                                     <span>FHSS</span>
                                 </label>
                             </div>
+                            <div class="">
+                                <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-show="showSubmitButtonPatientPlan" >Save</button>
+                                <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-hide="showSubmitButtonPatientPlan" >Update</button>
+                            </div>
                         </div>
                         <div class="col-lg-12 radio-style-2-con" ng-show="patientPlantRadios">
-                            
                             <div class="radio radio-styled">
                                 <label>
                                     <input ng-click="flag_to_show_retainer_update = false; flag_to_show_nhis_update = false;" type="radio" ng-init="PP.checkoutpatient = 1" name="checkoutpatient" value="1" ng-checked="HPUpdate.plan_id == '1'" ng-model="PP.checkoutpatient">
@@ -626,18 +621,17 @@
                                     <span data-toggle="modal" data-target="#relationshipUpdate">Retainership</span>
                                 </label>
                             </div>
-                            <div class="">
-                                <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-show="showSubmitButtonPatientPlan" >Save</button>
-                               <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-hide="showSubmitButtonPatientPlan" >Update</button>
-                            </div>
                             <div class="radio radio-styled">
                                 <label>
                                     <input ng-click="flag_to_show_retainer_update = false; flag_to_show_nhis_update = false;" type="radio" ng-init="PP.checkoutpatient = 4" name="checkoutpatient" value="4" ng-checked="HPUpdate.plan_id == '4'" ng-model="PP.checkoutpatient">
                                     <span>FHSS</span>
                                 </label>
                             </div>
+                            <div class="">
+                                <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-show="showSubmitButtonPatientPlan" >Save</button>
+                               <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-hide="showSubmitButtonPatientPlan" >Update</button>
+                            </div>
                         </div>
-
                         <div ng-if="flag_to_show_nhis">
                             <div class="col-lg-12 margin-bottom-xxl no-padding">
                                 <label class="label-style">Patient Summary</label>
@@ -655,8 +649,8 @@
                                     <div class="col-lg-6">
                                         <label>Policies</label>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <label class="txt-style-4">{{dataToBeAdded.policies.name}}</label>
+                                    <div class="col-lg-6"><!-- policiesName -->
+                                        <label class="txt-style-4">{{dataToBeAdded.policies}}</label>
                                     </div>
                                 </div>
                                 <div class="column col-lg-6">
@@ -793,7 +787,7 @@
                             <table ng-show="fromModal" class="table table-striped table-custom margin-bottom-xxl">
                                 <thead>
                                     <tr>
-                                        <th width="50%">patient id 2</th>
+                                        <th width="50%">patient id</th>
                                         <th>Name</th>
                                     </tr>
                                 </thead>
@@ -1036,7 +1030,7 @@
         </div><!--end .card -->
     </section>
 </div>
-<div class="modal fade big-modal" id="nhis" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_3" id="nhis" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -1044,6 +1038,7 @@
             </div>
             <form class="custom-form" name="form_modal_1" novalidate ng-submit="modal_nhis_Data(MI);">
                 <div class="modal-body pull-left">
+                    <div class="row margin-bottom-xxl">
                     <div class="col-lg-3">
                         <label>HMO</label>
                     </div>
@@ -1057,11 +1052,14 @@
                         <label>Policies</label>
                     </div>
                     <div class="col-lg-3">
-                        <select class="form-control" ng-class="{true: 'error'}[checkValidate_nhis && form_modal_1.policy_dropdown.$invalid]" name="policy_dropdown" data-placeholder="Select Policy" ng-model="MI.policies" ng-options="policy.name for policy in dropDownData.policies track by policy.id" required>
+                        <!-- <select class="form-control" ng-class="{true: 'error'}[checkValidate_nhis && form_modal_1.policy_dropdown.$invalid]" name="policy_dropdown" data-placeholder="Select Policy" ng-model="MI.policies" ng-options="policy.name for policy in dropDownData.policies track by policy.id" required>
                             <option value=""></option>
-                        </select>
+                        </select> -->
+                        <input type="text" name="policy_dropdown" ng-model="MI.policies" ng-class="{true: 'error'}[checkValidate_nhisUpdate && form_modal_1.policy_dropdown.$invalid]">
                         <span class="help-block PIValid" ng-show="checkValidate_nhis && form_modal_1.policy_dropdown.$error.required">Required</span>
                     </div>
+                        </div>
+                     <div class="row margin-bottom-xxl">
                     <div class="col-lg-3">
                         <label>Speciality</label>
                     </div>
@@ -1086,6 +1084,8 @@
                         <input type="text" numbers-only class="form-control" ng-class="{true: 'error'}[checkValidate_nhis && form_modal_1.insurance_id.$invalid]" name="insurance_id" placeholder="06" ng-model="MI.insurance_id" required />
                         <span class="help-block PIValid" ng-show="checkValidate_nhis && form_modal_1.insurance_id.$error.required">Required</span>
                     </div>
+                     </div>
+                    <div class="row margin-bottom-xxl">
                     <div class="show-on-dependant">
                         <div class="col-lg-12">
                             <div class="ajax-dropdown-con col-lg-4">
@@ -1096,6 +1096,8 @@
                         </div>
                         <div class="col-lg-12 dependant_list add_dependant_with_relation"></div>
                     </div>
+                    </div>
+                    <div class="row margin-bottom-xxl">
                     <div class="show-on-principal">
                         <div class="col-lg-12">
                             <div class="ajax-dropdown-con col-lg-4" ng-class="{
@@ -1118,6 +1120,8 @@
                             <span class="help-block PIValid" ng-show="checkValidate_nhis && MI.select_speciality == 'dependant' && form_modal_1.principal_relationship.$error.required">Required</span>
                         </div>
                     </div>
+                        </div>
+                    <div class="row margin-bottom-xxl">
                     <div class="col-lg-12">
                         <label>Description</label>
                     </div>
@@ -1125,7 +1129,7 @@
                         <textarea placeholder="Write here..." ng-class="{true : 'error'}[checkValidate_nhis &&  form_modal_1.desc_nhis.$invalid]" name="desc_nhis" ng-model="MI.description" required></textarea>
                         <span class="help-block PIValid" ng-show="checkValidate_nhis && form_modal_1.desc_nhis.$error.required">Required</span>
                     </div>
-
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" ng-click="checkValidate_nhis = true;" class="btn btn-default button-style-1" >create</button>
@@ -1135,14 +1139,15 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade big-modal" id="nhisUpdate" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_3" id="nhisUpdate" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>NHIS</h2>
             </div>
             <form class="custom-form" name="form_modal_1" novalidate ng-submit="modal_nhisUpdate_Data(MI);">
-                <div class="modal-body pull-left">
+                <div class="modal-body">
+                    <div class="row margin-bottom-xxl">
                     <div class="col-lg-3">
                         <label>HMO</label>
                     </div>
@@ -1157,12 +1162,15 @@
                         <label>Policies</label>
                     </div>
                     <div class="col-lg-3">
-                        <select class="form-control getPoliciesName" ng-class="{true: 'error'}[checkValidate_nhisUpdate && form_modal_1.policy_dropdown.$invalid]" name="policy_dropdown" data-placeholder="Select Policy" ng-model="MI.policies" required>
+                        <!-- <select class="form-control getPoliciesName" ng-class="{true: 'error'}[checkValidate_nhisUpdate && form_modal_1.policy_dropdown.$invalid]" name="policy_dropdown" data-placeholder="Select Policy" ng-model="MI.policies" required>
                             <option value=""></option>
                             <option value="{{policy.id}}" ng-repeat="policy in dropDownData.policies" value="{{policy.id}}" ng-selected="policy.name == HPUpdate.policies">{{policy.name}}</option>
-                        </select>
+                        </select> -->
+                        <input type="text" name="policy_dropdown" ng-model="MI.policies" ng-class="{true: 'error'}[checkValidate_nhisUpdate && form_modal_1.policy_dropdown.$invalid]">
                         <span class="help-block PIValid" ng-show="checkValidate_nhisUpdate && form_modal_1.policy_dropdown.$error.required">Required</span>
                     </div>
+                        </div>
+                    <div class="row margin-bottom-xxl">
                     <div class="col-lg-3">
                         <label>Speciality</label>
                     </div>
@@ -1187,6 +1195,8 @@
                         <input type="text" numbers-only class="form-control" ng-class="{true: 'error'}[checkValidate_nhisUpdate && form_modal_1.insurance_id.$invalid]" name="insurance_id" placeholder="06" ng-model="MI.insurance_id" required />
                         <span class="help-block PIValid" ng-show="checkValidate_nhisUpdate && form_modal_1.insurance_id.$error.required">Required</span>
                     </div>
+                    </div>
+                    <div class="row margin-bottom-xxl">
                     <div class="show-on-dependant">
                         <div class="col-lg-12">
                             <div class="ajax-dropdown-con col-lg-4">
@@ -1197,6 +1207,8 @@
                         </div>
                         <div class="col-lg-12 dependant_list add_dependant_with_relation"></div>
                     </div>
+                    </div>
+                    <div class="row margin-bottom-xxl">
                     <div class="show-on-principal">
                         <div class="col-lg-12">
                             <div class="ajax-dropdown-con col-lg-4" ng-class="{true: 'error'}[checkValidate_nhisUpdate && MI.select_speciality == 'dependant' && do_valid_nhis]">
@@ -1217,12 +1229,15 @@
                             <span class="help-block PIValid" ng-show="checkValidate_nhisUpdate && MI.select_speciality == 'dependant' && form_modal_1.principal_relationship.$error.required">Required</span>
                         </div>
                     </div>
+                    </div>
+                    <div class="row margin-bottom-xxl">
                     <div class="col-lg-12">
                         <label>Description</label>
                     </div>
                     <div class="col-lg-12">
                         <textarea placeholder="Write here..." ng-class="{true : 'error'}[checkValidate_nhisUpdate &&  form_modal_1.desc_nhis.$invalid]" name="desc_nhis" ng-model="MI.description" required></textarea>
                         <span class="help-block PIValid" ng-show="checkValidate_nhisUpdate && form_modal_1.desc_nhis.$error.required">Required</span>
+                    </div>
                     </div>
 
                 </div>
@@ -1234,14 +1249,15 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade big-modal" id="relationship" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_3" id="relationship" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Retainer Ship</h2>
             </div>
             <form class="custom-form" name="form_modal_2" novalidate ng-submit="modal_retainer_Data(RI);">
-                <div class="modal-body pull-left">
+                <div class="modal-body">
+                    <div class="row margin-bottom-xxl">
                     <div class="col-lg-3">
                         <label>Retainership</label>
                     </div>
@@ -1265,6 +1281,8 @@
                         </select>
                         <span class="help-block PIValid" ng-show="checkValidate_retainer && form_modal_2.category_dropdown.$error.required">Required</span>
                     </div>
+                        </div>
+                     <div class="row margin-bottom-xxl">
                     <div class="col-lg-3">
                         <label>Speciality</label>
                     </div>
@@ -1282,6 +1300,8 @@
                             </label>
                         </div>
                     </div>
+                     </div>
+                     <div class="row margin-bottom-xxl">
                     <div class="show-on-dependant">
                         <div class="col-lg-12">
                             <div class="ajax-dropdown-con col-lg-4">
@@ -1292,6 +1312,8 @@
                         </div>
                         <div class="col-lg-12 dependant_list add_dependant_with_relation"></div>
                     </div>
+                     </div>
+                     <div class="row margin-bottom-xxl">
                     <div class="show-on-principal">
                         <div class="col-lg-12">
                             <div class="ajax-dropdown-con col-lg-4" ng-class="{
@@ -1316,6 +1338,8 @@
                             <span class="help-block PIValid" ng-show="checkValidate_retainer && RI.select_speciality == 'dependant' && form_modal_2.principal_relationship.$error.required">Required</span>
                         </div>
                     </div>
+                     </div>
+                     <div class="row margin-bottom-xxl">
                     <div class="col-lg-12">
                         <label>Notes</label>
                     </div>
@@ -1325,7 +1349,7 @@
                                         : 'error'}[checkValidate_retainer && form_modal_2.notes_reatainer.$invalid]" name="notes_reatainer" ng-model="RI.notes" required></textarea>
                         <span class="help-block PIValid" ng-show="checkValidate_retainer && form_modal_2.notes_reatainer.$error.required">Required</span>
                     </div>
-
+                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" ng-click="checkValidate_retainer = true;" class="btn btn-default button-style-1" >create</button>
@@ -1335,14 +1359,15 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade big-modal" id="relationshipUpdate" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_3" id="relationshipUpdate" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Retainer Ship</h2>
             </div>
             <form class="custom-form" name="form_modal_2" novalidate ng-submit="modal_retainer_DataUpdate(RI);">
-                <div class="modal-body pull-left">
+                <div class="modal-body">
+                    <div class="row margin-bottom-xxl">
                     <div class="col-lg-3">
                         <label>Retainership</label>
                     </div>
@@ -1367,6 +1392,8 @@
                         </select> -->
                         <span class="help-block PIValid" ng-show="checkValidate_retainerUpdate && form_modal_2.category_dropdown.$error.required">Required</span>
                     </div>
+                        </div>
+                    <div class="row margin-bottom-xxl">
                     <div class="col-lg-3">
                         <label>Speciality</label>
                     </div>
@@ -1384,6 +1411,8 @@
                             </label>
                         </div>
                     </div>
+                    </div>
+                    <div class="row margin-bottom-xxl">
                     <div class="show-on-dependant">
                         <div class="col-lg-12">
                             <div class="ajax-dropdown-con col-lg-4">
@@ -1394,6 +1423,8 @@
                         </div>
                         <div class="col-lg-12 dependant_list add_dependant_with_relation"></div>
                     </div>
+                    </div>
+                    <div class="row margin-bottom-xxl">
                     <div class="show-on-principal">
                         <div class="col-lg-12">
                             <div class="ajax-dropdown-con col-lg-4" ng-class="{
@@ -1416,6 +1447,8 @@
                             <span class="help-block PIValid" ng-show="checkValidate_retainerUpdate && RI.select_speciality == 'dependant' && form_modal_2.principal_relationship.$error.required">Required</span>
                         </div>
                     </div>
+                    </div>
+                    <div class="row margin-bottom-xxl">
                     <div class="col-lg-12">
                         <label>Notes</label>
                     </div>
@@ -1423,6 +1456,7 @@
                         <textarea placeholder="Write here..." ng-class="{
                                 true: 'error'}[checkValidate_retainerUpdate && form_modal_2.notes_reatainer.$invalid]" name="notes_reatainer" ng-model="RI.notes" required></textarea>
                         <span class="help-block PIValid" ng-show="checkValidate_retainerUpdate && form_modal_2.notes_reatainer.$error.required">Required</span>
+                    </div>
                     </div>
 
                 </div>
@@ -1512,7 +1546,7 @@
                 <h2>Confirmation</h2>
             </div>
             <div class="modal-body">
-                <p>Do you want to Delete?</p>
+                <p class="modal-subtext">Do you want to Delete?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-toggle="modal" ng-click="deleteArchive();" data-dismiss="modal">Ok</button>
@@ -1543,7 +1577,7 @@
                 <h2>Success</h2>
             </div>
             <div class="modal-body">
-                <p>Patient Successfully Added</p>
+                <p class="modal-subtext">Patient Successfully Added</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>

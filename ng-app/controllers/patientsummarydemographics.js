@@ -1,5 +1,5 @@
 var AppEHR = angular.module('AppEHR');
-AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', 'GetResourcesByFolderArchives', 'ListFolderArchives', 'EditFolderArchives', 'DeleteFolderArchives', 'RemoveArchives', 'Upload', 'SaveFiles', '$timeout', 'DropDownData', 'ADDSupplements', 'ADDAllergy', 'AddFolderArchives','EditArchives', 'PatienPrescription', 'FolderUpContent', 'FolderUpFolders', 'ListImmunization', 'DeleteImmunization', 'AddImmunization', 'GetAllMedications', 'CheckoutPatient', 'GetMedicineUnits', 'GetPrescriptionSupplements', 'GetMedications', 'GetPatientAppointment', 'GetAP', 'DeleteAP', 'AddAP', 'DeleteFamily', 'ListFamily', 'DeleteAppointments', 'AddFamily', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy, GetResourcesByFolderArchives, ListFolderArchives, EditFolderArchives, DeleteFolderArchives, RemoveArchives, Upload, SaveFiles, $timeout, DropDownData, ADDSupplements, ADDAllergy, AddFolderArchives,EditArchives,PatienPrescription, FolderUpContent,FolderUpFolders, ListImmunization, DeleteImmunization, AddImmunization, GetAllMedications, CheckoutPatient, GetMedicineUnits, GetPrescriptionSupplements, GetMedications, GetPatientAppointment, GetAP, DeleteAP, AddAP, DeleteFamily, ListFamily, DeleteAppointments, AddFamily) {
+AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', 'GetResourcesByFolderArchives', 'ListFolderArchives', 'EditFolderArchives', 'DeleteFolderArchives', 'RemoveArchives', 'Upload', 'SaveFiles', '$timeout', 'DropDownData', 'ADDSupplements', 'ADDAllergy', 'AddFolderArchives','EditArchives', 'PatienPrescription', 'FolderUpContent', 'FolderUpFolders', 'ListImmunization', 'DeleteImmunization', 'AddImmunization', 'GetAllMedications', 'CheckoutPatient', 'GetMedicineUnits', 'GetPrescriptionSupplements', 'GetMedications', 'GetPatientAppointment', 'GetAP', 'DeleteAP', 'AddAP', 'DeleteFamily', 'ListFamily', 'DeleteAppointments', 'AddFamily', 'ClinicalReport', 'GetAllWardsDropDown', 'GetBedsByWard', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy, GetResourcesByFolderArchives, ListFolderArchives, EditFolderArchives, DeleteFolderArchives, RemoveArchives, Upload, SaveFiles, $timeout, DropDownData, ADDSupplements, ADDAllergy, AddFolderArchives,EditArchives,PatienPrescription, FolderUpContent,FolderUpFolders, ListImmunization, DeleteImmunization, AddImmunization, GetAllMedications, CheckoutPatient, GetMedicineUnits, GetPrescriptionSupplements, GetMedications, GetPatientAppointment, GetAP, DeleteAP, AddAP, DeleteFamily, ListFamily, DeleteAppointments, AddFamily, ClinicalReport, GetAllWardsDropDown, GetBedsByWard) {
         $rootScope.pageTitle = "EHR - Patient Summary Demographics";
         $scope.vital = {};
         $scope.PI = {};
@@ -1196,19 +1196,20 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
 
         /*CHECKOUT*/
 
-        $scope.checkoutPatient = function (CO) {
+        $scope.checkoutPatient = function (dataToBeAdded) {
             var CheckoutDetails = {
-                token: $window.sessionStorage.token,
-                visit_id: $scope.encounterID == undefined ? $scope.action : $scope.encounterID,
-                patient_id: $routeParams.patientID,
+                token: $window.sessionStorage.token, 
+                patient_id: $scope.PID,
+                visit_id: $scope.encounterID,
                 reason: $('input:radio[name="checkoutpatient"]:checked').val(),
                 notes: $('.checkout_patient_tab_con > div.active textarea').val() == undefined ? '' : $('.checkout_patient_tab_con > div.active textarea').val(),
-                pick_date: CO.date,
-                pick_time: CO.time,
-                admit_date: CO.date,
-                start_time: CO.time,
-                department_id: CO.date,
-                ward_id: CO.date
+                pick_date: dataToBeAdded.date == undefined ? '' : dataToBeAdded.date,
+                pick_time: dataToBeAdded.time == undefined ? '' : dataToBeAdded.time,
+                admit_date: $scope.admittedDate == undefined ? '' : $scope.admittedDate,
+                start_time: dataToBeAdded.time == undefined ? '' : dataToBeAdded.time,
+                department_id: dataToBeAdded.CPN == undefined ? '' : dataToBeAdded.CPN,
+                ward_id: dataToBeAdded.ward == undefined ? '' : dataToBeAdded.ward,
+                bed_id: $scope.CO.bedNumber == undefined ? '' : $scope.CO.bedNumber
             }
             console.log(CheckoutDetails);
             CheckoutPatient.save(CheckoutDetails, checkoutSuccess, checkoutSuccessFailure);
@@ -1227,6 +1228,70 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         function checkoutSuccessFailure(res) {
             console.log(res);
             $('#internetError').modal('show');
+        }
+
+        $scope.showBed = false;
+        $scope.showbedFlag = false;
+        $scope.showbeds = function(){
+            if($scope.showbedFlag == false){
+                $scope.showBed = true;
+                $scope.showbedFlag = true;
+            }else{
+                $scope.showBed = false;
+                $scope.showbedFlag = false;
+            }
+        }
+
+        GetAllWardsDropDown.get({
+            token: $window.sessionStorage.token
+        }, wardsDropDownSuccess, wardsDropDownFailure);
+
+        function wardsDropDownSuccess(res){
+            $rootScope.loader = "hide";
+            if(res.status == true){
+                $scope.wardDropdown = res.data;
+            }
+        }
+        function wardsDropDownFailure(error){
+            console.log(error);
+            $('#internetError').modal('show');
+        }
+        DropDownData.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id}, dropDownSuccess, dropDownFailed);
+
+        function dropDownSuccess(res){
+            if(res.status == true){
+                $scope.encountersDropdownData = res.data;
+                console.log(res);
+            }
+        }
+
+        function dropDownFailed(error){
+            $('#internetError').modal('show');
+            console.log(error);
+        }
+
+        $scope.wardSelected = function(wid){
+            $scope.wardselect = false;
+            console.log(wid);
+            GetBedsByWard.get({
+                token: $window.sessionStorage.token,
+                ward_id: wid
+            }, getBedsWardSuccess, getBedsWardFailure);
+            function getBedsWardSuccess(res){
+                console.log(res);
+                if(res.status == true){
+                    $scope.noOFBeds = res.data;
+                }
+            }
+            function getBedsWardFailure(error){
+                console.log(error);
+                $('#internetError').modal('show');
+            }
+        }
+
+        $scope.bedSelected = function(bedID){
+            console.log(bedID);
+            $scope.CO.bedNumber = bedID;
         }
 
         GetPrescriptionSupplements.save({token: $window.sessionStorage.token}, getSupplementSuccess, getSupplementFailure);
@@ -1373,6 +1438,23 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
             function Aptextfailure(error) {
                 console.log(error);
                 $('#internetError').modal('show');
+            }
+        }
+
+        $scope.viewReportPDF = function(clinicalID){
+            //$('#patientReport').modal('show');
+            ClinicalReport.save({
+                token: $window.sessionStorage.token,
+                patient_clinical_notes_id: clinicalID
+            }, previewRepostSuccess, previewReportFailure);
+            function previewRepostSuccess(res){
+                //$scope.previewReport = res.data;
+                $('.showPdf').html("<iframe class='abc' src="+res.data+"></iframe>");
+                console.log(res);
+            }
+
+            function previewReportFailure(error){
+              console.log(error);
             }
         }
 }]);

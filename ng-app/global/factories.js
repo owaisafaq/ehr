@@ -2796,3 +2796,63 @@ AppEHR.factory("ListFamily", function ($resource) {
     };
     return patientRegistrationEmployer;
 });*/
+AppEHR.factory("getInventory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_inventory_categories', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("AddMaterialByCat", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_material', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("GetTodayAppointments", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_all_todays_appointments', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("GetTodayEncounters", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_todays_all_visits', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});

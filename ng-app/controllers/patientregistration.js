@@ -66,7 +66,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             $scope.successMessage = false;
             $scope.errorMessage = false;
             $scope.showSubmitButton = true;
-            $scope.submitted = false;
+            $scope.submitted.nextOfKinStateByCountry = false;
             $scope.disabledTabInfo = 'active';
             $scope.disabledTabAdress = $scope.disabledTabArchive = $scope.disabledTabKin = $scope.disabledTabEmployer = $scope.disabledTabPatientPlant = "disabled-tabs";
             delete $window.sessionStorage.patient_id;
@@ -163,6 +163,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         };
 
         $scope.addressLocalGovtAreaByStates = function (state, flag) {
+            console.log("i m here")
             $scope.disabledDropdown = true;
             if (state != null) {
                 GetLocalGovermentArea.get({token: $window.sessionStorage.token, state_id: state.id == undefined ? state : state.id}, LGASuccess, LGAFailed);
@@ -174,7 +175,6 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                         angular.copy(res.data, $scope.patientInfolocalGovtArea);
                         angular.copy(res.data, $scope.addresslocalGovtArea);
                         $.each(res.data, function(key, value) {
-                            console.log('oiumki');
                           $('#autoship_option2').append($("<option></option>").attr("value",value.id).text(value.name));
                         });
                         $scope.disabledDropdown = false;
@@ -216,8 +216,8 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
         // Next of Kin
         $scope.nextOfKinStateByCountry = function (kin) {
-            if (kin != "null") {
-                States.get({token: $window.sessionStorage.token, country_id: kin}, nextOfKinStateSuccess, nextOfKinStateFailed);
+            if (kin != "null") { 
+                States.get({token: $window.sessionStorage.token, country_id: kin.id == undefined ? kin : kin.id}, nextOfKinStateSuccess, nextOfKinStateFailed);
             } else {
                 $scope.PI.kin_state = "null";
                 $scope.nextOfKinStates = [];
@@ -225,6 +225,8 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 $scope.nextOfKinCities = [];
             }
             function nextOfKinStateSuccess(res) {
+                console.log(res);
+                console.log("muttahir")
                 if (res.status == true && res.data.length > 0) {
                     angular.copy(res.data, $scope.nextOfKinStates);
                 }/*else{
@@ -667,7 +669,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 $scope.birthdate = new Date(splitDate[0], splitDate[1], splitDate[2]);
                 var ageDifMs = Date.now() - $scope.birthdate.getTime();
                 var ageDate = new Date(ageDifMs); // miliseconds from epoch
-                $scope.PI.age = Math.abs(ageDate.getUTCFullYear() - 1970);
+                $scope.PI.age = Math.abs(ageDate.getUTCFullYear() - 1970)+" year";
             }else{
                 birthday=birthday.split("-"); 
                 var dobMonth= birthday[1]; 
@@ -690,11 +692,15 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                   agemonth--;
                   ageday = 30 + ageday;
                 }
-                if(agemonth > 0)
+                if(agemonth > 0){
                     $scope.PI.age = agemonth + " month" + (agemonth > 1 ? 's ' : ' ') + ageday + " day" + (ageday > 1 ? 's' : '');
-                else
+                    console.log("here")
+                    }
+                    
+                else{
                     $scope.PI.age = ageday + " day" + (ageday > 1 ? 's' : '');
-                //var val = ageyear + "-" + agemonth + "-" + ageday;
+                    console.log("here2")
+                    }
                 console.log($scope.PI.age);
             }
             /*var splitDate = birthday.split('-');
@@ -901,7 +907,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     setTimeout(function () {
                         $('#autoship_optionKinRelation').val(res.data.patient_kin.relationship);
                         $('#autoship_optionKinState').val(res.data.patient_kin.state);
-                        $('#autoship_optionKinCountry').val(/*res.data.patient_kin.kin_country*/1);
+                        $('#autoship_optionKinCountry').val(1);
                         console.log($('#autoship_optionKinCountry').val(),'countryval');
                     },2000);
                 }
@@ -1407,6 +1413,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 $scope.dataToBeAdded.insurance_id = $scope.MI.insurance_id == undefined ? '' : $scope.MI.insurance_id
                 $scope.dataToBeAdded.dependents = depedants_values_new
                 $scope.dataToBeAdded.description = $scope.MI.description == undefined ? '' : $scope.MI.description
+                console.log($scope.dataToBeAdded);
                 $('#nhis').modal('hide');
                 $('#nhisUpdate').modal('hide');
                 if($routeParams.patientID == undefined){
@@ -1471,7 +1478,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 }
                 
                 $scope.dataToBeAdded.hmoName = $('.getHMOName option:selected').text();
-                $scope.dataToBeAdded.policiesName = $('.getPoliciesName option:selected').text();
+                $scope.dataToBeAdded.policiesName = $scope.dataToBeAdded.policies;
                 console.log($scope.dataToBeAdded);
             }
         }
@@ -1697,6 +1704,24 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 }
                 console.log($scope.dataToBeAdded);
                 PatienPlanSaveData.save($scope.dataToBeAdded, PlanDataSuccess, PlanDataFailure)
+            }else if ($scope.PP.checkoutpatient == 4)
+            {
+                $scope.dataToBeAdded.retainership = '';
+                $scope.dataToBeAdded.category = '';
+                $scope.dataToBeAdded.notes = '';
+                $scope.dataToBeAdded.hmo = '';
+                $scope.dataToBeAdded.policies = '';
+                $scope.dataToBeAdded.is_principal = '';
+                $scope.dataToBeAdded.is_dependant = '';
+                $scope.dataToBeAdded.principal_patient_id = '';
+                $scope.dataToBeAdded.relationship = '';
+                $scope.dataToBeAdded.dependents = [{}];
+                $rootScope.loader = 'show';
+                if($routeParams.patientID != undefined){
+                    $scope.dataToBeAdded.patient_plan_id = 4;
+                }
+                console.log($scope.dataToBeAdded);
+                PatienPlanSaveData.save($scope.dataToBeAdded, PlanDataSuccess, PlanDataFailure)
             }
             else if ($scope.PP.checkoutpatient == 2)
             {
@@ -1785,4 +1810,28 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
             }
         }
+//        States.get({token: $window.sessionStorage.token, country_id: country}, stateSuccess, stateFailed);
+         States.get({token: $window.sessionStorage.token, country_id: ""}, stateDirectSuccess, stateDirectFailed);
+            function stateDirectSuccess(res){
+                $scope.IndependentStates = res.data;
+            }
+            function stateDirectFailed(res){
+                console.log("failure")
+            }
+            
+            
+            
+            GetLocalGovermentArea.get({token: $window.sessionStorage.token, state_id: 0}, LGASuccessIndep, LGAFailedIndep); 
+                function LGASuccessIndep(res) {
+                    if (res.status == true && res.data.length > 0) {
+                        $scope.patientInfolocalGovtAreaIndependent = res.data
+                    }
+                }
+                function LGAFailedIndep(error) {
+                    $scope.disabledDropdown = false;
+                    $('#internetError').modal('show');
+                }
+            
+        
+            
     }]);

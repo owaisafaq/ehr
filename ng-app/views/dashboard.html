@@ -58,7 +58,7 @@
                                     <img class="pull-left" src="assets/img/dashboard/icon-6.png" />
                                     <div class="details">
                                         <span class="textstyle-1 pull-left">laboratory</span>
-                                        <span class="textstyle-2 pull-left">{{counts.appointments_count}}</span>
+                                        <span class="textstyle-2 pull-left">{{counts.laboratory_count}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -129,12 +129,12 @@
                 <div class="card">
                     <div class="card-head">
                         <h2 class="pull-left bold-text textstyle-4">Today’s Appointments</h2>
-                        <label class="pull-right textstyle-4">21 September 2016</label>
+                        <label class="pull-right textstyle-4">{{date}}</label>
                     </div>
                     <div class="card-body">
                         <form class="custom-form">
                             <div class="scroll-container">
-                                <table class="table table-striped no-margin table-custom">
+                                <table class="table table-striped no-margin table-custom" ng-show="appointments.length > 0">
                                     <thead>
                                         <tr>
                                             <th>patient id</th>
@@ -144,77 +144,27 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
+                                        <tr ng-repeat="a in appointments">
+                                            <td>{{a.patient_id}}</td>
+                                            <td>{{a.first_name}} {{a.middle_name}} {{a.last_name}}</td>
+                                            <td>{{a.start_time}}</td>
+                                            <td>{{a.doctor}}</td>
                                         </tr>
-                                        <tr>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                        </tr>
-                                        <tr>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                        </tr>
-                                        <tr>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                        </tr>
-                                        <tr>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                        </tr>
-                                        <tr>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                        </tr>
-                                       <!--  <tr>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                        </tr>
-                                        <tr>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                        </tr><tr>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                        </tr> -->
-
-
                                     </tbody>
                                 </table>
+                                <p ng-hide="appointments.length > 0">No Appointments</p>
                             </div>
-                            <div class="pagination pagination-centered pagination-dash pull-right margin-right-20">
+                            <div class="pagination pagination-centered pagination-dash pull-right margin-right-20" ng-show="appointmentCount">
                                 <ul class="pagination-controle pagination">
                                     <li class="prev-page">
-                                        <!--<button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>-->
                                         <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage = curPage - 1;
                                                 paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
                                     </li>                            
                                     <li>
-                                        <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberPharmacy" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>4</span>
+                                        <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberPharmacy" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
                                     </li>
                                     <li class="next-page">
-                                        <!--<button type="button" class="btn btn-primary" ng-disabled="curPage >= patientCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>-->
-                                        <button type="button" class="btn btn-primary" ng-disabled="curPage >= pharmacyCount / pageSize - 1" ng-click="curPage = curPage + 1;
+                                        <button type="button" class="btn btn-primary" ng-disabled="curPage >= appointmentCount / pageSize - 1" ng-click="curPage = curPage + 1;
                                                 paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
                                     </li>
                                 </ul>
@@ -229,12 +179,12 @@
                 <div class="card">
                     <div class="card-head">
                         <h2 class="pull-left bold-text textstyle-4">Today’s encounters</h2>
-                        <label class="pull-right textstyle-4">21 September 2016</label>
+                        <label class="pull-right textstyle-4">{{date}}</label>
                     </div>
                     <div class="card-body">
                         <form class="custom-form">
                             <div class="scroll-container">
-                                <table class="table table-striped no-margin table-custom">
+                                <table class="table table-striped no-margin table-custom" ng-show="EncounterCount > 0">
                                     <thead>
                                         <tr>
                                             <th>patient id</th>
@@ -244,78 +194,28 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
+                                        <tr ng-repeat="e in encounters">
+                                            <td>{{e.id}}</td>
+                                            <td>{{e.first_name}} {{e.middle_name}} {{e.last_name}}</td>
+                                            <td>{{e.created_at}}</td>
+                                            <td>{{e.name}}</td>
                                         </tr>
-                                        <tr>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                        </tr>
-                                        <tr>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                        </tr>
-                                        <tr>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                        </tr>
-                                        <tr>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                        </tr>
-                                        <tr>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                        </tr>
-                                        <!-- <tr>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                        </tr>
-                                        <tr>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                        </tr><tr>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                            <td>sample text</td>
-                                        </tr> -->
-
-
                                     </tbody>
                                 </table>
+                                <p ng-hide="EncounterCount > 0">No Encounters</p>
                             </div>
-                            <div class="pagination pagination-centered pagination-dash pull-right margin-right-20">
+                            <div class="pagination pagination-centered pagination-dash pull-right margin-right-20" ng-show="EncounterCount">
                                 <ul class="pagination-controle pagination">
                                     <li class="prev-page">
-                                        <!--<button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>-->
-                                        <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage = curPage - 1;
-                                                paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
+                                        <button type="button" class="btn btn-primary" ng-disabled="EcurPage == 0" ng-click="EcurPage = EcurPage - 1;
+                                                paginationPrev(pageSize, EcurPage);"><i class="fa fa-caret-left"></i></button>
                                     </li>                            
                                     <li>
-                                        <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberPharmacy" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>4</span>
+                                        <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberPharmacy" numbers-only value="{{EcurPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ enumberOfPages() }}</span>
                                     </li>
                                     <li class="next-page">
-                                        <!--<button type="button" class="btn btn-primary" ng-disabled="curPage >= patientCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>-->
-                                        <button type="button" class="btn btn-primary" ng-disabled="curPage >= pharmacyCount / pageSize - 1" ng-click="curPage = curPage + 1;
-                                                paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
+                                        <button type="button" class="btn btn-primary" ng-disabled="EcurPage >= pharmacyCount / pageSize - 1" ng-click="EcurPage = EcurPage + 1;
+                                                paginationNext(pageSize, EcurPage);"><i class="fa fa-caret-right"></i></button>
                                     </li>
                                 </ul>
                             </div>
@@ -329,23 +229,23 @@
             <div class="card">      
                 <div class="card-body text-center">      
                     <div class="all-content">
-                        <h3 class="dash-text text-color1 margin-0">1254</h3>
+                        <h3 class="dash-text text-color1 margin-0">{{counts.patients_admitted_count}}</h3>
                         <div class="details">
                             <span class="textstyle-5 margin-top-10">Total Visits</span>
-                            <span class="textstyle-6">september</span>
+                            <span class="textstyle-6">{{month}}</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-            <div class="col-lg-4">
+        <div class="col-lg-4">
             <div class="card">      
                 <div class="card-body text-center">      
                     <div class="all-content">
-                        <h3 class="dash-text text-color2 margin-0">1254</h3>
+                        <h3 class="dash-text text-color2 margin-0">{{counts.patients_prescription_count}}</h3>
                         <div class="details">
                             <span class="textstyle-5 margin-top-10">Total Prescriptions</span>
-                            <span class="textstyle-6">september</span>
+                            <span class="textstyle-6">{{month}}</span>
                         </div>
                     </div>
                 </div>
@@ -355,10 +255,10 @@
             <div class="card">      
                 <div class="card-body text-center">      
                     <div class="all-content">
-                        <h3 class="dash-text text-color3 margin-0">1254</h3>
+                        <h3 class="dash-text text-color3 margin-0">{{counts.patients_admitted_count}}</h3>
                         <div class="details">
                             <span class="textstyle-5 margin-top-10">Total Admissions</span>
-                            <span class="textstyle-6">september</span>
+                            <span class="textstyle-6">{{month}}</span>
                         </div>
                     </div>
                 </div>

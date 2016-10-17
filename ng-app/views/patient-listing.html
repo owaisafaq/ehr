@@ -8,11 +8,11 @@
                 </div> -->
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
-                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.first_name}}</span>
+                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.first_name}}{{displayInfo.last_name}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Number</label>
-                    <span class="txt-style-2 col-lg-12">PA-{{displayInfo.patient_id}}</span>
+                    <span class="txt-style-2 col-lg-12">P-{{displayInfo.patient_id}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Age</label>
@@ -30,9 +30,9 @@
                     <a href="#/billing/{{patientID}}" class="button-style-2">
                         <img src="assets/img/content_icn_blue.png" />
                     </a>
-                    <a href="javascript:;" class="button-style-2">
+                    <!-- <a href="javascript:;" class="button-style-2">
                         <img src="assets/img/assign_blue.png" />
-                    </a>
+                    </a> -->
                     <a href="javascript:;" class="button-style-2" ng-hide="ifEncounterID" data-target="#simpleModal1" data-toggle="modal" class="button-style-2">
                         <img src="assets/img/discharge_icn_blue.png" />
                     </a>                             
@@ -71,8 +71,8 @@
                     <a class="add button-custom" href=""></a>
                 </div>
                 <!-- <button class="add button-custom pull-right" ng-click="addPatientButton();">Add</button> -->
-                <button class="edit button-custom pull-right" ng-disabled="hideOptions" ng-click="updatePatientButton();">Update</button>
-                <button class="delete button-custom pull-right" data-toggle="modal" data-target="#deleteModal" ng-disabled="hideOptions">Delete</button>
+                <button class="edit button-custom pull-right" ng-hide="hideOptions" ng-click="updatePatientButton();">Update</button>
+                <button class="delete button-custom pull-right" data-toggle="modal" data-target="#deleteModal" ng-hide="hideOptions">Delete</button>
                 <div>
                 <div class="col-lg-2">
                     <select ng-model="pageSize" class="form-control" ng-change="selectBoxValue(pageSize);" placeholder="Number of Record">
@@ -107,7 +107,7 @@
                                         </label>
                                     </div>
                                 </td>
-                                <td><a class="blue" href="#/patient-summary-demographics/{{patientList.id}}">PA-{{patientList.id}}</a></td>
+                                <td><a class="blue" href="#/patient-summary-demographics/{{patientList.id}}">P-{{patientList.id}}</a></td>
                                 <td>{{patientList.first_name}}</td>
                                 <td>{{patientList.last_name}}</td>
                                 <td>{{patientList.date_of_birth}}</td>
@@ -168,7 +168,7 @@
 
                         <div class="row">
                             <label class="col-lg-6">Patient ID</label>
-                            <span class="col-lg-6">PA-{{patientID}}</span>
+                            <span class="col-lg-6">P-{{patientID}}</span>
                         </div>
 
                         <label class="col-lg-6">Date of Birth</label>

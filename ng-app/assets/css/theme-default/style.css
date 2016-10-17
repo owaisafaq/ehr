@@ -689,6 +689,12 @@ Table Styling
 .update[disabled]{
     opacity: 0.5;
 }
+.send{
+    background: url(../..//img/send.png) no-repeat top center;
+}
+.process{
+    background: url(../..//img/process.png) no-repeat top center;
+}
 .edit{
     background: url(../..//img/edit_icn.png) no-repeat top center;
 }
@@ -1062,11 +1068,11 @@ Side PopUp
 Accordian
 */
 .custom-accordian .card-head{
-    background: #003d51;
+    background: #464c61;
     color: #fff;
 }
 .card .btn-icon-toggle:hover, .card .btn-flat:hover{
-    background: #516e81;
+    background: #5c637d;
 }
 .custom-accordian .card-head.card-head-sm header{
     float: left;
@@ -1078,7 +1084,7 @@ Accordian
     height: 25px;
 }
 .custom-accordian .card-head .tools .btn-icon-toggle i{
-    line-height: 25px;
+    line-height: 24px;
 }
 .custom-accordian_2{
     margin-top: 40px;
@@ -1149,6 +1155,9 @@ new-encounter-clinical-documentation
     float: left;
     width: calc(100% / 4);
     margin-top: 18px;
+}
+.ulli li{
+    color: #005b9a;
 }
 .ulli li:nth-child(-n+4){
     margin-top: 0px;    
@@ -2581,7 +2590,7 @@ table.setting_table_cat > tbody > tr > td:nth-child(2) span{float:left;}
 .setting_box span:nth-child(2){float:right;font-size:20px;line-height:27px;}
 .settings_cont{margin-bottom: 50px;margin-top: 15px;}
 .settings_cont .setting_box:nth-of-type(1){margin-top:25px;}
-.billing{background-color:#c7d8eb;padding:26px 0 !important;height: 102px !important;padding-left:80px !important;}
+.billing{background-color:#c7d8eb;padding:8px 0 !important;height: 65px !important;padding-left:80px !important;}
 .billing .button-style-2{background-color:#FFF;}
 .billing .txt-style-2{font-size:20px}
 .tabs_sec{margin-top:36px;}
@@ -2931,6 +2940,12 @@ form .progress {
     }
     #stripOptions{
         display: none;
+    }
+    .print_invoice{
+        padding: 0;
+        width: 720px;
+        margin-left: -90px;
+        margin-top: -80px;
     }
 }
 
@@ -3405,10 +3420,15 @@ Pagination
     margin-top: 30px;
     display: table;
     padding: 0 15px;
+    text-align: center;
 }
 .sign-in-images img{
-    width: calc(100% / 4 - 10px);
+    width: calc(100% / 3 - 10px);
     margin-right: 10px;
+}
+.sign-in-images img:last-child{
+    margin-right: 0;
+    width: 70px;
 }
 .immunization-accordian li .delete-icon{
     position: absolute;
@@ -3639,6 +3659,7 @@ Pagination
 }
 .scroll-container{
     max-height: 250px;
+    min-height: 250px;
 }
 .dash-table-con .card-head,.dash-table-con .mCSB_container{
     padding: 0 20px !important;
@@ -3696,7 +3717,7 @@ Pagination
 .chosen-container, .chosen-container-single{
     display: none!important;
 }
-.chosen-styling .select2-container-multi .select2-choices .select2-search-choice{
+ .chosen-styling .select2-container-multi .select2-choices .select2-search-choice{
     background: #e9ecf4;
     border:1px solid #e9ecf4;
     color: #8491ae;
@@ -3719,7 +3740,9 @@ Pagination
     background: #e9ecf4 !important;
 }
 .chosen-styling .select2-container-multi .select2-choices .select2-search-field input{
-    width: 100px !important;
+    width: 140px !important;
+    border: 1px solid #e8ebed;
+    padding-left: 10px;
 }
 .card-head-custom .txt-style-2{
     font-size: 14px;
@@ -3735,4 +3758,27 @@ Pagination
 }
 .select2-container-disabled .select2-choice {
     border:none !important;
+}
+select#autoship_option.ng-hide,select#autoship_option2.ng-hide,select#autoship_option3.ng-hide,#autoship_optionKinRelation.ng-hide,#autoship_optionKinCountry.ng-hide, #autoship_optionKinState.ng-hide, #autoship_optionEmployeCountry.ng-hide, #autoship_optionEmployeState.ng-hide{
+    display: none!important;
+}
+#autoship_option, #autoship_option2, #autoship_option3,#autoship_optionKinRelation, #autoship_optionKinCountry,#autoship_optionKinState,#autoship_optionEmployeCountry,#autoship_optionEmployeState{
+   display: block!important;
+}
+.chosen-styling #autoship_option{
+    display: none !important;
+}
+.modal-graybar span{
+    float: left;
+    margin-right: 15px;
+}
+.modal-graybar span.txt-style-4{
+    width: 120px;
+}
+.modal-graybar span:last-child{
+    width: 60px;
+}
+.no-res-found{
+ color: #8491ae;
+ font-size: 15px;
 }
