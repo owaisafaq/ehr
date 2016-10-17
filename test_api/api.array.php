@@ -3,8 +3,8 @@
 require 'api.class.php';
 //define('HOST', 'http://131.107.100.10/ehr/public/api/');
 //define('HOST', 'http://localhost/ehr/public/api/');
-//define('HOST', 'http://demoz.online/ehr/public/api/');
-define('HOST', 'http://demoz.online/dev/ehr/public/api/');
+define('HOST', 'http://demoz.online/ehr/public/api/');
+//define('HOST', 'http://demoz.online/dev/ehr/public/api/');
 define('APP', '');
 define('ROUTE', '');
 
@@ -1864,6 +1864,19 @@ $api->method = "GET";
 $api->params->token = "123435";
 
 
+//Add Invoice to Bills
+$api = new api();
+$api->name = "Add Invoice to Bills";
+$api->url = HOST . 'add_invoice_to_bills';
+$api->method = "POST";
+$api->params->bill_id = "1";
+$api->params->patient_id = "1";
+$api->params->product_id = "1";
+$api->params->quantity = "";
+$api->params->service_id = "";
+$api->params->token = "123435";
+
+
 $api_arr [] = $api;
 //Get All Invoices
 $api = new api();
@@ -2555,11 +2568,48 @@ $api->params->token = "123435";
 
 $api_arr [] = $api;
 
+
+//Update Billing Category
+$api = new api();
+$api->name = "Update Billing Category";
+$api->url = HOST . 'update_billing_category';
+$api->method = "POST";
+$api->params->category_id = "1";
+$api->params->name = "";
+$api->params->description = "";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+//Delete Billing Category
+$api = new api();
+$api->name = "Delete Billing Category";
+$api->url = HOST . 'delete_billing_category';
+$api->method = "POST";
+$api->params->category_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
 //Get Billing Category
 $api = new api();
 $api->name = "Get Billing Category";
 $api->url = HOST . 'get_billing_category';
 $api->method = "GET";
+$api->params->offset = "0";
+$api->params->limit = "10";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Get Single Billing Category
+$api = new api();
+$api->name = "Get Single Billing Category";
+$api->url = HOST . 'get_single_billing_category';
+$api->method = "GET";
+$api->params->category_id = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
@@ -2583,6 +2633,8 @@ $api = new api();
 $api->name = "Get All Billing Codes";
 $api->url = HOST . 'get_all_billing_codes';
 $api->method = "GET";
+$api->params->offset = "0";
+$api->params->limit = "10";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
@@ -3043,3 +3095,76 @@ $api->params->limit = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
+
+
+//Add Lab
+$api = new api();
+$api->name = "Add Lab";
+$api->url = HOST . 'add_lab';
+$api->method = "POST";
+$api->params->name = "";
+$api->params->code = "";
+$api->params->description = "";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+//Get Labs
+$api = new api();
+$api->name = "Get Labs";
+$api->url = HOST . 'get_labs';
+$api->method = "GET";
+$api->params->offset = "1";
+$api->params->limit = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+//Get Lab
+$api = new api();
+$api->name = "Get Lab";
+$api->url = HOST . 'get_lab';
+$api->method = "GET";
+$api->params->lab_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+//Update Lab
+$api = new api();
+$api->name = "Update Lab";
+$api->url = HOST . 'update_lab';
+$api->method = "POST";
+$api->params->lab_id = "1";
+$api->params->name = "";
+$api->params->code = "";
+$api->params->description = "";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+//Delete Lab
+$api = new api();
+$api->name = "Delete Lab";
+$api->url = HOST . 'delete_lab';
+$api->method = "POST";
+$api->params->lab_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+//Dispense Medication
+$api = new api();
+$api->name = "Dispense Medication";
+$api->url = HOST . 'dispense_medication';
+$api->method = "POST";
+$api->params->prescribe_medication_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
