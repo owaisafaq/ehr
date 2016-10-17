@@ -56,7 +56,7 @@
                                     <button type="button" class="delete button-custom pull-right" ng-show="removePrescription" data-toggle="modal" data-target="#confirmation">remove medication</button>
                                     <button type="button" ng-click="updateDispense()" class="update button-custom pull-right">update medication</button>
                                     <button data-toggle="modal" data-target="#addmedication" class="add button-custom pull-right">add medication</button>
-                                    <button type="button" class="dispense_pharmacy button-custom pull-right">dispense pharmacy</button>
+                                    <button type="button" class="dispense_pharmacy button-custom pull-right" ng-hide="dispensePharmacyButton" ng-click="despensePharmacyFUn();">dispense pharmacy</button>
                                 </div>
                                 <table class="table table-striped no-margin table-custom table-custom_big editable_table">
                                     <thead>
@@ -89,7 +89,7 @@
                                             <td><input type="text" ng-keyup="calculateBalance(PrescriptionView.dispense, PrescriptionView.total_dispensed, $index)" ng-model="PrescriptionView.total_dispensed" ng-init="PrescriptionView.total_dispensed = PrescriptionView.total_amount" disabled class="editDispensed" /></td>
                                             <td>{{PrescriptionView.due}}</td>
                                             <td><span ng-if="PrescriptionView.total_dispensed != undefined && PrescriptionView.total_dispensed != ''">N{{PrescriptionView.cost * PrescriptionView.total_dispensed}}</span></td>
-                                            <td>{{PrescriptionView.prescription_status}}</td>
+                                            <td>{{PrescriptionView.medication_status}}</td>
                                         </tr>
                                     </tbody>
                                 </table>

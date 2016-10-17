@@ -2859,7 +2859,22 @@ AppEHR.factory("GetTodayEncounters", function ($resource) {
 AppEHR.factory("AddToBill", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'add_invoice_to_bills', params, {
-            save: {method: 'GET'}
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("DespensePharmacy", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_invoice_to_bills', params, {
+            save: {method: 'POST'}
         });
         return res2;
     }
