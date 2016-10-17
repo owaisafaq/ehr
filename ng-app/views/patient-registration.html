@@ -1009,7 +1009,7 @@
                                     </div>
                                 </div>
                                 <!-- </a> -->
-                                <div ng-if="archive.file.slice(-3) == 'jpg' || archive.file.slice(-3) == 'peg' || archive.file.slice(-3) == 'png'">
+                                <div ng-if="archive.file.slice(-3) == 'jpg' || archive.file.slice(-3) == 'jpeg' || archive.file.slice(-3) == 'png'">
                                     <div class="file_preview">
                                         <img src="{{archive.file}}" />
                                     </div>
@@ -1021,9 +1021,9 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                             <button type="button" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-click="saveArchiveButton();" >Save</button>
+                            </div>                            
                         </div>
+                        <button type="button" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-click="saveArchiveButton();" ng-show="foldersArchive.length != 0 || archives.length != 0" >Save</button>
                     </div>
                 </div>
             </div><!--end .card-body -->
