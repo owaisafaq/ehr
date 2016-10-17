@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Number</label>
-                    <span class="txt-style-2 col-lg-12">P-{{PI.patient_id}}</span>
+                    <span class="txt-style-2 col-lg-12">P{{PI.patient_id}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Age</label>
@@ -177,7 +177,7 @@
                                         <label>patient id</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <label class="txt-style-4">P-{{PI.patient_id}}</label>
+                                        <label class="txt-style-4">P{{PI.patient_id}}</label>
                                     </div>
 
                                     <div class="col-lg-3">
@@ -946,8 +946,9 @@
             <div class="modal-header pop_head">
                 <h2>Add Allergies</h2>
             </div>
+            <form class="custom-form" novalidate ng-submit="addAllergy(allergie)">
             <div class="modal-body">
-                <form class="custom-form" novalidate ng-submit="addAllergy(allergie)">
+                
                     <!--<div class="row">-->
                     <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
@@ -967,7 +968,7 @@
                         <div class="col-lg-4">
                             <input ng-model="allergie.allergy" type="text" placeholder="" name="" required/>
                         </div>
-</div>
+                    </div>
                     <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Severity</label>
@@ -991,7 +992,7 @@
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                             </div>
                         </div>
-</div>
+                    </div>
                      <div class="row margin-bottom-xxl">
 
                         <div class="col-lg-3">
@@ -1014,13 +1015,14 @@
                      </div>
                     <!--</div>-->
                     
-                </form>
+                
 
             </div>
             <div class="modal-footer">
-                        <button type="submit" class="btn btn-default button-style-1">Add</button>
-                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
-                    </div>
+                <button type="submit" class="btn btn-default button-style-1">Add</button>
+                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+            </div>
+            </form>
 
         </div><!-- /.modal-content -->
 

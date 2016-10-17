@@ -2856,6 +2856,36 @@ AppEHR.factory("GetTodayEncounters", function ($resource) {
     };
     return patientRegistrationEmployer;
 });
+AppEHR.factory("AddToBill", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_invoice_to_bills', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("DespensePharmacy", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'dispense_medication', params, {
+            save: {method: 'GET'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
 AppEHR.factory("GetAllTaxRates", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'list_tax_rates', params, {

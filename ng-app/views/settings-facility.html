@@ -4,7 +4,7 @@
             <div class="card-head">
                 <ul class="nav nav-tabs nav-justified custom-tab" data-toggle="tabs">
                     <li><a showtab href="#facilities-profile">Facilities Profile</a></li>
-                    <li><a showtab href="#room-location">Room & Locations</a></li>
+                    <!--<li><a showtab href="#room-location">Room & Locations</a></li>-->
                     <li class="active"><a showtab href="#spec-depart">Specialities & Departments</a></li>
                 </ul>
             </div>
@@ -197,9 +197,9 @@
 
                 </div>
                 
-                <div class="tab-pane" id="room-location">
-                    <!--<div class="card">-->
-                        <!--<div class="card-body">-->
+<!--                <div class="tab-pane" id="room-location">
+                    <div class="card">
+                        <div class="card-body">
                   <div class="table-header row background-none inv_header">
                       <h2 class="heading-style pull-left margin-top-30">Rooms & Location</h2>
                         <div class="pull-right">
@@ -244,27 +244,27 @@
 
                             </tbody>
                         </table>
-                        <!--muzammil do you code here-->
+                        muzammil do you code here
                         <div class="pagination pagination-centered pull-right" ng-show="pharmacyCount">
                         <ul class="pagination-controle pagination">
                             <li class="prev-page">
-                                <!--<button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>-->
+                                <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
                                 <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage = curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
                             </li>                            
                             <li>
                                 <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberPharmacy" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
                             </li>
                              <li class="next-page">
-                              <!--<button type="button" class="btn btn-primary" ng-disabled="curPage >= patientCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>-->
+                              <button type="button" class="btn btn-primary" ng-disabled="curPage >= patientCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
                               <button type="button" class="btn btn-primary" ng-disabled="curPage >= pharmacyCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
                             </li>
                         </ul>
                     </div>
                       
                     </form>
-<!--</div>-->
-                    <!--</div>-->
-                </div>
+</div>
+                    </div>
+                </div>-->
                 
                 
                   <div class="tab-pane active" id="spec-depart">

@@ -1,0 +1,130 @@
+<div id="content">
+    <section>
+        <div class="card">
+            <div class="card-body col-lg-12 custom-card-body">
+                <!--<div class="tab-pane active" id="template">-->                    
+                    <div class="table-header row background-none">
+                        <div class="row">
+                            <div class="pull-right">  
+                            <button class="add button-custom" data-toggle="modal" data-target="#newrole">New Role</button>
+                        </div>
+                        <div class="col-lg-2">
+                            <select class="form-control">
+                                <option>Search User</option>
+                                <option>Cheque</option>
+                                <option>type 3</option>
+                            </select>
+                        </div>
+                            </div>
+                    </div>
+                    <form class="custom-form">
+
+
+                        <table class="table table-striped no-margin table-custom table-custom_big setting_table">
+                            <thead>
+                                <tr>
+                                    <th>Group Id</th>
+                                    <th>Role Group</th>
+                                    <th>Total No</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>000011</td>
+                                    <td>Doctors</td>
+                                    <td>100</td>
+                                    <td>
+                                        <div class="billing_actions"><a href="javascript:;" class="setting-button"></a>
+                                            <div class="tool-tip_popup">
+                                                <a href="javascript:;">Edit</a>
+                                                <a href="javascript:;">Delete</a>     
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                   <td>000011</td>
+                                    <td>Doctors</td>
+                                    <td>100</td>
+                                    <td>
+                                        <div class="billing_actions"><a href="javascript:;" class="setting-button"></a>
+                                            <div class="tool-tip_popup">
+                                                <a href="javascript:;">Edit</a>
+                                                <a href="javascript:;">Delete</a>    
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                   <td>000011</td>
+                                    <td>Doctors</td>
+                                    <td>100</td>
+                                    <td>
+                                        <div class="billing_actions"><a href="javascript:;" class="setting-button"></a>
+                                            <div class="tool-tip_popup">
+                                                <a href="javascript:;">Edit</a>
+                                                <a href="javascript:;">Delete</a>  
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                <!--</div>-->                
+
+            </div><!--end .card-body -->
+        </div><!--end .card -->
+    </section>
+</div>
+<div class="modal fade modal-size_2" id="newrole" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Add Role Group</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form">
+                    <!--<div class="row">-->                       
+                    <div class="row margin-bottom-xxl">
+                    <div class="col-lg-3">
+                            <label>Role Group Name</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="text" placeholder="" name="" required/>
+                        </div>
+</div>
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label>Right & Context</label>
+                        </div>
+                        <div class="col-lg-8 add-multiple-con_select2">
+                            <select class="form-control add-multiple">
+                                <option>Search Context</option>
+                                <option>Cheque</option>
+                                <option>type 3</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-1">
+                             <span class="plus add-role"><i class="md-add"></i></span>
+                        </div>
+                    </div>
+                    <div class="rights_list">
+                    </div>
+                    <div class="modal-footer row">
+                        <button type="button" class="btn btn-default button-style-1">Add</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div><!-- /.modal-content -->
+
+
+    </div><!-- /.modal-dialog -->
+
+</div><!-- /.modal -->
+

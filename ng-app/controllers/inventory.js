@@ -125,7 +125,6 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 
 // Add Supplier
 	$scope.AddSupplier1 = function (supplier) {
-alert();
 		if (angular.equals({}, category) == false) {
 			$scope.hideLoader = 'show';
 			//$scope.updateEncounterBtn = true;

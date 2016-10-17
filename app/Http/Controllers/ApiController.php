@@ -2260,6 +2260,7 @@ class ApiController extends Controller
 
         if ($limit > 0 || $offset > 0) {
 
+
             $visits = DB::table('visits')
                 ->select(DB::raw('patient_clinical_notes.id as clinical_notes_id, visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name,visits.reason_of_visit'))
                 ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
@@ -3460,7 +3461,7 @@ class ApiController extends Controller
         $prescription_id = $request->input('precription_id');
         $prescriptions = DB::table('patient_prescription')
             ->leftJoin('patient_prescription_medicine', 'patient_prescription_medicine.prescription_id', '=', 'patient_prescription.id')
-            ->select(DB::raw('*,patient_prescription_medicine.id as prescribe_medication_id'))
+            ->select(DB::raw('*,patient_prescription_medicine.id as prescribe_medication_id,medication_status'))
             ->where('patient_prescription.id', $prescription_id)
             ->where('patient_prescription.status', 1)
             ->where('patient_prescription_medicine.status', 1)
@@ -3484,6 +3485,22 @@ class ApiController extends Controller
             ->first();
 
         return response()->json(['status' => true, 'data' => $prescriptions, 'notes' => $notes, 'prescription_data' => $prescription_data]);
+
+
+    }
+
+    public function dispense_medication(Request $request)
+    {
+        $prescribe_medication_id = $request->input('prescribe_medication_id');
+
+        DB::table('patient_prescription_medicine')
+            ->where('id', $prescribe_medication_id)
+            ->update(
+                ['medication_status' => 'dispensed', 'updated_at' => date("Y-m-d  H:i:s")]
+            );
+
+
+        return response()->json(['status' => true, 'message' => 'Medication Dispensed Successfully']);
 
 
     }

@@ -131,6 +131,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
         $scope.EID = encounterID;
         $rootScope.loader = "show";
         $scope.PID = patientID;
+        $scope.createOrderPatientID = patientID;
         GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: patientID}, getEncountersSuccess, getEncountersFailure);
         function getEncountersSuccess(res) {
             if (res.status == true) {
@@ -376,7 +377,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
         $scope.OrderBtn = true; // disabling submit button until request is complete
         addOrder.save({ // sending data over addOrder factory which will create new order
             token: $window.sessionStorage.token,
-            patient_id: $scope.Order.patient_id,
+            patient_id: $scope.createOrderPatientID,//$scope.Order.patient_id,
             lab: $scope.Order.selected_lab,
             lab_test: JSON.stringify($scope.lab_tests),
             clinical_information: '',//$scope.Order.clinical_information,
@@ -586,22 +587,22 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
     }
 
     $scope.createAppointments = function(dataToBeAdded){
-        if($scope.search != undefined && dataToBeAdded.department != undefined && dataToBeAdded.reason != undefined && dataToBeAdded.date != undefined && dataToBeAdded.startTime != undefined && dataToBeAdded.notes != undefined && dataToBeAdded.doctor != undefined && dataToBeAdded.priority != undefined){
+        if(dataToBeAdded.appointmentSearch != undefined && dataToBeAdded.department != undefined && dataToBeAdded.otherReason != undefined && dataToBeAdded.date != undefined && dataToBeAdded.startTime != undefined && dataToBeAdded.doctor != undefined){
         	$scope.disabledButton = "true";
         	$rootScope.loader = "show";
         	AddAppointments.save({
         		token: $window.sessionStorage.token,
-        		patient_id: $scope.search,
+        		patient_id: dataToBeAdded.appointmentSearch,
         		//visit_id: $scope.encounterID,
-        		department: dataToBeAdded.department,
-        		reason: dataToBeAdded.reason,
-        		date: dataToBeAdded.date,
-        		start_time: dataToBeAdded.startTime,
-        		notes: dataToBeAdded.notes,
-        		doctor: dataToBeAdded.doctor,
-        		other_reason: dataToBeAdded.otherReason,
+        		department: dataToBeAdded.department == undefined ? '' : dataToBeAdded.department,
+        		reason: dataToBeAdded.reason == undefined ? '' : dataToBeAdded.reason,
+        		date: dataToBeAdded.date == undefined ? '' : dataToBeAdded.date,
+        		start_time: dataToBeAdded.startTime == undefined ? '' : dataToBeAdded.startTime,
+        		notes: dataToBeAdded.notes == undefined ? '' : dataToBeAdded.notes,
+        		doctor: dataToBeAdded.doctor == undefined ? '' : dataToBeAdded.doctor,
+        		other_reason: dataToBeAdded.otherReason == undefined ? '' : dataToBeAdded.otherReason,
         		//end_time: dataToBeAdded.endTime,
-        		priority: dataToBeAdded.priority
+        		priority: dataToBeAdded.priority == undefined ? '' : dataToBeAdded.priority
         	}, createAppointmentSuccess, createAppointmentFailure);
 
         	function createAppointmentSuccess(res){

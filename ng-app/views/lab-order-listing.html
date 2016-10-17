@@ -64,7 +64,7 @@
                                 </td>
                                 <td>{{ labOrder.id}}</td>
                                 <td>
-                                    <div class="person-detail-box"><span><a class="blue" href="#/patient-summary-demographics/{{labOrder.patient_id}}">P-{{ labOrder.patient_id }}</a></span>
+                                    <div class="person-detail-box"><span><a class="blue" href="#/patient-summary-demographics/{{labOrder.patient_id}}">P{{ labOrder.patient_id }}</a></span>
                                         <div class="bed-info person_info">
                                             <div class="col-lg-12">
                                                 <span class="txt-style-4">Name</span>
@@ -162,7 +162,7 @@
                                             <option ng-repeat="patient in patients" value="{{ patient.id }}">{{ patient.first_name + ' ' + patient.last_name }}</option>
                                         </select>
                                         <input type="text" value="{{prefilledPatientName}}" ng-show="withVisit" disabled="true" ng-value="createOrderPatientID">
-                                        <input type="text" value="{{prefilledPatientName}}" ng-show="withVisit">
+                                        <!-- <input type="text" value="{{prefilledPatientName}}" ng-show="withVisit"> -->
                                         <p class="help-block PIValid" ng-show="submitted && addForm.patient_id.$error.required">Required</p>
                                     </div>
                                         </div>
@@ -399,7 +399,7 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer col-lg-12">
+            <div class="modal-footer col-lg-12 hidden-print">
                 <div class="pull-left">
                     <div class="checkbox checkbox-styled pull-left">
                         <label>

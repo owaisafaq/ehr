@@ -89,9 +89,10 @@
                         <div class="col-lg-2">
                             <select class="form-control" ng-model="search_plan_bill">
                                 <option value=""></option>
-                                <option selected >Self</option>
+                                <option selected >General</option>
                                 <option>NHIS</option>
                                 <option>Retainers</option>
+                                <option>FHSS</option>
                             </select>
                         </div>
                         <!--                        <div class="pull-right">
@@ -129,10 +130,10 @@
                                             </label>
                                         </div>
                                     </td>
-                                    <td>{{Bill.id}}</td>
+                                    <td>B{{Bill.id}}</td>
                                     <td>{{Bill.created_at}}</td>
                                     <td>E{{Bill.encounter_id}}</td>
-                                    <td><a class="blue" href="#/patient-summary-demographics/{{labOrder.patient_id}}">P-{{Bill.patient_id}}</a></td>
+                                    <td><a class="blue" href="#/patient-summary-demographics/{{labOrder.patient_id}}">P{{Bill.patient_id}}</a></td>
                                     <td>{{Bill.first_name}}</td>
                                     <td>{{Bill.purpose}}</td>
                                     <td>{{Bill.name}}</td>
@@ -174,7 +175,7 @@
 
                         <div class="table-header row background-none">
                             <div class="pull-right">
-                                <button class="delete button-custom pull-right" data-toggle="modal" data-target="#addtemplate" ng-click="deletingInvoice(invoice_id)">Delete Invoice</button>
+                                <button class="delete button-custom pull-right" data-toggle="modal" data-target="#deleteConfirm" ng-hide="deleteInvoiceButton">Delete Invoice</button>
                                 <!-- <button class="add button-custom pull-right btn_edit_invoice">Edit Invoice</button>-->
                                 <button class="process button-custom pull-right" data-toggle="modal" ng-click="prcessingPaymentClick(invoice_id)">Process Payment</button>
                                 <button class="print button-custom pull-right" ng-click="PrintInvoice(invoice_id)" >Print Invoice</button>
@@ -1100,8 +1101,9 @@
             <div class="modal-header pop_head">
                 <h2>Add to Bill</h2>
             </div>
+            <form class="custom-form" ng-submit="addToBill(addToBillData)">
             <div class="modal-body">
-                <form class="custom-form">
+                
                     <div class="row margin-bottom-xxl">
                         <div class="radio radio-styled col-lg-6 margin-0">
                             <label>
@@ -1121,7 +1123,7 @@
                             <label>Select Product</label>
                         </div>
                         <div class="col-lg-9 select-con">
-                            <select class="select_searchFields form-control" placeholder="Select Product">
+                            <select class="select_searchFields form-control" placeholder="Select Product" ng-model="addToBillData.product">
                                 <option value=""></option>
                                 <option>2</option>
                                 <option>3</option>
@@ -1131,7 +1133,7 @@
                             <label>Quantity</label>
                         </div>
                         <div class="col-lg-9 margin-top-10">
-                            <input class="form-control" type="number" placeholder="0" />
+                            <input class="form-control" type="number" ng-model="addToBillData.quantity" placeholder="0" />
                         </div>
                     </div>
                     <div class="row" ng-show="product_show == 'service'">
@@ -1139,19 +1141,20 @@
                             <label>Select Service</label>
                         </div>
                         <div class="col-lg-9 select-con">
-                            <select class="select_searchFields form-control" placeholder="Select Service">
+                            <select class="select_searchFields form-control" placeholder="Select Service" ng-model="addToBillData.service">
                                 <option value=""></option>
                                 <option>2</option>
                                 <option>3</option>
                             </select>
                         </div>
                     </div>
-                </form>
+                
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default button-style-1" data-toggle="modal" data-target="#vital-signs" data-dismiss="modal">Ok</button>
+                <button type="submit" class="btn btn-default button-style-1">Ok</button>
                 <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
             </div>
+            </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -1437,5 +1440,36 @@
                 </div>
             </div><!-- /.modal-content -->
         </form>
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade modal-size_1" id="deleteConfirm" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Confirmation</h2>
+            </div>
+            <div class="modal-body">
+                <p class="modal-subtext">Do you want to delete?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" ng-click="deletingInvoice(invoice_id)">Yes</button>
+                <button type="button" class="btn btn-default button-style-1 button-style-1_a" data-dismiss="modal">No</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade modal-size_1" id="successModal" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Status</h2>
+            </div>
+            <div class="modal-body">
+                <p class="modal-subtext">Invoice Deleted Successfully</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">ok</button>
+            </div>
+        </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

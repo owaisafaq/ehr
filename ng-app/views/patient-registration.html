@@ -1009,7 +1009,7 @@
                                     </div>
                                 </div>
                                 <!-- </a> -->
-                                <div ng-if="archive.file.slice(-3) == 'jpg' || archive.file.slice(-3) == 'peg' || archive.file.slice(-3) == 'png'">
+                                <div ng-if="archive.file.slice(-3) == 'jpg' || archive.file.slice(-3) == 'jpeg' || archive.file.slice(-3) == 'png'">
                                     <div class="file_preview">
                                         <img src="{{archive.file}}" />
                                     </div>
@@ -1021,9 +1021,9 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                             <button type="button" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-click="saveArchiveButton();" >Save</button>
+                            </div>                            
                         </div>
+                        <button type="button" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" ng-click="saveArchiveButton();" ng-show="foldersArchive.length != 0 || archives.length != 0" >Save</button>
                     </div>
                 </div>
             </div><!--end .card-body -->
@@ -1063,14 +1063,14 @@
                     <div class="col-lg-3">
                         <label>Speciality</label>
                     </div>
-                    <div class="col-lg-3 select-speciality">
-                        <div class="checkbox checkbox-styled col-lg-6">
+                    <div class="col-lg-3 select-speciality padding-0 margin-top-5">
+                        <div class="radio radio-styled col-lg-6 margin-0">
                             <label>
                                 <input type="radio" name="select_speciality" value="principal" ng-init="MI.select_speciality = 'principal'" ng-checked="true" ng-model="MI.select_speciality">
                                 <span>Principal</span>
                             </label>
                         </div>
-                        <div class="checkbox checkbox-styled col-lg-6">
+                        <div class="radio radio-styled col-lg-6 margin-0">
                             <label>
                                 <input type="radio" name="select_speciality" value="dependant" ng-model="MI.select_speciality">
                                 <span>Dependant</span>
@@ -1085,7 +1085,7 @@
                         <span class="help-block PIValid" ng-show="checkValidate_nhis && form_modal_1.insurance_id.$error.required">Required</span>
                     </div>
                      </div>
-                    <div class="row margin-bottom-xxl">
+                    <div class="row">
                     <div class="show-on-dependant">
                         <div class="col-lg-12">
                             <div class="ajax-dropdown-con col-lg-4">
@@ -1097,7 +1097,7 @@
                         <div class="col-lg-12 dependant_list add_dependant_with_relation"></div>
                     </div>
                     </div>
-                    <div class="row margin-bottom-xxl">
+                    <div class="row">
                     <div class="show-on-principal">
                         <div class="col-lg-12">
                             <div class="ajax-dropdown-con col-lg-4" ng-class="{
@@ -1121,7 +1121,7 @@
                         </div>
                     </div>
                         </div>
-                    <div class="row margin-bottom-xxl">
+                    <div class="row margin-bottom-xxl margin-top-20">
                     <div class="col-lg-12">
                         <label>Description</label>
                     </div>
@@ -1174,14 +1174,14 @@
                     <div class="col-lg-3">
                         <label>Speciality</label>
                     </div>
-                    <div class="col-lg-3 select-speciality">
-                        <div class="checkbox checkbox-styled col-lg-6">
+                    <div class="col-lg-3 select-speciality padding-0 margin-top-5">
+                        <div class="radio radio-styled col-lg-6 margin-0">
                             <label>
                                 <input type="radio" name="select_speciality" value="principal" ng-init="MI.select_speciality = 'principal'" ng-checked="true" ng-model="MI.select_speciality">
                                 <span>Principal</span>
                             </label>
                         </div>
-                        <div class="checkbox checkbox-styled col-lg-6">
+                        <div class="radio radio-styled col-lg-6 margin-0">
                             <label>
                                 <input type="radio" name="select_speciality" value="dependant" ng-model="MI.select_speciality">
                                 <span>Dependant</span>
@@ -1196,7 +1196,7 @@
                         <span class="help-block PIValid" ng-show="checkValidate_nhisUpdate && form_modal_1.insurance_id.$error.required">Required</span>
                     </div>
                     </div>
-                    <div class="row margin-bottom-xxl">
+                    <div class="row">
                     <div class="show-on-dependant">
                         <div class="col-lg-12">
                             <div class="ajax-dropdown-con col-lg-4">
@@ -1208,7 +1208,7 @@
                         <div class="col-lg-12 dependant_list add_dependant_with_relation"></div>
                     </div>
                     </div>
-                    <div class="row margin-bottom-xxl">
+                    <div class="row">
                     <div class="show-on-principal">
                         <div class="col-lg-12">
                             <div class="ajax-dropdown-con col-lg-4" ng-class="{true: 'error'}[checkValidate_nhisUpdate && MI.select_speciality == 'dependant' && do_valid_nhis]">
@@ -1230,7 +1230,7 @@
                         </div>
                     </div>
                     </div>
-                    <div class="row margin-bottom-xxl">
+                    <div class="row margin-bottom-xxl margin-top-20">
                     <div class="col-lg-12">
                         <label>Description</label>
                     </div>
@@ -1286,14 +1286,14 @@
                     <div class="col-lg-3">
                         <label>Speciality</label>
                     </div>
-                    <div class="col-lg-3 select-speciality">
-                        <div class="checkbox checkbox-styled col-lg-6">
+                    <div class="col-lg-3 select-speciality padding-0 margin-top-5">
+                        <div class="radio radio-styled col-lg-6 margin-0">
                             <label>
                                 <input type="radio" name="select_speciality" value="principal" ng-init="RI.select_speciality = 'principal'" ng-checked="true" ng-model="RI.select_speciality">
                                 <span>Principal</span>
                             </label>
                         </div>
-                        <div class="checkbox checkbox-styled col-lg-6">
+                        <div class="radio radio-styled col-lg-6 margin-0">
                             <label>
                                 <input type="radio" name="select_speciality" value="dependant" ng-model="RI.select_speciality">
                                 <span>Dependant</span>
@@ -1301,7 +1301,7 @@
                         </div>
                     </div>
                      </div>
-                     <div class="row margin-bottom-xxl">
+                     <div class="row">
                     <div class="show-on-dependant">
                         <div class="col-lg-12">
                             <div class="ajax-dropdown-con col-lg-4">
@@ -1313,7 +1313,7 @@
                         <div class="col-lg-12 dependant_list add_dependant_with_relation"></div>
                     </div>
                      </div>
-                     <div class="row margin-bottom-xxl">
+                     <div class="row">
                     <div class="show-on-principal">
                         <div class="col-lg-12">
                             <div class="ajax-dropdown-con col-lg-4" ng-class="{
@@ -1339,7 +1339,7 @@
                         </div>
                     </div>
                      </div>
-                     <div class="row margin-bottom-xxl">
+                     <div class="row margin-bottom-xxl margin-top-20">
                     <div class="col-lg-12">
                         <label>Notes</label>
                     </div>
@@ -1397,14 +1397,14 @@
                     <div class="col-lg-3">
                         <label>Speciality</label>
                     </div>
-                    <div class="col-lg-3 select-speciality">
-                        <div class="checkbox checkbox-styled col-lg-6">
+                    <div class="col-lg-3 select-speciality padding-0 margin-top-5">
+                        <div class="radio radio-styled col-lg-6 margin-0">
                             <label>
                                 <input type="radio" name="select_speciality" value="principal" ng-init="RI.select_speciality = 'principal'" ng-checked="true" ng-model="RI.select_speciality">
                                 <span>Principal</span>
                             </label>
                         </div>
-                        <div class="checkbox checkbox-styled col-lg-6">
+                        <div class="radio radio-styled col-lg-6 margin-0">
                             <label>
                                 <input type="radio" name="select_speciality" value="dependant" ng-model="RI.select_speciality">
                                 <span>Dependant</span>
@@ -1412,7 +1412,7 @@
                         </div>
                     </div>
                     </div>
-                    <div class="row margin-bottom-xxl">
+                    <div class="row">
                     <div class="show-on-dependant">
                         <div class="col-lg-12">
                             <div class="ajax-dropdown-con col-lg-4">
@@ -1424,7 +1424,7 @@
                         <div class="col-lg-12 dependant_list add_dependant_with_relation"></div>
                     </div>
                     </div>
-                    <div class="row margin-bottom-xxl">
+                    <div class="row">
                     <div class="show-on-principal">
                         <div class="col-lg-12">
                             <div class="ajax-dropdown-con col-lg-4" ng-class="{
@@ -1448,7 +1448,7 @@
                         </div>
                     </div>
                     </div>
-                    <div class="row margin-bottom-xxl">
+                    <div class="row margin-bottom-xxl margin-top-20">
                     <div class="col-lg-12">
                         <label>Notes</label>
                     </div>
