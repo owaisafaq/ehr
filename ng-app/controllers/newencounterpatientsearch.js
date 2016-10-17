@@ -131,6 +131,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
         $scope.EID = encounterID;
         $rootScope.loader = "show";
         $scope.PID = patientID;
+        $scope.createOrderPatientID = patientID;
         GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: patientID}, getEncountersSuccess, getEncountersFailure);
         function getEncountersSuccess(res) {
             if (res.status == true) {
@@ -376,7 +377,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
         $scope.OrderBtn = true; // disabling submit button until request is complete
         addOrder.save({ // sending data over addOrder factory which will create new order
             token: $window.sessionStorage.token,
-            patient_id: $scope.Order.patient_id,
+            patient_id: $scope.createOrderPatientID,//$scope.Order.patient_id,
             lab: $scope.Order.selected_lab,
             lab_test: JSON.stringify($scope.lab_tests),
             clinical_information: '',//$scope.Order.clinical_information,

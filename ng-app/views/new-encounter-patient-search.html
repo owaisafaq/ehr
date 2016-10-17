@@ -261,11 +261,12 @@
             <div class="modal-body">
                 <div class="row margin-bottom-xxl">
                 <div class="col-lg-12">
-                    <select class="form-control select_searchFields" ng-model="Order.patient_id" placeholder="Select Patient" name="patient_id" ng-class="{true: 'error'}[submitted && addForm.patient_id.$invalid]" required>
+                    <!-- <select class="form-control select_searchFields" ng-model="Order.patient_id" placeholder="Select Patient" name="patient_id" ng-class="{true: 'error'}[submitted && addForm.patient_id.$invalid]" required>
                         <option value=""></option>
                         <option ng-repeat="patient in patients" value="{{ patient.id }}" ng-selected="Order.patient_id == patient.id">{{ patient.first_name + ' ' + patient.last_name }}</option>
                     </select>
-                    <p class="help-block PIValid" ng-show="submitted && addForm.patient_id.$error.required">Required</p>
+                    <p class="help-block PIValid" ng-show="submitted && addForm.patient_id.$error.required">Required</p> -->
+                    <input type="text" value="{{prefilledPatientName}}" disabled="true" ng-value="createOrderPatientID" ng-model="Order.patient_id">
                 </div>
                     </div>
                 <div class="row margin-bottom-xxl">
