@@ -266,13 +266,33 @@ class BillingController extends Controller
 
     public function get_all_billing_codes(Request $request){
 
-          $bill_codes = DB::table('billing_codes')
-              ->leftJoin('billing_category', 'billing_codes.category', '=','billing_category.id' )
-              ->select(DB::raw('billing_codes.id,billing_codes.code,billing_codes.description,billing_codes.charge,billing_category.name as category'))
-              ->where('billing_codes.status', 1)
-              ->get();
+        $limit = $request->input('limit');
+        $offset = $request->input('offset');
 
-          return response()->json(['status' => true, 'data'=>$bill_codes]);
+        if ($limit > 0 || $offset > 0) {
+            $bill_codes = DB::table('billing_codes')
+                ->leftJoin('billing_category', 'billing_codes.category', '=', 'billing_category.id')
+                ->select(DB::raw('billing_codes.id,billing_codes.code,billing_codes.description,billing_codes.charge,billing_category.name as category'))
+                ->where('billing_codes.status', 1)
+                ->skip($offset)->take($limit)
+                ->get();
+
+            $count = DB::table('billing_codes')
+                ->leftJoin('billing_category', 'billing_codes.category', '=', 'billing_category.id')
+                ->select(DB::raw('billing_codes.id,billing_codes.code,billing_codes.description,billing_codes.charge,billing_category.name as category'))
+                ->where('billing_codes.status', 1)
+                ->count();
+
+        } else {
+            $bill_codes = DB::table('billing_codes')
+                ->leftJoin('billing_category', 'billing_codes.category', '=', 'billing_category.id')
+                ->select(DB::raw('billing_codes.id,billing_codes.code,billing_codes.description,billing_codes.charge,billing_category.name as category'))
+                ->where('billing_codes.status', 1)
+                ->get();
+            $count = count($bill_codes);
+
+        }
+        return response()->json(['status' => true, 'data' => $bill_codes,'count'=>$count]);
 
       }
 
@@ -325,8 +345,6 @@ class BillingController extends Controller
                 ['name' => $name, 'rate' => $rate, 'created_at' => date("Y-m-d  H:i:s")]);
 
         return response()->json(['status' => true, 'message' => 'Tax Rates Added successfully']);
-
-
     }
     public function update_tax_rates(Request $request){
         $tax_rate_id= $request->input('tax_rate_id');
@@ -341,12 +359,30 @@ class BillingController extends Controller
 
     public function list_tax_rates(Request $request){
 
-        $tax_rates = DB::table('tax_rates')
-            ->select(DB::raw('id,name,rate'))
-            ->where('status', 1)
-            ->get();
+        $limit = $request->input('limit');
+        $offset = $request->input('offset');
 
-        return response()->json(['status' => true, 'data' => $tax_rates]);
+        if ($limit > 0 || $offset > 0) {
+            $tax_rates = DB::table('tax_rates')
+                ->select(DB::raw('id,name,rate'))
+                ->where('status', 1)
+                ->skip($offset)->take($limit)
+                ->get();
+
+            $count = DB::table('tax_rates')
+                ->select(DB::raw('id,name,rate'))
+                ->where('status', 1)
+                ->count();
+        } else {
+            $tax_rates = DB::table('tax_rates')
+                ->select(DB::raw('id,name,rate'))
+                ->where('status', 1)
+                ->get();
+
+            $count = count($tax_rates);
+        }
+
+        return response()->json(['status' => true, 'data' => $tax_rates,'count' => $count]);
 
     }
 
