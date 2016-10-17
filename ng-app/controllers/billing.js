@@ -6,7 +6,6 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	$scope.selectedPatient = {};
 	$scope.AmountPaid = {};
 	$scope.dataStrip = "c";
-        $scope.disable_tabs = true;
 	$rootScope.loader = "show";
 	$scope.tabs_sec = 'qqqqq';
         $scope.product_show= 'product';
@@ -30,8 +29,6 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 				return true;
 			}
 			$scope.BillListings = res.data;
-                        console.log(res.data);
-                        console.log("catch me here")
 		}
 	}
 
@@ -41,9 +38,26 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	}
 
 	//Get All Invoices
-//        function invoiceByBill(billId){}
-	
+
+	GetAllInvoices.get({
+		token: $window.sessionStorage.token,
+	}, GetAllInvoicesSuccess, GetAllInvoicesFailure);
+
+	function GetAllInvoicesSuccess(res) {
+		console.log(res);
+		if (res.status == true) {
+			$scope.InvoiceListings = res.data;
+			console.log($scope.InvoiceListings)
+		}
+	}
+
+	function GetAllInvoicesFailure(error) {
+		$('#internetError').modal('show');
+		console.log(error);
+	}
 	$scope.SelectedPatientWithInvoice = function(patient_id,invoice_id){
+
+		console.log(patient_id);
 		$scope.patient_id = patient_id;
 		$scope.invoice_id = invoice_id;
 
@@ -63,8 +77,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 			$rootScope.loader = "hide";
 			$('#internetError').modal('show');
 			console.log(error);
-		}s
-                
+		}
 	};
 
 
@@ -259,7 +272,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 
 
 	$scope.SelectedPatient = function(patient_id,bill_id){
-                $scope.disable_tabs = false;
+
 		console.log(patient_id);
 		console.log(bill_id);
 		$scope.bill_id=bill_id;
@@ -295,24 +308,6 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 			$('#internetError').modal('show');
 			console.log(error);
 		}
-                 GetAllInvoices.get({
-		token: $window.sessionStorage.token,
-                bill_id : bill_id
-	}, GetAllInvoicesSuccess, GetAllInvoicesFailure);
-
-	function GetAllInvoicesSuccess(res) {
-		console.log(res);
-                console.log("catch me here");
-		if (res.status == true) {
-			$scope.InvoiceListings = res.data;
-			console.log($scope.InvoiceListings)
-		}
-	}
-
-	function GetAllInvoicesFailure(error) {
-		$('#internetError').modal('show');
-		console.log(error);
-	}
 	};
 
 	$scope.PrintInvoice = function(invoice_id) {
@@ -342,7 +337,6 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 					$('.invoice_list').hide();
 					$('.print_invoice').show();
 					$('.custom-tab').hide();
-                                        $('.card-head').hide();
 
 
 				}

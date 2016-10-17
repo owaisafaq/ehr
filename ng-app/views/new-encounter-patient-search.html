@@ -16,7 +16,7 @@
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Number</label>
-                    <span class="txt-style-2 col-lg-12">P-{{displayInfo.patient_id}}</span>
+                    <span class="txt-style-2 col-lg-12">PA-{{displayInfo.patient_id}}</span>
                 </div>
                 <div class="col-lg-1">
                     <label class="txt-style-1 text-uppercase col-lg-12 adjust-2">Age</label>
@@ -34,9 +34,9 @@
                     <a href="#/billing/{{PID}}" class="button-style-2">
                         <img src="assets/img/content_icn_blue.png" />
                     </a>
-                    <a href="javascript:;" class="button-style-2">
+                   <!--  <a href="javascript:;" class="button-style-2">
                         <img src="assets/img/assign_blue.png" />
-                    </a><!-- ng-if="visitStatus == 0"  -->
+                    </a> -->  <!-- ng-if="visitStatus == 0"  -->
                     <a href="javascript:void(0);" data-toggle="modal" data-target="#checkout" class="button-style-2">
                         <img src="assets/img/discharge_icn_blue.png" />
                     </a>
@@ -204,7 +204,7 @@
                                 </td>
                                 <td>E{{encounter.id}}</td>
                                 <td>{{encounter.created_at}}</td>
-                                <td><a class="blue" href="#/patient-summary-demographics/{{encounter.patient_id}}">P-{{encounter.patient_id}}</a></td>
+                                <td><a class="blue" href="#/patient-summary-demographics/{{encounter.patient_id}}">PA-{{encounter.patient_id}}</a></td>
                                 <td class="capitalize">{{encounter.first_name}} {{encounter.middle_name}} {{encounter.last_name}}</td>
                                 <td>{{encounter.faculty}}</td>
                                 <td>{{encounter.encounter_type}}</td>
