@@ -2260,6 +2260,7 @@ class ApiController extends Controller
 
         if ($limit > 0 || $offset > 0) {
 
+
             $visits = DB::table('visits')
                 ->select(DB::raw('patient_clinical_notes.id as clinical_notes_id, visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name,visits.reason_of_visit'))
                 ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
