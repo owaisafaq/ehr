@@ -1413,6 +1413,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 $scope.dataToBeAdded.insurance_id = $scope.MI.insurance_id == undefined ? '' : $scope.MI.insurance_id
                 $scope.dataToBeAdded.dependents = depedants_values_new
                 $scope.dataToBeAdded.description = $scope.MI.description == undefined ? '' : $scope.MI.description
+                console.log($scope.dataToBeAdded);
                 $('#nhis').modal('hide');
                 $('#nhisUpdate').modal('hide');
                 if($routeParams.patientID == undefined){
@@ -1477,7 +1478,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 }
                 
                 $scope.dataToBeAdded.hmoName = $('.getHMOName option:selected').text();
-                $scope.dataToBeAdded.policiesName = $('.getPoliciesName option:selected').text();
+                $scope.dataToBeAdded.policiesName = $scope.dataToBeAdded.policies;
                 console.log($scope.dataToBeAdded);
             }
         }

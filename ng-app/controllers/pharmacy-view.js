@@ -106,6 +106,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                 precription_id: $scope.prescriptionID,
                 prescription: JSON.stringify($scope.PrescriptionViewsCopy),
                 token: $window.sessionStorage.token,
+                note_for_pharmacy: $scope.Prescription.notes,
                 visit_id: $scope.encounterID
             }
             //console.log($scope.PrescriptionViews)
