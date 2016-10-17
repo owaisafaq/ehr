@@ -2856,3 +2856,246 @@ AppEHR.factory("GetTodayEncounters", function ($resource) {
     };
     return patientRegistrationEmployer;
 });
+AppEHR.factory("GetAllTaxRates", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'list_tax_rates', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var TaxRates = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return TaxRates;
+});
+AppEHR.factory("GetTaxRate", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'list_tax_rate', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var TaxRate = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return TaxRate;
+});
+AppEHR.factory("deleteTaxRate", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'delete_tax_rate', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var deletedTaxRate = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return deletedTaxRate;
+});
+AppEHR.factory("addTaxRate", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_tax_rates', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var addTaxRate = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return addTaxRate;
+});
+AppEHR.factory("editTaxRate", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'update_tax_rates', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var updateTaxRate = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return updateTaxRate;
+});
+AppEHR.factory("GetAllBillingCodes", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_all_billing_codes', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var BillingCodes = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return BillingCodes;
+});
+AppEHR.factory("GetBillingCode", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_billing_code', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var BillingCode = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return BillingCode;
+});
+AppEHR.factory("deleteBillingCode", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'delete_billing_code', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var deletedBillingCode = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return deletedBillingCode;
+});
+AppEHR.factory("addBillingCode", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_billing_code', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var BillingCode = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return BillingCode;
+});
+AppEHR.factory("editBillingCode", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'update_billing_code', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var updateBillingCode = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return updateBillingCode;
+});
+AppEHR.factory("GetAllCategories", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_billing_category', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var Categories = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return Categories;
+});
+
+
+
+AppEHR.factory("GetAllLabs", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_labs', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var Labs = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return Labs;
+});
+AppEHR.factory("GetLab", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_lab', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var Lab = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return Lab;
+});
+AppEHR.factory("deleteLab", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'delete_lab', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var deletedLab = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return deletedLab;
+});
+AppEHR.factory("addLab", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_lab', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var addLab = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return addLab;
+});
+AppEHR.factory("editLab", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'update_lab', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var updateLab = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return updateLab;
+});
