@@ -30,6 +30,7 @@ class PDFController extends Controller
     {
         $arr = array();
         $id = $request->input('lab_test_id');
+        $id = str_replace('L', '', $id);
 
         $db = DB::table('patient_lab_test_values')
             ->select('patient_lab_test_values.id','template_values','template','signoff')
@@ -178,16 +179,19 @@ class PDFController extends Controller
         $immmunizations = DB::table('patient_immunizations')
             ->select(DB::raw('*'))
             ->where('patient_id', $patient->id)
+            ->where('status', 1)
             ->get();
 
         $active_problems = DB::table('active_problems')
             ->select(DB::raw('*'))
             ->where('patient_id', $patient->id)
+            ->where('status', 1)
             ->get();
 
         $family_history = DB::table('family_history')
             ->select(DB::raw('*'))
             ->where('patient_id', $patient->id)
+            ->where('status', 1)
             ->get();
 
 

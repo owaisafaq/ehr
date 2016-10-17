@@ -7,11 +7,11 @@
             <div class="card-head card-head-custom card-color-3">
                 <div class="col-lg-3">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
-                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.first_name}}</span>
+                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.first_name}} {{displayInfo.last_name}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Number</label>
-                    <span class="txt-style-2 col-lg-12">PA-{{displayInfo.id}}</span>
+                    <span class="txt-style-2 col-lg-12">P-{{displayInfo.id}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Age</label>
@@ -96,10 +96,10 @@
                                     <form class="custom-form">
 
                                     <div class="row" ng-show="diagnosisAgaya" ng-class="{true: 'disabled-fields'}[is_signoff == 1]">
-                                        <div class="col-lg-2">
-                                            <label>Diagnosis</label>
-                                        </div>
-                                        <div class="col-lg-9 chosen-styling">
+                                        <!--<div>-->
+                                            <label class="col-lg-2">Diagnosis</label>
+                                        <!--</div>-->
+                                        <div class="col-lg-9 chosen-styling margin-0">
                                             <select class="chosen-select nun" ng-model="diagnosis" multiple data-placeholder="Choose a Medicine" style="width:100%;display:none!important" id="autoship_option">
                                                 <!-- <option value="1">+ve</option>
                                                 <option value="2">-ve</option>

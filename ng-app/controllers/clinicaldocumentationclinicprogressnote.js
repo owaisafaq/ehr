@@ -80,6 +80,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 	function getPatientSuccess(res){
 		if(res.status == true){
 			$scope.displayInfo.first_name = res.data.first_name;
+                        $scope.displayInfo.last_name = res.data.last_name;
 			$scope.displayInfo.id = res.data.id;
 			$scope.displayInfo.patient_id = res.data.id;
 			$scope.displayInfo.age = res.data.age;
@@ -103,6 +104,8 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
       console.log(res);
       
       if(res.status == true && res.data.length > 0){
+          console.log(res)
+          console.log("res")
         $scope.doUpdate = true;
         $scope.tid = res.template_id;
         $scope.cid = res.category_id;

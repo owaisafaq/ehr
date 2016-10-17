@@ -406,7 +406,7 @@ class OtherController extends Controller
             ->count();
 
         $lab_order_count = DB::table('lab_orders')
-            ->where('status', 1)
+            ->where('status',1)
             ->count();
 
         $billing_count = DB::table('billing')
@@ -423,6 +423,15 @@ class OtherController extends Controller
             ->groupby('visits.patient_id')
             ->count();
 
+        $patients_admitted_count = DB::table('patients_admitted')
+            ->where('status', 1)
+            ->where('is_discharged','!=',1)
+            ->count();
+
+        $patient_prescription_count = DB::table('patient_prescription')
+            ->where('status', 1)
+            ->count();
+
         $data = array(
             "patients_count" => $patients_count,
             "encounter_count" => $visits_count,
@@ -434,7 +443,9 @@ class OtherController extends Controller
             "patient_pool_area_count" => $pool_area_count,
             "inventory_count" => $inventory_products_count,
             "laboratory_count" => $lab_order_count,
-            "billing_count" => $billing_count
+            "billing_count" => $billing_count,
+            "patients_admitted_count" => $patients_admitted_count,
+            "patients_prescription_count" => $patient_prescription_count,
         );
 
         return response()->json(['status' => true, 'data' => $data]);
@@ -647,6 +658,11 @@ class OtherController extends Controller
                 ->groupby('patients_admitted.id')
                 ->get();
             $count = count($data);
+        }
+
+
+        foreach ($data as $patient_data) {
+            $patient_data->patient_id = str_pad($patient_data->patient_id, 7, '0', STR_PAD_LEFT);
         }
         return response()->json(['status' => true, 'data' => $data, 'count' => $count]);
     }
@@ -1216,6 +1232,104 @@ class OtherController extends Controller
         }
 
         return response()->json(['status' => true, 'message' => 'Material Added Successfully']);
+
+    }
+
+
+    public function get_all_todays_appointments(Request $request){
+
+        $limit = $request->input('limit');
+        $offset = $request->input('offset');
+        if ($limit > 0 || $offset > 0) {
+            $appointments = DB::table('appointments')
+                ->select(DB::raw('appointments.id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,appointment_status,start_time'))
+                ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
+                ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
+                ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
+                ->whereDay('appointments.pick_date', '=', date('d'))
+                ->where('appointments.status',1)
+                ->where('patients.status', 1)
+                ->skip($offset)->take($limit)
+                ->get();
+
+
+            $count = DB::table('appointments')
+                ->select(DB::raw('appointments.id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,appointment_status,start_time'))
+                ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
+                ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
+                ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
+                ->whereDay('appointments.pick_date', '=', date('d'))
+                ->where('appointments.status', 1)
+                ->where('patients.status', 1)
+                ->count();
+        } else {
+            $appointments = DB::table('appointments')
+                ->select(DB::raw('appointments.id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,appointment_status,start_time'))
+                ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
+                ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
+                ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
+                ->whereDay('appointments.pick_date', '=', date('d'))
+                ->where('appointments.status', 1)
+                ->where('patients.status', 1)
+                ->get();
+            $count = DB::table('appointments')
+                ->select(DB::raw('appointments.id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,appointment_status,start_time'))
+                ->leftJoin('patients', 'appointments.patient_id', '=', 'patients.id')
+                ->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
+                ->leftJoin('departments', 'appointments.department_id', '=', 'departments.id')
+                ->whereDay('appointments.pick_date', '=', date('d'))
+                ->where('appointments.status', 1)
+                ->where('patients.status', 1)
+                ->count();
+
+        }
+
+        return response()->json(['status' => true, 'data' => $appointments, 'count' => $count]);
+
+    }
+
+
+    public function get_todays_all_visits(Request $request){
+        $limit = $request->input('limit');
+        $offset = $request->input('offset');
+
+
+        if ($limit > 0 || $offset > 0) {
+
+            $visits = DB::table('visits')
+                ->select(DB::raw('visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name,visits.reason_of_visit'))
+                ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
+                ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
+                ->whereDay('visits.created_at', '=', date('d'))
+                ->where('visits.status',1)
+                ->skip($offset)->take($limit)
+                ->get();
+
+
+            $count = DB::table('visits')
+                ->select(DB::raw('visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name,visits.reason_of_visit'))
+                ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
+                ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
+                ->whereDay('visits.created_at', '=', date('d'))
+                ->where('visits.status', 1)
+                ->count();
+
+        } else {
+
+            $visits = DB::table('visits')
+                ->select(DB::raw('visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name,visits.reason_of_visit'))
+                ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
+                ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
+                ->whereDay('visits.created_at', '=', date('d'))
+                ->where('visits.status', 1)
+                ->get();
+
+            $count = count($visits);
+
+        }
+
+
+        return response()->json(['status' => true, 'data' => $visits, 'count' => $count]);
 
     }
 }

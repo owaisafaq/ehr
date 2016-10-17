@@ -2826,3 +2826,33 @@ AppEHR.factory("AddMaterialByCat", function ($resource) {
     };
     return patientRegistrationEmployer;
 });
+AppEHR.factory("GetTodayAppointments", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_all_todays_appointments', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});
+AppEHR.factory("GetTodayEncounters", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_todays_all_visits', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});

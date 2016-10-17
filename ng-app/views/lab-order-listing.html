@@ -64,7 +64,7 @@
                                 </td>
                                 <td>{{ labOrder.id}}</td>
                                 <td>
-                                    <div class="person-detail-box"><span><a class="blue" href="#/patient-summary-demographics/{{labOrder.patient_id}}">PA-{{ labOrder.patient_id }}</a></span>
+                                    <div class="person-detail-box"><span><a class="blue" href="#/patient-summary-demographics/{{labOrder.patient_id}}">P-{{ labOrder.patient_id }}</a></span>
                                         <div class="bed-info person_info">
                                             <div class="col-lg-12">
                                                 <span class="txt-style-4">Name</span>
@@ -114,7 +114,7 @@
                                         </div>
                                     </div>
                                 </td>-->
-                                <td>${{ labOrder.total_cost}}</td>
+                                <td>N{{labOrder.total_cost}}</td>
                                 <td>{{ labOrder.handled_by}}</td>
                             </tr>
                         </tbody>
@@ -192,6 +192,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <select class="form-control" id="lab_test" ng-model="Order.lab_test" placeholder="Search Lab Test" ng-options="labTest as labTest.name for labTest in labTests">
+                                            <option></option>
                                         </select>
                                     </div>
                                     <div class="col-lg-3">
@@ -219,30 +220,16 @@
                                             <tbody>
                                                 <tr ng-repeat="lab_test in lab_tests_td">
                                                     <td>{{ lab_test.name }}</td>
-                                                    <td>${{ lab_test.cost }}</td>
+                                                    <td>N{{ lab_test.cost }}</td>
                                                     <td>{{ lab_test.priority }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>TOTAL COST</td>
-                                                    <td>${{ lab_test_total }}</td>
+                                                    <td>N{{ lab_test_total }}</td>
                                                     <td></td>
                                                 </tr>
                                             </tbody>
                                         </table>
-                                    </div>
-    </div>
-<div class="row margin-bottom-xxl">
-                                    <div class="col-lg-2">
-                                        <label>Clinical Information</label>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <input type="text" class="form-control" placeholder="" ng-model="Order.clinical_information" name="clinical_information" ng-class="{true: 'error'}[submitted && addForm.clinical_information.$invalid]" required>
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <label>Diagnosis</label>
-                                    </div>
-                                    <div class="col-lg-4 margin-bottom-xxl">
-                                        <input type="text" class="form-control" placeholder="" ng-model="Order.diagnosis" name="diagnosis" ng-class="{true: 'error'}[submitted && addForm.diagnosis.$invalid]" required>
                                     </div>
     </div>
 <div class="row">
