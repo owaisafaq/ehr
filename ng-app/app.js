@@ -772,8 +772,7 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
 
         var date = new Date();
         date.setDate(date.getDate()-1);
-        $('.select-dateAge').datepicker({autoclose: true, todayHighlight: true, format: 'yyyy-mm-dd', endDate: date});
-        $('.select-date').datepicker({autoclose: true, todayHighlight: true, format: 'yyyy-mm-dd'});
+        $('.select-date').datepicker({autoclose: true, todayHighlight: true, format: 'yyyy-mm-dd', endDate: date});
         $('select').not('.select_searchFields,.search-ajax,.chosen-select, #autoship_option').select2({minimumResultsForSearch: Infinity});
         $('.select_searchFields').select2();
         $(".maskPhone").inputmask("99-9999999");

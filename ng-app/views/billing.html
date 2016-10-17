@@ -1,10 +1,10 @@
 <div id="content">
     <section>
-        <div class="card {{dataStrip}}" ng-class="{true: 'custom - card'}[patientInfo]">
+        <div class="card" ng-class="{true: 'custom-card'}[patientInfo]">
             <div class="card-head card-head-custom {{hospital_plan}} billing hidden-print" ng-show="patientInfo">
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
-                    <span class="txt-style-2 col-lg-12 capitalize">{{selectedPatient.first_name}}</span>
+                    <span class="txt-style-2 col-lg-12 capitalize">{{selectedPatient.first_name}} {{selectedPatient.last_name}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Number</label>
@@ -27,21 +27,20 @@
                     <a href="#/billing/{{patient_id}}" class="button-style-2">
                         <img src="assets/img/content_icn_blue.png" />
                     </a>
-                    <!-- <a href="javascript:;" class="button-style-2">
+<!--                    <a href="javascript:;" class="button-style-2">
                         <img src="assets/img/assign_blue.png" />
-                    </a> -->
+                    </a>-->
                     <a href="javascript:void(0);" data-target="#simpleModal1" data-toggle="modal" class="button-style-2">
                         <img src="assets/img/discharge_icn_blue.png" />
                     </a>
                 </div>
             </div>
 
-            <div class="card-head col-lg-12 no-padding card-head-auto {{tabs_sec}} hidden-print">
+            <div class="card-head col-lg-12 no-padding card-head-auto hidden-print">
                 <ul class="nav nav-tabs nav-justified custom-tab" data-toggle="tabs">
                     <li id="billing" class="active"><a showtab href="#generate"> Bills</a></li>
-                    <li id="invoicing"><a showtab href="#invoices">Invoices</a></li>
-                    <!-- <li><a showtab href="#receipts">Receipts</a></li>-->
-                    <li><a showtab href="#reports">Reports</a></li>
+                    <li ng-class="{true: 'disabled-tabs'}[disable_tabs]" id="invoicing"><a showtab href="#invoices">Invoices</a></li>
+                    <li ng-class="{true: 'disabled-tabs'}[disable_tabs]" class="disabled-tabs"><a showtab href="#reports">Reports</a></li>
                 </ul>
             </div>
 
@@ -118,7 +117,7 @@
                                     <th>patient name</th>
                                     <th>bill purpose</th>
                                     <th>patient plan</th>
-
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -133,12 +132,11 @@
                                     <td>{{Bill.id}}</td>
                                     <td>{{Bill.created_at}}</td>
                                     <td>E{{Bill.encounter_id}}</td>
-                                    <td><a class="blue" href="#/patient-summary-demographics/{{labOrder.patient_id}}">PA-{{Bill.patient_id}}</a></td>
+                                    <td><a class="blue" href="#/patient-summary-demographics/{{labOrder.patient_id}}">P-{{Bill.patient_id}}</a></td>
                                     <td>{{Bill.first_name}}</td>
                                     <td>{{Bill.purpose}}</td>
                                     <td>{{Bill.name}}</td>
-
-
+                                    <td class="{{Bill.bill_status}}">{{Bill.bill_status}}</td>
                                 </tr>
 
                             </tbody>
@@ -176,11 +174,11 @@
 
                         <div class="table-header row background-none">
                             <div class="pull-right">
-                                <button class="add button-custom pull-right" data-toggle="modal" data-target="#addtemplate" ng-click="deletingInvoice(invoice_id)">Delete Invoice</button>
+                                <button class="delete button-custom pull-right" data-toggle="modal" data-target="#addtemplate" ng-click="deletingInvoice(invoice_id)">Delete Invoice</button>
                                 <!-- <button class="add button-custom pull-right btn_edit_invoice">Edit Invoice</button>-->
-                                <button class="add button-custom pull-right" data-toggle="modal" ng-click="prcessingPaymentClick(invoice_id)">Process Payment</button>
-                                <button class="add button-custom pull-right" ng-click="PrintInvoice(invoice_id)"  >Print Invoice</button>
-                                <button class="add button-custom pull-right" data-toggle="modal" ng-click="SendInvoiceModal(invoice_id)">Send Invoice</button>
+                                <button class="process button-custom pull-right" data-toggle="modal" ng-click="prcessingPaymentClick(invoice_id)">Process Payment</button>
+                                <button class="print button-custom pull-right" ng-click="PrintInvoice(invoice_id)" >Print Invoice</button>
+                                <button class="send button-custom pull-right" data-toggle="modal" ng-click="SendInvoiceModal(invoice_id)">Send Invoice</button>
                                 <button class="add button-custom pull-right" data-toggle="modal" data-target="#addToBill">Add to Bill</button>
                             </div>
                             <span class="txt-style-3 pull-left text-uppercase">Plan</span>
@@ -195,7 +193,10 @@
 
 
                         <form class="custom-form">
-                            <table class="table table-striped no-margin table-custom table-custom_big setting_table">
+                            <div class="no-res-found" ng-if="InvoiceListings.length == ''">
+                                        No Result Found
+                            </div>
+                            <table ng-if="InvoiceListings.length != ''" class="table table-striped no-margin table-custom table-custom_big setting_table">
                                 <thead>
                                     <tr>
                                         <th></th>
@@ -231,7 +232,6 @@
 
 
                                     </tr>
-
                                 </tbody>
                             </table>
                         </form>
@@ -419,7 +419,7 @@
 
 
                 <div class="print_invoice">
-                    <div class="row margin-top-50">
+                    <div class="row">
                         <div class="col-lg-6 invoice_logo">
                             <h2>Logo</h2>
                             <span>Hospital Name</span>
