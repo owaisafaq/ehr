@@ -223,7 +223,8 @@
                             <label>Reason</label>
                         </div>
                         <div class="col-lg-4">
-                            <textarea ng-model="appointment.otherReason" name="otherReason" placeholder="Describe here"></textarea><!-- ng-class="{true: 'error'}[submitted && myFormAdd.otherReason.$invalid]" required -->
+                            <textarea ng-model="appointment.otherReason" name="otherReason" placeholder="Describe here" ng-class="{true: 'error'}[submitted && myFormAdd.otherReason.$invalid]" required></textarea>
+                            <p class="help-block PIValid" ng-show="submitted && myFormAdd.otherReason.$error.required">Required</p>
                         </div>
                     </div>
                 </div>
@@ -235,7 +236,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade modal-size_3" id="updateAppointment" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_2" id="updateAppointment" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -277,16 +278,6 @@
                     <div class="row margin-bottom-xxl">
                         <div class="col-lg-6 no-padding">
                             <div class="col-lg-4">
-                                <label>Reason</label>
-                            </div>
-                            <div class="col-lg-8 margin-bottom-30">
-                                <select class="form-control" ng-model="updateAppointment.reason" placeholder="Select" name="reason" ng-class="{true: 'error'}[submitted && addForm.reason.$invalid]" required>
-                                    <option value=""></option>
-                                    <option ng-repeat="r in reason" value="{{ r.name }}" ng-selected="updateAppointment.reason == d.name">{{ r.name }}</option>
-                                </select>
-                                <p class="help-block PIValid" ng-show="submitted && addForm.reason.$error.required">Required</p>
-                            </div>
-                              <div class="col-lg-4">
                                 <label>Date</label>
                             </div>
                             <div class="col-lg-8">
@@ -300,11 +291,10 @@
                             </div>
                         </div>
                         <div class="col-lg-2">
-                            <label>Other Reason</label>
+                            <label>Reason</label>
                         </div>
                         <div class="col-lg-4">
-                            <textarea ng-model="updateAppointment.otherReason" name="otherReason" placeholder="Describe here" required></textarea><!--  ng-class="{true: 'error'}[submitted && addForm.otherReason.$invalid]"  -->
-                            <!-- <p class="help-block PIValid" ng-show="submitted && addForm.otherReason.$error.required">Required</p> -->
+                            <textarea ng-model="updateAppointment.otherReason" name="otherReason" placeholder="Describe here" required></textarea>
                         </div>
                     </div>
                     <div class="row margin-bottom-xxl">
@@ -318,24 +308,9 @@
                             </div>
                             <p class="help-block PIValid" ng-show="submitted && addForm.starttime.$error.required">Required</p>
                         </div>
-                        <div class="col-lg-2">
-                            <label>Task Priority</label>
-                        </div>
-                        <div class="col-lg-4"><!-- ng-class="{true: 'error'}[submitted && addForm.task.$invalid]" -->
-                            <select class="form-control" ng-model="updateAppointment.priority" placeholder="Select Priority" name="task" required>
-                                <option value=""></option>
-                                <option ng-repeat="p in priorities" value="{{ p.name }}" ng-selected="updateAppointment.priority == p.name">{{ p.name }}</option>
-                            </select>
-                        </div>
                     </div>
                     <div class="row margin-bottom-xxl">
-                        <div class="col-lg-2">
-                            <label>Notes</label>
-                        </div>
-                        <div class="col-lg-4">
-                            <textarea ng-model="updateAppointment.notes" placeholder="Write here" name="notes" required></textarea><!-- ng-class="{true: 'error'}[submitted && addForm.notes.$invalid]" -->
-                            <!-- <p class="help-block PIValid" ng-show="submitted && addForm.notes.$error.required">Required</p> -->
-                        </div>
+                        
                         
                     </div>
                 </div>

@@ -1,15 +1,16 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData','GetBillInvoices','SendEmail', 'CheckoutPatient', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData,GetBillInvoices,SendEmail, CheckoutPatient){
+AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData','GetBillInvoices','SendEmail', 'CheckoutPatient', 'deleteInvoice', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData,GetBillInvoices,SendEmail, CheckoutPatient, deleteInvoice){
 	$rootScope.pageTitle = "EHR - Billing";
 	$scope.BillListings={};
 	$scope.selectedPatient = {};
 	$scope.AmountPaid = {};
 	$scope.dataStrip = "c";
-        $scope.disable_tabs = true;
+    $scope.disable_tabs = true;
 	$rootScope.loader = "show";
 	$scope.tabs_sec = 'qqqqq';
-        $scope.product_show= 'product';
+    $scope.product_show= 'product';
+    $scope.deleteInvoiceButton = true;
 
 	if($routeParams.patientID != undefined){
 		$scope.patientID = $routeParams.patientID;
@@ -46,6 +47,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	$scope.SelectedPatientWithInvoice = function(patient_id,invoice_id){
 		$scope.patient_id = patient_id;
 		$scope.invoice_id = invoice_id;
+		$scope.deleteInvoiceButton = false;
 
 		$rootScope.loader = "show";
 		GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: patient_id}, getPatientInfoSuccess, getPatientInfoFailure);
@@ -63,7 +65,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 			$rootScope.loader = "hide";
 			$('#internetError').modal('show');
 			console.log(error);
-		}s
+		}
                 
 	};
 
@@ -259,7 +261,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 
 
 	$scope.SelectedPatient = function(patient_id,bill_id){
-                $scope.disable_tabs = false;
+        $scope.disable_tabs = false;
 		console.log(patient_id);
 		console.log(bill_id);
 		$scope.bill_id=bill_id;
@@ -300,6 +302,8 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
                 bill_id : bill_id
 	}, GetAllInvoicesSuccess, GetAllInvoicesFailure);
 
+	
+	};
 	function GetAllInvoicesSuccess(res) {
 		console.log(res);
                 console.log("catch me here");
@@ -313,7 +317,6 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 		$('#internetError').modal('show');
 		console.log(error);
 	}
-	};
 
 	$scope.PrintInvoice = function(invoice_id) {
 
@@ -362,16 +365,16 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 
 
 	$scope.deletingInvoice = function (invoice_id){
-		if ( window.confirm("Are you Sure you want to delete?") ) {
-			deleteInvoice.save({
-				token: $window.sessionStorage.token,
-				invoice_id: invoice_id
-			}, deleteInvoiceSuccess, deleteInvoiceFailure);
-		}
+		deleteInvoice.save({
+			token: $window.sessionStorage.token,
+			invoice_id: invoice_id
+		}, deleteInvoiceSuccess, deleteInvoiceFailure);
 	};
 
 	function deleteInvoiceSuccess(res){
 		if(res.status == true) {
+			$('#deleteConfirm').modal('hide');
+			$('#successModal').modal('show');
 			GetAllInvoices.get({
 				token: $window.sessionStorage.token,
 			}, GetAllInvoicesSuccess, GetAllInvoicesFailure);

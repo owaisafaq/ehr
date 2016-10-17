@@ -92,6 +92,7 @@
                                 <option selected >General</option>
                                 <option>NHIS</option>
                                 <option>Retainers</option>
+                                <option>FHSS</option>
                             </select>
                         </div>
                         <!--                        <div class="pull-right">
@@ -174,7 +175,7 @@
 
                         <div class="table-header row background-none">
                             <div class="pull-right">
-                                <button class="delete button-custom pull-right" data-toggle="modal" data-target="#addtemplate" ng-click="deletingInvoice(invoice_id)">Delete Invoice</button>
+                                <button class="delete button-custom pull-right" data-toggle="modal" data-target="#deleteConfirm" ng-hide="deleteInvoiceButton">Delete Invoice</button>
                                 <!-- <button class="add button-custom pull-right btn_edit_invoice">Edit Invoice</button>-->
                                 <button class="process button-custom pull-right" data-toggle="modal" ng-click="prcessingPaymentClick(invoice_id)">Process Payment</button>
                                 <button class="print button-custom pull-right" ng-click="PrintInvoice(invoice_id)" >Print Invoice</button>
@@ -1437,5 +1438,36 @@
                 </div>
             </div><!-- /.modal-content -->
         </form>
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade modal-size_1" id="deleteConfirm" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Confirmation</h2>
+            </div>
+            <div class="modal-body">
+                <p class="modal-subtext">Do you want to delete?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" ng-click="deletingInvoice(invoice_id)">Yes</button>
+                <button type="button" class="btn btn-default button-style-1 button-style-1_a" data-dismiss="modal">No</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade modal-size_1" id="successModal" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Status</h2>
+            </div>
+            <div class="modal-body">
+                <p class="modal-subtext">Invoice Deleted Successfully</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">ok</button>
+            </div>
+        </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
