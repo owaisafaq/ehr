@@ -3420,10 +3420,15 @@ Pagination
     margin-top: 30px;
     display: table;
     padding: 0 15px;
+    text-align: center;
 }
 .sign-in-images img{
-    width: calc(100% / 4 - 10px);
+    width: calc(100% / 3 - 10px);
     margin-right: 10px;
+}
+.sign-in-images img:last-child{
+    margin-right: 0;
+    width: 70px;
 }
 .immunization-accordian li .delete-icon{
     position: absolute;

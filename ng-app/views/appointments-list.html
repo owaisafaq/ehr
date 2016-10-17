@@ -149,14 +149,14 @@
         </div><!--end .card -->
     </section>
 </div>
-<div class="modal fade modal-size_3" id="createAppointment" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_2" id="createAppointment" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Create Appointment</h2>
             </div>
             <form class="custom-form" name="myFormAdd" ng-model="myFormAdd" novalidate ng-submit="createAppointments(appointment);">
-                <div class="row margin-0">
+                <div class="row">
                     <div class="col-lg-12 margin-top-10">
                         <div class="col-lg-12">
                         <div class="header-search margin-right-0 col-lg-12">
@@ -194,16 +194,6 @@
                     </div>
                     <div class="row margin-bottom-xxl">
                         <div class="col-lg-6 no-padding">
-                            <div class="col-lg-4">
-                                <label>Reason</label>
-                            </div>
-                            <div class="col-lg-8 margin-bottom-30">
-                                <select class="form-control" ng-model="appointment.reason" placeholder="Select" name="reason" ng-class="{true: 'error'}[submitted && myFormAdd.reason.$invalid]" required>
-                                    <option value=""></option>
-                                    <option ng-repeat="r in reason" value="{{ r.name }}">{{ r.name }}</option>
-                                </select>
-                                <p class="help-block PIValid" ng-show="submitted && myFormAdd.reason.$error.required">Required</p>
-                            </div>
                               <div class="col-lg-4">
                                 <label>Date</label>
                             </div>
@@ -217,16 +207,7 @@
                                 <p class="help-block PIValid" ng-show="submitted && myFormAdd.date.$error.required">Required</p>
                             </div>
                         </div>
-                        <div class="col-lg-2">
-                            <label>Other Reason</label>
-                        </div>
-                        <div class="col-lg-4">
-                            <textarea ng-model="appointment.otherReason" name="otherReason" placeholder="Describe here"></textarea><!-- ng-class="{true: 'error'}[submitted && myFormAdd.otherReason.$invalid]" required -->
-                            <!-- <p class="help-block PIValid" ng-show="submitted && myFormAdd.otherReason.$error.required">Required</p> -->
-                        </div>
-                    </div>
-                    <div class="row margin-bottom-xxl">
-                        <div class="col-lg-2">
+                         <div class="col-lg-2">
                             <label>Time</label>
                         </div>
                         <div class="col-lg-4">
@@ -236,36 +217,14 @@
                             </div>
                             <p class="help-block PIValid" ng-show="submitted && myFormAdd.starttime.$error.required">Required</p>
                         </div>
-                        <!-- <div class="col-lg-2">
-                            <label>End Time</label>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="input-group bootstrap-timepicker col-lg-12">
-                                <input type="text" class="form-control input-small timepicker"  ng-model="appointment.endTime" name="endtime" ng-class="{true: 'error'}[submitted && myFormAdd.endtime.$invalid]" required>
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-                            </div>
-                            <p class="help-block PIValid" ng-show="submitted && myFormAdd.endtime.$error.required">Required</p>
-                        </div> -->
-                        <div class="col-lg-2">
-                            <label>Task Priority</label>
-                        </div>
-                        <div class="col-lg-4">
-                            <select class="form-control" ng-model="appointment.priority" placeholder="Select Priority" name="task" ><!-- ng-class="{true: 'error'}[submitted && myFormAdd.task.$invalid]" required -->
-                                <option value=""></option>
-                                <option ng-repeat="p in priorities" value="{{ p.name }}">{{ p.name }}</option>
-                            </select>
-                            <!-- <p class="help-block PIValid" ng-show="submitted && myFormAdd.task.$error.required">Required</p> -->
-                        </div>
                     </div>
                     <div class="row margin-bottom-xxl">
                         <div class="col-lg-2">
-                            <label>Notes</label>
+                            <label>Reason</label>
                         </div>
                         <div class="col-lg-4">
-                            <textarea ng-model="appointment.notes" placeholder="Write here" name="notes" ></textarea><!-- ng-class="{true: 'error'}[submitted && myFormAdd.notes.$invalid]" required -->
-                            <!-- <p class="help-block PIValid" ng-show="submitted && myFormAdd.notes.$error.required">Required</p> -->
+                            <textarea ng-model="appointment.otherReason" name="otherReason" placeholder="Describe here"></textarea><!-- ng-class="{true: 'error'}[submitted && myFormAdd.otherReason.$invalid]" required -->
                         </div>
-                        
                     </div>
                 </div>
                 <div class="modal-footer">
