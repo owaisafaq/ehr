@@ -2873,8 +2873,8 @@ AppEHR.factory("AddToBill", function ($resource) {
 });
 AppEHR.factory("DespensePharmacy", function ($resource) {
     function getResource(params, body) {
-        var res2 = $resource(serverPath + 'add_invoice_to_bills', params, {
-            save: {method: 'POST'}
+        var res2 = $resource(serverPath + 'dispense_medication', params, {
+            save: {method: 'GET'}
         });
         return res2;
     }

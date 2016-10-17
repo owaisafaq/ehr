@@ -370,10 +370,11 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         }
 
         $scope.despensePharmacyFUn = function(){
-            DespensePharmacy.save({token: $window.sessionStorage.token, medication_id: $scope.medicationID}, despensePharmacySuccess, getMediFailure);
+            DespensePharmacy.save({token: $window.sessionStorage.token, prescribe_medication_id: $scope.medicationID}, despensePharmacySuccess, getMediFailure);
         }
 
         function despensePharmacySuccess(res){
+            $scope.dispensePharmacyButton = true;
             if(res.status == true){
                 console.log(res);
                 GetPrescription.get({
