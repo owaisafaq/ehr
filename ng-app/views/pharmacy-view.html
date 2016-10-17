@@ -96,16 +96,16 @@
                                         <div class="col-lg-12">
                                             <label>notes from physician</label>
                                         </div>
-                                        <div class="col-lg-12"> <!-- Prescription.notes -->
-                                            <textarea ng-model="prescriptionPharmacyNotes" disabled></textarea>
+                                        <div class="col-lg-12">
+                                            <textarea ng-model="Prescription.notes" disabled></textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 no-padding">
                                         <div class="col-lg-12">
                                             <label>pharmacy note</label>
                                         </div>
-                                        <div class="col-lg-12"> <!-- prescriptionPharmacyNotes -->
-                                            <textarea ng-model="Prescription.notes" placeholder="We have run out of paracetamol"></textarea>
+                                        <div class="col-lg-12">
+                                            <textarea ng-model="prescriptionPharmacyNotes" placeholder="We have run out of paracetamol"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 no-padding save_Pview_button">
@@ -204,7 +204,7 @@
     </div><!-- /.modal-dialog -->
 
 </div><!-- /.modal -->
-<div class="modal fade big-modal" id="addmedication" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_2" id="addmedication" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -212,8 +212,8 @@
             </div>
             <div class="modal-body">
                 <form class="custom-form" novalidate ng-submit="savePharmacyPopUp()">
-                    <div class="row">
-
+                    <!--<div class="row">-->
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Medication</label>
                         </div>
@@ -223,7 +223,8 @@
                                 <option ng-selected="MedicationData.medication == medicationDropData.name" value="{{medicationDropData.id}}" ng-repeat="medicationDropData in getDrugs">{{medicationDropData.name}}</option>{{allMedications}}
                             </select>
                         </div>                                              
-
+</div>
+                     <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>SIG</label>
                         </div>
@@ -234,7 +235,8 @@
                             <!--open_sig-->
                             <a href="javascript:;" data-target="#addsig" data-toggle="modal" class="setting-button button-custom pull-right"></a>
                         </div>
-
+                     </div>
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Dispense</label>
                         </div>
@@ -248,7 +250,8 @@
                         <div class="col-lg-3">
                             <input ng-model="MedicationData.reffills" numbers-only type="text" placeholder="" />
                         </div>
-
+                    </div>
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Pharmacy</label>
                         </div>
@@ -258,21 +261,22 @@
                                 <option ng-selected="MedicationData.pharmacy == pharmacyDataDrop.name" value="{{pharmacyDataDrop.name}}" ng-repeat="pharmacyDataDrop in allPharmacies">{{pharmacyDataDrop.name}}</option>
                             </select>
                         </div>
+                        </div>
                         <!-- <div class="col-lg-3 clear">
                             <label>Note Of Pharmacy</label>
                         </div>
                         <div class="col-lg-9">
                             <input ng-model="MedicationData.note_of_pharmacy" type="text" placeholder="" required/>
                         </div> -->
+ <div class="row margin-bottom-xxl">
 
-
-                        <div class="col-lg-3"></div>
-                        <div class="col-lg-9">
+                        <div class="col-lg-9 col-lg-offset-3">
                             <button ng-hide="showUpdate" type="button" ng-click="addMedication()" ng-disabled="AddButtonOnAddMedication" class="btn btn-default pull-left button-style-1">Add</button>
                             <button type="button" ng-show="showUpdate" ng-click="addMedication(1)" class="btn btn-default pull-left button-style-1">Update</button>
                         </div>
+ </div>
 
-                    </div>
+                    <!--</div>-->
 
                     <div class="medication_list">
                         <div class="row med_row" ng-repeat="medicationDataPush in medicationsDataPush">
@@ -339,7 +343,7 @@
 
 </div><!-- /.modal -->
 
-<div class="modal fade big-modal" id="addsig" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_2" id="addsig" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
@@ -348,12 +352,13 @@
             <div class="modal-body">
                 <form class="custom-form">
                     <div class="row">
+                    <!--<div class="row">-->
                         <div class="col-lg-6">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <label>Dose</label>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <select class="form-control" ng-model="buildInstructions.dose" placeholder="Select">
                                         <option></option>
                                         <option ng-repeat="dose in medicineUnits.dosage" value="{{dose.dosage}}">{{dose.dosage}}</option>
@@ -362,7 +367,7 @@
                                 <div class="col-lg-12">
                                     <label>Route</label>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <select class="form-control" ng-model="buildInstructions.route" placeholder="Select">
                                         <option></option>
                                         <option ng-repeat="route in medicineUnits.route" value="{{route.route}}">{{route.route}}</option>
@@ -371,7 +376,7 @@
                                 <div class="col-lg-12">
                                     <label>Direction</label>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <select class="form-control" ng-model="buildInstructions.direction" placeholder="Select">
                                         <option></option>
                                         <option ng-repeat="direction in medicineUnits.direction" value="{{direction.direction}}">{{direction.direction}}</option>
@@ -379,12 +384,14 @@
                                 </div>
                             </div>
                         </div>
+                        <!--</div>-->
+                     <!--<div class="row ">-->
                         <div class="col-lg-6">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <label>Unit</label>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <select class="form-control" ng-model="buildInstructions.unit" placeholder="Select">
                                         <option></option>
                                         <option ng-repeat="unit in medicineUnits.unit" value="{{unit.unit}}">{{unit.unit}}</option>
@@ -393,7 +400,7 @@
                                 <div class="col-lg-12">
                                     <label>Frequency</label>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <select class="form-control" ng-model="buildInstructions.frequency" placeholder="Select">
                                         <option></option>
                                         <option ng-repeat="frequency in medicineUnits.frequency" value="{{frequency.frequency}}">{{frequency.frequency}}</option>
@@ -402,7 +409,7 @@
                                 <div class="col-lg-12">
                                     <label>Duration</label>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 margin-bottom-xxl">
                                     <select class="form-control" ng-model="buildInstructions.duration" placeholder="Select">
                                         <option></option>
                                         <option ng-repeat="duration in medicineUnits.duration" value="{{duration.duration}}">{{duration.duration}}</option>
@@ -410,7 +417,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                     </div>
+                    <!--</div>-->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default update_sig button-style-1" ng-click="addSIG(buildInstructions);">Update</button>
                         <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
@@ -428,7 +436,8 @@
                     <h2>Check Out Patient</h2>
                 </div>
                 <div class="modal-body">
-                    <div class="col-lg-12 no-padding margin-bottom-xxl">
+                    <div class="row margin-bottom-xxl">
+                    <div class="col-lg-12 no-padding">
                         <div class="alert {{messageType}}" role="alert" ng-show="message">
                             <i class="{{errorSymbol}}"></i> {{errorMessage}}
                         </div>
@@ -457,6 +466,7 @@
                             </label>
                         </div>
                     </div>
+                        </div>
                     <div class="checkout_patient_tab_con">
                         <div id="Noappointment" class="active">
                             <label class="margin-bottom-xl">Note</label>
@@ -489,9 +499,12 @@
                             </div>
                         </div>
                         <div id="admitPatient" class="row">
+                            <div class="row margin-bottom-xxl">
                             <div class="col-lg-12">
                                 <span class="txt-style-4">Presenting Complaint: Captured from Clinical Note</span>
                             </div>
+                                </div>
+                            <div class="row margin-bottom-xxl">
                             <div class="col-lg-3">
                                 <label>to specialty</label>
                             </div>
@@ -513,9 +526,13 @@
                                 </select>
                                 <a class="ward-button"></a>
                             </div>
+                                 </div>
+                            <div class="row margin-bottom-xxl">
                             <div class="col-lg-3">
                                 <label>Admitted DATE</label>
                             </div>
+                               
+                            
                             <div class="col-lg-3">
                                 <label class="txt-style-4">April 05, 2016</label>
                             </div>
@@ -528,11 +545,13 @@
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                                 </div>
                             </div>
-
+                            </div>
+                             <div class="row margin-bottom-xxl">
                             <div class="col-lg-12">
                                 <label class="margin-bottom-xl">Note</label>
                                 <textarea class="margin-bottom-lg" placeholder="Write Here..." ng-model="CO.note"></textarea>
                             </div>
+                             </div>
                         </div>
                         <div id="dead" class="row">
                             <div class="col-lg-12">
@@ -550,14 +569,14 @@
         </form>
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Confirmation</h2>
             </div>
             <div class="modal-body">
-                <p>Do you want to Delete?</p>
+                <p class="modal-subtext">Do you want to Delete?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-toggle="modal" ng-click="removePrescriptions();" data-dismiss="modal">Ok</button>
