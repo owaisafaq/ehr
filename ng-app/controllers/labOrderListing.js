@@ -214,9 +214,9 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
             patient_id: $scope.Order.patient_id,
             lab: $scope.Order.selected_lab,
             lab_test: JSON.stringify($scope.lab_tests),
-            clinical_information: '',//$scope.Order.clinical_information,
-            visit_id: $routeParams.encounterID == undefined ? 0 : $routeParams.encounterID,
-            diagnosis: '',//$scope.Order.diagnosis,
+            clinical_information: 'n/a',//$scope.Order.clinical_information,
+            visit_id: $routeParams.encounterID == undefined ? "0" : $routeParams.encounterID,
+            diagnosis: 'n/a',//$scope.Order.diagnosis,
             notes: $scope.Order.notes
         }, OrderSuccess, OrderFailure);
     };

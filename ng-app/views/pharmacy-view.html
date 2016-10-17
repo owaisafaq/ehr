@@ -8,7 +8,7 @@
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Number</label>
-                    <span class="txt-style-2 col-lg-12">P-{{displayInfo.patient_id}}</span>
+                    <span class="txt-style-2 col-lg-12">P{{displayInfo.patient_id}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Age</label>
@@ -69,6 +69,7 @@
                                             <th>total dispensed</th>
                                             <th>balance</th>
                                             <th>cost</th>
+                                            <th>status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -88,6 +89,7 @@
                                             <td><input type="text" ng-keyup="calculateBalance(PrescriptionView.dispense, PrescriptionView.total_dispensed, $index)" ng-model="PrescriptionView.total_dispensed" ng-init="PrescriptionView.total_dispensed = PrescriptionView.total_amount" disabled class="editDispensed" /></td>
                                             <td>{{PrescriptionView.due}}</td>
                                             <td><span ng-if="PrescriptionView.total_dispensed != undefined && PrescriptionView.total_dispensed != ''">N{{PrescriptionView.cost * PrescriptionView.total_dispensed}}</span></td>
+                                            <td>{{PrescriptionView.status}}</td>
                                         </tr>
                                     </tbody>
                                 </table>

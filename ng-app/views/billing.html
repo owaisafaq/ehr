@@ -89,7 +89,7 @@
                         <div class="col-lg-2">
                             <select class="form-control" ng-model="search_plan_bill">
                                 <option value=""></option>
-                                <option selected >Self</option>
+                                <option selected >General</option>
                                 <option>NHIS</option>
                                 <option>Retainers</option>
                             </select>
@@ -129,10 +129,10 @@
                                             </label>
                                         </div>
                                     </td>
-                                    <td>{{Bill.id}}</td>
+                                    <td>B{{Bill.id}}</td>
                                     <td>{{Bill.created_at}}</td>
                                     <td>E{{Bill.encounter_id}}</td>
-                                    <td><a class="blue" href="#/patient-summary-demographics/{{labOrder.patient_id}}">P-{{Bill.patient_id}}</a></td>
+                                    <td><a class="blue" href="#/patient-summary-demographics/{{labOrder.patient_id}}">P{{Bill.patient_id}}</a></td>
                                     <td>{{Bill.first_name}}</td>
                                     <td>{{Bill.purpose}}</td>
                                     <td>{{Bill.name}}</td>
