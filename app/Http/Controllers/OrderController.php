@@ -511,8 +511,10 @@ class OrderController extends Controller
             ['patient_id' => $patient_id,
                 'visit_id' => $visit_id,
                 'lab' => $lab,
-                'clinical_information' => $clinical_information,
-                'diagnosis' => $diagnosis,
+               // 'clinical_information' => $clinical_information,
+                'clinical_information' => '',
+               // 'diagnosis' => $diagnosis,
+                'diagnosis' => '',
                 'notes' => $notes,
                 'order_status' => 'created',
                 'created_at' => $currentdatetime
