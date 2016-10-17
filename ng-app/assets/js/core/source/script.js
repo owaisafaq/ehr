@@ -17,11 +17,11 @@ $(document).ready(function () {
     $('body').on('click', '.select-speciality input[type=radio]', function () {
         if ($(this).val() == "principal")
         {
-            $('#nhis').find('.show-on-principal').hide();
-            $('#nhis').find('.show-on-dependant').show();
+            $(this).parents('.modal').find('.show-on-principal').hide();
+            $(this).parents('.modal').find('.show-on-dependant').show();
         } else {
-            $('#nhis').find('.show-on-principal').show();
-            $('#nhis').find('.show-on-dependant').hide();
+            $(this).parents('.modal').find('.show-on-principal').show();
+            $(this).parents('.modal').find('.show-on-dependant').hide();
         }
     })
     $('body').on('click', '.ulli_2 span', function () {
