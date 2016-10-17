@@ -523,6 +523,28 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', function 
                         }
                     }
                 }).
+                        when('/settings-groups', {
+                    templateUrl: 'views/settings-groups.html',
+                    controller: 'settingsGroups',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/settings-groups.js").then(function() {
+                            });
+                        }
+                    }
+                }).
+                        when('/settings-users', {
+                    templateUrl: 'views/settings-users.html',
+                    controller: 'settingsUsers',
+                    resolve: {
+                        load: function($templateCache, $ocLazyLoad, $q) {
+                            lazyDeferred = $q.defer();
+                            return $ocLazyLoad.load ("controllers/settings-users.js").then(function() {
+                            });
+                        }
+                    }
+                }).
                 otherwise({
                     redirectTo: '/dashboard'
                 });
