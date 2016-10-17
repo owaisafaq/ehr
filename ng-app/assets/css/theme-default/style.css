@@ -3676,6 +3676,9 @@ Pagination
 .dash-table-con .card-body{
     padding-top: 0;
 }
+.dash-table-con .card-body{
+    height: 316px;
+}
 .pagination-dash{
     margin-bottom: 0;
     margin-top: 15px;
@@ -3787,4 +3790,64 @@ select#autoship_option.ng-hide,select#autoship_option2.ng-hide,select#autoship_o
 .no-res-found{
  color: #8491ae;
  font-size: 15px;
+}
+/*Right Styling*/
+.rights_list{
+    width: 100%;
+    float: left;
+    margin-bottom: 20px;
+    margin-left: -5px;
+    margin-right: -5px;
+    margin-top: 20px;
+    max-height: 170px;
+}
+.rights_list .right_chip {
+    width: 33.33%;
+    float: left;
+    padding: 0 0.7rem;
+    margin-bottom: 15px;
+}
+.right_list > div > span {
+    font-size: 14px;
+    color: #9facb3;
+    width: 100%;
+    float: left;
+}
+.rights_icons {
+    margin-top: 10px;
+    width: 100%;
+    float: left;
+}
+.rights_icons span.active {
+    background: #464c61;
+    color: #fff;
+    border: 2px solid #464c61;
+}
+.rights_icons span {
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+    border: 2px solid #8491ae;
+    float: left;
+    cursor: pointer;
+    padding: 3px 4px;
+    font-size: 20px;
+    line-height: 23px;
+    color: #8491ae;
+    margin-right: 12px;
+    text-align: center;
+}
+.rights_icons span.read{
+    line-height: 22px;
+}
+.rights_icons span.delete_icn{
+    line-height: 22px;
+}
+.rights_icons span.update_icn{
+    padding: 3px 6px;
+}
+.right_chip > span{
+    font-size: 14px;
+    font-weight: bold;
+    color: #b8c0d0;
 }
