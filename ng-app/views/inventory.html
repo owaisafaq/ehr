@@ -66,7 +66,7 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="InventoryList in InventoryLists| filter:search |filter:cat_search">
-                                    <td>{{InventoryList.product_id}}</td>
+                                    <td>P{{InventoryList.product_id}}</td>
                                     <td>{{InventoryList.product_name}}</td>
                                     <td>{{InventoryList.category_name}}</td>
                                     <td>{{InventoryList.cost_per_item}}</td>
@@ -1153,8 +1153,8 @@
                             <label>City</label>
                         </div>
                         <div class="col-lg-3">
-
-                            <select class="form-control" ng-model="supplier.city" required>
+                        <input type="text" placeholder="Select" ng-model="supplier.city"  required/>
+                            <!-- <select class="form-control" ng-model="supplier.city" required>
                                 <option>Select City</option>
                                 <option ng-repeat="city in Cities" value="{{city.id}}" >
 
@@ -1162,7 +1162,7 @@
                                 </option>
 
 
-                            </select>
+                            </select> -->
 
 
 
