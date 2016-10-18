@@ -330,19 +330,19 @@ class BillingController extends Controller
         if ($limit > 0 || $offset > 0) {
 
             $bill_category = DB::table('billing_category')
-                ->select(DB::raw('id,name'))
+                ->select(DB::raw('id,name,description'))
                 ->where('status', 1)
                 ->skip($offset)->take($limit)
                 ->get();
 
             $count = DB::table('billing_category')
-                ->select(DB::raw('id,name'))
+                ->select(DB::raw('id,name,description'))
                 ->where('status', 1)
                 ->count();
         }else{
 
             $bill_category = DB::table('billing_category')
-                ->select(DB::raw('id,name'))
+                ->select(DB::raw('id,name,description'))
                 ->where('status',1)
                 ->get();
 
@@ -416,9 +416,12 @@ class BillingController extends Controller
 
     public function get_billing_code(Request $request){
 
-          $bill_code = DB::table('billing_codes')
+        $bill_code_id =$request->input('billing_code_id');
+
+        $bill_code = DB::table('billing_codes')
               ->leftJoin('billing_category', 'billing_codes.category', '=','billing_category.id' )
-              ->select(DB::raw('billing_codes.id,billing_codes.code,billing_codes.description,billing_codes.charge,billing_category.name as category,billing_codes.category as category_id'))
+              ->select(DB::raw('billing_codes.id,billing_codes.code,billing_codes.description,billing_codes.charge,billing_category.name as category,billing_codes.category as category_id,tax'))
+              ->where('billing_codes.id',$bill_code_id)
               ->where('billing_codes.status', 1)
               ->first();
 

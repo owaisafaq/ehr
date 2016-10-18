@@ -3263,3 +3263,49 @@ AppEHR.factory("editLabTest", function ($resource) {
     };
     return updateLabTest;
 });
+
+AppEHR.factory("DownloadArchive", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'download_archive', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var updateLab = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return updateLab;
+});
+AppEHR.factory("QueryMedication", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'query_medication', params, {
+            save: {method: 'GET'}
+        });
+        return res2;
+    }
+    var updateLab = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return updateLab;
+});
+AppEHR.factory("GetAllproducts", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_all_prodducts', params, {
+            save: {method: 'GET'}
+        });
+        return res2;
+    }
+    var updateLab = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return updateLab;
+});

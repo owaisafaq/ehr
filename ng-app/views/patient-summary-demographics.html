@@ -359,7 +359,7 @@
                             </tr>
                         </tbody>
                     </table>
-<!--                    <div class="pagination pagination-centered" ng-show="vitalCount">
+                    <!--                    <div class="pagination pagination-centered" ng-show="vitalCount">
                         <ul class="pagination-controle pagination">
                             <li class="enterKey">
                                 <input type="text" width="5px" class="keyUpVital" ng-model="pageNumberVital" numbers-only placeholder="Page Number"/>
@@ -375,7 +375,7 @@
                             </li>
                         </ul>
                     </div>-->
-<div class="pagination pagination-centered pull-right" ng-show="vitalCount">
+                    <div class="pagination pagination-centered pull-right" ng-show="vitalCount">
                         <ul class="pagination-controle pagination">
                             <li class="prev-page">
                                 <!--<button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>-->
@@ -444,7 +444,7 @@
                             </li>
                         </ul>
                     </div>-->
-<div class="pagination pagination-centered pull-right" ng-show="medicationsCount">
+                    <div class="pagination pagination-centered pull-right" ng-show="medicationsCount">
                         <ul class="pagination-controle pagination">
                             <li class="prev-page">
                                 <!--<button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>-->
@@ -495,7 +495,7 @@
                                 data-ng-change="supplementbegin = (suplimentscurrentPage - 1) * suplimentsnumPerPage;
                                                     supplementend = supplementbegin + suplimentsnumPerPage">
                     </pagination> -->
-<!--                    <div class="pagination pagination-centered" ng-show="supplementsCount">
+                    <!--                    <div class="pagination pagination-centered" ng-show="supplementsCount">
                         <ul class="pagination-controle pagination">
                             <li class="enterKey">
                                 <input type="text" width="5px" class="keyUpSupplement" ng-model="pageNumberSupplement" numbers-only placeholder="Page Number"/>
@@ -511,7 +511,7 @@
                             </li>
                         </ul>
                     </div>-->
-<div class="pagination pagination-centered pull-right" ng-show="supplementsCount">
+                    <div class="pagination pagination-centered pull-right" ng-show="supplementsCount">
                         <ul class="pagination-controle pagination">
                             <li class="prev-page">
                                 <button type="button" class="btn btn-primary" ng-disabled="supplementsCurPage == 0" ng-click="supplementsCurPage=supplementsCurPage-1; supplementPaginationPrev(pageSize, supplementsCurPage);"><i class="fa fa-caret-left"></i></button>
@@ -541,11 +541,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="allergie in allergies">
+                            <tr ng-repeat="allergie in allergies" ng-init="edit[$index] = false">
                                 <td>E{{allergie.visit_id}}</td>
-                                <td><input type="text" ng-model="allergie.allergy_type" ng-init="edit[$index] = false" ng-disabled="edit[$index] == false" /></td>
+                                <td>
+                                    <!-- <input type="text" ng-model="allergie.allergy_type" ng-init="edit[$index] = false" ng-disabled="edit[$index] == false" /> -->
+                                    <select my-drop-down class="form-control" ng-model="allergie.allergy_type"  placeholder="Select" ng-disabled="edit[$index] == false">
+                                        <option ng-selected="allergie.allergy_type == allergy.id" ng-repeat="allergy in dropDownInfo.AllergyDropdownType" value="{{allergy.id}}">{{allergy.name}}</option>
+                                    </select>
+                                </td>
                                 <td><input type="text" ng-model="allergie.allergies" ng-disabled="edit[$index] == false" /></td>
-                                <td><input type="text" ng-model="allergie.severity" ng-disabled="edit[$index] == false" />
+                                <td>
+                                    <!-- <input type="text" ng-model="allergie.severity" ng-disabled="edit[$index] == false" /> -->
+                                    <select my-drop-down class="form-control" ng-model="allergie.severity"  placeholder="Select" ng-disabled="edit[$index] == false">
+                                        <option ng-selected="allergie.severity == allergy.id" ng-repeat="allergy in dropDownInfo.AllergySeverity" value="{{allergy.id}}">{{allergy.name}}</option>
+                                    </select>
                                 </td>
                                 <td>
                                     <div class="input-group date select-date my-date-picker">
@@ -560,10 +569,6 @@
                                         <option ng-selected="allergie.allergy_status == allergy.name" ng-repeat="allergy in dropDownInfo.AllergyType" value="{{allergy.name}}">{{allergy.name}}</option>
                                         <!--<option ng-selected="allergie.allergy_status == 'not any more'">Not Any More</option>-->
                                     </select>
-                                    <!--                                    <select class="form-control select_searchFields" placeholder="ID Type" ng-model="PI.identity_type">
-                                                                            <option value=""></option>
-                                                                            <option ng-repeat="idType in dropDownInfo.IdType" value="{{idType.id}}">{{idType.type}}</option>
-                                                                        </select>-->
                                 </td>
                                 <td><input type="text" ng-model="allergie.reactions" ng-disabled="edit[$index] == false" /></td>
                                 <td>
@@ -574,7 +579,7 @@
                             </tr>
                         </tbody>
                     </table>
-<!--                    <div class="pagination pagination-centered" ng-show="allergiesCount">
+                    <!--                    <div class="pagination pagination-centered" ng-show="allergiesCount">
                         <ul class="pagination-controle pagination">
                             <li class="enterKey">
                                 <input type="text" width="5px" class="keyUpAllergy" ng-model="pageNumberAllergy" numbers-only placeholder="Page Number"/>
@@ -590,7 +595,7 @@
                             </li>
                         </ul>
                     </div>-->
-<div class="pagination pagination-centered pull-right" ng-show="allergiesCount">
+                    <div class="pagination pagination-centered pull-right" ng-show="allergiesCount">
                         <ul class="pagination-controle pagination">
                             <li class="prev-page">
                                 <!--<button type="button" class="btn btn-primary" ng-disabled="supplementsCurPage == 0" ng-click="supplementsCurPage=supplementsCurPage-1; supplementPaginationPrev(pageSize, supplementsCurPage);"><i class="fa fa-caret-left"></i></button>-->
@@ -613,6 +618,7 @@
                             <button class="edit button-custom" ng-disabled="disableOptionsArchive">Edit</button>
                             <button class="delete button-custom" data-toggle="modal" data-target="#confirmation" ng-disabled="disableOptionsArchive">Remove</button>
                             <button data-toggle="modal" data-target="#fileUploader" class="add button-custom">ADD</button>
+                            <a href="" id="downloadFile" class="edit button-custom" download>Download</a>
                         </div>
                     </div>
 
@@ -630,7 +636,7 @@
                             </div>
                         </div>
                         <div class="file_create_con col-xs-12 no-padding">
-                            <div class="col-xs-2" data-id="{{archive.id}}" ng-repeat="archive in archives">
+                            <div class="col-xs-2" data-id="{{archive.id}}" data-filename="{{archive.file}}" ng-repeat="archive in archives">
                                 <!-- <a href="{{archive.file}}"> -->
                                 <div ng-if="archive.file.slice(-3) == 'pdf'" ng-dblclick="showPDF(archive.file);">
                                     <div class="file_preview">
@@ -940,7 +946,7 @@
 </div><!-- /.modal -->
 
 
-<div class="modal fade modal-size_3" id="addallergies" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_2" id="addallergies" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">

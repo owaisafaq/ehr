@@ -3505,6 +3505,22 @@ class ApiController extends Controller
 
     }
 
+    public function query_medication(Request $request)
+       {
+           $prescribe_medication_id = $request->input('prescribe_medication_id');
+
+           DB::table('patient_prescription_medicine')
+               ->where('id', $prescribe_medication_id)
+               ->update(
+                   ['medication_status' => 'query', 'updated_at' => date("Y-m-d  H:i:s")]
+               );
+
+
+           return response()->json(['status' => true, 'message' => 'Medication Quried Successfully']);
+
+
+       }
+
 
     public function update_prescription(Request $request)
     {
