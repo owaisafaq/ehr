@@ -541,11 +541,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="allergie in allergies">
+                            <tr ng-repeat="allergie in allergies" ng-init="edit[$index] = false">
                                 <td>E{{allergie.visit_id}}</td>
-                                <td><input type="text" ng-model="allergie.allergy_type" ng-init="edit[$index] = false" ng-disabled="edit[$index] == false" /></td>
+                                <td>
+                                    <!-- <input type="text" ng-model="allergie.allergy_type" ng-init="edit[$index] = false" ng-disabled="edit[$index] == false" /> -->
+                                    <select my-drop-down class="form-control" ng-model="allergie.allergy_type"  placeholder="Select" ng-disabled="edit[$index] == false">
+                                        <option ng-selected="allergie.allergy_type == allergy.id" ng-repeat="allergy in dropDownInfo.AllergyDropdownType" value="{{allergy.id}}">{{allergy.name}}</option>
+                                    </select>
+                                </td>
                                 <td><input type="text" ng-model="allergie.allergies" ng-disabled="edit[$index] == false" /></td>
-                                <td><input type="text" ng-model="allergie.severity" ng-disabled="edit[$index] == false" />
+                                <td>
+                                    <!-- <input type="text" ng-model="allergie.severity" ng-disabled="edit[$index] == false" /> -->
+                                    <select my-drop-down class="form-control" ng-model="allergie.severity"  placeholder="Select" ng-disabled="edit[$index] == false">
+                                        <option ng-selected="allergie.severity == allergy.id" ng-repeat="allergy in dropDownInfo.AllergySeverity" value="{{allergy.id}}">{{allergy.name}}</option>
+                                    </select>
                                 </td>
                                 <td>
                                     <div class="input-group date select-date my-date-picker">
@@ -560,10 +569,6 @@
                                         <option ng-selected="allergie.allergy_status == allergy.name" ng-repeat="allergy in dropDownInfo.AllergyType" value="{{allergy.name}}">{{allergy.name}}</option>
                                         <!--<option ng-selected="allergie.allergy_status == 'not any more'">Not Any More</option>-->
                                     </select>
-                                    <!--                                    <select class="form-control select_searchFields" placeholder="ID Type" ng-model="PI.identity_type">
-                                                                            <option value=""></option>
-                                                                            <option ng-repeat="idType in dropDownInfo.IdType" value="{{idType.id}}">{{idType.type}}</option>
-                                                                        </select>-->
                                 </td>
                                 <td><input type="text" ng-model="allergie.reactions" ng-disabled="edit[$index] == false" /></td>
                                 <td>
@@ -940,7 +945,7 @@
 </div><!-- /.modal -->
 
 
-<div class="modal fade modal-size_3" id="addallergies" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_2" id="addallergies" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">

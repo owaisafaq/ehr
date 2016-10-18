@@ -24,9 +24,17 @@ var dropDownInfo = {
     {"id": "4", "type": "Other"}
 	],
     "AllergyType" :[
-		{"name": "still exists"},
-		{"name": "not any more"}
-	]
+        {"name": "still exists"},
+        {"name": "not any more"}
+    ],
+    "AllergyDropdownType" :[
+        {"name": "1", "id": "1"},
+        {"name": "2", "id": "2"}
+    ],
+    "AllergySeverity" :[
+        {"name": "1", "id": "1"},
+        {"name": "2", "id": "2"}
+    ]
 };
 var frequencies = [
     {"id": "1", "name": "abc"},
