@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllBillingCodes', 'deleteBillingCode', 'addBillingCode', 'editBillingCode', 'GetBillingCode', 'GetAllBillingCategories', 'GetAllTaxRates', '$timeout', function($scope, $rootScope,$window,$routeParams,GetAllBillingCodes,deleteBillingCode,addBillingCode,editBillingCode,GetBillingCode,GetAllBillingCategories,GetAllTaxRates,$timeout){
+AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllBillingCodes', 'deleteBillingCode', 'addBillingCode', 'editBillingCode', 'GetBillingCode', 'GetAllBillingCategories', 'GetAllTaxRates','deleteBillingCategory', '$timeout', function($scope, $rootScope,$window,$routeParams,GetAllBillingCodes,deleteBillingCode,addBillingCode,editBillingCode,GetBillingCode,GetAllBillingCategories,GetAllTaxRates,deleteBillingCategory,$timeout){
 	$rootScope.pageTitle = "EHR - Billing Codes";
     $rootScope.loader = "show";
 	$scope.itemsPerPage = 15;
@@ -245,4 +245,37 @@ AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routePa
 			offset: (pageSize - 1) * curCatPage, limit: $scope.itemsPerPage
 		}, GetAllBillingCategoriesSuccess, GetAllBillingCategoriesFailure);
 	};
+
+	$scope.confirmRemoveBillingCategory = function(id){
+		$scope.deleteBillingCategoryId = id;
+		$('#confirmation').modal('show');
+	};
+	$scope.removeBillingCategory = function(){
+		$rootScope.loader = "show";
+		deleteBillingCategory.get({
+			token: $window.sessionStorage.token,
+			category_id : $scope.deleteBillingCategoryId
+		}, deleteBillingCategorySuccess, deleteBillingCategoryFailure)
+	};
+
+	function deleteBillingCategorySuccess(res){
+		if(res.status == true){
+			$scope.deleteBillingCategoryId = 0;
+			$('#confirmation').modal('hide');
+			GetAllBillingCategories.get({
+				token: $window.sessionStorage.token
+			}, GetAllBillingCategoriesSuccess, GetAllBillingCategoriesFailure);
+		}
+	}
+
+	function deleteBillingCategoryFailure(error){
+		console.log(error);
+		$('#confirmation').modal('hide');
+		$('#internetError').modal('show');
+	}
+
+	$scope.cancelDelete = function(){
+		$scope.deleteBillingCodeId = 0;
+		$scope.deleteBillingCategoryId = 0;
+	}
 }]);
