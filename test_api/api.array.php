@@ -3189,6 +3189,7 @@ $api->params->lab_id = "1";
 $api->params->name = "";
 $api->params->code = "";
 $api->params->cost = "";
+$api->params->description = "";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -3204,6 +3205,7 @@ $api->params->lab_id = "1";
 $api->params->name = "";
 $api->params->code = "";
 $api->params->cost = "";
+$api->params->description = "";
 $api->params->token = "123";
 
 $api_arr [] = $api;

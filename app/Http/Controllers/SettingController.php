@@ -162,9 +162,10 @@ class SettingController extends Controller
         $name = $request->input('name');
         $code = $request->input('code');
         $cost = $request->input('cost');
+        $description = $request->input('description');
 
         DB::table('lab_tests')
-            ->insert(['lab'=>$lab_id,'name' => $name,'lonic_code'=>$code,'cost'=>$cost,'created_at'=> date("Y-m-d  H:i:s")]);
+            ->insert(['lab'=>$lab_id,'name' => $name,'lonic_code'=>$code,'cost'=>$cost,'description'=>$description,'created_at'=> date("Y-m-d  H:i:s")]);
 
         return response()->json(['status' => true, 'message' => 'Lab Test Added successfully']);
 
@@ -178,10 +179,11 @@ class SettingController extends Controller
         $name = $request->input('name');
         $code = $request->input('code');
         $cost = $request->input('cost');
+        $description = $request->input('description');
 
         DB::table('lab_tests')
             ->id('id',$lab_test_id)
-            ->update(['lab'=>$lab_id,'name' => $name,'lonic_code'=>$code,'cost'=>$cost,'updated_at'=> date("Y-m-d  H:i:s")]);
+            ->update(['lab'=>$lab_id,'name' => $name,'lonic_code'=>$code,'cost'=>$cost,'description'=>$description,'updated_at'=> date("Y-m-d  H:i:s")]);
 
         return response()->json(['status' => true, 'message' => 'Lab Test Updated successfully']);
 
