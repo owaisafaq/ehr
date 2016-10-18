@@ -1,5 +1,5 @@
 var AppEHR = angular.module('AppEHR');
-AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', 'GetResourcesByFolderArchives', 'ListFolderArchives', 'EditFolderArchives', 'DeleteFolderArchives', 'RemoveArchives', 'Upload', 'SaveFiles', '$timeout', 'DropDownData', 'ADDSupplements', 'ADDAllergy', 'AddFolderArchives','EditArchives', 'PatienPrescription', 'FolderUpContent', 'FolderUpFolders', 'ListImmunization', 'DeleteImmunization', 'AddImmunization', 'GetAllMedications', 'CheckoutPatient', 'GetMedicineUnits', 'GetPrescriptionSupplements', 'GetMedications', 'GetPatientAppointment', 'GetAP', 'DeleteAP', 'AddAP', 'DeleteFamily', 'ListFamily', 'DeleteAppointments', 'AddFamily', 'ClinicalReport', 'GetAllWardsDropDown', 'GetBedsByWard', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy, GetResourcesByFolderArchives, ListFolderArchives, EditFolderArchives, DeleteFolderArchives, RemoveArchives, Upload, SaveFiles, $timeout, DropDownData, ADDSupplements, ADDAllergy, AddFolderArchives,EditArchives,PatienPrescription, FolderUpContent,FolderUpFolders, ListImmunization, DeleteImmunization, AddImmunization, GetAllMedications, CheckoutPatient, GetMedicineUnits, GetPrescriptionSupplements, GetMedications, GetPatientAppointment, GetAP, DeleteAP, AddAP, DeleteFamily, ListFamily, DeleteAppointments, AddFamily, ClinicalReport, GetAllWardsDropDown, GetBedsByWard) {
+AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', 'GetResourcesByFolderArchives', 'ListFolderArchives', 'EditFolderArchives', 'DeleteFolderArchives', 'RemoveArchives', 'Upload', 'SaveFiles', '$timeout', 'DropDownData', 'ADDSupplements', 'ADDAllergy', 'AddFolderArchives','EditArchives', 'PatienPrescription', 'FolderUpContent', 'FolderUpFolders', 'ListImmunization', 'DeleteImmunization', 'AddImmunization', 'GetAllMedications', 'CheckoutPatient', 'GetMedicineUnits', 'GetPrescriptionSupplements', 'GetMedications', 'GetPatientAppointment', 'GetAP', 'DeleteAP', 'AddAP', 'DeleteFamily', 'ListFamily', 'DeleteAppointments', 'AddFamily', 'ClinicalReport', 'GetAllWardsDropDown', 'GetBedsByWard', 'DownloadArchive', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy, GetResourcesByFolderArchives, ListFolderArchives, EditFolderArchives, DeleteFolderArchives, RemoveArchives, Upload, SaveFiles, $timeout, DropDownData, ADDSupplements, ADDAllergy, AddFolderArchives,EditArchives,PatienPrescription, FolderUpContent,FolderUpFolders, ListImmunization, DeleteImmunization, AddImmunization, GetAllMedications, CheckoutPatient, GetMedicineUnits, GetPrescriptionSupplements, GetMedications, GetPatientAppointment, GetAP, DeleteAP, AddAP, DeleteFamily, ListFamily, DeleteAppointments, AddFamily, ClinicalReport, GetAllWardsDropDown, GetBedsByWard, DownloadArchive) {
         $rootScope.pageTitle = "EHR - Patient Summary Demographics";
         $scope.vital = {};
         $scope.PI = {};
@@ -1020,7 +1020,8 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
 
         function PrescriptionSuccessPop(res) {
-           console.log(res)
+           console.log(res);
+           $rootScope.loader = 'hide';
            if (res.status == true) {
                $('#addmedication').modal('hide');
                $scope.medicationsDataPush = [];
@@ -1030,7 +1031,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
                     limit: $scope.itemsPerPage,
                     patient_id: $routeParams.patientID
                 }, getPatientMedicationSuccess, getPatientMedicationFailure);
-                $rootScope.loader = 'hide';
+                
            }
         }
 
@@ -1457,4 +1458,22 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
               console.log(error);
             }
         }
+
+        $scope.downloadDocuments = function(){
+            console.log($('.file_uploads .active').data('id'));
+            var resourceID = $('.file_uploads .active').data('id');
+            DownloadArchive.save({token: $window.sessionStorage.token, resource_id: resourceID}, downloadSuccess, downloadFailure);
+        }
+        function downloadSuccess(res){
+            if(res.status == true){
+                console.log(res, 'downloadapi');
+            }
+        }
+        function downloadFailure(error){
+            console.log(error);
+        }
+        $("#fileRequest").click(function() {
+            // // hope the server sets Content-Disposition: attachment!
+            window.location = 'file.doc';
+        });
 }]);

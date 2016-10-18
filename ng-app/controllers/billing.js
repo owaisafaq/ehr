@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData','GetBillInvoices','SendEmail', 'CheckoutPatient', 'deleteInvoice', 'AddToBill', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData,GetBillInvoices,SendEmail, CheckoutPatient, deleteInvoice, AddToBill){
+AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData','GetBillInvoices','SendEmail', 'CheckoutPatient', 'deleteInvoice', 'AddToBill', 'GetAllBillingCodes', 'GetAllproducts', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData,GetBillInvoices,SendEmail, CheckoutPatient, deleteInvoice, AddToBill, GetAllBillingCodes, GetAllproducts){
 	$rootScope.pageTitle = "EHR - Billing";
 	$scope.BillListings={};
 	$scope.selectedPatient = {};
@@ -426,7 +426,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
         	$('#internetError').modal('show');
             console.log(res)
         }
-
+        $scope.addToBillData = {};
         $scope.addToBill = function(dataToBeAdded){
         	$rootScope.loader = "show";
         	AddToBill.save({
@@ -445,12 +445,21 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
         		$('#addToBill').modal('show');
         	}
         }
+        GetAllproducts.save({token: $window.sessionStorage.token}, getAllPbillSuccess, checkoutSuccessFailure);
+        function getAllPbillSuccess(res){
+        	if(res.status == true){
+        		console.log(res, 'prodcutsssss');
+        		$scope.productsDropdown = res.date;
+        	}
+        }
 
+        GetAllBillingCodes.get({token: $window.sessionStorage.token, offset: 0, limit:0}, getAllbillSuccess, checkoutSuccessFailure);
+        function getAllbillSuccess(res){
+        	if(res.status == true){
+        		console.log(res, 'billing');
+        		$scope.serviceBill = res.data;
+        	}
+        }
 
-
-
-
-
-
-
+        
 }]);

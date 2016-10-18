@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription', '$window', 'GetPrescription', '$routeParams', 'PatienPrescriptionUpdate', 'GetPatientInfo', 'GetAllMedications', 'DropDownData', 'DeleteMedication', 'AddMedicationInPrescription', 'GetMedicineUnits', 'CheckoutPatient', "GetPrescriptionSupplements", "GetMedications", 'PrescriptionPDF', 'DespensePharmacy', function ($scope, $rootScope, PatienPrescription, $window, GetPrescription, $routeParams, PatienPrescriptionUpdate, GetPatientInfo, GetAllMedications, DropDownData, DeleteMedication, AddMedicationInPrescription, GetMedicineUnits, CheckoutPatient, GetPrescriptionSupplements, GetMedications, PrescriptionPDF, DespensePharmacy) {
+AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription', '$window', 'GetPrescription', '$routeParams', 'PatienPrescriptionUpdate', 'GetPatientInfo', 'GetAllMedications', 'DropDownData', 'DeleteMedication', 'AddMedicationInPrescription', 'GetMedicineUnits', 'CheckoutPatient', "GetPrescriptionSupplements", "GetMedications", 'PrescriptionPDF', 'DespensePharmacy', 'QueryMedication', 'DropDownData', function ($scope, $rootScope, PatienPrescription, $window, GetPrescription, $routeParams, PatienPrescriptionUpdate, GetPatientInfo, GetAllMedications, DropDownData, DeleteMedication, AddMedicationInPrescription, GetMedicineUnits, CheckoutPatient, GetPrescriptionSupplements, GetMedications, PrescriptionPDF, DespensePharmacy, QueryMedication, DropDownData) {
         $rootScope.pageTitle = "EHR - Pharmacy VIew";
         $scope.PrescriptionView = [];
         $scope.medicationsDataPush = [];
@@ -267,10 +267,13 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
             $('#internetError').modal('show');
         }
 
-        $scope.selectedMedication = function(id){
+        $scope.selectedMedication = function(id, index){
             $scope.medicationID = id;
             $scope.removePrescription = true;
-            console.log(id);
+            $scope.presQueries.encounter = $scope.PrescriptionViews[index].visit_id;
+            $scope.presQueries.prescriptionID = $scope.PrescriptionViews[index].prescription_id;
+            //$scope.presQueries.doctor = $scope.PrescriptionViews[index].visit_id;
+            console.log(id, $scope.presQueries);
             $scope.dispensePharmacyButton = false;
         }
 
@@ -383,5 +386,43 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                 }, prescriptionSuccess, prescriptionFailure);
             }
         }
+        $scope.dropDownData = [];
 
-    }]);
+        DropDownData.get({token: $window.sessionStorage.token}, dropDownSuccess, dropDownFailed);
+
+        function dropDownSuccess(res) {
+            console.log("drodowndata", res);
+            if (res.status == true) {
+                angular.copy(res.data, $scope.dropDownData);
+                /*$.each($scope.dropDownData.relationships, function(key, value) {
+                    console.log('autoship_optionKinRelation');
+                  $('#autoship_optionKinRelation').append($("<option></option>").attr("value",value.id).text(value.name));
+                });*/
+            }
+        }
+
+        function dropDownFailed(error) {
+            console.log(error);
+        }
+
+        $scope.presQuery = function(dataToBeAdded){
+            if(dataToBeAdded.doctor != undefined && dataToBeAdded.observation != undefined){
+                $rootScope.loader = "show";
+                QueryMedication.save({token: $window.sessionStorage.token, prescribe_medication_id: $scope.medicationID, doctor: dataToBeAdded.doctor, observation: dataToBeAdded.observation}, presQuerySuccess, getMediFailure);
+            }
+        }
+        $scope.presQueries = {};
+        function presQuerySuccess(res){
+            $scope.dispensePharmacyButton = true;
+            $rootScope.loader = "hide";
+            if(res.status == true){
+                $('#prescription-query').modal('hide');
+                $('#querySuccess').modal('show');
+                GetPrescription.get({
+                    token: $window.sessionStorage.token,
+                    precription_id: $scope.prescriptionID
+                }, prescriptionSuccess, prescriptionFailure);
+            }
+        }
+
+}]);
