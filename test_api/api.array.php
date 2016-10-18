@@ -3,8 +3,8 @@
 require 'api.class.php';
 //define('HOST', 'http://131.107.100.10/ehr/public/api/');
 //define('HOST', 'http://localhost/ehr/public/api/');
-define('HOST', 'http://demoz.online/ehr/public/api/');
-//define('HOST', 'http://demoz.online/dev/ehr/public/api/');
+//define('HOST', 'http://demoz.online/ehr/public/api/');
+define('HOST', 'http://demoz.online/dev/ehr/public/api/');
 define('APP', '');
 define('ROUTE', '');
 
@@ -3157,6 +3157,71 @@ $api->params->token = "123";
 
 $api_arr [] = $api;
 
+//Get All Lab Tests
+$api = new api();
+$api->name = "Get All Lab Tests";
+$api->url = HOST . 'get_all_lab_tests';
+$api->method = "GET";
+$api->params->offset = "1";
+$api->params->limit = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+//Get Single Test
+$api = new api();
+$api->name = "Get Single Test";
+$api->url = HOST . 'get_single_test';
+$api->method = "GET";
+$api->params->lab_test_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+//Add Lab Test
+$api = new api();
+$api->name = "Add Lab Test";
+$api->url = HOST . 'add_lab_test';
+$api->method = "POST";
+$api->params->lab_id = "1";
+$api->params->name = "";
+$api->params->code = "";
+$api->params->cost = "";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+//Update Lab Test
+$api = new api();
+$api->name = "Update Lab Test";
+$api->url = HOST . 'update_current_lab_test';
+$api->method = "POST";
+$api->params->lab_test_id = "1";
+$api->params->lab_id = "1";
+$api->params->name = "";
+$api->params->code = "";
+$api->params->cost = "";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+
+//Delete Lab Test
+$api = new api();
+$api->name = "Delete Lab Test";
+$api->url = HOST . 'delete_lab_test';
+$api->method = "POST";
+$api->params->lab_test_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+
 //Dispense Medication
 $api = new api();
 $api->name = "Dispense Medication";
@@ -3166,5 +3231,41 @@ $api->params->prescribe_medication_id = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
+
+
+//Query Medication
+$api = new api();
+$api->name = "Query Medication";
+$api->url = HOST . 'query_medication';
+$api->method = "POST";
+$api->params->prescribe_medication_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+//Download Archive
+$api = new api();
+$api->name = "Download Archive";
+$api->url = HOST . 'download_archive';
+$api->method = "POST";
+$api->params->resource_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+//Get All Products
+$api = new api();
+$api->name = "Get All Products";
+$api->url = HOST . 'get_all_prodducts';
+$api->method = "GET";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+
+
 
 

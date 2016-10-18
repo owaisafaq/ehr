@@ -181,6 +181,7 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->get('get_prescription_list','App\Http\Controllers\ApiController@get_prescription_list');
     $app->get('get_prescription','App\Http\Controllers\ApiController@get_prescription');
     $app->get('dispense_medication','App\Http\Controllers\ApiController@dispense_medication');
+    $app->get('query_medication','App\Http\Controllers\ApiController@query_medication');
     $app->get('get_patient_medications','App\Http\Controllers\ApiController@get_patient_medications');
     $app->post('update_prescription','App\Http\Controllers\ApiController@update_prescription');
     $app->post('remove_patient_precription_medications','App\Http\Controllers\OtherController@remove_patient_precription_medications');
@@ -343,6 +344,22 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->get('get_lab','App\Http\Controllers\SettingController@get_lab');
     $app->post('update_lab','App\Http\Controllers\SettingController@update_lab');
     $app->post('delete_lab','App\Http\Controllers\SettingController@delete_lab');
+
+    $app->get('get_all_lab_tests','App\Http\Controllers\SettingController@get_all_lab_tests');
+    $app->get('get_single_test','App\Http\Controllers\SettingController@get_single_test');
+    $app->post('add_lab_test','App\Http\Controllers\SettingController@add_lab_test');
+    $app->post('update_current_lab_test','App\Http\Controllers\SettingController@update_lab_test');
+    $app->post('delete_lab_test','App\Http\Controllers\SettingController@delete_lab_test');
+
+    //Download Document
+    $app->post('download_archive','App\Http\Controllers\PDFController@download_archive');
+
+
+    //Get All Products
+    $app->get('get_all_prodducts','App\Http\Controllers\SettingController@get_all_prodducts');
+
+
+
 
 
 });
