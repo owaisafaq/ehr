@@ -3036,22 +3036,81 @@ AppEHR.factory("editBillingCode", function ($resource) {
     };
     return updateBillingCode;
 });
-AppEHR.factory("GetAllCategories", function ($resource) {
+AppEHR.factory("GetAllBillingCategories", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'get_billing_category', params, {
             get: {method: 'GET'}
         });
         return res2;
     }
-    var Categories = {
+    var BillingCategories = {
         get: function (params, body, success) {
             var res = getResource(params, body);
             return res.get(params, body, success);
         }
     };
-    return Categories;
+    return BillingCategories;
 });
-
+AppEHR.factory("GetBillingCategory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_single_billing_category', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var BillingCategory = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return BillingCategory;
+});
+AppEHR.factory("deleteBillingCategory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'delete_billing_category', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var deletedBillingCategory = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return deletedBillingCategory;
+});
+AppEHR.factory("addBillingCategory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_billing_category', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var BillingCategory = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return BillingCategory;
+});
+AppEHR.factory("editBillingCategory", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'update_billing_category', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var updateBillingCategory = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return updateBillingCategory;
+});
 
 
 AppEHR.factory("GetAllLabs", function ($resource) {
@@ -3128,4 +3187,79 @@ AppEHR.factory("editLab", function ($resource) {
         }
     };
     return updateLab;
+});
+AppEHR.factory("GetAllLabTests", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_all_lab_tests', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var LabTests = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return LabTests;
+});
+AppEHR.factory("GetLabTest", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_single_test', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var LabTest = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return LabTest;
+});
+AppEHR.factory("deleteLabTest", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'delete_lab_test', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var deletedLabTest = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return deletedLabTest;
+});
+AppEHR.factory("addLabTest", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_lab_test', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var addLabTest = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return addLabTest;
+});
+AppEHR.factory("editLabTest", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'update_current_lab_test', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var updateLabTest = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return updateLabTest;
 });

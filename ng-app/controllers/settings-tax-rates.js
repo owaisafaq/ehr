@@ -8,7 +8,8 @@ AppEHR.controller('settingsTaxRates', ['$scope', '$rootScope', '$window', '$rout
 	$scope.pageSize = 15;
 	$scope.deleteTaxRateId = 0;
 	GetAllTaxRates.get({
-		token: $window.sessionStorage.token
+		token: $window.sessionStorage.token,
+		offset: ($scope.pageSize * $scope.curPage), limit: $scope.itemsPerPage
 	}, GetAllTaxRatesSuccess, GetAllTaxRatesFailure);
 
 	function GetAllTaxRatesSuccess(res) {
