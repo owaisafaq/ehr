@@ -162,7 +162,7 @@
                                             <option ng-repeat="patient in patients" value="{{ patient.id }}">{{ patient.first_name + ' ' + patient.last_name }}</option>
                                         </select>
                                         <input type="text" value="{{prefilledPatientName}}" ng-show="withVisit" disabled="true" ng-value="createOrderPatientID">
-                                        <input type="text" value="{{prefilledPatientName}}" ng-show="withVisit">
+                                        <!-- <input type="text" value="{{prefilledPatientName}}" ng-show="withVisit"> -->
                                         <p class="help-block PIValid" ng-show="submitted && addForm.patient_id.$error.required">Required</p>
                                     </div>
                                         </div>

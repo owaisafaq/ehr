@@ -180,6 +180,7 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->post('get_all_prescription','App\Http\Controllers\ApiController@get_all_prescription');
     $app->get('get_prescription_list','App\Http\Controllers\ApiController@get_prescription_list');
     $app->get('get_prescription','App\Http\Controllers\ApiController@get_prescription');
+    $app->get('dispense_medication','App\Http\Controllers\ApiController@dispense_medication');
     $app->get('get_patient_medications','App\Http\Controllers\ApiController@get_patient_medications');
     $app->post('update_prescription','App\Http\Controllers\ApiController@update_prescription');
     $app->post('remove_patient_precription_medications','App\Http\Controllers\OtherController@remove_patient_precription_medications');
@@ -254,6 +255,7 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->post('get_product','App\Http\Controllers\InventoryAPIController@get_product');
 
     $app->get('get_all_bills','App\Http\Controllers\BillingController@get_all_bills');
+
     $app->get('get_all_invoices','App\Http\Controllers\BillingController@get_all_invoices');
     $app->post('update_invoice','App\Http\Controllers\BillingController@update_invoice');
     $app->get('get_invoice_data','App\Http\Controllers\BillingController@get_invoice_data');
@@ -268,7 +270,10 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
 
     //Billing Codes and Templates
     $app->post('add_billing_category','App\Http\Controllers\BillingController@add_billing_category');
+    $app->post('update_billing_category','App\Http\Controllers\BillingController@update_billing_category');
+    $app->post('delete_billing_category','App\Http\Controllers\BillingController@delete_billing_category');
     $app->get('get_billing_category','App\Http\Controllers\BillingController@get_billing_category');
+    $app->get('get_single_billing_category','App\Http\Controllers\BillingController@get_single_billing_category');
     $app->post('add_billing_code','App\Http\Controllers\BillingController@add_billing_code');
     $app->post('update_billing_code','App\Http\Controllers\BillingController@update_billing_code');
     $app->get('get_all_billing_codes','App\Http\Controllers\BillingController@get_all_billing_codes');
@@ -330,5 +335,14 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     //DashBoard Api's
     $app->get('get_all_todays_appointments','App\Http\Controllers\OtherController@get_all_todays_appointments');
     $app->get('get_todays_all_visits','App\Http\Controllers\OtherController@get_todays_all_visits');
+
+
+    //Settings APIS
+    $app->post('add_lab','App\Http\Controllers\SettingController@add_lab');
+    $app->get('get_labs','App\Http\Controllers\SettingController@get_labs');
+    $app->get('get_lab','App\Http\Controllers\SettingController@get_lab');
+    $app->post('update_lab','App\Http\Controllers\SettingController@update_lab');
+    $app->post('delete_lab','App\Http\Controllers\SettingController@delete_lab');
+
 
 });

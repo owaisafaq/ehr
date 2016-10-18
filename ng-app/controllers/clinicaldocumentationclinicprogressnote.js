@@ -725,7 +725,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
         $scope.allDiagnosis = res.data;
         
         $.each($scope.allDiagnosis, function(key, value) {   
-          $('.chosen-select').append($("<option></option>").attr("value",value.id).text(value.name));
+          $('.chosen-select').append($("<option></option>").attr("value",value.id).text(value.name+" "+value.code));
         })
         $(".chosen-select").css('display', "block");
         $scope.diagnosis_id = 1;

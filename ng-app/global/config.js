@@ -1,7 +1,7 @@
 //var serverPath = "http://131.107.100.10/ehr/public/api/";
 //var serverPath = "http://demoz.online/ehr/public/api/";
 //var serverPath = "http://demoz.online/dev/ehr/public/api/";
-var serverPath = "http://demoz.online/ehr/public/api/";
+var serverPath = "http://demoz.online/dev/ehr/public/api/";
 
 //var patientFileUploadPath = "http://demoz.online/ehr/public/uploaded_images/";
 // http://demoz.online/staging/ehr/public/uploaded_images/
@@ -24,9 +24,17 @@ var dropDownInfo = {
     {"id": "4", "type": "Other"}
 	],
     "AllergyType" :[
-		{"name": "still exists"},
-		{"name": "not any more"}
-	]
+        {"name": "still exists"},
+        {"name": "not any more"}
+    ],
+    "AllergyDropdownType" :[
+        {"name": "1", "id": "1"},
+        {"name": "2", "id": "2"}
+    ],
+    "AllergySeverity" :[
+        {"name": "1", "id": "1"},
+        {"name": "2", "id": "2"}
+    ]
 };
 var frequencies = [
     {"id": "1", "name": "abc"},

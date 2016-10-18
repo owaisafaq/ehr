@@ -297,9 +297,9 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 			$('#internetError').modal('show');
 			console.log(error);
 		}
-                 GetAllInvoices.get({
+    GetAllInvoices.get({
 		token: $window.sessionStorage.token,
-                bill_id : bill_id
+        bill_id : bill_id
 	}, GetAllInvoicesSuccess, GetAllInvoicesFailure);
 
 	
@@ -365,6 +365,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 
 
 	$scope.deletingInvoice = function (invoice_id){
+		$rootScope.loader = "show";
 		deleteInvoice.save({
 			token: $window.sessionStorage.token,
 			invoice_id: invoice_id
@@ -372,14 +373,17 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	};
 
 	function deleteInvoiceSuccess(res){
+		$rootScope.loader = "hide";
+		$scope.deleteInvoiceButton = true;
 		if(res.status == true) {
 			$('#deleteConfirm').modal('hide');
 			$('#successModal').modal('show');
 			GetAllInvoices.get({
 				token: $window.sessionStorage.token,
+				bill_id : $scope.bill_id
 			}, GetAllInvoicesSuccess, GetAllInvoicesFailure);
 		}else {
-			alert(res.message);
+			//alert(res.message);
 		}
 	}
 	function deleteInvoiceFailure(error){
@@ -424,18 +428,21 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
         }
 
         $scope.addToBill = function(dataToBeAdded){
+        	$rootScope.loader = "show";
         	AddToBill.save({
         		token: $window.sessionStorage.token,
         		quantity: dataToBeAdded.quantity == undefined ? '' : dataToBeAdded.quantity,
         		bill_id: $scope.bill_id,
+        		patient_id: $scope.patient_id,
         		product_id: dataToBeAdded.product == undefined ? '0' : dataToBeAdded.product,
         		service_id: dataToBeAdded.service == undefined ? '0' : dataToBeAdded.service
         	}, addToBillSuccess, checkoutSuccessFailure);
         }
 
         function addToBillSuccess(res){
+        	$rootScope.loader = "hide";
         	if(res.status == true){
-        		console.log(res);
+        		$('#addToBill').modal('show');
         	}
         }
 

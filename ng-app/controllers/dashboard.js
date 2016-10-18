@@ -20,7 +20,8 @@ AppEHR.controller('dashboard', ['$scope', '$rootScope', '$window', 'DashboardCou
 	month[10] = "November";
 	month[11] = "December";
 	$scope.month = month[$scope.date.getMonth()];
-	$scope.date = $scope.date.getDay() + " " + month[$scope.date.getMonth()] + " " + $scope.date.getFullYear();
+	$scope.date = $scope.date.getDate() + " " + month[$scope.date.getMonth()] + " " + $scope.date.getFullYear();
+	console.log($scope.date);
 	DashboardCounts.get({token: $window.sessionStorage.token}, dashboardSuccess, dashboardFailure);
 	function dashboardSuccess(res){
 		$rootScope.loader = "hide";
