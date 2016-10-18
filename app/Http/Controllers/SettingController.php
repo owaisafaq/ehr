@@ -182,7 +182,7 @@ class SettingController extends Controller
         $description = $request->input('description');
 
         DB::table('lab_tests')
-            ->id('id',$lab_test_id)
+            ->where('id',$lab_test_id)
             ->update(['lab'=>$lab_id,'name' => $name,'lonic_code'=>$code,'cost'=>$cost,'description'=>$description,'updated_at'=> date("Y-m-d  H:i:s")]);
 
         return response()->json(['status' => true, 'message' => 'Lab Test Updated successfully']);

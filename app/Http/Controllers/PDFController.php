@@ -319,14 +319,18 @@ class PDFController extends Controller
         $path = base_path().'/public/patient_archive/';
 
         $file = DB::table('resources')
-             ->select(DB::raw('CONCAT("'. $path.'",resources.file) as file'))
+             ->select('file')
              ->where('id', $archive_id)
              ->first();
 
-/*        $response->headers->set('Access-Control-Allow-Origin' , '*')
+
+        $file_name = $path.$file->file;
+
+
+        /*$response->headers->set('Access-Control-Allow-Origin' , '*')
         $response->headers->set('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
         $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With, Application');*/
 
-        return response()->download($file->file);
+        return response()->download($file_name,$file->file);
     }
 }
