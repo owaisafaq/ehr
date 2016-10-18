@@ -1125,8 +1125,7 @@
                         <div class="col-lg-9 select-con">
                             <select class="select_searchFields form-control" placeholder="Select Product" ng-model="addToBillData.product">
                                 <option value=""></option>
-                                <option>2</option>
-                                <option>3</option>
+                                <option value="{{p.id}}" ng-repeat="p in productsDropdown">{{p.name}}</option>
                             </select>
                         </div>
                         <div class="col-lg-3 margin-top-10">
@@ -1143,8 +1142,7 @@
                         <div class="col-lg-9 select-con">
                             <select class="select_searchFields form-control" placeholder="Select Service" ng-model="addToBillData.service">
                                 <option value=""></option>
-                                <option>2</option>
-                                <option>3</option>
+                                <option value="{{s.id}}" ng-repeat="s in serviceBill">{{s.category}}</option>
                             </select>
                         </div>
                     </div>

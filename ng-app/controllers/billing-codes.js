@@ -1,14 +1,16 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllBillingCodes', 'deleteBillingCode', 'addBillingCode', 'editBillingCode', 'GetBillingCode', 'GetAllCategories', 'GetAllTaxRates', '$timeout', function($scope, $rootScope,$window,$routeParams,GetAllBillingCodes,deleteBillingCode,addBillingCode,editBillingCode,GetBillingCode,GetAllCategories,GetAllTaxRates,$timeout){
+AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllBillingCodes', 'deleteBillingCode', 'addBillingCode', 'editBillingCode', 'GetBillingCode', 'GetAllBillingCategories', 'GetAllTaxRates', '$timeout', function($scope, $rootScope,$window,$routeParams,GetAllBillingCodes,deleteBillingCode,addBillingCode,editBillingCode,GetBillingCode,GetAllBillingCategories,GetAllTaxRates,$timeout){
 	$rootScope.pageTitle = "EHR - Billing Codes";
     $rootScope.loader = "show";
 	$scope.itemsPerPage = 15;
 	$scope.curPage = 0;
+	$scope.curCatPage = 0;
 	$scope.pageSize = 15;
 	$scope.deleteBillingCodeId = 0;
 	GetAllBillingCodes.get({
-		token: $window.sessionStorage.token
+		token: $window.sessionStorage.token,
+		offset: 0, limit: $scope.itemsPerPage
 	}, GetAllBillingCodesSuccess, GetAllBillingCodesFailure);
 
 	function GetAllBillingCodesSuccess(res) {
@@ -126,6 +128,9 @@ AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routePa
 		$rootScope.loader = "hide";
 		if (res.status == true) {
 			$scope.editBillingCodeData = res.data;
+			setTimeout(function () {
+				$('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
+			},100);
 			$('#editcode').modal('show');
 		}
 	}
@@ -179,13 +184,13 @@ AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routePa
 		$('#internetError').modal('show');
 	}
 
-    GetAllCategories.get({
+	GetAllBillingCategories.get({
         token: $window.sessionStorage.token,
         offset : 0,
         limit : 0
-    }, GetAllCategoriesSuccess, GetAllCategoriesFailure);
+    }, GetAllBillingCategoriesSuccess, GetAllBillingCategoriesFailure);
 
-    function GetAllCategoriesSuccess(res) {
+    function GetAllBillingCategoriesSuccess(res) {
         $rootScope.loader = "hide";
         if (res.status == true) {
             if(res.data.length == 0){
@@ -195,7 +200,7 @@ AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routePa
             $scope.CategoriesCount = res.count;
         }
     }
-    function GetAllCategoriesFailure(error) {
+    function GetAllBillingCategoriesFailure(error) {
         $('#internetError').modal('show');
         console.log(error);
     }
@@ -220,4 +225,24 @@ AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routePa
         $('#internetError').modal('show');
         console.log(error);
     }
+
+	$scope.numberOfPagesCategories = function() {
+		return Math.ceil($scope.CategoriesCount / $scope.pageSize);
+	};
+
+	$scope.paginationNextCategories = function(pageSize, curCatPage){
+		$rootScope.loader = "show";
+		GetAllBillingCategories.get({
+			token: $window.sessionStorage.token,
+			offset: (pageSize * curCatPage), limit: $scope.itemsPerPage
+		}, GetAllBillingCategoriesSuccess, GetAllBillingCategoriesFailure);
+	};
+
+	$scope.paginationPrevCategories = function(pageSize, curCatPage){
+		$rootScope.loader = "show";
+		GetAllBillingCategories.get({
+			token: $window.sessionStorage.token,
+			offset: (pageSize - 1) * curCatPage, limit: $scope.itemsPerPage
+		}, GetAllBillingCategoriesSuccess, GetAllBillingCategoriesFailure);
+	};
 }]);
