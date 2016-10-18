@@ -17,8 +17,6 @@
                         </div>
                     </div>
                     <form class="custom-form">
-
-
                         <table class="table table-striped no-margin table-custom table-custom_big inventory_detail">
                             <thead>
                                 <tr>
@@ -28,48 +26,58 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="InventoryList in InventoryLists| filter:search |filter:cat_search">
-                                    <td><a href="#" class="blue">{{InventoryList.product_id}}</a></td>
-                                    <td>{{InventoryList.product_name}}</td>
+                                <tr ng-repeat="TaxRate in TaxRateLists| filter:search |filter:cat_search">
+                                    <td><a href="#" class="blue">{{TaxRate.name}}</a></td>
+                                    <td>{{TaxRate.rate}}</td>
                                     <td>
                                         <div class="billing_actions"><a href="javascript:;" class="setting-button"></a>
                                             <div class="tool-tip_popup">
-                                                <a href="javascript:;" ng-click="productDetail(InventoryList.product_id)">Edit</a>
-                                                <a href="javascript:;" ng-click="StockSelectedReorder(InventoryList.product_id)">Delete</a>
+                                                <a href="javascript:;" ng-click="taxRateDetail(TaxRate.id)">Edit</a>
+                                                <a href="javascript:;" ng-click="confirmRemoveTaxRate(TaxRate.id)">Delete</a>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
-
                             </tbody>
                         </table>
                         <!--muzammil do you code here-->
-                        <div class="pagination pagination-centered pull-right" ng-show="pharmacyCount">
-                        <ul class="pagination-controle pagination">
-                            <li class="prev-page">
-                                <!--<button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>-->
-                                <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage = curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
-                            </li>                            
-                            <li>
-                                <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberPharmacy" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
-                            </li>
-                             <li class="next-page">
-                              <!--<button type="button" class="btn btn-primary" ng-disabled="curPage >= patientCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>-->
-                              <button type="button" class="btn btn-primary" ng-disabled="curPage >= pharmacyCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
-                            </li>
-                        </ul>
-                    </div>
-                      
+                        <div class="pagination pagination-centered pull-right" ng-show="taxRatesCount">
+                            <ul class="pagination-controle pagination">
+                                <li class="prev-page">
+                                    <!--<button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>-->
+                                    <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage = curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
+                                </li>
+                                <li>
+                                    <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumber" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
+                                </li>
+                                 <li class="next-page">
+                                  <!--<button type="button" class="btn btn-primary" ng-disabled="curPage >= patientCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>-->
+                                  <button type="button" class="btn btn-primary" ng-disabled="curPage >= taxRatesCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
+                                </li>
+                            </ul>
+                        </div>
                     </form>
-
                 </div>
-              
             </div><!--end .card-body -->
         </div><!--end .card -->
     </section>
 </div>
-
-
+<div class="modal fade modal-size_1" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Confirmation</h2>
+            </div>
+            <div class="modal-body">
+                <p class="modal-subtext">Do you want to Delete?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-toggle="modal" ng-click="removeTaxRate();"  data-dismiss="modal">Ok</button>
+                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <div class="modal fade modal-size_1" id="addtax" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -77,40 +85,95 @@
                 <h2>Add Category</h2>
             </div>
             <div class="modal-body">
-                <form class="custom-form">
-                    <!--<div class="row">-->
-                        <div class="row margin-bottom-xxl">
+                <form class="custom-form" name="userForm1" ng-model="myForm" novalidate ng-submit="createTaxRate(taxRateData);">
+                    <div class="row margin-bottom-xxl">
+                        <div class="alert {{messageType}}" role="alert" ng-show="message">
+                            <i class="{{errorSymbol}}"></i> {{errorMessage}}
+                        </div>
+                    </div>
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Tax Name</label>
                         </div>
                         <div class="col-lg-9">
-                            <input type="text" placeholder="" name="" required/>
+                            <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm1.name.$invalid]"  name="name" required  ng-model="taxRateData.name" />
+                            <p class="help-block PIValid" ng-show="submitted && userForm1.name.$error.required">Required</p>
                         </div>
-                            </div>
-               
-
-<div class="row">
+                    </div>
+                    <div class="row">
                         <div class="col-lg-3">
                             <label>Tax Percentage</label>
                         </div>
                         <div class="col-lg-9">
-                            <input type="text" placeholder="" name="" required/>
+                            <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm1.rate.$invalid]" numbers-only name="rate" required  ng-model="taxRateData.rate" />
+                            <p class="help-block PIValid" ng-show="submitted && userForm1.rate.$error.required">Required</p>
                         </div>
-</div>
-                    <!--</div>-->
+                    </div>
                     <div class="modal-footer row">
                         <div class="row">
-                        <button type="button" class="btn btn-default button-style-1">Add</button>
-                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;" ng-disabled="submitted && userForm1.$invalid">Add</button>
+                            <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal" ng-disabled="addTextRateBtn">Cancel</button>
                         </div>
                     </div>
                 </form>
-
             </div>
-
         </div><!-- /.modal-content -->
-
-
     </div><!-- /.modal-dialog -->
-
+</div><!-- /.modal -->
+<div class="modal fade modal-size_1" id="edittax" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Edit Category</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form" name="userForm2" ng-model="myForm" novalidate ng-submit="updateTaxRate(editTaxRateData);">
+                    <div class="row margin-bottom-xxl">
+                        <div class="alert {{messageType}}" role="alert" ng-show="message">
+                            <i class="{{errorSymbol}}"></i> {{errorMessage}}
+                        </div>
+                    </div>
+                    <div class="row margin-bottom-xxl">
+                        <div class="col-lg-3">
+                            <label>Tax Name</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm2.name.$invalid]"  name="name" required  ng-model="editTaxRateData.name" />
+                            <p class="help-block PIValid" ng-show="submitted && userForm2.name.$error.required">Required</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label>Tax Percentage</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm2.rate.$invalid]"  name="rate" required  ng-model="editTaxRateData.rate" />
+                            <p class="help-block PIValid" ng-show="submitted && userForm2.rate.$error.required">Required</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer row">
+                        <div class="row">
+                            <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;" ng-disabled="submitted && userForm2.$invalid">Edit</button>
+                            <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal" ng-disabled="updateTextRateBtn">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade modal-size_1" id="noResultFound" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Result</h2>
+            </div>
+            <div class="modal-body">
+                <p class="modal-subtext">No Result Found</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
