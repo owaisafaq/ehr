@@ -1,5 +1,5 @@
 var AppEHR = angular.module('AppEHR');
-AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', 'PatientInformation', 'fileUpload', '$location', '$filter', 'Upload', '$timeout', 'PatientRegistrationAddress', 'PatientRegistrationKin', 'PatientRegistrationEmployer', '$routeParams', 'GetPatientAllData', 'PatienPlanSaveData', '$compile', '$http', 'GetArchives', 'RemoveArchives', 'EditArchives', 'AddFolderArchives', 'ListFolderArchives', 'GetResourcesByFolderArchives', 'DeleteFolderArchives', 'EditFolderArchives', 'SaveFiles', 'fileUpload', 'FolderUpContent', 'FolderUpFolders', function ($rootScope, $scope, $window, Countries, States, GetLocalGovermentArea, City, DropDownData, PatientInformation, fileUpload, $location, $filter, Upload, $timeout, PatientRegistrationAddress, PatientRegistrationKin, PatientRegistrationEmployer, $routeParams, GetPatientAllData, PatienPlanSaveData, $compile, $http, GetArchives, RemoveArchives, EditArchives, AddFolderArchives, ListFolderArchives, GetResourcesByFolderArchives, DeleteFolderArchives, EditFolderArchives, SaveFiles, fileUpload, FolderUpContent, FolderUpFolders) {
+AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', 'PatientInformation', 'fileUpload', '$location', '$filter', 'Upload', '$timeout', 'PatientRegistrationAddress', 'PatientRegistrationKin', 'PatientRegistrationEmployer', '$routeParams', 'GetPatientAllData', 'PatienPlanSaveData', '$compile', '$http', 'GetArchives', 'RemoveArchives', 'EditArchives', 'AddFolderArchives', 'ListFolderArchives', 'GetResourcesByFolderArchives', 'DeleteFolderArchives', 'EditFolderArchives', 'SaveFiles', 'fileUpload', 'FolderUpContent', 'FolderUpFolders', 'DownloadArchive', function ($rootScope, $scope, $window, Countries, States, GetLocalGovermentArea, City, DropDownData, PatientInformation, fileUpload, $location, $filter, Upload, $timeout, PatientRegistrationAddress, PatientRegistrationKin, PatientRegistrationEmployer, $routeParams, GetPatientAllData, PatienPlanSaveData, $compile, $http, GetArchives, RemoveArchives, EditArchives, AddFolderArchives, ListFolderArchives, GetResourcesByFolderArchives, DeleteFolderArchives, EditFolderArchives, SaveFiles, fileUpload, FolderUpContent, FolderUpFolders, DownloadArchive) {
         $rootScope.pageTitle = "EHR - Patient Registration";
         //$rootScope.loader = "show";
         $scope.PI = $rootScope.PI;
@@ -1832,6 +1832,18 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     $('#internetError').modal('show');
                 }
             
-        
+        $scope.downloadDocuments = function(){
+            console.log($('.file_uploads .active').data('id'));
+            var resourceID = $('.file_uploads .active').data('id');
+            DownloadArchive.save({token: $window.sessionStorage.token, resource_id: resourceID}, downloadSuccess, downloadFailure);
+        }
+        function downloadSuccess(res){
+            if(res.status == true){
+                console.log(res, 'downloadapi');
+            }
+        }
+        function downloadFailure(error){
+            console.log(error);
+        }
             
     }]);

@@ -32,6 +32,7 @@ $(document).ready(function () {
         $('.file_create_con > div,.folder_create_con > div').removeClass('active');
         $('.file_uploads').find('input').not($(this).find('input')).attr('disabled', 'disabled');
         $('.edit').show();
+        $('.download').show();
         $('.done-editing').hide();
         $(this).addClass('active');
     })

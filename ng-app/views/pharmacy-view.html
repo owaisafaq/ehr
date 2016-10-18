@@ -51,7 +51,7 @@
                         <div id="accordion3-1" class="collapse in">
                             <div class="card-body card-body">
                                 <div class="col-lg-12 no-padding margin-bottom-30">
-                                    <button type="button" class="notes button-custom pull-right" data-target="#prescription-query" data-toggle="modal">prescription query</button>
+                                    <button type="button" class="notes button-custom pull-right" data-target="#prescription-query" data-toggle="modal" ng-hide="dispensePharmacyButton">prescription query</button>
                                     <button type="button" class="print button-custom pull-right" data-target="#print-prescription" data-toggle="modal">print prescription</button>
                                     <button type="button" class="delete button-custom pull-right" ng-show="removePrescription" data-toggle="modal" data-target="#confirmation">remove medication</button>
                                     <button type="button" ng-click="updateDispense()" class="update button-custom pull-right">update medication</button>
@@ -77,7 +77,7 @@
                                             <td>
                                                 <div class="radio radio-styled">
                                                     <label>
-                                                        <input ng-model="PrescriptionView.id" type="radio" name="optionsRadios" ng-click="selectedMedication(PrescriptionView.prescribe_medication_id);">
+                                                        <input ng-model="PrescriptionView.id" type="radio" name="optionsRadios" ng-click="selectedMedication(PrescriptionView.prescribe_medication_id, $index);">
                                                         <span></span>
                                                     </label>
                                                 </div>
@@ -150,7 +150,7 @@
 <div class="modal fade modal-size_2" id="prescription-query" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="custom-form">
+            <form class="custom-form" ng-submit="presQuery(presQueries);" novalidate name="query">
                 <div class="modal-header pop_head">
                     <h2>Prescription Query</h2>
                 </div>
@@ -160,14 +160,14 @@
                         <label>encounter id</label>
                     </div>
                     <div class="col-lg-3">
-                        <input type="text" value="{{patient_id}}" disabled />
+                        <input type="text" ng-model="presQueries.encounter" disabled />
                     </div>
 
                     <div class="col-lg-3">
                         <label>prescription id</label>
                     </div>
                     <div class="col-lg-3">
-                        <input type="text" value="In Progress" disabled />
+                        <input type="text" value="In Progress" disabled ng-model="presQueries.prescriptionID"/>
                     </div>
                         </div>
                     <div class="row margin-bottom-xxl">
@@ -176,10 +176,11 @@
                         <label>Select Doctor</label>
                     </div>
                     <div class="col-lg-9">
-                        <select class="form-control">
-                            <option>Dr Joe Bloggs</option>
-                            <option>Dr Bloggs Joe</option>
+                        <select class="form-control" ng-model="presQueries.doctor" name="doc" required ng-class="{true: 'error'}[submitted && query.doc.$invalid]" data-placeholder="Select">
+                            <option value=""></option>
+                            <option value="{{d.id}}" ng-repeat="d in dropDownData.doctors">{{d.name}}</option>
                         </select>
+                        <p class="help-block PIValid" ng-show="submitted && query.doc.$error.required">Required</p>
                     </div>
                     </div>
                     <div class="row">
@@ -188,17 +189,17 @@
                         <label>Observation to doctor</label>
                     </div>
                     <div class="col-lg-12">
-                        <textarea></textarea>
+                        <textarea ng-model="presQueries.observation" name="observation" required ng-class="{true: 'error'}[submitted && query.observation.$invalid]" ></textarea>
+                        <p class="help-block PIValid" ng-show="submitted && query.observation.$error.required">Required</p>
                     </div>
                     </div>
                     <div class="modal-footer row">
                         <div class="col-lg-12 no-padding">
-                            <button type="button" class="btn btn-default button-style-1">Save</button>
+                            <button type="submit" ng-click="submitted=true;" class="btn btn-default button-style-1">Save</button>
                             <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
                         </div>
                     </div>
                 </div>
-
             </form>
         </div><!-- /.modal-content -->
 
@@ -583,6 +584,22 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-toggle="modal" ng-click="removePrescriptions();" data-dismiss="modal">Ok</button>
                 <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade modal-size_1" id="querySuccess" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Status</h2>
+            </div>
+            <div class="modal-body">
+                <p class="modal-subtext">Medication Quried Successfully</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">OK</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
