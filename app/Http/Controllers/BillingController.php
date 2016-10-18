@@ -416,9 +416,12 @@ class BillingController extends Controller
 
     public function get_billing_code(Request $request){
 
-          $bill_code = DB::table('billing_codes')
+        $bill_code_id =$request->input('billing_code_id');
+
+        $bill_code = DB::table('billing_codes')
               ->leftJoin('billing_category', 'billing_codes.category', '=','billing_category.id' )
               ->select(DB::raw('billing_codes.id,billing_codes.code,billing_codes.description,billing_codes.charge,billing_category.name as category,billing_codes.category as category_id'))
+              ->where('billing_codes.id',$bill_code_id)
               ->where('billing_codes.status', 1)
               ->first();
 

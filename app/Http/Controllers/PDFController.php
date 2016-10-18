@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\File;
 use DB;
 use PDF;
 use View;
+use Illuminate\Support\Facades\Response;
 use PHPMailer;
 
 class PDFController extends Controller
@@ -309,5 +310,23 @@ class PDFController extends Controller
             'data' => $file_archive
 
         ), JSON_UNESCAPED_SLASHES);
+    }
+
+    public function download_archive(Request $request){
+
+        $archive_id = $request->input('resource_id');
+
+        $path = base_path().'/public/patient_archive/';
+
+        $file = DB::table('resources')
+             ->select(DB::raw('CONCAT("'. $path.'",resources.file) as file'))
+             ->where('id', $archive_id)
+             ->first();
+
+/*        $response->headers->set('Access-Control-Allow-Origin' , '*')
+        $response->headers->set('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
+        $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With, Application');*/
+
+        return response()->download($file->file);
     }
 }
