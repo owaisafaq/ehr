@@ -1459,10 +1459,10 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
             }
         }
 
-        $scope.downloadDocuments = function(){
+        /*$scope.downloadDocuments = function(){
             console.log($('.file_uploads .active').data('id'));
             var resourceID = $('.file_uploads .active').data('id');
-            DownloadArchive.save({token: $window.sessionStorage.token, resource_id: resourceID}, downloadSuccess, downloadFailure);
+            //DownloadArchive.save({token: $window.sessionStorage.token, resource_id: resourceID}, downloadSuccess, downloadFailure);
         }
         function downloadSuccess(res){
             if(res.status == true){
@@ -1471,9 +1471,5 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         }
         function downloadFailure(error){
             console.log(error);
-        }
-        $("#fileRequest").click(function() {
-            // // hope the server sets Content-Disposition: attachment!
-            window.location = 'file.doc';
-        });
+        }*/
 }]);

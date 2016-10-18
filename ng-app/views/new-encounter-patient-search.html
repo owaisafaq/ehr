@@ -320,12 +320,12 @@
                         <tbody>
                             <tr ng-repeat="lab_test in lab_tests_td">
                                 <td>{{ lab_test.name }}</td>
-                                <td>${{ lab_test.cost }}</td>
+                                <td>N{{ lab_test.cost }}</td>
                                 <td>{{ lab_test.priority }}</td>
                             </tr>
                             <tr>
                                 <td>TOTAL COST</td>
-                                <td>${{ lab_test_total }}</td>
+                                <td>N{{ lab_test_total }}</td>
                                 <td></td>
                             </tr>
                         </tbody>
@@ -521,10 +521,11 @@
                     <div class="col-lg-12 margin-top-10">
                         <div class="col-lg-12">
                         <div class="header-search margin-right-0 col-lg-12">
-                            <button type="submit">
+                            <!-- <button type="submit">
                                 <i class="fa fa-search"></i>
                             </button>
-                            <input class="search_field" type="text" ng-model="appointment.appointmentSearch" placeholder="Search by Name or Patient Id" id="findPatient" data-source="{{PatientSearch}}search_patient" name="FindPatient" ng-class="{true: 'error'}[submitted && myFormAdd.FindPatient.$invalid]" required>
+                            <input class="search_field" type="text" ng-model="appointment.appointmentSearch" placeholder="Search by Name or Patient Id" id="findPatient" data-source="{{PatientSearch}}search_patient" name="FindPatient" ng-class="{true: 'error'}[submitted && myFormAdd.FindPatient.$invalid]" required> -->
+                            <input type="text" value="{{prefilledPatientName}}" disabled="true" ng-value="createOrderPatientID" ng-model="appointment.selectedPatientID">
                             <input type="hidden" ng-model="appointment.selectedPatientID" />
                         </div>
                             </div>

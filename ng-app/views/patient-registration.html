@@ -977,7 +977,7 @@
                             <button class="edit button-custom" ng-disabled="disableOptionsArchive">Edit</button>
                             <button class="delete button-custom" data-toggle="modal" data-target="#confirmation" ng-disabled="disableOptionsArchive">Remove</button>
                             <button ng-click="saveAndClose = true;" data-toggle="modal" data-target="#fileUploader" class="add button-custom">ADD</button>
-                            <button class="edit button-custom" ng-disabled="disableOptionsArchive" ng-click="downloadDocuments();">Download</button>
+                            <a href="" id="downloadFile" class="edit button-custom" download>Download</a>
                         </div>
                     </div>
 
@@ -994,7 +994,7 @@
                             </div>
                         </div>
                         <div class="file_create_con col-xs-12 no-padding">
-                            <div class="col-xs-2" data-id="{{archive.id}}" ng-repeat="archive in archives">
+                            <div class="col-xs-2" data-id="{{archive.id}}" data-filename="{{archive.file}}" ng-repeat="archive in archives">
                                 <!-- <a href="{{archive.file}}"> -->
                                 <div ng-if="archive.file.slice(-3) == 'pdf'" ng-dblclick="showPDF(archive.file);">
                                     <div class="file_preview">

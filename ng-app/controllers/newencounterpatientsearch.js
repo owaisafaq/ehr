@@ -587,12 +587,13 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
     }
 
     $scope.createAppointments = function(dataToBeAdded){
-        if(dataToBeAdded.appointmentSearch != undefined && dataToBeAdded.department != undefined && dataToBeAdded.otherReason != undefined && dataToBeAdded.date != undefined && dataToBeAdded.startTime != undefined && dataToBeAdded.doctor != undefined){
+    	console.log(dataToBeAdded);
+        if(dataToBeAdded.department != undefined && dataToBeAdded.otherReason != undefined && dataToBeAdded.date != undefined && dataToBeAdded.startTime != undefined && dataToBeAdded.doctor != undefined){
         	$scope.disabledButton = "true";
         	$rootScope.loader = "show";
         	AddAppointments.save({
         		token: $window.sessionStorage.token,
-        		patient_id: dataToBeAdded.appointmentSearch,
+        		patient_id: $scope.createOrderPatientID,
         		//visit_id: $scope.encounterID,
         		department: dataToBeAdded.department == undefined ? '' : dataToBeAdded.department,
         		reason: dataToBeAdded.reason == undefined ? '' : dataToBeAdded.reason,
