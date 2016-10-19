@@ -63,10 +63,9 @@ class BillingController extends Controller
             $amount = $cost->cost * $quantity;
 
             if ($amount == 0) {
-
                 $amount = 50;
-
             }
+
             DB::table('invoice')
                 ->insert(
                     ['patient_id' => $patient_id,

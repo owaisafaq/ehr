@@ -493,6 +493,7 @@ class InventoryAPIController extends Controller
          $cat_id = $request->input('cat_id');
          $strength = $request->input('strength');
          $dose_from = $request->input('dose_from');
+         $cost_per_item = $request->input('cost_per_item');
 
 
         $product = DB::table('inventory_products')
@@ -504,19 +505,42 @@ class InventoryAPIController extends Controller
             return response()->json(['status' => false, 'message' => "Product with same name exists already"], 200);
         }
 
-         $id = DB::table('inventory_products')->insertGetId(
-             [
-                'group'=>$group,
-                 //'department_id'=>$group,
-                 'name'=>$product_name,
-                 'trade_name'=>$trade_name,
-                 'route'=>$route,
-                 'reorder_level'=>$reorder_level,
-                 'cat_id'=>$cat_id,
-                 'strength'=>$strength,
-                 'dose_from'=>$dose_from
-             ]
-         );
+        if ($group != 'Drugs' || $group != 'Supplements') {
+            $id = DB::table('inventory_products')->insertGetId(
+                [
+                    'group' => $group,
+                    //'department_id'=>$group,
+                    'name' => $product_name,
+                    'trade_name' => $trade_name,
+                    'route' => $route,
+                    'reorder_level' => $reorder_level,
+                    'cat_id' => $cat_id,
+                    'strength' => $strength,
+                    'dose_from' => $dose_from,
+                    'cost' => $cost_per_item
+                ]
+            );
+
+            return response()->json(['status' => true, 'message' => "Product Inventory Added Successfully"], 200);
+
+        } else {
+            $id = DB::table('inventory_products')->insertGetId(
+                [
+                    'group' => $group,
+                    //'department_id'=>$group,
+                    'name' => $product_name,
+                    'trade_name' => $trade_name,
+                    'route' => $route,
+                    'reorder_level' => $reorder_level,
+                    'cat_id' => $cat_id,
+                    'strength' => $strength,
+                    'dose_from' => $dose_from
+                ]
+            );
+
+        }
+
+
         $product_id = $id;
 
         $pharmacy_id = $request->input('pharmacy_id');

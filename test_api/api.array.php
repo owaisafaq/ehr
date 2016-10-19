@@ -1617,6 +1617,7 @@ $api->params->reorder_level = "1";
 $api->params->cat_id = "1";
 $api->params->strength = "1";
 $api->params->dose_from = "1";
+$api->params->cost_per_item = "1";
 $api->params->token = "";
 
 $api_arr [] = $api;
