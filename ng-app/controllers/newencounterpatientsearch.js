@@ -131,6 +131,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
         $scope.EID = encounterID;
         $rootScope.loader = "show";
         $scope.PID = patientID;
+
         $scope.createOrderPatientID = patientID;
         GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: patientID}, getEncountersSuccess, getEncountersFailure);
         function getEncountersSuccess(res) {
@@ -148,6 +149,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
                 $scope.displayInfo.marital_status = res.data.marital_status;
                 $scope.hospital_plan = res.data.hospital_plan;
                 $scope.visitStatus = res.is_visit;
+                $scope.PIDwithName = patientID + " " + $scope.displayInfo.first_name + " " + $scope.displayInfo.last_name;
                 if($scope.hospital_plan == '1') $scope.hospital_plan = "card-color-1";
                 if($scope.hospital_plan == '2') $scope.hospital_plan = "card-color-2";
                 else $scope.hospital_plan = "card-color-3";

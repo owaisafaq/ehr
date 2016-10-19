@@ -139,6 +139,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 
 				GetAllInvoices.get({
 					token: $window.sessionStorage.token,
+					bill_id : $scope.bill_id
 				}, GetAllInvoicesSuccess, GetAllInvoicesFailure);
 
 
