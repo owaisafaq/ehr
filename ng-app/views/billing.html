@@ -223,7 +223,7 @@
                                         </td>
                                         <td>{{Invoice.created_at}}</td>
                                         <td>{{Invoice.id}}</td>
-                                        <td>{{Invoice.patient_id}}</td>
+                                        <td><a class="blue" href="#/patient-summary-demographics/{{Invoice.patient_id}}">P{{Invoice.patient_id}}</a></td>
                                         <td>{{Invoice.first_name}}</td>
                                         <td>{{Invoice.plan_name}}</td>
                                         <td>{{Invoice.description}}</td>
@@ -1029,7 +1029,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
-                <h2>Process Payment</h2>
+                <h2>Send Invoice</h2>
             </div>
             <div class="modal-body">
                 <form class="custom-form" ng-submit="SendInvoice(sendData, invoice_id);">

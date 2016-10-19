@@ -180,10 +180,12 @@
                             <label>City</label>
                         </div>
                         <div class="col-lg-3 margin-bottom-xxl">
-                            <select class="form-control" name="city" ng-model="pharmacyData.city" placeholder="Select City" required ng-class="{true: 'error'}[submitted && userForm1.city.$invalid]">
+                            <!-- <select class="form-control" name="city" ng-model="pharmacyData.city" placeholder="Select City" required ng-class="{true: 'error'}[submitted && userForm1.city.$invalid]">
                                 <option value=""></option>
                                 <option ng-repeat='city in cities' value='{{ city.id }}'>{{ city.name }}</option>
-                            </select>
+                            </select> -->
+                            <input type="text" placeholder="" name="city" ng-model="pharmacyData.city" required ng-class="{true: 'error'}[submitted && userForm1.city.$invalid]"/>
+                            <p class="help-block PIValid" ng-show="submitted && userForm1.city.$error.required">Required</p>
                         </div>
                         <div class="col-lg-3">
                             <label>Post Code</label>
@@ -281,10 +283,12 @@
                             <label>City</label>
                         </div>
                         <div class="col-lg-3 margin-bottom-xxl">
-                            <select class="form-control" name="city" ng-model="pharmacyDataEdit.city" placeholder="Select City" required ng-class="{true: 'error'}[submitted && userForm2.city.$invalid]" my-drop-down>
+                            <!-- <select class="form-control" name="city" ng-model="pharmacyDataEdit.city" placeholder="Select City" required ng-class="{true: 'error'}[submitted && userForm2.city.$invalid]" my-drop-down>
                                 <option value=""></option>
                                 <option ng-repeat='city in cities' value='{{ city.id }}' ng-selected="city.id == pharmacyDataEdit.city">{{ city.name }}</option>
-                            </select>
+                            </select> -->
+                            <input type="text" placeholder="Select" name="city" ng-model="pharmacyDataEdit.city" required ng-class="{true: 'error'}[submitted && userForm2.city.$invalid]"/>
+                            <p class="help-block PIValid" ng-show="submitted && userForm2.city.$error.required">Required</p>
                         </div>
                         <div class="col-lg-3">
                             <label>Post Code</label>
