@@ -3267,6 +3267,42 @@ $api->params->token = "123";
 $api_arr [] = $api;
 
 
+//Add Update Hospital
+$api = new api();
+$api->name = "Add Update Hospital";
+$api->url = HOST . 'add_update_hospital';
+$api->method = "POST";
+$api->params->is_update = "1";
+$api->params->name = "New Hospital";
+$api->params->address = "";
+$api->params->type = "";
+$api->params->city = "1";
+$api->params->registration_number = "";
+$api->params->state = "1";
+$api->params->category = "";
+$api->params->country = "1";
+$api->params->number_of_departments = "10";
+$api->params->phone = "";
+$api->params->date_registration = "18-2-1990";
+$api->params->email = "";
+$api->params->number_beds = "10";
+$api->params->website = "newhospital.com";
+$api->params->name_proprietor = "james";
+$api->params->accredation_lab = "W1-01";
+$api->params->accredation_pharmacy = "W2-021";
+$api->params->accredation_others = "w3-021";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+//Get Hospital Profile
+$api = new api();
+$api->name = "Get Hospital Profile";
+$api->url = HOST . 'get_hospital_profile';
+$api->method = "GET";
+$api->params->token = "123";
+
+$api_arr [] = $api;
 
 
 

@@ -217,4 +217,127 @@ class SettingController extends Controller
 
     }
 
+    public function add_update_hospital(Request $request){
+
+        $is_update= $request->input('is_update');
+        $name = $request->input('name');
+        $address = $request->input('address');
+        $type= $request->input('type');
+        $city= $request->input('city');
+        $registration_number = $request->input('registration_number');
+        $state = $request->input('state');
+        $category = $request->input('category');
+        $country= $request->input('country');
+        $number_of_departments = $request->input('number_of_departments');
+        $phone= $request->input('phone');
+        $date_registration= $request->input('date_registration');
+        $email= $request->input('email');
+        $number_beds = $request->input('number_beds');
+        $website = $request->input('website');
+        $name_proprietor = $request->input('name_proprietor');
+        $accredation_lab= $request->input('accredation_lab');
+        $accredation_pharmacy= $request->input('accredation_pharmacy');
+        $accredation_others= $request->input('accredation_others');
+
+        if ($is_update == 0) {
+
+            DB::table('hospital')
+                ->insert([
+                    'name' => $name,
+                    'address' => $address,
+                    'type' => $type,
+                    'city' => $city,
+                    'registration_number' => $registration_number,
+                    'state' => $state,
+                    'category' => $category,
+                    'country' => $country,
+                    'number_of_departments' => $number_of_departments,
+                    'phone' => $phone,
+                    'date_registration' => $date_registration,
+                    'email' => $email,
+                    'number_beds' => $number_beds,
+                    'website' => $website,
+                    'name_proprietor' => $name_proprietor,
+                    'accredation_lab' => $accredation_lab,
+                    'accredation_pharmacy' => $accredation_pharmacy,
+                    'accredation_others' => $accredation_others,
+                    'created_at' => date("Y-m-d  H:i:s")]);
+
+            return response()->json(['status' => true, 'message' => 'Hospital Added successfully']);
+
+        }else{
+
+            DB::table('hospital')
+                ->where('id',1)
+                ->update([
+                    'name' => $name,
+                    'address' => $address,
+                    'type' => $type,
+                    'city' => $city,
+                    'registration_number' => $registration_number,
+                    'state' => $state,
+                    'category' => $category,
+                    'country' => $country,
+                    'number_of_departments' => $number_of_departments,
+                    'phone' => $phone,
+                    'date_registration' => $date_registration,
+                    'email' => $email,
+                    'number_beds' => $number_beds,
+                    'website' => $website,
+                    'name_proprietor' => $name_proprietor,
+                    'accredation_lab' => $accredation_lab,
+                    'accredation_pharmacy' => $accredation_pharmacy,
+                    'accredation_others' => $accredation_others,
+                    'updated' => date("Y-m-d  H:i:s")]);
+
+            return response()->json(['status' => true, 'message' => 'Hospital Updated successfully']);
+
+
+        }
+    }
+
+    public function get_hospital_profile(Request $request){
+
+        $data = DB::table('hospital')
+               ->leftJoin('countries', 'countries.id', '=', 'hospital.country')
+               ->leftJoin('states', 'states.id', '=', 'hospital.state')
+               ->select(DB::raw('hospital.*,states.name as state,countries.name as country,states.name as state'))
+               ->where('id',1)
+               ->where('hospital.status', 1)
+               ->first();
+
+        return response()->json(['status'=>true,'data'=>$data]);
+
+    }
+
+    public function upload_hospital_image(Request $request)
+       {
+           $image = $request->file('hospital_image');
+           $destinationPath = base_path() . '/public/uploaded_images';
+           $original_name = $image->getClientOriginalName();
+
+           $extension = $image->getClientOriginalExtension(); // getting image extension
+           $fileName = rand() . time() . '.' . $extension; // renameing image
+           if (!$image->isValid()) {
+               return response()->json(['status' => false, 'message' => 'Invalid image']);
+           }
+
+           $image->move($destinationPath, $fileName);
+
+           DB::table('hospital')
+                    ->where('id',1)
+                    ->update(['image'=> $fileName,'updated_at'=> date("Y-m-d  H:i:s")]);
+
+           return response()->json(['status' => true, 'message' => "Patient Image Uploaded Successfully", "image" => $fileName,'name'=> $original_name]);
+
+
+       }
+
+       public function optupload_hospital_image(Request $request)
+       {
+
+           return response()->json(['status' => true, 'message' => 'hello']);
+
+       }
+
 }
