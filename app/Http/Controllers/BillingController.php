@@ -55,20 +55,18 @@ class BillingController extends Controller
 
         if ($product_id > 0) {
 
-/*            $cat_id = DB::table('inventory_products')
-                ->select(DB::raw('cat_id'))
+            $cost = DB::table('inventory_products')
+                ->select(DB::raw('cost'))
                 ->where('id', $product_id)
                 ->first();
 
-            $cost = DB::table('inventory_categories')
-                ->select(DB::raw('cat_id'))
-                ->where('id', $cat_id)
-                ->first();
+            $amount = $cost->cost * $quantity;
 
-            $amount = $cost * $quantity;*/
+            if ($amount == 0) {
 
-            $amount = 50;
+                $amount = 50;
 
+            }
             DB::table('invoice')
                 ->insert(
                     ['patient_id' => $patient_id,

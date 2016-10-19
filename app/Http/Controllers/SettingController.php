@@ -301,7 +301,7 @@ class SettingController extends Controller
         $data = DB::table('hospital')
                ->leftJoin('countries', 'countries.id', '=', 'hospital.country')
                ->leftJoin('states', 'states.id', '=', 'hospital.state')
-               ->select(DB::raw('hospital.*,states.name as state,countries.name as country,states.name as state'))
+               ->select(DB::raw('hospital.*,states.name as state,states.id as state_id,countries.id as country_id,countries.name as country,states.name as state'))
                ->where('hospital.id',1)
                ->where('hospital.status', 1)
                ->first();
@@ -312,7 +312,7 @@ class SettingController extends Controller
             $is_update = 1;
         }
 
-        return response()->json(['status'=>true,'data'=>$data,'is_update'=>$is_update]);
+        return response()->json(['status'=>true,'data'=>$data,'is_update'=>$is]);
 
     }
 

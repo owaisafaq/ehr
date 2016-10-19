@@ -362,21 +362,43 @@ class InventoryAPIController extends Controller
         $cat_id = $request->input('cat_id');
         $strength = $request->input('strength');
         $dose_from = $request->input('dose_from');
+        $cost_per_item = $request->input('cost_per_item');
 
-        $id = DB::table('inventory_products')->insertGetId(
-            [
-               // 'group'=>$group,
-                 'department_id'=>$group,
-                //'product_name'=>$product_name,
-                'name'=>$product_name,
-                'trade_name'=>$trade_name,
-                'route'=>$route,
-                'reorder_level'=>$reorder_level,
-                'cat_id'=>$cat_id,
-                'strength'=>$strength,
-                'dose_from'=>$dose_from
-            ]
-        );
+        if ($group != 'Drugs' || $group != 'Supplements') {
+            $id = DB::table('inventory_products')->insertGetId(
+                [
+                    'group' => $group,
+                    'department_id' => $group,
+                    //'product_name'=>$product_name,
+                    'name' => $product_name,
+                    'trade_name' => $trade_name,
+                    'route' => $route,
+                    'reorder_level' => $reorder_level,
+                    'cost' => $cost_per_item,
+                    'cat_id' => $cat_id,
+                    'strength' => $strength,
+                    'dose_from' => $dose_from
+                ]
+            );
+        } else {
+            $id = DB::table('inventory_products')->insertGetId(
+                [
+                    'group' => $group,
+                    'department_id' => $group,
+                    //'product_name'=>$product_name,
+                    'name' => $product_name,
+                    'trade_name' => $trade_name,
+                    'route' => $route,
+                    'reorder_level' => $reorder_level,
+                    //'cost' => $cost_per_item,
+                    'cat_id' => $cat_id,
+                    'strength' => $strength,
+                    'dose_from' => $dose_from
+                ]
+            );
+        }
+
+
         if($id){
             return response()->json(['status' => true, 'message' => "Product Added Successfully", 'stock_id'=>$id], 200);
 
