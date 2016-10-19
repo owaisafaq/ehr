@@ -131,6 +131,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
         $scope.EID = encounterID;
         $rootScope.loader = "show";
         $scope.PID = patientID;
+
         $scope.createOrderPatientID = patientID;
         GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: patientID}, getEncountersSuccess, getEncountersFailure);
         function getEncountersSuccess(res) {
@@ -148,6 +149,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
                 $scope.displayInfo.marital_status = res.data.marital_status;
                 $scope.hospital_plan = res.data.hospital_plan;
                 $scope.visitStatus = res.is_visit;
+                $scope.PIDwithName = patientID + " " + $scope.displayInfo.first_name + " " + $scope.displayInfo.last_name;
                 if($scope.hospital_plan == '1') $scope.hospital_plan = "card-color-1";
                 if($scope.hospital_plan == '2') $scope.hospital_plan = "card-color-2";
                 else $scope.hospital_plan = "card-color-3";
@@ -587,12 +589,13 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
     }
 
     $scope.createAppointments = function(dataToBeAdded){
-        if(dataToBeAdded.appointmentSearch != undefined && dataToBeAdded.department != undefined && dataToBeAdded.otherReason != undefined && dataToBeAdded.date != undefined && dataToBeAdded.startTime != undefined && dataToBeAdded.doctor != undefined){
+    	console.log(dataToBeAdded);
+        if(dataToBeAdded.department != undefined && dataToBeAdded.otherReason != undefined && dataToBeAdded.date != undefined && dataToBeAdded.startTime != undefined && dataToBeAdded.doctor != undefined){
         	$scope.disabledButton = "true";
         	$rootScope.loader = "show";
         	AddAppointments.save({
         		token: $window.sessionStorage.token,
-        		patient_id: dataToBeAdded.appointmentSearch,
+        		patient_id: $scope.createOrderPatientID,
         		//visit_id: $scope.encounterID,
         		department: dataToBeAdded.department == undefined ? '' : dataToBeAdded.department,
         		reason: dataToBeAdded.reason == undefined ? '' : dataToBeAdded.reason,

@@ -1,14 +1,16 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllBillingCodes', 'deleteBillingCode', 'addBillingCode', 'editBillingCode', 'GetBillingCode', 'GetAllCategories', 'GetAllTaxRates', '$timeout', function($scope, $rootScope,$window,$routeParams,GetAllBillingCodes,deleteBillingCode,addBillingCode,editBillingCode,GetBillingCode,GetAllCategories,GetAllTaxRates,$timeout){
+AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllBillingCodes', 'deleteBillingCode', 'addBillingCode', 'editBillingCode', 'GetBillingCode', 'GetAllBillingCategories', 'GetAllTaxRates','deleteBillingCategory', 'addBillingCategory', 'editBillingCategory', 'GetBillingCategory', '$timeout', function($scope, $rootScope,$window,$routeParams,GetAllBillingCodes,deleteBillingCode,addBillingCode,editBillingCode,GetBillingCode,GetAllBillingCategories,GetAllTaxRates,deleteBillingCategory,addBillingCategory,editBillingCategory,GetBillingCategory,$timeout){
 	$rootScope.pageTitle = "EHR - Billing Codes";
     $rootScope.loader = "show";
 	$scope.itemsPerPage = 15;
 	$scope.curPage = 0;
+	$scope.curCatPage = 0;
 	$scope.pageSize = 15;
 	$scope.deleteBillingCodeId = 0;
 	GetAllBillingCodes.get({
-		token: $window.sessionStorage.token
+		token: $window.sessionStorage.token,
+		offset: 0, limit: $scope.itemsPerPage
 	}, GetAllBillingCodesSuccess, GetAllBillingCodesFailure);
 
 	function GetAllBillingCodesSuccess(res) {
@@ -126,6 +128,9 @@ AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routePa
 		$rootScope.loader = "hide";
 		if (res.status == true) {
 			$scope.editBillingCodeData = res.data;
+			setTimeout(function () {
+				$('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
+			},100);
 			$('#editcode').modal('show');
 		}
 	}
@@ -179,13 +184,29 @@ AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routePa
 		$('#internetError').modal('show');
 	}
 
-    GetAllCategories.get({
+	GetAllBillingCategories.get({
+		token: $window.sessionStorage.token,
+		offset : 0,
+		limit: 0
+	}, GetAllBillingCategoriesSuccess, GetAllBillingCategoriesFailure);
+
+	function GetAllBillingCategoriesSuccess(res) {
+		$rootScope.loader = "hide";
+		if (res.status == true) {
+			if(res.data.length == 0){
+				$('#noResultFound').modal('show');
+			}
+			$scope.AllCategoryLists = res.data;
+		}
+	}
+
+	GetAllBillingCategories.get({
         token: $window.sessionStorage.token,
         offset : 0,
-        limit : 0
-    }, GetAllCategoriesSuccess, GetAllCategoriesFailure);
+		limit: $scope.itemsPerPage
+    }, GetBillingCategoriesSuccess, GetAllBillingCategoriesFailure);
 
-    function GetAllCategoriesSuccess(res) {
+    function GetBillingCategoriesSuccess(res) {
         $rootScope.loader = "hide";
         if (res.status == true) {
             if(res.data.length == 0){
@@ -195,7 +216,7 @@ AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routePa
             $scope.CategoriesCount = res.count;
         }
     }
-    function GetAllCategoriesFailure(error) {
+    function GetAllBillingCategoriesFailure(error) {
         $('#internetError').modal('show');
         console.log(error);
     }
@@ -220,4 +241,171 @@ AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routePa
         $('#internetError').modal('show');
         console.log(error);
     }
+
+	$scope.numberOfPagesCategories = function() {
+		return Math.ceil($scope.CategoriesCount / $scope.pageSize);
+	};
+
+	$scope.paginationNextCategories = function(pageSize, curCatPage){
+		$rootScope.loader = "show";
+		GetAllBillingCategories.get({
+			token: $window.sessionStorage.token,
+			offset: (pageSize * curCatPage), limit: $scope.itemsPerPage
+		}, GetAllBillingCategoriesSuccess, GetAllBillingCategoriesFailure);
+	};
+
+	$scope.paginationPrevCategories = function(pageSize, curCatPage){
+		$rootScope.loader = "show";
+		GetAllBillingCategories.get({
+			token: $window.sessionStorage.token,
+			offset: (pageSize - 1) * curCatPage, limit: $scope.itemsPerPage
+		}, GetAllBillingCategoriesSuccess, GetAllBillingCategoriesFailure);
+	};
+
+	$scope.confirmRemoveBillingCategory = function(id){
+		$scope.deleteBillingCategoryId = id;
+		$('#confirmation').modal('show');
+	};
+	$scope.removeBillingCategory = function(){
+		$rootScope.loader = "show";
+		deleteBillingCategory.get({
+			token: $window.sessionStorage.token,
+			category_id : $scope.deleteBillingCategoryId
+		}, deleteBillingCategorySuccess, deleteBillingCategoryFailure)
+	};
+
+	function deleteBillingCategorySuccess(res){
+		if(res.status == true){
+			$scope.deleteBillingCategoryId = 0;
+			$('#confirmation').modal('hide');
+			GetAllBillingCategories.get({
+				token: $window.sessionStorage.token
+			}, GetAllBillingCategoriesSuccess, GetAllBillingCategoriesFailure);
+		}
+	}
+
+	function deleteBillingCategoryFailure(error){
+		console.log(error);
+		$('#confirmation').modal('hide');
+		$('#internetError').modal('show');
+	}
+
+	$scope.cancelDelete = function(){
+		$scope.deleteBillingCodeId = 0;
+		$scope.deleteBillingCategoryId = 0;
+	};
+
+
+	$scope.createBillingCategory = function (billingCategoryData){
+		addBillingCategory.save({
+			token : $window.sessionStorage.token,
+			name : billingCategoryData.name,
+			description : billingCategoryData.description
+		},addBillingCategorySuccess,addBillingCategoryFailure);
+	};
+	function addBillingCategorySuccess(res){ // on success
+		if (res.status == true) {
+			$scope.hideLoader = 'hide';
+			$scope.message = true;
+			$scope.addBillingCategoryBtn = false;
+			$scope.errorMessage = res.message;
+			$scope.messageType = 'alert-success';
+			$scope.errorSymbol = 'fa fa-check';
+			$scope.billingCategoryData = {};
+			$scope.submitted = false;
+			$timeout(function(){
+				$scope.message = false;
+				$('#addcategory').modal('hide');
+				$scope.errorMessage = "";
+			},1500);
+			GetAllBillingCategories.get({
+				token: $window.sessionStorage.token,
+				offset : 0,
+				limit: 0
+			}, GetAllBillingCategoriesSuccess, GetAllBillingCategoriesFailure);
+			GetAllBillingCategories.get({
+				token: $window.sessionStorage.token
+			}, GetBillingCategoriesSuccess, GetAllBillingCategoriesFailure);
+		} else {
+			$scope.hideLoader = "hide";
+			$scope.addBillingCategoryBtn = false;
+			$scope.message = true;
+			$scope.messageType = "alert-danger";
+			$scope.errorMessage = res.message;
+			$scope.errorSymbol = "fa fa-times";
+		}
+	}
+	function addBillingCategoryFailure(error){ // on failure
+		console.log(error);
+		$('#internetError').modal('show');
+	}
+
+	$scope.billingCategoryDetail = function(id){
+		GetBillingCategory.get({
+			token: $window.sessionStorage.token,
+			category_id : id
+		}, GetAllBillingCategorySuccess, GetAllBillingCategoryFailure);
+	};
+	function GetAllBillingCategorySuccess(res) {
+		$rootScope.loader = "hide";
+		if (res.status == true) {
+			$scope.editBillingCategoryData = res.data;
+			setTimeout(function () {
+				$('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
+			},100);
+			$('#editcategory').modal('show');
+		}
+	}
+	function GetAllBillingCategoryFailure(error) {
+		$('#internetError').modal('show');
+		console.log(error);
+	}
+
+	$scope.updateBillingCategory = function(editBillingCategoryData){
+		$rootScope.loader = "show";
+		editBillingCategory.save({
+			token : $window.sessionStorage.token,
+			category_id : editBillingCategoryData.id,
+			name : editBillingCategoryData.name,
+			description : editBillingCategoryData.description
+		},editBillingCategorySuccess,editBillingCategoryFailure);
+	};
+
+	function editBillingCategorySuccess(res){ // on success
+		if (res.status == true) {
+			$rootScope.loader = 'hide';
+			$scope.message = true;
+			$scope.updateBillingCategoryBtn = false;
+			$scope.errorMessage = res.message;
+			$scope.messageType = 'alert-success';
+			$scope.errorSymbol = 'fa fa-check';
+			GetAllBillingCategories.get({
+				token: $window.sessionStorage.token,
+				offset : 0,
+				limit: 0
+			}, GetAllBillingCategoriesSuccess, GetAllBillingCategoriesFailure);
+			GetAllBillingCategories.get({
+				token: $window.sessionStorage.token
+			}, GetBillingCategoriesSuccess, GetAllBillingCategoriesFailure);
+			$timeout(function(){
+				$scope.message = false;
+				$scope.submitted = false;
+				$('#editcategory').modal('hide');
+				$scope.errorMessage = "";
+				$scope.editBillingCategoryData = {};
+			},1500);
+		} else {
+			$rootScope.loader = "hide";
+			$scope.updateBillingCategoryBtn = false;
+			$scope.message = true;
+			$scope.messageType = "alert-danger";
+			$scope.errorMessage = res.message;
+			$scope.errorSymbol = "fa fa-times";
+		}
+	}
+	function editBillingCategoryFailure(error){ // on failure
+		console.log(error);
+		$('#internetError').modal('show');
+	}
+
 }]);

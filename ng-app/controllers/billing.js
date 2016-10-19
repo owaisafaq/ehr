@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData','GetBillInvoices','SendEmail', 'CheckoutPatient', 'deleteInvoice', 'AddToBill', 'GetAllBillingCodes', 'GetAllproducts', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData,GetBillInvoices,SendEmail, CheckoutPatient, deleteInvoice, AddToBill, GetAllBillingCodes, GetAllproducts){
+AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData','GetBillInvoices','SendEmail', 'CheckoutPatient', 'deleteInvoice', 'AddToBill', 'GetAllBillingCodes', 'GetAllproducts', 'SendEmail',function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData,GetBillInvoices,SendEmail, CheckoutPatient, deleteInvoice, AddToBill, GetAllBillingCodes, GetAllproducts, SendEmail){
 	$rootScope.pageTitle = "EHR - Billing";
 	$scope.BillListings={};
 	$scope.selectedPatient = {};
@@ -139,6 +139,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 
 				GetAllInvoices.get({
 					token: $window.sessionStorage.token,
+					bill_id : $scope.bill_id
 				}, GetAllInvoicesSuccess, GetAllInvoicesFailure);
 
 
@@ -190,7 +191,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 		console.log(sendData)
 		console.log(invoice_id)
 
-		SendInvoiceEmail.save({token: $window.sessionStorage.token, email_address: sendData, invoice_id:invoice_id}, SendEmailSuccess, SendEmailFailure);
+		SendEmail.get({token: $window.sessionStorage.token, email_address: sendData.email, invoice_id:invoice_id}, SendEmailSuccess, SendEmailFailure);
 
 
 
@@ -442,7 +443,11 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
         function addToBillSuccess(res){
         	$rootScope.loader = "hide";
         	if(res.status == true){
-        		$('#addToBill').modal('show');
+        		$('#addToBill').modal('hide');
+        		GetAllInvoices.get({
+					token: $window.sessionStorage.token,
+			        bill_id : $scope.bill_id
+				}, GetAllInvoicesSuccess, GetAllInvoicesFailure);
         	}
         }
         GetAllproducts.save({token: $window.sessionStorage.token}, getAllPbillSuccess, checkoutSuccessFailure);

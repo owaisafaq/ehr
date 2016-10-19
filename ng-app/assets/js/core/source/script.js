@@ -35,7 +35,11 @@ $(document).ready(function () {
         $('.download').show();
         $('.done-editing').hide();
         $(this).addClass('active');
-    })
+        $('#downloadFile').attr('href', $('.file_uploads .active').data('filename'));
+    });
+    /*$('#downloadFile').click(function(){
+        $(".file_create_con > div:not(.active),.folder_create_con > div:not(.active)").removeClass('active');
+    });*/
 
     $('body').on('click', '#archive .edit', function () {
         $('.file_uploads').find('.active').find('input').removeAttr('disabled').focus().select();

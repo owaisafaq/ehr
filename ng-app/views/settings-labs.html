@@ -78,13 +78,13 @@
                                     <div class="col-lg-4 margin-0">
                                         <select class="form-control" placeholder="By Lab">
                                             <option></option>
-                                            <option>Sample</option>
+                                            <option ng-repeat="lab in Labs" value="{{ lab.id }}">{{ lab.name }}</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="pull-right">
-                                <button data-target="#newlabtest" data-toggle="modal" class="add button-custom pull-right add_inventory">new lab test</button>
+                                <button data-target="#addlabtest" data-toggle="modal" class="add button-custom pull-right add_inventory">new lab test</button>
                             </div>
                             <div class="pull-right">
                                 <div class="header-search pull-left margin-top-10">
@@ -110,37 +110,36 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!--<tr ng-repeat="InventoryList in InventoryLists| filter:search |filter:cat_search">
-                                    <td><a href="#" class="link-style_3">Dental</a></td>
-                                    <td>{{InventoryList.product_name}}</td>
-                                    <td>{{InventoryList.product_name}}</td>
-                                    <td>{{InventoryList.product_name}}</td>
-                                    <td>{{InventoryList.product_name}}</td>
+                                <tr ng-repeat="LabTest in LabTests | filter:search |filter:cat_search">
+                                    <td><a href="javscript:;" class="link-style_3">{{LabTest.name}}</a></td>
+                                    <td>{{LabTest.description}}</td>
+                                    <td>{{LabTest.lonic_code}}</td>
+                                    <td>{{LabTest.lab}}</td>
+                                    <td>{{LabTest.cost}}</td>
                                     <td>
                                         <div class="billing_actions pull-right"><a href="javascript:;" class="setting-button"></a>
                                             <div class="tool-tip_popup">
-                                                <a href="javascript:;" ng-click="productDetail(InventoryList.product_id)">Edit</a>
-                                                <a href="javascript:;" ng-click="StockSelectedReorder(InventoryList.product_id)">Delete</a>
+                                                <a href="javascript:;" ng-click="labTestDetail(LabTest.id)">Edit</a>
+                                                <a href="javascript:;" ng-click="confirmRemoveLabTest(LabTest.id)">Delete</a>
                                             </div>
                                         </div>
                                     </td>
-                                </tr>-->
+                                </tr>
                             </tbody>
                         </table>
-                        <!--muzammil do you code here-->
-                        <!--<div class="pagination pagination-centered pull-right" ng-show="pharmacyCount">
+                        <div class="pagination pagination-centered pull-right" ng-show="labTestsCount">
                             <ul class="pagination-controle pagination">
                                 <li class="prev-page">
-                                    <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage = curPage - 1;paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
+                                    <button type="button" class="btn btn-primary" ng-disabled="curTestPage == 0" ng-click="curTestPage = curTestPage - 1;paginationPrevTest(pageSize, curTestPage);"><i class="fa fa-caret-left"></i></button>
                                 </li>                            
                                 <li>
-                                    <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberPharmacy" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages()}}</span>
+                                    <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberPharmacy" numbers-only value="{{curTestPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfTestPages()}}</span>
                                 </li>
                                 <li class="next-page">
-                                    <button type="button" class="btn btn-primary" ng-disabled="curPage >= pharmacyCount / pageSize - 1" ng-click="curPage = curPage + 1;paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
+                                    <button type="button" class="btn btn-primary" ng-disabled="curTestPage >= labTestsCount / pageSize - 1" ng-click="curTestPage = curTestPage + 1;paginationNextTest(pageSize, curTestPage);"><i class="fa fa-caret-right"></i></button>
                                 </li>
                             </ul>
-                        </div>-->
+                        </div>
                     </form>
                 </div>
             </div><!--end .card -->
@@ -242,49 +241,53 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-<div class="modal fade modal-size_2" id="newlabtest" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_2" id="addlabtest" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>New Lab Test</h2>
             </div>
             <div class="modal-body">
-                <form class="custom-form">
-                    <!--<div class="row">-->
+                <form class="custom-form" name="userForm3" ng-model="myForm" novalidate ng-submit="createLabTest(labTestData);">
+                    <div class="row margin-bottom-xxl">
+                        <div class="alert {{messageType}}" role="alert" ng-show="message">
+                            <i class="{{errorSymbol}}"></i> {{errorMessage}}
+                        </div>
+                    </div>
                     <div class="row margin-bottom-xxl">
                         <div class="col-lg-2">
                             <label>Name</label>
                         </div>
                         <div class="col-lg-4">
-                            <input type="text" placeholder="" name="" required/>
+                            <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm3.name.$invalid]"  name="name" required  ng-model="labTestData.name" />
+                            <p class="help-block PIValid" ng-show="submitted && userForm3.name.$error.required">Required</p>
                         </div>
 
                         <div class="col-lg-2">
                             <label>Code</label>
                         </div>
                         <div class="col-lg-4">
-                            <input type="text" placeholder="" name="" required/>
+                            <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm3.code.$invalid]"  name="code" required  ng-model="labTestData.code" />
+                            <p class="help-block PIValid" ng-show="submitted && userForm3.code.$error.required">Required</p>
                         </div>
                     </div>
-                    
                     <div class="row margin-bottom-xxl">
                         <div class="col-lg-2">
                             <label>Cost</label>
                         </div>
                         <div class="col-lg-4">
-                            <input type="text" placeholder="" name="" required/>
+                            <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm3.cost.$invalid]"  name="cost" required  ng-model="labTestData.cost" numbers-only />
+                            <p class="help-block PIValid" ng-show="submitted && userForm3.cost.$error.required">Required</p>
                         </div>
-
                         <div class="col-lg-2">
                             <label>Lab</label>
                         </div>
                         <div class="col-lg-4">
-                            <select placeholder="Select Lab" class="form-control">
-                                <option></option>
-                                <option>Lab 1</option>
-                                <option>Lab 2</option>
+                            <select class="form-control" ng-model="labTestData.lab_id" placeholder="Select Lab" name="lab_id" ng-class="{true: 'error'}[submitted && userForm3.lab_id.$invalid]" required>
+                                <option value=""></option>
+                                <option ng-repeat="lab in Labs" value="{{ lab.id }}">{{ lab.name }}</option>
                             </select>
+                            <p class="help-block PIValid" ng-show="submitted && userForm3.lab_id.$error.required">Required</p>
                         </div>
                     </div>
                     <div class="row">
@@ -292,13 +295,83 @@
                             <label>Description</label>
                         </div>
                         <div class="col-lg-10">
-                            <textarea></textarea>
+                            <textarea placeholder="Write Here..." name="description" ng-model="labTestData.description" ng-class="{true: 'error'}[submitted && userForm3.description.$invalid]" required></textarea>
+                            <p class="help-block PIValid" ng-show="submitted && userForm3.description.$error.required">Required</p>
                         </div>
                     </div>
                     <!--</div>-->
                     <div class="modal-footer row">
-                        <button type="button" class="btn btn-default button-style-1">Add</button>
-                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;" ng-disabled="submitted && userForm3.$invalid">Add</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal" ng-disabled="addLabTestBtn">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade modal-size_2" id="editlabtest" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>New Lab Test</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form" name="userForm4" ng-model="myForm" novalidate ng-submit="updateLabTest(editLabTestData);">
+                    <div class="row margin-bottom-xxl">
+                        <div class="alert {{messageType}}" role="alert" ng-show="message">
+                            <i class="{{errorSymbol}}"></i> {{errorMessage}}
+                        </div>
+                    </div>
+                    <div class="row margin-bottom-xxl">
+                        <div class="col-lg-2">
+                            <label>Name</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm4.name.$invalid]"  name="name" required  ng-model="editLabTestData.name" />
+                            <p class="help-block PIValid" ng-show="submitted && userForm4.name.$error.required">Required</p>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <label>Code</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm4.code.$invalid]"  name="code" required  ng-model="editLabTestData.code" />
+                            <p class="help-block PIValid" ng-show="submitted && userForm4.code.$error.required">Required</p>
+                        </div>
+                    </div>
+                    <div class="row margin-bottom-xxl">
+                        <div class="col-lg-2">
+                            <label>Cost</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm4.cost.$invalid]"  name="cost" required  ng-model="editLabTestData.cost" numbers-only />
+                            <p class="help-block PIValid" ng-show="submitted && userForm4.cost.$error.required">Required</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <label>Lab</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <select class="form-control" ng-model="editLabTestData.lab_id" placeholder="Select Lab" name="lab_id" ng-class="{true: 'error'}[submitted && userForm4.lab_id.$invalid]" required>
+                                <option value=""></option>
+                                <option ng-repeat="lab in Labs" value="{{ lab.id }}" ng-selected="lab.id == editLabTestData.lab_id">{{ lab.name }}</option>
+                            </select>
+                            <p class="help-block PIValid" ng-show="submitted && userForm4.lab_id.$error.required">Required</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <label>Description</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <textarea placeholder="Write Here..." name="description" ng-model="editLabTestData.description" ng-class="{true: 'error'}[submitted && userForm4.description.$invalid]" required></textarea>
+                            <p class="help-block PIValid" ng-show="submitted && userForm4.description.$error.required">Required</p>
+                        </div>
+                    </div>
+                    <!--</div>-->
+                    <div class="modal-footer row">
+                        <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;" ng-disabled="submitted && userForm4.$invalid">Add</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal" ng-disabled="updateLabTestBtn">Cancel</button>
                     </div>
                 </form>
             </div>
@@ -315,8 +388,9 @@
                 <p class="modal-subtext">Do you want to Delete?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default button-style-1" data-toggle="modal" ng-click="removeLab();"  data-dismiss="modal">Ok</button>
-                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-default button-style-1" data-toggle="modal" ng-click="removeLab();" ng-show="deleteLabId" data-dismiss="modal">Ok</button>
+                <button type="button" class="btn btn-default button-style-1" data-toggle="modal" ng-click="removeLabTest();" ng-show="deleteLabTestId" data-dismiss="modal">Ok</button>
+                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal" ng-click="cancelDelete();">Cancel</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
