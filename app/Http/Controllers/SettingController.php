@@ -238,12 +238,14 @@ class SettingController extends Controller
         $accredation_lab= $request->input('accredation_lab');
         $accredation_pharmacy= $request->input('accredation_pharmacy');
         $accredation_others= $request->input('accredation_others');
+        $image= $request->input('image');
 
         if ($is_update == 0) {
 
             DB::table('hospital')
                 ->insert([
                     'name' => $name,
+                    'image' => $image,
                     'address' => $address,
                     'type' => $type,
                     'city' => $city,
@@ -271,6 +273,7 @@ class SettingController extends Controller
                 ->where('id',1)
                 ->update([
                     'name' => $name,
+                    'image' => $image,
                     'address' => $address,
                     'type' => $type,
                     'city' => $city,
@@ -288,7 +291,7 @@ class SettingController extends Controller
                     'accredation_lab' => $accredation_lab,
                     'accredation_pharmacy' => $accredation_pharmacy,
                     'accredation_others' => $accredation_others,
-                    'updated' => date("Y-m-d  H:i:s")]);
+                    'updated_at' => date("Y-m-d  H:i:s")]);
 
             return response()->json(['status' => true, 'message' => 'Hospital Updated successfully']);
 
@@ -298,6 +301,8 @@ class SettingController extends Controller
 
     public function get_hospital_profile(Request $request){
 
+        $logo_image = url('/').'/uploaded_images/';
+
         $data = DB::table('hospital')
                ->leftJoin('countries', 'countries.id', '=', 'hospital.country')
                ->leftJoin('states', 'states.id', '=', 'hospital.state')
@@ -306,13 +311,17 @@ class SettingController extends Controller
                ->where('hospital.status', 1)
                ->first();
 
+        if($data->image !='') {
+            $data->image = $logo_image . $data->image;
+        }
+
         if (empty($data)) {
             $is_update = 0;
         } else {
             $is_update = 1;
         }
 
-        return response()->json(['status'=>true,'data'=>$data,'is_update'=>$is]);
+        return response()->json(['status'=>true,'data'=>$data,'is_update'=>$is_update]);
 
     }
 
@@ -343,6 +352,89 @@ class SettingController extends Controller
        {
 
            return response()->json(['status' => true, 'message' => 'hello']);
+
+       }
+
+
+    public function add_department(Request $request)
+      {
+          $name = $request->input('name');
+          $description = $request->input('description');
+
+          DB::table('departments')
+              ->insert(['name' => $name,'description'=>$description,'created_at'=> date("Y-m-d  H:i:s")]);
+
+          return response()->json(['status' => true, 'message' => 'Department Added successfully']);
+
+      }
+
+      public function get_departments(Request $request)
+      {
+          $limit = $request->input('limit');
+          $offset = $request->input('offset');
+
+          if ($limit > 0 || $offset > 0) {
+
+              $departments= DB::table('departments')
+                  ->select(DB::raw('*'))
+                  ->where('status', 1)
+                  ->skip($offset)->take($limit)
+                  ->get();
+
+              $count = DB::table('departments')
+                  ->select(DB::raw('*'))
+                  ->where('status', 1)
+                  ->count();
+          } else {
+
+              $departments = DB::table('departments')
+                  ->select(DB::raw('*'))
+                  ->where('status', 1)
+                  ->get();
+              $count = count($labs);
+          }
+
+          return response()->json(['status' => true, 'data' => $departments, 'count' => $count]);
+
+      }
+
+      public function get_department(Request $request)
+      {
+          $department_id= $request->input('department_id');
+
+          $department= DB::table('departments')
+              ->select(DB::raw('*'))
+              ->where('id', $department_id)
+              ->where('status',1)
+              ->first();
+
+          return response()->json(['status' => true, 'data' => $department]);
+
+      }
+
+      public function update_department(Request $request)
+      {
+          $department_id = $request->input('department_id');
+          $name = $request->input('name');
+          $description = $request->input('description');
+
+          DB::table('departments')
+              ->where('id',$department_id)
+              ->update(['name' => $name,'description'=>$description,'updated_at'=> date("Y-m-d  H:i:s")]);
+
+          return response()->json(['status' => true, 'message' => 'Department updated successfully']);
+
+      }
+
+      public function delete_department(Request $request)
+       {
+           $department_id = $request->input('department_id');
+
+           DB::table('departments')
+               ->where('id',$department_id)
+               ->update(['status'=> 0,'updated_at'=> date("Y-m-d  H:i:s")]);
+
+           return response()->json(['status' => true, 'message' => 'Department deleted successfully']);
 
        }
 

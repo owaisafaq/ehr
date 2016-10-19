@@ -3316,7 +3316,13 @@ class ApiController extends Controller
         $patient_prescriptions = json_decode($prescription);
         $currentdatetime = date("Y-m-d  H:i:s");
 
-        DB::table('patient_prescription_medicine')->where('prescription_id', '=', $prescription_id)->delete();
+    /*    $pharmacy = DB::table('patient_prescription_medicine')
+            ->select('pharmacy')
+            ->where('prescription_id',$prescription_id)->first();
+
+        $pharmacy = $pharmacy->pharmacy;*/
+
+        DB::table('patient_prescription_medicine')->where('prescription_id', $prescription_id)->delete();
 
         foreach ($patient_prescriptions as $patient_prescription) {
 
@@ -3327,7 +3333,7 @@ class ApiController extends Controller
                         'sig' => $patient_prescription->sig,
                         'dispense' => $patient_prescription->dispense,
                         'reffills' => $patient_prescription->reffills,
-                        'pharmacy' => $patient_prescription->pharmacy,
+                        'pharmacy' => $patient_prescription->pharmacy_id,
                         'created_at' => $currentdatetime
                     ]
                 );

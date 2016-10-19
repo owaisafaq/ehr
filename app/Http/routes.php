@@ -34,8 +34,8 @@ $app->group(['prefix' => 'api'], function () use ($app) {
     $app->post('add_referal_attachments','App\Http\Controllers\ApiController@add_referal_attachments');
     $app->options('add_lab_order_attachments','App\Http\Controllers\ApiController@opt_add_lab_order_attachments');
     $app->post('add_lab_order_attachments','App\Http\Controllers\ApiController@add_lab_order_attachments');
-    $app->post('upload_hospital_image', 'App\Http\Controllers\ApiController@upload_hospital_image');
-    $app->options('upload_hospital_image','App\Http\Controllers\ApiController@optupload_hospital_image');
+    $app->post('upload_hospital_image', 'App\Http\Controllers\SettingController@upload_hospital_image');
+    $app->options('upload_hospital_image','App\Http\Controllers\SettingController@optupload_hospital_image');
 });
 $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($app) {
 
@@ -367,6 +367,13 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->post('add_update_hospital','App\Http\Controllers\SettingController@add_update_hospital');
     $app->get('get_hospital_profile','App\Http\Controllers\SettingController@get_hospital_profile');
 
+
+    //Settings APIS
+    $app->post('add_department','App\Http\Controllers\SettingController@add_department');
+    $app->get('get_departments','App\Http\Controllers\SettingController@get_departments');
+    $app->get('get_department','App\Http\Controllers\SettingController@get_department');
+    $app->post('update_department','App\Http\Controllers\SettingController@update_department');
+    $app->post('delete_department','App\Http\Controllers\SettingController@delete_department');
 
 
 
