@@ -33,6 +33,7 @@ class BillingController extends Controller
             $bill->id = str_pad($bill->id, 8, '0', STR_PAD_LEFT);
             $bill->encounter_id = str_pad($bill->encounter_id, 8, '0', STR_PAD_LEFT);
             $bill->patient_id = str_pad($bill->patient_id, 7, '0', STR_PAD_LEFT);
+            $bill->first_name = $bill->first_name." ".$bill->last_name;
          }
 
 
@@ -279,6 +280,11 @@ class BillingController extends Controller
             ->where('patients.status', 1)
             ->where('invoice.bill_id', $bill_id)
             ->get();
+
+        foreach($bills as $bill){
+            $bill->patient_id = str_pad($bill->patient_id, 7, '0', STR_PAD_LEFT);
+            $bill->first_name = $bill->first_name . " " . $bill->last_name;
+        }
 
             return response()->json(['status' => true, 'message' => 'Invoices found', 'data' => $bills]);
 

@@ -3002,8 +3002,8 @@ class ApiController extends Controller
             ->leftJoin('template_types', 'template_types.id', '=', 'template_categories.template_type')
             ->select(DB::raw('templates.id,templates.name,templates.description,template_categories.name as category,templates.template'))
             ->where('templates.status', 1)
-            ->where('template_categories.template_type', $template_type)
-           // ->where('templates.category_id', $category_id)
+          //  ->where('template_categories.template_type', $template_type)
+            ->where('templates.category_id', $category_id)
             ->get();
 
         return response()->json(['status' => true, 'data' => $templates]);
@@ -3466,6 +3466,26 @@ class ApiController extends Controller
             ->where('patient_prescription.status', 1)
             ->where('patient_prescription_medicine.status', 1)
             ->get();
+
+        foreach ($prescriptions as $prescription) {
+
+            $medication  = DB::table('inventory_products')
+                ->select(DB::raw('id,name'))
+                ->where('id', $prescription->medication)
+                ->where('status', 1)
+                ->first();
+
+            $prescription->medication = $medication->name;
+
+            $pharmacy  = DB::table('pharmacy')
+                      ->select(DB::raw('id,name'))
+                      ->where('id', $prescription->pharmacy)
+                      ->where('status', 1)
+                      ->first();
+
+            $prescription->pharmacy = $pharmacy->name;
+
+        }
 
 
         $prescription_notes = DB::table('prescription_notes')

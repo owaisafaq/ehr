@@ -302,7 +302,7 @@ class SettingController extends Controller
                ->leftJoin('countries', 'countries.id', '=', 'hospital.country')
                ->leftJoin('states', 'states.id', '=', 'hospital.state')
                ->select(DB::raw('hospital.*,states.name as state,countries.name as country,states.name as state'))
-               ->where('id',1)
+               ->where('hospital.id',1)
                ->where('hospital.status', 1)
                ->first();
 
