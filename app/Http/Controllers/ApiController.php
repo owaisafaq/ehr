@@ -3493,6 +3493,7 @@ class ApiController extends Controller
                       ->first();
 
             $prescription->pharmacy = $pharmacy->name;
+            $prescription->pharmacy_id = $pharmacy->id;
 
         }
 
@@ -3513,7 +3514,9 @@ class ApiController extends Controller
             ->where('patient_prescription.id', $prescription_id)
             ->first();
 
-        return response()->json(['status' => true, 'data' => $prescriptions, 'notes' => $notes, 'prescription_data' => $prescription_data]);
+
+
+        return response()->json(['status' => true, 'data' => $prescriptions, 'notes' => $notes, 'prescription_data' => $prescription_data,'pharmacy_name'=>$prescriptions[0]->pharmacy,'pharmacy_id'=>$prescriptions[0]->pharmacy_id]);
 
 
     }

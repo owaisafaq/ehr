@@ -76,6 +76,7 @@ class BillingController extends Controller
                         'product_id' => $product_id,
                         'description' => 'This invoice is generated for Inventory Products',
                         'amount' => $amount,
+                        'due' => $amount,
                         'invoice_status' => 'pending',
                         'type' => 'product',
                         'created_at' => date("Y-m-d  H:i:s")
@@ -135,12 +136,13 @@ class BillingController extends Controller
         $currentdatetime = date("Y-m-d  H:i:s");
 
         $amount = DB::table('invoice')
-            ->select('due')
+            ->select('due','bill_id')
             ->where('status', 1)
             ->where('id', $invoice_id)
             ->first();
 
         $invoice_amount = $amount->due;
+        $bill_id = $amount->bill_id;
 
 
         if ($due == 0) {
@@ -151,6 +153,8 @@ class BillingController extends Controller
                 ->where('id', $invoice_id)
                 ->update(
                     ['due' => $invoice_amount, 'invoice_status' => $status,'updated_at'=>$currentdatetime]);
+
+
 
             return response()->json(['status' => true, 'message' => 'Invoice Updated successfully']);
 
@@ -175,6 +179,22 @@ class BillingController extends Controller
                 ->update(
                     ['due' => $total_amount,
                         'invoice_status' => 'paid']);
+
+
+            $count = DB::table('invoice')
+                       ->select('*')
+                       ->where('status', 1)
+                       ->where('invoice_status','!=' ,'paid')
+                       ->where('bill_id', $bill_id)
+                       ->count();
+
+            if ($count < 1) {
+                DB::table('billing')
+                    ->where('id', $bill_id)
+                    ->update(
+                        ['bill_status' => 'paid']);
+            }
+
 
             return response()->json(['status' => true, 'message' => 'Invoice Updated successfully']);
 
