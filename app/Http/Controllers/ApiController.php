@@ -3449,6 +3449,15 @@ class ApiController extends Controller
         foreach ($prescriptions as $prescription) {
             $prescription->visit_id = str_pad($prescription->visit_id, 8, '0', STR_PAD_LEFT);
             $prescription->patient_id = str_pad($prescription->patient_id, 7, '0', STR_PAD_LEFT);
+
+            $pharmacy  = DB::table('pharmacy')
+                       ->select(DB::raw('id,name'))
+                       ->where('id', $pharmacy_id)
+                       //->where('status', 1)
+                       ->first();
+
+             $prescription->pharmacy = $pharmacy->name;
+
         }
 
         return response()->json(['status' => true, 'data' => $prescriptions, 'count' => $count]);
@@ -3480,7 +3489,7 @@ class ApiController extends Controller
             $pharmacy  = DB::table('pharmacy')
                       ->select(DB::raw('id,name'))
                       ->where('id', $prescription->pharmacy)
-                      ->where('status', 1)
+                     // ->where('status', 1)
                       ->first();
 
             $prescription->pharmacy = $pharmacy->name;

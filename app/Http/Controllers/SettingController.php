@@ -306,7 +306,13 @@ class SettingController extends Controller
                ->where('hospital.status', 1)
                ->first();
 
-        return response()->json(['status'=>true,'data'=>$data]);
+        if (empty($data)) {
+            $is_update = 0;
+        } else {
+            $is_update = 1;
+        }
+
+        return response()->json(['status'=>true,'data'=>$data,'is_update'=>$is_update]);
 
     }
 
