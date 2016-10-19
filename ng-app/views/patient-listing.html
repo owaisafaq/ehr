@@ -53,10 +53,10 @@
                         </select>
                     </div>
                     <div class="header-search margin-right-0 pull-left">
-                        <button type="submit" ng-hide="disabledSearchBar">
+                        <button type="submit">
                             <i class="fa fa-search"></i>
                         </button>
-                        <input ng-model="search[filterType]" ng-hide="disabledSearchBar" class="search_field" type="text" placeholder="Search for a patient" value="">
+                        <input ng-model="search[filterType]" ng-disabled="disabledSearchBar" class="search_field" type="text" placeholder="Search for a patient" value="">
                     </div>
                 </div>
 
