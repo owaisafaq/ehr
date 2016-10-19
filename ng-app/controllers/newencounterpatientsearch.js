@@ -64,6 +64,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 				$scope.displayInfo.sex = res.data.sex;
 				$scope.displayInfo.marital_status = res.data.marital_status;
 				$scope.EID = res.data.encounter_id;
+				$scope.PIDwithName = string + " " + $scope.displayInfo.first_name + " " + $scope.displayInfo.last_name;
 				for(var k=0; k < $scope.allEncounter.length; k++){
                     
 					if($scope.EID == $scope.allEncounter[k].id){

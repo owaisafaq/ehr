@@ -44,9 +44,10 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	//Get All Invoices
 //        function invoiceByBill(billId){}
 	
-	$scope.SelectedPatientWithInvoice = function(patient_id,invoice_id){
+	$scope.SelectedPatientWithInvoice = function(patient_id,invoice_id, tAmount){
 		$scope.patient_id = patient_id;
 		$scope.invoice_id = invoice_id;
+		$scope.tAmount = tAmount;
 		$scope.deleteInvoiceButton = false;
 
 		$rootScope.loader = "show";
@@ -464,6 +465,12 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
         		console.log(res, 'billing');
         		$scope.serviceBill = res.data;
         	}
+        }
+
+        $scope.calculateAmount = function(tAmount, amountPaid){
+        	if(tAmount != 0)
+        		$scope.tAmount = tAmount - amountPaid;
+        	else $scope.tAmount = 0;
         }
 
         

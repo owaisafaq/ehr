@@ -86,9 +86,9 @@
                                             <td>{{PrescriptionView.sig}}</td>
                                             <td>{{PrescriptionView.dispense}}</td>
                                             <td>{{PrescriptionView.reffills}}</td>
-                                            <td><input type="text" ng-keyup="calculateBalance(PrescriptionView.dispense, PrescriptionView.total_dispensed, $index)" ng-model="PrescriptionView.total_dispensed" ng-init="PrescriptionView.total_dispensed = PrescriptionView.total_amount" disabled class="editDispensed" /></td>
+                                            <td><input type="text" numbers-only ng-keyup="calculateBalance(PrescriptionView.dispense, PrescriptionView.total_dispensed, $index, costArray[$index])" ng-model="PrescriptionView.total_dispensed" ng-init="PrescriptionView.total_dispensed = PrescriptionView.total_amount" disabled class="editDispensed" /></td>
                                             <td>{{PrescriptionView.due}}</td>
-                                            <td><span ng-if="PrescriptionView.total_dispensed != undefined && PrescriptionView.total_dispensed != ''">N{{PrescriptionView.cost * PrescriptionView.total_dispensed}}</span></td>
+                                            <td><span ng-if="PrescriptionView.total_dispensed != undefined && PrescriptionView.total_dispensed != ''">N{{costArray[$index]}}</span></td>
                                             <td class="capitalize">{{PrescriptionView.medication_status}}</td>
                                         </tr>
                                     </tbody>
@@ -226,7 +226,7 @@
                                 <option ng-selected="MedicationData.medication == medicationDropData.name" value="{{medicationDropData.id}}" ng-repeat="medicationDropData in getDrugs">{{medicationDropData.name}}</option>{{allMedications}}
                             </select>
                         </div>                                              
-</div>
+                    </div>
                      <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>SIG</label>
@@ -259,10 +259,11 @@
                             <label>Pharmacy</label>
                         </div>
                         <div class="col-lg-9">
-                            <select ng-model="MedicationData.pharmacy" class="form-control getpharmacyName" placeholder="Select Pharmacy">
+                            <!-- <select ng-model="MedicationData.pharmacy" class="form-control getpharmacyName" placeholder="Select Pharmacy">
                                 <option></option>
                                 <option ng-selected="MedicationData.pharmacy == pharmacyDataDrop.name" value="{{pharmacyDataDrop.name}}" ng-repeat="pharmacyDataDrop in allPharmacies">{{pharmacyDataDrop.name}}</option>
-                            </select>
+                            </select> -->
+                            <input ng-model="MedicationData.pharmacy" ng-value="pharmacyNameID" disabled type="text" placeholder="" />
                         </div>
                         </div>
                         <!-- <div class="col-lg-3 clear">
@@ -271,7 +272,7 @@
                         <div class="col-lg-9">
                             <input ng-model="MedicationData.note_of_pharmacy" type="text" placeholder="" required/>
                         </div> -->
- <div class="row margin-bottom-xxl">
+                        <div class="row margin-bottom-xxl">
 
                         <div class="col-lg-9 col-lg-offset-3">
                             <button ng-hide="showUpdate" type="button" ng-click="addMedication()" ng-disabled="AddButtonOnAddMedication" class="btn btn-default pull-left button-style-1">Add</button>

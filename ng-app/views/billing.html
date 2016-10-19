@@ -182,13 +182,13 @@
                                 <button class="send button-custom pull-right" data-toggle="modal" ng-click="SendInvoiceModal(invoice_id)">Send Invoice</button>
                                 <button class="add button-custom pull-right" data-toggle="modal" data-target="#addToBill">Add to Bill</button>
                             </div>
-                            <span class="txt-style-3 pull-left text-uppercase">Plan</span>
+                            <!-- <span class="txt-style-3 pull-left text-uppercase">Plan</span> -->
                             <div class="col-lg-2">
-                                <select class="form-control" ng-model="search_plan">
+                                <!-- <select class="form-control" ng-model="search_plan">
                                     <option selected >Self</option>
                                     <option>NHIS</option>
                                     <option>Retainers</option>
-                                </select>
+                                </select> -->
                             </div>
                         </div>
 
@@ -203,9 +203,9 @@
                                         <th></th>
                                         <th>Date</th>
                                         <th>Invoice No</th>
-                                        <th>patient ID</th>
+                                        <!-- <th>patient ID</th>
                                         <th>patient name</th>
-                                        <th>patient plan</th>
+                                        <th>patient plan</th> -->
                                         <th>purpose</th>
                                         <th>amount</th>
                                         <th>due</th>
@@ -217,15 +217,15 @@
                                         <td align="center">
                                             <div class="radio radio-styled">
                                                 <label>
-                                                    <input type="radio" id="radio-{{Invoice.id}}" ng-click="SelectedPatientWithInvoice(Invoice.patient_id, Invoice.id)" name="optionsRadios"><span></span>
+                                                    <input type="radio" id="radio-{{Invoice.id}}" ng-click="SelectedPatientWithInvoice(Invoice.patient_id, Invoice.id, Invoice.amount)" name="optionsRadios"><span></span>
                                                 </label>
                                             </div>
                                         </td>
                                         <td>{{Invoice.created_at}}</td>
                                         <td>{{Invoice.id}}</td>
-                                        <td><a class="blue" href="#/patient-summary-demographics/{{Invoice.patient_id}}">P{{Invoice.patient_id}}</a></td>
+                                        <!-- <td><a class="blue" href="#/patient-summary-demographics/{{Invoice.patient_id}}">P{{Invoice.patient_id}}</a></td>
                                         <td>{{Invoice.first_name}}</td>
-                                        <td>{{Invoice.plan_name}}</td>
+                                        <td>{{Invoice.plan_name}}</td> -->
                                         <td>{{Invoice.description}}</td>
                                         <td>{{Invoice.amount}}</td>
                                         <td>{{Invoice.due}}</td>
@@ -962,15 +962,23 @@
                         <div class="col-lg-3">
                             <label>Amount Paid</label>
                         </div>
+                        <div class="col-lg-9"><!-- ng-keyup="calculateAmount(tAmount, AmountPaid.amount_paid);" -->
+                            <input type="text" placeholder="" numbers-only ng-model="AmountPaid.amount_paid"  required/>
+                        </div>
+                    </div><br/>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label>Amount Due</label>
+                        </div>
                         <div class="col-lg-9">
-                            <input type="text" placeholder=""   ng-model="AmountPaid.amount_paid"  required/>
+                            <input type="text" placeholder="" disabled ng-model="tAmount"/>
                         </div>
                     </div>
 
 
                     <div class="modal-footer row">
                         <div class="row">
-                            <button type="submit" class="btn btn-default button-style-1">Mark as Paid</button>
+                            <button type="submit" class="btn btn-default button-style-1">Process</button>
                             <button type="button" class="btn button-style-1 button-style-1_a hide_print_inovice" data-dismiss="modal">Cancel</button>
                         </div>
                     </div>
@@ -990,7 +998,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
-                <h2>Paid </h2>
+                <h2>Process Payment </h2>
             </div>
             <div class="modal-body">
                 <form class="custom-form" ng-submit="ProcessingPayment(AmountPaid, invoice_id);">

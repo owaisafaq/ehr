@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription', '$window', 'GetPrescription', '$routeParams', 'PatienPrescriptionUpdate', 'GetPatientInfo', 'GetAllMedications', 'DropDownData', 'DeleteMedication', 'AddMedicationInPrescription', 'GetMedicineUnits', 'CheckoutPatient', "GetPrescriptionSupplements", "GetMedications", 'PrescriptionPDF', 'DespensePharmacy', 'QueryMedication', 'DropDownData', function ($scope, $rootScope, PatienPrescription, $window, GetPrescription, $routeParams, PatienPrescriptionUpdate, GetPatientInfo, GetAllMedications, DropDownData, DeleteMedication, AddMedicationInPrescription, GetMedicineUnits, CheckoutPatient, GetPrescriptionSupplements, GetMedications, PrescriptionPDF, DespensePharmacy, QueryMedication, DropDownData) {
+AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription', '$window', 'GetPrescription', '$routeParams', 'PatienPrescriptionUpdate', 'GetPatientInfo', 'GetAllMedications', 'DropDownData', 'DeleteMedication', 'AddMedicationInPrescription', 'GetMedicineUnits', 'CheckoutPatient', "GetPrescriptionSupplements", "GetMedications", 'PrescriptionPDF', 'DespensePharmacy', 'QueryMedication', 'DropDownData', 'PharmacyPrescription', function ($scope, $rootScope, PatienPrescription, $window, GetPrescription, $routeParams, PatienPrescriptionUpdate, GetPatientInfo, GetAllMedications, DropDownData, DeleteMedication, AddMedicationInPrescription, GetMedicineUnits, CheckoutPatient, GetPrescriptionSupplements, GetMedications, PrescriptionPDF, DespensePharmacy, QueryMedication, DropDownData, PharmacyPrescription) {
         $rootScope.pageTitle = "EHR - Pharmacy VIew";
         $scope.PrescriptionView = [];
         $scope.medicationsDataPush = [];
@@ -11,6 +11,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         $scope.Prescription = {};
         $scope.showUpdate = false;
         $scope.prescriptionID = $routeParams.prescriptionID;
+        $scope.pharmacyID = $routeParams.pharmacyID;
         $scope.PrescriptionViews = [];
         $scope.AddButtonOnAddMedication = false;
 
@@ -24,7 +25,6 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         $scope.displayInfo = {};
         $scope.removePrescription = false;
         $scope.medicineUnits = [];
-        console.log($scope.prescriptionID);
         GetPrescription.get({
             token: $window.sessionStorage.token,
             precription_id: $scope.prescriptionID
@@ -37,11 +37,19 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                 $scope.patient_id = res.data.patient_id;
                 $scope.PrescriptionViews = res.data;
                 $scope.Prescription.notes = res.notes;
+                $scope.pharmacyNameID = res.pharmacy_name;
+                $scope.pharmacyID = res.pharmacy_id;
                 $scope.prescription_data = res.prescription_data;
                 $scope.prescription_data.date = res.prescription_data.date;
                 $scope.prescription_data.date = $scope.prescription_data.date.split(' ');
                 $scope.encounterID = $scope.prescription_data.visit_id;
                 $rootScope.loader = 'hide';
+                $scope.costArray = [];
+                console.log($scope.PrescriptionViews[0]);
+                for(var i = 0; $scope.PrescriptionViews.length > i ; i++){
+                    $scope.costArray[i] = parseInt($scope.PrescriptionViews[i].dispense) * parseInt($scope.PrescriptionViews[i].total_amount);
+                    console.log($scope.costArray[i], $scope.PrescriptionViews[i].dispense, $scope.PrescriptionViews[i].total_amount);
+                }
             }
         }
         function prescriptionFailure(res) {
@@ -94,6 +102,8 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
             for (var i = 0; i < $scope.PrescriptionViews.length; i++) {
                 $scope.PrescriptionViewsCopy[i].note_of_pharmacy = $scope.prescriptionPharmacyNotes;
                 $scope.PrescriptionViewsCopy[i].cost = $scope.PrescriptionViews[i].cost * $scope.PrescriptionViews[i].total_dispensed;
+                $scope.PrescriptionViewsCopy[i].pharmacy_id = $scope.pharmacyID;
+                //$scope.PrescriptionViewsCopy[i].pharmacy = $scope.pharmacyID;
                 delete $scope.PrescriptionViewsCopy[i].patient_id;
                 delete $scope.PrescriptionViewsCopy[i].created_at;
                 delete $scope.PrescriptionViewsCopy[i].notes;
@@ -110,35 +120,35 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                 note_for_pharmacy: $scope.Prescription.notes,
                 visit_id: $scope.encounterID
             }
-            //console.log($scope.PrescriptionViews)
+            console.log($scope.PrescriptionViewsCopy)
                 //            $scope.PrescriptionViews.notes = $scope.PrescriptionViews.prescriptionPharmacyNotes == undefined ? '' : $scope.PrescriptionViews.prescriptionPharmacyNotes;
             console.log(addPrescrptn)
             PatienPrescriptionUpdate.save(addPrescrptn, PrescriptionSuccess, PrescriptionFailure)
         }
 
-        $scope.calculateBalance = function (dispense, totalDispense, index) {
+        $scope.calculateBalance = function (dispense, totalDispense, index, costarray) {
             if (totalDispense != undefined) {
-                $scope.PrescriptionViews[index].balance = parseInt(dispense) + parseInt(totalDispense);
+                $scope.PrescriptionViews[index].costArray = parseInt(dispense) + parseInt(totalDispense);
             }
             if (totalDispense == '') {
-                $scope.PrescriptionViews[index].balance = '';
+                $scope.PrescriptionViews[index].costArray = '';
             }
         }
         $scope.addMedication = function (checkEdit) {
             var AddMedications = {
                 medicationName: $('.getMedicineName option:selected').text(),
-                pharmacyName: $('.getpharmacyName option:selected').text(),
+                pharmacyName:  $scope.pharmacyID,
                 medication: $scope.MedicationData.medication,
                 sig: $scope.MedicationData.sig,
                 dispense: $scope.MedicationData.dispense,
                 reffills: $scope.MedicationData.reffills,
-                pharmacy: $scope.MedicationData.pharmacy,
+                pharmacy: $scope.pharmacyNameID,
                 note_of_pharmacy: $scope.MedicationData.note_of_pharmacy,
             }
             //$scope.AddButtonOnAddMedication = true;
             console.log(AddMedications);
             $scope.note = $scope.MedicationData.note_of_pharmacy;
-            if(AddMedications.medication != undefined && AddMedications.medication != '' && AddMedications.sig != undefined && AddMedications.sig != '' && AddMedications.dispense != undefined && AddMedications.dispense != '' && AddMedications.reffills != undefined && AddMedications.reffills != '' && AddMedications.pharmacy != undefined && AddMedications.pharmacy != '' /*&& AddMedications.note_of_pharmacy != undefined && AddMedications.note_of_pharmacy != ''*/){
+            if(AddMedications.medication != undefined && AddMedications.medication != '' && AddMedications.sig != undefined && AddMedications.sig != '' && AddMedications.dispense != undefined && AddMedications.dispense != '' && AddMedications.reffills != undefined && AddMedications.reffills != '' && AddMedications.pharmacy != '' /*&& AddMedications.note_of_pharmacy != undefined && AddMedications.note_of_pharmacy != ''*/){
                 //if (angular.equals({}, AddMedications) == false) {
                     console.log('IN');
                     $scope.medicationsDataPush.push(AddMedications);
@@ -147,7 +157,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                     $scope.MedicationData.reffills = "";
                     $scope.MedicationData.note_of_pharmacy = "";
                     $scope.MedicationData.medication = "";
-                    $scope.MedicationData.pharmacy = "";
+                    //$scope.MedicationData.pharmacy = "";
                     $("#addmedication select").select2("val", "");
                     if (checkEdit == 1) {
                         $scope.showUpdate = false;
@@ -177,6 +187,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                 token: $window.sessionStorage.token,
                 prescription_id: $scope.prescriptionID
             }
+            console.log(addPrescrptnPop);
             AddMedicationInPrescription.save(addPrescrptnPop, PrescriptionSuccessPop, PrescriptionFailurePop)
         }
 
@@ -422,6 +433,14 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                     token: $window.sessionStorage.token,
                     precription_id: $scope.prescriptionID
                 }, prescriptionSuccess, prescriptionFailure);
+            }
+        }
+
+        PharmacyPrescription.get({token: $window.sessionStorage.token, limit:10, offset:0}, pharmacyNameSuccess, getMediFailure);
+        function pharmacyNameSuccess(res){
+            //console.log(res.data[0].pharmacy, 'odasdsao');
+            if(res.status == true){
+                $scope.pharmacyName = res.data[0].pharmacy
             }
         }
 
