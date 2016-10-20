@@ -19,7 +19,7 @@
                                 <button type="submit">
                                     <i class="fa fa-search"></i>
                                 </button>
-                                <input class="search_field" type="text" placeholder="Search investigation">
+                                <input class="search_field" ng-model="searchInves" type="text" placeholder="Search investigation">
                             </div>
                         </div>
                     </div>
@@ -33,9 +33,9 @@
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr ng-repeat="LabList in LabLists | filter:search |filter:name">
-                                    <td>{{LabList.name}}</td>
+                            <tbody><!--  |filter:name -->
+                                <tr ng-repeat="LabList in LabLists | filter:{name:searchInves}">
+                                    <td class="capitalize">{{LabList.name}}</td>
                                     <td>{{LabList.description}}</td>
                                     <td>{{LabList.code}}</td>
                                     <td>
@@ -112,10 +112,10 @@
                             <tbody><!-- |filter:cat_search -->
                                 <tr ng-repeat="LabTest in LabTests | filter:{lab:labType} | filter:
                                 {name: searchTest}">
-                                    <td><a href="javscript:;" class="link-style_3">{{LabTest.name}}</a></td>
+                                    <td><a href="javscript:;" class="link-style_3 capitalize">{{LabTest.name}}</a></td>
                                     <td>{{LabTest.description}}</td>
                                     <td>{{LabTest.lonic_code}}</td>
-                                    <td>{{LabTest.lab}}</td>
+                                    <td class="capitalize">{{LabTest.lab}}</td>
                                     <td>{{LabTest.cost}}</td>
                                     <td>
                                         <div class="billing_actions pull-right"><a href="javascript:;" class="setting-button"></a>

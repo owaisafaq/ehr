@@ -27,7 +27,7 @@
                             </thead>
                             <tbody><!-- |filter:cat_search -->
                                 <tr ng-repeat="TaxRate in TaxRateLists| filter: {name: search}">
-                                    <td><a href="#" class="blue">{{TaxRate.name}}</a></td>
+                                    <td><a href="#" class="blue capitalize">{{TaxRate.name}}</a></td>
                                     <td>{{TaxRate.rate}}</td>
                                     <td>
                                         <div class="billing_actions"><a href="javascript:;" class="setting-button"></a>

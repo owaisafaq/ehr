@@ -11,7 +11,7 @@
                 <div class="tab-pane" id="facilities-profile">
                     <div class="table-header row background-none inv_header auto">
                         <div class="row">
-                            <h2 class="col-xs-12 heading-style margin-bottom-30 margin-top-5">Radiology Investigations</h2>
+                            <h2 class="col-xs-12 heading-style margin-bottom-30 margin-top-5">Facilities Profile</h2>
                         </div>
                         <div class="table-upper">
                             <div class="pull-left logo-textStyle">
@@ -190,7 +190,7 @@
                                 <button type="submit">
                                     <i class="fa fa-search"></i>
                                 </button>
-                                <input class="search_field" type="text" placeholder="Search Departments">
+                                <input class="search_field" ng-model="speciSearch" type="text" placeholder="Search Departments">
                             </div>
                         </div>
                     </div>
@@ -203,8 +203,8 @@
                                 <th></th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr ng-repeat="DepartmentList in DepartmentLists| filter:search |filter:cat_search">
+                            <tbody><!--  |filter:cat_search -->
+                            <tr ng-repeat="DepartmentList in DepartmentLists| filter: {name:speciSearch}">
                                 <td><a href="#" class="link-style_3">{{DepartmentList.name}}</a></td>
                                 <td>{{DepartmentList.description}}</td>
                                 <td>
