@@ -672,8 +672,9 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
             department_id: addEncounter.department,
             encounter_class: addEncounter.class == undefined ? '' : addEncounter.class,
             encounter_type: addEncounter.type,
-            whom_to_see: addEncounter.wts,
-            decscribe_whom_to_see : addEncounter.describeWTS
+            reason_of_visit: addEncounter.describeWTS == undefined ? '' : addEncounter.describeWTS,
+            whom_to_see: addEncounter.wts == undefined ? '' : addEncounter.wts,
+            decscribe_whom_to_see : addEncounter.describeWTS == undefined ? '' : addEncounter.describeWTS
         }, encounterSuccess, encounterFailed);
         function encounterSuccess(res){
             if(res.status == true){

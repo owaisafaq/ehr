@@ -171,6 +171,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
             setTimeout(function () {
                 $('#addmedication select').trigger('change');
             }, 100)
+            $scope.pharmacyNameID = 
             $scope.medicationsDataPush.splice(index, 1);
             console.log($scope.medicationsDataPush);
             $scope.showUpdate = true;
