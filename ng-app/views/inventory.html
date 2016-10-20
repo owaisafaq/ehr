@@ -1,4 +1,4 @@
-su<div id="content">
+<div id="content">
     <section>
         <div class="card">
             <div class="card-head col-lg-9 no-padding card-head-auto">
@@ -191,7 +191,7 @@ su<div id="content">
                                         <label>group</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <select name="group" class="form-control group_select" ng-model="inventory.group" placeholder="Select Group">
+                                        <select name="group" class="form-control group_select" ng-model="inventory.group" placeholder="Select Group" ng-change="groupchange();">
                                             <option></option>
                                             <option value="Drugs">Drugs</option>
                                             <option value="Supplements">Supplements</option>
@@ -249,7 +249,7 @@ su<div id="content">
                                         </div>
                                         <div class="col-lg-3 no-padding">
                                             <div class="col-lg-6">
-                                                <input type="text" name="strength1" ng-model="inventory.strength" ng-class="{true: 'error'}[submitted && myFormAdd.strength1.$invalid]" required />
+                                                <input type="text" class="strength1" name="strength1" ng-model="inventory.strength" ng-class="{true: 'error'}[submitted && myFormAdd.strength1.$invalid]" required />
                                                 <p class="help-block PIValid" ng-show="submitted && myFormAdd.strength1.$error.required">Required</p>
                                             </div>
                                             <div class="col-lg-6">
@@ -294,8 +294,15 @@ su<div id="content">
                                         <input type="text" name="orderquantity" placeholder="" ng-model="inventory.order_quantity" ng-class="{true: 'error'}[submitted && myFormAdd.orderquantity.$invalid]" required numbers-only/>
                                         <p class="help-block PIValid" ng-show="submitted && myFormAdd.orderquantity.$error.required">Required</p>
                                     </div>
+                                    <div class="col-lg-3 costForDoc">
+                                        <label>cost Price/item</label>
+                                    </div>
+                                    <div class="col-lg-3 costForDoc">
+                                        <input type="text" name="costPriceitem" ng-model="inventory.price" required ng-class="{true: 'error'}[submitted && myFormAdd.costPriceitem.$invalid]" numbers-only/>
+                                        <p class="help-block PIValid" ng-show="submitted && myFormAdd.costPriceitem.$error.required">Required</p>
+                                    </div>
                                 </div>
-                                <div class="row no-margin">
+                                <div class="row no-margin" id="stockDetailsSection">
                                     <div class="row no-margin">
                                         <div class="col-lg-3"><label class="label-style">Stock Details</label></div>
                                     </div>
@@ -346,7 +353,7 @@ su<div id="content">
                                         <label>quantity</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <input type="text" name="stockQuantity" ng-model="inventory.quantity" required ng-class="{true: 'error'}[submitted && myFormAdd.stockQuantity.$invalid]" numbers-only/>
+                                        <input type="text" class="stockQuantity" name="stockQuantity" ng-model="inventory.quantity" required ng-class="{true: 'error'}[submitted && myFormAdd.stockQuantity.$invalid]" numbers-only/>
                                         <p class="help-block PIValid" ng-show="submitted && myFormAdd.stockQuantity.$error.required">Required</p>
                                     </div>
                                     <div class="col-lg-3">
@@ -418,14 +425,14 @@ su<div id="content">
                                         <input type="text" ng-model="inventory.tax" placeholder="" required />
                                     </div>-->
 
-                                    <div class="col-lg-3">
-                                        <button type="submit" ng-click="submitted=true;" class="btn btn-default button-style-1">Add</button>
-                                        <button type="button" class="btn button-style-1 button-style-1_a cancel_add" >Cancel</button>
-                                    </div>
+                                    
 
 
                                 </div>
-
+                                <div class="col-lg-3">
+                                    <button type="submit" ng-click="submitted=true;" class="btn btn-default button-style-1">Add</button>
+                                    <button type="button" class="btn button-style-1 button-style-1_a cancel_add" >Cancel</button>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -1482,6 +1489,8 @@ Edit Supplier Modal-->
                         $(".inventory_detail").hide();
                         $(".inv_header").hide();
                         $("#stock_det").hide();
+
+                        
 //                $(".add-drug-supplements").hide();
                         $(".show_on_others").show();
                         $(".show_on_supplements").hide();
@@ -1491,8 +1500,20 @@ Edit Supplier Modal-->
                         $(".show_on_supplements").show();
                     }
 
+                    if ($(".group_select option:selected").val() == "Others" || $(".group_select option:selected").val() == "Documents") {
+                        $('#stockDetailsSection').hide();
+                        $('.costForDoc').show();
+                        
+                    }else{
+                        $('#stockDetailsSection').show();
+                        $('.costForDoc').hide();
+                    }
+
+                    
+
 
                 });
+                $('.costForDoc').hide();
 
                 $(".group_select_edit").change(function () {
 

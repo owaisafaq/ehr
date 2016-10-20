@@ -670,10 +670,11 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
             token: $window.sessionStorage.token, 
             patient_id: $rootScope.HEADERSEARCHPATIENTID,
             department_id: addEncounter.department,
-            encounter_class: addEncounter.class,
+            encounter_class: addEncounter.class == undefined ? '' : addEncounter.class,
             encounter_type: addEncounter.type,
-            whom_to_see: addEncounter.wts,
-            decscribe_whom_to_see : addEncounter.describeWTS
+            reason_of_visit: addEncounter.describeWTS == undefined ? '' : addEncounter.describeWTS,
+            whom_to_see: addEncounter.wts == undefined ? '' : addEncounter.wts,
+            decscribe_whom_to_see : addEncounter.describeWTS == undefined ? '' : addEncounter.describeWTS
         }, encounterSuccess, encounterFailed);
         function encounterSuccess(res){
             if(res.status == true){
@@ -690,6 +691,15 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
                     $rootScope.headerMessage = false;
                     $rootScope.encounterHeaderSearchBar = true;
                     $('.create_counter_header').addClass('hide');
+                }, 2000);
+            }else{
+                $rootScope.headerHideLoader = "hide";
+                $rootScope.headerMessageType = "alert-danger";
+                $rootScope.headerErrorMessage = res.message;
+                $rootScope.headerErrorSymbol = "fa fa-times";//
+                $rootScope.headerMessage = true;
+                $timeout(function () {
+                    $rootScope.headerMessage = false;
                 }, 2000);
             }
         }
@@ -837,6 +847,45 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
             },
             minimumInputLength: 2,
         });
+        
+        
+         $(".search-ajax-appointment").select2({
+            placeholder: 'Select Patient',
+            ajax: {
+                url: serverPath+"search_patient",
+                delay: 250,
+                type: "POST",
+                data: function (params, page) {
+                    return {
+                        term: params,
+                        name: params
+                    };
+                },
+                results: function (data, page) {
+                    var myResults = [];
+                    if (data.status == false) {
+                        myResults.push({
+                            'text': "No Result Found"
+                        });
+                    }
+                    else {
+                        $.each(data['data'], function (index, item) {
+                            //console.log(item);
+                            myResults.push({
+                                'id': item.id,
+                                'text': item.id + " "+ item.first_name + " " + item.last_name
+                            });
+                        });
+                    }
+                    return {
+                        results: myResults
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 2,
+        });
+        
         $(".encounter-search-bar, .get-patient-search-bar").select2({
             placeholder: 'Search Patient',
             ajax: {

@@ -45,8 +45,8 @@
                         <!---->
                         <select ng-model="filterType" class="form-control" placeholder="Select Search By" ng-change="findPatient();">
                             <option></option>
-                            <option value="id">Patient ID</option>
-                            <option value="first_name">Patient Name</option>
+                            <option value="id">ID</option>
+                            <option value="first_name">First Name</option>
                             <option value="last_name">Last Name</option>
                             <option value="date_of_birth">Date of Birth</option>
                             <option value="phone_number">Phone Number</option>
@@ -76,7 +76,6 @@
                 <div>
                 <div class="col-lg-2">
                     <select ng-model="pageSize" class="form-control" ng-change="selectBoxValue(pageSize);" placeholder="Number of Record">
-                        <option value=""></option>
                         <!-- <option value="5">5</option>
                         <option value="10">10</option> -->
                         <option value="15" ng-selected="true">15</option>

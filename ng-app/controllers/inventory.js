@@ -170,8 +170,17 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 		$('#internetError').modal('show');
 		console.log(error);
 	}
-
-
+	$scope.inventory = {};
+	$scope.inventory.group = undefined;
+	$scope.groupchange = function(){
+		if ($scope.inventory.group == "Documents") {
+	        $scope.inventory.quantity = '';
+	        console.log('document');
+	    }else if($scope.inventory.group == "Others"){
+	        $scope.inventory.quantity = '';
+	        $scope.inventory.strength = '';
+	    }
+	}
 // Add Inventory
 	$scope.AddInventory = function (inventory) {
 		if (inventory.product_name != undefined && inventory.strength != undefined && inventory.reorder_level != undefined && inventory.order_quantity != undefined && inventory.quantity != undefined && inventory.price != undefined) {
@@ -191,7 +200,7 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 				expiry	:inventory.expiry_date == undefined ? '' :inventory.expiry_date,
 				quantity:inventory.quantity == undefined ? '' :inventory.quantity,
 				order_quantity:inventory.order_quantity == undefined ? '' :inventory.order_quantity,
-				cost_per_item:inventory.price == undefined ? '' :inventory.price,
+				
 				pack:'pack',
 				dept_id:inventory.group == undefined ? '' :inventory.group,
 				group:inventory.group == undefined ? '' :inventory.group,
@@ -202,6 +211,11 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 				cat_id:inventory.cat_id == undefined ? '' :inventory.cat_id,
 				strength:inventory.strength == undefined ? '' :inventory.strength,
 				dose_from:inventory.dose_from == undefined ? '' :inventory.dose_from
+			}
+			if(inventory.group == "Documents" || inventory.group == "Others"){
+				addInventory.cost_per_item = inventory.price
+			}else{
+				addInventory.cost_per_item = '';
 			}
 			var addProduct={
 				token:$window.sessionStorage.token,

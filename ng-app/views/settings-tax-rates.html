@@ -12,7 +12,7 @@
                                 <button type="submit">
                                     <i class="fa fa-search"></i>
                                 </button>
-                                <input class="search_field" type="text" ng-model="search.product_id" placeholder="Search tax">
+                                <input class="search_field" type="text" ng-model="search" placeholder="Search tax">
                             </div>
                         </div>
                     </div>
@@ -25,9 +25,9 @@
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr ng-repeat="TaxRate in TaxRateLists| filter:search |filter:cat_search">
-                                    <td><a href="#" class="blue">{{TaxRate.name}}</a></td>
+                            <tbody><!-- |filter:cat_search -->
+                                <tr ng-repeat="TaxRate in TaxRateLists| filter: {name: search}">
+                                    <td><a href="#" class="blue capitalize">{{TaxRate.name}}</a></td>
                                     <td>{{TaxRate.rate}}</td>
                                     <td>
                                         <div class="billing_actions"><a href="javascript:;" class="setting-button"></a>

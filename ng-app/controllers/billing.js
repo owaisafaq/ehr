@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData','GetBillInvoices','SendEmail', 'CheckoutPatient', 'deleteInvoice', 'AddToBill', 'GetAllBillingCodes', 'GetAllproducts', 'SendEmail',function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData,GetBillInvoices,SendEmail, CheckoutPatient, deleteInvoice, AddToBill, GetAllBillingCodes, GetAllproducts, SendEmail){
+AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData','GetBillInvoices','SendEmail', 'CheckoutPatient', 'deleteInvoice', 'AddToBill', 'GetAllBillingCodes', 'GetAllproducts', 'SendEmail', 'GetBillingWithDates', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData,GetBillInvoices,SendEmail, CheckoutPatient, deleteInvoice, AddToBill, GetAllBillingCodes, GetAllproducts, SendEmail, GetBillingWithDates){
 	$rootScope.pageTitle = "EHR - Billing";
 	$scope.BillListings={};
 	$scope.selectedPatient = {};
@@ -44,9 +44,10 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	//Get All Invoices
 //        function invoiceByBill(billId){}
 	
-	$scope.SelectedPatientWithInvoice = function(patient_id,invoice_id){
+	$scope.SelectedPatientWithInvoice = function(patient_id,invoice_id, tAmount){
 		$scope.patient_id = patient_id;
 		$scope.invoice_id = invoice_id;
+		$scope.tAmount = tAmount;
 		$scope.deleteInvoiceButton = false;
 
 		$rootScope.loader = "show";
@@ -142,7 +143,9 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 					bill_id : $scope.bill_id
 				}, GetAllInvoicesSuccess, GetAllInvoicesFailure);
 
-
+				GetAllBills.get({
+					token: $window.sessionStorage.token,
+				}, GetAllBillsSuccess, GetAllBillsFailure);
 
 				/*				$('#radio-2').prop("checked", true);
 */
@@ -466,5 +469,24 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
         	}
         }
 
+        $scope.calculateAmount = function(tAmount, amountPaid){
+        	if(tAmount != 0)
+        		$scope.tAmount = tAmount - amountPaid;
+        	else $scope.tAmount = 0;
+        }
+
+        $scope.dateSearchPeirod = function(periodDate){
+        	console.log(periodDate);
+        	$rootScope.loader = "show";
+        	GetBillingWithDates.get({token: $window.sessionStorage.token, date: periodDate}, dateSuccess, checkoutSuccessFailure);
+        }
+
+        function dateSuccess(res){
+        	console.log(res, 'datebills');
+        	$rootScope.loader = "hide";
+        	if(res.status == true){
+        		$scope.BillListings = res.data;
+        	}
+        }
         
 }]);
