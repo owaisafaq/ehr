@@ -3309,3 +3309,33 @@ AppEHR.factory("GetAllproducts", function ($resource) {
     };
     return updateLab;
 });
+AppEHR.factory("GetHospitalProfile", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_hospital_profile', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var Hospital = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return Hospital;
+});
+AppEHR.factory("addUpdateHospital", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_update_hospital', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var hospitalData = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return hospitalData;
+});

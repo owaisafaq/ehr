@@ -3002,8 +3002,8 @@ class ApiController extends Controller
             ->leftJoin('template_types', 'template_types.id', '=', 'template_categories.template_type')
             ->select(DB::raw('templates.id,templates.name,templates.description,template_categories.name as category,templates.template'))
             ->where('templates.status', 1)
-            ->where('template_categories.template_type', $template_type)
-           // ->where('templates.category_id', $category_id)
+          //  ->where('template_categories.template_type', $template_type)
+            ->where('templates.category_id', $category_id)
             ->get();
 
         return response()->json(['status' => true, 'data' => $templates]);
@@ -3316,7 +3316,13 @@ class ApiController extends Controller
         $patient_prescriptions = json_decode($prescription);
         $currentdatetime = date("Y-m-d  H:i:s");
 
-        DB::table('patient_prescription_medicine')->where('prescription_id', '=', $prescription_id)->delete();
+    /*    $pharmacy = DB::table('patient_prescription_medicine')
+            ->select('pharmacy')
+            ->where('prescription_id',$prescription_id)->first();
+
+        $pharmacy = $pharmacy->pharmacy;*/
+
+        DB::table('patient_prescription_medicine')->where('prescription_id', $prescription_id)->delete();
 
         foreach ($patient_prescriptions as $patient_prescription) {
 
@@ -3327,7 +3333,7 @@ class ApiController extends Controller
                         'sig' => $patient_prescription->sig,
                         'dispense' => $patient_prescription->dispense,
                         'reffills' => $patient_prescription->reffills,
-                        'pharmacy' => $patient_prescription->pharmacy,
+                        'pharmacy' => $patient_prescription->pharmacy_id,
                         'created_at' => $currentdatetime
                     ]
                 );
@@ -3449,6 +3455,15 @@ class ApiController extends Controller
         foreach ($prescriptions as $prescription) {
             $prescription->visit_id = str_pad($prescription->visit_id, 8, '0', STR_PAD_LEFT);
             $prescription->patient_id = str_pad($prescription->patient_id, 7, '0', STR_PAD_LEFT);
+
+            $pharmacy  = DB::table('pharmacy')
+                       ->select(DB::raw('id,name'))
+                       ->where('id', $pharmacy_id)
+                       //->where('status', 1)
+                       ->first();
+
+             $prescription->pharmacy = $pharmacy->name;
+
         }
 
         return response()->json(['status' => true, 'data' => $prescriptions, 'count' => $count]);
@@ -3467,6 +3482,27 @@ class ApiController extends Controller
             ->where('patient_prescription_medicine.status', 1)
             ->get();
 
+        foreach ($prescriptions as $prescription) {
+
+            $medication  = DB::table('inventory_products')
+                ->select(DB::raw('id,name'))
+                ->where('id', $prescription->medication)
+                ->where('status', 1)
+                ->first();
+
+            $prescription->medication = $medication->name;
+
+            $pharmacy  = DB::table('pharmacy')
+                      ->select(DB::raw('id,name'))
+                      ->where('id', $prescription->pharmacy)
+                     // ->where('status', 1)
+                      ->first();
+
+            $prescription->pharmacy = $pharmacy->name;
+            $prescription->pharmacy_id = $pharmacy->id;
+
+        }
+
 
         $prescription_notes = DB::table('prescription_notes')
             ->select(DB::raw('note_for_pharmacy'))
@@ -3484,7 +3520,9 @@ class ApiController extends Controller
             ->where('patient_prescription.id', $prescription_id)
             ->first();
 
-        return response()->json(['status' => true, 'data' => $prescriptions, 'notes' => $notes, 'prescription_data' => $prescription_data]);
+
+
+        return response()->json(['status' => true, 'data' => $prescriptions, 'notes' => $notes, 'prescription_data' => $prescription_data,'pharmacy_name'=>$prescriptions[0]->pharmacy,'pharmacy_id'=>$prescriptions[0]->pharmacy_id]);
 
 
     }
