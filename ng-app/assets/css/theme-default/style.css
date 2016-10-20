@@ -184,12 +184,12 @@ Menu styling
     left: 20px;
 }
 .menubar-inverse .gui-controls li .title,.gui-controls > li > a .title,.menubar-inverse .gui-controls li.gui-folder > a .title{
-    color: #43abff;
+    color: #b4deff;
     text-shadow: none; 
     font-style: normal;
 }
 .menubar-inverse .gui-icon {
-    color: #43abff;
+    color: #b4deff;
 }
 /*.menubar-inverse .gui-controls li.active .gui-icon{
     background-color: transparent;
@@ -452,7 +452,7 @@ Menu styling
     font-family: 'SegoeUI-reg';
     box-sizing: border-box;
     border-radius: 2px;
-    color: #8491ae;
+    color: #7f8796;
 }
 .custom-form textarea{
     width: 100%;
@@ -478,7 +478,7 @@ Menu styling
     color:#a2a6b9;
 }
 .select2-container.form-control, .custom-form input[type=text], .custom-form input[type=email],.custom-form input[type=number]{
-    border: 1px solid #e8ebed;
+    border: 1px solid #d2d6d8;
     height: 32px;
 }
 /*
@@ -653,7 +653,7 @@ Table Styling
 }
 .table-custom tbody > tr > td{
     padding: 3px 10px;
-    color: #b8c0d0;
+    color: #7f8796;
     font-size: 14px;
 }
 .table-custom .radio-styled{
