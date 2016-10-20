@@ -476,13 +476,13 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
         }
 
         $scope.dateSearchPeirod = function(periodDate){
-        	console.log(periodDate);
+        	//console.log(periodDate);
         	$rootScope.loader = "show";
         	GetBillingWithDates.get({token: $window.sessionStorage.token, date: periodDate}, dateSuccess, checkoutSuccessFailure);
         }
 
         function dateSuccess(res){
-        	console.log(res, 'datebills');
+        	//console.log(res, 'datebills');
         	$rootScope.loader = "hide";
         	if(res.status == true){
         		$scope.BillListings = res.data;
