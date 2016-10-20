@@ -27,6 +27,7 @@
                     <a class="link-style_2" href="javascript:;" ng-click="filterLabs.order_status = 'completed'">closed orders</a>&nbsp;&nbsp;|&nbsp;&nbsp; -->
                     <a class="link-style_2" href="javascript:;" ng-click="filterLabs.order_status = 'Cancelled'">cancelled orders</a>
                 </div>
+                
                 <div class="icons_con">
                     <button data-toggle="modal" data-target="#neworder" class="new_order button-custom">new order</button>
                     <button data-toggle="modal" data-target="#signoff" class="add button-custom" ng-show="orderSelected" ng-disabled="signoffStatus == 1">Sign off</button>
@@ -35,6 +36,15 @@
                     <button data-toggle="modal" data-target="#cancelOrder" class="update button-custom" ng-show="orderSelected">Cancel Order</button>
                 </div>
                 <div class="col-lg-12 no-padding">
+                    <!-- <div class="card-body col-lg-2">
+                        <select ng-model="pageSize" class="form-control" ng-change="selectBoxValue(pageSize);" placeholder="Number of Record">
+                            <option value="10" ng-selected="true">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="50">50</option>
+                        </select>
+                    </div> -->
                     <table class="table table-striped no-margin table-custom">
                         <thead>
                             <tr>
