@@ -235,7 +235,7 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
         	$rootScope.loader = "show";
         	AddAppointments.save({
         		token: $window.sessionStorage.token,
-        		patient_id: dataToBeAdded.selectedPatientID,
+        		patient_id: $("#searchpatient").val(),
         		//visit_id: $scope.encounterID,
         		department: dataToBeAdded.department == undefined ? '' : dataToBeAdded.department,
         		reason: dataToBeAdded.reason == undefined ? '' : dataToBeAdded.reason,
@@ -247,7 +247,7 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
         		//end_time: dataToBeAdded.endTime,
         		priority: dataToBeAdded.priority == undefined ? '' : dataToBeAdded.priority
         	}, createAppointmentSuccess, createAppointmentFailure);
-
+console.log($("#searchpatient").val())
         	function createAppointmentSuccess(res){
         		console.log(res);
         		if(res.status == true){
@@ -355,54 +355,59 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
     }*/
 
 
-    $('#findPatient').on('input', function(){
-
-        var input = $('#findPatient').val();
-        if(input != undefined || input != ''){
-            if(input.length == 0){
-                $('.headerWithSwitchingImages').addClass('ng-hide');
-                $('.headerWithSwitchingImages1').removeClass('ng-hide');
-            }else{
-                $.ajax({
-                    url: $('#findPatient').data('source'),
-                    dataType: "json",
-                    type: "POST",
-                    delay: 500,
-                    minLength: 1,
-                    data: {name: input},
-                    success: function (patients) {
-                        $("#findPatient").autocomplete({
-                            source: function (request, response) {
-                                if(patients.status == true){
-                                    response($.map(patients.data, function (value, key) {
-                                        return {
-                                            label: value.first_name == "" || value.first_name == undefined ? "No patient found" : value.id + " - " + value.first_name + " " + value.last_name,
-                                            value: value.id == "" ? '0' : value.id
-                                        }
-                                    }));
-                                    //$( "#findPatient" ).autocomplete( "close" );
-                                    patients.data = [];
-                                    $('#findPatient').data()=null;
-                                }else{
-                                    $(this).data().term = null;
-                                    response({label:"No Patient Found"});
-                                    patients.data = [];
-                                }
-                            },
-                            select: function(event, ui) {
-                                $('#findPatient').val(ui.item.label);
-                                console.log(ui.item.label);
-                                $scope.appointment.appointmentSearch = ui.item.label;
-                                $scope.selectedPatientID = $scope.appointment.appointmentSearch.split(' - ');
-                                $scope.appointment.selectedPatientID = $scope.selectedPatientID[0];
-                                return false;
-                            }
-                        });
-                    }
-                });
-            }
-        }
-    });
+//    $('#findPatient').on('keyup', function(){
+//        var input = $('#findPatient').val();
+//        console.log(input)
+//        if(input != undefined || input != ''){
+////            if(input.length == 0){
+////                console.log("therere")
+////                $('.headerWithSwitchingImages').addClass('ng-hide');
+////                $('.headerWithSwitchingImages1').removeClass('ng-hide');
+////            }else{
+//                console.log("no there")
+////                $.ajax({
+////                    url: $('#findPatient').data('source'),
+////                    dataType: "json",
+////                    type: "POST",
+////                    minLength: 0,
+////                    data: {name: input},
+////                    success: function (patients) {
+////                       console.log(patients)
+////                        $("#findPatient").autocomplete({
+////                            source: function (request, response) {
+////                                console.log("i m in")
+////                                if(patients.status == true){
+////                                    console.log("status here")
+////                                    response($.map(patients.data, function (value, key) {
+////                                        return {
+////                                            label: value.first_name == "" || value.first_name == undefined ? "No patient found" : value.id + " - " + value.first_name + " " + value.last_name,
+////                                            value: value.id == "" ? '0' : value.id
+////                                        }
+////                                    }));
+////                                    //$( "#findPatient" ).autocomplete( "close" );
+////                                    patients.data = [];
+//////                                    $('#findPatient').data() = null;
+////                                }else{
+////                                    $(this).data().term = null;
+////                                    response({label:"No Patient Found"});
+////                                    patients.data = [];
+////                                }
+////                            },
+////                            select: function(event, ui) {
+////                                console.log("catch me here")
+////                                $('#findPatient').val(ui.item.label);
+////                                console.log(ui.item.label);
+////                                $scope.appointment.appointmentSearch = ui.item.label;
+////                                $scope.selectedPatientID = $scope.appointment.appointmentSearch.split(' - ');
+////                                $scope.appointment.selectedPatientID = $scope.selectedPatientID[0];
+////                                return false;
+////                            }
+////                        });
+////                    }
+////                });
+////            }
+//        }
+//    });
 
     $scope.convertAppointments = function(){
         $rootScope.loader = "show";

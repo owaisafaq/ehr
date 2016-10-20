@@ -837,6 +837,45 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
             },
             minimumInputLength: 2,
         });
+        
+        
+         $(".search-ajax-appointment").select2({
+            placeholder: 'Select Patient',
+            ajax: {
+                url: serverPath+"search_patient",
+                delay: 250,
+                type: "POST",
+                data: function (params, page) {
+                    return {
+                        term: params,
+                        name: params
+                    };
+                },
+                results: function (data, page) {
+                    var myResults = [];
+                    if (data.status == false) {
+                        myResults.push({
+                            'text': "No Result Found"
+                        });
+                    }
+                    else {
+                        $.each(data['data'], function (index, item) {
+                            //console.log(item);
+                            myResults.push({
+                                'id': item.id,
+                                'text': item.id + " "+ item.first_name + " " + item.last_name
+                            });
+                        });
+                    }
+                    return {
+                        results: myResults
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 2,
+        });
+        
         $(".encounter-search-bar, .get-patient-search-bar").select2({
             placeholder: 'Search Patient',
             ajax: {
