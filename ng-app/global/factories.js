@@ -3339,3 +3339,19 @@ AppEHR.factory("addUpdateHospital", function ($resource) {
     };
     return hospitalData;
 });
+
+AppEHR.factory("GetBillingWithDates", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_todays_bills', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var hospitalData = {
+        get: function (params, body, success) {
+            var get1 = getResource(params, body);
+            return get1.get(params, body, success);
+        }
+    };
+    return hospitalData;
+});
