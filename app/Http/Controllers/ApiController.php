@@ -735,7 +735,7 @@ class ApiController extends Controller
         if ($limit > 0 || $offset > 0) {
 
             $users = DB::table('users')
-                ->select(DB::raw('id,name,first_name,last_name,telephone_number,email'))
+                ->select(DB::raw('id,name,first_name,last_name,telephone_number,email,status'))
                 ->where('status', 1)
                 ->skip($offset)->take($limit)
                 ->get();
@@ -747,7 +747,7 @@ class ApiController extends Controller
 
         } else {
             $users = DB::table('users')
-                ->select(DB::raw('id,name,first_name,last_name,telephone_number,email'))
+                ->select(DB::raw('id,name,first_name,last_name,telephone_number,email,status'))
                 ->where('status', 1)
                 ->get();
 
@@ -766,7 +766,7 @@ class ApiController extends Controller
         $user_id = $request->input('user_id');
 
         $user = DB::table('users')
-            ->select(DB::raw('id,name,first_name,last_name,telephone_number,email'))
+            ->select(DB::raw('id,name,first_name,last_name,telephone_number,email,status'))
             ->where('status', 1)
             ->where('id', $user_id)
             ->first();
@@ -3603,7 +3603,7 @@ class ApiController extends Controller
         $prescription_id = $request->input('precription_id');
         $prescriptions = DB::table('patient_prescription')
             ->leftJoin('patient_prescription_medicine', 'patient_prescription_medicine.prescription_id', '=', 'patient_prescription.id')
-            ->select(DB::raw('*,patient_prescription_medicine.id as prescribe_medication_id,medication_status'))
+            ->select(DB::raw('*,patient_prescription_medicine.id as prescribe_medication_id,medication_status,patient_prescription_medicine.medication as medication_id'))
             ->where('patient_prescription.id', $prescription_id)
             ->where('patient_prescription.status', 1)
             ->where('patient_prescription_medicine.status', 1)
