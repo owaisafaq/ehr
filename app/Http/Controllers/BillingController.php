@@ -682,5 +682,35 @@ class BillingController extends Controller
 
         return response()->json(['status' => true, 'message' => 'template updated successfully']);
     }
+    public function get_todays_bills(Request $request){
+
+        $date = $request->input('date');
+
+/*        $data = DB::table('billing')
+                  ->select(DB::raw('*'))
+                  ->whereDate('created_at','=',$date)
+                  ->where('status', 1)
+                  ->get();*/
+
+        $bills = DB::table('billing')
+                    ->select('billing.id','billing.encounter_id','billing.patient_id','billing.created_at','billing.purpose','billing.bill_status','hospital_plan.name','patients.first_name','patients.middle_name','patients.last_name')
+                    ->leftJoin('visits', 'visits.id', '=', 'billing.encounter_id')
+                    ->leftJoin('patients', 'patients.id', '=', 'billing.patient_id')
+                    ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.hospital_plan')
+                    ->whereDate('billing.created_at','=',$date)
+                    ->where('billing.status', 1)
+                    ->where('patients.status', 1)
+                    ->get();
+
+        foreach ($bills as $bill) {
+            $bill->id = str_pad($bill->id, 8, '0', STR_PAD_LEFT);
+            $bill->encounter_id = str_pad($bill->encounter_id, 8, '0', STR_PAD_LEFT);
+            $bill->patient_id = str_pad($bill->patient_id, 7, '0', STR_PAD_LEFT);
+            $bill->first_name = $bill->first_name . " " . $bill->last_name;
+        }
+
+        return response()->json(['status' => true, 'data' => $bills]);
+
+    }
 
 }

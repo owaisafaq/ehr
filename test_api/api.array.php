@@ -31,6 +31,9 @@ $api->url = HOST . 'register_user';
 $api->method = "POST";
 $api->description = "Register User";
 $api->params->name = "owais";
+$api->params->first_name = "owais";
+$api->params->last_name = "owais";
+$api->params->telephone_number = "owais";
 $api->params->email = "owais@gmail.com";
 $api->params->password = "1234";
 $api->params->role_id = "1";
@@ -3275,6 +3278,7 @@ $api->method = "POST";
 $api->params->is_update = "1";
 $api->params->name = "New Hospital";
 $api->params->image = "image";
+$api->params->image_name = "image";
 $api->params->address = "";
 $api->params->type = "";
 $api->params->city = "1";
@@ -3366,5 +3370,71 @@ $api->params->department_id = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
+
+
+//Get Todays Bills
+$api = new api();
+$api->name = "Get Todays Bills";
+$api->url = HOST . 'get_todays_bills';
+$api->method = "GET";
+$api->params->date = "2016-10-25";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+//Get All Users
+$api = new api();
+$api->name = "Get All Users";
+$api->url = HOST . 'get_all_users';
+$api->method = "GET";
+$api->params->offset = "1";
+$api->params->limit = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+//Get User
+$api = new api();
+$api->name = "Get User";
+$api->url = HOST . 'get_user';
+$api->method = "GET";
+$api->params->user_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Update User
+$api = new api();
+$api->name = "Update User";
+$api->url = HOST . 'update_user';
+$api->method = "POST";
+$api->description = "Update User";
+$api->params->user_id = "1";
+$api->params->name = "owais";
+$api->params->first_name = "owais";
+$api->params->last_name = "owais";
+$api->params->telephone_number = "owais";
+$api->params->email = "owais@gmail.com";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Delete User
+$api = new api();
+$api->name = "Delete User";
+$api->url = HOST . 'delete_user';
+$api->method = "POST";
+$api->description = "Delete User";
+$api->params->user_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+
 
 

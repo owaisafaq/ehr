@@ -329,28 +329,24 @@ class OtherController extends Controller
 
     public function get_medicine_units(Request $request)
     {
-        $dosage = DB::table('medicine_units')
-            ->select(DB::raw('id,dosage'))
+        $dosage = DB::table('dose_form')
+            ->select(DB::raw('id,name as dosage'))
             ->where('status', 1)
-            ->where('dosage', '!=', '')
             ->get();
 
-        $unit = DB::table('medicine_units')
-            ->select(DB::raw('id,unit'))
+        $unit = DB::table('strength')
+            ->select(DB::raw('id,name as unit'))
             ->where('status', 1)
-            ->where('unit', '!=', '')
             ->get();
 
-        $route = DB::table('medicine_units')
-            ->select(DB::raw('id,route'))
+        $route = DB::table('route_selected')
+            ->select(DB::raw('id,name as route'))
             ->where('status', 1)
-            ->where('route', '!=', '')
             ->get();
 
-        $frequency = DB::table('medicine_units')
-            ->select(DB::raw('id,frequency'))
+        $frequency = DB::table('frequency')
+            ->select(DB::raw('id,name as frequency'))
             ->where('status', 1)
-            ->where('frequency', '!=', '')
             ->get();
 
 
