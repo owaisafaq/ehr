@@ -139,6 +139,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 
 				GetAllInvoices.get({
 					token: $window.sessionStorage.token,
+					bill_id : $scope.bill_id
 				}, GetAllInvoicesSuccess, GetAllInvoicesFailure);
 
 
@@ -442,7 +443,11 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
         function addToBillSuccess(res){
         	$rootScope.loader = "hide";
         	if(res.status == true){
-        		$('#addToBill').modal('show');
+        		$('#addToBill').modal('hide');
+        		GetAllInvoices.get({
+					token: $window.sessionStorage.token,
+			        bill_id : $scope.bill_id
+				}, GetAllInvoicesSuccess, GetAllInvoicesFailure);
         	}
         }
         GetAllproducts.save({token: $window.sessionStorage.token}, getAllPbillSuccess, checkoutSuccessFailure);

@@ -174,86 +174,73 @@ AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams
 
 // Add Inventory
 	$scope.AddInventory = function (inventory) {
-
-		if (angular.equals({}, inventory) == false) {
-			$scope.loader = 'show';
+		if (inventory.product_name != undefined && inventory.strength != undefined && inventory.reorder_level != undefined && inventory.order_quantity != undefined && inventory.quantity != undefined && inventory.price != undefined) {
+			$rootScope.loader = 'show';
 			//$scope.updateEncounterBtn = true;
 			//console.log(inventory);
-			var addInventory={
+			var addInventory = {
 				token: $window.sessionStorage.token,
 				//product_id	:inventory.product_id,
-				pharmacy_id:inventory.pharmacy_id,
-				manufacturer_id:inventory.manufacturer_id,
+				pharmacy_id:inventory.pharmacy_id == undefined ? '' :inventory.pharmacy_id,
+				manufacturer_id:inventory.manufacturer_id == undefined ? '' :inventory.manufacturer_id,
 				//department_id:inventory.cat_id,
-				supplier_id:inventory.supp_id,
-				received_date:inventory.recvd_date,
-				batch_no:inventory.batch_number,
-				ref_no	:inventory.ref_no,
-				expiry	:inventory.expiry_date,
-				quantity:inventory.quantity,
-				order_quantity:inventory.order_quantity,
-				cost_per_item:inventory.price,
+				supplier_id:inventory.supp_id == undefined ? '' :inventory.supp_id,
+				received_date:inventory.recvd_date == undefined ? '' :inventory.recvd_date,
+				batch_no:inventory.batch_number == undefined ? '' :inventory.batch_number,
+				ref_no	:inventory.ref_no == undefined ? '' :inventory.ref_no,
+				expiry	:inventory.expiry_date == undefined ? '' :inventory.expiry_date,
+				quantity:inventory.quantity == undefined ? '' :inventory.quantity,
+				order_quantity:inventory.order_quantity == undefined ? '' :inventory.order_quantity,
+				cost_per_item:inventory.price == undefined ? '' :inventory.price,
 				pack:'pack',
-				dept_id:inventory.group,
-				group:inventory.group,
-				product_name:inventory.product_name,
-				trade_name:inventory.trade_name,
-				route:inventory.route,
-				reorder_level:inventory.reorder_level,
-				cat_id:inventory.cat_id,
-				strength:inventory.strength,
-				dose_from:inventory.dose_from
-
-
+				dept_id:inventory.group == undefined ? '' :inventory.group,
+				group:inventory.group == undefined ? '' :inventory.group,
+				product_name:inventory.product_name == undefined ? '' :inventory.product_name,
+				trade_name:inventory.trade_name == undefined ? '' :inventory.trade_name,
+				route:inventory.route == undefined ? '' :inventory.route,
+				reorder_level:inventory.reorder_level == undefined ? '' :inventory.reorder_level,
+				cat_id:inventory.cat_id == undefined ? '' :inventory.cat_id,
+				strength:inventory.strength == undefined ? '' :inventory.strength,
+				dose_from:inventory.dose_from == undefined ? '' :inventory.dose_from
 			}
 			var addProduct={
 				token:$window.sessionStorage.token,
-				department_id:inventory.group,
-				product_name:inventory.product_name,
-				trade_name:inventory.trade_name,
-				route:inventory.route,
-				reorder_level:inventory.reorder_level,
-				cat_id:inventory.cat_id,
-				strength:inventory.strength,
-				dose_from:inventory.dose_from
-
-
+				department_id:inventory.group == undefined ? '' :inventory.group,
+				product_name:inventory.product_name == undefined ? '' :inventory.product_name,
+				trade_name:inventory.trade_name == undefined ? '' :inventory.trade_name,
+				route:inventory.route == undefined ? '' :inventory.route,
+				reorder_level:inventory.reorder_level == undefined ? '' :inventory.reorder_level,
+				cat_id:inventory.cat_id == undefined ? '' :inventory.cat_id,
+				strength:inventory.strength == undefined ? '' :inventory.strength,
+				dose_from:inventory.dose_from == undefined ? '' :inventory.dose_from
 			}
-
-
-
-
-
-
-
 			AddInventory.save(addInventory, AddInventorySuccess, AddInventoryFailure);
 			//AddProduct.save(addProduct, AddProductSuccess, AddProductFailure);
-
-
-
 		}
 	}
 
 	function AddInventorySuccess(res) {
 		if (res.status == true) {
-
 			$rootScope.loader = "hide";
-
 			$("#stock_det").hide();
 			$(".add-drug-supplements").hide();
 			$(".add-drug-others").hide();
 			$(".inventory_detail").show();
 			$(".inv_header").show();
-
-
+			$scope.submitted = false;
+			$scope.inventory = {};
+			$('#errorModal').modal('show');
+			$scope.inventoryError = res.message;
+			$scope.modalHeader = "Status";
 			document.getElementById("addInv").reset();
-
-
 			GetAllInventory.get({
 				token: $window.sessionStorage.token,
 			}, GetAllInventorySuccess, GetAllInventoryFailure);
-
-
+		}else{
+			$rootScope.loader = "hide";
+			$('#errorModal').modal('show');
+			$scope.inventoryError = res.message;
+			$scope.modalHeader = "Error";
 		}
 	}
 

@@ -179,7 +179,7 @@ su<div id="content">
                         </div>
                     </form>
                     <div class="add-drug-supplements">
-                        <form class="custom-form" id="addInv" ng-submit="AddInventory(inventory);"  >
+                        <form class="custom-form" id="addInv" name="myFormAdd" ng-submit="AddInventory(inventory);" novalidate >
                             <div class="row">
                                 <h2 class="h2-style_1 show_on_supplements">Add Inventory (Drug & Supplement)</h2>
                                 <h2 class="h2-style_1 show_on_others">Add Inventory (Others)</h2>
@@ -191,50 +191,49 @@ su<div id="content">
                                         <label>group</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <select class="form-control group_select" ng-model="inventory.group" placeholder="Select Group" required >
+                                        <select name="group" class="form-control group_select" ng-model="inventory.group" placeholder="Select Group">
                                             <option></option>
                                             <option value="Drugs">Drugs</option>
                                             <option value="Supplements">Supplements</option>
                                             <option value="Documents">Documents</option>
                                             <option value="Others">Others</option>
-
                                         </select>
+                                        <!-- <p class="help-block PIValid" ng-show="submitted && myFormAdd.group.$error.required">Required</p> -->
                                     </div>
                                     <div class="col-lg-3">
                                         <label>category</label>
                                     </div>
                                     <div class="col-lg-3">
-
-                                        <select class="form-control" ng-model="inventory.cat_id"  required  >
-
+                                        <select class="form-control" name="category" ng-model="inventory.cat_id" required>
                                             <option>Select Category</option>
                                             <option ng-repeat="category in CategoryLists" value="{{category.id}}">
                                                 {{category.cat_name}}
                                             </option>
-
-
-
                                         </select>
+                                        <!-- <p class="help-block PIValid" ng-show="submitted && myFormAdd.category.$error.required">Required</p> -->
                                     </div>
 
                                     <div class="col-lg-3">
                                         <label>product name</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <input type="text" ng-model="inventory.product_name"  placeholder="" required  />
+                                        <input type="text" name="productname" ng-model="inventory.product_name"  placeholder="" required ng-class="{true: 'error'}[submitted && myFormAdd.productname.$invalid]" />
+                                        <p class="help-block PIValid" ng-show="submitted && myFormAdd.productname.$error.required">Required</p>
                                     </div>
                                     <div class="col-lg-3">
                                         <label>product id</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <input type="text" placeholder=""  ng-model="inventory.product_id" required  />
+                                        <input type="text" name="productID" placeholder=""  ng-model="inventory.product_id" required />
+                                        <!-- <p class="help-block PIValid" ng-show="submitted && myFormAdd.productID.$error.required">Required</p> -->
                                     </div>
                                     <div class="show_on_others row">
                                         <div class="col-lg-3">
                                             <label>Description</label>
                                         </div>
                                         <div class="col-lg-9">
-                                            <textarea ng-model="inventory.description" ng-required="show_on_others" ></textarea>
+                                            <textarea name="description" ng-model="inventory.description" ng-required="show_on_others" ng-class="{true: 'error'}[submitted && myFormAdd.description.$invalid]" required></textarea>
+                                            <p class="help-block PIValid" ng-show="submitted && myFormAdd.description.$error.required">Required</p>
                                         </div>
                                     </div>
                                     <div class="show_on_supplements row">
@@ -242,21 +241,24 @@ su<div id="content">
                                             <label>trade name</label>
                                         </div>
                                         <div class="col-lg-3">
-                                            <input type="text" ng-model="inventory.trade_name" ng-required="show_on_supplements"   />
+                                            <input type="text" name="tradename" ng-model="inventory.trade_name" ng-required="show_on_supplements"  ng-class="{true: 'error'}[submitted && myFormAdd.tradename.$invalid]" required />
+                                            <p class="help-block PIValid" ng-show="submitted && myFormAdd.tradename.$error.required">Required</p>
                                         </div>
                                         <div class="col-lg-3">
                                             <label>strength</label>
                                         </div>
                                         <div class="col-lg-3 no-padding">
                                             <div class="col-lg-6">
-                                                <input type="text" ng-model="inventory.strength" ng-required="show_on_supplements"  />
+                                                <input type="text" name="strength1" ng-model="inventory.strength" ng-class="{true: 'error'}[submitted && myFormAdd.strength1.$invalid]" required />
+                                                <p class="help-block PIValid" ng-show="submitted && myFormAdd.strength1.$error.required">Required</p>
                                             </div>
                                             <div class="col-lg-6">
-                                                <select class="form-control" ng-model="inventory.unit" ng-required="show_on_supplements"  >
+                                                <select class="form-control" name="unit" ng-model="inventory.unit" ng-required="show_on_supplements" ng-class="{true: 'error'}[submitted && myFormAdd.unit.$invalid]" required >
                                                     <option>Select Unit</option>
                                                     <option>mg</option>
                                                     <option>ml</option>
                                                 </select>
+                                                <p class="help-block PIValid" ng-show="submitted && myFormAdd.unit.$error.required">Required</p>
                                             </div>
                                         </div>
 <!--                                        <div class="col-lg-3">
@@ -282,14 +284,15 @@ su<div id="content">
                                     </div>
                                     <div class="col-lg-3">
 
-                                        <input type="text" placeholder="" ng-model="inventory.reorder_level"  required />
-
+                                        <input type="text" name="reorderlevel" placeholder="" ng-model="inventory.reorder_level"  ng-class="{true: 'error'}[submitted && myFormAdd.reorderlevel.$invalid]" required />
+                                        <p class="help-block PIValid" ng-show="submitted && myFormAdd.reorderlevel.$error.required">Required</p>
                                     </div>
                                     <div class="col-lg-3">
                                         <label>order quantity</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <input type="text" placeholder="" ng-model="inventory.order_quantity" required />
+                                        <input type="text" name="orderquantity" placeholder="" ng-model="inventory.order_quantity" ng-class="{true: 'error'}[submitted && myFormAdd.orderquantity.$invalid]" required numbers-only/>
+                                        <p class="help-block PIValid" ng-show="submitted && myFormAdd.orderquantity.$error.required">Required</p>
                                     </div>
                                 </div>
                                 <div class="row no-margin">
@@ -302,7 +305,8 @@ su<div id="content">
                                     <div class="col-lg-3">
                                         <div class="input-group date select-date">
                                             <div class="input-group-content">
-                                                <input type="text" class="form-control" ng-model="inventory.recvd_date" placeholder="Pick Date" required >
+                                                <input type="text" name="stockReceivedDate" class="form-control" ng-model="inventory.recvd_date" placeholder="Pick Date" required >
+                                                <!-- <p class="help-block PIValid" ng-show="submitted && myFormAdd.stockReceivedDate.$error.required">Required</p> -->
                                             </div>
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                         </div>
@@ -311,18 +315,13 @@ su<div id="content">
                                         <label>supplier</label>
                                     </div>
                                     <div class="col-lg-3">
-
-
-
-
-
-                                        <select class="form-control" ng-model="inventory.supp_id" required  >
+                                        <select class="form-control" name="supplier" ng-model="inventory.supp_id" required>
                                             <option>Select supplier</option>
-
                                             <option ng-repeat="supplier in SuppplierLists" value="{{supplier.id}}">
                                                 {{supplier.name}}
                                             </option>
                                         </select>
+                                        <!-- <p class="help-block PIValid" ng-show="submitted && myFormAdd.supplier.$error.required">Required</p> -->
                                     </div>
 
                                     <div class="col-lg-3">
@@ -337,7 +336,8 @@ su<div id="content">
                                     <div class="col-lg-3">
                                         <div class="input-group date select-date">
                                             <div class="input-group-content">
-                                                <input type="text" class="form-control" ng-model="inventory.expiry_date" placeholder="Pick Date" required >
+                                                <input type="text" name="expiryDate" class="form-control" ng-model="inventory.expiry_date" placeholder="Pick Date" required>
+                                                <!-- <p class="help-block PIValid" ng-show="submitted && myFormAdd.expiryDate.$error.required">Required</p> -->
                                             </div>
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                         </div>
@@ -346,13 +346,15 @@ su<div id="content">
                                         <label>quantity</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <input type="text" ng-model="inventory.quantity" required />
+                                        <input type="text" name="stockQuantity" ng-model="inventory.quantity" required ng-class="{true: 'error'}[submitted && myFormAdd.stockQuantity.$invalid]" numbers-only/>
+                                        <p class="help-block PIValid" ng-show="submitted && myFormAdd.stockQuantity.$error.required">Required</p>
                                     </div>
                                     <div class="col-lg-3">
                                         <label>cost Price/item</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <input type="text"  ng-model="inventory.price" required />
+                                        <input type="text" name="costPriceitem" ng-model="inventory.price" required ng-class="{true: 'error'}[submitted && myFormAdd.costPriceitem.$invalid]" numbers-only/>
+                                        <p class="help-block PIValid" ng-show="submitted && myFormAdd.costPriceitem.$error.required">Required</p>
                                     </div>
                                     <div class="col-lg-3">
                                         <label>manufacturer</label>
@@ -417,7 +419,7 @@ su<div id="content">
                                     </div>-->
 
                                     <div class="col-lg-3">
-                                        <button type="submit" class="btn btn-default button-style-1">Add</button>
+                                        <button type="submit" ng-click="submitted=true;" class="btn btn-default button-style-1">Add</button>
                                         <button type="button" class="btn button-style-1 button-style-1_a cancel_add" >Cancel</button>
                                     </div>
 
@@ -1382,6 +1384,21 @@ Edit Supplier Modal-->
             </div>
             <div class="modal-body">
                 <p class="modal-subtext">No Record Found</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade modal-size_1" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>{{modalHeader}}</h2>
+            </div>
+            <div class="modal-body">
+                <p class="modal-subtext capitalize">{{inventoryError}}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>

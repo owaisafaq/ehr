@@ -4,11 +4,9 @@
             <div class="card-head">
                 <ul class="nav nav-tabs nav-justified custom-tab" data-toggle="tabs">
                     <li><a showtab href="#facilities-profile">Facilities Profile</a></li>
-                    <!--<li><a showtab href="#room-location">Room & Locations</a></li>-->
                     <li class="active"><a showtab href="#spec-depart">Specialities & Departments</a></li>
                 </ul>
             </div>
-
             <div class="card-body tab-content col-lg-12 custom-card-body padding-top-0">
                 <div class="tab-pane" id="facilities-profile">
                     <div class="table-header row background-none inv_header auto">
@@ -17,10 +15,10 @@
                         </div>
                         <div class="table-upper">
                             <div class="pull-left logo-textStyle">
-                                LOGO
+                                <img src="{{ hospitalData.image }}">
                             </div>
                             <div class="pull-right">
-                                <button data-target="#facility-profile" data-toggle="modal" class="edit button-custom pull-right add_inventory">Edit Profile</button>
+                                <button class="edit button-custom pull-right add_inventory" ng-click="openEditModal();">Edit Profile</button>
                             </div>
                         </div>
                     </div>
@@ -33,61 +31,55 @@
                                             <label class="txt-style-3">Name</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label class="txt-style-4">Wuse District Hospital</label>
+                                            <label class="txt-style-4">{{ hospitalData.name }}</label>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <label class="txt-style-3">type of facility</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label class="txt-style-4">Dental Clinic</label>
+                                            <label class="txt-style-4">{{ hospitalData.type }}</label>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <label class="txt-style-3">registration number</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label class="txt-style-4">HHSS/REG/89/266</label>
+                                            <label class="txt-style-4">{{ hospitalData.registration_number }}</label>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <label class="txt-style-3">category</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label class="txt-style-4">C</label>
+                                            <label class="txt-style-4">{{ hospitalData.category }}</label>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <label class="txt-style-3">no of specialty</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label class="txt-style-4">7</label>
+                                            <label class="txt-style-4">{{ hospitalData.number_of_departments }}</label>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <label class="txt-style-3">date of registration</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label class="txt-style-4">19/08/2016</label>
+                                            <label class="txt-style-4">{{ hospitalData.date_registration }}</label>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <label class="txt-style-3">no of beds</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label class="txt-style-4">04</label>
+                                            <label class="txt-style-4">{{ hospitalData.number_beds }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -96,7 +88,7 @@
                                         <label class="txt-style-3">Name of proprietor</label>
                                     </div>
                                     <div class="col-lg-6">
-                                        <label class="txt-style-4">Dr Donald Trump</label>
+                                        <label class="txt-style-4">{{ hospitalData.name_proprietor }}</label>
                                     </div>
                                 </div>
                                 <div class="row colored-bg">
@@ -104,7 +96,7 @@
                                         <label class="txt-style-3">accreditation  no pharmacy</label>
                                     </div>
                                     <div class="col-lg-6">
-                                        <label class="txt-style-4">W244332</label>
+                                        <label class="txt-style-4">{{ hospitalData.accredation_pharmacy }}</label>
                                     </div>
                                 </div>
                             </div>
@@ -115,61 +107,55 @@
                                             <label class="txt-style-3">address</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label class="txt-style-4">20-22 Wenlock Road London, N17GU</label>
+                                            <label class="txt-style-4">{{ hospitalData.address }}</label>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <label class="txt-style-3">city</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label class="txt-style-4">Abuja</label>
+                                            <label class="txt-style-4">{{ hospitalData.city }}</label>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <label class="txt-style-3">state</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label class="txt-style-4">FCT</label>
+                                            <label class="txt-style-4">{{ hospitalData.state }}</label>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <label class="txt-style-3">country</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label class="txt-style-4">Nigeria</label>
+                                            <label class="txt-style-4">{{ hospitalData.country }}</label>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <label class="txt-style-3">phone</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label class="txt-style-4">07462588038</label>
+                                            <label class="txt-style-4">{{ hospitalData.phone }}</label>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <label class="txt-style-3">email</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label class="txt-style-4">tunde@openng.com</label>
+                                            <label class="txt-style-4">{{ hospitalData.email }}</label>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <label class="txt-style-3">Website</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label class="txt-style-4">www.openng.com</label>
+                                            <label class="txt-style-4">{{ hospitalData.website }}</label>
                                         </div>
                                     </div>
                                 </div> 
@@ -178,7 +164,7 @@
                                         <label class="txt-style-3">accreditation no lab</label>
                                     </div>
                                     <div class="col-lg-6">
-                                        <label class="txt-style-4">W244331</label>
+                                        <label class="txt-style-4">{{ hospitalData.accredation_lab }}</label>
                                     </div>
                                 </div>
                                 <div class="row colored-bg">
@@ -186,92 +172,16 @@
                                         <label class="txt-style-3">accreditation Others</label>
                                     </div>
                                     <div class="col-lg-6">
-                                        <label class="txt-style-4">W244333</label>
+                                        <label class="txt-style-4">{{ hospitalData.accredation_others }}</label>
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
                     </form>
-
                 </div>
-                
-<!--                <div class="tab-pane" id="room-location">
-                    <div class="card">
-                        <div class="card-body">
-                  <div class="table-header row background-none inv_header">
-                      <h2 class="heading-style pull-left margin-top-30">Rooms & Location</h2>
-                        <div class="pull-right">
-                            <button data-target="#newroom" data-toggle="modal" class="add button-custom pull-right add_inventory">New Room</button>
-                        </div>
-                        <div class="pull-right">
-                            <div class="header-search pull-left margin-top-10">
-                                <button type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                                <input class="search_field" type="text" placeholder="Search Room">
-                            </div>
-                        </div>
-                    </div>
-                    
-                            <form class="custom-form">
-
-
-                        <table class="table table-striped no-margin table-custom table-custom_big inventory_detail">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Room Name</th>
-                                    <th>Description</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="InventoryList in InventoryLists| filter:search |filter:cat_search">
-                                    <td><a href="#" class="link-style_3">{{InventoryList.product_id}}</a></td>
-                                    <td>{{InventoryList.product_name}}</td>
-                                    <td>{{InventoryList.product_name}}</td>
-                                    <td>
-                                        <div class="billing_actions pull-right"><a href="javascript:;" class="setting-button"></a>
-                                            <div class="tool-tip_popup">
-                                                <a href="javascript:;" ng-click="productDetail(InventoryList.product_id)">Edit</a>
-                                                <a href="javascript:;" ng-click="StockSelectedReorder(InventoryList.product_id)">Delete</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                        muzammil do you code here
-                        <div class="pagination pagination-centered pull-right" ng-show="pharmacyCount">
-                        <ul class="pagination-controle pagination">
-                            <li class="prev-page">
-                                <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
-                                <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage = curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
-                            </li>                            
-                            <li>
-                                <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberPharmacy" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
-                            </li>
-                             <li class="next-page">
-                              <button type="button" class="btn btn-primary" ng-disabled="curPage >= patientCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
-                              <button type="button" class="btn btn-primary" ng-disabled="curPage >= pharmacyCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
-                            </li>
-                        </ul>
-                    </div>
-                      
-                    </form>
-</div>
-                    </div>
-                </div>-->
-                
-                
-                  <div class="tab-pane active" id="spec-depart">
-                    <!--<div class="card">-->
-                        <!--<div class="card-body">-->
-                  <div class="table-header row background-none inv_header">
-                      <h2 class="heading-style pull-left margin-top-30">Specialities & Departments</h2>
+                <div class="tab-pane active" id="spec-depart">
+                    <div class="table-header row background-none inv_header">
+                        <h2 class="heading-style pull-left margin-top-30">Specialities & Departments</h2>
                         <div class="pull-right">
                             <button data-target="#addNewSpeciality" data-toggle="modal" class="add button-custom pull-right add_inventory">New speciality</button>
                         </div>
@@ -284,63 +194,52 @@
                             </div>
                         </div>
                     </div>
-                    
-                            <form class="custom-form">
-
-
+                    <form class="custom-form">
                         <table class="table table-striped no-margin table-custom table-custom_big inventory_detail">
                             <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Speciality Code</th>
-                                    <th>Description</th>
-                                    <th></th>
-                                </tr>
+                            <tr>
+                                <th>Name</th>
+                                <th>Speciality Code</th>
+                                <th>Description</th>
+                                <th></th>
+                            </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="InventoryList in InventoryLists| filter:search |filter:cat_search">
-                                    <td><a href="#" class="link-style_3">Dental</a></td>
-                                    <td>{{InventoryList.product_name}}</td>
-                                    <td>{{InventoryList.product_name}}</td>
-                                    <td>
-                                        <div class="billing_actions pull-right"><a href="javascript:;" class="setting-button"></a>
-                                            <div class="tool-tip_popup">
-                                                <a href="javascript:;" ng-click="productDetail(InventoryList.product_id)">Edit</a>
-                                                <a href="javascript:;" ng-click="StockSelectedReorder(InventoryList.product_id)">Delete</a>
-                                            </div>
+                            <!--<tr ng-repeat="InventoryList in InventoryLists| filter:search |filter:cat_search">
+                                <td><a href="#" class="link-style_3">Dental</a></td>
+                                <td>{{InventoryList.product_name}}</td>
+                                <td>{{InventoryList.product_name}}</td>
+                                <td>
+                                    <div class="billing_actions pull-right">
+                                        <a href="javascript:;" class="setting-button"></a>
+                                        <div class="tool-tip_popup">
+                                            <a href="javascript:;" ng-click="productDetail(InventoryList.product_id)">Edit</a>
+                                            <a href="javascript:;" ng-click="StockSelectedReorder(InventoryList.product_id)">Delete</a>
                                         </div>
-                                    </td>
-                                </tr>
-
+                                    </div>
+                                </td>
+                            </tr>-->
                             </tbody>
                         </table>
-                        <!--muzammil do you code here-->
-                        <div class="pagination pagination-centered pull-right" ng-show="pharmacyCount">
-                        <ul class="pagination-controle pagination">
-                            <li class="prev-page">
-                                <!--<button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>-->
-                                <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage = curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
-                            </li>                            
-                            <li>
-                                <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberPharmacy" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
-                            </li>
-                             <li class="next-page">
-                              <!--<button type="button" class="btn btn-primary" ng-disabled="curPage >= patientCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>-->
-                              <button type="button" class="btn btn-primary" ng-disabled="curPage >= pharmacyCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
-                            </li>
-                        </ul>
-                    </div>
-                      
+                        <!--<div class="pagination pagination-centered pull-right" ng-show="pharmacyCount">
+                            <ul class="pagination-controle pagination">
+                                <li class="prev-page">
+                                    <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage = curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
+                                </li>
+                                <li>
+                                    <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberPharmacy" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
+                                </li>
+                                <li class="next-page">
+                                    <button type="button" class="btn btn-primary" ng-disabled="curPage >= pharmacyCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
+                                </li>
+                            </ul>
+                        </div>-->
                     </form>
-<!--</div>-->
-                    <!--</div>-->
                 </div>
             </div><!--end .card -->
         </div>
     </section>
 </div>
-
-
 <div class="modal fade modal-size_3" id="facility-profile" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -348,7 +247,12 @@
                 <h2>facility profile</h2>
             </div>
             <div class="modal-body">
-                <form class="custom-form">
+                <form class="custom-form" name="userForm1" ng-model="myForm" novalidate ng-submit="createEditHospital(hospitalData);">
+                    <div class="row margin-bottom-xxl">
+                        <div class="alert {{messageType}}" role="alert" ng-show="message">
+                            <i class="{{errorSymbol}}"></i> {{errorMessage}}
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="row margin-bottom-xxl">
@@ -356,67 +260,67 @@
                                     <label>name</label>
                                 </div>
                                 <div class="col-lg-8">
-                                    <input type="text" placeholder="" name="" required/>
+                                    <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm1.name.$invalid]"  name="name" required  ng-model="hospitalData.name" />
+                                    <p class="help-block PIValid" ng-show="submitted && userForm1.name.$error.required">Required</p>
                                 </div>
                             </div>
-
                             <div class="row margin-bottom-xxl">
                                 <div class="col-lg-4">
                                     <label>type of facility</label>
                                 </div>
                                 <div class="col-lg-8">
-                                    <input type="text" placeholder="" name="" required/>
+                                    <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm1.type.$invalid]"  name="type" required  ng-model="hospitalData.type" />
+                                    <p class="help-block PIValid" ng-show="submitted && userForm1.type.$error.required">Required</p>
                                 </div>
                             </div>
-
                             <div class="row margin-bottom-xxl">
                                 <div class="col-lg-4">
                                     <label>registration number</label>
                                 </div>
                                 <div class="col-lg-8">
-                                    <input type="text" placeholder="" name="" required/>
+                                    <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm1.registration_number.$invalid]"  name="registration_number" required  ng-model="hospitalData.registration_number" />
+                                    <p class="help-block PIValid" ng-show="submitted && userForm1.registration_number.$error.required">Required</p>
                                 </div>
                             </div>
-
                             <div class="row margin-bottom-xxl">
                                 <div class="col-lg-4">
                                     <label>category</label>
                                 </div>
                                 <div class="col-lg-8">
-                                    <input type="text" placeholder="" name="" required/>
+                                    <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm1.category.$invalid]"  name="category" required  ng-model="hospitalData.category" />
+                                    <p class="help-block PIValid" ng-show="submitted && userForm1.category.$error.required">Required</p>
                                 </div>
                             </div>
-
                             <div class="row margin-bottom-xxl">
                                 <div class="col-lg-4">
                                     <label>no of speciality</label>
                                 </div>
                                 <div class="col-lg-8">
-                                    <input type="text" placeholder="" name="" required/>
+                                    <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm1.number_of_departments.$invalid]"  name="number_of_departments" required  ng-model="hospitalData.number_of_departments" />
+                                    <p class="help-block PIValid" ng-show="submitted && userForm1.number_of_departments.$error.required">Required</p>
                                 </div>
                             </div>
-
                             <div class="row margin-bottom-xxl">
                                 <div class="col-lg-4">
                                     <label>date of registration</label>
                                 </div>
                                 <div class="col-lg-8">
-                                    <!--<input type="text" placeholder="" name="" required/>-->
                                     <div class="input-group date select-date">
                                     <div class="input-group-content">
-                                        <input type="text" name="date_of_birth" class="form-control" required placeholder="Pick Date" />                                        
+                                        <input type="text" placeholder="Pick Date" class="form-control" ng-class="{true: 'error'}[submitted && userForm1.date_registration.$invalid]"  name="date_registration" required  ng-model="hospitalData.date_registration" />
+                                        <p class="help-block PIValid" ng-show="submitted && userForm1.date_registration.$error.required">Required</p>
                                     </div>
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
                                 </div>
                             </div>
-
                             <div class="row margin-bottom-xxl">
                                 <div class="col-lg-4">
                                     <label>name of proprietor</label>
                                 </div>
                                 <div class="col-lg-8">
-                                    <input type="text" placeholder="" name="" required/>
+                                    <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm1.name_proprietor.$invalid]"  name="name_proprietor" required  ng-model="hospitalData.name_proprietor" />
+                                    <p class="help-block PIValid" ng-show="submitted && userForm1.name_proprietor.$error.required">Required</p>
                                 </div>
                             </div>
                             <div class="row margin-bottom-xxl">
@@ -424,17 +328,16 @@
                                     <label>Upload Image</label>
                                 </div>
                                 <div class="col-lg-8">
-                                <div class="file-field">
-                                    <div class="file-path-wrapper">
-                                        <input class="file-path yellow" ng-model="PI.imageOrignalName" type="text" placeholder="Image Name" id="csv">
-                                        <input ng-model="PI.patient_image" type="hidden">
-                                    </div>
-                                    <input type="file" ngf-select="uploadFiles($files, $invalidFiles, 1)" name="file" accept="image/*">
-                                    <div class="btn-browse">
-                                        <span class="browse">Browse</span>
+                                    <div class="file-field">
+                                        <div class="file-path-wrapper">
+                                            <input class="file-path yellow" ng-model="PI.imageOrignalName" type="text" placeholder="Image Name">
+                                        </div>
+                                        <input type="file" ngf-select="uploadFiles($files, $invalidFiles)" name="file" accept="image/*">
+                                        <div class="btn-browse">
+                                            <span class="browse">Browse</span>
+                                        </div>
                                     </div>
                                 </div>
-                                    </div>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -443,187 +346,142 @@
                                     <label>address</label>
                                 </div>
                                 <div class="col-lg-8">
-                                    <input type="text" placeholder="" name="" required/>
+                                    <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm1.address.$invalid]"  name="address" required  ng-model="hospitalData.address" />
+                                    <p class="help-block PIValid" ng-show="submitted && userForm1.address.$error.required">Required</p>
                                 </div>
                             </div>
-
                             <div class="row margin-bottom-xxl">
                                 <div class="col-lg-4">
                                     <label>city</label>
                                 </div>
                                 <div class="col-lg-8">
-                                    <input type="text" placeholder="" name="" required/>
+                                    <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm1.city.$invalid]"  name="city" required  ng-model="hospitalData.city" />
+                                    <p class="help-block PIValid" ng-show="submitted && userForm1.city.$error.required">Required</p>
                                 </div>
                             </div>
-
                             <div class="row margin-bottom-xxl">
                                 <div class="col-lg-4">
                                     <label>state</label>
                                 </div>
                                 <div class="col-lg-8">
-                                    <select class="form-control" placeholder="Select">
-                                        <option></option>
-                                        <option>Sample 1</option>
-                                        <option>Sample 2</option>
+                                    <select class="form-control" ng-model="hospitalData.state_id" placeholder="Select State" name="state" ng-class="{true: 'error'}[submitted && userForm1.state.$invalid]" required>
+                                        <option value=""></option>
+                                        <option ng-repeat="State in States" value="{{ State.id }}" ng-selected="State.id == hospitalData.state_id">{{ State.name }}</option>
                                     </select>
+                                    <p class="help-block PIValid" ng-show="submitted && userForm1.lab_id.$error.required">Required</p>
                                 </div>
                             </div>
-
                             <div class="row margin-bottom-xxl">
                                 <div class="col-lg-4">
                                     <label>country</label>
                                 </div>
                                 <div class="col-lg-8">
-                                    <select class="form-control" placeholder="Select">
-                                        <option></option>
-                                        <option>Country 1</option>
-                                        <option>Country 2</option>
+                                    <select class="form-control" ng-model="hospitalData.country_id" placeholder="Select Country" name="country" ng-class="{true: 'error'}[submitted && userForm1.country.$invalid]" required>
+                                        <option value=""></option>
+                                        <option ng-repeat="k in Countries" value="{{ k.id }}" ng-selected="k.id == hospitalData.country_id">{{ k.name }}</option>
                                     </select>
+                                    <p class="help-block PIValid" ng-show="submitted && userForm2.tax.$error.required">Required</p>
                                 </div>
                             </div>
-
                             <div class="row margin-bottom-xxl">
                                 <div class="col-lg-4">
                                     <label>phone</label>
                                 </div>
                                 <div class="col-lg-8">
-                                    <input type="text" placeholder="" name="" required/>
+                                    <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm1.phone.$invalid]"  name="phone" required  ng-model="hospitalData.phone" />
+                                    <p class="help-block PIValid" ng-show="submitted && userForm1.phone.$error.required">Required</p>
                                 </div>
                             </div>
-
                             <div class="row margin-bottom-xxl">
                                 <div class="col-lg-4">
                                     <label>email</label>
                                 </div>
                                 <div class="col-lg-8">
-                                    <input type="text" placeholder="" name="" required/>
+                                    <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm1.email.$invalid]"  name="email" required  ng-model="hospitalData.email" />
+                                    <p class="help-block PIValid" ng-show="submitted && userForm1.email.$error.required">Required</p>
                                 </div>
                             </div>
-
                             <div class="row margin-bottom-xxl">
                                 <div class="col-lg-4">
                                     <label>website</label>
                                 </div>
                                 <div class="col-lg-8">
-                                    <input type="text" placeholder="" name="" required/>
+                                    <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm1.website.$invalid]"  name="website" required  ng-model="hospitalData.website" />
+                                    <p class="help-block PIValid" ng-show="submitted && userForm1.website.$error.required">Required</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
                     <div class="modal-footer row">
-                        <button type="button" class="btn btn-default button-style-1">Save</button>
-                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;" ng-disabled="submitted && userForm1.$invalid">Save</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal" ng-disabled="addHospitalBtn">Cancel</button>
                     </div>
                 </form>
-
-
-
             </div><!-- /.modal-content -->
-
-
         </div><!-- /.modal-dialog -->
-
     </div><!-- /.modal -->
 </div>
-    <div class="modal fade modal-size_2" id="newroom" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header pop_head">
-                <h2>Add New Room</h2>
-            </div>
-            <div class="modal-body">
-                <form class="custom-form">
-                    <!--<div class="row">-->
-                        <div class="row margin-bottom-xxl">
-                        <div class="col-lg-2">
-                            <label>Name</label>
-                        </div>
-                        <div class="col-lg-4">
-                            <input type="text" placeholder="" name="" required/>
-                        </div>
-                            
-                            <div class="col-lg-2">
-                            <label>Code</label>
-                        </div>
-                        <div class="col-lg-4">
-                            <input type="text" placeholder="" name="" required/>
-                        </div>
-                            </div>
-               
-
-<div class="row">
-                        <div class="col-lg-2">
-                            <label>Description</label>
-                        </div>
-                        <div class="col-lg-10">
-                            <textarea></textarea>
-                        </div>
-</div>
-                    <!--</div>-->
-                    <div class="modal-footer row">
-                        <button type="button" class="btn btn-default button-style-1">Add</button>
-                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
-                    </div>
-                </form>
-
-            </div>
-
-        </div><!-- /.modal-content -->
-
-
-    </div><!-- /.modal-dialog -->
-
-</div><!-- /.modal -->
-
-
 <div class="modal fade modal-size_2" id="addNewSpeciality" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
-                <h2>Add New Room</h2>
+                <h2>Add New Speciality</h2>
             </div>
             <div class="modal-body">
                 <form class="custom-form">
-                    <!--<div class="row">-->
-                        <div class="row margin-bottom-xxl">
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-2">
                             <label>Name</label>
                         </div>
                         <div class="col-lg-4">
                             <input type="text" placeholder="" name="" required/>
                         </div>
-                            
-                            <div class="col-lg-2">
-                            <label>Speciality Code</label>
-                        </div>
-                        <div class="col-lg-4">
-                            <input type="text" placeholder="" name="" required/>
-                        </div>
-                            </div>
-               
-
-<div class="row">
+                    </div>
+                    <div class="row">
                         <div class="col-lg-2">
                             <label>Description</label>
                         </div>
                         <div class="col-lg-10">
                             <textarea></textarea>
                         </div>
-</div>
-                    <!--</div>-->
+                    </div>
                     <div class="modal-footer row">
                         <button type="button" class="btn btn-default button-style-1">Add</button>
                         <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
                     </div>
                 </form>
-
             </div>
-
         </div><!-- /.modal-content -->
-
-
     </div><!-- /.modal-dialog -->
-
+</div><!-- /.modal -->
+<div class="modal fade modal-size_1" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Confirmation</h2>
+            </div>
+            <div class="modal-body">
+                <p class="modal-subtext">Do you want to Delete?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-toggle="modal" ng-click="removeBillingCode();"  data-dismiss="modal">Ok</button>
+                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal" ng-click="cancelDelete();">Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade modal-size_1" id="fileUploadedSuccess" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Status</h2>
+            </div>
+            <div class="modal-body">
+                <p>Attachment Uploaded</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
