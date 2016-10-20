@@ -697,7 +697,7 @@ class BillingController extends Controller
                     ->leftJoin('visits', 'visits.id', '=', 'billing.encounter_id')
                     ->leftJoin('patients', 'patients.id', '=', 'billing.patient_id')
                     ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.hospital_plan')
-                    ->whereDate('billing.created_at',$date)
+                    ->whereDate('billing.created_at','=',$date)
                     ->where('billing.status', 1)
                     ->where('patients.status', 1)
                     ->get();
