@@ -13,7 +13,9 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         $scope.prescriptionID = $routeParams.prescriptionID;
         $scope.pharmacyID = $routeParams.pharmacyID;
         $scope.PrescriptionViews = [];
+        $scope.PrescriptionViewsGetId = [];
         $scope.AddButtonOnAddMedication = false;
+       
 
         $scope.MedicationData = {}
         //$scope.buildInstructionObject = buildInstructionObject;
@@ -36,8 +38,12 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                 console.log(res);
                 $scope.patient_id = res.data.patient_id;
                 $scope.PrescriptionViews = res.data;
+                $scope.PrescriptionViewsGetId = res.data;
+                console.log("res.data")
+                console.log(res.data)
                 $scope.Prescription.notes = res.notes;
-                $scope.pharmacyNameID = res.pharmacy_name;
+//                $scope.pharmacyNameID = res.pharmacy_name;
+                $scope.MedicationData.pharmacyName = res.pharmacy_name;
                 $scope.pharmacyID = res.pharmacy_id;
                 $scope.prescription_data = res.prescription_data;
                 $scope.prescription_data.date = res.prescription_data.date;
@@ -96,7 +102,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         }
         $scope.updatePharmacy = function () {
             $rootScope.loader = "show";
-            console.log($scope.PrescriptionViews);
+//            console.log($scope.PrescriptionViews);
             angular.copy($scope.PrescriptionViews, $scope.PrescriptionViewsCopy)
                 // $scope.PrescriptionViews.token = $window.sessionStorage.token;
                 // console.log($scope.prescriptionPharmacyNotes)
@@ -104,13 +110,17 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                 $scope.PrescriptionViewsCopy[i].note_of_pharmacy = $scope.prescriptionPharmacyNotes;
                 $scope.PrescriptionViewsCopy[i].cost = $scope.PrescriptionViews[i].cost * $scope.PrescriptionViews[i].total_dispensed;
                 $scope.PrescriptionViewsCopy[i].pharmacy_id = $scope.pharmacyID;
+//                $scope.PrescriptionViewsCopy[i].medication = $scope.medicationsDataPush[i].medication;
                 //$scope.PrescriptionViewsCopy[i].pharmacy = $scope.pharmacyID;
                 delete $scope.PrescriptionViewsCopy[i].patient_id;
+                delete $scope.PrescriptionViewsCopy[i].medication
                 delete $scope.PrescriptionViewsCopy[i].created_at;
                 delete $scope.PrescriptionViewsCopy[i].notes;
                 delete $scope.PrescriptionViewsCopy[i].total_dispensed;
                 delete $scope.PrescriptionViewsCopy[i].balance;
                 delete $scope.PrescriptionViewsCopy[i].cost;
+                
+                $scope.PrescriptionViewsCopy[i].medication = $scope.PrescriptionViewsGetId[i].medication_id;
             }
 
             var addPrescrptn = {
@@ -121,10 +131,11 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                 note_for_pharmacy: $scope.Prescription.notes,
                 visit_id: $scope.encounterID
             }
-            console.log($scope.PrescriptionViewsCopy)
+            
+//            console.log($scope.PrescriptionViewsCopy)
                 //            $scope.PrescriptionViews.notes = $scope.PrescriptionViews.prescriptionPharmacyNotes == undefined ? '' : $scope.PrescriptionViews.prescriptionPharmacyNotes;
             console.log(addPrescrptn)
-            //PatienPrescriptionUpdate.save(addPrescrptn, PrescriptionSuccess, PrescriptionFailure)
+ PatienPrescriptionUpdate.save(addPrescrptn, PrescriptionSuccess, PrescriptionFailure)
         }
 
         $scope.calculateBalance = function (dispense, totalDispense, index, costarray) {
@@ -138,7 +149,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         $scope.addMedication = function (checkEdit) {
             var AddMedications = {
                 medicationName: $('.getMedicineName option:selected').text(),
-                pharmacyName:  $scope.pharmacyNameID,
+                pharmacyName:  $scope.MedicationData.pharmacyName,
                 medication: $scope.MedicationData.medication,
                 sig: $scope.MedicationData.sig,
                 dispense: $scope.MedicationData.dispense,
@@ -171,7 +182,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
             setTimeout(function () {
                 $('#addmedication select').trigger('change');
             }, 100)
-            $scope.pharmacyNameID = 
+            $scope.pharmacyNameID = "";
             $scope.medicationsDataPush.splice(index, 1);
             console.log($scope.medicationsDataPush);
             $scope.showUpdate = true;
