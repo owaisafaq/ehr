@@ -96,6 +96,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         }
         $scope.updatePharmacy = function () {
             $rootScope.loader = "show";
+            console.log($scope.PrescriptionViews);
             angular.copy($scope.PrescriptionViews, $scope.PrescriptionViewsCopy)
                 // $scope.PrescriptionViews.token = $window.sessionStorage.token;
                 // console.log($scope.prescriptionPharmacyNotes)
@@ -123,7 +124,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
             console.log($scope.PrescriptionViewsCopy)
                 //            $scope.PrescriptionViews.notes = $scope.PrescriptionViews.prescriptionPharmacyNotes == undefined ? '' : $scope.PrescriptionViews.prescriptionPharmacyNotes;
             console.log(addPrescrptn)
-            PatienPrescriptionUpdate.save(addPrescrptn, PrescriptionSuccess, PrescriptionFailure)
+            //PatienPrescriptionUpdate.save(addPrescrptn, PrescriptionSuccess, PrescriptionFailure)
         }
 
         $scope.calculateBalance = function (dispense, totalDispense, index, costarray) {
@@ -188,7 +189,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                 prescription_id: $scope.prescriptionID
             }
             console.log(addPrescrptnPop);
-            AddMedicationInPrescription.save(addPrescrptnPop, PrescriptionSuccessPop, PrescriptionFailurePop)
+            //AddMedicationInPrescription.save(addPrescrptnPop, PrescriptionSuccessPop, PrescriptionFailurePop)
         }
 
         function PrescriptionSuccessPop(res) {

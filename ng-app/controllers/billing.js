@@ -143,7 +143,9 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 					bill_id : $scope.bill_id
 				}, GetAllInvoicesSuccess, GetAllInvoicesFailure);
 
-
+				GetAllBills.get({
+					token: $window.sessionStorage.token,
+				}, GetAllBillsSuccess, GetAllBillsFailure);
 
 				/*				$('#radio-2').prop("checked", true);
 */
