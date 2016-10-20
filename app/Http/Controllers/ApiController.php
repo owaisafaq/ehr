@@ -1677,14 +1677,28 @@ class ApiController extends Controller
             ->first();
 
         if(empty($visit)){
+            $demographics->patient_status='Active';
             $is_visit = 0;
             return response()->json(['status' => true, 'data' => $demographics,'is_visit'=>$is_visit]);
         }
         if($visit->visit_status=='checkout'){
+
+            $reason = DB::table('patient_checkout')
+                ->select(DB::raw('reason'))
+                ->where('visit_id', $visit->id)
+                ->first();
+
+            if($reason->reason =='Dead'){
+                $demographics->patient_status='Deceased';
+            }else{
+                $demographics->patient_status='Active';
+            }
+
             $is_visit = 0;
             return response()->json(['status' => true, 'data' => $demographics,'is_visit'=>$is_visit]);
         }
         if($visit->visit_status !='checkout'){
+            $demographics->patient_status='Active';
             $is_visit = 1;
             return response()->json(['status' => true, 'data' => $demographics,'is_visit'=>$is_visit,'visit_id'=>$visit->id ]);
         }

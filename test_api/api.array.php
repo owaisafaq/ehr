@@ -3275,6 +3275,7 @@ $api->method = "POST";
 $api->params->is_update = "1";
 $api->params->name = "New Hospital";
 $api->params->image = "image";
+$api->params->image_name = "image";
 $api->params->address = "";
 $api->params->type = "";
 $api->params->city = "1";
