@@ -263,7 +263,8 @@
                                 <option></option>
                                 <option ng-selected="MedicationData.pharmacy == pharmacyDataDrop.name" value="{{pharmacyDataDrop.name}}" ng-repeat="pharmacyDataDrop in allPharmacies">{{pharmacyDataDrop.name}}</option>
                             </select> -->
-                            <input ng-model="MedicationData.pharmacy" ng-value="pharmacyNameID" disabled type="text" placeholder="" />
+                            <input ng-model="pharmacyNameID" ng-value="pharmacyNameID" disabled type="text" placeholder="" />
+                            <input type="hidden" ng-model="MedicationData.pharmacy">
                         </div>
                         </div>
                         <!-- <div class="col-lg-3 clear">
@@ -309,7 +310,7 @@
                                         <label>Pharmacy</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <span>{{medicationDataPush.pharmacy}}</span>
+                                        <span>{{medicationDataPush.pharmacyName}}</span>
                                     </div>
 
                                     <div class="col-lg-2 clear">

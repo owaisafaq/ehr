@@ -670,7 +670,7 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
             token: $window.sessionStorage.token, 
             patient_id: $rootScope.HEADERSEARCHPATIENTID,
             department_id: addEncounter.department,
-            encounter_class: addEncounter.class,
+            encounter_class: addEncounter.class == undefined ? '' : addEncounter.class,
             encounter_type: addEncounter.type,
             whom_to_see: addEncounter.wts,
             decscribe_whom_to_see : addEncounter.describeWTS
@@ -690,6 +690,15 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
                     $rootScope.headerMessage = false;
                     $rootScope.encounterHeaderSearchBar = true;
                     $('.create_counter_header').addClass('hide');
+                }, 2000);
+            }else{
+                $rootScope.headerHideLoader = "hide";
+                $rootScope.headerMessageType = "alert-danger";
+                $rootScope.headerErrorMessage = res.message;
+                $rootScope.headerErrorSymbol = "fa fa-times";//
+                $rootScope.headerMessage = true;
+                $timeout(function () {
+                    $rootScope.headerMessage = false;
                 }, 2000);
             }
         }

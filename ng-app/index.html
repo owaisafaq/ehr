@@ -287,13 +287,12 @@
                                 <p class="help-block PIValid" ng-show="headerSubmitted && encounterForm.department.$error.required">Required</p>
                             </div>
 
-                            <div class="col-lg-6">
+                            <!-- <div class="col-lg-6">
                                 <label>encounter class</label>
                             </div>
                             <div class="col-lg-6">
                                 <select class="form-control" ng-class="{true: 'error'}[headerSubmitted && encounterForm.class.$invalid]" name="class" ng-model="addEncounter.class" placeholder="Select" required>
                                     <option value=""></option>
-                                    <!-- <option ng-repeat="class in eclass" value="{{class.id}}">{{class.name}}</option> -->
                                     <option value="Emergency">Emergency</option>
                                     <option value="Inpatient">Inpatient</option>
                                     <option value="Outpatient">Outpatient</option>
@@ -302,7 +301,7 @@
                                     <option value="Obstetrics">Obstetrics</option>
                                 </select>
                                 <p class="help-block PIValid" ng-show="headerSubmitted && encounterForm.class.$error.required">Required</p>
-                            </div>
+                            </div> -->
 
                             <div class="col-lg-6">
                                 <label>encounter type</label>
@@ -332,7 +331,7 @@
                                 <p class="help-block PIValid" ng-show="headerSubmitted && encounterForm.wts.$error.required">Required</p>
                             </div> 
                             <div class="col-lg-6">
-                                <label>Describe whom to see</label>
+                                <label>Reason of visit</label>
                             </div>
                             <div class="col-lg-6">
                                 <textarea  ng-model="addEncounter.describeWTS"></textarea>

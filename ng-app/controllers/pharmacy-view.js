@@ -138,16 +138,16 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         $scope.addMedication = function (checkEdit) {
             var AddMedications = {
                 medicationName: $('.getMedicineName option:selected').text(),
-                pharmacyName:  $scope.pharmacyID,
+                pharmacyName:  $scope.pharmacyNameID,
                 medication: $scope.MedicationData.medication,
                 sig: $scope.MedicationData.sig,
                 dispense: $scope.MedicationData.dispense,
                 reffills: $scope.MedicationData.reffills,
-                pharmacy: $scope.pharmacyNameID,
+                pharmacy: $scope.pharmacyID,
                 note_of_pharmacy: $scope.MedicationData.note_of_pharmacy,
             }
             //$scope.AddButtonOnAddMedication = true;
-            console.log(AddMedications);
+            console.log(AddMedications); //return true;
             $scope.note = $scope.MedicationData.note_of_pharmacy;
             if(AddMedications.medication != undefined && AddMedications.medication != '' && AddMedications.sig != undefined && AddMedications.sig != '' && AddMedications.dispense != undefined && AddMedications.dispense != '' && AddMedications.reffills != undefined && AddMedications.reffills != '' && AddMedications.pharmacy != '' /*&& AddMedications.note_of_pharmacy != undefined && AddMedications.note_of_pharmacy != ''*/){
                 //if (angular.equals({}, AddMedications) == false) {
@@ -172,7 +172,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                 $('#addmedication select').trigger('change');
             }, 100)
             $scope.medicationsDataPush.splice(index, 1);
-            console.log($scope.medicationsDataPush)
+            console.log($scope.medicationsDataPush);
             $scope.showUpdate = true;
         }
         $scope.savePharmacyPopUp = function () {
@@ -189,11 +189,11 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                 prescription_id: $scope.prescriptionID
             }
             console.log(addPrescrptnPop);
-            //AddMedicationInPrescription.save(addPrescrptnPop, PrescriptionSuccessPop, PrescriptionFailurePop)
+            AddMedicationInPrescription.save(addPrescrptnPop, PrescriptionSuccessPop, PrescriptionFailurePop)
         }
 
         function PrescriptionSuccessPop(res) {
-            console.log(res)
+            console.log(res, "popup response")
             if (res.status == true) {
                 $('#addmedication').modal('hide');
                 $scope.medicationsDataPush = [];
