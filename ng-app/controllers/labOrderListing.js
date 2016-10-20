@@ -707,5 +707,25 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
         }else{
             $scope.visibleImg = false;
         }
+    }
+
+    $scope.selectBoxValue = function(value){
+        $rootScope.loader = "show";
+        $scope.pageNumber = '';
+        if($routeParams.patientID != undefined && $routeParams.encounterID != undefined){
+            $scope.withVisit = true;
+            $scope.createOrderPatientID = $routeParams.patientID;
+            $scope.prefilledPatient = $routeParams.patientID;
+            LabOrdersByPatient.get({
+                token: $window.sessionStorage.token,
+                offset: ($scope.pageSize * $scope.curPage), limit: value
+            }, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
+        }else{
+            $scope.withVisit = false;
+            GetAllLabOrders.get({ // Getting all lab orders
+                token: $window.sessionStorage.token,
+                offset: ($scope.pageSize * $scope.curPage), limit: value
+            }, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
         }
+    }
 }]);

@@ -3111,8 +3111,6 @@ AppEHR.factory("editBillingCategory", function ($resource) {
     };
     return updateBillingCategory;
 });
-
-
 AppEHR.factory("GetAllLabs", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'get_labs', params, {
@@ -3335,6 +3333,100 @@ AppEHR.factory("addUpdateHospital", function ($resource) {
         save: function (params, body, success) {
             var res = getResource(params, body);
             return res.save(params, body, success);
+        }
+    };
+    return hospitalData;
+});
+
+
+
+AppEHR.factory("GetAllDepartments", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_departments', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var Departments = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return Departments;
+});
+AppEHR.factory("GetDepartment", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_department', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var Department = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return Department;
+});
+AppEHR.factory("deleteDepartment", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'delete_department', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var deletedDepartment = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return deletedDepartment;
+});
+AppEHR.factory("addDepartment", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_department', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var addedDepartment = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return addedDepartment;
+});
+AppEHR.factory("editDepartment", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'update_department', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var updatedDepartment = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return updatedDepartment;
+});
+
+AppEHR.factory("GetBillingWithDates", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_todays_bills', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var hospitalData = {
+        get: function (params, body, success) {
+            var get1 = getResource(params, body);
+            return get1.get(params, body, success);
         }
     };
     return hospitalData;

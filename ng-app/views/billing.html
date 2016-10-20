@@ -64,11 +64,12 @@
                         </div>
                         <div class="pull-right col-lg-7">
                             <div class="pull-right col-lg-3">
-                                <select class="form-control">
-                                    <option>All</option>
-                                    <option>Cheque</option>
-                                    <option>type 3</option>
-                                </select>
+                                <div class="input-group date select-date">
+                                    <div class="input-group-content">
+                                        <input type="text" class="form-control" placeholder="Select Date"  ng-model="periodDate" ng-change="dateSearchPeirod(periodDate);">
+                                    </div>
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
                             </div>
                             <div class="pull-right">
                                 <span class="txt-style-3 pull-left text-uppercase billing_period">period</span>
@@ -89,23 +90,13 @@
                         <div class="col-lg-2">
                             <select class="form-control" ng-model="search_plan_bill">
                                 <option value=""></option>
-                                <option selected >General</option>
+                                <option selected value="self">General</option>
                                 <option>NHIS</option>
                                 <option>Retainers</option>
                                 <option>FHSS</option>
                             </select>
                         </div>
-                        <!--                        <div class="pull-right">
-                                                    <div class="header-search pull-left margin-top-10">
-                                                        <button type="submit">
-                                                            <i class="fa fa-search"></i>
-                                                        </button>
-                                                        <input class="search_field" type="text" placeholder="Search Template">
-                                                    </div>
-                                                </div> -->
                     </div>
-
-
                     <form class="custom-form">
                         <table class="table table-striped no-margin table-custom table-custom_big setting_table">
                             <thead>
@@ -133,7 +124,7 @@
                                     <td>B{{Bill.id}}</td>
                                     <td>{{Bill.created_at}}</td>
                                     <td>E{{Bill.encounter_id}}</td>
-                                    <td><a class="blue" href="#/patient-summary-demographics/{{labOrder.patient_id}}">P{{Bill.patient_id}}</a></td>
+                                    <td><a class="blue" href="#/patient-summary-demographics/{{Bill.patient_id}}">P{{Bill.patient_id}}</a></td>
                                     <td>{{Bill.first_name}}</td>
                                     <td>{{Bill.purpose}}</td>
                                     <td>{{Bill.name}}</td>

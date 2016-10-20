@@ -239,6 +239,7 @@ class SettingController extends Controller
         $accredation_pharmacy= $request->input('accredation_pharmacy');
         $accredation_others= $request->input('accredation_others');
         $image= $request->input('image');
+        $image_name= $request->input('image_name');
 
         if ($is_update == 0) {
 
@@ -246,6 +247,7 @@ class SettingController extends Controller
                 ->insert([
                     'name' => $name,
                     'image' => $image,
+                    'image_name' => $image_name,
                     'address' => $address,
                     'type' => $type,
                     'city' => $city,
@@ -274,6 +276,7 @@ class SettingController extends Controller
                 ->update([
                     'name' => $name,
                     'image' => $image,
+                    'image_name' => $image_name,
                     'address' => $address,
                     'type' => $type,
                     'city' => $city,
@@ -311,17 +314,13 @@ class SettingController extends Controller
                ->where('hospital.status', 1)
                ->first();
 
-        if($data->image !='') {
-            $data->image = $logo_image . $data->image;
-        }
-
         if (empty($data)) {
             $is_update = 0;
         } else {
             $is_update = 1;
         }
 
-        return response()->json(['status'=>true,'data'=>$data,'is_update'=>$is_update]);
+        return response()->json(['status'=>true,'data'=>$data,'is_update'=>$is_update,'path'=>$logo_image]);
 
     }
 
@@ -339,11 +338,11 @@ class SettingController extends Controller
 
            $image->move($destinationPath, $fileName);
 
-           DB::table('hospital')
+    /*       DB::table('hospital')
                     ->where('id',1)
-                    ->update(['image'=> $fileName,'updated_at'=> date("Y-m-d  H:i:s")]);
+                    ->update(['image'=> $fileName,'updated_at'=> date("Y-m-d  H:i:s")]);*/
 
-           return response()->json(['status' => true, 'message' => "Patient Image Uploaded Successfully", "image" => $fileName,'name'=> $original_name]);
+           return response()->json(['status' => true, 'message' => "Patient Image Uploaded Successfully", "image" => $fileName,'image_name'=> $original_name]);
 
 
        }
@@ -391,7 +390,7 @@ class SettingController extends Controller
                   ->select(DB::raw('*'))
                   ->where('status', 1)
                   ->get();
-              $count = count($labs);
+              $count = count($departments);
           }
 
           return response()->json(['status' => true, 'data' => $departments, 'count' => $count]);

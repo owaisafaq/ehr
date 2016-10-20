@@ -551,6 +551,7 @@ class OrderController extends Controller
                         'bill_id' => $bill_id,
                         'description' => 'This invoice is generated for Lab Orders',
                         'amount' => 50,
+                        'due'=> 50,
                         'invoice_status' => 'pending',
                         'created_at' => $currentdatetime
                     ]

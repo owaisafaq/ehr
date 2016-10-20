@@ -11,11 +11,11 @@
                 <div class="tab-pane" id="facilities-profile">
                     <div class="table-header row background-none inv_header auto">
                         <div class="row">
-                            <h2 class="col-xs-12 heading-style margin-bottom-30 margin-top-5">Radiology Investigations</h2>
+                            <h2 class="col-xs-12 heading-style margin-bottom-30 margin-top-5">Facilities Profile</h2>
                         </div>
                         <div class="table-upper">
                             <div class="pull-left logo-textStyle">
-                                <img src="{{ hospitalData.image }}">
+                                <img src="{{ path }}{{ hospitalData.image }}" style="width:244px;height:85px;" ng-show="hospitalData.image">
                             </div>
                             <div class="pull-right">
                                 <button class="edit button-custom pull-right add_inventory" ng-click="openEditModal();">Edit Profile</button>
@@ -190,7 +190,7 @@
                                 <button type="submit">
                                     <i class="fa fa-search"></i>
                                 </button>
-                                <input class="search_field" type="text" placeholder="Search Departments">
+                                <input class="search_field" ng-model="speciSearch" type="text" placeholder="Search Departments">
                             </div>
                         </div>
                     </div>
@@ -199,29 +199,27 @@
                             <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Speciality Code</th>
                                 <th>Description</th>
                                 <th></th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <!--<tr ng-repeat="InventoryList in InventoryLists| filter:search |filter:cat_search">
-                                <td><a href="#" class="link-style_3">Dental</a></td>
-                                <td>{{InventoryList.product_name}}</td>
-                                <td>{{InventoryList.product_name}}</td>
+                            <tbody><!--  |filter:cat_search -->
+                            <tr ng-repeat="DepartmentList in DepartmentLists| filter: {name:speciSearch}">
+                                <td><a href="#" class="link-style_3">{{DepartmentList.name}}</a></td>
+                                <td>{{DepartmentList.description}}</td>
                                 <td>
                                     <div class="billing_actions pull-right">
                                         <a href="javascript:;" class="setting-button"></a>
                                         <div class="tool-tip_popup">
-                                            <a href="javascript:;" ng-click="productDetail(InventoryList.product_id)">Edit</a>
-                                            <a href="javascript:;" ng-click="StockSelectedReorder(InventoryList.product_id)">Delete</a>
+                                            <a href="javascript:;" ng-click="departmentDetail(DepartmentList.id)">Edit</a>
+                                            <a href="javascript:;" ng-click="confirmRemoveDeparment(DepartmentList.id)">Delete</a>
                                         </div>
                                     </div>
                                 </td>
-                            </tr>-->
+                            </tr>
                             </tbody>
                         </table>
-                        <!--<div class="pagination pagination-centered pull-right" ng-show="pharmacyCount">
+                        <div class="pagination pagination-centered pull-right" ng-show="pharmacyCount">
                             <ul class="pagination-controle pagination">
                                 <li class="prev-page">
                                     <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage = curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
@@ -233,7 +231,7 @@
                                     <button type="button" class="btn btn-primary" ng-disabled="curPage >= pharmacyCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
                                 </li>
                             </ul>
-                        </div>-->
+                        </div>
                     </form>
                 </div>
             </div><!--end .card -->
@@ -330,7 +328,7 @@
                                 <div class="col-lg-8">
                                     <div class="file-field">
                                         <div class="file-path-wrapper">
-                                            <input class="file-path yellow" ng-model="PI.imageOrignalName" type="text" placeholder="Image Name">
+                                            <input class="file-path yellow" ng-model="image.image_name" type="text" placeholder="Image Name">
                                         </div>
                                         <input type="file" ngf-select="uploadFiles($files, $invalidFiles)" name="file" accept="image/*">
                                         <div class="btn-browse">
@@ -421,20 +419,26 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </div>
-<div class="modal fade modal-size_2" id="addNewSpeciality" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade modal-size_1" id="addNewSpeciality" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Add New Speciality</h2>
             </div>
             <div class="modal-body">
-                <form class="custom-form">
+                <form class="custom-form" name="userForm2" ng-model="myForm" novalidate ng-submit="createDepartment(departmentData);">
+                    <div class="row margin-bottom-xxl">
+                        <div class="alert {{messageType}}" role="alert" ng-show="message">
+                            <i class="{{errorSymbol}}"></i> {{errorMessage}}
+                        </div>
+                    </div>
                     <div class="row margin-bottom-xxl">
                         <div class="col-lg-2">
                             <label>Name</label>
                         </div>
-                        <div class="col-lg-4">
-                            <input type="text" placeholder="" name="" required/>
+                        <div class="col-lg-10">
+                            <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm2.name.$invalid]"  name="name" required  ng-model="departmentData.name" />
+                            <p class="help-block PIValid" ng-show="submitted && userForm2.name.$error.required">Required</p>
                         </div>
                     </div>
                     <div class="row">
@@ -442,12 +446,53 @@
                             <label>Description</label>
                         </div>
                         <div class="col-lg-10">
-                            <textarea></textarea>
+                            <textarea placeholder="Write Here..." name="description" ng-model="departmentData.description" ng-class="{true: 'error'}[submitted && userForm2.description.$invalid]" required></textarea>
+                            <p class="help-block PIValid" ng-show="submitted && userForm2.description.$error.required">Required</p>
                         </div>
                     </div>
                     <div class="modal-footer row">
-                        <button type="button" class="btn btn-default button-style-1">Add</button>
-                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;" ng-disabled="submitted && userForm2.$invalid">Add</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal" ng-disabled="addDepartmentBtn">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade modal-size_2" id="editNewSpeciality" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Edit New Speciality</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form" name="userForm3" ng-model="myForm" novalidate ng-submit="updateDepartment(editDepartmentData);">
+                    <div class="row margin-bottom-xxl">
+                        <div class="alert {{messageType}}" role="alert" ng-show="message">
+                            <i class="{{errorSymbol}}"></i> {{errorMessage}}
+                        </div>
+                    </div>
+                    <div class="row margin-bottom-xxl">
+                        <div class="col-lg-2">
+                            <label>Name</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm3.name.$invalid]"  name="name" required  ng-model="editDepartmentData.name" />
+                            <p class="help-block PIValid" ng-show="submitted && userForm3.name.$error.required">Required</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <label>Description</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <textarea placeholder="Write Here..." name="description" ng-model="editDepartmentData.description" ng-class="{true: 'error'}[submitted && userForm3.description.$invalid]" required></textarea>
+                            <p class="help-block PIValid" ng-show="submitted && userForm3.description.$error.required">Required</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer row">
+                        <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;" ng-disabled="submitted && userForm3.$invalid">Edit</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal" ng-disabled="updateDepartmentBtn">Cancel</button>
                     </div>
                 </form>
             </div>
@@ -464,8 +509,8 @@
                 <p class="modal-subtext">Do you want to Delete?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default button-style-1" data-toggle="modal" ng-click="removeBillingCode();"  data-dismiss="modal">Ok</button>
-                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal" ng-click="cancelDelete();">Cancel</button>
+                <button type="button" class="btn btn-default button-style-1" data-toggle="modal" ng-click="removeDepartment();"  data-dismiss="modal">Ok</button>
+                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

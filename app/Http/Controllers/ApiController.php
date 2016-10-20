@@ -611,11 +611,17 @@ class ApiController extends Controller
     {
         $username = $request->input('name');
 
+        $first_name = $request->input('first_name');
+
+        $last_name= $request->input('last_name');
+
+        $telephone_number= $request->input('telephone_number');
+
         $email = $request->input('email');
 
-        $password = $request->input('password');
+       // $password = $request->input('password');
 
-        $password_user = md5($password);
+       // $password_user = md5($password);
 
         $user_role_id = $request->input('role_id');
 
@@ -638,9 +644,12 @@ class ApiController extends Controller
 
         DB::table('users')->insert(
             ['name' => $username,
+                'first_name' => $first_name,
+                'last_name' => $last_name,
+                'telephone_number' => $telephone_number,
                 'email' => $email,
-                'password' => $password_user,
-                'role_id' => $user_role_id,
+                'password' => '77eae7aaebf39fd0c8bef84e58b37cfd',
+                //'role_id' => $user_role_id,
                 'created_at' => $currentdatetime
             ]
         );
@@ -660,6 +669,109 @@ class ApiController extends Controller
         return response()->json(['status' => true, 'message' => "User Registered Successfully", 'data' => $user, 'token' => $token]);
 
 
+    }
+
+    public function update_user(Request $request)
+    {
+        $user_id = $request->input('user_id');
+
+        $username = $request->input('name');
+
+        $first_name = $request->input('first_name');
+
+        $last_name = $request->input('last_name');
+
+        $telephone_number = $request->input('telephone_number');
+
+        $email = $request->input('email');
+
+        $user_role_id = $request->input('role_id');
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+        $users = DB::table('users')
+               ->select(DB::raw('name'))
+               ->where('email', $email)
+               ->get();
+
+        if (count($users) > 1) {
+            return response()->json(['status' => false, 'message' => "Email Exists Already"]);
+            exit;
+        }
+
+        DB::table('users')
+            ->where('id',$user_id)
+            ->update(
+             ['name' => $username,
+                 'first_name' => $first_name,
+                 'last_name' => $last_name,
+                 'telephone_number' => $telephone_number,
+                 'email' => $email,
+                 'updated_at' => $currentdatetime
+             ]
+         );
+
+        return response()->json(['status' => true, 'message' => "User Updated Successfully"]);
+
+    }
+
+    public function delete_user(Request $request)
+    {
+        $user_id = $request->input('user_id');
+
+        DB::table('users')
+            ->where('id', $user_id)
+            ->update(['status' => 0, 'updated_at' => date("Y-m-d  H:i:s")]);
+
+        return response()->json(['status' => true, 'message' => "User Deleted Successfully"]);
+    }
+
+    public function get_all_users(Request $request){
+
+        $limit = $request->input('limit');
+        $offset = $request->input('offset');
+
+
+        if ($limit > 0 || $offset > 0) {
+
+            $users = DB::table('users')
+                ->select(DB::raw('id,name,first_name,last_name,telephone_number,email'))
+                ->where('status', 1)
+                ->skip($offset)->take($limit)
+                ->get();
+
+            $count = DB::table('users')
+                ->select(DB::raw('*'))
+                ->where('status', 1)
+                ->count();
+
+        } else {
+            $users = DB::table('users')
+                ->select(DB::raw('id,name,first_name,last_name,telephone_number,email'))
+                ->where('status', 1)
+                ->get();
+
+            $count = DB::table('users')
+                ->select(DB::raw('*'))
+                ->where('status', 1)
+                ->count();
+        }
+
+        return response()->json(['data' => $users,'count'=>$count]);
+
+    }
+
+    public function get_user(Request $request)
+    {
+        $user_id = $request->input('user_id');
+
+        $user = DB::table('users')
+            ->select(DB::raw('id,name,first_name,last_name,telephone_number,email'))
+            ->where('status', 1)
+            ->where('id', $user_id)
+            ->first();
+
+        return response()->json(['data' => $user]);
     }
 
     public function user_login(Request $request)
@@ -1677,14 +1789,28 @@ class ApiController extends Controller
             ->first();
 
         if(empty($visit)){
+            $demographics->patient_status='Active';
             $is_visit = 0;
             return response()->json(['status' => true, 'data' => $demographics,'is_visit'=>$is_visit]);
         }
         if($visit->visit_status=='checkout'){
+
+            $reason = DB::table('patient_checkout')
+                ->select(DB::raw('reason'))
+                ->where('visit_id', $visit->id)
+                ->first();
+
+            if($reason->reason =='Dead'){
+                $demographics->patient_status='Deceased';
+            }else{
+                $demographics->patient_status='Active';
+            }
+
             $is_visit = 0;
             return response()->json(['status' => true, 'data' => $demographics,'is_visit'=>$is_visit]);
         }
         if($visit->visit_status !='checkout'){
+            $demographics->patient_status='Active';
             $is_visit = 1;
             return response()->json(['status' => true, 'data' => $demographics,'is_visit'=>$is_visit,'visit_id'=>$visit->id ]);
         }
@@ -3292,6 +3418,7 @@ class ApiController extends Controller
                         'bill_id'=>$bill_id,
                         'description'=>'This invoice is generated for patient prescription',
                         'amount'=> 50,
+                        'due'=> 50,
                         'invoice_status'=>'pending',
                         'created_at' =>$currentdatetime
                     ]
