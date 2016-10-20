@@ -380,6 +380,9 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
 
     //User Managemet
     $app->get('get_all_users','App\Http\Controllers\ApiController@get_all_users');
+    $app->get('get_user','App\Http\Controllers\ApiController@get_user');
+    $app->post('update_user','App\Http\Controllers\ApiController@update_user');
+    $app->post('delete_user','App\Http\Controllers\ApiController@delete_user');
 
 
 });

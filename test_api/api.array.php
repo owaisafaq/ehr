@@ -3388,6 +3388,48 @@ $api = new api();
 $api->name = "Get All Users";
 $api->url = HOST . 'get_all_users';
 $api->method = "GET";
+$api->params->offset = "1";
+$api->params->limit = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+//Get User
+$api = new api();
+$api->name = "Get User";
+$api->url = HOST . 'get_user';
+$api->method = "GET";
+$api->params->user_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Update User
+$api = new api();
+$api->name = "Update User";
+$api->url = HOST . 'update_user';
+$api->method = "POST";
+$api->description = "Update User";
+$api->params->user_id = "1";
+$api->params->name = "owais";
+$api->params->first_name = "owais";
+$api->params->last_name = "owais";
+$api->params->telephone_number = "owais";
+$api->params->email = "owais@gmail.com";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Delete User
+$api = new api();
+$api->name = "Delete User";
+$api->url = HOST . 'delete_user';
+$api->method = "POST";
+$api->description = "Delete User";
+$api->params->user_id = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
