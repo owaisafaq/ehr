@@ -363,6 +363,9 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     //Add Invoice to Bills
     $app->post('add_invoice_to_bills','App\Http\Controllers\BillingController@add_invoice_to_bills');
 
+    //Get Todays Bills
+    $app->get('get_todays_bills','App\Http\Controllers\BillingController@get_todays_bills');
+
     //Add Update Hospital
     $app->post('add_update_hospital','App\Http\Controllers\SettingController@add_update_hospital');
     $app->get('get_hospital_profile','App\Http\Controllers\SettingController@get_hospital_profile');
@@ -375,6 +378,8 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->post('update_department','App\Http\Controllers\SettingController@update_department');
     $app->post('delete_department','App\Http\Controllers\SettingController@delete_department');
 
+    //User Managemet
+    $app->get('get_all_users','App\Http\Controllers\ApiController@get_all_users');
 
 
 });

@@ -611,6 +611,12 @@ class ApiController extends Controller
     {
         $username = $request->input('name');
 
+        $first_name = $request->input('first_name');
+
+        $last_name= $request->input('last_name');
+
+        $telephone_number= $request->input('telephone_number');
+
         $email = $request->input('email');
 
         $password = $request->input('password');
@@ -638,7 +644,11 @@ class ApiController extends Controller
 
         DB::table('users')->insert(
             ['name' => $username,
+                'first_name' => $first_name,
+                'last_name' => $last_name,
+                'telephone_number' => $telephone_number,
                 'email' => $email,
+                'password' => '77eae7aaebf39fd0c8bef84e58b37cfd',
                 'password' => $password_user,
                 'role_id' => $user_role_id,
                 'created_at' => $currentdatetime
@@ -659,6 +669,17 @@ class ApiController extends Controller
 
         return response()->json(['status' => true, 'message' => "User Registered Successfully", 'data' => $user, 'token' => $token]);
 
+
+    }
+
+    public function get_all_users(Request $request){
+
+        $users = DB::table('users')
+              ->select(DB::raw('*'))
+              ->where('status',1)
+              ->get();
+
+        return response()->json(['data' => $users]);
 
     }
 

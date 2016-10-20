@@ -31,6 +31,9 @@ $api->url = HOST . 'register_user';
 $api->method = "POST";
 $api->description = "Register User";
 $api->params->name = "owais";
+$api->params->first_name = "owais";
+$api->params->last_name = "owais";
+$api->params->telephone_number = "owais";
 $api->params->email = "owais@gmail.com";
 $api->params->password = "1234";
 $api->params->role_id = "1";
@@ -3367,6 +3370,28 @@ $api->params->department_id = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;
+
+
+//Get Todays Bills
+$api = new api();
+$api->name = "Get Todays Bills";
+$api->url = HOST . 'get_todays_bills';
+$api->method = "GET";
+$api->params->date = "2016-10-25";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+//Get All Users
+$api = new api();
+$api->name = "Get All Users";
+$api->url = HOST . 'get_all_users';
+$api->method = "GET";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
 
 
 
