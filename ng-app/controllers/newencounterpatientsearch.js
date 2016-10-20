@@ -808,4 +808,16 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
         $scope.parseFloat = function (val) {
             return isNaN(parseFloat(val)) ? 0 : parseFloat(val);
         }
+        
+
+$scope.search = function(item){ 
+        if($scope.listsearch == undefined){
+            return true;
+        }else{
+            if(item.last_name.toLowerCase().indexOf($scope.listsearch.toLowerCase()) != -1 || item.first_name.toLowerCase().indexOf($scope.listsearch.toLowerCase()) != -1){
+                return true;
+            }
+        }
+    };
+
 }]);

@@ -83,6 +83,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
                 $scope.PI.patient_image = res.data.patient_image;
                 $scope.PI.displayImage = patientImageDirectory + res.data.patient_image;
                 $scope.hospital_plan = res.data.hospital_plan;
+                $scope.patient_status = res.data.patient_status;
                 $scope.is_visit = res.is_visit;
                 $scope.encounterID = res.visit_id;
                 console.log('visit id', $scope.encounterID);

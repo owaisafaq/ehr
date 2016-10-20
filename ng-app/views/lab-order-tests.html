@@ -133,74 +133,6 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade modal-size_1" id="order-label" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content pull-left">
-                    <div class="modal-header pop_head">
-                        <h2>Lab Order label</h2>
-                    </div>
-                    <div class="modal-body pull-left label-style-con modal-body-2">
-                        <form class="custom-form">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <label>Patient Name</label>
-                                    <label class="txt-style-4 margin-bottom-xxl">{{ selectedOrder.patient_name}}</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label>Patient ID</label>
-                                    <label class="txt-style-4 margin-bottom-xxl">{{ selectedOrder.patient_id}}</label>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <label>Gender</label>
-                                    <label class="txt-style-4 margin-bottom-xxl">{{ selectedOrder.gender}}</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label>Order Number</label>
-                                    <label class="txt-style-4 margin-bottom-xxl">{{ selectedOrder.id}}</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label>Test ID</label>
-                                    <label class="txt-style-4 margin-bottom-xxl">{{ selectedOrder.id}}</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label>Test name</label>
-                                    <label class="txt-style-4 margin-bottom-xxl" ng-repeat="t in selectedOrder.test">{{ t.test_name }}</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label class="margin-bottom-xxl">Collected By: {{selectedOrder.created_at | date:'MMM dd, yyyy hh:mm a'}}</label>
-                                </div>
-                                <!--<div class="col-lg-6">
-                                    <label>Collection Date</label>
-                                    <label class="txt-style-4 margin-bottom-xxl">Jan 09, 2016</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label>Collection Time</label>
-                                    <label class="txt-style-4">00:00:00</label>
-                                </div>-->
-                                <div class="col-lg-6">
-                                    <img src="assets/img/bar_code.jpg" alt="" ng-show="visibleImg"/>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer col-lg-12 hidden-print">
-                        <div class="pull-left">
-                            <div class="checkbox checkbox-styled pull-left">
-                                <label>
-                                    <input type="checkbox" value="" ng-model="insertbarcode" ng-click="insertBarcode(insertbarcode);">
-                                    <span>Insert Barcode</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="pull-right">
-                            <button type="button" ng-click="openPrint()" class="btn btn-default button-style-1">Print</button>
-                            <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
-                        </div>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
 </div><!--end .card-body -->
 </section>
 </div><!--end .card -->
@@ -310,3 +242,72 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    
+    <div class="modal fade modal-size_1" id="order-label" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content pull-left">
+                    <div class="modal-header pop_head">
+                        <h2>Lab Order label</h2>
+                    </div>
+                    <div class="modal-body pull-left label-style-con modal-body-2">
+                        <form class="custom-form">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label>Patient Name</label>
+                                    <label class="txt-style-4 margin-bottom-xxl">{{ selectedOrder.patient_name}}</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>Patient ID</label>
+                                    <label class="txt-style-4 margin-bottom-xxl">{{ selectedOrder.patient_id}}</label>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <label>Gender</label>
+                                    <label class="txt-style-4 margin-bottom-xxl">{{ selectedOrder.gender}}</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>Order Number</label>
+                                    <label class="txt-style-4 margin-bottom-xxl">{{ selectedOrder.id}}</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>Test ID</label>
+                                    <label class="txt-style-4 margin-bottom-xxl">{{ selectedOrder.id}}</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>Test name</label>
+                                    <label class="txt-style-4 margin-bottom-xxl" ng-repeat="t in selectedOrder.test">{{ t.test_name }}</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label class="margin-bottom-xxl">Collected By: {{selectedOrder.created_at | date:'MMM dd, yyyy hh:mm a'}}</label>
+                                </div>
+                                <!--<div class="col-lg-6">
+                                    <label>Collection Date</label>
+                                    <label class="txt-style-4 margin-bottom-xxl">Jan 09, 2016</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>Collection Time</label>
+                                    <label class="txt-style-4">00:00:00</label>
+                                </div>-->
+                                <div class="col-lg-6">
+                                    <img src="assets/img/bar_code.jpg" alt="" ng-show="visibleImg"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer col-lg-12 hidden-print">
+                        <div class="pull-left">
+                            <div class="checkbox checkbox-styled pull-left">
+                                <label>
+                                    <input type="checkbox" value="" ng-model="insertbarcode" ng-click="insertBarcode(insertbarcode);">
+                                    <span>Insert Barcode</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="pull-right">
+                            <button type="button" ng-click="openPrint()" class="btn btn-default button-style-1">Print</button>
+                            <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
