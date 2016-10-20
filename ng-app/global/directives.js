@@ -305,3 +305,8 @@ AppEHR.filter('range', function() {
     return input;
   };
 });
+AppEHR.filter('num', function() {
+    return function(input) {
+      return parseInt(input, 10);
+    }
+});

@@ -710,6 +710,9 @@ Table Styling
 .add{
     background: url(../..//img/plus.png) no-repeat top center;
 }
+.download{
+    background: url(../..//img/download_icon.png) no-repeat top center;
+}
 .notification{
     background: url(../..//img/ring.png) no-repeat top center;
 }
@@ -2953,7 +2956,7 @@ form .progress {
         margin-left: -90px;
         margin-top: -80px;
     }
-}
+} //media print end
 
 .check-box-label label{
     width:auto;
@@ -3754,7 +3757,7 @@ Pagination
     padding-left: 10px;
 }
 .card-head-custom .txt-style-2{
-    font-size: 14px;
+    font-size: 13px;
 }
 .adjust-width .adjust-1{
     width: 14%;   
