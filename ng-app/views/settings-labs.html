@@ -76,9 +76,9 @@
                                         <label class="margin-right-10">Select</label>
                                     </div>
                                     <div class="col-lg-4 margin-0">
-                                        <select class="form-control" placeholder="By Lab">
+                                        <select class="form-control" placeholder="By Lab" ng-model="labType">
                                             <option></option>
-                                            <option ng-repeat="lab in Labs" value="{{ lab.id }}">{{ lab.name }}</option>
+                                            <option ng-repeat="lab in Labs" value="{{ lab.name }}">{{ lab.name }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -91,7 +91,7 @@
                                     <button type="submit">
                                         <i class="fa fa-search"></i>
                                     </button>
-                                    <input class="search_field" type="text" placeholder="Search test">
+                                    <input class="search_field" type="text" ng-model="searchTest" placeholder="Search test">
                                 </div>
                             </div>
                             </div>
@@ -109,8 +109,9 @@
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr ng-repeat="LabTest in LabTests | filter:search |filter:cat_search">
+                            <tbody><!-- |filter:cat_search -->
+                                <tr ng-repeat="LabTest in LabTests | filter:{lab:labType} | filter:
+                                {name: searchTest}">
                                     <td><a href="javscript:;" class="link-style_3">{{LabTest.name}}</a></td>
                                     <td>{{LabTest.description}}</td>
                                     <td>{{LabTest.lonic_code}}</td>

@@ -29,7 +29,7 @@
                                 <button type="submit">
                                     <i class="fa fa-search"></i>
                                 </button>
-                                <input class="search_field" type="text" placeholder="Search Template">
+                                <input class="search_field" ng-model="search" type="text" placeholder="Search Template">
                             </div>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="BillingCode in BillingCodeLists| filter:search |filter:code">
+                                <tr ng-repeat="BillingCode in BillingCodeLists| filter:{code:search}">
                                     <td>{{BillingCode.description}}</td>
                                     <td>{{BillingCode.code}}</td>
                                     <td>{{BillingCode.charge}}</td>
@@ -86,7 +86,7 @@
                                 <button type="submit">
                                     <i class="fa fa-search"></i>
                                 </button>
-                                <input class="search_field" type="text" placeholder="Search Category">
+                                <input class="search_field" ng-model="searchCat" type="text" placeholder="Search Category">
                             </div>
                         </div>
                     </div>
@@ -99,7 +99,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="Category in CategoryLists| filter:search |filter:code">
+                                <tr ng-repeat="Category in CategoryLists| filter:{name:searchCat}"><!--  |filter:code -->
                                     <td>{{ Category.name }}</td>
                                     <td>
                                         <span>{{ Category.description }}</span>
