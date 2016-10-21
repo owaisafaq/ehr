@@ -769,7 +769,7 @@ class OrderController extends Controller
         $lab_test_id = $request->input('lab_test_id');
 
         $lab_test = DB::table('lab_tests')
-            ->select('lab_order_tests.id','lab_tests.name','lab_tests.lonic_code','lab_tests.cost','lab_tests.lab','lab_order_tests.test_status', 'lab_order_tests.lab_order_id', 'patients.first_name', 'patients.last_name', 'patients.id as patient_id', 'patients.age', 'patients.sex', 'maritial_status.name as marital_status','lab_orders.visit_id')
+            ->select('lab_order_tests.id','lab_tests.name','lab_tests.lonic_code','lab_tests.cost','lab_tests.lab','lab_order_tests.test_status', 'lab_order_tests.lab_order_id', 'patients.first_name', 'patients.last_name', 'patients.id as patient_id', 'patients.age', 'patients.sex', 'maritial_status.name as marital_status','lab_orders.visit_id','lab_orders.created_at')
             ->leftJoin('lab_order_tests', 'lab_order_tests.lab_test', '=', 'lab_tests.id')
             ->leftJoin('lab_orders', 'lab_orders.id', '=', 'lab_order_tests.lab_order_id')
             ->leftJoin('patients', 'patients.id', '=', 'lab_orders.patient_id')
@@ -777,6 +777,8 @@ class OrderController extends Controller
             //->where('lab_tests.status', 1)
             ->where('lab_order_tests.id', $lab_test_id)
             ->first();
+
+        $lab_test->patient_id = str_pad($lab_test->patient_id, 7, '0', STR_PAD_LEFT);
 
         if ($lab_test->sex == 1) {
             $lab_test->gender = 'male';

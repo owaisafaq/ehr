@@ -3464,6 +3464,7 @@ class ApiController extends Controller
                         'dispense' => $patient_prescription->dispense,
                         'reffills' => $patient_prescription->reffills,
                         'pharmacy' => $patient_prescription->pharmacy_id,
+                        'amount' => $patient_prescription->amount,
                         'created_at' => $currentdatetime
                     ]
                 );

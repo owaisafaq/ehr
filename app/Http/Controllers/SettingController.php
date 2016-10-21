@@ -449,4 +449,14 @@ class SettingController extends Controller
 
     }
 
+    public function add_role_group(Request $request){
+
+        $name= $request->input('name');
+
+        DB::table('roles')->insert(['name'=> $name,'created_at'=> date("Y-m-d  H:i:s")]);
+
+        $role_rights = $request->input('role_rights');
+
+    }
+
 }
