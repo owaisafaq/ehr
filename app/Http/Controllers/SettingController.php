@@ -437,4 +437,16 @@ class SettingController extends Controller
 
        }
 
+
+    public function get_all_contexts()
+    {
+        $contexts = DB::table('contexts')
+            ->select(DB::raw('id,name'))
+            ->where('status',1)
+            ->get();
+
+        return response()->json(['status' => true, 'data' => $contexts]);
+
+    }
+
 }

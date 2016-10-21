@@ -3378,3 +3378,16 @@ $api->params->token = "123";
 $api_arr [] = $api;
 
 
+//Add Role Group
+$api = new api();
+$api->name = "Add Role Group";
+$api->url = HOST . 'add_role_group';
+$api->method = "POST";
+$api->params->name = "Doctor";
+$api->params->role_rights = "";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+

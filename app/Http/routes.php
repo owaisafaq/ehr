@@ -385,4 +385,8 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->post('delete_user','App\Http\Controllers\ApiController@delete_user');
 
 
+    //Role Managment
+    $app->get('get_all_contexts','App\Http\Controllers\SettingController@get_all_contexts');
+
+
 });
