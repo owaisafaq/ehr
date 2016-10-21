@@ -389,9 +389,9 @@
                             <label>Pharmacy</label>
                         </div>
                         <div class="col-lg-9">
-                            <select ng-model="MedicationData.pharmacy" class="form-control" placeholder="Select Pharmacy">
+                            <select ng-model="MedicationData.pharmacy" class="form-control" placeholder="Select Pharmacy" id="select_pharmacy">
                                 <option></option>
-                                <option ng-selected="MedicationData.pharmacy == pharmacyDataDrop.name" value="{{pharmacyDataDrop.name}}" ng-repeat="pharmacyDataDrop in allPharmacies">{{pharmacyDataDrop.name}}</option>
+                                <option ng-selected="MedicationData.pharmacy == pharmacyDataDrop.name" value="{{pharmacyDataDrop.id}}" ng-repeat="pharmacyDataDrop in allPharmacies">{{pharmacyDataDrop.name}}</option>
                             </select>
                         </div>
                     </div>

@@ -191,9 +191,9 @@
                                         <label>group</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <select name="group" class="form-control group_select" ng-model="inventory.group" placeholder="Select Group" ng-change="groupchange();">
-                                            <option></option>
-                                            <option value="Drugs">Drugs</option>
+                                        <select name="group" class="form-control group_select" id="group_select" ng-model="inventory.group" ng-change="groupchange();">
+                                            <option value=""></option>
+                                            <option selected value="Drugs">Drugs</option>
                                             <option value="Supplements">Supplements</option>
                                             <option value="Documents">Documents</option>
                                             <option value="Others">Others</option>
@@ -204,8 +204,8 @@
                                         <label>category</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <select class="form-control" name="category" ng-model="inventory.cat_id" required>
-                                            <option>Select Category</option>
+                                        <select class="form-control" placeholder="Select Category" name="category" ng-model="inventory.cat_id" required>
+                                            <option></option>
                                             <option ng-repeat="category in CategoryLists" value="{{category.id}}">
                                                 {{category.cat_name}}
                                             </option>
@@ -244,10 +244,10 @@
                                             <input type="text" name="tradename" ng-model="inventory.trade_name" ng-required="show_on_supplements"  ng-class="{true: 'error'}[submitted && myFormAdd.tradename.$invalid]" required />
                                             <p class="help-block PIValid" ng-show="submitted && myFormAdd.tradename.$error.required">Required</p>
                                         </div>
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-3" ng-hide="inventory.group == 'Documents'">
                                             <label>strength</label>
                                         </div>
-                                        <div class="col-lg-3 no-padding">
+                                        <div class="col-lg-3 no-padding" ng-hide="inventory.group == 'Documents'">
                                             <div class="col-lg-6">
                                                 <input type="text" class="strength1" name="strength1" ng-model="inventory.strength" ng-class="{true: 'error'}[submitted && myFormAdd.strength1.$invalid]" required />
                                                 <p class="help-block PIValid" ng-show="submitted && myFormAdd.strength1.$error.required">Required</p>

@@ -83,7 +83,7 @@ AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routePa
             description : billingCodeData.description,
             charge : billingCodeData.charge,
             category_id : billingCodeData.category_id,
-            tax : billingCodeData.tax
+            tax : 0//billingCodeData.tax
 		},addBillingCodeSuccess,addBillingCodeFailure);
 	};
 	function addBillingCodeSuccess(res){ // on success
@@ -148,7 +148,7 @@ AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routePa
             description : editBillingCodeData.description,
             charge : editBillingCodeData.charge,
             category_id : editBillingCodeData.category_id,
-            tax : editBillingCodeData.tax
+            tax : 0//editBillingCodeData.tax
 		},editBillingCodeSuccess,editBillingCodeFailure);
 	};
 

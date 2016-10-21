@@ -401,12 +401,20 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
            sig: $scope.MedicationData.sig,
            dispense: $scope.MedicationData.dispense,
            reffills: $scope.MedicationData.reffills,
-           pharmacy: $scope.MedicationData.pharmacy,
+           pharmacy: $('#select_pharmacy option:selected').text(),
            note_of_pharmacy: $scope.MedicationData.note_of_pharmacy,
        }
-       console.log(AddMedications);
+       var AddMedicationsPID = {
+           medication: $scope.MedicationData.medication,
+           medicationName:  $(".medicationNeme option:selected").text(),
+           sig: $scope.MedicationData.sig,
+           dispense: $scope.MedicationData.dispense,
+           reffills: $scope.MedicationData.reffills,
+           pharmacy:  $scope.MedicationData.pharmacy,
+           note_of_pharmacy: $scope.MedicationData.note_of_pharmacy,
+       }
        $scope.note = $scope.MedicationData.note_of_pharmacy;
-       $scope.medicationsDataPush.push(AddMedications);
+       $scope.medicationsDataPush.push(AddMedicationsPID);
        $scope.MedicationData.sig = "";
        $scope.MedicationData.dispense = "";
        $scope.MedicationData.reffills = "";
@@ -437,7 +445,9 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
            token: $window.sessionStorage.token,
            visit_id: $scope.displayInfo.encounter_id
        }
+       console.log(addPrescrptnPop);
        $rootScope.loader = 'show';
+       console.log(addPrescrptnPop)
        PatienPrescription.save(addPrescrptnPop, PrescriptionSuccessPop, PrescriptionFailurePop)
     }
 

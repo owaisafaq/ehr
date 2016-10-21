@@ -105,6 +105,10 @@ AppEHR.controller('settingsLabs', ['$scope', '$rootScope', '$window', '$routePar
 			GetAllLabs.get({
 				token: $window.sessionStorage.token
 			}, GetAllLabsSuccess, GetAllLabsFailure);
+			GetAllLabs.get({
+				token: $window.sessionStorage.token,
+				offset: 0, limit: 0
+			}, GetLabsSuccess, GetLabsFailure);
 		}
 	}
 
@@ -140,6 +144,10 @@ AppEHR.controller('settingsLabs', ['$scope', '$rootScope', '$window', '$routePar
 			GetAllLabs.get({
 				token: $window.sessionStorage.token
 			}, GetAllLabsSuccess, GetAllLabsFailure);
+			GetAllLabs.get({
+				token: $window.sessionStorage.token,
+				offset: 0, limit: 0
+			}, GetLabsSuccess, GetLabsFailure);
 		} else {
 			$scope.hideLoader = "hide";
 			$scope.addLabBtn = false;
@@ -194,6 +202,10 @@ AppEHR.controller('settingsLabs', ['$scope', '$rootScope', '$window', '$routePar
 			GetAllLabs.get({
 				token: $window.sessionStorage.token
 			}, GetAllLabsSuccess, GetAllLabsFailure);
+			GetAllLabs.get({
+				token: $window.sessionStorage.token,
+				offset: 0, limit: 0
+			}, GetLabsSuccess, GetLabsFailure);
 			$timeout(function(){
 				$scope.message = false;
 				$scope.submitted = false;
@@ -254,6 +266,10 @@ AppEHR.controller('settingsLabs', ['$scope', '$rootScope', '$window', '$routePar
 			GetAllLabTests.get({
 				token: $window.sessionStorage.token
 			}, GetAllLabTestsSuccess, GetAllLabTestsFailure);
+			GetAllLabs.get({
+				token: $window.sessionStorage.token,
+				offset: 0, limit: 0
+			}, GetLabsSuccess, GetLabsFailure);
 		}
 	}
 
