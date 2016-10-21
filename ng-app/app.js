@@ -873,7 +873,7 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
                             //console.log(item);
                             myResults.push({
                                 'id': item.id,
-                                'text': item.id + " "+ item.first_name + " " + item.last_name
+                                'text': item.patient_id + " "+ item.first_name + " " + item.last_name
                             });
                         });
                     }
