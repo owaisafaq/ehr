@@ -338,6 +338,15 @@
                                     <span ng-hide="imageUploading" class="float-right image-uploading-text ng-hide">Image uploading... </span> 
                                 </div>
                             </div>
+                            <div class="row margin-bottom-xxl">
+                                <div class="col-lg-4">
+                                    <label>ACCREDITATION NO PHARMACY</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm1.ANOPHARMACY.$invalid]"  name="ANOPHARMACY" required  ng-model="hospitalData.accredation_pharmacy" />
+                                    <p class="help-block PIValid" ng-show="submitted && userForm1.ANOPHARMACY.$error.required">Required</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="row margin-bottom-xxl">
@@ -407,6 +416,24 @@
                                 <div class="col-lg-8">
                                     <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm1.website.$invalid]"  name="website" required  ng-model="hospitalData.website" />
                                     <p class="help-block PIValid" ng-show="submitted && userForm1.website.$error.required">Required</p>
+                                </div>
+                            </div>
+                            <div class="row margin-bottom-xxl">
+                                <div class="col-lg-4">
+                                    <label>ACCREDITATION NO LAB</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm1.ANOLAB.$invalid]"  name="ANOLAB" required  ng-model="hospitalData.accredation_lab" />
+                                    <p class="help-block PIValid" ng-show="submitted && userForm1.ANOLAB.$error.required">Required</p>
+                                </div>
+                            </div>
+                            <div class="row margin-bottom-xxl">
+                                <div class="col-lg-4">
+                                    <label>ACCREDITATION OTHERS</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm1.AOTHERS.$invalid]"  name="AOTHERS" required  ng-model="hospitalData.accredation_others" />
+                                    <p class="help-block PIValid" ng-show="submitted && userForm1.AOTHERS.$error.required">Required</p>
                                 </div>
                             </div>
                         </div>

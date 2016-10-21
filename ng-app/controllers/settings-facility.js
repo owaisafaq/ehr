@@ -7,6 +7,7 @@ AppEHR.controller('settingsFacility', ['$scope', '$rootScope', '$window', '$rout
     $scope.curPage = 0;
     $scope.pageSize = 15;
     $scope.deleteDepartmentId = 0;
+    $scope.imageUploading = true;
 	Countries.get({
 		token: $window.sessionStorage.token
 	}, GetAllCountriesSuccess, GetAllCountriesFailure);
@@ -77,12 +78,12 @@ AppEHR.controller('settingsFacility', ['$scope', '$rootScope', '$window', '$rout
             number_beds : '',
             website : hospitalData.website,
             name_proprietor : hospitalData.name_proprietor,
-            //accredation_lab : hospitalData.accredation_lab,
-            accredation_lab : '',
-            //accredation_pharmacy : hospitalData.accredation_pharmacy,
-            accredation_pharmacy : '',
-            //accredation_others : hospitalData.accredation_others
-            accredation_others : ''
+            accredation_lab : hospitalData.accredation_lab,
+            //accredation_lab : '',
+            accredation_pharmacy : hospitalData.accredation_pharmacy,
+            //accredation_pharmacy : '',
+            accredation_others : hospitalData.accredation_others
+            //accredation_others : ''
         },addUpdateHospitalSuccess,addUpdateHospitalFailure);
     };
     function addUpdateHospitalSuccess(res){ // on success
@@ -117,6 +118,7 @@ AppEHR.controller('settingsFacility', ['$scope', '$rootScope', '$window', '$rout
         $('#internetError').modal('show');
     }
     $scope.uploadFiles = function (files, errFiles, ref) {
+        $scope.imageUploading = false;
         $scope.files = files;
         $scope.errFiles = errFiles;
         var i = 1;
@@ -130,7 +132,7 @@ AppEHR.controller('settingsFacility', ['$scope', '$rootScope', '$window', '$rout
             file.upload.then(function (response) {
                 //$timeout(function () {
                 $scope.image = file.result = response.data;
-                if(ref == undefined) $('#fileUploadedSuccess').modal('show');
+                if(ref == undefined) $scope.imageUploading = true;//$('#fileUploadedSuccess').modal('show');
                 else $scope.refAttachment = response.data.message;
                 if(files.length == i){
                     $scope.saveAndClose = false;
