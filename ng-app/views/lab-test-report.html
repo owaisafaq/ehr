@@ -8,7 +8,7 @@
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Number</label>
-                    <span class="txt-style-2 col-lg-12">{{ labTest.patient_id }}</span>
+                    <span class="txt-style-2 col-lg-12">P{{ labTest.patient_id }}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Age</label>
@@ -39,9 +39,9 @@
                     <span class="txt-style-3 pull-left text-uppercase">lab order</span>
                     <span class="txt-style-4 pull-left">{{ labTest.lab_order_id }}</span>
                     <span class="txt-style-3 pull-left text-uppercase">date of service</span>
-                    <span class="txt-style-4 pull-left">April 05, 2015</span>
+                    <span class="txt-style-4 pull-left">{{labTest.created_at}}</span>
                     <span class="txt-style-3 pull-left text-uppercase">Time</span>
-                    <span class="txt-style-4 pull-left">12:12</span>
+                    <span class="txt-style-4 pull-left">{{labTestTime}}</span>
                     <span class="txt-style-3 pull-left text-uppercase">Select Template</span>
                     <!--<div class="pull-left header-checkboxes">
                         <div class="checkbox checkbox-styled">
