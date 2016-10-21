@@ -774,7 +774,7 @@ class OrderController extends Controller
             ->leftJoin('lab_orders', 'lab_orders.id', '=', 'lab_order_tests.lab_order_id')
             ->leftJoin('patients', 'patients.id', '=', 'lab_orders.patient_id')
             ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
-            ->where('lab_tests.status', 1)
+            //->where('lab_tests.status', 1)
             ->where('lab_order_tests.id', $lab_test_id)
             ->first();
 
