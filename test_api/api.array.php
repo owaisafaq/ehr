@@ -1345,6 +1345,7 @@ $api->name = "Update Lab Test";
 $api->url = HOST . 'update_lab_test';
 $api->method = "POST";
 $api->params->lab_test = "1";
+$api->params->date_time = "2016-10-15 15:46";
 //$api->params->lab_order_test_id = "";
 $api->params->status = "in progress";
 $api->params->token = "123";
@@ -1896,7 +1897,7 @@ $api->name = "Get Templates";
 $api->url = HOST . 'get_templates';
 $api->method = "GET";
 $api->params->template_type = "1";
-//$api->params->category_id = "";
+$api->params->category_id = "";
 $api->params->token = "123435";
 
 
