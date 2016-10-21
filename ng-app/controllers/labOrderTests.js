@@ -83,13 +83,16 @@ AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routePar
 
     $scope.updateTestForm = function () { // updating Test Form Status
         //if (angular.equals({}, test) == false) {
-            console.log($scope.startTime, $scope.updateDate);
+            
+        $scope.startTime = $scope.startTime.split(' ');
+        $scope.startTime = $scope.startTime[0];    
+        console.log($scope.startTime, $scope.updateDate);
         $scope.hideLoader = 'show';
         $scope.updateTestBtn = true; // disabling submit button until request is complete
         updateTestStatus.save({ // sending data over updateTestStatus factory which will update Test Status
             token: $window.sessionStorage.token,
-            date_time: $scope.selectedTest.id,
-            date: $scope.updateDate + " " + $scope.startTime,
+            lab_test: $scope.selectedTest.id,
+            date_time: $scope.updateDate + " " + $scope.startTime,
             status: $('#cancelOrder2 .form-wizard-horizontal li.active .title').data('val')
         }, updateTestStatusSuccess, updateTestStatusFailure);
         $scope.testSelected($scope.selectedTest.id);
