@@ -457,7 +457,7 @@ Menu styling
 .custom-form textarea{
     width: 100%;
     height: 84px;
-    border:1px solid #edf1f5; 
+    border: 1px solid #d2d6d8;
     resize: none;
     padding-left: 10px;
     padding-top: 10px;

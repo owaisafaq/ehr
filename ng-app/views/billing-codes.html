@@ -140,8 +140,8 @@
             </div>
             <div class="modal-body">
                 <form class="custom-form" name="userForm1" ng-model="myForm" novalidate ng-submit="createBillingCode(billingCodeData);">
-                    <div class="row margin-bottom-xxl">
-                        <div class="alert {{messageType}}" role="alert" ng-show="message">
+                    <div class="row">
+                        <div class="alert {{messageType}} margin-bottom-xxl" role="alert" ng-show="message">
                             <i class="{{errorSymbol}}"></i> {{errorMessage}}
                         </div>
                     </div>
@@ -160,11 +160,7 @@
                             <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm1.code.$invalid]"  name="code" required  ng-model="billingCodeData.code" />
                             <p class="help-block PIValid" ng-show="submitted && userForm1.code.$error.required">Required</p>
                         </div>
-                    </div>
-                    <div class="row margin-bottom-xxl">
-                        
-                    </div>
-                    
+                    </div>                    
                      <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Charge</label>
@@ -184,21 +180,6 @@
                             <p class="help-block PIValid" ng-show="submitted && userForm1.category.$error.required">Required</p>
                         </div>
                      </div>
-                    <div class="row margin-bottom-xxl">
-
-                        
-
-                        <!-- <div class="col-lg-3">
-                            <label>Tax</label>
-                        </div>
-                        <div class="col-lg-3">
-                            <select class="form-control" ng-model="billingCodeData.tax" placeholder="Select" name="tax" ng-class="{true: 'error'}[submitted && userForm1.tax.$invalid]" required>
-                                <option value=""></option>
-                                <option ng-repeat="k in TaxRatesLists" value="{{ k.id }}">{{ k.name }} ({{ k.rate }})</option>
-                            </select>
-                            <p class="help-block PIValid" ng-show="submitted && userForm1.tax.$error.required">Required</p>
-                        </div> -->
-                        </div>
                     <div class="modal-footer">
                         <div class="row margin-bottom-xxl">
                             <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;" ng-disabled="submitted && userForm1.$invalid">Add</button>
