@@ -67,13 +67,16 @@ class ApiController extends Controller
             ->where('status',1)
             ->get();
 
+        foreach ($patients as $patient) {
+            $patient->patient_id = str_pad($patient->id, 7, '0', STR_PAD_LEFT);
+        }
+
         if (empty($patients)) {
             $patient = array(
                 "id" => '0',
                 "first_name" => "",
                 "last_name" => "",
                 );
-
             return response()->json(['status' => false, 'data' => $patient]);
         } else {
             return response()->json(['status' => true, 'data' => $patients]);
