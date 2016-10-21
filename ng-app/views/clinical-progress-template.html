@@ -30,6 +30,7 @@
                                         <th>Template Name</th>
                                         <th>Category</th>
                                         <th>Description</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -38,7 +39,9 @@
                                         <td>{{templateList.category}}</td>
                                         <td>
                                             <span>{{templateList.description}}</span>
-                                            <div class="billing_actions"><a href="javascript:;" class="setting-button"></a>
+                                        </td>
+                                        <td>
+                                             <div class="billing_actions"><a href="javascript:;" class="setting-button"></a>
                                                 <div class="tool-tip_popup">
                                                     <a href="javascript:;" ng-click="editMyTemplate(templateList.id)">Edit</a>
                                                     <a href="javascript:;" ng-click="templateDeleted(templateList.id)">Delete</a>
@@ -222,6 +225,7 @@
                                 <tr>
                                     <th>Category</th>
                                     <th>Description</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -229,7 +233,10 @@
                                     <td>{{category.name}}</td>
                                     <td>
                                         <span>{{category.description}}</span>
-                                        <div class="settings_actions"><a href="javascript:;" class="setting-button"></a>
+                                        
+                                    </td>
+                                    <td>
+                                        <div class="billing_actions"><a href="javascript:;" class="setting-button"></a>
                                             <div class="tool-tip_popup">
                                                 <!--<a href="javascript:;">View</a>-->
                                                 <a href="javascript:;" ng-click="openEditModal(category.id);">Edit</a>
