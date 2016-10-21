@@ -37,7 +37,7 @@
                         <table class="table table-striped no-margin table-custom table-custom_big billing_table">
                             <thead>
                                 <tr>
-                                    <th>Description</th>
+                                    <th>Name</th>
                                     <th>Code</th>
                                     <th>Charge</th>
                                     <th>Category</th>
@@ -155,11 +155,11 @@
                         </div>
                         </div>
                     <div class="row margin-bottom-xxl">
-                        <div class="col-lg-12">
-                            <label>Description</label>
+                        <div class="col-lg-3">
+                            <label>Name</label>
                         </div>
-                        <div class="col-lg-12">
-                            <textarea placeholder="Write Here..." name="description" ng-model="billingCodeData.description" ng-class="{true: 'error'}[submitted && userForm1.description.$invalid]" required></textarea>
+                        <div class="col-lg-9">
+                            <input type="text" name="description" ng-model="billingCodeData.description" ng-class="{true: 'error'}[submitted && userForm1.description.$invalid]" required />
                             <p class="help-block PIValid" ng-show="submitted && userForm1.description.$error.required">Required</p>
                         </div>
                     </div>
@@ -185,16 +185,6 @@
                             <p class="help-block PIValid" ng-show="submitted && userForm1.category.$error.required">Required</p>
                         </div>
 
-                        <div class="col-lg-3">
-                            <label>Tax</label>
-                        </div>
-                        <div class="col-lg-3">
-                            <select class="form-control" ng-model="billingCodeData.tax" placeholder="Select" name="tax" ng-class="{true: 'error'}[submitted && userForm1.tax.$invalid]" required>
-                                <option value=""></option>
-                                <option ng-repeat="k in TaxRatesLists" value="{{ k.id }}">{{ k.name }} ({{ k.rate }})</option>
-                            </select>
-                            <p class="help-block PIValid" ng-show="submitted && userForm1.tax.$error.required">Required</p>
-                        </div>
                         </div>
                     <div class="modal-footer">
                         <div class="row margin-bottom-xxl">
