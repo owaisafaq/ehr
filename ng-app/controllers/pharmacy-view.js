@@ -34,8 +34,8 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
 
         function prescriptionSuccess(res) {
             if(res.status == true){
-                console.log("all");
-                console.log(res);
+//                console.log("all");
+//                console.log(res);
                 $scope.patient_id = res.data.patient_id;
                 $scope.PrescriptionViews = res.data;
                 $scope.PrescriptionViewsGetId = res.data;
@@ -51,10 +51,10 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                 $scope.encounterID = $scope.prescription_data.visit_id;
                 $rootScope.loader = 'hide';
                 $scope.costArray = [];
-                console.log($scope.PrescriptionViews[0]);
+//                console.log($scope.PrescriptionViews[0]);
                 for(var i = 0; $scope.PrescriptionViews.length > i ; i++){
                     $scope.costArray[i] = parseInt($scope.PrescriptionViews[i].dispense) * parseInt($scope.PrescriptionViews[i].total_amount);
-                    console.log($scope.costArray[i], $scope.PrescriptionViews[i].dispense, $scope.PrescriptionViews[i].total_amount);
+//                    console.log($scope.costArray[i], $scope.PrescriptionViews[i].dispense, $scope.PrescriptionViews[i].total_amount);
                 }
             }
         }
@@ -139,8 +139,13 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         }
 
         $scope.calculateBalance = function (dispense, totalDispense, index, costarray) {
+//            console.log(costarray);
+//            console.log(index);
             if (totalDispense != undefined) {
                 $scope.PrescriptionViews[index].costArray = parseInt(dispense) + parseInt(totalDispense);
+//                $scope.Total[index] = parseInt(dispense) + parseInt(totalDispense);
+                console.log($scope.PrescriptionViews[index].costArray)
+//                   console.log($scope.Total[index]);
             }
             if (totalDispense == '') {
                 $scope.PrescriptionViews[index].costArray = '';
@@ -263,8 +268,8 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         $scope.allMedications = [];
         $scope.allPharmacies = [];
         function getAllMedicationsSuccess(res){
-            console.log(11112);
-            console.log(res);
+//            console.log(11112);
+//            console.log(res);
             if(res.status == true){
                 $scope.allMedications = res.data;
             }
@@ -280,8 +285,8 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
 
         function getpharmacySuccess(res){
             if(res.status == true){
-                console.log(1);
-                console.log(res);
+//                console.log(1);
+//                console.log(res);
                 $scope.allPharmacies = res.data.pharmacy;
             }
         }
@@ -367,7 +372,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         }
         GetPrescriptionSupplements.save({token: $window.sessionStorage.token}, getSupplementSuccess, getSupplementFailure);
         function getSupplementSuccess(res) {
-            console.log(res, "supp")
+//            console.log(res, "supp")
            $scope.getSupp = res.data;
         }
         function getSupplementFailure(res) {
@@ -376,7 +381,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         }
         GetMedications.save({token: $window.sessionStorage.token}, getMediSuccess, getMediFailure);
         function getMediSuccess(res) {
-            console.log(res, "drugs")
+//            console.log(res, "drugs")
            $scope.getDrugs = res.data;
         }
         function getMediFailure(res) {
@@ -388,7 +393,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
 
         function presSuccess(res){
             if(res.status == true){
-                console.log(res, 'lll');
+//                console.log(res, 'lll');
                 $('.showPdf').html("<iframe class='abc' src="+res.data+"></iframe>");
             }
         }
@@ -415,7 +420,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         DropDownData.get({token: $window.sessionStorage.token}, dropDownSuccess, dropDownFailed);
 
         function dropDownSuccess(res) {
-            console.log("drodowndata", res);
+//            console.log("drodowndata", res);
             if (res.status == true) {
                 angular.copy(res.data, $scope.dropDownData);
                 /*$.each($scope.dropDownData.relationships, function(key, value) {

@@ -3514,6 +3514,17 @@ Pagination
     background: #f6f8fd;
     text-align: center;
     line-height: 90px;
+    position: relative;
+}
+.logo-textStyle img{
+    position: absolute;
+     max-width: 231px;
+    max-height: 90px;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
 }
 .table-upper{
     display: flex;
