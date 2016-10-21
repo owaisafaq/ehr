@@ -140,6 +140,10 @@ AppEHR.controller('settingsLabs', ['$scope', '$rootScope', '$window', '$routePar
 			GetAllLabs.get({
 				token: $window.sessionStorage.token
 			}, GetAllLabsSuccess, GetAllLabsFailure);
+			GetAllLabs.get({
+				token: $window.sessionStorage.token,
+				offset: 0, limit: 0
+			}, GetLabsSuccess, GetLabsFailure);
 		} else {
 			$scope.hideLoader = "hide";
 			$scope.addLabBtn = false;
