@@ -3431,3 +3431,79 @@ AppEHR.factory("GetBillingWithDates", function ($resource) {
     };
     return hospitalData;
 });
+
+AppEHR.factory("GetAllUsers", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_all_users', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var Users = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return Users;
+});
+AppEHR.factory("GetUser", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_user', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var User = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return User;
+});
+AppEHR.factory("deleteUser", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'delete_user', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var deletedUser = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return deletedUser;
+});
+AppEHR.factory("addUser", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'register_user', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var addedUser = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return addedUser;
+});
+AppEHR.factory("editUser", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'update_user', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var updatedUser = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return updatedUser;
+});

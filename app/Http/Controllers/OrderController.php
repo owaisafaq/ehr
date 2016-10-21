@@ -132,7 +132,7 @@ class OrderController extends Controller
 
             $lab_orders->ordered_by = 'Dr Smith';
             $lab_orders->handled_by = 'James';
-            $lab_orders->total_cost = 0;
+            $lab_orders->total_cost = 50;
             //$lab_orders->test_name = 'Blood Test';
 
             if ($lab_orders->sex == 1) {
