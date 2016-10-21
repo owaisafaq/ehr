@@ -61,11 +61,15 @@ class ApiController extends Controller
             ->select(DB::raw('id,first_name,last_name'))
             ->where( function ($q) use ($name) {
                 $q->where('first_name','LIKE',"$name%")
-                    ->orWhere('id','LIKE',"%$name%");
+                    ->orWhere('id','LIKE',"$name%");
                         })
             //->where('hospital_plan',1)
             ->where('status',1)
             ->get();
+
+        foreach ($patients as $patient) {
+            $patient->patient_id = str_pad($patient->id, 7, '0', STR_PAD_LEFT);
+        }
 
         if (empty($patients)) {
             $patient = array(
@@ -73,7 +77,6 @@ class ApiController extends Controller
                 "first_name" => "",
                 "last_name" => "",
                 );
-
             return response()->json(['status' => false, 'data' => $patient]);
         } else {
             return response()->json(['status' => true, 'data' => $patients]);
@@ -3128,8 +3131,8 @@ class ApiController extends Controller
             ->leftJoin('template_types', 'template_types.id', '=', 'template_categories.template_type')
             ->select(DB::raw('templates.id,templates.name,templates.description,template_categories.name as category,templates.template'))
             ->where('templates.status', 1)
-          //  ->where('template_categories.template_type', $template_type)
-            ->where('templates.category_id', $category_id)
+            ->where('template_categories.template_type', $template_type)
+             ->where('templates.category_id', $category_id)
             ->get();
 
         return response()->json(['status' => true, 'data' => $templates]);
@@ -3459,8 +3462,10 @@ class ApiController extends Controller
                         'medication' => $patient_prescription->medication,
                         'sig' => $patient_prescription->sig,
                         'dispense' => $patient_prescription->dispense,
+                        'total_dispense' => $patient_prescription->total_dispense,
                         'reffills' => $patient_prescription->reffills,
                         'pharmacy' => $patient_prescription->pharmacy_id,
+                        'amount' => $patient_prescription->amount,
                         'created_at' => $currentdatetime
                     ]
                 );
@@ -3603,7 +3608,7 @@ class ApiController extends Controller
         $prescription_id = $request->input('precription_id');
         $prescriptions = DB::table('patient_prescription')
             ->leftJoin('patient_prescription_medicine', 'patient_prescription_medicine.prescription_id', '=', 'patient_prescription.id')
-            ->select(DB::raw('*,patient_prescription_medicine.id as prescribe_medication_id,medication_status,patient_prescription_medicine.medication as medication_id'))
+            ->select(DB::raw('*,patient_prescription_medicine.id as prescribe_medication_id,medication_status,patient_prescription_medicine.medication as medication_id,patient_prescription_medicine.amount'))
             ->where('patient_prescription.id', $prescription_id)
             ->where('patient_prescription.status', 1)
             ->where('patient_prescription_medicine.status', 1)
