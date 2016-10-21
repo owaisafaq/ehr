@@ -375,7 +375,7 @@ class OrderController extends Controller
     public function get_lab_order_history(Request $request)
     {
         $orders = DB::table('lab_orders')
-            ->select(DB::raw('lab_orders.id,lab_orders.patient_id,patients.first_name as patient_name,lab_orders.order_status,labs.name as lab_name,patients.age,patients.marital_status,patients.sex,maritial_status.name as marital_status, lab_orders.created_at,lab_orders.updated_at'))
+            ->select(DB::raw('lab_orders.id,lab_orders.patient_id,patients.first_name as patient_name,lab_orders.order_status,labs.name as lab_name,patients.age,patients.marital_status,patients.sex,maritial_status.name as marital_status,lab_order_tests.created_at,lab_orders.updated_at'))
             ->leftJoin('patients', 'lab_orders.patient_id', '=', 'patients.id')
             ->leftJoin('labs', 'labs.id', '=', 'lab_orders.lab')
             ->leftJoin('lab_order_tests', 'lab_order_tests.lab_order_id', '=', 'lab_orders.id')
@@ -610,7 +610,7 @@ class OrderController extends Controller
 
         DB::table('lab_order_tests')
             ->where('id', $lab_order_test_id)
-            ->update(array('test_status' => $status, 'updated_at' => $currentdatetime));
+            ->update(array('test_status' => $status, 'created_at' => $currentdatetime));
 
         return response()->json(['status' => true, 'message' => 'Lab Test Updated Successfully']);
 
@@ -769,7 +769,7 @@ class OrderController extends Controller
         $lab_test_id = $request->input('lab_test_id');
 
         $lab_test = DB::table('lab_tests')
-            ->select('lab_order_tests.id','lab_tests.name','lab_tests.lonic_code','lab_tests.cost','lab_tests.lab','lab_order_tests.test_status', 'lab_order_tests.lab_order_id', 'patients.first_name', 'patients.last_name', 'patients.id as patient_id', 'patients.age', 'patients.sex', 'maritial_status.name as marital_status','lab_orders.visit_id','lab_orders.created_at')
+            ->select('lab_order_tests.id','lab_tests.name','lab_tests.lonic_code','lab_tests.cost','lab_tests.lab','lab_order_tests.test_status', 'lab_order_tests.lab_order_id', 'patients.first_name', 'patients.last_name', 'patients.id as patient_id', 'patients.age', 'patients.sex', 'maritial_status.name as marital_status','lab_orders.visit_id','lab_order_tests.created_at')
             ->leftJoin('lab_order_tests', 'lab_order_tests.lab_test', '=', 'lab_tests.id')
             ->leftJoin('lab_orders', 'lab_orders.id', '=', 'lab_order_tests.lab_order_id')
             ->leftJoin('patients', 'patients.id', '=', 'lab_orders.patient_id')
