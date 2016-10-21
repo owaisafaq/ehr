@@ -61,7 +61,7 @@ class ApiController extends Controller
             ->select(DB::raw('id,first_name,last_name'))
             ->where( function ($q) use ($name) {
                 $q->where('first_name','LIKE',"$name%")
-                    ->orWhere('id','LIKE',"%$name%");
+                    ->orWhere('id','LIKE',"$name%");
                         })
             //->where('hospital_plan',1)
             ->where('status',1)
