@@ -53,7 +53,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                 $scope.costArray = [];
 //                console.log($scope.PrescriptionViews[0]);
                 for(var i = 0; $scope.PrescriptionViews.length > i ; i++){
-                    $scope.costArray[i] = parseInt($scope.PrescriptionViews[i].dispense) * parseInt($scope.PrescriptionViews[i].total_amount);
+                    $scope.costArray[i] = parseInt($scope.PrescriptionViews[i].dispense) * parseInt($scope.PrescriptionViews[i].amount);
 //                    console.log($scope.costArray[i], $scope.PrescriptionViews[i].dispense, $scope.PrescriptionViews[i].total_amount);
                 }
             }
@@ -108,7 +108,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                 // console.log($scope.prescriptionPharmacyNotes)
             for (var i = 0; i < $scope.PrescriptionViews.length; i++) {
                 $scope.PrescriptionViewsCopy[i].note_of_pharmacy = $scope.prescriptionPharmacyNotes;
-                $scope.PrescriptionViewsCopy[i].cost = $scope.PrescriptionViews[i].cost * $scope.PrescriptionViews[i].total_dispensed;
+                $scope.PrescriptionViewsCopy[i].cost = $scope.PrescriptionViews[i].cost * $scope.PrescriptionViews[i].total_dispense;
                 $scope.PrescriptionViewsCopy[i].pharmacy_id = $scope.pharmacyID;
 //                $scope.PrescriptionViewsCopy[i].medication = $scope.medicationsDataPush[i].medication;
                 //$scope.PrescriptionViewsCopy[i].pharmacy = $scope.pharmacyID;
@@ -116,11 +116,13 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                 delete $scope.PrescriptionViewsCopy[i].medication
                 delete $scope.PrescriptionViewsCopy[i].created_at;
                 delete $scope.PrescriptionViewsCopy[i].notes;
-                delete $scope.PrescriptionViewsCopy[i].total_dispensed;
+                delete $scope.PrescriptionViewsCopy[i].total_dispense;
                 delete $scope.PrescriptionViewsCopy[i].balance;
                 delete $scope.PrescriptionViewsCopy[i].cost;
+                delete $scope.PrescriptionViewsCopy[i].total_amount;
                 
                 $scope.PrescriptionViewsCopy[i].medication = $scope.PrescriptionViewsGetId[i].medication_id;
+                $scope.PrescriptionViewsCopy[i].total_dispense = $scope.PrescriptionViews[i].total_dispense;
             }
 
             var addPrescrptn = {
@@ -142,9 +144,10 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
 //            console.log(costarray);
 //            console.log(index);
             if (totalDispense != undefined) {
-                $scope.PrescriptionViews[index].costArray = parseInt(dispense) + parseInt(totalDispense);
+                $scope.PrescriptionViews[index].amount = parseInt(dispense) + parseInt(totalDispense);
 //                $scope.Total[index] = parseInt(dispense) + parseInt(totalDispense);
-                console.log($scope.PrescriptionViews[index].costArray)
+//console.log($scope.PrescriptionView)
+                console.log($scope.PrescriptionView.amount)
 //                   console.log($scope.Total[index]);
             }
             if (totalDispense == '') {
