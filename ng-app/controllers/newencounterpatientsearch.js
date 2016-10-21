@@ -795,29 +795,41 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
             console.log(error);
         }
         $scope.Calculatebmi = function () {
-            $scope.vital.result = ($scope.vital.weight) / (($scope.vital.height / 100) * ($scope.vital.height / 100));
-            console.log("aasdas")
+        	if($scope.vital.weight != undefined && $scope.vital.height != undefined){
+	            $scope.vital.result = ($scope.vital.weight) / (($scope.vital.height / 100) * ($scope.vital.height / 100));
+	            $scope.vital.result = parseFloat($scope.vital.result).toFixed(2);
+	            console.log("aasdas");
+	        }
         }
         $scope.GetTempcVal = function () {
             $scope.vital.temperaturef = ($scope.vital.temperaturec - 32) * (5 / 9);
+            $scope.vital.temperaturef = parseFloat($scope.vital.temperaturef).toFixed(2);
+            console.log($scope.vital.temperaturef);
+            if($('#tempc').val() == ''){
+        		$scope.vital.temperaturef = '';
+        	}
         }
         $scope.GetTempfVal = function () {
-            $scope.vital.temperaturec = ($scope.vital.temperaturef * (9 / 5)) + 32
 
+            $scope.vital.temperaturec = ($scope.vital.temperaturec * (9 / 5)) + 32
+            $scope.vital.temperaturec = parseFloat($scope.vital.temperaturec).toFixed(2);
+            if($('#tempf').val() == ''){
+        		$scope.vital.temperaturec = '';
+        	}
         }
         $scope.parseFloat = function (val) {
             return isNaN(parseFloat(val)) ? 0 : parseFloat(val);
         }
         
 
-$scope.search = function(item){ 
-        if($scope.listsearch == undefined){
-            return true;
-        }else{
-            if(item.last_name.toLowerCase().indexOf($scope.listsearch.toLowerCase()) != -1 || item.first_name.toLowerCase().indexOf($scope.listsearch.toLowerCase()) != -1){
-                return true;
-            }
-        }
-    };
+		$scope.search = function(item){ 
+	        if($scope.listsearch == undefined){
+	            return true;
+	        }else{
+	            if(item.last_name.toLowerCase().indexOf($scope.listsearch.toLowerCase()) != -1 || item.first_name.toLowerCase().indexOf($scope.listsearch.toLowerCase()) != -1){
+	                return true;
+	            }
+	        }
+	    };
 
 }]);
