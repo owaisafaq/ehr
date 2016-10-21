@@ -3462,6 +3462,7 @@ class ApiController extends Controller
                         'medication' => $patient_prescription->medication,
                         'sig' => $patient_prescription->sig,
                         'dispense' => $patient_prescription->dispense,
+                        'total_dispense' => $patient_prescription->total_dispense,
                         'reffills' => $patient_prescription->reffills,
                         'pharmacy' => $patient_prescription->pharmacy_id,
                         'amount' => $patient_prescription->amount,
@@ -3505,7 +3506,6 @@ class ApiController extends Controller
                         'dispense' => $patient_prescription->dispense,
                         'reffills' => $patient_prescription->reffills,
                         'pharmacy' => $patient_prescription->pharmacy,
-                        'amount' => $patient_prescription->amount,
                         'created_at' => $currentdatetime
                     ]
                 );

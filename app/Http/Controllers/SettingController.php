@@ -452,10 +452,30 @@ class SettingController extends Controller
     public function add_role_group(Request $request){
 
         $name= $request->input('name');
+        $role_rights = $request->input('role_rights');
 
         DB::table('roles')->insert(['name'=> $name,'created_at'=> date("Y-m-d  H:i:s")]);
 
-        $role_rights = $request->input('role_rights');
+        $role_id = DB::getPdo()->lastInsertId();
+
+        $rights = json_decode($role_rights);
+
+
+        foreach ($rights as $right) {
+            DB::table('role_rights')->insert(
+                ['role_id'=>$role_id,
+                    'context_id' => $right->context_id,
+                    'add_right' => $right->is_add,
+                    'update_right' => $right->is_update,
+                    'delete_right' => $right->is_delete,
+                    'view_right' => $right->is_read,
+                    'created_at' => date("Y-m-d  H:i:s")
+                ]
+            );
+        }
+
+        return response()->json(['status'=> true,'message'=> 'New Role Group Created Successfully']);
+
 
     }
 
