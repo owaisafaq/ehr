@@ -145,6 +145,8 @@ class OrderController extends Controller
 
         }
         foreach ($orders as $key => $order_tests) {
+            $order_tests->id = ltrim($order_tests->id,'L');
+
             $tests = DB::table('lab_tests')
                 ->select(DB::raw('lab_tests.name as test_name,lab_tests.cost,priority'))
                 ->leftJoin('lab_order_tests', 'lab_order_tests.lab_test', '=', 'lab_tests.id')
@@ -535,6 +537,14 @@ class OrderController extends Controller
 
         }
 
+        $amount = DB::table('lab_tests')
+            ->select(DB::raw('IFNULL(SUM(lab_tests.cost),0) as cost,count(lab_order_tests.lab_test) as totaltests'))
+            ->leftJoin('lab_order_tests', 'lab_order_tests.lab_test', '=', 'lab_tests.id')
+            ->where('lab_order_tests.lab_order_id', $order_id)
+            ->first();
+
+        $total_amount = $amount->cost;
+
         $bill = DB::table('billing')
             ->select(DB::raw('id'))
             ->where('encounter_id', $visit_id)
@@ -550,8 +560,8 @@ class OrderController extends Controller
                     ['patient_id' => $patient_id,
                         'bill_id' => $bill_id,
                         'description' => 'This invoice is generated for Lab Orders',
-                        'amount' => 50,
-                        'due'=> 50,
+                        'amount' => $total_amount,
+                        'due'=> $total_amount,
                         'invoice_status' => 'pending',
                         'created_at' => $currentdatetime
                     ]
