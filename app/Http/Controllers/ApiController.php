@@ -757,7 +757,7 @@ class ApiController extends Controller
                 ->count();
         }
 
-        return response()->json(['data' => $users,'count'=>$count]);
+        return response()->json(['status' => true,'data' => $users,'count'=>$count]);
 
     }
 
@@ -771,7 +771,7 @@ class ApiController extends Controller
             ->where('id', $user_id)
             ->first();
 
-        return response()->json(['data' => $user]);
+        return response()->json(['status' => true,'data' => $user]);
     }
 
     public function user_login(Request $request)

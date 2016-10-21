@@ -120,6 +120,7 @@ AppEHR.controller('settingsFacility', ['$scope', '$rootScope', '$window', '$rout
         $scope.files = files;
         $scope.errFiles = errFiles;
         var i = 1;
+        $scope.imageUploading = false;
         angular.forEach(files, function (file) {
             file.upload = Upload.upload({
                 url: serverPath + "upload_hospital_image",
@@ -140,6 +141,7 @@ AppEHR.controller('settingsFacility', ['$scope', '$rootScope', '$window', '$rout
                 if (response.status > 0)
                     $scope.errorMsg = response.status + ': ' + response.data;
             }, function (evt) {
+                $scope.imageUploading = true;
                 file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
             });
         });
