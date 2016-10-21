@@ -805,20 +805,17 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
             $scope.vital.temperaturef = ($scope.vital.temperaturec - 32) * (5 / 9);
             $scope.vital.temperaturef = parseFloat($scope.vital.temperaturef).toFixed(2);
             console.log($scope.vital.temperaturef);
-            if($scope.vital.temperaturef == '' || $scope.vital.temperaturef == undefined){
-            	$scope.vital.temperaturec = '';
-            	console.log($scope.vital.temperaturef, 'check');
-            }
+            if($('#tempc').val() == ''){
+        		$scope.vital.temperaturef = '';
+        	}
         }
         $scope.GetTempfVal = function () {
-        	if($('#tempf').val() == ''){
-        		alert();
-        	}
+
             $scope.vital.temperaturec = ($scope.vital.temperaturec * (9 / 5)) + 32
             $scope.vital.temperaturec = parseFloat($scope.vital.temperaturec).toFixed(2);
-            if($scope.vital.temperaturec == ''){
-            	$scope.vital.temperaturef = '';
-            }
+            if($('#tempf').val() == ''){
+        		$scope.vital.temperaturec = '';
+        	}
         }
         $scope.parseFloat = function (val) {
             return isNaN(parseFloat(val)) ? 0 : parseFloat(val);

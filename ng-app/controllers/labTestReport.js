@@ -18,8 +18,31 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', '$routeParams', '$wi
 
     function getLabOrderInfoSuccess(res){ // on success
         $scope.labTest = res.data;
+        console.log(res.data,'fyrt');
+        if($scope.labTest.created_at != undefined || $scope.labTest.created_at != ''){
+            /*$scope.date = new Date();
+            var month = new Array();
+            month[0] = "January";
+            month[1] = "February";
+            month[2] = "March";
+            month[3] = "April";
+            month[4] = "May";
+            month[5] = "June";
+            month[6] = "July";
+            month[7] = "August";
+            month[8] = "September";
+            month[9] = "October";
+            month[10] = "November";
+            month[11] = "December";*/
+            var dateAndTime = $scope.labTest.created_at.split(' ');
+            //var date = dateAndTime[0].split('-');
+            //var day = date[2]; var month1 = date[1]; var year = date[0];
+            //$scope.labTest.created_at =  month[parseInt(month1)] + " " + day + ", " + year;
+            $scope.labTest.created_at = dateAndTime[0];
+            $scope.labTestTime = dateAndTime[1];
+        }
         $scope.template_id = res.template_id;
-        //console.log(res,'fyrt');
+        
         $scope.visit_id = res.data.visit_id;
         CheckLabOrderStatus.save({
             token: $window.sessionStorage.token,

@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-lg-1">
                     <label class="txt-style-1 text-uppercase col-lg-12 adjust-2">Age</label>
-                    <span class="txt-style-2 col-lg-12">{{displayInfo.age}} Years</span>
+                    <span class="txt-style-2 col-lg-12">{{displayInfo.age}}</span>
                 </div>
                 <div class="col-lg-1">
                     <label class="txt-style-1 text-uppercase col-lg-12">Sex</label>
@@ -776,7 +776,7 @@
                                     <label>temperature (c)</label>
                                 </div>
                                 <div class="col-lg-6 margin-bottom-xxl">
-                                    <input type="text" placeholder="temperature (c)" ng-model="vital.temperaturec" numbers-only ng-change="GetTempcVal()"/>
+                                    <input type="text" placeholder="temperature (c)" ng-model="vital.temperaturec" numbers-only ng-change="GetTempcVal()" id="tempc"/>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>temperature (f)</label>
