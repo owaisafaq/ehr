@@ -77,11 +77,17 @@ AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routePa
 	}
 
 	$scope.createBillingCode = function (billingCodeData){
+            var val = billingCodeData.charge;
+            var myString = val.substr(val.indexOf(".") + 1)
+            if(myString == ""){
+                val = val + "00"
+            }
+            
 		addBillingCode.save({
 			token : $window.sessionStorage.token,
             code : billingCodeData.code,
             description : billingCodeData.description,
-            charge : billingCodeData.charge,
+            charge : val,
             category_id : billingCodeData.category_id,
             tax : 0//billingCodeData.tax
 		},addBillingCodeSuccess,addBillingCodeFailure);

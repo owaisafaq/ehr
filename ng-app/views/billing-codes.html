@@ -166,7 +166,7 @@
                             <label>Charge</label>
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm1.charge.$invalid]" numbers-only name="charge" required  ng-model="billingCodeData.charge" />
+                            <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm1.charge.$invalid]" name="charge" required  ng-model="billingCodeData.charge" class="maskCost" />
                             <p class="help-block PIValid" ng-show="submitted && userForm1.charge.$error.required">Required</p>
                         </div>
                         <div class="col-lg-3">

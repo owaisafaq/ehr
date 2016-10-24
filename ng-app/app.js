@@ -810,6 +810,8 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
         $('.select_searchFields').select2();
         $(".maskPhone").inputmask("99-9999999");
         $(".maskMobile").inputmask("99999999999");
+//        $(".maskCost").inputmask({mask: "9999.99", numericInput: true,placeholder:" ", rightAlignNumerics: false,maxlength: false,greedy:false});
+        $(".maskCost").inputmask({mask:"9{1,8}.99",placeholder:" ", rightAlignNumerics: true});
         $('.timepicker').timepicker();
         $(".search-ajax").select2({
             placeholder: 'Select Patient',
