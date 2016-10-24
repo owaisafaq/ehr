@@ -37,7 +37,7 @@ $app->group(['prefix' => 'api'], function () use ($app) {
     $app->post('upload_hospital_image', 'App\Http\Controllers\SettingController@upload_hospital_image');
     $app->options('upload_hospital_image','App\Http\Controllers\SettingController@optupload_hospital_image');
 });
-$app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($app) {
+$app->group(['prefix'=> 'api','middleware'=>['jwt.auth', 'App\Http\Middleware\CheckRoles']], function () use ($app) {
 
 
     $app->post('register_patient', 'App\Http\Controllers\ApiController@register_patient');
@@ -229,7 +229,7 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
      $app->post('edit_patient_bed','App\Http\Controllers\OtherController@edit_patient_bed');
 
 });
-$app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($app) {
+$app->group(['prefix' => 'api',['jwt.auth','App\Http\Middleware\CheckRoles']], function () use ($app) {
     $app->post('create_inventory_category','App\Http\Controllers\InventoryAPIController@create_category');
     $app->post('update_inventory_category','App\Http\Controllers\InventoryAPIController@update_category');
     $app->get('get_inventory_category','App\Http\Controllers\InventoryAPIController@get_categories');
@@ -389,8 +389,13 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->get('get_all_contexts','App\Http\Controllers\SettingController@get_all_contexts');
     $app->post('add_role_group','App\Http\Controllers\SettingController@add_role_group');
     $app->get('get_roles','App\Http\Controllers\SettingController@get_roles');
-    $app->post('delete_role','App\Http\Controllers\SettingController@delete_role');
+   // $app->post('delete_role','App\Http\Controllers\SettingController@delete_role');
     $app->get('get_user_role','App\Http\Controllers\SettingController@get_user_role');
 
 
 });
+
+/*$app->group(['prefix' => 'api','middleware' => ['jwt.auth', 'App\Http\Middleware\CheckRoles']], function () use ($app) {
+    $app->post('delete_role','App\Http\Controllers\SettingController@delete_role');
+
+});*/
