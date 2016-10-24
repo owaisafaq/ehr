@@ -29,7 +29,50 @@ class CheckRoles {
 
         $method_name=$request->segment(2);
 
-        $user_id = Auth::user()->id;
+        $context_method = DB::table('context_methods')
+                         ->select(DB::raw('context_id'))
+                         ->where('name',$method_name)
+                         ->first();
+
+        if (empty($context_method)) {
+            return response()->json(['status' => false, 'message' => "No Role Assigned to the User", 'error_code' => 500]);
+        }
+
+        else{
+            $context_id = $context_method->context_id;
+
+            $user_id = Auth::user()->id;
+
+            $role_id = DB::table('users')
+                ->select(DB::raw('role_id'))
+                ->where('id', $user_id)
+                ->first();
+
+            $role_id = $role_id->role_id;
+
+            $role_rights = DB::table('role_rights')
+                ->select(DB::raw('*'))
+                ->where('role_id', $role_id)
+                ->get();
+
+            $is_valid = 0;
+
+            foreach($role_rights as $rights){
+
+                if($rights->context_id == $context_id){
+                    $is_valid++;
+                    break;
+                }
+            }
+
+            if($is_valid>0){
+                return $next($request);
+            }else{
+                return response()->json(['status'=>false,'message'=>"This Right is not assigned to this User Role",'error_code'=>500]);
+            }
+
+        }
+/*        $user_id = Auth::user()->id;
 
         $role_id = DB::table('users')
             ->select(DB::raw('role_id'))
@@ -48,11 +91,11 @@ class CheckRoles {
                  ->count();
 
             if($count<1){
-                return response()->json(['status'=>false,'message'=>"No Right Assigned to the Given User Role",'error_code'=>500]);
+                return response()->json(['status'=>false,'message'=>"This Right is not assigned to this User Role",'error_code'=>500]);
             }
 
             return $next($request);
-        }
+        }*/
 
     }
 

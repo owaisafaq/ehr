@@ -822,9 +822,12 @@ class ApiController extends Controller
 
             $obj = new  \stdClass();
             foreach ($user_roles as $roles) {
-                $context = str_replace(' ', '_', $roles->context);
-                $obj->{$context} = $roles;
+                $context = str_replace(array( '(', ')','/' ), '', $roles->context);
+                $context_1 = str_replace(' ','_',$context);
+                $obj->{$context_1} = $roles;
             }
+
+
 
             if ($user_status->user_status != 'active') {
                 return response()->json(['status' => false, 'message' => 'This user is not active']);
