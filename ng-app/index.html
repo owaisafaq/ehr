@@ -120,8 +120,6 @@
                             </a>
                         </li><!--end /menu-li -->
                         <!-- END DASHBOARD -->
-
-                        
                         <!-- BEGIN DASHBOARD -->
                         <!-- <li>
                             <a href="../../html/layouts/builder.html" >
@@ -200,20 +198,20 @@
                             </a>
                             <ul ng-hide="ROLES.Patient == undefined">
                                 <li ng-hide="ROLES.Patient == undefined"><a href="#/settings"><span class="title">Settings Dashboard</span></a></li>
-                                <li ng-hide="ROLES.Patient == undefined"><a href="#/settings-users"><span class="title">User Management</span></a></li>
-                                <li ng-hide="ROLES.Patient == undefined"><a href="#/settings-groups"><span class="title">Roles Management</span></a></li>
+                                <li ng-hide="ROLES.Users == undefined"><a href="#/settings-users"><span class="title">User Management</span></a></li>
+                                <li ng-hide="ROLES.Roles == undefined"><a href="#/settings-groups"><span class="title">Roles Management</span></a></li>
                                 <li ng-hide="ROLES.Patient == undefined" class="gui-folder"><a><span class="title">Templates</span></a>
                                     <ul>
                                         <li ng-hide="ROLES.Clinical_notes_templates == undefined"><a href="#/clinical-progress-template"><span class="title">Clinical note templates</span></a></li>
                                         <li ng-hide="ROLES.Lab_order_templates == undefined"><a href="#/templates"><span class="title">Lab order templates</span></a></li>
                                     </ul>
                                 </li>
-                                <li ng-hide="ROLES.Patient == undefined"><a href="#/billing-codes"><span class="title">Billing codes</span></a></li>
-                                <li ng-hide="ROLES.Patient == undefined"><a href="#/settings-tax-rates"><span class="title">Tax rates</span></a></li>
+                                <li ng-hide="ROLES.Billing_code == undefined"><a href="#/billing-codes"><span class="title">Billing codes</span></a></li>
+                                <li ng-hide="ROLES.Tax_rates == undefined"><a href="#/settings-tax-rates"><span class="title">Tax rates</span></a></li>
                                 <li ng-hide="ROLES.Inventory == undefined"><a href="#/inventory"><span class="title">Inventory management</span></a></li>
                                 <li ng-hide="ROLES.Pharmacy == undefined"><a href="#/pharmacy"><span class="title">Pharmacy management</span></a></li>
-                                <li ng-hide="ROLES.Patient == undefined"><a href="#/settings-labs"><span class="title">Lab management</span></a></li>
-                                <li ng-hide="ROLES.Patient == undefined"><a href="#/settings-facility"><span class="title">Facility management</span></a></li>
+                                <li ng-hide="ROLES.Labs == undefined"><a href="#/settings-labs"><span class="title">Lab management</span></a></li>
+                                <li ng-hide="ROLES.Facility == undefined && ROLES.Specialties == undefined"><a href="#/settings-facility"><span class="title">Facility management</span></a></li>
                             </ul>
                         </li>
                         

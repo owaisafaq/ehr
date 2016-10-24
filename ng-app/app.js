@@ -549,7 +549,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', function 
                     redirectTo: '/dashboard'
                 });
     }]);
-AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData, $timeout) {
+AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData, $timeout, $routeParams) {
     if (sessionStorage.length == 0) {
         //console.log(1111111111111111);
 //            var path = $location.$$path;
@@ -559,7 +559,7 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
 //        } else {
         $location.path("login");
     }
-//    $rootScope.ROLES = JSON.parse($window.sessionStorage.roles);
+    $rootScope.ROLES = JSON.parse($window.sessionStorage.roles);
     console.log($rootScope.ROLES);
     $rootScope.RolesAccess = function(msg){
         $rootScope.rolesAccessMsg = msg;
@@ -734,9 +734,13 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
         $rootScope.loginCheck = $location.$$path == '/login' || $location.$$path == '/' ? true : false;
         if ($window.sessionStorage.email != undefined && $window.sessionStorage.email != 'undefined' && $window.sessionStorage.token != undefined && window.sessionStorage.token != 'undefined' && $window.sessionStorage.role_id != undefined && window.sessionStorage.role_id != 'undefined') {
             var path = $location.$$path;
+            //console.log($rootScope.ROLES, 'path');
             if ((path == "/login" || path == "/") && path != undefined) {
                 $location.path("dashboard");
-            }
+            }/*else if(path.slice(0, -9) == "/patient-summary-demographics" && $rootScope.ROLES.Patient_records_Summary == undefined){
+                $rootScope.RolesAccess('No Role Assigned to the User');
+                $location.path("dashboard");
+            }*/
         } else $location.path("login");
         //console.log("here")
         //console.log(localStorage.getItem('sessionStorage'))

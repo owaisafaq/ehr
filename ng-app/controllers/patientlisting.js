@@ -72,7 +72,6 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
 
         function GetAllPatientsSuccess(res) {
             $rootScope.loader = "hide";
-            $rootScope.RolesAccess(res.message);
             if (res.status == true) {
                 if(res.data.length == 0){
                     $('#noRecordFound').modal('show');
