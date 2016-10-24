@@ -520,7 +520,22 @@ class SettingController extends Controller
 
     public function get_user_role(Request $request){
         $role_id = $request->input('role_id');
-        dd($role_id);
+        $user_roles = DB::table('users')
+            ->Join('roles', 'users.role_id', '=', 'roles.id')
+            ->join('role_rights', 'roles.id', '=', 'role_rights.role_id')
+            ->join('contexts', 'role_rights.context_id', '=', 'contexts.id')
+            ->select(DB::raw('roles.name,contexts.name as context,role_rights.add_right,role_rights.update_right,role_rights.delete_right,role_rights.view_right'))
+            ->where('roles.id', $role_id)
+            ->where('roles.status', 1)
+            ->get();
+
+        $obj = new  \stdClass();
+        foreach ($user_roles as $roles) {
+            $obj->{$roles->context} = $roles;
+        }
+
+        return response()->json(['status' => true,'data'=>$obj]);
+
     }
 
 }
