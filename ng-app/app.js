@@ -559,7 +559,7 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
 //        } else {
         $location.path("login");
     }
-    $rootScope.ROLES = JSON.parse($window.sessionStorage.roles);
+//    $rootScope.ROLES = JSON.parse($window.sessionStorage.roles);
     console.log($rootScope.ROLES);
     $rootScope.RolesAccess = function(msg){
         $rootScope.rolesAccessMsg = msg;
