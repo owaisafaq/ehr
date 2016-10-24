@@ -72,8 +72,8 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
 
         function GetAllPatientsSuccess(res) {
             $rootScope.loader = "hide";
+            $rootScope.RolesAccess(res.message);
             if (res.status == true) {
-                $rootScope.RolesAccess(res.msg);
                 if(res.data.length == 0){
                     $('#noRecordFound').modal('show');
                     return true;
@@ -82,8 +82,9 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
                 $scope.patientLists = [];
                 $scope.patientLists = res.data;
                 $scope.patientCount = res.count;
-            }else if(res.error == 1){
-                RolesAccess(res.msg);
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
 
         }
@@ -241,8 +242,10 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
                 $scope.errorSymbol = "fa fa-check";// 
                 $scope.message = true;
                 setTimeout(function() {$('#simpleModal1').modal('hide');}, 1000);
-                
+            }else if(res.error_code == 500){
+                RolesAccess(res.msg);
             }
+
         }
 
         function checkoutFailure(error){
@@ -274,6 +277,8 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
                         token: $window.sessionStorage.token,
                         offset: $scope.offset, limit: $scope.itemsPerPage
                     }, GetAllPatientsSuccess, GetAllPatientsFailure);
+                }else if(res.error_code == 500){
+                    RolesAccess(res.msg);
                 }
             }
 
