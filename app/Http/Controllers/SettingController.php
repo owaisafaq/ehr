@@ -518,4 +518,9 @@ class SettingController extends Controller
 
     }
 
+    public function get_user_role(Request $request){
+        $role_id = $request->input('role_id');
+        dd($role_id);
+    }
+
 }

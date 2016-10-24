@@ -3414,4 +3414,15 @@ $api->params->token = "123";
 $api_arr [] = $api;
 
 
+//Get User Role
+$api = new api();
+$api->name = "Get User Role";
+$api->url = HOST.'get_user_role';
+$api->method = "GET";
+$api->params->role_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
 
