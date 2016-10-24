@@ -37,7 +37,7 @@ $app->group(['prefix' => 'api'], function () use ($app) {
     $app->post('upload_hospital_image', 'App\Http\Controllers\SettingController@upload_hospital_image');
     $app->options('upload_hospital_image','App\Http\Controllers\SettingController@optupload_hospital_image');
 });
-$app->group(['prefix'=> 'api','middleware'=>['jwt.auth', 'App\Http\Middleware\CheckRoles']], function () use ($app) {
+$app->group(['prefix'=> 'api','middleware'=>['jwt.auth','App\Http\Middleware\CheckRoles']], function () use ($app) {
 
 
     $app->post('register_patient', 'App\Http\Controllers\ApiController@register_patient');
@@ -390,13 +390,13 @@ $app->group(['prefix' => 'api',['jwt.auth','App\Http\Middleware\CheckRoles']], f
     $app->post('add_role_group','App\Http\Controllers\SettingController@add_role_group');
     $app->post('update_role_group','App\Http\Controllers\SettingController@update_role_group');
     $app->get('get_roles','App\Http\Controllers\SettingController@get_roles');
-    $app->post('delete_role','App\Http\Controllers\SettingController@delete_role');
+   // $app->post('delete_role','App\Http\Controllers\SettingController@delete_role');
     $app->get('get_user_role','App\Http\Controllers\SettingController@get_user_role');
 
 
 });
 
-/*$app->group(['prefix' => 'api','middleware' => ['jwt.auth', 'App\Http\Middleware\CheckRoles']], function () use ($app) {
+$app->group(['prefix' => 'api','middleware' => ['jwt.auth', 'App\Http\Middleware\CheckRoles']], function () use ($app) {
     $app->post('delete_role','App\Http\Controllers\SettingController@delete_role');
 
-});*/
+});

@@ -4,6 +4,8 @@ use Closure;
 use DB;
 use JWTAuth;
 use Auth;
+use Route;
+
 
 
 class CheckRoles {
@@ -23,6 +25,9 @@ class CheckRoles {
         }else{
             return redirect('admin/login');
         }*/
+
+
+        $method_name=$request->segment(2);
 
         $user_id = Auth::user()->id;
 
