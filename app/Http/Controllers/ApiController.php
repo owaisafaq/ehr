@@ -820,15 +820,16 @@ class ApiController extends Controller
                 ->where('roles.status', 1)
                 ->get();
 
-
-            if ($user_status->user_status != 'active') {
-
-
-                return response()->json(['status' => false, 'message' => 'This user is not active']);
-
+            $obj = new  \stdClass();
+            foreach ($user_roles as $roles) {
+                $obj->{$roles->context} = $roles;
             }
 
-            return response()->json(['status' => true, 'data' => $user[0],'token'=> $token,'roles'=>$user_roles]);
+            if ($user_status->user_status != 'active') {
+                return response()->json(['status' => false, 'message' => 'This user is not active']);
+            }
+
+            return response()->json(['status' => true, 'data' => $user[0],'token'=> $token, 'roles'=>$obj]);
 
         } else {
 

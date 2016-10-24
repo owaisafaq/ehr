@@ -389,6 +389,7 @@ $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($ap
     $app->get('get_all_contexts','App\Http\Controllers\SettingController@get_all_contexts');
     $app->post('add_role_group','App\Http\Controllers\SettingController@add_role_group');
     $app->get('get_roles','App\Http\Controllers\SettingController@get_roles');
+    $app->post('delete_role','App\Http\Controllers\SettingController@delete_role');
 
 
 });

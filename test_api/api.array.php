@@ -3401,4 +3401,15 @@ $api->params->token = "123";
 $api_arr [] = $api;
 
 
+//Delete Role
+$api = new api();
+$api->name = "Delete Role";
+$api->url = HOST . 'delete_role';
+$api->method = "POST";
+$api->params->role_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
 

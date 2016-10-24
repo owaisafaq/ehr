@@ -479,7 +479,7 @@ class SettingController extends Controller
 
     }
 
-    public function get_roles(Request $request)
+    public function get_roles()
     {
         $roles = DB::table('roles')
             ->select(DB::raw('id,name'))
@@ -487,6 +487,17 @@ class SettingController extends Controller
             ->get();
 
         return response()->json(['status' => true, 'data' => $roles]);
+    }
+
+    public function delete_role(Request $request){
+        $role_id= $request->input('role_id');
+
+        DB::table('roles')
+             ->where('id',$role_id)
+             ->update(['status' => 0,'updated_at' => date("Y-m-d  H:i:s")]);
+
+        return response()->json(['status'=> true,'message'=> 'Role Group Deleted Successfully']);
+
     }
 
 }
