@@ -3374,6 +3374,8 @@ $api = new api();
 $api->name = "Get All Contexts";
 $api->url = HOST . 'get_all_contexts';
 $api->method = "GET";
+$api->params->offset = "1";
+$api->params->limit = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;

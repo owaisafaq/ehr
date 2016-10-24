@@ -438,14 +438,32 @@ class SettingController extends Controller
        }
 
 
-    public function get_all_contexts()
+    public function get_all_contexts(Request $request)
     {
-        $contexts = DB::table('contexts')
-            ->select(DB::raw('id,name'))
-            ->where('status',1)
-            ->get();
+        $limit = $request->input('limit');
+        $offset = $request->input('offset');
 
-        return response()->json(['status' => true, 'data' => $contexts]);
+        if ($limit > 0 || $offset > 0) {
+
+            $contexts = DB::table('contexts')
+                ->select(DB::raw('id,name'))
+                ->where('status', 1)
+                ->skip($offset)->take($limit)
+                ->get();
+        } else {
+            $contexts = DB::table('contexts')
+                ->select(DB::raw('id,name'))
+                ->where('status', 1)
+                ->get();
+
+        }
+
+        $count = DB::table('contexts')
+            ->select(DB::raw('id,name'))
+            ->where('status', 1)
+            ->count();
+
+            return response()->json(['status' => true, 'data' => $contexts,'count'=>$count]);
 
     }
 
