@@ -3398,6 +3398,8 @@ $api = new api();
 $api->name = "Get Roles";
 $api->url = HOST . 'get_roles';
 $api->method = "GET";
+$api->params->offset = "1";
+$api->params->limit = "1";
 $api->params->token = "123";
 
 $api_arr [] = $api;

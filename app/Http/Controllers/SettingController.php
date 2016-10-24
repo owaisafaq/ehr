@@ -444,7 +444,6 @@ class SettingController extends Controller
         $offset = $request->input('offset');
 
         if ($limit > 0 || $offset > 0) {
-
             $contexts = DB::table('contexts')
                 ->select(DB::raw('id,name'))
                 ->where('status', 1)
@@ -455,7 +454,6 @@ class SettingController extends Controller
                 ->select(DB::raw('id,name'))
                 ->where('status', 1)
                 ->get();
-
         }
 
         $count = DB::table('contexts')
@@ -497,14 +495,42 @@ class SettingController extends Controller
 
     }
 
-    public function get_roles()
+    public function get_roles(Request $request)
     {
-        $roles = DB::table('roles')
+        $limit = $request->input('limit');
+        $offset = $request->input('offset');
+
+        if ($limit > 0 || $offset > 0) {
+
+            $roles = DB::table('roles')
+                ->select(DB::raw('id,name'))
+                ->where('status', 1)
+                ->skip($offset)->take($limit)
+                ->get();
+
+        } else {
+            $roles = DB::table('roles')
+                ->select(DB::raw('id,name'))
+                ->where('status', 1)
+                ->get();
+
+        }
+        $count = DB::table('roles')
             ->select(DB::raw('id,name'))
             ->where('status', 1)
-            ->get();
+            ->count();
 
-        return response()->json(['status' => true, 'data' => $roles]);
+
+        foreach ($roles as $role) {
+            $context_count = DB::table('role_rights')
+                ->select(DB::raw('*'))
+                ->where('status', 1)
+                ->where('role_rights.role_id',$role->id)
+                ->count();
+            $role->context_count = $context_count;
+        }
+
+        return response()->json(['status'=>true,'data' =>$roles,'count'=>$count]);
     }
 
     public function delete_role(Request $request){
@@ -520,21 +546,21 @@ class SettingController extends Controller
 
     public function get_user_role(Request $request){
         $role_id = $request->input('role_id');
-        $user_roles = DB::table('users')
-            ->Join('roles', 'users.role_id', '=', 'roles.id')
+        $user_roles = DB::table('roles')
             ->join('role_rights', 'roles.id', '=', 'role_rights.role_id')
             ->join('contexts', 'role_rights.context_id', '=', 'contexts.id')
-            ->select(DB::raw('roles.name,contexts.name as context,role_rights.add_right,role_rights.update_right,role_rights.delete_right,role_rights.view_right'))
+            ->select(DB::raw('contexts.name as context,contexts.id as context_id,role_rights.id as role_right_id,role_rights.add_right,role_rights.update_right,role_rights.delete_right,role_rights.view_right'))
             ->where('roles.id', $role_id)
             ->where('roles.status', 1)
             ->get();
 
-        $obj = new  \stdClass();
-        foreach ($user_roles as $roles) {
-            $obj->{$roles->context} = $roles;
-        }
+        $role_name = DB::table('roles')
+            ->select(DB::raw('name'))
+            ->where('roles.id', $role_id)
+            ->where('roles.status', 1)
+            ->first();
 
-        return response()->json(['status' => true,'data'=>$obj]);
+        return response()->json(['status' => true,'data'=>$user_roles,'name'=>$role_name->name]);
 
     }
 
