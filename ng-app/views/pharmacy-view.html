@@ -86,9 +86,11 @@
                                             <td>{{PrescriptionView.sig}}</td>
                                             <td>{{PrescriptionView.dispense}}</td>
                                             <td>{{PrescriptionView.reffills}}</td>
-                                            <td><input type="text" numbers-only ng-keyup="calculateBalance(PrescriptionView.dispense, PrescriptionView.total_dispensed, $index, costArray[$index])" ng-model="PrescriptionView.total_dispensed" ng-init="PrescriptionView.total_dispensed = PrescriptionView.total_amount" disabled class="editDispensed" /></td>
+                                            <!--ng-init="PrescriptionView.total_dispensed = PrescriptionView.amount"-->
+                                            <td><input type="text" numbers-only ng-keyup="calculateBalance(PrescriptionView.dispense, PrescriptionView.total_dispense, $index, costArray[$index])" ng-model="PrescriptionView.total_dispense" disabled class="editDispensed" /></td>
                                             <td>{{PrescriptionView.due}}</td>
-                                            <td><span ng-if="PrescriptionView.total_dispensed != undefined && PrescriptionView.total_dispensed != '' ">N{{ PrescriptionViews[$index].costArray }}</span>
+                                            <td><span ng-if="PrescriptionView.total_dispense != undefined && PrescriptionView.total_dispense != '' ">N{{PrescriptionView.amount}}</span>
+                                                <!--PrescriptionViews[$index].costArray-->
                                             </td>
                                             <td class="capitalize">{{PrescriptionView.medication_status}}</td>
                                         </tr>

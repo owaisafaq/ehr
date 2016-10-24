@@ -19,8 +19,12 @@ class InventoryAPIController extends Controller
         date_default_timezone_set("Africa/Lagos");
     }
     //Categories APIs.
-    public function get_categories(){
-        $categories = DB::table('inventory_categories')->where('status', 1)->get();
+    public function get_categories(Request $request){
+        $group = $request->input('group');
+        $categories = DB::table('inventory_categories')
+            ->where('status',1)
+            ->where('cat_group',$group)
+            ->get();
         if($categories){
             return response()->json(['status' => true, 'message' => "Categories Found", 'data'=>$categories], 200);
         }else{
