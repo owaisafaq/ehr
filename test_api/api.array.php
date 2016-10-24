@@ -3391,4 +3391,14 @@ $api->params->token = "123";
 $api_arr [] = $api;
 
 
+//Get Roles
+$api = new api();
+$api->name = "Get Roles";
+$api->url = HOST . 'get_roles';
+$api->method = "GET";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
 

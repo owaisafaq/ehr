@@ -652,7 +652,7 @@ class ApiController extends Controller
                 'telephone_number' => $telephone_number,
                 'email' => $email,
                 'password' => '77eae7aaebf39fd0c8bef84e58b37cfd',
-                //'role_id' => $user_role_id,
+                'role_id' => $user_role_id,
                 'created_at' => $currentdatetime
             ]
         );
@@ -789,6 +789,7 @@ class ApiController extends Controller
             ->select(DB::raw('id as source_id,email,name,role_id'))
             ->where('email', $email_address)
             ->where('password', $password_user)
+            ->where('status',1)
             ->get();
 
 
@@ -810,6 +811,15 @@ class ApiController extends Controller
                 ->where('id', $user_id)
                 ->first();
 
+            $user_roles = DB::table('users')
+                ->Join('roles','users.role_id','=','roles.id')
+                ->join('role_rights','roles.id','=','role_rights.role_id')
+                ->join('contexts','role_rights.context_id','=','contexts.id')
+                ->select(DB::raw('roles.name,contexts.name as context,role_rights.add_right,role_rights.update_right,role_rights.delete_right,role_rights.view_right'))
+                ->where('users.id', $user_id)
+                ->where('roles.status', 1)
+                ->get();
+
 
             if ($user_status->user_status != 'active') {
 
@@ -818,7 +828,7 @@ class ApiController extends Controller
 
             }
 
-            return response()->json(['status' => true, 'data' => $user[0], 'token' => $token]);
+            return response()->json(['status' => true, 'data' => $user[0],'token'=> $token,'roles'=>$user_roles]);
 
         } else {
 
