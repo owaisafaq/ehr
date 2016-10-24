@@ -1,6 +1,5 @@
 /nbproject *
+.idea
 .env
-/.idea
-composer.phar
-/vendor
-/nbproject/private/
+.gitignore
+vendor

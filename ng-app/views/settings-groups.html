@@ -2,11 +2,10 @@
     <section>
         <div class="card">
             <div class="card-body col-lg-12 custom-card-body">
-                <!--<div class="tab-pane active" id="template">-->                    
-                    <div class="table-header row background-none">
-                        <div class="row">
-                            <h2 class="heading-style col-lg-12">Role Management</h2>
-                            <div class="pull-right">  
+                <div class="table-header row background-none">
+                    <div class="row">
+                        <h2 class="heading-style col-lg-12">Role Management</h2>
+                        <div class="pull-right">
                             <button class="add button-custom" data-toggle="modal" data-target="#newrole">New Role</button>
                         </div>
                         <div class="col-lg-2">
@@ -16,11 +15,9 @@
                                 <option>type 3</option>
                             </select>
                         </div>
-                            </div>
                     </div>
+                </div>
                     <form class="custom-form">
-
-
                         <table class="table table-striped no-margin table-custom table-custom_big setting_table">
                             <thead>
                                 <tr>
@@ -39,33 +36,7 @@
                                         <div class="billing_actions"><a href="javascript:;" class="setting-button"></a>
                                             <div class="tool-tip_popup">
                                                 <a href="javascript:;">Edit</a>
-                                                <a href="javascript:;">Delete</a>     
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                   <td>000011</td>
-                                    <td>Doctors</td>
-                                    <td>100</td>
-                                    <td>
-                                        <div class="billing_actions"><a href="javascript:;" class="setting-button"></a>
-                                            <div class="tool-tip_popup">
-                                                <a href="javascript:;">Edit</a>
-                                                <a href="javascript:;">Delete</a>    
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                   <td>000011</td>
-                                    <td>Doctors</td>
-                                    <td>100</td>
-                                    <td>
-                                        <div class="billing_actions"><a href="javascript:;" class="setting-button"></a>
-                                            <div class="tool-tip_popup">
-                                                <a href="javascript:;">Edit</a>
-                                                <a href="javascript:;">Delete</a>  
+                                                <a href="javascript:;">Delete</a>
                                             </div>
                                         </div>
                                     </td>
@@ -73,21 +44,19 @@
                             </tbody>
                         </table>
                         <div class="pagination pagination-centered pull-right" ng-show="patientCount">
-                        <ul class="pagination-controle pagination">
-                            <li class="prev-page">
-                                <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
-                            </li>                            
-                            <li>
-                                <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumber" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
-                            </li>
-                             <li class="next-page">
-                              <button type="button" class="btn btn-primary" ng-disabled="curPage >= patientCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
-                            </li>
-                        </ul>
-                    </div>
+                            <ul class="pagination-controle pagination">
+                                <li class="prev-page">
+                                    <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
+                                </li>
+                                <li>
+                                    <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumber" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
+                                </li>
+                                 <li class="next-page">
+                                  <button type="button" class="btn btn-primary" ng-disabled="curPage >= patientCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
+                                </li>
+                            </ul>
+                        </div>
                     </form>
-                <!--</div>-->                
-
             </div><!--end .card-body -->
         </div><!--end .card -->
     </section>
@@ -100,26 +69,25 @@
             </div>
             <div class="modal-body">
                 <form class="custom-form">
-                    <!--<div class="row">-->                       
                     <div class="row margin-bottom-xxl">
-                    <div class="col-lg-3">
+                        <div class="col-lg-3">
                             <label>Role Group Name</label>
                         </div>
                         <div class="col-lg-9">
-                            <input type="text" placeholder="" name="" required/>
+                            <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm1.name.$invalid]"  name="name" required  ng-model="labTestData.name" numbers-only />
+                            <p class="help-block PIValid" ng-show="submitted && userForm1.name.$error.required">Required</p>
                         </div>
-</div>
-
+                    </div>
                     <div class="row">
                         <div class="col-lg-3">
                             <label>Right & Context</label>
                         </div>
                         <div class="col-lg-8 add-multiple-con_select2">
-                            <select class="form-control add-multiple">
-                                <option>Search Context</option>
-                                <option>Cheque</option>
-                                <option>type 3</option>
+                            <select class="form-control add-multiple" ng-model="labTestData.role_rights" placeholder="Search Context" name="role_rights" ng-class="{true: 'error'}[submitted && userForm1.role_rights.$invalid]" required>
+                                <option value=""></option>
+                                <option ng-repeat="Context in Contexts" value="{{ Context.id }}">{{ Context.name }}</option>
                             </select>
+                            <p class="help-block PIValid" ng-show="submitted && userForm1.role_rights.$error.required">Required</p>
                         </div>
                         <div class="col-lg-1">
                              <span class="plus add-role"><i class="md-add"></i></span>
@@ -128,17 +96,13 @@
                     <div class="rights_list">
                     </div>
                     <div class="modal-footer row">
+                        <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;" ng-disabled="submitted && userForm1.$invalid">Add</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal" ng-disabled="addLabTestBtn">Cancel</button>
                         <button type="button" class="btn btn-default button-style-1">Add</button>
                         <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
                     </div>
                 </form>
-
             </div>
-
         </div><!-- /.modal-content -->
-
-
     </div><!-- /.modal-dialog -->
-
 </div><!-- /.modal -->
-
