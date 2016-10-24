@@ -822,7 +822,8 @@ class ApiController extends Controller
 
             $obj = new  \stdClass();
             foreach ($user_roles as $roles) {
-                $obj->{$roles->context} = $roles;
+                $context = str_replace(' ', '_', $roles->context);
+                $obj->{$context} = $roles;
             }
 
             if ($user_status->user_status != 'active') {
