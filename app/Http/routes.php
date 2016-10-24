@@ -388,8 +388,9 @@ $app->group(['prefix' => 'api',['jwt.auth','App\Http\Middleware\CheckRoles']], f
     //Role Managment
     $app->get('get_all_contexts','App\Http\Controllers\SettingController@get_all_contexts');
     $app->post('add_role_group','App\Http\Controllers\SettingController@add_role_group');
+    $app->post('update_role_group','App\Http\Controllers\SettingController@update_role_group');
     $app->get('get_roles','App\Http\Controllers\SettingController@get_roles');
-   // $app->post('delete_role','App\Http\Controllers\SettingController@delete_role');
+    $app->post('delete_role','App\Http\Controllers\SettingController@delete_role');
     $app->get('get_user_role','App\Http\Controllers\SettingController@get_user_role');
 
 

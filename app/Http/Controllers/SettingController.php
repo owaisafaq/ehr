@@ -563,5 +563,29 @@ class SettingController extends Controller
         return response()->json(['status' => true,'data'=>$user_roles,'name'=>$role_name->name]);
 
     }
+    public function update_role_group(Request $request){
+        $role_id = $request->input('role_id');
+        DB::table('role_rights')->where('role_id','=',$role_id)->delete();
+
+        $role_rights = $request->input('role_rights');
+
+        $rights = json_decode($role_rights);
+
+           foreach ($rights as $right) {
+               DB::table('role_rights')->insert(
+                   ['role_id'=>$role_id,
+                       'context_id' => $right->context_id,
+                       'add_right' => $right->is_add,
+                       'update_right' => $right->is_update,
+                       'delete_right' => $right->is_delete,
+                       'view_right' => $right->is_read,
+                       'created_at' => date("Y-m-d  H:i:s")
+                   ]
+               );
+           }
+
+
+        return response()->json(['status'=> true,'message'=> 'Role Group Updated Successfully']);
+    }
 
 }

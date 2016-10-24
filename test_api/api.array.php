@@ -3392,6 +3392,18 @@ $api->params->token = "123";
 
 $api_arr [] = $api;
 
+//Update Role Group
+$api = new api();
+$api->name = "Update Role Group";
+$api->url = HOST . 'update_role_group';
+$api->method = "POST";
+$api->params->role_id = "3";
+$api->params->role_rights = "";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
 
 //Get Roles
 $api = new api();
