@@ -51,6 +51,7 @@ AppEHR.controller('settingsUsers', ['$scope', '$rootScope', '$window', '$routePa
 		$scope.deleteUserId = id;
 		$('#confirmation').modal('show');
 	};
+	
 	$scope.removeUser = function(){
 		$rootScope.loader = "show";
 		deleteUser.get({

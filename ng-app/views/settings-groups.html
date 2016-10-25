@@ -11,6 +11,7 @@
                         <div class="col-lg-2">
                             <select class="form-control select_searchFields" placeholder="Search Roles" ng-model="byRole">
                                 <option></option>
+                                <option value="">All</option>
                                 <option ng-repeat="Role in Roles" value="{{ Role.id }}">{{ Role.name }}</option>
                             </select>
                         </div>
@@ -27,7 +28,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="Role in Roles | filter:{ id:byRole }">
+                                <tr ng-repeat="Role in Roles | filter:{ id:byRole }">
                                     <td>{{ Role.id }}</td>
                                     <td>{{ Role.name }}</td>
                                     <td>{{ Role.context_count }}</td>

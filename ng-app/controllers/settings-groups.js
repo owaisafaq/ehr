@@ -68,6 +68,9 @@ AppEHR.controller('settingsGroups', ['$scope', '$rootScope', '$window', '$routeP
             }
             $scope.Roles = res.data;
             $scope.rolesCount = res.count;
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         }
     }
     function GetAllRolesFailure(error) {
@@ -115,6 +118,9 @@ AppEHR.controller('settingsGroups', ['$scope', '$rootScope', '$window', '$routeP
                 token: $window.sessionStorage.token,
                 offset: 0, limit: 0
             }, GetAllRolesSuccess, GetAllRolesFailure);
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         }
     }
 
@@ -200,6 +206,9 @@ AppEHR.controller('settingsGroups', ['$scope', '$rootScope', '$window', '$routeP
                 token: $window.sessionStorage.token,
                 offset: 0, limit: 0
             }, GetAllRolesSuccess, GetAllRolesFailure);
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         } else {
             $scope.hideLoader = "hide";
             $scope.addRoleBtn = false;
@@ -263,6 +272,9 @@ AppEHR.controller('settingsGroups', ['$scope', '$rootScope', '$window', '$routeP
                 $scope.editRoleData = {};
                 $scope.editRights = [];
             },1500);
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         } else {
             $rootScope.loader = "hide";
             $scope.updateRoleBtn = false;

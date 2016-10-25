@@ -3864,4 +3864,10 @@ select#autoship_option.ng-hide,select#autoship_option2.ng-hide,select#autoship_o
     font-size: 14px;
     font-weight: bold;
     color: #b8c0d0;
+    width: 100%;
+    overflow: hidden;
+    display: inline-block;
+    height: 25px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }

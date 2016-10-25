@@ -120,9 +120,6 @@
                             </a>
                         </li><!--end /menu-li -->
                         <!-- END DASHBOARD -->
-
-                        
-
                         <!-- BEGIN DASHBOARD -->
                         <!-- <li>
                             <a href="../../html/layouts/builder.html" >
@@ -130,91 +127,91 @@
                                 <span class="title">Messages</span>
                             </a>
                         </li> --><!--end /menu-li -->
-                        <li class="gui-folder">
+                        <li class="gui-folder" ng-hide="ROLES.Patient == undefined">
                             <a>
                                 <div class="gui-icon"><i class="md md-person-add"></i></div>
                                 <span class="title">Patient</span>
                             </a>
                             <ul>
-                                <li><a href="#/patient-listing"><span class="title">Patient listing</span></a></li>
-                                <li><a href="#/patient-registration/"><span class="title">New Patient</span></a></li>
+                                <li ng-hide="ROLES.Patient == undefined"><a href="#/patient-listing"><span class="title">Patient listing</span></a></li>
+                                <li ng-hide="ROLES.Patient == undefined"><a href="#/patient-registration/"><span class="title">New Patient</span></a></li>
                             </ul>
                         </li>
 
-                        <li>
-                            <a href="#/new-encounter-patient-search" >
+                        <li ng-hide="ROLES.Encounter == undefined">
+                            <a href="#/new-encounter-patient-search">
                                 <div class="gui-icon"><i class="md md-note-add"></i></div>
                                 <span class="title">Encounters</span>
                             </a>
                         </li>
                         
-                        <li class="gui-folder">
+                        <li class="gui-folder" ng-hide="ROLES.Lab_order == undefined">
                             <a>
                                 <div class="gui-icon"><i class="md md-format-color-fill"></i></div>
                                 <span class="title">Lab Orders</span>
                             </a>
                             <ul>
-                                <li><a href="#/lab-order-listing/"><span class="title">Lab Order Listing</span></a></li>
-                                <li><a href="#/lab-order-history"><span class="title">Lab Order History</span></a></li>
+                                <li ng-hide="ROLES.Lab_order == undefined"><a href="#/lab-order-listing/"><span class="title">Lab Order Listing</span></a></li>
+                                <li ng-hide="ROLES.Lab_order == undefined"><a href="#/lab-order-history"><span class="title">Lab Order History</span></a></li>
                             </ul>
                         </li>
 
-                        <li class="gui-folder">
+                        <li class="gui-folder" ng-hide="ROLES.Appointments == undefined">
                             <a>
                                 <div class="gui-icon"><i class="md md-assignment"></i></div>
                                 <span class="title">Appointments</span>
                             </a>
                             <ul>
-                                <li><a href="#/appointments-list"><span class="title">Appointment Listing</span></a></li>
-                                <li><a href="#/appointments-calander-view" ><span class="title">Appointment Calendar</span></a></li>
+                                <li ng-hide="ROLES.Appointments == undefined"><a href="#/appointments-list"><span class="title">Appointment Listing</span></a></li>
+                                <li ng-hide="ROLES.Appointments == undefined"><a href="#/appointments-calander-view" ><span class="title">Appointment Calendar</span></a></li>
                             </ul>
                         </li>
                         
-                        <li>
+                        <li ng-hide="ROLES.Pool_area == undefined">
                             <a href="#/patient-pool-area" >
                                 <div class="gui-icon"><i class="md md-local-pharmacy"></i></div>
                                 <span class="title">Patient Pool Area</span>
                             </a>
                         </li><!--end /menu-li -->
                         
-                          <li class="gui-folder">
+                          <li class="gui-folder" ng-hide="ROLES.Ward == undefined">
                             <a>
                                 <div class="gui-icon"><i class="md md-hotel"></i></div>
                                 <span class="title">Ward Management</span>
                             </a>
                             <ul>
-                                <li><a href="#/ward-bed-listing"><span class="title">Ward Listing</span></a></li>
-                                <li><a href="#/wards-bed-occupancy" ><span class="title">Bed Occupancy</span></a></li>
-                                <li><a href="#/wards-discharge-summary" ><span class="title">Discharge Summary</span></a></li>
+                                <li ng-hide="ROLES.Ward == undefined"><a href="#/ward-bed-listing"><span class="title">Ward Listing</span></a></li>
+                                <li ng-hide="ROLES.Ward == undefined"><a href="#/wards-bed-occupancy" ><span class="title">Bed Occupancy</span></a></li>
+                                <li ng-hide="ROLES.Ward == undefined"><a href="#/wards-discharge-summary" ><span class="title">Discharge Summary</span></a></li>
                             </ul>
                         </li>
-                        <li>
+                        <li ng-hide="ROLES.Bill == undefined">
                             <a href="#/billing">
                                 <div class="gui-icon"><i class="md md-attach-money"></i></div>
                                 <span class="title">Billing</span>
                             </a>
                         </li><!--end /menu-li -->
-                        <li class="gui-folder">
+                        <li class="gui-folder" ng-hide="ROLES.Pharmacy == undefined && ROLES.Inventory == undefined && ROLES.Pharmacy_prescription == undefined && ROLES.Stock == undefined && ROLES.Clinical_notes_templates == undefined && ROLES.Lab_order_templates == undefined">
                             <a>
                                 <div class="gui-icon"><i class="md md-settings"></i></div>
                                 <span class="title">Settings</span>
                             </a>
-                            <ul>
-                                <li><a href="#/settings"><span class="title">Settings Dashboard</span></a></li>
-                                <li><a href="#/settings-users"><span class="title">User Management</span></a></li>
-                                <li><a href="#/settings-groups"><span class="title">Roles Management</span></a></li>
-                                <li class="gui-folder"><a><span class="title">Templates</span></a>
+                            <ul ng-hide="ROLES.Patient == undefined">
+                                <li ng-hide="ROLES.Patient == undefined"><a href="#/settings"><span class="title">Settings Dashboard</span></a></li>
+                                <li ng-hide="ROLES.Users == undefined"><a href="#/settings-users"><span class="title">User Management</span></a></li>
+                                <li ng-hide="ROLES.Roles == undefined"><a href="#/settings-groups"><span class="title">Roles Management</span></a></li>
+                                <li ng-hide="ROLES.Patient == undefined" class="gui-folder"><a><span class="title">Templates</span></a>
                                     <ul>
-                                        <li><a href="#/clinical-progress-template"><span class="title">Clinical note templates</span></a></li>
-                                        <li><a href="#/templates"><span class="title">Lab order templates</span></a></li>
+                                        <li ng-hide="ROLES.Clinical_notes_templates == undefined"><a href="#/clinical-progress-template"><span class="title">Clinical note templates</span></a></li>
+                                        <li ng-hide="ROLES.Lab_order_templates == undefined"><a href="#/templates"><span class="title">Lab order templates</span></a></li>
                                     </ul>
                                 </li>
-                                <li><a href="#/billing-codes"><span class="title">Billing codes</span></a></li>
-                                <li><a href="#/settings-tax-rates"><span class="title">Tax rates</span></a></li>
-                                <li><a href="#/inventory"><span class="title">Inventory management</span></a></li>
-                                <li><a href="#/pharmacy"><span class="title">Pharmacy management</span></a></li>
-                                <li><a href="#/settings-labs"><span class="title">Lab management</span></a></li>
-                                <li><a href="#/settings-facility"><span class="title">Facility management</span></a></li>
+                                <li ng-hide="ROLES.Billing_code == undefined"><a href="#/billing-codes"><span class="title">Billing codes</span></a></li>
+                                <li ng-hide="ROLES.Tax_rates == undefined"><a href="#/settings-tax-rates"><span class="title">Tax rates</span></a></li>
+                                <li ng-hide="ROLES.Inventory == undefined"><a href="#/inventory"><span class="title">Inventory management</span></a></li>
+                                <li ng-hide="ROLES.Pharmacy == undefined"><a href="#/pharmacy"><span class="title">Pharmacy management</span></a></li>
+                                <li ng-hide="ROLES.Labs == undefined"><a href="#/settings-labs"><span class="title">Lab management</span></a></li>
+                                <li ng-hide="ROLES.Facility == undefined && ROLES.Specialties == undefined"><a href="#/settings-facility"><span class="title">Facility management</span></a></li>
                             </ul>
                         </li>
                         
@@ -362,6 +359,21 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default button-style-1" ng-click="internetError();" >Refresh</button>
                         <button type="button" class="btn btn-default button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <div class="modal fade modal-size_1" id="rolesAccess" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header pop_head">
+                        <h2>Error</h2>
+                    </div>
+                    <div class="modal-body">
+                        <p class="error-header">{{rolesAccessMsg}}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default button-style-1 button-style-1_a" data-dismiss="modal">OK</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->

@@ -552,11 +552,11 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', function 
 AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData, $timeout, $routeParams) {
     if (sessionStorage.length == 0) {
         //console.log(1111111111111111);
-//            var path = $location.$$path;
-//            if ((path == "/login" || path == "/") && path != undefined) {
-//                $location.path("patient-registration/");
-//            }
-//        } else {
+        //            var path = $location.$$path;
+        //            if ((path == "/login" || path == "/") && path != undefined) {
+        //                $location.path("patient-registration/");
+        //            }
+        //        } else {
         $location.path("login");
     }
     if($window.sessionStorage.roles != undefined)

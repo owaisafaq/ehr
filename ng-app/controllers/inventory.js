@@ -1,27 +1,28 @@
 var AppEHR = angular.module('AppEHR');
         AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllInventory', 'GetAllSuppliers', 'AddCategory', 'GetAllCategories', 'AddSupplier', 'GetSingleSupplier', 'UpdateSuppliers', 'GetSingleCategory', 'GetSingleStock', 'updateCategory', 'DeleteCategory', 'DeleteSupplier', 'AddInventory', 'AddProduct', 'DeleteInventory', 'GetSingleProduct', 'GetAllPharmacies', 'GetReorderLevel', 'updateReorderLevel', 'GetProduct', 'ProductUpdate', 'Countries', 'States', 'City', 'AddMoreStock', '$timeout', function($scope, $rootScope, $window, $routeParams, GetAllInventory, GetAllSuppliers, AddCategory, GetAllCategories, AddSupplier, GetSingleSupplier, UpdateSuppliers, GetSingleCategory, GetSingleStock, updateCategory, DeleteCategory, DeleteSupplier, AddInventory, AddProduct, DeleteInventory, GetSingleProduct, GetAllPharmacies, GetReorderLevel, updateReorderLevel, GetProduct, ProductUpdate, Countries, States, City, AddMoreStock, $timeout){
         $rootScope.pageTitle = "EHR - Inventory";
-                $scope.displayInfo = {};
-                $rootScope.loader = "show";
-                $scope.cat_unique = {};
-                $scope.inventory = {};
-                $scope.selectedSupplier = {};
-                GetAllInventory.get({
-                token: $window.sessionStorage.token,
-                }, GetAllInventorySuccess, GetAllInventoryFailure);
-                function GetAllInventorySuccess(res) {
-                $rootScope.loader = "hide";
-                        if (res.status == true) {
+        $scope.displayInfo = {};
+        $rootScope.loader = "show";
+        $scope.cat_unique = {};
+        $scope.inventory = {};
+        $scope.selectedSupplier = {};
+        GetAllInventory.get({
+            token: $window.sessionStorage.token,
+        }, GetAllInventorySuccess, GetAllInventoryFailure);
+        function GetAllInventorySuccess(res) {
+            $rootScope.loader = "hide";
+            if (res.status == true) {
                 if (res.data.length == 0){
                 $('#noRecordFound').modal('show');
-                        return true;
+                    return true;
                 }
                 $scope.InventoryLists = res.data;
-                }else if(res.error_code == 500){
-                    console.log(res);
-                    $rootScope.RolesAccess(res.message);
-                }
-                }
+                console.log($scope.InventoryLists, 'inventory');
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
+            }
+        }
 
         function GetAllInventoryFailure(error) {
         $('#internetError').modal('show');
@@ -48,7 +49,7 @@ var AppEHR = angular.module('AppEHR');
         $scope.AddCategory = function (category) {
 
         if (angular.equals({}, category) == false) {
-        $scope.hideLoader = 'show';
+                $scope.hideLoader = 'show';
                 //$scope.updateEncounterBtn = true;
                 //console.log($scope.displayInfo.patient_id);
                 var addCateogry = {
@@ -57,7 +58,7 @@ var AppEHR = angular.module('AppEHR');
                         cat_desc: category.cat_desc,
                         cat_group: category.cat_group,
                 }
-        angular.copy(addCateogry, $scope.cat_unique);
+            angular.copy(addCateogry, $scope.cat_unique);
                 AddCategory.save(addCateogry, CategorySuccess, CategoryFailure);
         }
         }
@@ -166,8 +167,8 @@ var AppEHR = angular.module('AppEHR');
                 }
 // Add Inventory
         $scope.AddInventory = function (inventory) {
-        if (inventory.product_name != undefined && inventory.reorder_level != undefined && inventory.order_quantity != undefined && inventory.quantity != undefined && inventory.price != undefined) {
-        $rootScope.loader = 'show';
+            if (inventory.product_name != undefined && inventory.reorder_level != undefined && inventory.order_quantity != undefined && inventory.quantity != undefined && inventory.price != undefined) {
+            $rootScope.loader = 'show';
                 
             var val = inventory.price;
             var myString = val.substr(val.indexOf(".") + 1)
@@ -234,17 +235,17 @@ var AppEHR = angular.module('AppEHR');
                 $scope.modalHeader = "Status";
                 document.getElementById("addInv").reset();
                 GetAllInventory.get({
-                token: $window.sessionStorage.token,
+                    token: $window.sessionStorage.token,
                 }, GetAllInventorySuccess, GetAllInventoryFailure);
-        }else if(res.error_code == 500){
-            console.log(res);
-            $rootScope.RolesAccess(res.message);
-        } else{
-        $rootScope.loader = "hide";
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
+            } else{
+                $rootScope.loader = "hide";
                 $('#errorModal').modal('show');
                 $scope.inventoryError = res.message;
                 $scope.modalHeader = "Error";
-        }
+            }
         }
 
         function AddInventoryFailure(error) {
