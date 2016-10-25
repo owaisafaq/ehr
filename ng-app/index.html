@@ -174,7 +174,7 @@
                             </a>
                         </li><!--end /menu-li -->
                         
-                          <li class="gui-folder" ng-hide="ROLES.Ward == undefined">
+                      <li class="gui-folder" ng-hide="ROLES.Ward == undefined">
                             <a>
                                 <div class="gui-icon"><i class="md md-hotel"></i></div>
                                 <span class="title">Ward Management</span>
@@ -196,11 +196,11 @@
                                 <div class="gui-icon"><i class="md md-settings"></i></div>
                                 <span class="title">Settings</span>
                             </a>
-                            <ul ng-hide="ROLES.Patient == undefined">
-                                <li ng-hide="ROLES.Patient == undefined"><a href="#/settings"><span class="title">Settings Dashboard</span></a></li>
+                            <ul>
+                                <li><a href="#/settings"><span class="title">Settings Dashboard</span></a></li>
                                 <li ng-hide="ROLES.Users == undefined"><a href="#/settings-users"><span class="title">User Management</span></a></li>
                                 <li ng-hide="ROLES.Roles == undefined"><a href="#/settings-groups"><span class="title">Roles Management</span></a></li>
-                                <li ng-hide="ROLES.Patient == undefined" class="gui-folder"><a><span class="title">Templates</span></a>
+                                <li ng-hide="ROLES.Lab_order_templates == undefined && ROLES.Clinical_notes_templates == undefined" class="gui-folder"><a><span class="title">Templates</span></a>
                                     <ul>
                                         <li ng-hide="ROLES.Clinical_notes_templates == undefined"><a href="#/clinical-progress-template"><span class="title">Clinical note templates</span></a></li>
                                         <li ng-hide="ROLES.Lab_order_templates == undefined"><a href="#/templates"><span class="title">Lab order templates</span></a></li>

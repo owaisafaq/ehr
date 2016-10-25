@@ -700,6 +700,9 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
                     $rootScope.encounterHeaderSearchBar = true;
                     $('.create_counter_header').addClass('hide');
                 }, 2000);
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }else{
                 $rootScope.headerHideLoader = "hide";
                 $rootScope.headerMessageType = "alert-danger";

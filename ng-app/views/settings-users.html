@@ -9,11 +9,17 @@
                             <button class="add button-custom" data-toggle="modal" data-target="#addUser">New User</button>
                         </div>
                         <div class="col-lg-2">
-                            <select class="form-control select_searchFields" placeholder="Search User By Name">
+                            <!-- <select class="form-control select_searchFields" placeholder="Search User By Name">
                                 <option></option>
                                 <option>Cheque</option>
                                 <option>type 3</option>
-                            </select>
+                            </select> -->
+                            <div class="header-search margin-right-0 pull-left">
+                                <button type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <input class="search_field" ng-model="search" type="text" placeholder="Search User By Name">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -31,7 +37,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="UserList in UserLists">
+                            <tr ng-repeat="UserList in UserLists | filter: {name:search}">
                                 <td>{{ UserList.name }}</td>
                                 <td>{{ UserList.first_name }}</td>
                                 <td>{{ UserList.last_name }}</td>

@@ -282,12 +282,13 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 
 	function encounterSuccess(res){
 		console.log(res);
+		$scope.hideLoader = "hide";
 		if(res.status == true){
 			$scope.submitted = false;
             $scope.disabledEncounterButton = true;
 			$scope.addEncounterBtn = false;
             $scope.buttonDisabled = true;
-			$scope.hideLoader = "hide";
+			
 			$scope.messageType = "alert-success";
 			$scope.errorMessage = res.message;
 			$scope.errorSymbol = "fa fa-check";// 
@@ -741,13 +742,14 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 
     function encounterDeleteSuccess(res) {
         console.log(res);
+        $rootScope.loader = "hide";
         if (res.status == true) {
             GetAllEncounters.get({
 		        token: $window.sessionStorage.token,
 		        offset: 0,
 		        limit: $scope.itemsPerPage
 		    }, getPatientEncounters, getPatientEncountersFailure);
-            $rootScope.loader = "hide";
+            
         }else if(res.error_code == 500){
             console.log(res);
             $rootScope.RolesAccess(res.message);
