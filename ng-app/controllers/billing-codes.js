@@ -77,11 +77,17 @@ AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routePa
 	}
 
 	$scope.createBillingCode = function (billingCodeData){
+            var val = billingCodeData.charge;
+            var myString = val.substr(val.indexOf(".") + 1)
+            if(myString == ""){
+                val = val + "00"
+            }
+            
 		addBillingCode.save({
 			token : $window.sessionStorage.token,
             code : billingCodeData.code,
             description : billingCodeData.description,
-            charge : billingCodeData.charge,
+            charge : val,
             category_id : billingCodeData.category_id,
             tax : 0//billingCodeData.tax
 		},addBillingCodeSuccess,addBillingCodeFailure);
@@ -141,12 +147,17 @@ AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routePa
 
 	$scope.updateBillingCode = function(editBillingCodeData){
 		$rootScope.loader = "show";
+                 var val = editBillingCodeData.charge;
+            var myString = val.substr(val.indexOf(".") + 1)
+            if(myString == ""){
+                val = val + "00"
+            }
 		editBillingCode.save({
 			token : $window.sessionStorage.token,
             billing_code_id : editBillingCodeData.id,
             code : editBillingCodeData.code,
             description : editBillingCodeData.description,
-            charge : editBillingCodeData.charge,
+            charge : val,
             category_id : editBillingCodeData.category_id,
             tax : 0//editBillingCodeData.tax
 		},editBillingCodeSuccess,editBillingCodeFailure);

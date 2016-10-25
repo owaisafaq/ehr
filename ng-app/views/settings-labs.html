@@ -277,7 +277,7 @@
                             <label>Cost</label>
                         </div>
                         <div class="col-lg-4">
-                            <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm3.cost.$invalid]"  name="cost" required  ng-model="labTestData.cost" numbers-only />
+                            <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm3.cost.$invalid]" class="maskCost"  name="cost" required  ng-model="labTestData.cost" />
                             <p class="help-block PIValid" ng-show="submitted && userForm3.cost.$error.required">Required</p>
                         </div>
                         <div class="col-lg-2">
@@ -346,14 +346,14 @@
                             <label>Cost</label>
                         </div>
                         <div class="col-lg-4">
-                            <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm4.cost.$invalid]"  name="cost" required  ng-model="editLabTestData.cost" numbers-only />
+                            <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm4.cost.$invalid]" name="cost" required class="maskCost" ng-model="editLabTestData.cost" />
                             <p class="help-block PIValid" ng-show="submitted && userForm4.cost.$error.required">Required</p>
                         </div>
                         <div class="col-lg-2">
                             <label>Lab</label>
                         </div>
                         <div class="col-lg-4">
-                            <select class="form-control" ng-model="editLabTestData.lab_id" placeholder="Select Lab" name="lab_id" ng-class="{true: 'error'}[submitted && userForm4.lab_id.$invalid]" required>
+                            <select class="form-control" ng-model="editLabTestData.lab_id" placeholder="SelCostect Lab" name="lab_id" ng-class="{true: 'error'}[submitted && userForm4.lab_id.$invalid]" required>
                                 <option value=""></option>
                                 <option ng-repeat="lab in Labs" value="{{ lab.id }}" ng-selected="lab.id == editLabTestData.lab_id">{{ lab.name }}</option>
                             </select>

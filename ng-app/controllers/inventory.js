@@ -159,14 +159,17 @@ var AppEHR = angular.module('AppEHR');
         $scope.AddInventory = function (inventory) {
         if (inventory.product_name != undefined && inventory.reorder_level != undefined && inventory.order_quantity != undefined && inventory.quantity != undefined && inventory.price != undefined) {
         $rootScope.loader = 'show';
-                //$scope.updateEncounterBtn = true;
-                //console.log(inventory);
+                
+            var val = inventory.price;
+            var myString = val.substr(val.indexOf(".") + 1)
+            if(myString == ""){
+                val = val + "00"
+            }
+                
                 var addInventory = {
                 token: $window.sessionStorage.token,
-                        //product_id	:inventory.product_id,
                         pharmacy_id:inventory.pharmacy_id == undefined ? '' :inventory.pharmacy_id,
                         manufacturer_id:inventory.manufacturer_id == undefined ? '' :inventory.manufacturer_id,
-                        //department_id:inventory.cat_id,
                         supplier_id:inventory.supp_id == undefined ? '' :inventory.supp_id,
                         received_date:inventory.recvd_date == undefined ? '' :inventory.recvd_date,
                         batch_no:inventory.batch_number == undefined ? '' :inventory.batch_number,
@@ -182,14 +185,9 @@ var AppEHR = angular.module('AppEHR');
                         route:inventory.route == undefined ? '' :inventory.route,
                         reorder_level:inventory.reorder_level == undefined ? '' :inventory.reorder_level,
                         cat_id:inventory.cat_id == undefined ? '' :inventory.cat_id,
-//				strength:inventory.strength == undefined ? '' :inventory.strength,
+                        cost_per_item : val,
                         dose_from:inventory.dose_from == undefined ? '' :inventory.dose_from
                 }
-        if (inventory.group == "Documents" || inventory.group == "Others"){
-        addInventory.cost_per_item = inventory.price
-        } else{
-        addInventory.cost_per_item = '';
-        }
         if (inventory.group == "Documents"){
         addInventory.strength = '';
         }
@@ -209,7 +207,6 @@ var AppEHR = angular.module('AppEHR');
         }
         console.log(addInventory);
                 AddInventory.save(addInventory, AddInventorySuccess, AddInventoryFailure);
-                //AddProduct.save(addProduct, AddProductSuccess, AddProductFailure);
         }
         }
 
@@ -280,6 +277,12 @@ var AppEHR = angular.module('AppEHR');
         console.log($scope.productID);
                 console.log(stock);
                 if (angular.equals({}, category) == false) {
+                    var val = stock.price;
+            var myString = val.substr(val.indexOf(".") + 1)
+            if(myString == ""){
+                val = val + "00"
+            }
+                    
         $scope.hideLoader = 'show';
                 //$scope.updateEncounterBtn = true;
                 //console.log($scope.displayInfo.patient_id);
@@ -295,7 +298,7 @@ var AppEHR = angular.module('AppEHR');
                         expiry:stock.expiry_date,
                         quantity:stock.quantity,
                         order_quantity:"",
-                        cost_per_item:stock.price,
+                        cost_per_item:val,
                         pack:stock.pack,
                         token:$window.sessionStorage.token,
                 }
