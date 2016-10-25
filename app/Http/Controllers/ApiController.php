@@ -3141,14 +3141,26 @@ class ApiController extends Controller
         $category_id = $request->input('category_id');
         $template_type  = $request->input('template_type');
 
-        $templates = DB::table('templates')
-            ->leftJoin('template_categories', 'template_categories.id', '=', 'templates.category_id')
-            ->leftJoin('template_types', 'template_types.id', '=', 'template_categories.template_type')
-            ->select(DB::raw('templates.id,templates.name,templates.description,template_categories.name as category,templates.template'))
-            ->where('templates.status', 1)
-            ->where('template_categories.template_type', $template_type)
-             ->where('templates.category_id', $category_id)
-            ->get();
+
+        if(isset($category_id)) {
+            $templates = DB::table('templates')
+                ->leftJoin('template_categories', 'template_categories.id', '=', 'templates.category_id')
+                ->leftJoin('template_types', 'template_types.id', '=', 'template_categories.template_type')
+                ->select(DB::raw('templates.id,templates.name,templates.description,template_categories.name as category,templates.template'))
+                ->where('templates.status', 1)
+                ->where('template_categories.template_type', $template_type)
+                ->where('templates.category_id', $category_id)
+                ->get();
+        } else {
+            $templates = DB::table('templates')
+                ->leftJoin('template_categories', 'template_categories.id', '=', 'templates.category_id')
+                ->leftJoin('template_types', 'template_types.id', '=', 'template_categories.template_type')
+                ->select(DB::raw('templates.id,templates.name,templates.description,template_categories.name as category,templates.template'))
+                ->where('templates.status', 1)
+                ->where('template_categories.template_type', $template_type)
+                ->get();
+
+        }
 
         return response()->json(['status' => true, 'data' => $templates]);
 
