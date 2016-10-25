@@ -183,14 +183,14 @@ class InventoryAPIController extends Controller
 
     //Stock APIs.
     public function get_stock(){
-        $stock = DB::table('stock')
-            ->select('stock.id as stock_id', 'inventory_products.id as product_id','inventory_categories.id as category_id',
+        $stock = DB::table('inventory_products')
+            ->select('inventory_products.id as product_id','inventory_categories.id as category_id',
                      'inventory_categories.cat_name as category_name',
                      'inventory_products.name as product_name','cost_per_item', 'quantity','order_quantity','inventory_products.reorder_level','stock.stock_status')
-            ->leftJoin('inventory_products','inventory_products.id','=','stock.product_id')
+            ->leftJoin('stock','inventory_products.id','=','stock.product_id')
             ->leftJoin('inventory_categories','inventory_products.cat_id','=','inventory_categories.id')
-            ->where(['stock.status'=>1])
-            ->groupby('stock.product_id')
+           // ->where(['stock.status'=>1])
+            ->groupby('inventory_products.id')
             ->get();
         if($stock){
             return response()->json(['status' => true, 'message' => "Stock Found.", 'data'=>$stock], 200);

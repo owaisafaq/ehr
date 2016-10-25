@@ -769,7 +769,8 @@ class ApiController extends Controller
         $user_id = $request->input('user_id');
 
         $user = DB::table('users')
-            ->select(DB::raw('id,name,first_name,last_name,telephone_number,email,status'))
+            ->join('roles', 'roles.id', '=', 'users.role_id')
+            ->select(DB::raw('id,name,first_name,last_name,telephone_number,email,status,role_id,roles.name as role_name'))
             ->where('status', 1)
             ->where('id', $user_id)
             ->first();
