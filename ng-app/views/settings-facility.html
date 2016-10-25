@@ -376,7 +376,7 @@
                                         <option value=""></option>
                                         <option ng-repeat="State in States" value="{{ State.id }}" ng-selected="State.id == hospitalData.state_id">{{ State.name }}</option>
                                     </select>
-                                    <p class="help-block PIValid" ng-show="submitted && userForm1.lab_id.$error.required">Required</p>
+                                    <p class="help-block PIValid" ng-show="submitted && userForm1.state.$error.required">Required</p>
                                 </div>
                             </div>
                             <div class="row margin-bottom-xxl">
@@ -388,7 +388,7 @@
                                         <option value=""></option>
                                         <option ng-repeat="k in Countries" value="{{ k.id }}" ng-selected="k.id == hospitalData.country_id">{{ k.name }}</option>
                                     </select>
-                                    <p class="help-block PIValid" ng-show="submitted && userForm2.tax.$error.required">Required</p>
+                                    <p class="help-block PIValid" ng-show="submitted && userForm1.country.$error.required">Required</p>
                                 </div>
                             </div>
                             <div class="row margin-bottom-xxl">
