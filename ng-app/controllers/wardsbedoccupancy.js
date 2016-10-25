@@ -36,6 +36,9 @@ AppEHR.controller('wardsBedOccupancyController', ['$scope', '$rootScope', '$wind
                 $scope.allBedOccupancy[k].number_of_beds_occupied = parseFloat($scope.allBedOccupancy[k].number_of_beds_occupied);
             }
             $scope.bedCount = res.count;
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         }
     }
 

@@ -252,6 +252,9 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 		        limit: $scope.itemsPerPage
 		    }, getPatientEncounters, getPatientEncountersFailure);
             //GetAllEncounters.get({token: $window.sessionStorage.token}, getPatientEncounters, getPatientEncountersFailure);
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         } else {
             $scope.hideLoader = "hide";
             $scope.updateEncounterBtn = false;
@@ -295,7 +298,10 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 		        limit: $scope.itemsPerPage
 		    }, getPatientEncounters, getPatientEncountersFailure);
 			$timeout(function(){$scope.closePopUp = true; /*$window.location.href = '#/new-encounter-encounter-list/'+res.visit_id+'/' + $scope.search*/}, 1000);
-		}else{
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }else{
 			$scope.hideLoader = "hide";
 			$scope.addEncounterBtn = false;
 			$scope.message = true;
@@ -411,6 +417,9 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
                 //$window.location.href = "#/lab-order-listing/" + $scope.PID + "/" + $scope.encounterID;
             },500);
             $scope.orderSelected = false;
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         } else {
             $scope.hideLoader = "hide";
             $scope.OrderBtn = false;
@@ -510,7 +519,10 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 		        offset: 0,
 		        limit: $scope.itemsPerPage
 		    }, getPatientEncounters, getPatientEncountersFailure);
-    	}
+    	}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
     }
 
     function checkoutFailure(error){
@@ -618,7 +630,10 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
         			$('#createAppointment').modal('hide');
         			$scope.appointment = {};
         			$scope.submitted = false;
-        		}
+        		}else if(res.error_code == 500){
+	                console.log(res);
+	                $rootScope.RolesAccess(res.message);
+	            }
         	}
         	function createAppointmentFailure(error){
                 $rootScope.loader = "hide";
@@ -733,6 +748,9 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 		        limit: $scope.itemsPerPage
 		    }, getPatientEncounters, getPatientEncountersFailure);
             $rootScope.loader = "hide";
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         } else {
             $rootScope.loader = "hide";
         }
@@ -787,6 +805,9 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
                 $scope.vital.weight = '';
                 $scope.vital.notes = '';
                 $scope.vital.height = '';
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
         }
 

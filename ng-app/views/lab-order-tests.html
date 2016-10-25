@@ -304,7 +304,7 @@
                             </div>
                         </div>
                         <div class="pull-right">
-                            <button type="button" ng-click="openPrint()" class="btn btn-default button-style-1">Print</button>
+                            <button type="button" ng-click="openPrint()" class="btn btn-default button-style-1" ng-hide="ROLES.Lab_test == undefined || ROLES.Lab_order.update_right == '0'">Print</button>
                             <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
                         </div>
                     </div>

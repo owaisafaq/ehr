@@ -58,6 +58,9 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
                 $scope.allEncounter = res.data;
                 $scope.allEncounterCount = res.count;
                 console.log(res);
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
             DropDownData.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id}, dropDownSuccess, dropDownFailed);
         }
@@ -139,15 +142,20 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
             CheckoutPatient.save(CheckoutDetails, checkoutSuccess, checkoutSuccessFailure);
         }
         function checkoutSuccess(res) {
-            GetAllEncounters.get({token: $window.sessionStorage.token}, getPatientEncounters, getPatientEncountersFailure);
-            $('#checkout').modal('hide');
-            $('.checkout_patient_tab_con > div.active textarea').val('');
-            $('input:radio[name="checkoutpatient"]').prop("checked", false);
-            $('input:radio[name="checkoutpatient"]').eq(0).trigger("click");
-            $scope.buttonDisabled = false;
-            $('.counter_pop').addClass('ng-hide');
-            $scope.buttonDisabled = false;
-            $scope.patientInfo = false;
+            if(res.status == true){
+                GetAllEncounters.get({token: $window.sessionStorage.token}, getPatientEncounters, getPatientEncountersFailure);
+                $('#checkout').modal('hide');
+                $('.checkout_patient_tab_con > div.active textarea').val('');
+                $('input:radio[name="checkoutpatient"]').prop("checked", false);
+                $('input:radio[name="checkoutpatient"]').eq(0).trigger("click");
+                $scope.buttonDisabled = false;
+                $('.counter_pop').addClass('ng-hide');
+                $scope.buttonDisabled = false;
+                $scope.patientInfo = false;
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
+            }
         }
         function  checkoutSuccessFailure(res) {
             $('#internetError').modal('show');
@@ -214,6 +222,9 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
                 $scope.vital.weight = '';
                 $scope.vital.notes = '';
                 $scope.vital.height = '';
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
         }
 
@@ -284,6 +295,9 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
                     $scope.updateEncounterPopUp = false;
                 }, 1500);
                 GetAllEncounters.get({token: $window.sessionStorage.token}, getPatientEncounters, getPatientEncountersFailure);
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             } else {
                 $scope.hideLoader = "hide";
                 $scope.updateEncounterBtn = false;
@@ -321,6 +335,9 @@ AppEHR.controller('newEncounterEncounterListController', ['$scope', '$rootScope'
             if (res.status == true) {
                 GetAllEncounters.get({token: $window.sessionStorage.token}, getPatientEncounters, getPatientEncountersFailure);
                 $rootScope.loader = "hide";
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             } else {
                 $rootScope.loader = "hide";
             }

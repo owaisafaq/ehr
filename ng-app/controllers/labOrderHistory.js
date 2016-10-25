@@ -16,7 +16,10 @@ AppEHR.controller('labOrderHistory', ['$scope', '$rootScope', '$window', 'GetLab
                 return true;
             }
 			$scope.labOrders = res.data;
-		}
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
 	}
 	function GetAllLabOrdersFailure(error) { // on failure GetAllLabOrders
         $('#internetError').modal('show');
@@ -33,6 +36,9 @@ AppEHR.controller('labOrderHistory', ['$scope', '$rootScope', '$window', 'GetLab
                 $rootScope.loader = "hide";
                 $scope.orderSelected = true;
                 $scope.selectedOrder = res.data;
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
         }
         function getLabOrderInfoFailure(error) { // on failure

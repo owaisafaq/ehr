@@ -21,7 +21,10 @@ AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routePa
 			}
 			$scope.BillingCodeLists = res.data;
 			$scope.billingCodesCount = res.count;
-		}
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
 	}
 	function GetAllBillingCodesFailure(error) {
 		$('#internetError').modal('show');
@@ -67,7 +70,10 @@ AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routePa
 			GetAllBillingCodes.get({
 				token: $window.sessionStorage.token
 			}, GetAllBillingCodesSuccess, GetAllBillingCodesFailure);
-		}
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
 	}
 
 	function deleteBillingCodeFailure(error){
@@ -110,7 +116,10 @@ AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routePa
 			GetAllBillingCodes.get({
 				token: $window.sessionStorage.token
 			}, GetAllBillingCodesSuccess, GetAllBillingCodesFailure);
-		} else {
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        } else {
 			$scope.hideLoader = "hide";
 			$scope.addBillingCodeBtn = false;
 			$scope.message = true;
@@ -138,7 +147,10 @@ AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routePa
 				$('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
 			},100);
 			$('#editcode').modal('show');
-		}
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
 	}
 	function GetAllBillingCodeFailure(error) {
 		$('#internetError').modal('show');
@@ -181,7 +193,10 @@ AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routePa
 				$scope.errorMessage = "";
 				$scope.editBillingCodeData = {};
 			},1500);
-		} else {
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        } else {
 			$rootScope.loader = "hide";
 			$scope.updateBillingCodeBtn = false;
 			$scope.message = true;
@@ -208,7 +223,10 @@ AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routePa
 				$('#noResultFound').modal('show');
 			}
 			$scope.AllCategoryLists = res.data;
-		}
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
 	}
 
 	GetAllBillingCategories.get({
@@ -225,6 +243,9 @@ AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routePa
             }
             $scope.CategoryLists = res.data;
             $scope.CategoriesCount = res.count;
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         }
     }
     function GetAllBillingCategoriesFailure(error) {
@@ -246,6 +267,9 @@ AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routePa
             }
             $scope.TaxRatesLists = res.data;
             $scope.CategoriesCount = res.count;
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         }
     }
     function GetAllTaxRatesFailure(error) {
@@ -337,7 +361,10 @@ AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routePa
 			GetAllBillingCategories.get({
 				token: $window.sessionStorage.token
 			}, GetBillingCategoriesSuccess, GetAllBillingCategoriesFailure);
-		} else {
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        } else {
 			$scope.hideLoader = "hide";
 			$scope.addBillingCategoryBtn = false;
 			$scope.message = true;
@@ -365,7 +392,10 @@ AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routePa
 				$('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
 			},100);
 			$('#editcategory').modal('show');
-		}
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
 	}
 	function GetAllBillingCategoryFailure(error) {
 		$('#internetError').modal('show');
@@ -405,7 +435,10 @@ AppEHR.controller('billing-codes', ['$scope', '$rootScope', '$window', '$routePa
 				$scope.errorMessage = "";
 				$scope.editBillingCategoryData = {};
 			},1500);
-		} else {
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        } else {
 			$rootScope.loader = "hide";
 			$scope.updateBillingCategoryBtn = false;
 			$scope.message = true;

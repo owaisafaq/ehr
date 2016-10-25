@@ -19,6 +19,9 @@ AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routePar
             $scope.template_exists = res.data.test[0].template_exists;
             $scope.orderSelected = true;
             $scope.selectedOrder = res.data;
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         }
     }
     function getLabOrderInfoFailure(error) { // on failure
@@ -116,6 +119,9 @@ AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routePar
                 $('#cancelOrder2').modal('hide');
                 $scope.message = false;
             },500);
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         } else {
             $scope.hideLoader = "hide";
             $scope.updateTestBtn = false;
@@ -155,6 +161,9 @@ AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routePar
             $scope.signoffStatus = 1;
             $('#successSignoff').modal('show');
             $('#confirmModal').modal('hide');
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         }
     }
     function signoffFailure(res){
@@ -213,7 +222,13 @@ AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routePar
         }, addMaterialSuccess, addMaterialFailure);
         }
         function addMaterialSuccess(res){
-            console.log(res.message);
+            
+            if(res.status == true){
+                console.log(res.message);
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
+            }
 //            console.log("success");
         }
         function addMaterialFailure(res){
