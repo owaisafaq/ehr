@@ -438,14 +438,30 @@ class SettingController extends Controller
        }
 
 
-    public function get_all_contexts()
+    public function get_all_contexts(Request $request)
     {
-        $contexts = DB::table('contexts')
-            ->select(DB::raw('id,name'))
-            ->where('status',1)
-            ->get();
+        $limit = $request->input('limit');
+        $offset = $request->input('offset');
 
-        return response()->json(['status' => true, 'data' => $contexts]);
+        if ($limit > 0 || $offset > 0) {
+            $contexts = DB::table('contexts')
+                ->select(DB::raw('id,name'))
+                ->where('status', 1)
+                ->skip($offset)->take($limit)
+                ->get();
+        } else {
+            $contexts = DB::table('contexts')
+                ->select(DB::raw('id,name'))
+                ->where('status', 1)
+                ->get();
+        }
+
+        $count = DB::table('contexts')
+            ->select(DB::raw('id,name'))
+            ->where('status', 1)
+            ->count();
+
+            return response()->json(['status' => true, 'data' => $contexts,'count'=>$count]);
 
     }
 
@@ -453,13 +469,11 @@ class SettingController extends Controller
 
         $name= $request->input('name');
         $role_rights = $request->input('role_rights');
-
         DB::table('roles')->insert(['name'=> $name,'created_at'=> date("Y-m-d  H:i:s")]);
 
         $role_id = DB::getPdo()->lastInsertId();
 
         $rights = json_decode($role_rights);
-
 
         foreach ($rights as $right) {
             DB::table('role_rights')->insert(
@@ -477,6 +491,99 @@ class SettingController extends Controller
         return response()->json(['status'=> true,'message'=> 'New Role Group Created Successfully']);
 
 
+    }
+
+    public function get_roles(Request $request)
+    {
+        $limit = $request->input('limit');
+        $offset = $request->input('offset');
+
+        if ($limit > 0 || $offset > 0) {
+
+            $roles = DB::table('roles')
+                ->select(DB::raw('id,name'))
+                ->where('status', 1)
+                ->skip($offset)->take($limit)
+                ->get();
+
+        } else {
+            $roles = DB::table('roles')
+                ->select(DB::raw('id,name'))
+                ->where('status', 1)
+                ->get();
+
+        }
+        $count = DB::table('roles')
+            ->select(DB::raw('id,name'))
+            ->where('status', 1)
+            ->count();
+
+
+        foreach ($roles as $role) {
+            $context_count = DB::table('role_rights')
+                ->select(DB::raw('*'))
+                ->where('status', 1)
+                ->where('role_rights.role_id',$role->id)
+                ->count();
+            $role->context_count = $context_count;
+        }
+
+        return response()->json(['status'=>true,'data' =>$roles,'count'=>$count]);
+    }
+
+    public function delete_role(Request $request){
+        $role_id= $request->input('role_id');
+
+        DB::table('roles')
+             ->where('id',$role_id)
+             ->update(['status' => 0,'updated_at' => date("Y-m-d  H:i:s")]);
+
+        return response()->json(['status'=> true,'message'=> 'Role Group Deleted Successfully']);
+
+    }
+
+    public function get_user_role(Request $request){
+        $role_id = $request->input('role_id');
+        $user_roles = DB::table('roles')
+            ->join('role_rights', 'roles.id', '=', 'role_rights.role_id')
+            ->join('contexts', 'role_rights.context_id', '=', 'contexts.id')
+            ->select(DB::raw('contexts.name as context,contexts.id as context_id,role_rights.id as role_right_id,role_rights.add_right,role_rights.update_right,role_rights.delete_right,role_rights.view_right'))
+            ->where('roles.id', $role_id)
+            ->where('roles.status', 1)
+            ->get();
+
+        $role_name = DB::table('roles')
+            ->select(DB::raw('name'))
+            ->where('roles.id', $role_id)
+            ->where('roles.status', 1)
+            ->first();
+
+        return response()->json(['status' => true,'data'=>$user_roles,'name'=>$role_name->name]);
+
+    }
+    public function update_role_group(Request $request){
+        $role_id = $request->input('role_id');
+        DB::table('role_rights')->where('role_id','=',$role_id)->delete();
+
+        $role_rights = $request->input('role_rights');
+
+        $rights = json_decode($role_rights);
+
+           foreach ($rights as $right) {
+               DB::table('role_rights')->insert(
+                   ['role_id'=>$role_id,
+                       'context_id' => $right->context_id,
+                       'add_right' => $right->is_add,
+                       'update_right' => $right->is_update,
+                       'delete_right' => $right->is_delete,
+                       'view_right' => $right->is_read,
+                       'created_at' => date("Y-m-d  H:i:s")
+                   ]
+               );
+           }
+
+
+        return response()->json(['status'=> true,'message'=> 'Role Group Updated Successfully']);
     }
 
 }
