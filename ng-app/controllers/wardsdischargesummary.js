@@ -36,7 +36,10 @@ AppEHR.controller('wardsDischargeSummaryController', ['$scope', '$rootScope','$w
 			}
 			$scope.allAdmitPatient = res.data;
 			$scope.admitCount = res.count;
-		}
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
 	}
 	function admitPatientFailure(error){
 		console.log(error);
@@ -156,7 +159,10 @@ AppEHR.controller('wardsDischargeSummaryController', ['$scope', '$rootScope','$w
 					offset: 0,
 					limit: $scope.itemsPerPage
 				}, admitPatientSucess, admitPatientFailure);
-			}
+			}else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
+            }
 		}
 		function movePatientFailure(error){
 			console.log(error);
@@ -214,7 +220,10 @@ AppEHR.controller('wardsDischargeSummaryController', ['$scope', '$rootScope','$w
 				offset: 0,
 				limit: $scope.itemsPerPage
 			}, admitPatientSucess, admitPatientFailure);
-    	}
+    	}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
     }
     function dischargeFailure(error){
     	console.log(error);
@@ -249,7 +258,10 @@ AppEHR.controller('wardsDischargeSummaryController', ['$scope', '$rootScope','$w
 				offset: 0,
 				limit: $scope.itemsPerPage
 			}, admitPatientSucess, admitPatientFailure);
-    	}
+    	}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
     }
     function updateAdmitPatientFailure(error){
     	console.log(error);

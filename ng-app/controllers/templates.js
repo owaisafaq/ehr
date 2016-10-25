@@ -46,6 +46,9 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
 
             $(".addtemplates").hide();
             $(".main_templates").show();
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         }
     }
 
@@ -118,6 +121,9 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
             //$scope.templateLists.push($scope.cat_unique);
             $(".editTemplateTab").hide();
             $(".main_templates").show();
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         }
     }
 
@@ -192,6 +198,9 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
                 $scope.category = [];
                 $scope.submitted = false;
             },500);
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         }
     }
 
@@ -241,6 +250,9 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
                 $scope.category = [];
                 $scope.submitted = false;
             },500);
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         }
     }
 
@@ -257,6 +269,9 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
                 if (res.status == true) {
                     $rootScope.loader = "hide";
                     getTemplateCategory.get({token: $window.sessionStorage.token, template_type: 2}, TemplateCategorySuccess, TemplateCategoryFailed);
+                }else if(res.error_code == 500){
+                    console.log(res);
+                    $rootScope.RolesAccess(res.message);
                 }else{
                    alert(res.message);
                 }
@@ -280,9 +295,9 @@ AppEHR.controller('templates', ['$scope', '$rootScope', 'mySchema', '$window', '
                     getTemplates.get({
                         token: $window.sessionStorage.token, template_type: 2
                     }, getTemplateSuccess, getTemplateFailure);
-
-
-
+                }else if(res.error_code == 500){
+                    console.log(res);
+                    $rootScope.RolesAccess(res.message);
                 }else{
                     alert(res.message);
                 }

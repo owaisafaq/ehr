@@ -35,7 +35,10 @@ AppEHR.controller('wardBedListingController', ['$scope', '$rootScope', '$window'
                 $scope.allWards[k].number_of_beds = parseFloat($scope.allWards[k].number_of_beds);
             }
 			$scope.wardsCount = res.count;
-		}
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
 	}
 	function getWardsFailure(error){
 		console.log(error);
@@ -101,6 +104,9 @@ AppEHR.controller('wardBedListingController', ['$scope', '$rootScope', '$window'
                     offset: 0
                 }, getWardsSuccess, getWardsFailure);
 
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
         }
         function createWardFailure(error){
@@ -136,7 +142,9 @@ AppEHR.controller('wardBedListingController', ['$scope', '$rootScope', '$window'
                     limit: $scope.itemsPerPage, 
                     offset: 0
                 }, getWardsSuccess, getWardsFailure);
-
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
         }
         function updateWardFailure(error){
@@ -198,7 +206,10 @@ AppEHR.controller('wardBedListingController', ['$scope', '$rootScope', '$window'
 					limit: $scope.itemsPerPage, 
 					offset: 0
 				}, getWardsSuccess, getWardsFailure);
-			}
+			}else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
+            }
 		}
 		function deleteWardFailure(error){
 			console.log(error);

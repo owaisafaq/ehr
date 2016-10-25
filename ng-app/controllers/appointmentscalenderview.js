@@ -35,7 +35,10 @@ AppEHR.controller('appointmentsCalenderController', ['$scope', '$rootScope', '$w
                 $('#calendar').fullCalendar( 'removeEvents');
                 $('#calendar').fullCalendar( 'addEventSource', event, true);
             }else $('#calendar').fullCalendar( 'addEventSource', event, true);
-		}
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
 	}
 	function AppointmentCalenderFailure(error){
 		$('#internetError').modal('show');
@@ -241,6 +244,9 @@ AppEHR.controller('appointmentsCalenderController', ['$scope', '$rootScope', '$w
                     $scope.appointment = {};
                     $scope.submitted = false;
                     AppointmentCalender.get({token: $window.sessionStorage.token}, AppointmentCalenderSuccess, AppointmentCalenderFailure);
+                }else if(res.error_code == 500){
+                    console.log(res);
+                    $rootScope.RolesAccess(res.message);
                 }
             }
             function createAppointmentFailure(error){

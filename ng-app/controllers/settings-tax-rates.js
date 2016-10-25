@@ -20,7 +20,10 @@ AppEHR.controller('settingsTaxRates', ['$scope', '$rootScope', '$window', '$rout
             }
 			$scope.TaxRateLists = res.data;
 			$scope.taxRatesCount = res.count;
-		}
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
 	}
 	function GetAllTaxRatesFailure(error) {
 		$('#internetError').modal('show');
@@ -66,7 +69,10 @@ AppEHR.controller('settingsTaxRates', ['$scope', '$rootScope', '$window', '$rout
 			GetAllTaxRates.get({
 				token: $window.sessionStorage.token
 			}, GetAllTaxRatesSuccess, GetAllTaxRatesFailure);
-		}
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
 	}
 
 	function deleteTaxRateFailure(error){
@@ -100,7 +106,10 @@ AppEHR.controller('settingsTaxRates', ['$scope', '$rootScope', '$window', '$rout
 			GetAllTaxRates.get({
 				token: $window.sessionStorage.token
 			}, GetAllTaxRatesSuccess, GetAllTaxRatesFailure);
-		} else {
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        } else {
 			$scope.hideLoader = "hide";
 			$scope.addTextRateBtn = false;
 			$scope.message = true;
@@ -125,7 +134,10 @@ AppEHR.controller('settingsTaxRates', ['$scope', '$rootScope', '$window', '$rout
 		if (res.status == true) {
 			$scope.editTaxRateData = res.data;
 			$('#edittax').modal('show');
-		}
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
 	}
 	function GetAllTaxRateFailure(error) {
 		$('#internetError').modal('show');
@@ -160,7 +172,10 @@ AppEHR.controller('settingsTaxRates', ['$scope', '$rootScope', '$window', '$rout
 				$scope.errorMessage = "";
 				$scope.editTaxRateData = {};
 			},1500);
-		} else {
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        } else {
 			$rootScope.loader = "hide";
 			$scope.updateTextRateBtn = false;
 			$scope.message = true;

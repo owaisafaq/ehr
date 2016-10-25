@@ -385,6 +385,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                         $scope.disabledTabAdress = 'active';
                         $scope.disabledTabInfo = '';
                         $scope.disabledTabs = "";
+                    }else if(res.error_code == 500){
+                        console.log(res);
+                        $rootScope.RolesAccess(res.message);
                     } else {
                         $rootScope.loader = 'hide';
                         $scope.showSubmitButton = true;
@@ -400,6 +403,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     if (res.status == true) {
                         $rootScope.loader = 'hide';
                         $window.location.href = "#/patient-summary-demographics/"+$scope.PI.patient_ID;
+                    }else if(res.error_code == 500){
+                        console.log(res);
+                        $rootScope.RolesAccess(res.message);
                     } else {
                         $scope.showSubmitButton = true;
                     }
@@ -460,6 +466,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                             }
                             $scope.disabledTabAdress = '';
                             //$scope.disabledTabs = "";
+                        }else if(res.error_code == 500){
+                            console.log(res);
+                            $rootScope.RolesAccess(res.message);
                         } else {
                             $rootScope.loader = 'hide';
                             $scope.errorMessage = true;
@@ -487,6 +496,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                             /*$scope.disabledTabKin = 'active';
                              $scope.disabledTabAdress = '';
                              $scope.disabledTabs = "";*/
+                        }else if(res.error_code == 500){
+                            console.log(res);
+                            $rootScope.RolesAccess(res.message);
                         } else {
                             $scope.showSubmitButtonAddress = true;
                         }
@@ -541,6 +553,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                             $scope.disabledTabEmployer = $scope.disabledTabEmployer != 'active' ? '' : "active";
                             $scope.disabledTabKin = "";
                             //$scope.disabledTabs = "";
+                        }else if(res.error_code == 500){
+                            console.log(res);
+                            $rootScope.RolesAccess(res.message);
                         } else {
                             $rootScope.loader = 'hide';
                             $scope.showSubmitButtonKin = true;
@@ -564,6 +579,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                             
                             $scope.disabledTabs = "";
                             $window.location.href = "#/patient-summary-demographics/"+$window.sessionStorage.patient_id;
+                        }else if(res.error_code == 500){
+                            console.log(res);
+                            $rootScope.RolesAccess(res.message);
                         } else {
                             $scope.showSubmitButtonKin = true;
                             $rootScope.loader = 'hide';
@@ -612,6 +630,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                             $scope.disabledTabPatientPlant = $scope.disabledTabPatientPlant != 'active' ? '' : "active";
                             // $scope.disabledTabPatientPlant = 'active';
                             $scope.disabledTabEmployer = '';
+                        }else if(res.error_code == 500){
+                            console.log(res);
+                            $rootScope.RolesAccess(res.message);
                         } else {
                             $rootScope.loader = 'hide';
                             $scope.showSubmitButtonEmployer = true;
@@ -633,6 +654,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                             $scope.showSubmitButtonAddress = false;
                             $scope.disabledTabs = "";
                             $window.location.href = "#/patient-summary-demographics/"+$window.sessionStorage.patient_id;
+                        }else if(res.error_code == 500){
+                            console.log(res);
+                            $rootScope.RolesAccess(res.message);
                         } else {
                             $scope.errorKinMessage = true;
                             $scope.showSubmitButtonKin = true;
@@ -986,6 +1010,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 setTimeout(function () {
                     $('select').trigger('change');
                 }, 100);
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
         }
         function patientEditFailed(error) {
@@ -997,6 +1024,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             if (res.status == true) {
                 $scope.archives = res.data;
                 //console.log(res.data);
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
         }
 
@@ -1061,8 +1091,12 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                         i++;
                     });
                 }, function (response) {
-                    if (response.status > 0)
+                    if (response.status > 0){
                         $scope.errorMsg = response.status + ': ' + response.data;
+                    }else if(res.error_code == 500){
+                        console.log(res);
+                        $rootScope.RolesAccess(res.message);
+                    }
                 }, function (evt) {
                     file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
                 });
@@ -1112,6 +1146,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 GetResourcesByFolderArchives.get({token: $window.sessionStorage.token, patient_id: $routeParams.parentID == undefined ? $window.sessionStorage.patient_id : $routeParams.parentID, followup_parent_id: $scope.followupParentId}, nestedFolderSuccess, nestedFolderFailure);
 
                 ListFolderArchives.get({token: $window.sessionStorage.token, patient_id: $routeParams.parentID == undefined ? $window.sessionStorage.patient_id : $routeParams.parentID, followup_parent_id: $scope.followupParentId}, listFolderSuccess, listFolderFailure);
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
         }
 
@@ -1127,6 +1164,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 $('.archive_buttons .edit,.archive_buttons .delete').css('display','none')
                 GetResourcesByFolderArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, followup_parent_id: $scope.followupParentId}, nestedFolderSuccess, nestedFolderFailure);
                 ListFolderArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, followup_parent_id: $scope.followupParentId}, listFolderSuccess, listFolderFailure);
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
         }
 
@@ -1150,6 +1190,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             if (res.status == true) {
                 $rootScope.loader = 'hide';
                 GetArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id}, archiveSuccess, archiveFailure);
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
         }
         // to edit folder or filename
@@ -1170,6 +1213,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             if (res.status == true) {
                 $('.archive_buttons .edit,.archive_buttons .delete').css('display','none')
                 ListFolderArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, followup_parent_id: $scope.followupParentId}, listFolderSuccess, listFolderFailure);
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
         }
 
@@ -1183,6 +1229,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             if (res.status == true) {
                 $('.archive_buttons .edit,.archive_buttons .delete').css('display','none')
                 GetResourcesByFolderArchives.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id, followup_parent_id: $scope.followupParentId}, nestedFolderSuccess, nestedFolderFailure);
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
         }
         function editFileArchiveFailure(error) {
@@ -1208,6 +1257,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 $scope.backLinkID = res.data.parent_id == undefined ? res.data[0].followup_parent_id : res.data.parent_id ;*/
                 console.log($scope.backLinkID);
                 $rootScope.loader = 'hide';
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
         }
         function listFolderFailure(error) {
@@ -1217,6 +1269,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
         $scope.backLinkID = '0';
         function nestedFolderSuccess(res) {
+            $rootScope.loader = 'hide';
             if (res.status == true) {
                 $scope.backButtonArchive = false;
                 //$scope.foldersArchive = [];
@@ -1225,7 +1278,10 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 console.log("bckid "+$scope.backLinkID);*/
                 $scope.archives = [];
                 $scope.archives = res.data;
-                $rootScope.loader = 'hide';
+                
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
         }
 
@@ -1316,6 +1372,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 console.log("bckid "+$scope.backLinkID);
                 $scope.foldersArchive = res.data;
                 $rootScope.loader = 'hide';
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
         }
 
@@ -1361,6 +1420,9 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 $scope.folderName = '';
                 $scope.archiveSuccessMessage = res.message;
                 $rootScope.loader = 'hide';
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
         }
 
@@ -1797,8 +1859,10 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                         token: $window.sessionStorage.token,
                         patient_id: $window.sessionStorage.patient_id
                     }, patientEditSuccess, patientEditFailed);
-                }
-                else {
+                }else if(res.error_code == 500){
+                    console.log(res);
+                    $rootScope.RolesAccess(res.message);
+                }else {
                     console.log("failure")
                 }
             }

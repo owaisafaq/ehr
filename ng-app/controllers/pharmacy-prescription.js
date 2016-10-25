@@ -27,7 +27,10 @@ AppEHR.controller('pharmacyPrescription', ['$scope', '$rootScope', '$window', 'P
 			$scope.allPharmacies = res.data;
 			$scope.pharmacyCount = res.count;
 			
-		}
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
 	}
 
 	function pharmanyListFailure(error){

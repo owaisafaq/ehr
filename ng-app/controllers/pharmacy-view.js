@@ -56,6 +56,9 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                     $scope.costArray[i] = parseInt($scope.PrescriptionViews[i].dispense) * parseInt($scope.PrescriptionViews[i].amount);
 //                    console.log($scope.costArray[i], $scope.PrescriptionViews[i].dispense, $scope.PrescriptionViews[i].total_amount);
                 }
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
         }
         function prescriptionFailure(res) {
@@ -213,7 +216,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         }
 
         function PrescriptionSuccessPop(res) {
-            console.log(res, "popup response")
+            console.log(res, "popup response");
             if (res.status == true) {
                 $('#addmedication').modal('hide');
                 $scope.medicationsDataPush = [];
@@ -221,6 +224,9 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                     token: $window.sessionStorage.token,
                     precription_id: $scope.prescriptionID
                 }, prescriptionSuccess, prescriptionFailure);
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
         }
         function PrescriptionFailurePop(res) {
@@ -325,6 +331,9 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                         token: $window.sessionStorage.token,
                         precription_id: $scope.prescriptionID
                     }, prescriptionSuccess, prescriptionFailure);
+                }else if(res.error_code == 500){
+                    console.log(res);
+                    $rootScope.RolesAccess(res.message);
                 }
             }
             function deleteMedicationFailure(error){
@@ -366,6 +375,9 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                 $scope.message = true;
                 setTimeout(function() {$('#simpleModal1').modal('hide');}, 1000);
                 
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
         }
 
@@ -392,12 +404,15 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
             $('#internetError').modal('show');
         }
 
-            PrescriptionPDF.get({token: $window.sessionStorage.token, prescription_id: $scope.prescriptionID}, presSuccess, pressFailure);
+        PrescriptionPDF.get({token: $window.sessionStorage.token, prescription_id: $scope.prescriptionID}, presSuccess, pressFailure);
 
         function presSuccess(res){
             if(res.status == true){
 //                console.log(res, 'lll');
                 $('.showPdf').html("<iframe class='abc' src="+res.data+"></iframe>");
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
         }
         function pressFailure(){
@@ -416,6 +431,9 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                     token: $window.sessionStorage.token,
                     precription_id: $scope.prescriptionID
                 }, prescriptionSuccess, prescriptionFailure);
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
         }
         $scope.dropDownData = [];
@@ -454,6 +472,9 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                     token: $window.sessionStorage.token,
                     precription_id: $scope.prescriptionID
                 }, prescriptionSuccess, prescriptionFailure);
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
         }
 

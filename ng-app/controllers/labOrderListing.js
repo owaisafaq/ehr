@@ -42,7 +42,10 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
             }
 			$scope.labOrders = res.data;
 
-		}
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
 	}
 	function GetAllLabOrdersFailure(error) { // on failure GetAllLabOrders
         $('#internetError').modal('show');
@@ -125,6 +128,9 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
                     limit: $scope.itemsPerPage, offset: 0
                 }, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
             }
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         } else {
             $scope.hideLoader = "hide";
             $scope.cancleOrderBtn = false;
@@ -259,6 +265,9 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
                     limit: $scope.itemsPerPage, offset: 0
                 }, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
             }
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         } else {
             $scope.hideLoader = "hide";
             $scope.OrderBtn = false;
@@ -337,6 +346,9 @@ AppEHR.controller('labOrderListing', ['$scope', '$rootScope', 'GetAllLabOrders',
             $scope.signoffStatus = 1;
             $('#signoff').modal('hide');
             $('#successSignoff').modal('show');
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         }
     }
     function signoffFailure(res){

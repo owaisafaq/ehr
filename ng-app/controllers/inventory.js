@@ -17,6 +17,9 @@ var AppEHR = angular.module('AppEHR');
                         return true;
                 }
                 $scope.InventoryLists = res.data;
+                }else if(res.error_code == 500){
+                    console.log(res);
+                    $rootScope.RolesAccess(res.message);
                 }
                 }
 
@@ -60,13 +63,16 @@ var AppEHR = angular.module('AppEHR');
         }
 
         function CategorySuccess(res) {
-        if (res.status == true) {
-        $rootScope.loader = "hide";
-                $scope.CategoryLists.push($scope.cat_unique);
-                $timeout(function () {
-                $('#addCategory').modal('hide');
-                }, 500);
-        }
+            if (res.status == true) {
+            $rootScope.loader = "hide";
+                    $scope.CategoryLists.push($scope.cat_unique);
+                    $timeout(function () {
+                    $('#addCategory').modal('hide');
+                    }, 500);
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
+            }
         }
 
         function CategoryFailure(error) {
@@ -137,6 +143,9 @@ var AppEHR = angular.module('AppEHR');
                 token: $window.sessionStorage.token
 
                 }, GetAllSupplierSuccess, GetAllSupplierFailure);
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         }
         }
 
@@ -227,6 +236,9 @@ var AppEHR = angular.module('AppEHR');
                 GetAllInventory.get({
                 token: $window.sessionStorage.token,
                 }, GetAllInventorySuccess, GetAllInventoryFailure);
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         } else{
         $rootScope.loader = "hide";
                 $('#errorModal').modal('show');
@@ -328,6 +340,9 @@ var AppEHR = angular.module('AppEHR');
                 }
 
 
+                }else if(res.error_code == 500){
+                    console.log(res);
+                    $rootScope.RolesAccess(res.message);
                 }
                 }
 
@@ -385,18 +400,21 @@ var AppEHR = angular.module('AppEHR');
         }
 
         function UpdateCategorySuccess(res) {
-        console.log(res);
-                console.log(res);
-                if (res.status == true) {
-        $rootScope.loader = "hide";
-                $timeout(function () {
-                $('#editCategory').modal('hide');
-                }, 500);
-                GetAllCategories.get({
-                token: $window.sessionStorage.token
+            console.log(res);
+                    console.log(res);
+                    if (res.status == true) {
+            $rootScope.loader = "hide";
+                    $timeout(function () {
+                    $('#editCategory').modal('hide');
+                    }, 500);
+                    GetAllCategories.get({
+                    token: $window.sessionStorage.token
 
-                }, GetAllCategoriesSuccess, GetAllCategoriesFailure);
-        }
+                    }, GetAllCategoriesSuccess, GetAllCategoriesFailure);
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
+            }
         }
 
         function UpdateCategoryFailure(error) {
@@ -438,8 +456,8 @@ var AppEHR = angular.module('AppEHR');
 
         function UpdateSupplierSuccess(res) {
         console.log(res);
-                if (res.status == true) {
-        $rootScope.loader = "hide";
+            if (res.status == true) {
+                $rootScope.loader = "hide";
                 $timeout(function () {
                 $('#editSupplier').modal('hide');
                 }, 500);
@@ -447,7 +465,10 @@ var AppEHR = angular.module('AppEHR');
                 token: $window.sessionStorage.token
 
                 }, GetAllSupplierSuccess, GetAllSupplierFailure);
-        }
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
+            }
         }
 
         function UpdateSupplierFailure(error) {
@@ -475,6 +496,9 @@ var AppEHR = angular.module('AppEHR');
                         token: $window.sessionStorage.token
 
                         }, GetAllSupplierSuccess, GetAllSupplierFailure);
+                }else if(res.error_code == 500){
+                    console.log(res);
+                    $rootScope.RolesAccess(res.message);
                 }
                 }
         function deleteSupplierInfoFailure(error) {
@@ -493,13 +517,16 @@ var AppEHR = angular.module('AppEHR');
                         $rootScope.loader = "show";
                         DeleteInventory.save({token: $window.sessionStorage.token, stock_id: stockID}, deleteStockInfoSuccess, deleteStockInfoFailure);
                         function deleteStockInfoSuccess(res) {
-                        if (res.status == true) {
-                        $rootScope.loader = "hide";
-                                console.log("Deleted");
-                                GetAllInventory.get({
-                                token: $window.sessionStorage.token,
-                                }, GetAllInventorySuccess, GetAllInventoryFailure);
-                        }
+                            if (res.status == true) {
+                            $rootScope.loader = "hide";
+                                    console.log("Deleted");
+                                    GetAllInventory.get({
+                                    token: $window.sessionStorage.token,
+                                    }, GetAllInventorySuccess, GetAllInventoryFailure);
+                            }else if(res.error_code == 500){
+                                console.log(res);
+                                $rootScope.RolesAccess(res.message);
+                            }
                         }
                 function deleteStockInfoFailure(error) {
                 $rootScope.loader = "hide";
@@ -515,12 +542,15 @@ var AppEHR = angular.module('AppEHR');
                         $rootScope.loader = "show";
                         GetSingleCategory.get({token: $window.sessionStorage.token, cat_id: catID}, getCategoryInfoSuccess, getCategoryInfoFailure);
                         function getCategoryInfoSuccess(res) {
-                        if (res.status == true) {
-                        $rootScope.loader = "hide";
-                                $scope.selectedCategory = res.data;
-                                console.log($scope.selectedCategory);
-                                $('#editCategory').modal('show');
-                        }
+                            if (res.status == true) {
+                            $rootScope.loader = "hide";
+                                    $scope.selectedCategory = res.data;
+                                    console.log($scope.selectedCategory);
+                                    $('#editCategory').modal('show');
+                            }else if(res.error_code == 500){
+                                console.log(res);
+                                $rootScope.RolesAccess(res.message);
+                            }
                         }
                 function getCategoryInfoFailure(error) {
                 $rootScope.loader = "hide";
@@ -538,14 +568,17 @@ var AppEHR = angular.module('AppEHR');
                         $rootScope.loader = "show";
                         DeleteCategory.save({token: $window.sessionStorage.token, cat_id: catID}, deleteCategoryInfoSuccess, deleteCategoryInfoFailure);
                         function deleteCategoryInfoSuccess(res) {
-                        if (res.status == true) {
-                        $rootScope.loader = "hide";
-                                console.log("Deleted");
-                                GetAllCategories.get({
-                                token: $window.sessionStorage.token
+                            if (res.status == true) {
+                            $rootScope.loader = "hide";
+                                    console.log("Deleted");
+                                    GetAllCategories.get({
+                                    token: $window.sessionStorage.token
 
-                                }, GetAllCategoriesSuccess, GetAllCategoriesFailure);
-                        }
+                                    }, GetAllCategoriesSuccess, GetAllCategoriesFailure);
+                            }else if(res.error_code == 500){
+                                console.log(res);
+                                $rootScope.RolesAccess(res.message);
+                            }
                         }
                 function deleteCategoryInfoFailure(error) {
                 $rootScope.loader = "hide";
@@ -561,14 +594,17 @@ var AppEHR = angular.module('AppEHR');
                         $rootScope.loader = "show";
                         GetSingleSupplier.get({token: $window.sessionStorage.token, supplier_id: supplierID}, getSupplierInfoSuccess, getSupplierInfoFailure);
                         function getSupplierInfoSuccess(res) {
-                        if (res.status == true) {
-                        //console.log(res);
-                        $rootScope.loader = "hide";
-                                //$scope.SupplierSelected = true;
-                                $scope.selectedSupplier = res.data;
-                                console.log($scope.selectedSupplier);
-                                $('#editSupplier').modal('show');
-                        }
+                            if (res.status == true) {
+                            //console.log(res);
+                            $rootScope.loader = "hide";
+                                    //$scope.SupplierSelected = true;
+                                    $scope.selectedSupplier = res.data;
+                                    console.log($scope.selectedSupplier);
+                                    $('#editSupplier').modal('show');
+                            }else if(res.error_code == 500){
+                                console.log(res);
+                                $rootScope.RolesAccess(res.message);
+                            }
                         }
                 function getSupplierInfoFailure(error) {
                 $rootScope.loader = "hide";
@@ -671,17 +707,20 @@ var AppEHR = angular.module('AppEHR');
                 console.log(ReorderUpdate);
                         updateReorderLevel.save(ReorderUpdate, ReorderUpdateSuccess, ReorderUpdateFailure);
                         function ReorderUpdateSuccess(res) {
-                        console.log(res);
-                                console.log(res);
-                                if (res.status == true) {
-                        $rootScope.loader = "hide";
+                            console.log(res);
+                            console.log(res);
+                            if (res.status == true) {
+                                $rootScope.loader = "hide";
                                 $timeout(function () {
                                 $('#update_reorder').modal('hide');
                                 }, 500);
                                 GetAllInventory.get({
                                 token: $window.sessionStorage.token,
                                 }, GetAllInventorySuccess, GetAllInventoryFailure);
-                        }
+                            }else if(res.error_code == 500){
+                                console.log(res);
+                                $rootScope.RolesAccess(res.message);
+                            }
                         }
 
                 function ReorderUpdateFailure(error) {
@@ -714,9 +753,9 @@ var AppEHR = angular.module('AppEHR');
                         ProductUpdate.save(updateProduct, ProductUpdateSuccess, ProductUpdateFailure);
                         function ProductUpdateSuccess(res) {
 
-                        console.log(res);
-                                if (res.status == true) {
-                        $rootScope.loader = "hide";
+                                console.log(res);
+                            if (res.status == true) {
+                                 $rootScope.loader = "hide";
                                 $(".inventory_detail").show();
                                 $(".inv_header").show();
                                 //$("#stock_det").hide();
@@ -725,7 +764,10 @@ var AppEHR = angular.module('AppEHR');
                                 GetAllInventory.get({
                                 token: $window.sessionStorage.token,
                                 }, GetAllInventorySuccess, GetAllInventoryFailure);
-                        }
+                            }else if(res.error_code == 500){
+                                console.log(res);
+                                $rootScope.RolesAccess(res.message);
+                            }
                         }
 
                 function ProductUpdateFailure(error) {

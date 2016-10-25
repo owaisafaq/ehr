@@ -104,6 +104,9 @@ AppEHR.controller('settingsFacility', ['$scope', '$rootScope', '$window', '$rout
             GetHospitalProfile.get({
                 token: $window.sessionStorage.token
             }, GetHospitalProfileSuccess, GetHospitalProfileFailure);
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         } else {
             $scope.hideLoader = "hide";
             $scope.addHospitalBtn = false;
@@ -140,8 +143,12 @@ AppEHR.controller('settingsFacility', ['$scope', '$rootScope', '$window', '$rout
                 i++;
                 //});
             }, function (response) {
-                if (response.status > 0)
+                if (response.status > 0){
                     $scope.errorMsg = response.status + ': ' + response.data;
+                }else if(res.error_code == 500){
+                    console.log(res);
+                    $rootScope.RolesAccess(res.message);
+                }
             }, function (evt) {
                 $scope.imageUploading = true;
                 file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
@@ -208,6 +215,9 @@ AppEHR.controller('settingsFacility', ['$scope', '$rootScope', '$window', '$rout
             GetAllDepartments.get({
                 token: $window.sessionStorage.token
             }, GetAllDepartmentsSuccess, GetAllDepartmentsFailure);
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         }
     }
 
@@ -242,6 +252,9 @@ AppEHR.controller('settingsFacility', ['$scope', '$rootScope', '$window', '$rout
             GetAllDepartments.get({
                 token: $window.sessionStorage.token
             }, GetAllDepartmentsSuccess, GetAllDepartmentsFailure);
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         } else {
             $scope.hideLoader = "hide";
             $scope.addDepartmentBtn = false;
@@ -305,6 +318,9 @@ AppEHR.controller('settingsFacility', ['$scope', '$rootScope', '$window', '$rout
                 $scope.errorMessage = "";
                 $scope.editDepartmentData = {};
             },1500);
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         } else {
             $rootScope.loader = "hide";
             $scope.updateDepartmentBtn = false;

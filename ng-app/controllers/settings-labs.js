@@ -21,7 +21,10 @@ AppEHR.controller('settingsLabs', ['$scope', '$rootScope', '$window', '$routePar
 			}
 			$scope.LabLists = res.data;
 			$scope.labsCount = res.count;
-		}
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
 	}
 	function GetAllLabsFailure(error) {
 		$('#internetError').modal('show');
@@ -109,7 +112,10 @@ AppEHR.controller('settingsLabs', ['$scope', '$rootScope', '$window', '$routePar
 				token: $window.sessionStorage.token,
 				offset: 0, limit: 0
 			}, GetLabsSuccess, GetLabsFailure);
-		}
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
 	}
 
 	function deleteLabFailure(error){
@@ -148,7 +154,10 @@ AppEHR.controller('settingsLabs', ['$scope', '$rootScope', '$window', '$routePar
 				token: $window.sessionStorage.token,
 				offset: 0, limit: 0
 			}, GetLabsSuccess, GetLabsFailure);
-		} else {
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        } else {
 			$scope.hideLoader = "hide";
 			$scope.addLabBtn = false;
 			$scope.message = true;
@@ -213,7 +222,10 @@ AppEHR.controller('settingsLabs', ['$scope', '$rootScope', '$window', '$routePar
 				$scope.errorMessage = "";
 				$scope.editLabData = {};
 			},1500);
-		} else {
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        } else {
 			$rootScope.loader = "hide";
 			$scope.updateLabBtn = false;
 			$scope.message = true;
@@ -270,7 +282,10 @@ AppEHR.controller('settingsLabs', ['$scope', '$rootScope', '$window', '$routePar
 				token: $window.sessionStorage.token,
 				offset: 0, limit: 0
 			}, GetLabsSuccess, GetLabsFailure);
-		}
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
 	}
 
 	function deleteLabTestFailure(error){
@@ -318,7 +333,10 @@ AppEHR.controller('settingsLabs', ['$scope', '$rootScope', '$window', '$routePar
 			GetAllLabTests.get({
 				token: $window.sessionStorage.token
 			}, GetAllLabTestsSuccess, GetAllLabTestsFailure);
-		} else {
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        } else {
 			$scope.hideLoader = "hide";
 			$scope.addLabTestBtn = false;
 			$scope.message = true;
@@ -393,7 +411,10 @@ AppEHR.controller('settingsLabs', ['$scope', '$rootScope', '$window', '$routePar
 				$scope.errorMessage = "";
 				$scope.editLabTestData = {};
 			},1500);
-		} else {
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        } else {
 			$rootScope.loader = "hide";
 			$scope.updateLabTestBtn = false;
 			$scope.message = true;
