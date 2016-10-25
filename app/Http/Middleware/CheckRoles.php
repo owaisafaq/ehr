@@ -39,6 +39,7 @@ class CheckRoles {
         }
 
         else{
+
             $context_id = $context_method->context_id;
 
             $user_id = Auth::user()->id;

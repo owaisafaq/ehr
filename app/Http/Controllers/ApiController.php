@@ -770,9 +770,9 @@ class ApiController extends Controller
 
         $user = DB::table('users')
             ->join('roles', 'roles.id', '=', 'users.role_id')
-            ->select(DB::raw('id,name,first_name,last_name,telephone_number,email,status,role_id,roles.name as role_name'))
-            ->where('status', 1)
-            ->where('id', $user_id)
+            ->select(DB::raw('users.id,users.name,first_name,last_name,telephone_number,email,role_id,roles.name as role_name'))
+            ->where('users.status', 1)
+            ->where('users.id', $user_id)
             ->first();
 
         return response()->json(['status' => true,'data' => $user]);
