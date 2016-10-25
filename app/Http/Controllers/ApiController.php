@@ -738,26 +738,26 @@ class ApiController extends Controller
         if ($limit > 0 || $offset > 0) {
 
             $users = DB::table('users')
-                ->select(DB::raw('id,name,first_name,last_name,telephone_number,email,status'))
-                ->where('status', 1)
+                ->join('roles','roles.id', '=', 'users.role_id')
+                ->select(DB::raw('users.id,users.name,first_name,last_name,telephone_number,email,users.role_id,roles.name as role_name'))
+                ->where('users.status',1)
                 ->skip($offset)->take($limit)
                 ->get();
 
             $count = DB::table('users')
-                ->select(DB::raw('*'))
-                ->where('status', 1)
+                ->join('roles', 'roles.id', '=', 'users.role_id')
+                ->select(DB::raw('users.id,users.name,first_name,last_name,telephone_number,email,users.role_id,roles.name as role_name'))
+                ->where('users.status', 1)
                 ->count();
 
         } else {
             $users = DB::table('users')
-                ->select(DB::raw('id,name,first_name,last_name,telephone_number,email,status'))
-                ->where('status', 1)
+                ->join('roles', 'roles.id', '=', 'users.role_id')
+                ->select(DB::raw('users.id,users.name,first_name,last_name,telephone_number,email,users.role_id,roles.name as role_name'))
+                ->where('users.status', 1)
                 ->get();
 
-            $count = DB::table('users')
-                ->select(DB::raw('*'))
-                ->where('status', 1)
-                ->count();
+            $count = count($users);
         }
 
         return response()->json(['status' => true,'data' => $users,'count'=>$count]);
@@ -3167,7 +3167,7 @@ class ApiController extends Controller
     }
 
 
-    public function delete_template(Request $request)
+    public function template(Request $request)
     {
         $template_id = $request->input('template_id');
 

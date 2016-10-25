@@ -37,6 +37,10 @@ $app->group(['prefix' => 'api'], function () use ($app) {
     $app->post('upload_hospital_image', 'App\Http\Controllers\SettingController@upload_hospital_image');
     $app->options('upload_hospital_image','App\Http\Controllers\SettingController@optupload_hospital_image');
 });
+
+
+
+
 $app->group(['prefix'=> 'api','middleware'=>['jwt.auth'/*,'App\Http\Middleware\CheckRoles'*/]], function () use ($app) {
 
 
@@ -250,7 +254,7 @@ $app->group(['prefix' => 'api',['jwt.auth'/*,'App\Http\Middleware\CheckRoles'*/]
     $app->post('delete_inventory','App\Http\Controllers\InventoryAPIController@delete_stock');
     $app->post('update_inventory','App\Http\Controllers\InventoryAPIController@update_stock');
     $app->post('update_reorder_level','App\Http\Controllers\InventoryAPIController@update_order_level');
-    $app->post('update_reorder_level','App\Http\Controllers\InventoryAPIController@update_order_level');
+   // $app->post('update_reorder_level','App\Http\Controllers\InventoryAPIController@update_order_level');
     $app->post('add_product','App\Http\Controllers\InventoryAPIController@add_product');
     $app->post('add_product_inventory','App\Http\Controllers\InventoryAPIController@add_product_inventory');
     $app->post('get_reorder_level','App\Http\Controllers\InventoryAPIController@get_reorder_level');
@@ -320,7 +324,6 @@ $app->group(['prefix' => 'api',['jwt.auth'/*,'App\Http\Middleware\CheckRoles'*/]
 
     // Add Material Dropdown
     $app->get('get_inventory_categories','App\Http\Controllers\ApiController@get_inventory_categories');
-
 
 
     //clinical reports template categories

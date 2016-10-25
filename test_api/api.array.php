@@ -31,6 +31,8 @@ $api->url = HOST . 'register_user';
 $api->method = "POST";
 $api->description = "Register User";
 $api->params->name = "owais";
+$api->params->first_name = "owais";
+$api->params->last_name = "owais";
 $api->params->email = "owais@gmail.com";
 $api->params->password = "1234";
 $api->params->role_id = "1";
@@ -3369,6 +3371,41 @@ $api->params->token = "123";
 
 $api_arr [] = $api;
 
+
+//Get All Users
+$api = new api();
+$api->name = "Get All Users";
+$api->url = HOST . 'get_all_users';
+$api->method = "GET";
+$api->params->offset = "1";
+$api->params->limit = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+//Get User
+$api = new api();
+$api->name = "Get User";
+$api->url = HOST . 'get_user';
+$api->method = "GET";
+$api->params->user_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+//Delete User
+$api = new api();
+$api->name = "Delete User";
+$api->url = HOST . 'delete_user';
+$api->method = "POST";
+$api->params->user_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+
 //Get All Contexts
 $api = new api();
 $api->name = "Get All Contexts";
@@ -3398,6 +3435,7 @@ $api->name = "Update Role Group";
 $api->url = HOST . 'update_role_group';
 $api->method = "POST";
 $api->params->role_id = "3";
+$api->params->name = "3";
 $api->params->role_rights = "";
 $api->params->token = "123";
 
