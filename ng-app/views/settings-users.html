@@ -35,7 +35,7 @@
                                 <td>{{ UserList.name }}</td>
                                 <td>{{ UserList.first_name }}</td>
                                 <td>{{ UserList.last_name }}</td>
-                                <td>Role</td>
+                                <td>{{ UserList.role_name }}</td>
                                 <td>{{ UserList.email }}</td>
                                 <td>{{ UserList.telephone_number }}</td>
                                 <td>
@@ -126,11 +126,11 @@
                             <label>User Role Group</label>
                         </div>
                         <div class="col-lg-4">
-                              <select class="form-control">
-                                <option>Search Role Group</option>
-                                <option>Role A</option>
-                                <option>Role B</option>
+                            <select class="form-control add-multiple" ng-model="userData.role_id" placeholder="Search Role Group" name="role_id" ng-class="{true: 'error'}[submitted && userForm1.role_id.$invalid]" required>
+                                <option value=""></option>
+                                <option ng-repeat="Role in Roles" value="{{ Role.id }}">{{ Role.name }}</option>
                             </select>
+                            <p class="help-block PIValid" ng-show="submitted && userForm1.role_id.$error.required">Required</p>
                         </div>
                     </div>
                     <div class="modal-footer row">
@@ -200,11 +200,11 @@
                             <label>User Role Group</label>
                         </div>
                         <div class="col-lg-4">
-                            <select class="form-control">
-                                <option>Search Role Group</option>
-                                <option>Role A</option>
-                                <option>Role B</option>
+                            <select class="form-control" ng-model="editUserData.role_id" placeholder="Select Role Group" name="role_id" ng-class="{true: 'error'}[submitted && userForm2.role_id.$invalid]" required>
+                                <option value=""></option>
+                                <option ng-repeat="k in Roles" value="{{ k.id }}" ng-selected="k.id == editUserData.role_id">{{ k.name }}</option>
                             </select>
+                            <p class="help-block PIValid" ng-show="submitted && userForm2.role_id.$error.required">Required</p>
                         </div>
                     </div>
                     <div class="modal-footer row">
