@@ -89,6 +89,16 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->post('add_manufacturer','App\Http\Controllers\ApiController@add_manufacturer');
 
+
+    //Template Types
+
+    $app->post('get_lab_template_type','App\Http\Controllers\OrderController@get_lab_template_type');
+    $app->post('update_lab_template_types','App\Http\Controllers\OrderController@update_lab_template_types');
+    $app->post('add_lab_template_types','App\Http\Controllers\OrderController@add_lab_template_types');
+    $app->post('delete_lab_template_types','App\Http\Controllers\OrderController@delete_lab_template_types');
+
+
+
 });
 
 
@@ -97,7 +107,7 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($app) {
 
 
-    //Templates for Lab Orders
+    //Templates  Categories for Lab
 
     $app->get('get_lab_template_categories','App\Http\Controllers\OrderController@get_lab_template_categories');
     $app->post('get_lab_template_category','App\Http\Controllers\OrderController@get_lab_template_category');
@@ -107,12 +117,6 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
 
     $app->get('get_lab_template_types','App\Http\Controllers\OrderController@get_lab_template_types');
 
-    //Template Types
-
-    $app->post('get_lab_template_type','App\Http\Controllers\OrderController@get_lab_template_type');
-    $app->post('update_lab_template_types','App\Http\Controllers\OrderController@update_lab_template_types');
-    $app->post('add_lab_template_types','App\Http\Controllers\OrderController@add_lab_template_types');
-    $app->post('delete_lab_template_types','App\Http\Controllers\OrderController@delete_lab_template_types');
 
     //Templates
 
@@ -122,7 +126,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->post('add_template','App\Http\Controllers\ApiController@add_template');
     $app->post('edit_template','App\Http\Controllers\ApiController@edit_template');
 
-    //Templates for Clinical Notes
+
+    //Templates Categories for Clinical Notes
     $app->get('get_templates_categories','App\Http\Controllers\ApiController@get_templates_categories');
     $app->post('delete_template_category','App\Http\Controllers\ApiController@delete_template_category');
     $app->post('add_template_category','App\Http\Controllers\ApiController@add_template_category');
