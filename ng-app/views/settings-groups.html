@@ -161,9 +161,9 @@
                             <label>Right & Context</label>
                         </div>
                         <div class="col-lg-8 add-multiple-con_select2">
-                            <select class="form-control add-multiple" ng-model="editRoleData.role_rights" placeholder="Search Context" name="role_rights" ng-class="{true:'error'}[submitted && empty_flag]" ng-change="EditcontextOnChange(roleData.role_rights);">
+                            <select class="form-control add-multiple" ng-model="editRoleData.role_rights" placeholder="Search Context" name="role_rights" ng-class="{true:'error'}[submitted && empty_flag]" ng-change="EditcontextOnChange(editRoleData.role_rights);">
                                 <option value=""></option>
-                                <option ng-repeat="lab in Contexts" value="{{ lab.id }}">{{ lab.name }}</option>
+                                <option ng-repeat="lab in Contexts" value="{{ lab.id }}">{{ lab.name }} {{ lab.id }}</option>
                             </select>
                             <p class="help-block PIValid" ng-show="submitted && empty_flag">Required</p>
                         </div>

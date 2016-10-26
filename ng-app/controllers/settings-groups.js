@@ -277,7 +277,7 @@ AppEHR.controller('settingsGroups', ['$scope', '$rootScope', '$window', '$routeP
     };
     function addRoleSuccess(res){ // on success
         if (res.status == true) {
-            $scope.labTypeFlag = true;
+            $scope.labTypeFlag = false;$scope.templateFlag = false;
             $scope.hideLoader = 'hide';
             $scope.message = true;
             $scope.addRoleBtn = false;
@@ -413,11 +413,12 @@ AppEHR.controller('settingsGroups', ['$scope', '$rootScope', '$window', '$routeP
         }
     }
     $scope.EditcontextOnChange = function(id){
+        console.log(id)
         if(id == 31){
             $scope.EtemplateFlag = true;
             $scope.ElabTypeFlag = false;
             console.log('goal');
-        }else if(id == 9){
+        }else if(id == 9 || id == 9 || id == 9){
             $scope.ElabTypeFlag = true;
             $scope.EtemplateFlag = false;
         }else{
