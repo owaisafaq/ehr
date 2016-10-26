@@ -54,6 +54,9 @@ AppEHR.controller('clinicalProgressTemplate', ['$scope', '$rootScope', 'mySchema
             $(".main_templates").show();
 
 
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         }
     }
 
@@ -103,6 +106,9 @@ AppEHR.controller('clinicalProgressTemplate', ['$scope', '$rootScope', 'mySchema
             setTimeout(function () {
                 $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
             },500);
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         }
     }
 
@@ -126,6 +132,9 @@ AppEHR.controller('clinicalProgressTemplate', ['$scope', '$rootScope', 'mySchema
             //$scope.templateLists.push($scope.cat_unique);
             $(".editTemplateTab").hide();
             $(".main_templates").show();
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         }
     }
 
@@ -149,6 +158,9 @@ AppEHR.controller('clinicalProgressTemplate', ['$scope', '$rootScope', 'mySchema
                 return true;
             }
             $scope.templateLists = res.data;
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         }
     }
 
@@ -201,6 +213,9 @@ AppEHR.controller('clinicalProgressTemplate', ['$scope', '$rootScope', 'mySchema
                 $scope.category = [];
                 $scope.submitted = false;
             },500);
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         }
     }
 
@@ -218,8 +233,9 @@ AppEHR.controller('clinicalProgressTemplate', ['$scope', '$rootScope', 'mySchema
                 if (res.status == true) {
                     $rootScope.loader = "hide";
                     getCliTemplateCategory.get({token: $window.sessionStorage.token, template_type: 1}, TemplateCategorySuccess, TemplateCategoryFailed);
-                }else{
-                   alert(res.message);
+                }else if(res.error_code == 500){
+                    console.log(res);
+                    $rootScope.RolesAccess(res.message);
                 }
             }
             function deleteCategoryInfoFailure(error) {
@@ -248,6 +264,9 @@ AppEHR.controller('clinicalProgressTemplate', ['$scope', '$rootScope', 'mySchema
 
 
 
+                }else if(res.error_code == 500){
+                    console.log(res);
+                    $rootScope.RolesAccess(res.message);
                 }else{
                     $rootScope.loader = "hide";
                     alert(res.message);
@@ -304,6 +323,9 @@ AppEHR.controller('clinicalProgressTemplate', ['$scope', '$rootScope', 'mySchema
                 $scope.category = [];
                 $scope.submitted = false;
             },500);
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         }
     }
 

@@ -81,7 +81,11 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
                 $scope.patientLists = [];
                 $scope.patientLists = res.data;
                 $scope.patientCount = res.count;
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
+
         }
 
         function GetAllPatientsFailure(error) {
@@ -237,8 +241,10 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
                 $scope.errorSymbol = "fa fa-check";// 
                 $scope.message = true;
                 setTimeout(function() {$('#simpleModal1').modal('hide');}, 1000);
-                
+            }else if(res.error_code == 500){
+                $rootScope.RolesAccess(res.message);
             }
+
         }
 
         function checkoutFailure(error){
@@ -259,6 +265,7 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
 
             function deletePatientSuccess(res){
                 $rootScope.loader = "hide";
+                console.log(res,' owais');
                 if(res.status ==  true){
                     $scope.hideOptions = true;
                     $scope.patientInfo = false;
@@ -270,12 +277,16 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
                         token: $window.sessionStorage.token,
                         offset: $scope.offset, limit: $scope.itemsPerPage
                     }, GetAllPatientsSuccess, GetAllPatientsFailure);
+                }else if(res.error_code == 500){
+                    $('#deleteModal').modal('hide');
+                    $rootScope.RolesAccess(res.message);
                 }
             }
 
             function deletePatientFailure(error){
+                $rootScope.loader = "hide";
                 $('#internetError').modal('show');
-                console.log(error);
+                console.log(error, 'error');
             }
         }
 

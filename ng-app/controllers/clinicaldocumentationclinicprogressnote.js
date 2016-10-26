@@ -53,8 +53,9 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
             },100);
           }
           
-      } else {
+      } else if(res.error_code == 500){
           console.log(res);
+          $rootScope.RolesAccess(res.message);
       }
   }
 
@@ -171,6 +172,9 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
         $scope.mySchema = $scope.renderedTemplate;
         $scope.showAccordion = true;
         //$rootScope.loader = "hide";
+      }else if(res.error_code == 500){
+          console.log(res);
+          $rootScope.RolesAccess(res.message);
       }
       $rootScope.loader = "hide";
   }
@@ -210,6 +214,9 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
           setTimeout(function () {
             $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
           },2000);
+      }else if(res.error_code == 500){
+          console.log(res);
+          $rootScope.RolesAccess(res.message);
       }
       //$scope.mySchema = JSON.parse(res.data[0].template);
 		}
@@ -303,7 +310,10 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
           $scope.mySchema = templateCl;
           //$scope.mySchema = JSON.parse(res.data.template);
         }
-			}
+			}else if(res.error_code == 500){
+          console.log(res);
+          $rootScope.RolesAccess(res.message);
+      }
 		}
 
 		function getTemplateDataFailure(error){
@@ -364,6 +374,9 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
             patient_id: $routeParams.patientID
           }, checkClinicalStatusSuccess, checkClinicalStatusFailure);
 
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         }
       }
       function updateClinicalNotesFailure(error){
@@ -383,6 +396,9 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
         }, checkClinicalStatusSuccess, checkClinicalStatusFailure);
 			}else if(res.status == false){
         $('#erorModal').modal('show');
+      }else if(res.error_code == 500){
+          console.log(res);
+          $rootScope.RolesAccess(res.message);
       }
 		}
 
@@ -460,7 +476,10 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
        }else if(res.status == false){
         $('#addmedication').modal('hide');
           $('#statusModal').modal('show');
-       }
+       }else if(res.error_code == 500){
+          console.log(res);
+          $rootScope.RolesAccess(res.message);
+      }
     }
 
     function PrescriptionFailurePop(res) {
@@ -553,20 +572,25 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
             CheckoutPatient.save(CheckoutDetails, checkoutSuccess, checkoutSuccessFailure);
         }
         function checkoutSuccess(res) {
-            $rootScope.loader = "hide";
-            $scope.messageType = "alert-success";
-            $scope.errorMessage = res.message;
-            $scope.errorSymbol = "fa fa-check";// 
-            $scope.message = true;
-            setTimeout(function() {$('#checkout').modal('hide');}, 1000);
+            if(res.status == true){
+              $rootScope.loader = "hide";
+              $scope.messageType = "alert-success";
+              $scope.errorMessage = res.message;
+              $scope.errorSymbol = "fa fa-check";// 
+              $scope.message = true;
+              setTimeout(function() {$('#checkout').modal('hide');}, 1000);
 
-            $('.checkout_patient_tab_con > div.active textarea').val('');
-            $('input:radio[name="checkoutpatient"]').prop("checked", false);
-            $('input:radio[name="checkoutpatient"]').eq(0).trigger("click");
-            $scope.buttonDisabled = false;
-            $('.counter_pop').addClass('ng-hide');
-            $scope.buttonDisabled = false;
-            $scope.patientInfo = false;
+              $('.checkout_patient_tab_con > div.active textarea').val('');
+              $('input:radio[name="checkoutpatient"]').prop("checked", false);
+              $('input:radio[name="checkoutpatient"]').eq(0).trigger("click");
+              $scope.buttonDisabled = false;
+              $('.counter_pop').addClass('ng-hide');
+              $scope.buttonDisabled = false;
+              $scope.patientInfo = false;
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
+            }
         }
         function  checkoutSuccessFailure(res) {
           $('#internetError').modal('show');
@@ -609,6 +633,9 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
             $scope.externalDoctor = false;
             $('#referral').modal('hide');
             $('#successmodal').modal('show');
+          }else if(res.error_code == 500){
+              console.log(res);
+              $rootScope.RolesAccess(res.message);
           }
         }
 
@@ -653,6 +680,10 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
                 }, function (response) {
                     if (response.status > 0)
                         $scope.errorMsg = response.status + ': ' + response.data;
+                    if(res.error_code == 500){
+                        console.log(res);
+                        $rootScope.RolesAccess(res.message);
+                    }
                 }, function (evt) {
                     file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
                 });
@@ -677,8 +708,13 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 
         function previewRepostSuccess(res){
           //$scope.previewReport = res.data;
-          $('.showPdf').html("<iframe class='abc' src="+res.data+"></iframe>");
-          console.log(res);
+          if(res.status == true){
+            $('.showPdf').html("<iframe class='abc' src="+res.data+"></iframe>");
+            console.log(res);
+          }else if(res.error_code == 500){
+              console.log(res);
+              $rootScope.RolesAccess(res.message);
+          }
         }
 
         function previewReportFailure(error){
@@ -717,6 +753,9 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
           if(res.status == true){
             $scope.is_signoff = res.is_signoff;
             $('#signOffSuccess').modal('show');
+          }else if(res.error_code == 500){
+              console.log(res);
+              $rootScope.RolesAccess(res.message);
           }
         }
         function signOffFailure(error){
@@ -789,7 +828,10 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
           $scope.activeDropdown = false;
              if (res.status == true) {
                  $scope.labTests = res.data;
-             }
+             }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
+            }
          }
          function GetLabTestsFailure(error) { // on failure
             $('#internetError').modal('show');
@@ -849,6 +891,9 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
                 $('#radiology').modal('hide');
                 $scope.message = false;
             },500);
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         } else {
             $scope.hideLoader = "hide";
             $scope.OrderBtn = false;

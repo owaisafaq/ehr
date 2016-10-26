@@ -27,7 +27,10 @@ AppEHR.controller('wardsBedShematicController', ['$scope', '$rootScope', '$windo
             }
 			$scope.allBedOccupancy = res.data;
 			$scope.bedCount = res.count;
-		}
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
 	}
 
 	function bedOccupancyFailure(error){
@@ -102,6 +105,9 @@ AppEHR.controller('wardsBedShematicController', ['$scope', '$rootScope', '$windo
                 /*offset: 0,
                 limit: $scope.itemsPerPage*/
             }, bedOccupancySuccess, bedOccupancyFailure);
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         }
     }
     function newBedFailure(error){
@@ -124,6 +130,9 @@ AppEHR.controller('wardsBedShematicController', ['$scope', '$rootScope', '$windo
                     /*offset: 0,
                     limit: $scope.itemsPerPage*/
                 }, bedOccupancySuccess, bedOccupancyFailure);
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
         }
         function deleteBedFailure(error){
@@ -161,6 +170,9 @@ AppEHR.controller('wardsBedShematicController', ['$scope', '$rootScope', '$windo
                     /*offset: 0,
                     limit: $scope.itemsPerPage*/
                 }, bedOccupancySuccess, bedOccupancyFailure);
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }else{
                 $scope.statusMsg = res.message;
                 $scope.errorClass = "error-header";

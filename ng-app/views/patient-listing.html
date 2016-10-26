@@ -33,7 +33,7 @@
                     <!-- <a href="javascript:;" class="button-style-2">
                         <img src="assets/img/assign_blue.png" />
                     </a> -->
-                    <a href="javascript:;" class="button-style-2" ng-hide="ifEncounterID" data-target="#simpleModal1" data-toggle="modal" class="button-style-2">
+                    <a href="javascript:;" class="button-style-2" ng-hide="ifEncounterID && ROLES.Patient_Status_CheckoutDischargeMoveRefer.update_right == '0'" data-target="#simpleModal1" data-toggle="modal" class="button-style-2">
                         <img src="assets/img/discharge_icn_blue.png" />
                     </a>                             
                 </div>
@@ -167,7 +167,6 @@
                             <label class="col-lg-6">Patient ID</label>
                             <span class="col-lg-6">P{{patientID}}</span>
                         </div>
-
                         <label class="col-lg-6">Date of Birth</label>
                         <span class="col-lg-6">{{displayInfo.date_of_birth}}</span>
                     </div>
@@ -175,12 +174,12 @@
                         <label class="col-lg-6">Gender</label>
                         <span class="col-lg-6 capitalize">{{displayInfo.sex}}</span>
                     </div>
-                    <img class="barCode" src="{{displayInfo.barcode}}" />
+                    <img class="barCode" src="{{displayInfo.barcode}}"/>
                 </div>
                 <div class="page-break2"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="printIdCard btn btn-default button-style-1">Print</button>
+                <button type="button" ng-hide="ROLES.Patient_Reports_ImportExport.update_right == '0' || ROLES.Patient_Reports_ImportExport.update_right == undefined" class="printIdCard btn btn-default button-style-1">Print</button>
                 <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
             </div>
         </div><!-- /.modal-content -->

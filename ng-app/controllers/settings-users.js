@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('settingsUsers', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllUsers', 'GetUser', 'deleteUser', 'addUser', 'editUser', '$timeout', function($scope,$rootScope,$window,$routeParams,GetAllUsers,GetUser,deleteUser,addUser,editUser,$timeout){
+AppEHR.controller('settingsUsers', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllUsers', 'GetUser', 'deleteUser', 'addUser', 'editUser', '$timeout', 'GetAllRoles', function($scope,$rootScope,$window,$routeParams,GetAllUsers,GetUser,deleteUser,addUser,editUser,$timeout,GetAllRoles){
 	$rootScope.pageTitle = "EHR - Users";
 	$rootScope.loader = "show";
 	$scope.itemsPerPage = 15;
@@ -51,6 +51,7 @@ AppEHR.controller('settingsUsers', ['$scope', '$rootScope', '$window', '$routePa
 		$scope.deleteUserId = id;
 		$('#confirmation').modal('show');
 	};
+	
 	$scope.removeUser = function(){
 		$rootScope.loader = "show";
 		deleteUser.get({
@@ -82,7 +83,8 @@ AppEHR.controller('settingsUsers', ['$scope', '$rootScope', '$window', '$routePa
 			first_name : userData.first_name,
 			last_name : userData.last_name,
 			telephone_number : userData.telephone_number,
-			email : userData.email
+			email : userData.email,
+			role_id : userData.role_id
 		},addUserSuccess,addUserFailure);
 	};
 	function addUserSuccess(res){ // on success
@@ -127,6 +129,9 @@ AppEHR.controller('settingsUsers', ['$scope', '$rootScope', '$window', '$routePa
 		$rootScope.loader = "hide";
 		if (res.status == true) {
 			$scope.editUserData = res.data;
+			$timeout(function(){
+				$('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
+			},100);
 			$('#editUser').modal('show');
 		}
 	}
@@ -178,5 +183,23 @@ AppEHR.controller('settingsUsers', ['$scope', '$rootScope', '$window', '$routePa
 	function editUserFailure(error){ // on failure
 		console.log(error);
 		$('#internetError').modal('show');
+	}
+
+	GetAllRoles.get({
+		token: $window.sessionStorage.token,
+		offset: 0, limit: 0
+	}, GetAllRolesSuccess, GetAllRolesFailure);
+	function GetAllRolesSuccess(res) {
+		$rootScope.loader = "hide";
+		if (res.status == true) {
+			if(res.data.length == 0){
+				$('#noResultFound').modal('show');
+			}
+			$scope.Roles = res.data;
+		}
+	}
+	function GetAllRolesFailure(error) {
+		$('#internetError').modal('show');
+		console.log(error);
 	}
 }]);

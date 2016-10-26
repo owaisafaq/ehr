@@ -40,6 +40,9 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', '$routeParams', '$wi
             //$scope.labTest.created_at =  month[parseInt(month1)] + " " + day + ", " + year;
             $scope.labTest.created_at = dateAndTime[0];
             $scope.labTestTime = dateAndTime[1];
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         }
         $scope.template_id = res.template_id;
         
@@ -245,6 +248,9 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', '$routeParams', '$wi
                   token: $window.sessionStorage.token,
                   lab_order_test_id: $scope.labordertestid
             }, checkClinicalStatusSuccess, checkClinicalStatusFailure);
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         } else {
             $scope.hideLoader = "hide";
             $scope.cancleOrderBtn = false;
@@ -284,6 +290,10 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', '$routeParams', '$wi
             }, function (response) {
                 if (response.status > 0)
                     $scope.errorMsg = response.status + ': ' + response.data;
+                else if(res.error_code == 500){
+                    console.log(res);
+                    $rootScope.RolesAccess(res.message);
+                }
             }, function (evt) {
                 file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
             });
@@ -339,20 +349,25 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', '$routeParams', '$wi
         CheckoutPatient.save(CheckoutDetails, checkoutSuccess, checkoutSuccessFailure);
     }
     function checkoutSuccess(res) {
-        $rootScope.loader = "hide";
-        $scope.messageType = "alert-success";
-        $scope.errorMessage = res.message;
-        $scope.errorSymbol = "fa fa-check";// 
-        $scope.message = true;
-        setTimeout(function() {$('#checkout').modal('hide');}, 1000);
+        if(res.status == true){
+            $rootScope.loader = "hide";
+            $scope.messageType = "alert-success";
+            $scope.errorMessage = res.message;
+            $scope.errorSymbol = "fa fa-check";// 
+            $scope.message = true;
+            setTimeout(function() {$('#checkout').modal('hide');}, 1000);
 
-        $('.checkout_patient_tab_con > div.active textarea').val('');
-        $('input:radio[name="checkoutpatient"]').prop("checked", false);
-        $('input:radio[name="checkoutpatient"]').eq(0).trigger("click");
-        $scope.buttonDisabled = false;
-        $('.counter_pop').addClass('ng-hide');
-        $scope.buttonDisabled = false;
-        $scope.patientInfo = false;
+            $('.checkout_patient_tab_con > div.active textarea').val('');
+            $('input:radio[name="checkoutpatient"]').prop("checked", false);
+            $('input:radio[name="checkoutpatient"]').eq(0).trigger("click");
+            $scope.buttonDisabled = false;
+            $('.counter_pop').addClass('ng-hide');
+            $scope.buttonDisabled = false;
+            $scope.patientInfo = false;
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
     }
     function  checkoutSuccessFailure(res) {
       $('#internetError').modal('show');
@@ -396,6 +411,9 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', '$routeParams', '$wi
             $rootScope.loader = "hide";
             $scope.is_signoff = 1;
             $("#successSignoff").modal('show');
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         }
     }
     function signoffFailure(res){

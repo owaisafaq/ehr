@@ -9,11 +9,17 @@
                             <button class="add button-custom" data-toggle="modal" data-target="#addUser">New User</button>
                         </div>
                         <div class="col-lg-2">
-                            <select class="form-control select_searchFields" placeholder="Search User By Name">
+                            <!-- <select class="form-control select_searchFields" placeholder="Search User By Name">
                                 <option></option>
                                 <option>Cheque</option>
                                 <option>type 3</option>
-                            </select>
+                            </select> -->
+                            <div class="header-search margin-right-0 pull-left">
+                                <button type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <input class="search_field" ng-model="search" type="text" placeholder="Search User By Name">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -31,11 +37,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="UserList in UserLists">
+                            <tr ng-repeat="UserList in UserLists | filter: {name:search}">
                                 <td>{{ UserList.name }}</td>
                                 <td>{{ UserList.first_name }}</td>
                                 <td>{{ UserList.last_name }}</td>
-                                <td>Role</td>
+                                <td>{{ UserList.role_name }}</td>
                                 <td>{{ UserList.email }}</td>
                                 <td>{{ UserList.telephone_number }}</td>
                                 <td>
@@ -126,11 +132,11 @@
                             <label>User Role Group</label>
                         </div>
                         <div class="col-lg-4">
-                              <select class="form-control">
-                                <option>Search Role Group</option>
-                                <option>Role A</option>
-                                <option>Role B</option>
+                            <select class="form-control add-multiple" ng-model="userData.role_id" placeholder="Search Role Group" name="role_id" ng-class="{true: 'error'}[submitted && userForm1.role_id.$invalid]" required>
+                                <option value=""></option>
+                                <option ng-repeat="Role in Roles" value="{{ Role.id }}">{{ Role.name }}</option>
                             </select>
+                            <p class="help-block PIValid" ng-show="submitted && userForm1.role_id.$error.required">Required</p>
                         </div>
                     </div>
                     <div class="modal-footer row">
@@ -200,11 +206,11 @@
                             <label>User Role Group</label>
                         </div>
                         <div class="col-lg-4">
-                            <select class="form-control">
-                                <option>Search Role Group</option>
-                                <option>Role A</option>
-                                <option>Role B</option>
+                            <select class="form-control" ng-model="editUserData.role_id" placeholder="Select Role Group" name="role_id" ng-class="{true: 'error'}[submitted && userForm2.role_id.$invalid]" required>
+                                <option value=""></option>
+                                <option ng-repeat="k in Roles" value="{{ k.id }}" ng-selected="k.id == editUserData.role_id">{{ k.name }}</option>
                             </select>
+                            <p class="help-block PIValid" ng-show="submitted && userForm2.role_id.$error.required">Required</p>
                         </div>
                     </div>
                     <div class="modal-footer row">

@@ -21,7 +21,10 @@ AppEHR.controller('pharmacy', ['$scope', '$rootScope', 'getPharmacy', '$window',
 			}
 			$scope.pharmacyLists = res.data;
 			$scope.pharmacyCount = res.count;
-		}
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
 	}
 
 	function getPharmacyFailure(error) {
@@ -113,7 +116,10 @@ AppEHR.controller('pharmacy', ['$scope', '$rootScope', 'getPharmacy', '$window',
 			getPharmacy.get({
 				token: $window.sessionStorage.token
 			}, getPharmacySuccess, getPharmacyFailure);
-		} else {
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        } else {
 			$scope.hideLoader = "hide";
 			$scope.addPharmacyBtn = false;
 			$scope.message = true;
@@ -175,7 +181,10 @@ AppEHR.controller('pharmacy', ['$scope', '$rootScope', 'getPharmacy', '$window',
 				$('#s2id_autogen3 .select2-chosen').text('Select State');
 				$('#s2id_autogen5 .select2-chosen').text('Select City');
 			},1500);
-		} else {
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        } else {
 			$rootScope.loader = "hide";
 			$scope.addPharmacyBtn = false;
 			$scope.message = true;
@@ -204,7 +213,10 @@ AppEHR.controller('pharmacy', ['$scope', '$rootScope', 'getPharmacy', '$window',
 			getPharmacy.get({
 				token: $window.sessionStorage.token
 			}, getPharmacySuccess, getPharmacyFailure);
-		}
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
 	}
 
 	function deletePharmacyFailure(error){

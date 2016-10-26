@@ -8,7 +8,7 @@
                 </ul>
             </div>
             <div class="card-body tab-content col-lg-12 custom-card-body padding-top-0">
-                <div class="tab-pane" id="facilities-profile">
+                <div class="tab-pane" id="facilities-profile" ng-hide="ROLES.Facility == undefined">
                     <div class="table-header row background-none inv_header auto">
                         <div class="row">
                             <h2 class="col-xs-12 heading-style margin-bottom-30 margin-top-5">Facilities Profile</h2>
@@ -179,7 +179,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="tab-pane active" id="spec-depart">
+                <div class="tab-pane active" id="spec-depart" ng-hide="ROLES.Specialties == undefined">
                     <div class="table-header row background-none inv_header">
                         <h2 class="heading-style pull-left margin-top-30">Specialities & Departments</h2>
                         <div class="pull-right">
@@ -376,7 +376,7 @@
                                         <option value=""></option>
                                         <option ng-repeat="State in States" value="{{ State.id }}" ng-selected="State.id == hospitalData.state_id">{{ State.name }}</option>
                                     </select>
-                                    <p class="help-block PIValid" ng-show="submitted && userForm1.lab_id.$error.required">Required</p>
+                                    <p class="help-block PIValid" ng-show="submitted && userForm1.state.$error.required">Required</p>
                                 </div>
                             </div>
                             <div class="row margin-bottom-xxl">
@@ -388,7 +388,7 @@
                                         <option value=""></option>
                                         <option ng-repeat="k in Countries" value="{{ k.id }}" ng-selected="k.id == hospitalData.country_id">{{ k.name }}</option>
                                     </select>
-                                    <p class="help-block PIValid" ng-show="submitted && userForm2.tax.$error.required">Required</p>
+                                    <p class="help-block PIValid" ng-show="submitted && userForm1.country.$error.required">Required</p>
                                 </div>
                             </div>
                             <div class="row margin-bottom-xxl">

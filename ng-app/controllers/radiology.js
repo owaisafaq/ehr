@@ -110,6 +110,9 @@ AppEHR.controller('radiology', ['$scope', '$rootScope', 'GetAllLabOrders', '$win
                     limit: $scope.itemsPerPage, offset: 0
                 }, GetAllLabOrdersSuccess, GetAllLabOrdersFailure);
             }
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         } else {
             $scope.hideLoader = "hide";
             $scope.cancleOrderBtn = false;
@@ -227,6 +230,9 @@ AppEHR.controller('radiology', ['$scope', '$rootScope', 'GetAllLabOrders', '$win
             },500);
             GetAllRadiologyLabs.save({token: $window.sessionStorage.token, patient_id: $routeParams.patientID, visit_id: $routeParams.encounterID, limit: $scope.itemsPerPage, offset: 0}, radiologyGetorerdesucdcess, radiologyGetorerdeFailure);
             $scope.orderSelected = false;
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         } else {
             $scope.hideLoader = "hide";
             $scope.OrderBtn = false;

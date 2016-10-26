@@ -558,18 +558,11 @@ class SettingController extends Controller
             ->where('roles.status', 1)
             ->first();
 
-        return response()->json(['status' => true,'data'=>$user_roles,'name'=>$role_name->name,'role_id'=>$role_id]);
+        return response()->json(['status' => true,'data'=>$user_roles,'name'=>$role_name->name]);
 
     }
     public function update_role_group(Request $request){
         $role_id = $request->input('role_id');
-        $name = $request->input('name');
-
-        DB::table('roles')
-                 ->where('id',$role_id)
-                 ->update(['name'=> $name,'updated_at'=>date("Y-m-d  H:i:s")]);
-
-
         DB::table('role_rights')->where('role_id','=',$role_id)->delete();
 
         $role_rights = $request->input('role_rights');

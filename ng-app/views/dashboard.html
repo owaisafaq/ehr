@@ -1,8 +1,8 @@
 <div id="content">
     <section>
         <div class="dashboard-new">
-            <div class="">
-                <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-3" ng-hide="ROLES.Patient == undefined">
                     <a href="#/patient-listing">
                         <div class="card">
                             <div class="card-body color-style1 text-center">
@@ -18,7 +18,7 @@
                     </a>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-3" ng-hide="ROLES.Encounter == undefined">
                     <a href="#/new-encounter-patient-search">
                         <div class="card">
                             <div class="card-body color-style2 text-center">
@@ -34,7 +34,7 @@
                     </a>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-3" ng-hide="ROLES.Appointments == undefined">
                     <a href="#/appointments-list">
                         <div class="card">
                             <div class="card-body color-style3 text-center">
@@ -50,7 +50,7 @@
                     </a>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-3" ng-hide="ROLES.Lab_order == undefined">
                     <a href="#/lab-order-listing">
                         <div class="card">
                             <div class="card-body color-style4 text-center">
@@ -66,11 +66,10 @@
                     </a>
                 </div>
             </div>
-
             <div class="grid-boxes-style-2">
 
 
-                <div class="col-md-3">
+                <div class="col-md-3" ng-hide="ROLES.Pool_area == undefined">
                     <a href="#/patient-pool-area">
                         <div class="card">
                             <div class="card-body">
@@ -81,7 +80,7 @@
                     </a>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-3" ng-hide="ROLES.Ward == undefined">
                     <a href="#/ward-bed-listing">
                         <div class="card">
                             <div class="card-body">
@@ -92,7 +91,7 @@
                     </a>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-3" ng-hide="ROLES.Pharmacy == undefined">
                     <a href="#/pharmacy">
                         <div class="card">
                             <div class="card-body">
@@ -102,7 +101,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3" ng-hide="ROLES.Inventory == undefined">
                     <a href="#/inventory">
                         <div class="card">
                             <div class="card-body">
@@ -113,7 +112,7 @@
                     </a>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-3" ng-hide="ROLES.Bill == undefined">
                     <a href="#/billing">
                         <div class="card">
                             <div class="card-body">
@@ -133,7 +132,7 @@
                     </div>
                     <div class="card-body">
                         <form class="custom-form">
-                            <div class="scroll-container">
+                            <div class="scroll-container" ng-hide="ROLES.Appointments == undefined">
                                 <table class="table table-striped no-margin table-custom" ng-show="appointments.length > 0">
                                     <thead>
                                         <tr>
@@ -154,6 +153,7 @@
                                 </table>
                                 <p ng-hide="appointments.length > 0">No Appointments</p>
                             </div>
+                            <p ng-show="ROLES.Appointments == undefined">You've No Rights</p>
                             <div class="pagination pagination-centered pagination-dash pull-right margin-right-20" ng-show="appointmentCount">
                                 <ul class="pagination-controle pagination">
                                     <li class="prev-page">
@@ -183,7 +183,7 @@
                     </div>
                     <div class="card-body">
                         <form class="custom-form">
-                            <div class="scroll-container">
+                            <div class="scroll-container" ng-hide="ROLES.Encounter == undefined">
                                 <table class="table table-striped no-margin table-custom" ng-show="EncounterCount > 0">
                                     <thead>
                                         <tr>
@@ -204,6 +204,7 @@
                                 </table>
                                 <p ng-hide="EncounterCount > 0">No Encounters</p>
                             </div>
+                            <p ng-show="ROLES.Encounter == undefined">You've No Rights</p>
                             <div class="pagination pagination-centered pagination-dash pull-right margin-right-20" ng-show="EncounterCount">
                                 <ul class="pagination-controle pagination">
                                     <li class="prev-page">

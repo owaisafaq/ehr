@@ -33,7 +33,10 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 			$scope.BillListings = res.data;
                         console.log(res.data);
                         console.log("catch me here")
-		}
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
 	}
 
 	function GetAllBillsFailure(error) {
@@ -101,10 +104,10 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 						$("#process_payment").modal('show');
 					}
 				}
-
-
-
-			}
+			}else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
+            }
 		}
 		function InvoiecStatusFailure(error) {
 			$rootScope.loader = "hide";
@@ -152,7 +155,10 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 
 
 
-			}
+			}else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
+            }
 		}
 		function PaymentFailure(error) {
 			$rootScope.loader = "hide";
@@ -204,7 +210,10 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 
 				$('#send_invoice').modal('hide');
 
-			}
+			}else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
+            }
 		}
 
 		function SendEmailFailure(error) {
@@ -250,7 +259,10 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 				$scope.InvoiceListings = res.data;
 				console.log($scope.InvoiceListings)
 				$('.nav-tabs a[href="#invoices"]').tab('show');
-			}
+			}else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
+            }
 		}
 
 		function GetBillInvoicesFailure(error) {
@@ -310,11 +322,14 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	};
 	function GetAllInvoicesSuccess(res) {
 		console.log(res);
-                console.log("catch me here");
+        console.log("catch me here");
 		if (res.status == true) {
 			$scope.InvoiceListings = res.data;
 			console.log($scope.InvoiceListings)
-		}
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
 	}
 
 	function GetAllInvoicesFailure(error) {
@@ -352,7 +367,10 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
                                         $('.card-head').hide();
 
 
-				}
+				}else if(res.error_code == 500){
+	                console.log(res);
+	                $rootScope.RolesAccess(res.message);
+	            }
 			}
 
 			function getInvoiceFailure(error) {
@@ -386,9 +404,10 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 				token: $window.sessionStorage.token,
 				bill_id : $scope.bill_id
 			}, GetAllInvoicesSuccess, GetAllInvoicesFailure);
-		}else {
-			//alert(res.message);
-		}
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
 	}
 	function deleteInvoiceFailure(error){
 		$('#internetError').modal('show');
@@ -415,16 +434,21 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
             CheckoutPatient.save(CheckoutDetails, checkoutSuccess, checkoutSuccessFailure);
         }
         function checkoutSuccess(res) {
-            console.log(res)
-            $rootScope.loader = "hide";
-            $scope.messageType = "alert-success";
-            $scope.errorMessage = res.message;
-            $scope.errorSymbol = "fa fa-check";// 
-            $scope.message = true;
-            $('#simpleModal1').modal('hide');
-            $('.checkout_patient_tab_con > div.active textarea').val('');
-            $('input:radio[name="checkoutpatient"]').prop("checked", false);
-            $('input:radio[name="checkoutpatient"]').eq(0).trigger("click");
+        	if(res.status == true){
+	            console.log(res)
+	            $rootScope.loader = "hide";
+	            $scope.messageType = "alert-success";
+	            $scope.errorMessage = res.message;
+	            $scope.errorSymbol = "fa fa-check";// 
+	            $scope.message = true;
+	            $('#simpleModal1').modal('hide');
+	            $('.checkout_patient_tab_con > div.active textarea').val('');
+	            $('input:radio[name="checkoutpatient"]').prop("checked", false);
+	            $('input:radio[name="checkoutpatient"]').eq(0).trigger("click");
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
+            }
         }
         function  checkoutSuccessFailure(res) {
         	$('#internetError').modal('show');
@@ -451,14 +475,20 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 					token: $window.sessionStorage.token,
 			        bill_id : $scope.bill_id
 				}, GetAllInvoicesSuccess, GetAllInvoicesFailure);
-        	}
+        	}else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
+            }
         }
         GetAllproducts.save({token: $window.sessionStorage.token}, getAllPbillSuccess, checkoutSuccessFailure);
         function getAllPbillSuccess(res){
         	if(res.status == true){
         		console.log(res, 'prodcutsssss');
         		$scope.productsDropdown = res.date;
-        	}
+        	}else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
+            }
         }
 
         GetAllBillingCodes.get({token: $window.sessionStorage.token, offset: 0, limit:0}, getAllbillSuccess, checkoutSuccessFailure);
@@ -466,7 +496,10 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
         	if(res.status == true){
         		console.log(res, 'billing');
         		$scope.serviceBill = res.data;
-        	}
+        	}else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
+            }
         }
 
         $scope.calculateAmount = function(tAmount, amountPaid){
@@ -486,7 +519,10 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
         	$rootScope.loader = "hide";
         	if(res.status == true){
         		$scope.BillListings = res.data;
-        	}
+        	}else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
+            }
         }
         
 }]);

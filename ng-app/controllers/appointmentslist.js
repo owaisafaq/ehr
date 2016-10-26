@@ -48,7 +48,10 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
             function dropDownFailed(error){
                 console.log(error);
             }
-		}
+		}else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
 	}
 	function allAppointmentsFailure(error){
 		$rootScope.loader = "hide";
@@ -208,7 +211,10 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
 					limit: $scope.itemsPerPage, 
 					offset: 0
 				}, allAppointmentsSuccess, allAppointmentsFailure);
-    		}
+    		}else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
+            }
     	}
     	function deleteAppointmentFailure(error){
             $('#internetError').modal('show');
@@ -263,7 +269,10 @@ console.log($("#searchpatient").val())
     					offset: 0
     				}, allAppointmentsSuccess, allAppointmentsFailure);
 
-        		}
+        		}else if(res.error_code == 500){
+                    console.log(res);
+                    $rootScope.RolesAccess(res.message);
+                }
         	}
         	function createAppointmentFailure(error){
                 $rootScope.loader = "hide";
@@ -309,8 +318,10 @@ console.log($("#searchpatient").val())
 					limit: $scope.itemsPerPage, 
 					offset: 0
 				}, allAppointmentsSuccess, allAppointmentsFailure);
-
-    		}
+    		}else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
+            }
     	}
     	function updateAppointmentFailure(error){
             $rootScope.loader = "hide";
@@ -426,6 +437,9 @@ console.log($("#searchpatient").val())
                     limit: $scope.itemsPerPage, 
                     offset: 0
                 }, allAppointmentsSuccess, allAppointmentsFailure);
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }else{
                 $scope.modalHeading = "Error";
                 $scope.modalMessage = "Appointment cannot be converted! Patient has an active encounter";
@@ -466,6 +480,9 @@ console.log($("#searchpatient").val())
                     limit: $scope.itemsPerPage, 
                     offset: 0
                 }, allAppointmentsSuccess, allAppointmentsFailure);
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
         }
         function reminderAppointmentFailure(error){

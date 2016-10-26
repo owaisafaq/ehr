@@ -549,16 +549,24 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', function 
                     redirectTo: '/dashboard'
                 });
     }]);
-AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData, $timeout) {
+AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData, $timeout, $routeParams) {
     if (sessionStorage.length == 0) {
         //console.log(1111111111111111);
-//            var path = $location.$$path;
-//            if ((path == "/login" || path == "/") && path != undefined) {
-//                $location.path("patient-registration/");
-//            }
-//        } else {
+        //            var path = $location.$$path;
+        //            if ((path == "/login" || path == "/") && path != undefined) {
+        //                $location.path("patient-registration/");
+        //            }
+        //        } else {
         $location.path("login");
     }
+    if($window.sessionStorage.roles != undefined)
+        $rootScope.ROLES = JSON.parse($window.sessionStorage.roles);
+    console.log($rootScope.ROLES);
+    $rootScope.RolesAccess = function(msg){
+        $rootScope.rolesAccessMsg = msg;
+        $('#rolesAccess').modal('show');
+    }
+
     //$rootScope.SelectedPatientAfterSearch = false;
     $rootScope.encounterHeaderSearchBar = true;
     $rootScope.headerPatientSearch = serverPath;
@@ -692,6 +700,9 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
                     $rootScope.encounterHeaderSearchBar = true;
                     $('.create_counter_header').addClass('hide');
                 }, 2000);
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }else{
                 $rootScope.headerHideLoader = "hide";
                 $rootScope.headerMessageType = "alert-danger";
@@ -727,9 +738,13 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
         $rootScope.loginCheck = $location.$$path == '/login' || $location.$$path == '/' ? true : false;
         if ($window.sessionStorage.email != undefined && $window.sessionStorage.email != 'undefined' && $window.sessionStorage.token != undefined && window.sessionStorage.token != 'undefined' && $window.sessionStorage.role_id != undefined && window.sessionStorage.role_id != 'undefined') {
             var path = $location.$$path;
+            //console.log($rootScope.ROLES, 'path');
             if ((path == "/login" || path == "/") && path != undefined) {
                 $location.path("dashboard");
-            }
+            }/*else if(path.slice(0, -9) == "/patient-summary-demographics" && $rootScope.ROLES.Patient_records_Summary == undefined){
+                $rootScope.RolesAccess('No Role Assigned to the User');
+                $location.path("dashboard");
+            }*/
         } else $location.path("login");
         //console.log("here")
         //console.log(localStorage.getItem('sessionStorage'))
@@ -810,6 +825,8 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
         $('.select_searchFields').select2();
         $(".maskPhone").inputmask("99-9999999");
         $(".maskMobile").inputmask("99999999999");
+//        $(".maskCost").inputmask({mask: "9999.99", numericInput: true,placeholder:" ", rightAlignNumerics: false,maxlength: false,greedy:false});
+        $(".maskCost").inputmask({mask:"9{1,8}.99",placeholder:" ", rightAlignNumerics: true});
         $('.timepicker').timepicker();
         $(".search-ajax").select2({
             placeholder: 'Select Patient',

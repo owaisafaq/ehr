@@ -3337,9 +3337,6 @@ AppEHR.factory("addUpdateHospital", function ($resource) {
     };
     return hospitalData;
 });
-
-
-
 AppEHR.factory("GetAllDepartments", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'get_departments', params, {
@@ -3506,4 +3503,99 @@ AppEHR.factory("editUser", function ($resource) {
         }
     };
     return updatedUser;
+});
+
+
+AppEHR.factory("GetAllContexts", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_all_contexts', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var Contexts = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return Contexts;
+});
+AppEHR.factory("addRole", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_role_group', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var Context = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return Context;
+});
+
+
+AppEHR.factory("GetAllRoles", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_roles', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var Roles = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return Roles;
+});
+AppEHR.factory("deleteRole", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'delete_role', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var deletedRole = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return deletedRole;
+});
+AppEHR.factory("GetRole", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_user_role', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var Role = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return Role;
+});
+
+AppEHR.factory("editRole", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'update_role_group', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var updatedRole = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return updatedRole;
 });

@@ -19,6 +19,10 @@ AppEHR.controller('logoutController', ['$scope', '$window', 'AUTH', '$rootScope'
 					$window.sessionStorage.source_id = res.data.source_id;
 					$window.sessionStorage.token = res.token;
 					$scope.preLoader = false;
+					$window.sessionStorage.roles = JSON.stringify(res.roles);
+					$rootScope.ROLES = JSON.parse($window.sessionStorage.roles);
+					console.log($window.sessionStorage.roles);
+					console.log($rootScope.ROLES);
 					$window.location.href = '#/dashboard';
 				}else{
 					$scope.preLoader = false;
