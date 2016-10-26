@@ -483,6 +483,7 @@ class SettingController extends Controller
                     'update_right' => $right->is_update,
                     'delete_right' => $right->is_delete,
                     'view_right' => $right->is_read,
+                    'type' => $right->type,
                     'created_at' => date("Y-m-d  H:i:s")
                 ]
             );
@@ -526,6 +527,14 @@ class SettingController extends Controller
                 ->where('role_rights.role_id',$role->id)
                 ->count();
             $role->context_count = $context_count;
+
+            $user_count = DB::table('users')
+                ->select(DB::raw('*'))
+                ->where('status',1)
+                ->where('role_id',$role->id)
+                ->count();
+            $role->user_count = $user_count;
+
         }
 
         return response()->json(['status'=>true,'data' =>$roles,'count'=>$count]);
@@ -547,7 +556,7 @@ class SettingController extends Controller
         $user_roles = DB::table('roles')
             ->join('role_rights', 'roles.id', '=', 'role_rights.role_id')
             ->join('contexts', 'role_rights.context_id', '=', 'contexts.id')
-            ->select(DB::raw('contexts.name as context,contexts.id as context_id,role_rights.id as role_right_id,role_rights.add_right,role_rights.update_right,role_rights.delete_right,role_rights.view_right'))
+            ->select(DB::raw('contexts.name as context,contexts.id as context_id,role_rights.id as role_right_id,role_rights.add_right,role_rights.update_right,role_rights.delete_right,role_rights.view_right,role_rights.type'))
             ->where('roles.id', $role_id)
             ->where('roles.status', 1)
             ->get();
@@ -558,11 +567,18 @@ class SettingController extends Controller
             ->where('roles.status', 1)
             ->first();
 
-        return response()->json(['status' => true,'data'=>$user_roles,'name'=>$role_name->name]);
+        return response()->json(['status' => true,'data'=>$user_roles,'name'=>$role_name->name,'role_id'=>$role_id]);
 
     }
     public function update_role_group(Request $request){
         $role_id = $request->input('role_id');
+        $name = $request->input('name');
+
+        DB::table('roles')
+                 ->where('id',$role_id)
+                 ->update(['name'=> $name,'updated_at'=>date("Y-m-d  H:i:s")]);
+
+
         DB::table('role_rights')->where('role_id','=',$role_id)->delete();
 
         $role_rights = $request->input('role_rights');
@@ -577,6 +593,7 @@ class SettingController extends Controller
                        'update_right' => $right->is_update,
                        'delete_right' => $right->is_delete,
                        'view_right' => $right->is_read,
+                       'type' => $right->type,
                        'created_at' => date("Y-m-d  H:i:s")
                    ]
                );

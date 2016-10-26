@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Exception\HttpResponseException;
 use JWTAuth;
+use Auth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -69,10 +70,64 @@ class OrderController extends Controller
     }
 
 
+
+
     public function get_all_lab_orders(Request $request)
     {
         $limit = $request->input('limit');
         $offset = $request->input('offset');
+
+
+        $method_name = $request->segment(2);
+
+        $context_method = DB::table('context_methods')
+            ->select(DB::raw('*'))
+            ->where('name', $method_name)
+            ->first();
+
+        if (empty($context_method)) {
+            return response()->json(['status' => false, 'message' => "No Role Assigned to the User", 'error_code' => 500]);
+        }
+
+        $context_id = $context_method->context_id;
+        $right = $context_method->right;
+
+        $user_id = Auth::user()->id;
+
+        $role_id = DB::table('users')
+            ->select(DB::raw('role_id'))
+            ->where('id', $user_id)
+            ->first();
+
+        $role_id = $role_id->role_id;
+
+
+        /*$user_lab_types = "";*/
+
+        $user_lab_types = DB::table('role_rights')
+            ->select(DB::raw('type'))
+            ->where('role_id', $role_id)
+            ->where('context_id', $context_id)
+            ->where($right,1)
+            ->where('type','!=',0)
+            ->get();
+
+        if (empty($user_lab_types)) {
+            //no rights on any lab;
+            return response()->json(['status' => false, 'message' => "This Right is not assigned to this User Role", 'error_code' => 500]);
+        }
+
+        else{
+          //  $user_lab_types = (array)$user_lab_types;
+            $new_arr = array();
+
+            foreach ($user_lab_types as $types) {
+                $new_arr[] = $types->type;
+            }
+            $lab_types = implode(',', $new_arr);
+        }
+
+        //dd($lab_types);
 
         if ($limit > 0 || $offset > 0) {
 
@@ -85,7 +140,8 @@ class OrderController extends Controller
                 ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
                 ->where('lab_orders.status', 1)
                 ->where('patients.status', 1)
-                ->where('labs.name','!=','radiology')
+               // ->where('labs.name','!=','radiology')
+                ->whereIn('lab_orders.lab',[$lab_types])
                 ->groupby('lab_orders.id')
                 ->skip($offset)->take($limit)
                 ->get();
@@ -99,7 +155,8 @@ class OrderController extends Controller
                 ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
                 ->where('lab_orders.status', 1)
                 ->where('patients.status', 1)
-                ->where('labs.name','!=','radiology')
+                //->where('labs.name','!=','radiology')
+                ->whereIn('lab_orders.lab',[$lab_types])
                 ->groupby('lab_orders.id')
                 ->get();
 
@@ -116,7 +173,8 @@ class OrderController extends Controller
                 ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
                 ->where('lab_orders.status', 1)
                 ->where('patients.status', 1)
-                ->where('labs.name','!=','radiology')
+               // ->where('labs.name','!=','radiology')
+                ->whereIn('lab_orders.lab',[$lab_types])
                 ->groupby('lab_orders.id')
                 ->get();
 
@@ -170,6 +228,16 @@ class OrderController extends Controller
 
     }
 
+    public function objectToArray($user_lab_types) {
+       if(is_object($user_lab_types)) {
+           $user_lab_types = get_object_vars($user_lab_types);
+       }
+       if(is_array($user_lab_types)) {
+         return array_map(__FUNCTION__, $user_lab_types); // recursive
+       } else {
+         return $user_lab_types;
+       }
+     }
 
     public function get_all_radiology_lab_orders(Request $request)
      {
@@ -279,6 +347,56 @@ class OrderController extends Controller
         $limit = $request->input('limit');
         $offset = $request->input('offset');
 
+
+        $method_name = $request->segment(2);
+
+        $context_method = DB::table('context_methods')
+            ->select(DB::raw('*'))
+            ->where('name', $method_name)
+            ->first();
+
+        if (empty($context_method)) {
+            return response()->json(['status' => false, 'message' => "No Role Assigned to the User", 'error_code' => 500]);
+        }
+
+        $context_id = $context_method->context_id;
+        $right = $context_method->right;
+
+        $user_id = Auth::user()->id;
+
+        $role_id = DB::table('users')
+            ->select(DB::raw('role_id'))
+            ->where('id', $user_id)
+            ->first();
+
+        $role_id = $role_id->role_id;
+
+
+        /*$user_lab_types = "";*/
+
+        $user_lab_types = DB::table('role_rights')
+            ->select(DB::raw('type'))
+            ->where('role_id', $role_id)
+            ->where('context_id', $context_id)
+            ->where($right, 1)
+            ->where('type', '!=', 0)
+            ->get();
+
+        if (empty($user_lab_types)) {
+            //no rights on any lab;
+            return response()->json(['status' => false, 'message' => "This Right is not assigned to this User Role", 'error_code' => 500]);
+        } else {
+            //  $user_lab_types = (array)$user_lab_types;
+            $new_arr = array();
+
+            foreach ($user_lab_types as $types) {
+                $new_arr[] = $types->type;
+            }
+            $lab_types = implode(',', $new_arr);
+        }
+
+
+
         if ($limit > 0 || $offset > 0) {
 
             $orders = DB::table('lab_orders')
@@ -292,6 +410,7 @@ class OrderController extends Controller
                 ->where('patients.status', 1)
                 ->where('patients.id', $patient_id)
                 ->where('lab_orders.visit_id', $visit_id)
+                ->whereIn('lab_orders.lab',[$lab_types])
                 ->groupby('lab_orders.id')
                 ->skip($offset)->take($limit)
                 ->get();
@@ -307,6 +426,7 @@ class OrderController extends Controller
                 ->where('patients.status', 1)
                 ->where('patients.id', $patient_id)
                 ->where('lab_orders.visit_id', $visit_id)
+                ->whereIn('lab_orders.lab',[$lab_types])
                 ->groupby('lab_orders.id')
                 ->get();
             $count = count($count);
@@ -322,6 +442,7 @@ class OrderController extends Controller
                 ->where('patients.status', 1)
                 ->where('patients.id', $patient_id)
                 ->where('lab_orders.visit_id', $visit_id)
+                ->whereIn('lab_orders.lab',[$lab_types])
                 ->groupby('lab_orders.id')
                 ->get();
             $count = count($orders);
@@ -374,6 +495,54 @@ class OrderController extends Controller
 
     public function get_lab_order_history(Request $request)
     {
+
+        $method_name = $request->segment(2);
+
+        $context_method = DB::table('context_methods')
+            ->select(DB::raw('*'))
+            ->where('name', $method_name)
+            ->first();
+
+        if (empty($context_method)) {
+            return response()->json(['status' => false, 'message' => "No Role Assigned to the User", 'error_code' => 500]);
+        }
+
+        $context_id = $context_method->context_id;
+        $right = $context_method->right;
+
+        $user_id = Auth::user()->id;
+
+        $role_id = DB::table('users')
+            ->select(DB::raw('role_id'))
+            ->where('id', $user_id)
+            ->first();
+
+        $role_id = $role_id->role_id;
+
+
+        /*$user_lab_types = "";*/
+
+        $user_lab_types = DB::table('role_rights')
+            ->select(DB::raw('type'))
+            ->where('role_id', $role_id)
+            ->where('context_id', $context_id)
+            ->where($right, 1)
+            ->where('type', '!=', 0)
+            ->get();
+
+        if (empty($user_lab_types)) {
+            //no rights on any lab;
+            return response()->json(['status' => false, 'message' => "This Right is not assigned to this User Role", 'error_code' => 500]);
+        } else {
+            //  $user_lab_types = (array)$user_lab_types;
+            $new_arr = array();
+
+            foreach ($user_lab_types as $types) {
+                $new_arr[] = $types->type;
+            }
+            $lab_types = implode(',', $new_arr);
+        }
+
         $orders = DB::table('lab_orders')
             ->select(DB::raw('lab_orders.id,lab_orders.patient_id,patients.first_name as patient_name,lab_orders.order_status,labs.name as lab_name,patients.age,patients.marital_status,patients.sex,maritial_status.name as marital_status,lab_order_tests.created_at,lab_orders.updated_at'))
             ->leftJoin('patients', 'lab_orders.patient_id', '=', 'patients.id')
@@ -384,6 +553,7 @@ class OrderController extends Controller
             ->where('lab_orders.status', 1)
             ->whereIn('order_status', ['completed', 'cancelled'])
             ->groupby('lab_orders.id')
+            ->whereIn('lab_orders.lab',[$lab_types])
             ->where('patients.status', 1)
             ->get();
 
@@ -1015,4 +1185,5 @@ class OrderController extends Controller
     }
 
 }
+
 

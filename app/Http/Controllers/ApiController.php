@@ -633,6 +633,7 @@ class ApiController extends Controller
         $users = DB::table('users')
             ->select(DB::raw('name'))
             ->where('email', $email)
+            ->where('status',1)
             ->get();
 
         if (count($users) > 0) {
@@ -640,10 +641,7 @@ class ApiController extends Controller
             return response()->json(['status' => false, 'message' => "Email Exists Already"]);
 
             exit;
-
-
         }
-
 
         DB::table('users')->insert(
             ['name' => $username,
@@ -652,7 +650,7 @@ class ApiController extends Controller
                 'telephone_number' => $telephone_number,
                 'email' => $email,
                 'password' => '77eae7aaebf39fd0c8bef84e58b37cfd',
-                //'role_id' => $user_role_id,
+                'role_id' => $user_role_id,
                 'created_at' => $currentdatetime
             ]
         );
@@ -660,14 +658,12 @@ class ApiController extends Controller
 
         $user_id = DB::getPdo()->lastInsertId();
 
-
         $user = DB::table('users')
             ->select(DB::raw('name,id'))
             ->where('id', $user_id)
             ->first();
 
         $token = JWTAuth::fromUser($user);
-
 
         return response()->json(['status' => true, 'message' => "User Registered Successfully", 'data' => $user, 'token' => $token]);
 
@@ -710,6 +706,7 @@ class ApiController extends Controller
                  'last_name' => $last_name,
                  'telephone_number' => $telephone_number,
                  'email' => $email,
+                 'role_id' => $user_role_id,
                  'updated_at' => $currentdatetime
              ]
          );
@@ -738,26 +735,26 @@ class ApiController extends Controller
         if ($limit > 0 || $offset > 0) {
 
             $users = DB::table('users')
-                ->select(DB::raw('id,name,first_name,last_name,telephone_number,email,status'))
-                ->where('status', 1)
+                ->join('roles','roles.id', '=', 'users.role_id')
+                ->select(DB::raw('users.id,users.name,first_name,last_name,telephone_number,email,users.role_id,roles.name as role_name'))
+                ->where('users.status',1)
                 ->skip($offset)->take($limit)
                 ->get();
 
             $count = DB::table('users')
-                ->select(DB::raw('*'))
-                ->where('status', 1)
+                ->join('roles', 'roles.id', '=', 'users.role_id')
+                ->select(DB::raw('users.id,users.name,first_name,last_name,telephone_number,email,users.role_id,roles.name as role_name'))
+                ->where('users.status', 1)
                 ->count();
 
         } else {
             $users = DB::table('users')
-                ->select(DB::raw('id,name,first_name,last_name,telephone_number,email,status'))
-                ->where('status', 1)
+                ->join('roles', 'roles.id', '=', 'users.role_id')
+                ->select(DB::raw('users.id,users.name,first_name,last_name,telephone_number,email,users.role_id,roles.name as role_name'))
+                ->where('users.status', 1)
                 ->get();
 
-            $count = DB::table('users')
-                ->select(DB::raw('*'))
-                ->where('status', 1)
-                ->count();
+            $count = count($users);
         }
 
         return response()->json(['status' => true,'data' => $users,'count'=>$count]);
@@ -769,9 +766,10 @@ class ApiController extends Controller
         $user_id = $request->input('user_id');
 
         $user = DB::table('users')
-            ->select(DB::raw('id,name,first_name,last_name,telephone_number,email,status'))
-            ->where('status', 1)
-            ->where('id', $user_id)
+            ->join('roles', 'roles.id', '=', 'users.role_id')
+            ->select(DB::raw('users.id,users.name,first_name,last_name,telephone_number,email,role_id,roles.name as role_name'))
+            ->where('users.status', 1)
+            ->where('users.id', $user_id)
             ->first();
 
         return response()->json(['status' => true,'data' => $user]);
@@ -789,6 +787,7 @@ class ApiController extends Controller
             ->select(DB::raw('id as source_id,email,name,role_id'))
             ->where('email', $email_address)
             ->where('password', $password_user)
+            ->where('status',1)
             ->get();
 
 
@@ -810,15 +809,29 @@ class ApiController extends Controller
                 ->where('id', $user_id)
                 ->first();
 
+            $user_roles = DB::table('users')
+                ->Join('roles','users.role_id','=','roles.id')
+                ->join('role_rights','roles.id','=','role_rights.role_id')
+                ->join('contexts','role_rights.context_id','=','contexts.id')
+                ->select(DB::raw('roles.name,contexts.name as context,role_rights.add_right,role_rights.update_right,role_rights.delete_right,role_rights.view_right'))
+                ->where('users.id', $user_id)
+                ->where('roles.status', 1)
+                ->get();
 
-            if ($user_status->user_status != 'active') {
-
-
-                return response()->json(['status' => false, 'message' => 'This user is not active']);
-
+            $obj = new  \stdClass();
+            foreach ($user_roles as $roles) {
+                $context = str_replace(array( '(', ')','/' ), '', $roles->context);
+                $context_1 = str_replace(' ','_',$context);
+                $obj->{$context_1} = $roles;
             }
 
-            return response()->json(['status' => true, 'data' => $user[0], 'token' => $token]);
+
+
+            if ($user_status->user_status != 'active') {
+                return response()->json(['status' => false, 'message' => 'This user is not active']);
+            }
+
+            return response()->json(['status' => true, 'data' => $user[0],'token'=> $token, 'roles'=>$obj]);
 
         } else {
 
@@ -3126,14 +3139,31 @@ class ApiController extends Controller
         $category_id = $request->input('category_id');
         $template_type  = $request->input('template_type');
 
-        $templates = DB::table('templates')
-            ->leftJoin('template_categories', 'template_categories.id', '=', 'templates.category_id')
-            ->leftJoin('template_types', 'template_types.id', '=', 'template_categories.template_type')
-            ->select(DB::raw('templates.id,templates.name,templates.description,template_categories.name as category,templates.template'))
-            ->where('templates.status', 1)
-            ->where('template_categories.template_type', $template_type)
-             ->where('templates.category_id', $category_id)
-            ->get();
+        if($category_id = '' || !isset($category_id)){
+            $category_id =0;
+        }
+
+        if($category_id != 0) {
+
+            $templates = DB::table('templates')
+                ->leftJoin('template_categories', 'template_categories.id', '=', 'templates.category_id')
+                ->leftJoin('template_types', 'template_types.id', '=', 'template_categories.template_type')
+                ->select(DB::raw('templates.id,templates.name,templates.description,template_categories.name as category,templates.template'))
+                ->where('templates.status', 1)
+                ->where('template_categories.template_type', $template_type)
+                ->where('templates.category_id', $category_id)
+                ->get();
+        } else {
+            $templates = DB::table('templates')
+                ->leftJoin('template_categories', 'template_categories.id', '=', 'templates.category_id')
+                ->leftJoin('template_types', 'template_types.id', '=', 'template_categories.template_type')
+                ->select(DB::raw('templates.id,templates.name,templates.description,template_categories.name as category,templates.template'))
+                ->where('templates.status', 1)
+                ->where('template_categories.template_type',$template_type)
+                ->get();
+
+
+        }
 
         return response()->json(['status' => true, 'data' => $templates]);
 
