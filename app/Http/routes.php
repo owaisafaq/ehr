@@ -98,6 +98,17 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->post('delete_lab_template_types','App\Http\Controllers\OrderController@delete_lab_template_types');
 
 
+    //Template Details
+     $app->get('get_template_details','App\Http\Controllers\OrderController@get_template_details');
+
+
+     //Other Routes of templates
+     $app->get('get_lab_test_templates','App\Http\Controllers\OrderController@get_lab_test_templates');
+     $app->post('add_lab_test_templates','App\Http\Controllers\OrderController@add_lab_test_templates');
+     $app->post('update_lab_test_templates','App\Http\Controllers\OrderController@update_lab_test_templates');
+     $app->post('delete_lab_test_templates','App\Http\Controllers\OrderController@delete_lab_test_templates');
+
+
 
 });
 
@@ -134,16 +145,6 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->post('get_template_category','App\Http\Controllers\ApiController@get_template_category');
     $app->post('update_template_category','App\Http\Controllers\ApiController@update_template_category');
 
-
-    //Template Details
-    $app->get('get_template_details','App\Http\Controllers\OrderController@get_template_details');
-
-
-    //Other Routes of templates
-    $app->get('get_lab_test_templates','App\Http\Controllers\OrderController@get_lab_test_templates');
-    $app->post('add_lab_test_templates','App\Http\Controllers\OrderController@add_lab_test_templates');
-    $app->post('update_lab_test_templates','App\Http\Controllers\OrderController@update_lab_test_templates');
-    $app->post('delete_lab_test_templates','App\Http\Controllers\OrderController@delete_lab_test_templates');
 
 
     //Routes of Lab Orders
