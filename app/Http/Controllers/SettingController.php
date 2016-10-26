@@ -526,6 +526,14 @@ class SettingController extends Controller
                 ->where('role_rights.role_id',$role->id)
                 ->count();
             $role->context_count = $context_count;
+
+            $user_count = DB::table('users')
+                ->select(DB::raw('*'))
+                ->where('status',1)
+                ->where('role_id',$role->id)
+                ->count();
+            $role->user_count = $user_count;
+
         }
 
         return response()->json(['status'=>true,'data' =>$roles,'count'=>$count]);

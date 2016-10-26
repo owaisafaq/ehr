@@ -633,6 +633,7 @@ class ApiController extends Controller
         $users = DB::table('users')
             ->select(DB::raw('name'))
             ->where('email', $email)
+            ->where('status',1)
             ->get();
 
         if (count($users) > 0) {
@@ -710,6 +711,7 @@ class ApiController extends Controller
                  'last_name' => $last_name,
                  'telephone_number' => $telephone_number,
                  'email' => $email,
+                 'role_id' => $user_role_id,
                  'updated_at' => $currentdatetime
              ]
          );
