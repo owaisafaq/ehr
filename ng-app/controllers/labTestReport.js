@@ -20,7 +20,11 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', '$routeParams', '$wi
         $scope.labTest = res.data;
         console.log(res.data,'fyrt');
         if($scope.labTest.created_at != undefined || $scope.labTest.created_at != ''){
-            /*$scope.date = new Date();
+            var date = new Date();
+            currentDate = date.getDate();     // Get current date
+            monthNumber       = date.getMonth(); // current month
+            year        = date.getFullYear();
+            //$scope.date = new Date();
             var month = new Array();
             month[0] = "January";
             month[1] = "February";
@@ -33,13 +37,16 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', '$routeParams', '$wi
             month[8] = "September";
             month[9] = "October";
             month[10] = "November";
-            month[11] = "December";*/
-            var dateAndTime = $scope.labTest.created_at.split(' ');
+            month[11] = "December";
+            hour = date.getHours();
+            min  = date.getMinutes();
+            sec  = date.getSeconds();
+            //var dateAndTime = $scope.labTest.created_at.split(' ');
             //var date = dateAndTime[0].split('-');
             //var day = date[2]; var month1 = date[1]; var year = date[0];
             //$scope.labTest.created_at =  month[parseInt(month1)] + " " + day + ", " + year;
-            $scope.labTest.created_at = dateAndTime[0];
-            $scope.labTestTime = dateAndTime[1];
+            $scope.labTest.created_at = month[monthNumber] + " " + currentDate + " " + year //dateAndTime[0];
+            $scope.labTestTime = hour + ":" + min + ":" + sec;//dateAndTime[1];
         }else if(res.error_code == 500){
             console.log(res);
             $rootScope.RolesAccess(res.message);

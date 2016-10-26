@@ -120,6 +120,7 @@ AppEHR.controller('settingsUsers', ['$scope', '$rootScope', '$window', '$routePa
 	}
 
 	$scope.userDetail = function(id){
+		$rootScope.loader = "show";
 		GetUser.get({
 			token: $window.sessionStorage.token,
 			user_id : id
@@ -149,7 +150,8 @@ AppEHR.controller('settingsUsers', ['$scope', '$rootScope', '$window', '$routePa
 			first_name : editUserData.first_name,
 			last_name : editUserData.last_name,
 			telephone_number : editUserData.telephone_number,
-			email : editUserData.email
+			email : editUserData.email,
+			role_id : editUserData.role_id
 		},editUserSuccess,editUserFailure);
 	};
 
