@@ -109,23 +109,16 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
      $app->post('update_lab_test_templates','App\Http\Controllers\OrderController@update_lab_test_templates');
      $app->post('delete_lab_test_templates','App\Http\Controllers\OrderController@delete_lab_test_templates');
 
-
-      //Templates  Categories for Lab
-
-     $app->get('get_lab_template_categories','App\Http\Controllers\OrderController@get_lab_template_categories');
-     $app->post('get_lab_template_category','App\Http\Controllers\OrderController@get_lab_template_category');
-     $app->post('add_lab_template_category','App\Http\Controllers\OrderController@add_lab_template_category');
-     $app->post('update_lab_template_category','App\Http\Controllers\OrderController@update_lab_template_category');
-     $app->post('delete_lab_template_category','App\Http\Controllers\OrderController@delete_lab_template_category');
+    $app->get('get_lab_test_fields', 'App\Http\Controllers\OrderController@get_lab_test_fields');
 
 
-    //Templates Categories for Clinical Notes
-    $app->get('get_templates_categories','App\Http\Controllers\ApiController@get_templates_categories');
-    $app->post('delete_template_category','App\Http\Controllers\ApiController@delete_template_category');
-    $app->post('add_template_category','App\Http\Controllers\ApiController@add_template_category');
-    $app->post('get_template_category','App\Http\Controllers\ApiController@get_template_category');
-    $app->post('update_template_category','App\Http\Controllers\ApiController@update_template_category');
+    //These routes are handled in their function and not in middleware
+    $app->get('get_all_lab_orders', 'App\Http\Controllers\OrderController@get_all_lab_orders');
+    $app->get('get_all_radiology_lab_orders', 'App\Http\Controllers\OrderController@get_all_radiology_lab_orders');
+    $app->get('get_patient_lab_orders', 'App\Http\Controllers\OrderController@get_patient_lab_orders');
 
+    //Lab Order History
+     $app->get('get_lab_order_history','App\Http\Controllers\OrderController@get_lab_order_history');
 
 
 });
@@ -145,29 +138,39 @@ $app->group(['prefix' => 'api', 'middleware' => ['jwt.auth','App\Http\Middleware
     $app->post('edit_template','App\Http\Controllers\ApiController@edit_template');
 
 
+    //Templates  Categories for Lab
+
+    $app->get('get_lab_template_categories', 'App\Http\Controllers\OrderController@get_lab_template_categories');
+    $app->post('get_lab_template_category', 'App\Http\Controllers\OrderController@get_lab_template_category');
+    $app->post('add_lab_template_category', 'App\Http\Controllers\OrderController@add_lab_template_category');
+    $app->post('update_lab_template_category', 'App\Http\Controllers\OrderController@update_lab_template_category');
+    $app->post('delete_lab_template_category', 'App\Http\Controllers\OrderController@delete_lab_template_category');
+
+
+    //Templates Categories for Clinical Notes
+    $app->get('get_templates_categories', 'App\Http\Controllers\ApiController@get_templates_categories');
+    $app->post('delete_template_category', 'App\Http\Controllers\ApiController@delete_template_category');
+    $app->post('add_template_category', 'App\Http\Controllers\ApiController@add_template_category');
+    $app->post('get_template_category', 'App\Http\Controllers\ApiController@get_template_category');
+    $app->post('update_template_category', 'App\Http\Controllers\ApiController@update_template_category');
+
 
 
     //Routes of Lab Orders
 
     $app->get('get_lab_tests', 'App\Http\Controllers\OrderController@get_lab_tests');
     $app->get('get_lab_test_details', 'App\Http\Controllers\OrderController@get_lab_test_details');
-    $app->get('get_all_lab_orders', 'App\Http\Controllers\OrderController@get_all_lab_orders');
-    $app->get('get_all_radiology_lab_orders', 'App\Http\Controllers\OrderController@get_all_radiology_lab_orders');
-    $app->get('get_patient_lab_orders', 'App\Http\Controllers\OrderController@get_patient_lab_orders');
+
     $app->get('get_lab_order', 'App\Http\Controllers\OrderController@get_lab_order');
     $app->post('add_lab_order', 'App\Http\Controllers\OrderController@add_lab_order');
     $app->post('cancel_lab_order', 'App\Http\Controllers\OrderController@cancel_lab_order');
     $app->post('update_lab_test', 'App\Http\Controllers\OrderController@update_lab_test');
-    $app->get('get_lab_test_fields', 'App\Http\Controllers\OrderController@get_lab_test_fields');
+
     $app->post('add_lab_test_values', 'App\Http\Controllers\OrderController@add_lab_test_values');
     $app->post('update_lab_test_values', 'App\Http\Controllers\OrderController@update_lab_test_values');
 
     //Lab Order Pdf
     $app->get('get_lab_test_pdf','App\Http\Controllers\PDFController@get_lab_test_pdf');
-
-
-    //Lab Order History
-    $app->get('get_lab_order_history','App\Http\Controllers\OrderController@get_lab_order_history');
 
 
     //Sign Of Lab Report

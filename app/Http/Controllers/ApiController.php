@@ -641,10 +641,7 @@ class ApiController extends Controller
             return response()->json(['status' => false, 'message' => "Email Exists Already"]);
 
             exit;
-
-
         }
-
 
         DB::table('users')->insert(
             ['name' => $username,
@@ -661,14 +658,12 @@ class ApiController extends Controller
 
         $user_id = DB::getPdo()->lastInsertId();
 
-
         $user = DB::table('users')
             ->select(DB::raw('name,id'))
             ->where('id', $user_id)
             ->first();
 
         $token = JWTAuth::fromUser($user);
-
 
         return response()->json(['status' => true, 'message' => "User Registered Successfully", 'data' => $user, 'token' => $token]);
 
@@ -3144,8 +3139,12 @@ class ApiController extends Controller
         $category_id = $request->input('category_id');
         $template_type  = $request->input('template_type');
 
+        if($category_id = '' || !isset($category_id)){
+            $category_id =0;
+        }
 
-        if(isset($category_id)) {
+        if($category_id != 0) {
+
             $templates = DB::table('templates')
                 ->leftJoin('template_categories', 'template_categories.id', '=', 'templates.category_id')
                 ->leftJoin('template_types', 'template_types.id', '=', 'template_categories.template_type')
@@ -3160,8 +3159,9 @@ class ApiController extends Controller
                 ->leftJoin('template_types', 'template_types.id', '=', 'template_categories.template_type')
                 ->select(DB::raw('templates.id,templates.name,templates.description,template_categories.name as category,templates.template'))
                 ->where('templates.status', 1)
-                ->where('template_categories.template_type', $template_type)
+                ->where('template_categories.template_type',$template_type)
                 ->get();
+
 
         }
 
@@ -3170,7 +3170,7 @@ class ApiController extends Controller
     }
 
 
-    public function template(Request $request)
+    public function delete_template(Request $request)
     {
         $template_id = $request->input('template_id');
 
