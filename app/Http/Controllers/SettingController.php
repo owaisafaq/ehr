@@ -447,19 +447,19 @@ class SettingController extends Controller
 
         if ($limit > 0 || $offset > 0) {
             $contexts = DB::table('contexts')
-                ->select(DB::raw('id,name'))
+                ->select(DB::raw('id,name,available_rights'))
                 ->where('status', 1)
                 ->skip($offset)->take($limit)
                 ->get();
         } else {
             $contexts = DB::table('contexts')
-                ->select(DB::raw('id,name'))
+                ->select(DB::raw('id,name,available_rights'))
                 ->where('status', 1)
                 ->get();
         }
 
         $count = DB::table('contexts')
-            ->select(DB::raw('id,name'))
+            ->select(DB::raw('id,name,available_rights'))
             ->where('status', 1)
             ->count();
 
