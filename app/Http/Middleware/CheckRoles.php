@@ -22,6 +22,7 @@ class CheckRoles
 
     public function handle($request, Closure $next)
     {
+        //dd($request);
         /* if($request->session()->get('admin_data')){
 
              return $next($request);
@@ -55,23 +56,24 @@ class CheckRoles
             $role_id = $role_id->role_id;
 
             if (strpos($method_name,'lab_order') !== false || strpos($method_name,'lab_test') !== false) {
-                if ($request->lab) {
+                if ($request->has('lab')) {
                     $type_id = $request->lab;
-                } elseif ($request->lab_test_id && strpos($method_name,'get_lab_test_pdf') !== true ) {
+                }elseif($request->has('lab_test_id') && strpos($method_name,'get_lab_test_pdf') !== true ) {
+
                     $lab = DB::table('lab_tests')
                         ->select(DB::raw('lab'))
                         ->where('id',$request->lab_test_id)
                         ->first();
                     $type_id = $lab->lab;
 
-                } elseif ($request->order_id) {
+                } elseif($request->has('order_id')) {
                     $lab = DB::table('lab_orders')
                         ->select(DB::raw('lab'))
                         ->where('id',$request->order_id)
                         ->first();
                     $type_id = $lab->lab;
 
-                } elseif ($request->lab_test) {
+                } elseif ($request->has('lab_test')) {
                     $order = DB::table('lab_order_tests')
                         ->select(DB::raw('lab_order_id'))
                         ->where('id',$request->lab_test)
@@ -84,7 +86,7 @@ class CheckRoles
                         ->first();
                     $type_id = $lab->lab;
 
-                } elseif ($request->lab_test_id  && strpos($method_name,'get_lab_test_pdf') !== false && strpos($method_name,'get_lab_test_pdf') !== true ) {
+                } elseif ($request->has('lab_test_id')  && strpos($method_name,'get_lab_test_pdf') !== false && strpos($method_name,'get_lab_test_pdf') !== true ) {
                     $order = DB::table('lab_order_tests')
                         ->select(DB::raw('lab_order_id'))
                         ->where('id',$request->lab_test_id)
@@ -97,7 +99,7 @@ class CheckRoles
                         ->first();
                     $type_id = $lab->lab;
 
-                } elseif ($request->lab_test_id && strpos($method_name, 'signoff_lab_report') !== false) {
+                } elseif ($request->has('lab_test_id') && strpos($method_name, 'signoff_lab_report') !== false) {
                     $order = DB::table('patient_lab_test_values')
                         ->select(DB::raw('lab_order_id'))
                         ->where('id', $request->lab_test_id)
@@ -110,7 +112,7 @@ class CheckRoles
                         ->first();
                     $type_id = $lab->lab;
 
-                } elseif ($request->lab_order_test_id) {
+                } elseif ($request->has('lab_order_test_id')) {
                     $order = DB::table('lab_order_tests')
                         ->select(DB::raw('lab_order_id'))
                         ->where('id', $request->lab_order_test_id)
@@ -136,9 +138,9 @@ class CheckRoles
                     ->where('type', $type_id)
                     ->get();
             } elseif (strpos($method_name,'template') !== false || strpos($method_name,'lab_template') !== false) {
-                if ($request->template_type) {
+                if ($request->has('template_type')) {
                     $type_id = $request->template_type;
-                } elseif ($request->template_id) {
+                } elseif ($request->has('template_id')) {
                     $category = DB::table('templates')
                         ->select(DB::raw('category_id'))
                         ->where('id',$request->template_id)
@@ -151,14 +153,14 @@ class CheckRoles
                         ->first();
                     $type_id = $type->template_type;
 
-                } elseif ($request->category_id) {
+                } elseif ($request->has('category_id')) {
                     $type = DB::table('template_categories')
                         ->select(DB::raw('template_type'))
                         ->where('id',$request->category_id)
                         ->first();
                     $type_id = $type->template_type;
 
-                } elseif ($request->cat_id) {
+                } elseif ($request->has('cat_id')) {
                     $type = DB::table('template_categories')
                         ->select(DB::raw('template_type'))
                         ->where('id',$request->cat_id)
@@ -188,8 +190,6 @@ class CheckRoles
                     ->where($right, 1)
                     ->get();
             }
-
-
         }
 
         if (empty($role_rights)) {
