@@ -691,6 +691,7 @@ class ApiController extends Controller
         $users = DB::table('users')
                ->select(DB::raw('name'))
                ->where('email', $email)
+               ->where('status',1)
                ->get();
 
         if (count($users) > 1) {

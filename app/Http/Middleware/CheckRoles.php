@@ -55,11 +55,10 @@ class CheckRoles
 
             $role_id = $role_id->role_id;
 
-            if (strpos($method_name,'lab_order') !== false || strpos($method_name,'lab_test') !== false) {
+            if (strpos($method_name,'lab_order') !== false || strpos($method_name,'lab_test') !== false || strpos($method_name,'lab_report') !== false) {
                 if ($request->has('lab')) {
                     $type_id = $request->lab;
-                }elseif($request->has('lab_test_id') && strpos($method_name,'get_lab_test_pdf') !== true ) {
-
+                }elseif($request->has('lab_test_id') && $method_name !='get_lab_test_pdf' && $method_name !='signoff_lab_report') {
                     $lab = DB::table('lab_tests')
                         ->select(DB::raw('lab'))
                         ->where('id',$request->lab_test_id)
@@ -86,7 +85,7 @@ class CheckRoles
                         ->first();
                     $type_id = $lab->lab;
 
-                } elseif ($request->has('lab_test_id')  && strpos($method_name,'get_lab_test_pdf') !== false && strpos($method_name,'get_lab_test_pdf') !== true ) {
+                } elseif ($request->has('lab_test_id')  && strpos($method_name,'get_lab_test_pdf') !== false) {
                     $order = DB::table('lab_order_tests')
                         ->select(DB::raw('lab_order_id'))
                         ->where('id',$request->lab_test_id)
@@ -99,7 +98,7 @@ class CheckRoles
                         ->first();
                     $type_id = $lab->lab;
 
-                } elseif ($request->has('lab_test_id') && strpos($method_name, 'signoff_lab_report') !== false) {
+                } elseif ($request->has('lab_test_id') && strpos($method_name,'signoff_lab_report') !== false) {
                     $order = DB::table('patient_lab_test_values')
                         ->select(DB::raw('lab_order_id'))
                         ->where('id', $request->lab_test_id)
