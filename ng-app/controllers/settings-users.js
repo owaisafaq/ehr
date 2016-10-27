@@ -143,6 +143,7 @@ AppEHR.controller('settingsUsers', ['$scope', '$rootScope', '$window', '$routePa
 
 	$scope.updateUser = function(editUserData){
 		$rootScope.loader = "show";
+		console.log(editUserData); //return false;
 		editUser.save({
 			token : $window.sessionStorage.token,
 			user_id : editUserData.id,

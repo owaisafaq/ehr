@@ -78,6 +78,7 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
 		GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: patientID}, patientInfoSuccess, patientInfoFailure);
 
         function patientInfoSuccess(res) {
+            $rootScope.loader = "hide";
             if (res.status == true) {
                 $scope.buttonDisabled = false;
                 $scope.displayInfo.first_name = res.data.first_name;
@@ -92,7 +93,10 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
                 if($scope.hospital_plan == '1') $scope.hospital_plan = "card-color-1";
                 if($scope.hospital_plan == '2') $scope.hospital_plan = "card-color-2";
                 else $scope.hospital_plan = "card-color-3";
-                $rootScope.loader = "hide";
+                
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
         }
 
@@ -128,7 +132,10 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
                     console.log(11111);
 		        },100);
                 
-        	}
+        	}else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
+            }
         }
 
         function getAppointmentFailure(error) {
