@@ -736,21 +736,21 @@ class ApiController extends Controller
         if ($limit > 0 || $offset > 0) {
 
             $users = DB::table('users')
-                ->join('roles','roles.id', '=', 'users.role_id')
+                ->leftjoin('roles','roles.id', '=', 'users.role_id')
                 ->select(DB::raw('users.id,users.name,first_name,last_name,telephone_number,email,users.role_id,roles.name as role_name'))
                 ->where('users.status',1)
                 ->skip($offset)->take($limit)
                 ->get();
 
             $count = DB::table('users')
-                ->join('roles', 'roles.id', '=', 'users.role_id')
+                ->leftjoin('roles', 'roles.id', '=', 'users.role_id')
                 ->select(DB::raw('users.id,users.name,first_name,last_name,telephone_number,email,users.role_id,roles.name as role_name'))
                 ->where('users.status', 1)
                 ->count();
 
         } else {
             $users = DB::table('users')
-                ->join('roles', 'roles.id', '=', 'users.role_id')
+                ->leftjoin('roles', 'roles.id', '=', 'users.role_id')
                 ->select(DB::raw('users.id,users.name,first_name,last_name,telephone_number,email,users.role_id,roles.name as role_name'))
                 ->where('users.status', 1)
                 ->get();
@@ -767,10 +767,10 @@ class ApiController extends Controller
         $user_id = $request->input('user_id');
 
         $user = DB::table('users')
-            ->join('roles', 'roles.id', '=', 'users.role_id')
+            ->leftjoin('roles','roles.id','=','users.role_id')
             ->select(DB::raw('users.id,users.name,first_name,last_name,telephone_number,email,role_id,roles.name as role_name'))
             ->where('users.status', 1)
-            ->where('users.id', $user_id)
+            ->where('users.id',$user_id)
             ->first();
 
         return response()->json(['status' => true,'data' => $user]);
