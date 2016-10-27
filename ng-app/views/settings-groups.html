@@ -88,9 +88,9 @@
                             <label>Right & Context</label>
                         </div>
                         <div class="col-lg-8 add-multiple-con_select2">
-                            <select class="form-control add-multiple" ng-model="roleData.role_rights" placeholder="Search Context" name="role_rights" ng-class="{true:'error'}[submitted && empty_flag]" ng-change="contextOnChange(roleData.role_rights);">
+                            <select class="form-control add-multiple" ng-model="roleData.role_rights" placeholder="Search Context" name="role_rights" ng-class="{true:'error'}[submitted && empty_flag]" ng-change="contextOnChange(roleData.role_rights, roleData.role_rights.available_rights);">
                                 <option value=""></option>
-                                <option ng-repeat="Context in Contexts" value="{{ Context.id }}">{{ Context.name }}</option>
+                                <option ng-repeat="Context in Contexts" value="{{ Context.id }}" availablerights="{{Context.available_rights}}">{{ Context.name }}</option>
                             </select>
                             <p class="help-block PIValid" ng-show="submitted && empty_flag">Required</p>
                         </div>
@@ -103,7 +103,7 @@
                             <label>Types</label>
                         </div>
                         <div class="col-lg-8 add-multiple-con_select2">
-                            <select class="form-control add-multiple_tempName" ng-model="roleData.type" placeholder="Labs" name="templateID">
+                            <select class="form-control add-multiple_tempName" ng-model="roleData.type" placeholder="Labs" name="labID">
                                 <option value=""></option>
                                 <option ng-repeat="lab in Labs" value="{{ lab.id }}">{{ lab.name }}</option>
                             </select>
@@ -115,7 +115,7 @@
                             <label>Templates</label>
                         </div>
                         <div class="col-lg-8 add-multiple-con_select2">
-                            <select class="form-control add-multiple_tempName" ng-model="roleData.type" placeholder="Templates" name="templateID">
+                            <select class="form-control add-multiple_labName" ng-model="roleData.type" placeholder="Templates" name="templateID">
                                 <option value=""></option>
                                 <option value="1">Clinical Templates</option>
                                 <option value="2">Lab Templates</option>
@@ -163,7 +163,7 @@
                         <div class="col-lg-8 add-multiple-con_select2">
                             <select class="form-control add-multiple" ng-model="editRoleData.role_rights" placeholder="Search Context" name="role_rights" ng-class="{true:'error'}[submitted && empty_flag]" ng-change="EditcontextOnChange(editRoleData.role_rights);">
                                 <option value=""></option>
-                                <option ng-repeat="lab in Contexts" value="{{ lab.id }}">{{ lab.name }}</option>
+                                <option ng-repeat="lab in Contexts" value="{{ lab.id }}" availablerights="{{lab.available_rights}}">{{ lab.name }}</option>
                             </select>
                             <p class="help-block PIValid" ng-show="submitted && empty_flag">Required</p>
                         </div>
@@ -188,7 +188,7 @@
                             <label>Templates</label>
                         </div>
                         <div class="col-lg-8 add-multiple-con_select2">
-                            <select class="form-control add-multiple" ng-model="roleData.type" placeholder="Templates" name="templateID">
+                            <select class="form-control add-multiple_ElabName" ng-model="roleData.type" placeholder="Templates" name="templateID">
                                 <option value=""></option>
                                 <option value="1">Clinical Templates</option>
                                 <option value="2">Lab Templates</option>
