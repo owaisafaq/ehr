@@ -21,7 +21,7 @@ AppEHR.controller('settingsGroups', ['$scope', '$rootScope', '$window', '$routeP
             var id = $('#addRole select[name=role_rights]').val();
             console.log('id n temp');
             if(id != '' && template_id != '') {
-                console.log($('#addRole .right_chip[data-id="' + id + '"').length , $('#addRole .right_chip[data-template-id="' + template_id + '"').length);
+                console.log($('#addRole .right_chip[data-id="' + id + '"').length < 1 && $('#addRole .right_chip[data-template-id="' + template_id + '"').length < 1);
                 if ($('#addRole .right_chip[data-id="' + id + '"').length < 1 && $('#addRole .right_chip[data-template-id="' + template_id + '"').length < 1) {
                     $('#addRole .rights_list .mCSB_container').append('<div class="right_chip" data-template-id="' + template_id + '" data-id="' + id + '"><span>' + $('#addRole .add-multiple .select2-chosen').html() + " - " + $('#addRole .add-multiple_labName .select2-chosen').html() + '</span>' + get_context_rights(rightsArray) + '</div>');
                     $("#addRole .add-multiple").select2('data', null);
@@ -49,7 +49,7 @@ AppEHR.controller('settingsGroups', ['$scope', '$rootScope', '$window', '$routeP
                 var rightsArray = $('#addRole .add-multiple option:selected').attr('availablerights');
                 rightsArray = rightsArray.split(',');
                 console.log($('#addRole .right_chip[data-id="' + id + '"').length , $('#addRole .right_chip[data-lab-id="' + template_id + '"').length);
-                if ($('#addRole .right_chip[data-id="' + id + '"').length < 1 && $('#addRole .right_chip[data-lab-id="' + template_id + '"').length < 1) {
+                if (($('#addRole .right_chip[data-id="' + id + '"').length == 0 && $('#addRole .right_chip[data-lab-id="' + template_id + '"').length == 0) || ($('#addRole .right_chip[data-id="' + id + '"').length == 0 && $('#addRole .right_chip[data-lab-id="' + template_id + '"').length >= 1) || ($('#addRole .right_chip[data-id="' + id + '"').length >= 1 && $('#addRole .right_chip[data-lab-id="' + template_id + '"').length == 0)) {
                     $('#addRole .rights_list .mCSB_container').append('<div class="right_chip" data-lab-id="' + template_id + '" data-id="' + id + '"><span>' + $('#addRole .add-multiple .select2-chosen').html() + " - " + $('#addRole .add-multiple_tempName .select2-chosen').html() + '</span>' + get_context_rights(rightsArray) +'</div>');
                     $("#addRole .add-multiple").select2('data', null);
                     $("#addRole .add-multiple_tempName").select2('data', null);
@@ -57,7 +57,7 @@ AppEHR.controller('settingsGroups', ['$scope', '$rootScope', '$window', '$routeP
                     $scope.empty_flag = false;
                     //$scope.templateFlag = false;
                     //$scope.labTypeFlag = false; labTypes labID
-                }else if($('#addRole .right_chip[data-id="' + id + '"').length >= 1 && $('#addRole .right_chip[data-lab-id="' + template_id + '"').length < 1){
+                }/*else if($('#addRole .right_chip[data-id="' + id + '"').length >= 1 && $('#addRole .right_chip[data-lab-id="' + template_id + '"').length <= 1){
                     console.log('labTypeFlag nhi aya',template_id);
                     $('#addRole .rights_list .mCSB_container').append('<div class="right_chip" data-lab-id="' + template_id + '" data-id="' + id + '"><span>' + $('#addRole .add-multiple .select2-chosen').html() + " - " + $('#addRole .add-multiple_tempName .select2-chosen').html() + '</span>'+ get_context_rights(rightsArray) +'</div>');
                     $("#addRole .add-multiple").select2('data', null);
@@ -71,7 +71,7 @@ AppEHR.controller('settingsGroups', ['$scope', '$rootScope', '$window', '$routeP
                     $("#addRole .add-multiple_tempName").select2('data', null);
                     $scope.submitted = false;
                     $scope.empty_flag = false;
-                }
+                }*/
             }
         }else{
             var id = $('#addRole select[name=role_rights]').val();
