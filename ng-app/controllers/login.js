@@ -22,7 +22,7 @@ AppEHR.controller('loginController', ['$scope', '$window', 'AUTH', '$rootScope',
 					$window.sessionStorage.roles = JSON.stringify(res.roles);
 					$rootScope.ROLES = JSON.parse($window.sessionStorage.roles);
 					console.log($window.sessionStorage.roles);
-					console.log($rootScope.ROLES);
+					console.log($rootScope.ROLES); //return true;
 					$window.location.href = '#/dashboard';
 				}else{
 					$scope.preLoader = false;

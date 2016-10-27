@@ -174,7 +174,7 @@
                             </a>
                         </li><!--end /menu-li -->
                         
-                      <li class="gui-folder" ng-hide="ROLES.Ward == undefined">
+                          <li class="gui-folder" ng-hide="ROLES.Ward == undefined">
                             <a>
                                 <div class="gui-icon"><i class="md md-hotel"></i></div>
                                 <span class="title">Ward Management</span>
@@ -191,7 +191,7 @@
                                 <span class="title">Billing</span>
                             </a>
                         </li><!--end /menu-li -->
-                        <li class="gui-folder" ng-hide="ROLES.Pharmacy == undefined && ROLES.Inventory == undefined && ROLES.Pharmacy_prescription == undefined && ROLES.Stock == undefined && ROLES.Clinical_notes_templates == undefined && ROLES.Lab_order_templates == undefined">
+                        <li class="gui-folder" ng-hide="ROLES.Pharmacy == undefined && ROLES.Inventory == undefined && ROLES.Pharmacy_prescription == undefined && ROLES.Stock == undefined && ROLES.Users == undefined && ROLES.Roles == undefined && ROLES.Billng_code == undefined && ROLES.Tax_rates == undefined && ROLES.Labs == 0 && ROLES.Facility == undefined && ROLES.templates == undefined">
                             <a>
                                 <div class="gui-icon"><i class="md md-settings"></i></div>
                                 <span class="title">Settings</span>
@@ -200,13 +200,13 @@
                                 <li><a href="#/settings"><span class="title">Settings Dashboard</span></a></li>
                                 <li ng-hide="ROLES.Users == undefined"><a href="#/settings-users"><span class="title">User Management</span></a></li>
                                 <li ng-hide="ROLES.Roles == undefined"><a href="#/settings-groups"><span class="title">Roles Management</span></a></li>
-                                <li ng-hide="ROLES.Lab_order_templates == undefined && ROLES.Clinical_notes_templates == undefined" class="gui-folder"><a><span class="title">Templates</span></a>
+                                <li ng-hide="ROLES.templates.type == 0 && ROLES.templates.type == 0" class="gui-folder"><a><span class="title">Templates</span></a>
                                     <ul>
-                                        <li ng-hide="ROLES.Clinical_notes_templates == undefined"><a href="#/clinical-progress-template"><span class="title">Clinical note templates</span></a></li>
-                                        <li ng-hide="ROLES.Lab_order_templates == undefined"><a href="#/templates"><span class="title">Lab order templates</span></a></li>
+                                        <li ng-show="ROLES.templates.type == 1"><a href="#/clinical-progress-template"><span class="title">Clinical note templates</span></a></li>
+                                        <li ng-show="ROLES.templates.type == 2"><a href="#/templates"><span class="title">Lab order templates</span></a></li>
                                     </ul>
                                 </li>
-                                <li ng-hide="ROLES.Billing_code == undefined"><a href="#/billing-codes"><span class="title">Billing codes</span></a></li>
+                                <li ng-hide="ROLES.Billng_code == undefined"><a href="#/billing-codes"><span class="title">Billing codes</span></a></li>
                                 <li ng-hide="ROLES.Tax_rates == undefined"><a href="#/settings-tax-rates"><span class="title">Tax rates</span></a></li>
                                 <li ng-hide="ROLES.Inventory == undefined"><a href="#/inventory"><span class="title">Inventory management</span></a></li>
                                 <li ng-hide="ROLES.Pharmacy == undefined"><a href="#/pharmacy"><span class="title">Pharmacy management</span></a></li>
@@ -370,10 +370,10 @@
                         <h2>Error</h2>
                     </div>
                     <div class="modal-body">
-                        <p class="error-header capitalize">{{rolesAccessMsg}}</p>
+                        <p class="error-header">{{rolesAccessMsg}}</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">OK</button>
+                        <button type="button" class="btn btn-default button-style-1 button-style-1_a" data-dismiss="modal">OK</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
