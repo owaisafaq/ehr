@@ -815,28 +815,36 @@ class ApiController extends Controller
                 ->first();
 
             $user_roles = DB::table('users')
-                ->Join('roles','users.role_id','=','roles.id')
-                ->join('role_rights','roles.id','=','role_rights.role_id')
-                ->join('contexts','role_rights.context_id','=','contexts.id')
-                ->select(DB::raw('roles.name,contexts.name as context,role_rights.add_right,role_rights.update_right,role_rights.delete_right,role_rights.view_right'))
-                ->where('users.id', $user_id)
+                ->leftJoin('roles','users.role_id','=','roles.id')
+                ->leftjoin('role_rights','roles.id','=','role_rights.role_id')
+                ->leftjoin('contexts','role_rights.context_id','=','contexts.id')
+                ->select(DB::raw('roles.name,contexts.name as context,role_rights.add_right,role_rights.update_right,role_rights.delete_right,role_rights.view_right,role_rights.type'))
+                ->where('users.id',$user_id)
                 ->where('roles.status', 1)
                 ->get();
 
             $obj = new  \stdClass();
             foreach ($user_roles as $roles) {
-                $context = str_replace(array( '(', ')','/' ), '', $roles->context);
-                $context_1 = str_replace(' ','_',$context);
+                $context = str_replace(array('(', ')', '/'), '', $roles->context);
+                $context_1 = str_replace(' ', '_', $context);
+
+                if ($context_1 == 'templates' && $roles->type == 1) {
+                    $context_1 = 'clinical_notes_templates';
+                }
+                if ($context_1 == 'templates' && $roles->type == 2) {
+                    $context_1 = 'lab_order_templates';
+                }
                 $obj->{$context_1} = $roles;
             }
-
 
 
             if ($user_status->user_status != 'active') {
                 return response()->json(['status' => false, 'message' => 'This user is not active']);
             }
 
-            return response()->json(['status' => true, 'data' => $user[0],'token'=> $token, 'roles'=>$obj]);
+
+
+            return response()->json(['status' => true, 'data' => $user[0], 'token' => $token, 'roles' => $obj]);
 
         } else {
 
