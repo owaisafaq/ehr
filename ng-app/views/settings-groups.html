@@ -12,7 +12,7 @@
                             <select class="form-control select_searchFields" placeholder="Search Roles" ng-model="byRole">
                                 <option></option>
                                 <option value="">All</option>
-                                <option ng-repeat="Role in Roles" value="{{ Role.id }}">{{ Role.name }}</option>
+                                <option ng-repeat="Role in Roles" value="{{ Role.name }}">{{ Role.name }}</option>
                             </select>
                         </div>
                     </div>
@@ -28,10 +28,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="Role in Roles | filter:{ id:byRole }">
+                                <tr ng-repeat="Role in Roles | filter:{ name:byRole }">
                                     <td>{{ Role.id }}</td>
                                     <td>{{ Role.name }}</td>
-                                    <td>{{ Role.context_count }}</td>
+                                    <td>{{ Role.user_count }}</td>
                                     <td>
                                         <div class="billing_actions pull-right"><a href="javascript:;" class="setting-button"></a>
                                             <div class="tool-tip_popup">
@@ -83,19 +83,44 @@
                             <p class="help-block PIValid" ng-show="submitted && userForm1.name.$error.required">Required</p>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Right & Context</label>
                         </div>
                         <div class="col-lg-8 add-multiple-con_select2">
-                            <select class="form-control add-multiple" ng-model="roleData.role_rights" placeholder="Search Context" name="role_rights" ng-class="{true:'error'}[submitted && empty_flag]">
+                            <select class="form-control add-multiple" ng-model="roleData.role_rights" placeholder="Search Context" name="role_rights" ng-class="{true:'error'}[submitted && empty_flag]" ng-change="contextOnChange(roleData.role_rights);">
                                 <option value=""></option>
                                 <option ng-repeat="Context in Contexts" value="{{ Context.id }}">{{ Context.name }}</option>
                             </select>
                             <p class="help-block PIValid" ng-show="submitted && empty_flag">Required</p>
                         </div>
                         <div class="col-lg-1">
-                             <span class="plus add-role"><i class="md-add"></i></span>
+                            <span class="plus add-role"><i class="md-add"></i></span>
+                        </div>
+                    </div>
+                    <div class="row margin-bottom-xxl" ng-show="labTypeFlag">
+                        <div class="col-lg-3">
+                            <label>Types</label>
+                        </div>
+                        <div class="col-lg-8 add-multiple-con_select2">
+                            <select class="form-control add-multiple_tempName" ng-model="roleData.type" placeholder="Labs" name="templateID">
+                                <option value=""></option>
+                                <option ng-repeat="lab in Labs" value="{{ lab.id }}">{{ lab.name }}</option>
+                            </select>
+                            <!-- <p class="help-block PIValid" ng-show="submitted">Required</p> -->
+                        </div>
+                    </div>
+                    <div class="row" ng-show="templateFlag">
+                        <div class="col-lg-3">
+                            <label>Templates</label>
+                        </div>
+                        <div class="col-lg-8 add-multiple-con_select2">
+                            <select class="form-control add-multiple_tempName" ng-model="roleData.type" placeholder="Templates" name="templateID">
+                                <option value=""></option>
+                                <option value="1">Clinical Templates</option>
+                                <option value="2">Lab Templates</option>
+                            </select>
+                            <!-- <p class="help-block PIValid" ng-show="submitted">Required</p> -->
                         </div>
                     </div>
                     <div class="rights_list">
@@ -131,19 +156,44 @@
                             <p class="help-block PIValid" ng-show="submitted && userForm2.name.$error.required">Required</p>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>Right & Context</label>
                         </div>
                         <div class="col-lg-8 add-multiple-con_select2">
-                            <select class="form-control add-multiple" ng-model="editRoleData.role_rights" placeholder="Search Context" name="role_rights" ng-class="{true:'error'}[submitted && empty_flag]">
+                            <select class="form-control add-multiple" ng-model="editRoleData.role_rights" placeholder="Search Context" name="role_rights" ng-class="{true:'error'}[submitted && empty_flag]" ng-change="EditcontextOnChange(editRoleData.role_rights);">
                                 <option value=""></option>
-                                <option ng-repeat="Context in Contexts" value="{{ Context.id }}">{{ Context.name }}</option>
+                                <option ng-repeat="lab in Contexts" value="{{ lab.id }}">{{ lab.name }}</option>
                             </select>
                             <p class="help-block PIValid" ng-show="submitted && empty_flag">Required</p>
                         </div>
                         <div class="col-lg-1">
                              <span class="plus add-role"><i class="md-add"></i></span>
+                        </div>
+                    </div>
+                    <div class="row margin-bottom-xxl" ng-show="ElabTypeFlag">
+                        <div class="col-lg-3">
+                            <label>Types</label>
+                        </div>
+                        <div class="col-lg-8 add-multiple-con_select2">
+                            <select class="form-control add-multiple" ng-model="roleData.type" placeholder="Labs" name="labTypes">
+                                <option value=""></option>
+                                <option ng-repeat="lab in Labs" value="{{ lab.id }}">{{ lab.name }}</option>
+                            </select>
+                            <p class="help-block PIValid" ng-show="submitted && empty_flag">Required</p>
+                        </div>
+                    </div>
+                    <div class="row" ng-show="EtemplateFlag">
+                        <div class="col-lg-3">
+                            <label>Templates</label>
+                        </div>
+                        <div class="col-lg-8 add-multiple-con_select2">
+                            <select class="form-control add-multiple" ng-model="roleData.type" placeholder="Templates" name="templateID">
+                                <option value=""></option>
+                                <option value="1">Clinical Templates</option>
+                                <option value="2">Lab Templates</option>
+                            </select>
+                            <p class="help-block PIValid" ng-show="submitted && empty_flag">Required</p>
                         </div>
                     </div>
                     <div class="rights_list">

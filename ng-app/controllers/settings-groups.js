@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('settingsGroups', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllContexts', 'GetAllRoles', 'deleteRole', 'GetRole', 'addRole', 'editRole', '$timeout', function($scope,$rootScope,$window,$routeParams,GetAllContexts,GetAllRoles,deleteRole,GetRole,addRole,editRole,$timeout){
+AppEHR.controller('settingsGroups', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllContexts', 'GetAllRoles', 'deleteRole', 'GetRole', 'addRole', 'editRole', '$timeout', 'GetAllLabs', function($scope,$rootScope,$window,$routeParams,GetAllContexts,GetAllRoles,deleteRole,GetRole,addRole,editRole,$timeout, GetAllLabs){
 	$rootScope.pageTitle = "EHR - Groups";
     $rootScope.loader = "show";
     $scope.itemsPerPage = 15;
@@ -13,24 +13,112 @@ AppEHR.controller('settingsGroups', ['$scope', '$rootScope', '$window', '$routeP
     $scope.submitted = false;
     $(".rights_list").mCustomScrollbar();
     $(document).on('click','#addRole .add-role', function () {
-        var id = $('#addRole select[name=role_rights]').val();
-        if(id != '') {
-            if ($('#addRole .right_chip[data-id="' + id + '"').length < 1) {
-                $('#addRole .rights_list .mCSB_container').append('<div class="right_chip" data-id="' + id + '"><span>' + $('#addRole .add-multiple .select2-chosen').html() + '</span><div class="rights_icons"><span class="rights create"><i class="fa fa-plus"></i></span><span class="rights update_icn"><i class="fa fa-edit"></i></span><span class="rights delete_icn"><i class="fa fa-times"></i></span><span class="rights read"><i class="fa fa-eye"></i></span></div></div>');
-                $("#addRole .add-multiple").select2('data', null);
+        var template_id = 0;
+        if($scope.templateFlag == true){
+            template_id = $('#addRole select[name=templateID]').val();
+            var id = $('#addRole select[name=role_rights]').val();
+            console.log('id n temp');
+            if(id != '' && template_id != '') {
+                console.log($('#addRole .right_chip[data-id="' + id + '"').length , $('#addRole .right_chip[data-template-id="' + template_id + '"').length);
+                if ($('#addRole .right_chip[data-id="' + id + '"').length < 1 && $('#addRole .right_chip[data-template-id="' + template_id + '"').length < 1) {
+                    $('#addRole .rights_list .mCSB_container').append('<div class="right_chip" data-template-id="' + template_id + '" data-id="' + id + '"><span>' + $('#addRole .add-multiple .select2-chosen').html() + " - " + $('#addRole .add-multiple_tempName .select2-chosen').html() + '</span><div class="rights_icons"><span class="rights create"><i class="fa fa-plus"></i></span><span class="rights update_icn"><i class="fa fa-edit"></i></span><span class="rights delete_icn"><i class="fa fa-times"></i></span><input type="hidden" name="type[]" ng-value="roleData.type"/><span class="rights read"><i class="fa fa-eye"></i></span></div></div>');
+                    $("#addRole .add-multiple").select2('data', null);
+                    $("#addRole .add-multiple_tempName").select2('data', null);
+                    $scope.submitted = false;
+                    $scope.empty_flag = false;
+                    //$scope.templateFlag = false;
+                    //$scope.labTypeFlag = false; labTypes templateID
+                }else if($('#addRole .right_chip[data-id="' + id + '"').length >= 1 && $('#addRole .right_chip[data-template-id="' + template_id + '"').length < 1){
+                    console.log('nhi aya');
+                    $('#addRole .rights_list .mCSB_container').append('<div class="right_chip" data-template-id="' + template_id + '" data-id="' + id + '"><span>' + $('#addRole .add-multiple .select2-chosen').html() + " - " + $('#addRole .add-multiple_tempName .select2-chosen').html() + '</span><div class="rights_icons"><span class="rights create"><i class="fa fa-plus"></i></span><span class="rights update_icn"><i class="fa fa-edit"></i></span><span class="rights delete_icn"><i class="fa fa-times"></i></span><input type="hidden" name="type[]" ng-value="roleData.type"/><span class="rights read"><i class="fa fa-eye"></i></span></div></div>');
+                    $("#addRole .add-multiple").select2('data', null);
+                    $("#addRole .add-multiple_tempName").select2('data', null);
+                    $scope.submitted = false;
+                    $scope.empty_flag = false;
+                }else{
+                    console.log('else');
+                }
             }
-            $scope.empty_flag = false;
+        }else if($scope.labTypeFlag == true){
+            template_id = $('#addRole select[name=templateID]').val();
+            var id = $('#addRole select[name=role_rights]').val();
+            console.log('labTypeFlag id n temp');
+            if(id != '' && template_id != '') {
+                console.log($('#addRole .right_chip[data-id="' + id + '"').length , $('#addRole .right_chip[data-template-id="' + template_id + '"').length);
+                if ($('#addRole .right_chip[data-id="' + id + '"').length < 1 && $('#addRole .right_chip[data-template-id="' + template_id + '"').length < 1) {
+                    $('#addRole .rights_list .mCSB_container').append('<div class="right_chip" data-template-id="' + template_id + '" data-id="' + id + '"><span>' + $('#addRole .add-multiple .select2-chosen').html() + " - " + $('#addRole .add-multiple_tempName .select2-chosen').html() + '</span><div class="rights_icons"><span class="rights create"><i class="fa fa-plus"></i></span><span class="rights update_icn"><i class="fa fa-edit"></i></span><span class="rights delete_icn"><i class="fa fa-times"></i></span><input type="hidden" name="type[]" ng-value="roleData.type"/><span class="rights read"><i class="fa fa-eye"></i></span></div></div>');
+                    $("#addRole .add-multiple").select2('data', null);
+                    $("#addRole .add-multiple_tempName").select2('data', null);
+                    $scope.submitted = false;
+                    $scope.empty_flag = false;
+                    //$scope.templateFlag = false;
+                    //$scope.labTypeFlag = false; labTypes templateID
+                }else if($('#addRole .right_chip[data-id="' + id + '"').length >= 1 && $('#addRole .right_chip[data-template-id="' + template_id + '"').length < 1){
+                    console.log('labTypeFlag nhi aya',template_id);
+                    $('#addRole .rights_list .mCSB_container').append('<div class="right_chip" data-template-id="' + template_id + '" data-id="' + id + '"><span>' + $('#addRole .add-multiple .select2-chosen').html() + " - " + $('#addRole .add-multiple_tempName .select2-chosen').html() + '</span><div class="rights_icons"><span class="rights create"><i class="fa fa-plus"></i></span><span class="rights update_icn"><i class="fa fa-edit"></i></span><span class="rights delete_icn"><i class="fa fa-times"></i></span><input type="hidden" name="type[]" ng-value="roleData.type"/><span class="rights read"><i class="fa fa-eye"></i></span></div></div>');
+                    $("#addRole .add-multiple").select2('data', null);
+                    $("#addRole .add-multiple_tempName").select2('data', null);
+                    $scope.submitted = false;
+                    $scope.empty_flag = false;
+                }else{
+                    console.log('else');
+                }
+            }
+        }else{
+            var id = $('#addRole select[name=role_rights]').val();
+            if(id != '') {
+                console.log('id');
+                if ($('#addRole .right_chip[data-id="' + id + '"').length < 1) {
+                    console.log('id nested');
+                    $('#addRole .rights_list .mCSB_container').append('<div class="right_chip" data-template-id="' + template_id + '" data-id="' + id + '"><span>' + $('#addRole .add-multiple .select2-chosen').html() + '</span><div class="rights_icons"><span class="rights create"><i class="fa fa-plus"></i></span><span class="rights update_icn"><i class="fa fa-edit"></i></span><span class="rights delete_icn"><i class="fa fa-times"></i></span><input type="hidden" name="type[]" ng-value="roleData.type"/><span class="rights read"><i class="fa fa-eye"></i></span></div></div>');
+                    $("#addRole .add-multiple").select2('data', null);
+                    //$scope.templateFlag = false;
+                    //$scope.labTypeFlag = false; labTypes templateID
+                }
+               // $scope.labTypeFlag = false;
+                $scope.empty_flag = false;
+            }
         }
+        
     });
 
     $(document).on('click','#editRole .add-role', function () {
-        var id = $('#editRole select[name=role_rights]').val();
-        if(id != '') {
-            if ($('#editRole .right_chip[data-id="' + id + '"').length < 1) {
-                $('#editRole .rights_list .mCSB_container').append('<div class="#editRole right_chip" data-id="' + id + '"><span>' + $('#editRole .add-multiple .select2-chosen').html() + '</span><div class="rights_icons"><span class="rights create"><i class="fa fa-plus"></i></span><span class="rights update_icn"><i class="fa fa-edit"></i></span><span class="rights delete_icn"><i class="fa fa-times"></i></span><span class="rights read"><i class="fa fa-eye"></i></span></div></div>');
-                $("#editRole .add-multiple").select2('data', null);
+        var template_id = 0;
+        if($scope.EtemplateFlag == true){
+            template_id = $('#editRole select[name=templateID]').val();
+            var id = $('#editRole select[name=role_rights]').val();
+            console.log('id n temp');
+            if(id != '' && template_id != '') {
+                console.log($('#editRole .right_chip[data-id="' + id + '"').length , $('#editRole .right_chip[data-template-id="' + template_id + '"').length);
+                if ($('#editRole .right_chip[data-id="' + id + '"').length < 1 && $('#editRole .right_chip[data-template-id="' + template_id + '"').length < 1) {
+                    $('#editRole .rights_list .mCSB_container').append('<div class="right_chip" data-template-id="' + template_id + '" data-id="' + id + '"><span>' + $('#editRole .add-multiple .select2-chosen').html() + " - " + $('#editRole .add-multiple_tempName .select2-chosen').html() + '</span><div class="rights_icons"><span class="rights create"><i class="fa fa-plus"></i></span><span class="rights update_icn"><i class="fa fa-edit"></i></span><span class="rights delete_icn"><i class="fa fa-times"></i></span><input type="hidden" name="type[]" ng-value="roleData.type"/><span class="rights read"><i class="fa fa-eye"></i></span></div></div>');
+                    $("#editRole .add-multiple").select2('data', null);
+                    $("#editRole .add-multiple_tempName").select2('data', null);
+                    $scope.submitted = false;
+                    $scope.empty_flag = false;
+                    //$scope.templateFlag = false;
+                    //$scope.labTypeFlag = false; labTypes templateID
+                }else if($('#editRole .right_chip[data-id="' + id + '"').length >= 1 && $('#editRole .right_chip[data-template-id="' + template_id + '"').length < 1){
+                    console.log('nhi aya');
+                    $('#editRole .rights_list .mCSB_container').append('<div class="right_chip" data-template-id="' + template_id + '" data-id="' + id + '"><span>' + $('#editRole .add-multiple .select2-chosen').html() + " - " + $('#editRole .add-multiple_tempName .select2-chosen').html() + '</span><div class="rights_icons"><span class="rights create"><i class="fa fa-plus"></i></span><span class="rights update_icn"><i class="fa fa-edit"></i></span><span class="rights delete_icn"><i class="fa fa-times"></i></span><input type="hidden" name="type[]" ng-value="roleData.type"/><span class="rights read"><i class="fa fa-eye"></i></span></div></div>');
+                    $("#editRole .add-multiple").select2('data', null);
+                    $("#editRole .add-multiple_tempName").select2('data', null);
+                    $scope.submitted = false;
+                    $scope.empty_flag = false;
+                }else{
+                    console.log('else');
+                }
             }
-            $scope.empty_flag = false;
+        }else{
+            var id = $('#editRole select[name=role_rights]').val();
+            if(id != '') {
+                if ($('#editRole .right_chip[data-id="' + id + '"').length < 1) {
+                    $('#editRole .rights_list .mCSB_container').append('<div class="#editRole right_chip" data-id="' + id + '"><span>' + $('#editRole .add-multiple .select2-chosen').html() + '</span><div class="rights_icons"><span class="rights create"><i class="fa fa-plus"></i></span><span class="rights update_icn"><i class="fa fa-edit"></i></span><span class="rights delete_icn"><i class="fa fa-times"></i></span><span class="rights read"><i class="fa fa-eye"></i></span></div></div>');
+                    $("#editRole .add-multiple").select2('data', null);
+                }
+                //$scope.labTypeFlag = true;
+                $scope.empty_flag = false;
+            }
         }
     });
 
@@ -78,7 +166,7 @@ AppEHR.controller('settingsGroups', ['$scope', '$rootScope', '$window', '$routeP
         console.log(error);
     }
 
-        $scope.numberOfPages = function() {
+    $scope.numberOfPages = function() {
         return Math.ceil($scope.rolesCount / $scope.pageSize);
     };
 
@@ -151,8 +239,9 @@ AppEHR.controller('settingsGroups', ['$scope', '$rootScope', '$window', '$routeP
                 if(value.update_right == 1) update_class = ' active';
                 if(value.delete_right == 1) delete_class = ' active';
                 if(value.view_right == 1) read_class = ' active';
-                $('#editRole .rights_list .mCSB_container').append('<div class="right_chip" data-id="' + value.context_id + '"><span>' + value.context + '</span><div class="rights_icons"><span class="rights create'+ add_class +'"><i class="fa fa-plus"></i></span><span class="rights update_icn'+ update_class +'"><i class="fa fa-edit"></i></span><span class="rights delete_icn'+ delete_class +'"><i class="fa fa-times"></i></span><span class="rights read'+ read_class +'"><i class="fa fa-eye"></i></span></div></div>');
+                $('#editRole .rights_list .mCSB_container').append('<div class="right_chip" data-id="' + value.context_id + '" data-template-id="' + value.type + '"><span>' + value.context + '</span><div class="rights_icons"><span class="rights create'+ add_class +'"><i class="fa fa-plus"></i></span><span class="rights update_icn'+ update_class +'"><i class="fa fa-edit"></i></span><span class="rights delete_icn'+ delete_class +'"><i class="fa fa-times"></i></span><span class="rights read'+ read_class +'"><i class="fa fa-eye"></i></span></div></div>');
             });
+            //$scope.labTypeFlag = true;
             $('#editRole').modal('show');
         }
     }
@@ -173,12 +262,13 @@ AppEHR.controller('settingsGroups', ['$scope', '$rootScope', '$window', '$routeP
                 if($(this).find('.read').hasClass('active')) read = '1';
                 if($(this).find('.update_icn').hasClass('active')) update = '1';
                 if($(this).find('.delete_icn').hasClass('active')) deletes = '1';
-                $scope.rights[i] = {context_id : $(this).data('id'),is_add: create,is_read: read, is_update:update, is_delete:deletes};
+                $scope.rights[i] = {context_id : $(this).data('id'),is_add: create,is_read: read, is_update:update, is_delete:deletes, type: $(this).data('template-id') == 0 ? 0 : $(this).data('template-id')};
+                //$scope.roleData.type == undefined || $scope.roleData.type == '' ? 0 : $scope.roleData.type
             });
         }else{
             //$('.error').html('Please add at least one right');
             //$('.error').show();
-        }
+        } console.log($scope.rights); //return false;
         addRole.save({
             token : $window.sessionStorage.token,
             name : roleData.name,
@@ -187,6 +277,7 @@ AppEHR.controller('settingsGroups', ['$scope', '$rootScope', '$window', '$routeP
     };
     function addRoleSuccess(res){ // on success
         if (res.status == true) {
+            $scope.labTypeFlag = false;$scope.templateFlag = false;
             $scope.hideLoader = 'hide';
             $scope.message = true;
             $scope.addRoleBtn = false;
@@ -237,12 +328,12 @@ AppEHR.controller('settingsGroups', ['$scope', '$rootScope', '$window', '$routeP
                 if($(this).find('.read').hasClass('active')) read = '1';
                 if($(this).find('.update_icn').hasClass('active')) update = '1';
                 if($(this).find('.delete_icn').hasClass('active')) deletes = '1';
-                $scope.editRights[i] = {context_id : $(this).data('id'),is_add: create,is_read: read, is_update:update, is_delete:deletes};
+                $scope.editRights[i] = {context_id : $(this).data('id'),is_add: create,is_read: read, is_update:update, is_delete:deletes, type: $(this).data('template-id') == 0 || $(this).data('template-id') == undefined ? 0 : $(this).data('template-id')};
             });
         }else{
             //$('.error').html('Please add at least one right');
             //$('.error').show();
-        }
+        }console.log($scope.editRights); //return false;
         editRole.save({
             token : $window.sessionStorage.token,
             role_id : editRoleData.role_id,
@@ -287,5 +378,53 @@ AppEHR.controller('settingsGroups', ['$scope', '$rootScope', '$window', '$routeP
     function editRoleFailure(error){ // on failure
         console.log(error);
         $('#internetError').modal('show');
+    }
+
+    GetAllLabs.get({
+        token: $window.sessionStorage.token,
+        offset: 0, limit: 0
+    }, GetLabsSuccess, GetLabsFailure);
+
+    function GetLabsSuccess(res) {
+        $rootScope.loader = "hide";
+        if (res.status == true) {
+            if(res.data.length == 0){
+            }
+            $scope.Labs = res.data;
+        }
+    }
+    function GetLabsFailure(error) {
+        $('#internetError').modal('show');
+        console.log(error);
+    }
+    //$scope.templateFlag = false;
+    $scope.contextOnChange = function(id){
+        if(id == 31){
+            $scope.templateFlag = true;
+            $scope.labTypeFlag = false;
+            console.log('goal');
+        }else if(id == 9 || id == 9 || id == 9){
+            $scope.labTypeFlag = true;
+            $scope.templateFlag = false;
+        }else{
+            $scope.roleData.type = undefined;
+            $scope.templateFlag = false;
+            $scope.labTypeFlag = false;
+        }
+    }
+    $scope.EditcontextOnChange = function(id){
+        console.log(id)
+        if(id == 31){
+            $scope.EtemplateFlag = true;
+            $scope.ElabTypeFlag = false;
+            console.log('goal');
+        }else if(id == 9 || id == 9 || id == 9){
+            $scope.ElabTypeFlag = true;
+            $scope.EtemplateFlag = false;
+        }else{
+            //$scope.roleData.type = undefined;
+            $scope.EtemplateFlag = false;
+            $scope.ElabTypeFlag = false;
+        }
     }
 }]);

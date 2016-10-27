@@ -13,7 +13,7 @@
                     <div class="main_templates">
                         <div class="table-header row background-none">
                             <div class="pull-right">
-                                <button class="add button-custom pull-right templates">New Template</button>
+                                <button class="add button-custom pull-right templates" ng-hide="ROLES.Lab_order_templates.add_right == '0'">New Template</button>
                             </div>
 
                             <div class="pull-right">
@@ -42,8 +42,8 @@
                                             <span>{{templateList.description}}</span>
                                             <div class="billing_actions pull-right"><a href="javascript:;" class="setting-button"></a>
                                                 <div class="tool-tip_popup">
-                                                    <a href="javascript:;" ng-click="editMyTemplate(templateList.id)">Edit</a>
-                                                    <a href="javascript:;"   ng-click="templateDeleted(templateList.id)">Delete</a>
+                                                    <a href="javascript:;" ng-click="editMyTemplate(templateList.id)" ng-hide="ROLES.Lab_order_templates.update_right == '0'">Edit</a>
+                                                    <a href="javascript:;" ng-click="templateDeleted(templateList.id)" ng-hide="ROLES.Lab_order_templates.delete_right == '0'">Delete</a>
                                                 </div>
                                             </div>
                                         </td>

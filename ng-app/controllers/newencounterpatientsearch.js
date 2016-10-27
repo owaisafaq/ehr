@@ -568,6 +568,9 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
             	}
             }
             console.log($scope.allEncounter);
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
         }
         //DropDownData.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id}, dropDownSuccess, dropDownFailed);
     }

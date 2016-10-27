@@ -563,8 +563,10 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
         $rootScope.ROLES = JSON.parse($window.sessionStorage.roles);
     console.log($rootScope.ROLES);
     $rootScope.RolesAccess = function(msg){
-        $rootScope.rolesAccessMsg = msg;
-        $('#rolesAccess').modal('show');
+        if(!$('#rolesAccess').hasClass('in')){
+            $rootScope.rolesAccessMsg = msg;
+            $('#rolesAccess').modal('show');
+        }
     }
 
     //$rootScope.SelectedPatientAfterSearch = false;
