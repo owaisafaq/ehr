@@ -113,6 +113,7 @@ class CheckRoles
                     $type_id = $lab->lab;
 
                 } elseif ($request->has('lab_order_test_id')) {
+
                     $order = DB::table('lab_order_tests')
                         ->select(DB::raw('lab_order_id'))
                         ->where('id', $request->lab_order_test_id)
