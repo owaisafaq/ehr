@@ -59,11 +59,27 @@ class CheckRoles
                 if ($request->has('lab')) {
                     $type_id = $request->lab;
                 }elseif($request->has('lab_test_id') && $method_name !='get_lab_test_pdf' && $method_name !='signoff_lab_report') {
-                    $lab = DB::table('lab_tests')
+
+                  /*  $lab = DB::table('lab_tests')
                         ->select(DB::raw('lab'))
                         ->where('id',$request->lab_test_id)
                         ->first();
+                    $type_id = $lab->lab;*/
+
+                    $order = DB::table('lab_order_tests')
+                        ->select(DB::raw('lab_order_id'))
+                        ->where('id', $request->lab_test_id)
+                        ->first();
+                    $order_id = $order->lab_order_id;
+
+                    $lab = DB::table('lab_orders')
+                        ->select(DB::raw('lab'))
+                        ->where('id', $order_id)
+                        ->first();
                     $type_id = $lab->lab;
+
+
+                /*dd($type_id);*/
 
                 } elseif($request->has('order_id')) {
                     $lab = DB::table('lab_orders')
