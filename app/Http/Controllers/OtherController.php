@@ -372,7 +372,6 @@ class OtherController extends Controller
             "frequency" => $frequency,
             "direction" => $direction,
             "duration" => $duration
-
         );
 
         return response()->json(['status' => true, 'data' => $data]);
