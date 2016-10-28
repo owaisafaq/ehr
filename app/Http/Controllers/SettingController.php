@@ -570,8 +570,13 @@ class SettingController extends Controller
                 $lab = DB::table('labs')
                     ->select(DB::raw('name'))
                     ->where('id',$roles->type)
+                    ->where('status',1)
                     ->first();
                 $roles->role_type = $lab->name;
+
+                if(empty($lab)){
+                    $roles->role_type = 'Lab Deleted';
+                }
             }
 
             elseif ($roles->context_id == 31) {
