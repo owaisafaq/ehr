@@ -39,11 +39,12 @@ AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routePar
             lab_test_id: testID
         }, getLabTestInfoSuccess, getLabTestInfoFailure);
         function getLabTestInfoSuccess(res) { // on success
+            $rootScope.loader = "hide";
             if (res.status == true) {
                 console.log(res, "ipopopo");
                 $scope.signoffStatus = res.data.signoff;
                 $scope.labtestid = res.data.id;
-                $rootScope.loader = "hide";
+                
                 $scope.testIsSelected = true;
                 $scope.selectedTest = res.data;
                 var length = $('#cancelOrder2 .form-wizard-horizontal li').length;
@@ -65,6 +66,9 @@ AppEHR.controller('labOrderTests', ['$scope', '$rootScope','$window', '$routePar
                     lab_test_id: $scope.labtestid, //    will place there orderID/21 api is in progress
                     token: $window.sessionStorage.token
                 }, orderReportSuccess, orderReportFailure);
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
             }
         }
         function getLabTestInfoFailure(error) { // on failure
