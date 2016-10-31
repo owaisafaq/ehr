@@ -3599,3 +3599,19 @@ AppEHR.factory("editRole", function ($resource) {
     };
     return updatedRole;
 });
+
+AppEHR.factory("ImportPatient", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'import_patients', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var updatedRole = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return updatedRole;
+});
