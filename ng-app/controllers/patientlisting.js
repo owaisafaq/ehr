@@ -26,10 +26,12 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
 
         $scope.paginationNext = function(pageSize, curPage){
             $rootScope.loader = "show";
-            GetAllPatients.get({
-                token: $window.sessionStorage.token,
-                offset: (pageSize * curPage), limit: $scope.itemsPerPage
-            }, GetAllPatientsSuccess, GetAllPatientsFailure);
+            if($scope.selectBox == true){
+                GetAllPatients.get({
+                    token: $window.sessionStorage.token,
+                    offset: (pageSize * curPage), limit: $scope.itemsPerPage
+                }, GetAllPatientsSuccess, GetAllPatientsFailure);
+            }
         }
 
         $scope.paginationPrev = function(pageSize, curPage){
@@ -49,6 +51,8 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
         }
 
         $scope.selectBoxValue = function(value){
+            $scope.selectBox = true;
+            $scope.pageSize = value;
             $rootScope.loader = "show";
             $scope.pageNumber = '';
             GetAllPatients.get({
@@ -296,5 +300,13 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
 
         $scope.findPatient = function(){
             $scope.disabledSearchBar = false;
+        }
+
+        $scope.exportPatient = function(){
+            
+        }
+
+        $scope.importPatient = function(){
+            
         }
 }]);

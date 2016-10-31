@@ -61,8 +61,8 @@
                 </div>
 
                 <button type="button" data-toggle="modal" data-target="#addpatient" class="btn ink-reaction button-style-1 button-style-1 pull-right" ng-disabled="idCardDisabledBtn">create patient id card</button>
-                <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10">export</button>
-                <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10">import</button>
+                <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10" ng-click="exportPatient();">export</button>
+                <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10" ng-click="importPatient();">import</button>
             </div>
             <div class="card-body col-lg-12">
                 <div class="icons_con" ng-init="hideOptions = true;">
@@ -127,7 +127,7 @@
                             </li>
                         </ul>
                     </div>-->
-<div class="pagination pagination-centered pull-right" ng-show="patientCount">
+                    <div class="pagination pagination-centered pull-right" ng-show="patientCount">
                         <ul class="pagination-controle pagination">
                             <li class="prev-page">
                                 <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
@@ -135,13 +135,24 @@
                             <li>
                                 <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumber" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
                             </li>
-                             <li class="next-page">
+                            <li class="next-page">
                               <button type="button" class="btn btn-primary" ng-disabled="curPage >= patientCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
                             </li>
                         </ul>
                     </div>
-
-
+                    <div class="pagination pagination-centered pull-right" ng-show="patientCount && selectBox">
+                        <ul class="pagination-controle pagination">
+                            <li class="prev-page">
+                                <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
+                            </li>                            
+                            <li>
+                                <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumber" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
+                            </li>
+                            <li class="next-page">
+                              <button type="button" class="btn btn-primary" ng-disabled="curPage >= patientCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div><!--end .card-body -->
         </div><!--end .card -->
