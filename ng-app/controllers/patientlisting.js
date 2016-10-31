@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPatients', '$window', '$routeParams', 'GetPatientInfo', 'CheckoutPatient', 'DeletePatient', function ($scope, $rootScope, GetAllPatients, $window, $routeParams, GetPatientInfo, CheckoutPatient, DeletePatient) {
+AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPatients', '$window', '$routeParams', 'GetPatientInfo', 'CheckoutPatient', 'DeletePatient', 'Upload', '$timeout', 'ImportPatient', function ($scope, $rootScope, GetAllPatients, $window, $routeParams, GetPatientInfo, CheckoutPatient, DeletePatient, Upload, $timeout, ImportPatient) {
         $scope.action = '';
         $rootScope.pageTitle = "EHR - Patient Listing";
         $scope.displayInfo = {};
@@ -17,27 +17,47 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
             token: $window.sessionStorage.token,
             offset: $scope.offset, limit: $scope.itemsPerPage
         }, GetAllPatientsSuccess, GetAllPatientsFailure);
-
+        ImportPatient.save({token: $window.sessionStorage.token}, importSuccess, GetAllPatientsFailure);
+        function importSuccess(res){
+            console.log(res);
+            if(res.status == true){
+                $scope.importFileURL = res.data;
+            }
+        }
         $scope.curPage = 0;
         $scope.pageSize = 15;
         $scope.numberOfPages = function() {
-          return Math.ceil($scope.patientCount / $scope.pageSize);
+            return Math.ceil($scope.patientCount / $scope.pageSize);
         };
 
         $scope.paginationNext = function(pageSize, curPage){
             $rootScope.loader = "show";
-            GetAllPatients.get({
-                token: $window.sessionStorage.token,
-                offset: (pageSize * curPage), limit: $scope.itemsPerPage
-            }, GetAllPatientsSuccess, GetAllPatientsFailure);
+            if($scope.selectBox == true){
+                GetAllPatients.get({
+                    token: $window.sessionStorage.token,
+                    offset: (pageSize * curPage), limit: $scope.selectBoxLimit
+                }, GetAllPatientsSuccess, GetAllPatientsFailure);
+            }else{
+                GetAllPatients.get({
+                    token: $window.sessionStorage.token,
+                    offset: (pageSize * curPage), limit: $scope.itemsPerPage
+                }, GetAllPatientsSuccess, GetAllPatientsFailure);
+            }
         }
 
         $scope.paginationPrev = function(pageSize, curPage){
             $rootScope.loader = "show";
-            GetAllPatients.get({
-                token: $window.sessionStorage.token,
-                offset: (pageSize - 1) * curPage, limit: $scope.itemsPerPage
-            }, GetAllPatientsSuccess, GetAllPatientsFailure);
+            if($scope.selectBox == true){
+                GetAllPatients.get({
+                    token: $window.sessionStorage.token,
+                    offset: (pageSize - 1) * curPage, limit: $scope.selectBoxLimit
+                }, GetAllPatientsSuccess, GetAllPatientsFailure);
+            }else{
+                GetAllPatients.get({
+                    token: $window.sessionStorage.token,
+                    offset: (pageSize - 1) * curPage, limit: $scope.itemsPerPage
+                }, GetAllPatientsSuccess, GetAllPatientsFailure);
+            }
         }
         $scope.samePage = '';
         $scope.goToPage = function(pageSize, num){
@@ -51,6 +71,7 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
         $scope.selectBoxValue = function(value){
             $scope.selectBox = true;
             $scope.pageSize = value;
+            $scope.selectBoxLimit = value;
             $rootScope.loader = "show";
             $scope.pageNumber = '';
             GetAllPatients.get({
@@ -304,7 +325,46 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
             
         }
 
-        $scope.importPatient = function(){
-            
+        $scope.uploadFiles = function (files, errFiles) {
+            $scope.files = files;
+            $scope.errFiles = errFiles;
+            var i = 1;
+            angular.forEach(files, function (file) {
+                //console.log('dp1');
+                $scope.imageUploading = false;
+                $scope.patientImageProgress = true;
+                file.upload = Upload.upload({
+                    url: serverPath + "export_patients_data",
+                    method: 'POST',
+                    data: {patients_data: file}
+                });
+
+                file.upload.then(function (response) {
+                    $scope.imageUploading = true;
+                    $scope.patientImageProgress = false;
+                    $timeout(function () {
+                        file.result = response.data;
+                        //console.log(response);
+                        
+                        //$scope.PI.imageOrignalName = response.data.name;
+                        //$scope.PI.exportModal = response.data.image;
+                        if(files.length == i){
+                            $scope.saveAndClose = false;
+                        }
+                        i++;
+                    });
+                }, function (response) {
+                    if (response.status > 0){
+                        $scope.errorMsg = response.status + ': ' + response.data;
+                    }else if(res.error_code == 500){
+                        console.log(res);
+                        $rootScope.RolesAccess(res.message);
+                    }
+                }, function (evt) {
+                    $('#exportModal').modal('show');
+                    file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+                });
+                
+            });
         }
 }]);

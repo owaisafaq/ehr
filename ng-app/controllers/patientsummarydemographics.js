@@ -1102,7 +1102,7 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
             $scope.MedicationData.sig += sigData.route == undefined ? '' : sigData.route;
             $scope.MedicationData.sig += sigData.frequency == undefined ? '' : " for " + sigData.frequency + " ";
             $scope.MedicationData.sig += sigData.direction == undefined ? '' : sigData.direction + " ";
-            $scope.MedicationData.sig += sigData.durationText == undefined ? '' : sigData.durationText;
+            $scope.MedicationData.sig += sigData.durationText == undefined ? '' : sigData.durationText + " ";
             $scope.MedicationData.sig += sigData.duration == undefined ? '' : sigData.duration;
             console.log($scope.MedicationData.sig);
         }
