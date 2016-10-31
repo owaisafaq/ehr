@@ -356,7 +356,7 @@ class SettingController extends Controller
 
        }
 
-    public function export_patients_date(Request $request)
+    public function export_patients_data(Request $request)
     {
         $file = $request->file('patients_data');
         $destinationPath = base_path() . '/public/patients_data';
@@ -374,7 +374,7 @@ class SettingController extends Controller
 
     }
 
-    public function optexport_patients_date(Request $request)
+    public function optexport_patients_data(Request $request)
     {
 
         return response()->json(['status' => true, 'message' => 'hello']);
