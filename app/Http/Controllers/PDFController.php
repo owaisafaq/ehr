@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Response as IlluminateResponse;
 
+use Excel;
 
 use Illuminate\Support\Facades\File;
 use DB;
@@ -335,4 +336,60 @@ class PDFController extends Controller
 
         return response()->download($file_name,$file->file);
     }
+
+    public function export_patients()
+    {
+
+        Excel::create('patients', function ($excel) {
+
+            $excel->sheet('patients', function ($sheet) {
+                $sheet->row(1, array(
+                    'Unit Number', 'First Name', 'Middle Name', 'Last Name', 'Date of Birth', 'Marital Status', 'Religion', 'Gender', 'State of Origin', 'LGA', 'Tribe', 'Language', 'Nationality', 'Moble', 'Email'
+                ));
+
+
+                $patients = DB::table('patients')
+                    ->leftJoin('patient_address', 'patient_address.patient_id', '=', 'patients.id')
+                    ->leftJoin('religion', 'religion.id', '=', 'patients.religion')
+                    ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
+                    ->leftJoin('blood_group', 'blood_group.id', '=', 'patients.blood_group')
+                    ->leftJoin('states', 'states.id', '=', 'patients.state')
+                    ->leftJoin('language', 'language.id', '=', 'patients.language')
+                    ->leftJoin('nationality', 'nationality.id', '=', 'patients.nationality')
+                    ->select(DB::raw('patients.id,patient_unit_number,first_name,middle_name,last_name,date_of_birth,maritial_status.name as marital_status,religion.name as religion,(CASE WHEN (sex = 1) THEN "Male" ELSE "Female" END) as gender,states.name as state,patients.local_goverment_area,tribe,language.name as language,nationality.name as nationality,patient_address.mobile_number,patient_address.email'))
+                    ->where('patients.status', 1)
+                    ->where('patient_address.address_type', 'contact')
+                    ->get();
+
+
+                $i = 2;
+                foreach ($patients as $patient) {
+                    $sheet->row($i, array(
+                        $patient->patient_unit_number, $patient->first_name, $patient->middle_name, $patient->last_name, $patient->date_of_birth, $patient->marital_status, $patient->religion, $patient->gender, $patient->state, $patient->local_goverment_area, $patient->tribe, $patient->language, $patient->nationality, $patient->mobile_number, $patient->email
+                    ));
+
+                    $i++;
+                }
+                // Sheet manipulation
+
+            });
+
+        })->store('xlsx');
+
+        $file_path = 'http://localhost/ehr/storage/exports/patients.xlsx';
+
+
+        echo json_encode(array(
+            'status' => true,
+            'data' => $file_path
+
+        ), JSON_UNESCAPED_SLASHES);
+
+        // $path = base_path().'/storage/exports/patients.xlsx';
+
+
+        // return response()->download($path,'patients.xlsx');
+
+    }
+
 }

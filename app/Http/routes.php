@@ -468,3 +468,10 @@ $app->group(['prefix' => 'api','middleware' => ['jwt.auth','App\Http\Middleware\
     $app->post('delete_patient', 'App\Http\Controllers\ApiController@delete_patient');
 
 });
+
+
+$app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($app) {
+    //testing importexport
+    $app->post('export_patients','App\Http\Controllers\PDFController@export_patients');
+
+});
