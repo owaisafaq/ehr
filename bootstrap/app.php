@@ -27,6 +27,7 @@ $app->configure('auth');
 class_alias(Tymon\JWTAuth\Facades\JWTAuth::class, 'JWTAuth');
 
 class_alias(niklasravnsborg\LaravelPdf\Facades\Pdf::class, 'PDF');
+class_alias(Maatwebsite\Excel\Facades\Excel::class,'Excel');
 
 class_alias('Laravel\Lumen\Http\Middleware\VerifyCsrfToken', 'csrf');
 class_alias(Tymon\JWTAuth\Facades\JWTFactory::class, 'JWTFactory');
@@ -125,6 +126,8 @@ $app->register(App\Providers\GuardServiceProvider::class);
 $app->register(Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class);
 //PDF Dependency
 $app->register(niklasravnsborg\LaravelPdf\PdfServiceProvider::class);
+//excel service provider
+$app->register(Maatwebsite\Excel\ExcelServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

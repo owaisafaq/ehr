@@ -356,6 +356,31 @@ class SettingController extends Controller
 
        }
 
+    public function export_patients_data(Request $request)
+    {
+        $file = $request->file('patients_data');
+        $destinationPath = base_path() . '/public/patients_data';
+        $original_name = $file->getClientOriginalName();
+
+        $extension = $file->getClientOriginalExtension(); // getting image extension
+        $fileName = rand() . time() . '.' . $extension; // renameing image
+        if (!$file->isValid()) {
+            return response()->json(['status' => false, 'message' => 'Invalid File']);
+        }
+
+        $file->move($destinationPath,$fileName);
+
+        return response()->json(['status' => true, 'message' => "Patient File Exported Successfully"]);
+
+    }
+
+    public function optexport_patients_data(Request $request)
+    {
+
+        return response()->json(['status' => true, 'message' => 'hello']);
+
+    }
+
 
     public function add_department(Request $request)
       {

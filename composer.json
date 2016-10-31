@@ -18,7 +18,8 @@
     "illuminate/routing": "^5.1",
     "phpmailer/phpmailer": "^5.2",
     "niklasravnsborg/laravel-pdf": "^1.1",
-    "mpdf/mpdf": "^6.1"
+    "mpdf/mpdf": "^6.1",
+    "maatwebsite/excel": "~2.1.0"
     
   },
   "require-dev": {
