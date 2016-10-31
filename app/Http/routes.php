@@ -38,6 +38,8 @@ $app->group(['prefix' => 'api'], function () use ($app) {
     $app->post('add_lab_order_attachments','App\Http\Controllers\ApiController@add_lab_order_attachments');
     $app->post('upload_hospital_image', 'App\Http\Controllers\SettingController@upload_hospital_image');
     $app->options('upload_hospital_image','App\Http\Controllers\SettingController@optupload_hospital_image');
+    $app->post('export_patients_date', 'App\Http\Controllers\SettingController@export_patients_date');
+    $app->options('export_patients_date','App\Http\Controllers\SettingController@optexport_patients_date');
 });
 
 

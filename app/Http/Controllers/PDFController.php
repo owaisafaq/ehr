@@ -376,7 +376,7 @@ class PDFController extends Controller
 
         })->store('xlsx');
 
-        $file_path = 'http://localhost/ehr/storage/exports/patients.xlsx';
+        $file_path = 'http://131.107.100.10//ehr/storage/exports/patients.xlsx';
 
 
         echo json_encode(array(
