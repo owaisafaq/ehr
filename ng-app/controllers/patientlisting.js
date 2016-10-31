@@ -26,12 +26,10 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
 
         $scope.paginationNext = function(pageSize, curPage){
             $rootScope.loader = "show";
-            if($scope.selectBox == true){
-                GetAllPatients.get({
-                    token: $window.sessionStorage.token,
-                    offset: (pageSize * curPage), limit: $scope.itemsPerPage
-                }, GetAllPatientsSuccess, GetAllPatientsFailure);
-            }
+            GetAllPatients.get({
+                token: $window.sessionStorage.token,
+                offset: (pageSize * curPage), limit: $scope.itemsPerPage
+            }, GetAllPatientsSuccess, GetAllPatientsFailure);
         }
 
         $scope.paginationPrev = function(pageSize, curPage){
