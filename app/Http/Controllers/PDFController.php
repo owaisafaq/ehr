@@ -374,9 +374,9 @@ class PDFController extends Controller
 
             });
 
-        })->store('xlsx');
+        })->store('csv');
 
-        $file_path = 'http://131.107.100.10//ehr/storage/exports/patients.xlsx';
+        $file_path = 'http://131.107.100.10//ehr/storage/exports/patients.csv';
 
 
         echo json_encode(array(

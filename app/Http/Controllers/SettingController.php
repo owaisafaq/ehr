@@ -381,6 +381,59 @@ class SettingController extends Controller
 
     }
 
+    public function enrollUserByCSV(Request $request)
+       {
+          // $user_id = Auth::user()->id;
+          //$course_id=$request->input('course_id');
+           $destinationPath = base_path() . '/public/patients_data';
+           $extension = $request->file('patients_data')->getClientOriginalExtension();
+
+           if ($extension == 'csv') {
+               $fileName = time() . '.' . $extension;
+               $request->file('patients_data')->move($destinationPath, $fileName);
+               $fileneww = $destinationPath . '/' . $fileName;
+               $fileas = file($fileneww);
+              //unset($fileas[0]);
+              // dd($fileas);
+               for ($i = 1; $i < count($fileas); $i++) {
+                   $data = explode(',', $fileas[$i]);
+                  // dd($data);
+                   if ($data[0] != null) {
+
+                     // echo '<pre>';print_r($data[8]);echo '</pre>';
+
+                       $state = $data[8];
+                       if ($state == '') {
+                           $state_id = 0;
+                       }else{
+                           $state_id = DB::table('states')
+                               ->select(DB::raw('id'))
+                               ->where('name',$state)
+                               ->first();
+                           $state_id = $state_id->id;
+
+                       }
+                          /* DB::table('patients')->insert([
+                               'course_id' => $course_id,
+                               'user_id' => $data[0],
+                               'enrollment_status' => 'Pending',
+                               'created_by' => $user_id
+                           ]);*/
+                   }
+
+               }
+
+
+               return response()->json(['status'=> true,'message'=> 'File exported successfully']);
+           }
+
+           else{
+               return response()->json(['status' => false, 'message' => 'File not exported']);
+
+           }
+
+       }
+
 
     public function add_department(Request $request)
       {
