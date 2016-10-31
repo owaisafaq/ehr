@@ -337,7 +337,7 @@ class PDFController extends Controller
         return response()->download($file_name,$file->file);
     }
 
-    public function export_patients()
+    public function import_patients()
     {
 
         Excel::create('patients', function ($excel) {

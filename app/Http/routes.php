@@ -472,6 +472,6 @@ $app->group(['prefix' => 'api','middleware' => ['jwt.auth','App\Http\Middleware\
 
 $app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($app) {
     //testing importexport
-    $app->post('export_patients','App\Http\Controllers\PDFController@export_patients');
+    $app->post('import_patients','App\Http\Controllers\PDFController@import_patients');
 
 });

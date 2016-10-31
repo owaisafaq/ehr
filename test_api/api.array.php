@@ -3479,7 +3479,7 @@ $api_arr [] = $api;
 //Export patients
 $api = new api();
 $api->name = "Export patients";
-$api->url = HOST . 'export_patients';
+$api->url = HOST . 'import_patients';
 $api->method = "POST";
 $api->params->token = "123435";
 
