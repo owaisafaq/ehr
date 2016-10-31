@@ -8,7 +8,7 @@
                 </div> -->
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
-                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.first_name}}{{displayInfo.last_name}}</span>
+                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.first_name}} {{displayInfo.last_name}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Patient Number</label>
@@ -90,15 +90,15 @@
                         <thead>
                             <tr>
                                 <th width="5px"></th>
-                                <th>patient id</th>
-                                <th>first name</th>
-                                <th>last name</th>
+                                <th><a href="javascript:void(0);" class="pull-right" ng-click="sortingByPID()"><i class="fa {{sortingWard}}" aria-hidden="true"></i></a>patient id</th>
+                                <th><a href="javascript:void(0);" class="pull-right" ng-click="sortingBySpeciality()"><i class="fa {{sortingSpeciality}}" aria-hidden="true"></i></a> first name</th>
+                                <th><a href="javascript:void(0);" class="pull-right" ng-click="sortingByBeds()"><i class="fa {{sortingBeds}}" aria-hidden="true"></i></a> last name</th>
                                 <th>date of birth</th>
                                 <th>phone number</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="patientList in patientLists | filter: search">
+                            <tr ng-repeat="patientList in patientLists | filter: search | orderBy:sortOrder">
                                 <td align="center">
                                     <div class="radio radio-styled">
                                         <label>

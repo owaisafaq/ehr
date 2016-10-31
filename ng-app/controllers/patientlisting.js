@@ -364,7 +364,47 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
                     $('#exportModal').modal('show');
                     file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
                 });
-                
             });
         }
+        $scope.sortingWard = $scope.sortingBeds = $scope.sortingSpeciality = "fa-caret-down";
+        $scope.sortingByPID = function(){
+            if($scope.flagWard == false){
+                $scope.sortingWard = "fa-caret-up";
+                $scope.sortOrder = "-id";
+                $scope.flagWard = true;
+                console.log(1, $scope.sortOrder);
+            }else{
+                $scope.flagWard = false;
+                $scope.sortOrder = "id";
+                $scope.sortingWard = "fa-caret-down";
+                console.log(2, $scope.sortOrder);
+            }
+        }
+        $scope.sortingByBeds = function(){
+            if($scope.flagBeds == false){
+                $scope.sortingBeds = "fa-caret-up";
+                $scope.sortOrder = "-last_name";
+                $scope.flagBeds = true;
+                console.log(1, $scope.sortOrder, $scope.flagBeds);
+            }else{
+                $scope.flagBeds = false;
+                $scope.sortOrder = "last_name";
+                $scope.sortingBeds = "fa-caret-down";
+                console.log(2, $scope.sortOrder, $scope.flagBeds);
+            }
+        }
+        $scope.sortingBySpeciality = function(){
+            if($scope.flagSpeciality == false){
+                $scope.sortingSpeciality = "fa-caret-up";
+                $scope.sortOrder = "-first_name";
+                $scope.flagSpeciality = true;
+                console.log(1, $scope.sortOrder);
+            }else{
+                $scope.flagSpeciality = false;
+                $scope.sortOrder = "first_name";
+                $scope.sortingSpeciality = "fa-caret-down";
+                console.log(2, $scope.sortOrder);
+            }
+        }
+
 }]);
