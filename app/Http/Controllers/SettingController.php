@@ -356,7 +356,7 @@ class SettingController extends Controller
 
        }
 
-    public function export_patients_data(Request $request)
+    public function export_patients_data_old(Request $request)
     {
         $file = $request->file('patients_data');
         $destinationPath = base_path() . '/public/patients_data';
@@ -381,7 +381,7 @@ class SettingController extends Controller
 
     }
 
-    public function enrollUserByCSV(Request $request)
+    public function export_patients_data(Request $request)
        {
           // $user_id = Auth::user()->id;
           //$course_id=$request->input('course_id');
@@ -485,26 +485,53 @@ class SettingController extends Controller
                                $nationality_id = $nationality_id->id;
                            }
                        }
+                       $unit_number = str_replace('"', '', $data[0]);
+                       $first_name = str_replace('"', '', $data[1]);
+                       $middle_name = str_replace('"', '', $data[2]);
+                       $last_name = str_replace('"', '', $data[3]);
+                       $date_of_birth = str_replace('"', '', $data[4]);
+                       $local_goverment_area = str_replace('"', '', $data[9]);
+                       $tribe = str_replace('"', '', $data[10]);
+                       $mobile_number = str_replace('"', '', $data[13]);
+                       $mail_address = str_replace('"', '', $data[14]);
 
-                          /* DB::table('patients')->insert([
-                               'course_id' => $course_id,
-                               'user_id' => $data[0],
-                               'enrollment_status' => 'Pending',
-                               'created_by' => $user_id
-                           ]);*/
+                       DB::table('patients')->insert(
+                           ['first_name' => $first_name,
+                               'middle_name' => $middle_name,
+                               'last_name' => $last_name,
+                               'date_of_birth' => $date_of_birth,
+                               'sex' => $sex,
+                               'marital_status' => $marital_status_id,
+                               'religion' => $religion_id,
+                               'patient_unit_number' => $unit_number,
+                               'state' => $state_id,
+                               'local_goverment_area' => $local_goverment_area,
+                               'tribe' => $tribe,
+                               'nationality' => $nationality_id,
+                               'language' => $language_id,
+                               'created_at' => date("Y-m-d  H:i:s")
+                           ]
+                       );
+
+                       $patient_id = DB::getPdo()->lastInsertId();
+
+                       DB::table('patient_address')->insert(
+                                ['patient_id' => $patient_id,
+                                    'email' => $mail_address,
+                                    'address_type' => 'contact',
+                                    'mobile_number' => $mobile_number,
+                                    'created_at' => date("Y-m-d  H:i:s")
+                                ]
+                            );
                    }
 
                }
-               exit;
-
-
 
                return response()->json(['status'=> true,'message'=> 'File exported successfully']);
            }
 
            else{
                return response()->json(['status' => false, 'message' => 'File not exported']);
-
            }
 
        }
