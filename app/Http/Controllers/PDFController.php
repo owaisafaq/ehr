@@ -357,7 +357,7 @@ class PDFController extends Controller
                     ->leftJoin('language', 'language.id', '=', 'patients.language')
                     ->leftJoin('nationality', 'nationality.id', '=', 'patients.nationality')
                     ->select(DB::raw('patients.id,patient_unit_number,first_name,middle_name,last_name,date_of_birth,maritial_status.name as marital_status,religion.name as religion,(CASE WHEN (sex = 1) THEN "Male" ELSE "Female" END) as gender,states.name as state,patients.local_goverment_area,tribe,language.name as language,nationality.name as nationality,patient_address.mobile_number,patient_address.email'))
-                    ->where('patients.status', 1)
+                    ->where('patients.status',1)
                     ->where('patient_address.address_type', 'contact')
                     ->get();
 
@@ -376,7 +376,7 @@ class PDFController extends Controller
 
         })->store('csv');
 
-        $file_path = 'http://131.107.100.10//ehr/storage/exports/patients.csv';
+        $file_path = 'http://demoz.online/ehr/storage/exports/patients.csv';
 
 
         echo json_encode(array(
