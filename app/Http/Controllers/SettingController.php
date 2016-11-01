@@ -399,20 +399,93 @@ class SettingController extends Controller
                    $data = explode(',', $fileas[$i]);
                   // dd($data);
                    if ($data[0] != null) {
-
-                     // echo '<pre>';print_r($data[8]);echo '</pre>';
-
                        $state = $data[8];
+                       $state = str_replace('"','',$state);
                        if ($state == '') {
                            $state_id = 0;
                        }else{
                            $state_id = DB::table('states')
-                               ->select(DB::raw('id'))
+                               ->select(DB::raw('*'))
                                ->where('name',$state)
                                ->first();
-                           $state_id = $state_id->id;
-
+                           if(empty($state_id)){
+                               $state_id = 0;
+                           }else{
+                               $state_id = $state_id->id;
+                           }
                        }
+                       $marital_status = $data[5];
+                       $marital_status = str_replace('"', '', $marital_status);
+                       if ($marital_status == '') {
+                           $marital_status_id = 0;
+                       } else {
+                           $marital_status_id = DB::table('maritial_status')
+                               ->select(DB::raw('*'))
+                               ->where('name', $marital_status)
+                               ->first();
+                           if (empty($marital_status_id)) {
+                               $marital_status_id = 0;
+                           } else {
+                               $marital_status_id = $marital_status_id->id;
+                           }
+                       }
+
+                       $religion = $data[6];
+                       $religion = str_replace('"', '', $religion);
+                       if ($religion == '') {
+                           $religion_id = 0;
+                       } else {
+                           $religion_id = DB::table('religion')
+                               ->select(DB::raw('*'))
+                               ->where('name',$religion)
+                               ->first();
+                           if (empty($religion_id)) {
+                               $religion_id = 0;
+                           } else {
+                               $religion_id = $religion_id->id;
+                           }
+                       }
+                       $gender = str_replace('"', '', $data[7]);
+                       if ($gender == 'Female') {
+
+                           $sex = 0;
+                       } else {
+                           $sex = 1;
+                       }
+
+                       $language = $data[11];
+                       $language = str_replace('"', '', $language);
+                       if ($language == '') {
+                           $language_id = 0;
+                       } else {
+                           $language_id = DB::table('language')
+                               ->select(DB::raw('*'))
+                               ->where('name', $language)
+                               ->first();
+                           if (empty($language_id)) {
+                               $language_id = 0;
+                           } else {
+                               $language_id = $language_id->id;
+                           }
+                       }
+
+                       $nationality = $data[12];
+
+                       $nationality = str_replace('"', '', $nationality);
+                       if ($nationality == '') {
+                           $nationality_id = 0;
+                       } else {
+                           $nationality_id = DB::table('nationality')
+                               ->select(DB::raw('*'))
+                               ->where('name',$nationality)
+                               ->first();
+                           if (empty($marital_status_id)) {
+                               $nationality_id = 0;
+                           } else {
+                               $nationality_id = $nationality_id->id;
+                           }
+                       }
+
                           /* DB::table('patients')->insert([
                                'course_id' => $course_id,
                                'user_id' => $data[0],
@@ -422,6 +495,8 @@ class SettingController extends Controller
                    }
 
                }
+               exit;
+
 
 
                return response()->json(['status'=> true,'message'=> 'File exported successfully']);
