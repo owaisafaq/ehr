@@ -1152,7 +1152,7 @@ class ApiController extends Controller
         $labs = DB::table('labs')
             ->select(DB::raw('id,name'))
             ->where('status', 1)
-            ->where('name','!=','radiology')
+           // ->where('name','!=','radiology')
             ->get();
 
         $pharmacy = DB::table('pharmacy')
@@ -2575,7 +2575,7 @@ class ApiController extends Controller
                    ->where('patients.status', 1)
                    ->orderby('appointments.created_at','desc')
                    ->skip($offset)->take($limit)
-                   //->where('appointments.patient_id', $patient_id)
+                   ->where('appointments.patient_id', $patient_id)
                    ->get();
                $count = DB::table('appointments')
                    ->select(DB::raw('appointments.id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,appointment_status,start_time'))
@@ -2585,6 +2585,7 @@ class ApiController extends Controller
                    ->where('appointments.status', 1)
                    ->where('patients.status', 1)
                    ->orderby('appointments.created_at', 'desc')
+                   ->where('appointments.patient_id', $patient_id)
                    ->count();
            }else{
                $appointments = DB::table('appointments')
@@ -2595,6 +2596,7 @@ class ApiController extends Controller
                    ->where('appointments.status', 1)
                    ->where('patients.status', 1)
                    ->orderby('appointments.created_at','desc')
+                   ->where('appointments.patient_id', $patient_id)
                    ->get();
                $count = DB::table('appointments')
                      ->select(DB::raw('appointments.id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,appointment_status,start_time'))
@@ -2604,6 +2606,7 @@ class ApiController extends Controller
                      ->where('appointments.status', 1)
                      ->where('patients.status', 1)
                      ->orderby('appointments.created_at', 'desc')
+                     ->where('appointments.patient_id', $patient_id)
                      ->count();
 
            }
