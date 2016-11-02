@@ -473,7 +473,7 @@ $app->group(['prefix' => 'api','middleware' => ['jwt.auth','App\Http\Middleware\
 });
 
 
-$app->group(['prefix' => 'api','middleware' => 'jwt.auth'], function () use ($app) {
+$app->group(['prefix'=>'api','middleware'=>['jwt.auth','App\Http\Middleware\CheckRoles']], function () use ($app) {
     //testing importexport
     $app->post('import_patients','App\Http\Controllers\PDFController@import_patients');
     $app->post('enrollUserByCSV','App\Http\Controllers\SettingController@enrollUserByCSV');

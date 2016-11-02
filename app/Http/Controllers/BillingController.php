@@ -84,13 +84,21 @@ class BillingController extends Controller
 
         } else {
 
+            $amount = DB::table('billing_codes')
+                ->select(DB::raw('charge'))
+                ->where('id',$service_id)
+                ->first();
+
+            $amount = $amount->charge;
+
             DB::table('invoice')
                 ->insert(
                     ['patient_id' => $patient_id,
                         'bill_id' => $bill_id,
                         'billing_code_id' => $service_id,
                         'description' => 'This invoice is generated for Inventory Products',
-                        'amount' => 50,
+                        'amount' => $amount,
+                        'due' => $amount,
                         'invoice_status' => 'pending',
                         'type' => 'service',
                         'created_at' => date("Y-m-d  H:i:s")
