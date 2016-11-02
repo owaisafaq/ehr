@@ -88,6 +88,10 @@ class ApiController extends Controller
        {
            $name = $request->input('name');
            $column_name = $request->input('column_name');
+           if($column_name=='patients.id'){
+               $name = ltrim($name,"P000000");
+           }
+
            $patients = DB::table('patients')
                ->leftJoin('patient_address', 'patient_address.patient_id', '=', 'patients.id')
                ->select(DB::raw('patients.id,first_name,last_name,date_of_birth,patient_address.phone_number'))
