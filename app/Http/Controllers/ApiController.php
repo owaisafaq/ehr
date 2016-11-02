@@ -3483,6 +3483,16 @@ class ApiController extends Controller
 
         }
 
+
+        $pharmacy = $patient_prescriptions[0]->pharmacy;
+
+        $product = DB::table('pharmacy')
+            ->select(DB::raw('name'))
+            ->where('id',$pharmacy)
+            ->first();
+
+        $purpose = "Prescription -". "$product->name";
+
         DB::table('prescription_notes')
             ->insert(
                 ['prescription_id' => $prescription_id,
@@ -3506,7 +3516,7 @@ class ApiController extends Controller
                 ->insert(
                     ['patient_id'=>$patient_id,
                         'bill_id'=>$bill_id,
-                        'description'=>'This invoice is generated for patient prescription',
+                        'description'=>$purpose,
                         'amount'=> 50,
                         'due'=> 50,
                         'invoice_status'=>'pending',
