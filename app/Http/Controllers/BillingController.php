@@ -68,12 +68,21 @@ class BillingController extends Controller
                 $amount = 50;
             }
 
+
+            $product = DB::table('inventory_products')
+                ->leftJoin('inventory_categories','inventory_products.cat_id','=','inventory_categories.id')
+                ->select(DB::raw('inventory_products.name as name,inventory_categories.cat_name as category'))
+                ->where('inventory_products.id', $product_id)
+                ->first();
+
+            $purpose = "Product "."$product->category"."-"."$product->name";
+
             DB::table('invoice')
                 ->insert(
                     ['patient_id' => $patient_id,
                         'bill_id' => $bill_id,
                         'product_id' => $product_id,
-                        'description' => 'This invoice is generated for Inventory Products',
+                        'description' => $purpose,
                         'amount' => $amount,
                         'due' => $amount,
                         'invoice_status' => 'pending',
@@ -83,6 +92,15 @@ class BillingController extends Controller
                 );
 
         } else {
+
+/*
+            $product = DB::table('inventory_products')
+                ->leftJoin('inventory_categories', 'inventory_products.cat_id', '=', 'inventory_categories.id')
+                ->select(DB::raw('inventory_products.name as name,inventory_categories.cat_name as category'))
+                ->where('inventory_products.id', $product_id)
+                ->first();
+
+            $purpose = "Product " . "$product->category" . "-" . "$product->name";*/
 
             $amount = DB::table('billing_codes')
                 ->select(DB::raw('charge'))
