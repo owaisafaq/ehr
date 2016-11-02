@@ -84,6 +84,43 @@ class ApiController extends Controller
     }
 
 
+    public function search_patient_listing(Request $request)
+       {
+           $name = $request->input('name');
+           $column_name = $request->input('column_name');
+           $patients = DB::table('patients')
+               ->leftJoin('patient_address', 'patient_address.patient_id', '=', 'patients.id')
+               ->select(DB::raw('patients.id,first_name,last_name,date_of_birth,patient_address.phone_number'))
+               ->where( function ($q) use ($name,$column_name) {
+                   $q->where($column_name,'LIKE',"$name%")
+                     /*  ->orWhere('last_name','LIKE',"$name%")
+                       ->orWhere('date_of_birth','LIKE',"$name%")
+                       ->orWhere('phone_number','LIKE',"$name%")
+                       ->orWhere('patients.id','LIKE',"$name%")*/;
+                           })
+               ->where('patients.status',1)
+               ->where('patient_address.address_type','contact')
+               ->get();
+
+           foreach ($patients as $patient) {
+               $patient->id = str_pad($patient->id, 7, '0', STR_PAD_LEFT);
+           }
+
+           if (empty($patients)) {
+               $patient = array(
+                   "id" => '0',
+                   "first_name" => "",
+                   "last_name" => "",
+                   "date_of_birth" => "",
+                   "phone_number" => "",
+                   );
+               return response()->json(['status' => false, 'data' => $patient]);
+           } else {
+               return response()->json(['status' => true, 'data' => $patients]);
+           }
+       }
+
+
     public function search_doctor(Request $request)
     {
         $name = $request->input('name');

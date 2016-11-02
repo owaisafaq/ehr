@@ -23,6 +23,7 @@ $app->group(['prefix' => 'api'], function () use ($app) {
     $app->post('register_user','App\Http\Controllers\ApiController@register_user');
     $app->post('user_login','App\Http\Controllers\ApiController@user_login');
     $app->post('search_patient', 'App\Http\Controllers\ApiController@search_patient');
+    $app->post('search_patient_listing', 'App\Http\Controllers\ApiController@search_patient_listing');
     $app->post('search_doctor', 'App\Http\Controllers\ApiController@search_doctor');
     $app->post('search_department', 'App\Http\Controllers\ApiController@search_department');
     $app->post('add_patient_archive','App\Http\Controllers\ApiController@add_patient_archive');
