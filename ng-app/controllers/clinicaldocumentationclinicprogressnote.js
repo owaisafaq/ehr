@@ -55,7 +55,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
           
       } else if(res.error_code == 500){
           console.log(res);
-          $rootScope.RolesAccess(res.message);
+          //$rootScope.RolesAccess(res.message);
       }
   }
 
@@ -494,6 +494,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
           $scope.MedicationData.sig += sigData.route == undefined ? '' : sigData.route;
           $scope.MedicationData.sig += sigData.frequency == undefined ? '' : " for " + sigData.frequency + " ";
           $scope.MedicationData.sig += sigData.direction == undefined ? '' : sigData.direction + " ";
+          $scope.MedicationData.sig += sigData.durationText == undefined ? '' : sigData.durationText + " ";
           $scope.MedicationData.sig += sigData.duration == undefined ? '' : sigData.duration;
       }
     }

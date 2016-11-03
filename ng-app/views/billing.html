@@ -166,7 +166,7 @@
 
                         <div class="table-header row background-none">
                             <div class="pull-right">
-                                <button class="delete button-custom pull-right" data-toggle="modal" data-target="#deleteConfirm" ng-hide="deleteInvoiceButton">Delete Invoice</button>
+                                <button class="delete button-custom pull-right" data-toggle="modal" data-target="#deleteConfirm" ng-hide="deleteInvoiceButton">Remove Invoice</button>
                                 <!-- <button class="add button-custom pull-right btn_edit_invoice">Edit Invoice</button>-->
                                 <button class="process button-custom pull-right" data-toggle="modal" ng-click="prcessingPaymentClick(invoice_id)">Process Payment</button>
                                 <button class="print button-custom pull-right" ng-click="PrintInvoice(invoice_id)" >Print Invoice</button>
@@ -208,7 +208,7 @@
                                         <td align="center">
                                             <div class="radio radio-styled">
                                                 <label>
-                                                    <input type="radio" id="radio-{{Invoice.id}}" ng-click="SelectedPatientWithInvoice(Invoice.patient_id, Invoice.id, Invoice.amount)" name="optionsRadios"><span></span>
+                                                    <input type="radio" id="radio-{{Invoice.id}}" ng-click="SelectedPatientWithInvoice(Invoice.patient_id, Invoice.id, Invoice.amount, Invoice.invoice_status)" name="optionsRadios"><span></span>
                                                 </label>
                                             </div>
                                         </td>
@@ -1463,6 +1463,21 @@
             </div>
             <div class="modal-body">
                 <p class="modal-subtext">Invoice Deleted Successfully</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">ok</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade modal-size_1" id="freeze" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Status</h2>
+            </div>
+            <div class="modal-body">
+                <p class="modal-subtext">Invoice Can't be Deleted</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">ok</button>

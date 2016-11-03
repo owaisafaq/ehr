@@ -6,16 +6,16 @@
         <div class="card custom-card no-padding">
             <div class="card-head">
                 <ul class="nav nav-tabs nav-justified custom-tab " data-toggle="tabs" ng-init="disabledTabInfo = 'active';byParams == undefined ? disabledTabAdress = 'disabled-tabs' : byParams; byParams == undefined ? disabledTabKin = 'disabled-tabs':byParams;byParams == undefined ? disabledTabEmployer = 'disabled-tabs': '';byParams == undefined ? disabledTabPatientPlant = 'disabled-tabs' : byParams; byParams == undefined ? disabledTabArchive = 'disabled-tabs' : byParams;">
-                    <li class="{{disabledTabInfo}}"><a showtab href="#info">patient information</a></li>
+                    <li class="{{disabledTabInfo}}-no"><a showtab href="#info">patient information</a></li>
                     <li class="{{disabledTabAdress}}"><a showtab href="#address">address</a></li>
-                    <li class="{{disabledTabKin}}"><a showtab href="#kin">next of kin</a></li>
+                    <li class="{{disabledTabKin}} "><a showtab href="#kin">next of kin</a></li>
                     <li class="{{disabledTabEmployer}}"><a showtab href="#employer">employer</a></li>
-                    <li class="{{disabledTabPatientPlant}}"><a showtab href="#plan">hospital plan</a></li>
+                    <li class="{{disabledTabPatientPlant1}} active"><a showtab href="#plan">hospital plan</a></li>
                     <li class="{{disabledTabArchive}}"><a showtab href="#archive">archive</a></li>
                 </ul>
             </div><!-- end .card-head -->
             <div class="card-body tab-content">
-                <div class="tab-pane {{disabledTabInfo}}" id="info">
+                <div class="tab-pane {{disabledTabInfo}}-no" id="info">
                     <form class="custom-form" name="userForm1" ng-model="myForm" novalidate ng-submit="validatePatientInfo(PI);" enctype="multipart/form-data" method="post">
                         <div class="row">
                             <div class="col-lg-3">
@@ -152,9 +152,9 @@
                                     </select>
                                 </div>
                                 <div class="col-lg-3">
-                                    <select class="form-control select_searchFields" ng-model="PI.nationality" placeholder="Nationality">
+                                    <select class="form-control select_searchFields infoNationality" ng-model="PI.nationality" placeholder="Nationality">
                                         <option value=""></option>
-                                        <option ng-repeat="nationality in dropDownData.nationality" value="{{nationality.id}}">{{nationality.name}}</option>
+                                        <option ng-repeat="nationality in dropDownData.nationality" value="{{nationality.id}}" ng-selected="PI.nationality == nationality.id">{{nationality.name}} {{PI.nationality}}</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-3">
@@ -246,7 +246,7 @@
                                 <label>Country/State</label>
                             </div>
                             <div class="col-lg-3">
-                                <select class="form-control select_searchFields" data-placeholder="Select Country" ng-model="PI.adress.country" ng-change="addressStateByCountry(PI.adress.country, 0);">
+                                <select class="form-control select_searchFields addressCountry" data-placeholder="Select Country" ng-model="PI.adress.country" ng-change="addressStateByCountry(PI.adress.country, 0);">
                                     <option value=""></option>
                                     <option ng-selected="PI.adress.country == country.id" value="{{country.id}}" ng-repeat="country in contactAddressCountries">{{country.name}}</option>
                                 </select>
@@ -341,7 +341,7 @@
                                     <label>Country/State</label>  
                                 </div>
                                 <div class="col-lg-3">
-                                    <select class="form-control select_searchFields" data-placeholder="Select Country" ng-model="PI.adress.permanent_country" ng-change="addressStateByCountry(PI.adress.permanent_country, 1);">
+                                    <select class="form-control select_searchFields addressCountry" data-placeholder="Select Country" ng-model="PI.adress.permanent_country" ng-change="addressStateByCountry(PI.adress.permanent_country, 1);">
                                         <option value=""></option>
                                         <option ng-selected="PI.adress.permanent_country == country.id" value="{{country.id}}" ng-repeat="country in permanentAddressCountries">{{country.name}}</option>
                                     </select>
@@ -379,7 +379,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="tab-pane  {{disabledTabKin}}" id="kin">
+                <div class="tab-pane {{disabledTabKin}}" id="kin">
                     <form class="custom-form" name="userForm2" novalidate ng-submit="validatePatientKin(PI.kin);">
                         <div class="row">
                             <div class="col-lg-3">
@@ -443,7 +443,7 @@
                                     <option value=null>Country</option>
                                     <option ng-repeat="country in nextOfKinCountries" value="{{country.id}}">{{country.name}}</option>
                                 </select> -->
-                                <select class="form-control select_searchFields" data-placeholder="Select Country" ng-model="PI.kin.kin_country" ng-options="country.name for country in nextOfKinCountries track by country.id" ng-change="nextOfKinStateByCountry(PI.kin.kin_country);" ng-hide="updateState">
+                                <select class="form-control select_searchFields kinCountry" data-placeholder="Select Country" ng-model="PI.kin.kin_country" ng-options="country.name for country in nextOfKinCountries track by country.id" ng-change="nextOfKinStateByCountry(PI.kin.kin_country);" ng-hide="updateState">
                                     <option value=""></option>
                                 </select>
                                 <select class="chosen-select PI-chozen" ng-model="PI.kin.kin_country" data-placeholder="Select State" style="width:100%;display:block!important;" id="autoship_optionKinCountry" ng-show="updateState">
@@ -532,7 +532,7 @@
                                 <label>Country/State</label>  
                             </div>
                             <div class="col-lg-3">
-                                <select class="form-control select_searchFields" data-placeholder="Select Country" ng-model="PI.employer.employer_country" ng-options="country.name for country in employerCountries track by country.id" ng-change="employerStateByCountry(PI.employer.employer_country);" ng-hide="updateState">
+                                <select class="form-control select_searchFields employerCountry" data-placeholder="Select Country" ng-model="PI.employer.employer_country" ng-options="country.name for country in employerCountries track by country.id" ng-change="employerStateByCountry(PI.employer.employer_country);" ng-hide="updateState">
                                     <option value=""></option>
                                 </select>
                                 <select class="chosen-select PI-chozen" ng-model="PI.kin.kin_relationship" data-placeholder="Select State" style="width:100%;display:block!important;" id="autoship_optionEmployeCountry" ng-show="updateState">
@@ -568,33 +568,33 @@
                         <button type="submit" class="btn btn-default button-style-1 float-right btn-big patient-submit-btn" value="Next" ng-hide="showSubmitButtonEmployer" ng-click="validatePatientEmployer(PI.employer);">Update</button>
                     </div>
                 </div>
-                <div class="tab-pane {{disabledTabPatientPlant}}" id="plan">
+                <div class="tab-pane {{disabledTabPatientPlant1}} active" id="plan">
                     <form class="custom-form" name="userForm4" novalidate ng-submit="savePlanData(PP);">
                         <div class="col-lg-12 margin-bottom-xxl">
-                            <label class="label-style">Select Plan</label>
+                            <label class="label-style">Select Plan {{PP.checkoutpatient}}</label>
                         </div>
                         <div class="col-lg-12 radio-style-2-con" ng-hide="patientPlantRadios">
-                            <div class="radio radio-styled">
-                                <label>
-                                    <input ng-click="flag_to_show_retainer = false; flag_to_show_nhis = false;" type="radio" ng-init="PP.checkoutpatient = 1" name="checkoutpatient" value="1" checked ng-checked="true" ng-model="PP.checkoutpatient">
-                                    <span>General</span>
+                            <div class="radio radio-styled checkRaido">
+                                <label><!-- ng-init="PP.checkoutpatient = 1" --> <!-- checked -->
+                                    <input ng-click="flag_to_show_retainer = false; flag_to_show_nhis = false;" type="radio" ng-checked="true" name="checkoutpatient1" value="1" ng-model="PP.checkoutpatient"> <!-- ng-checked="true"  -->
+                                    <span>Private</span>
                                 </label>
                             </div>
                             <div class="radio radio-styled">
                                 <label>
-                                    <input ng-click="flag_to_show_retainer = false;" type="radio" name="checkoutpatient" value="2" ng-model="PP.checkoutpatient">
+                                    <input ng-click="flag_to_show_retainer = false;" type="radio" name="checkoutpatient1" value="2" ng-model="PP.checkoutpatient">
                                     <span data-toggle="modal" data-target="#nhis">NHIS</span>
                                 </label>
                             </div>
                             <div class="radio radio-styled">
                                 <label>
-                                    <input ng-click="flag_to_show_nhis = false;" type="radio" name="checkoutpatient" value="3" ng-model="PP.checkoutpatient">
+                                    <input ng-click="flag_to_show_nhis = false;" type="radio" name="checkoutpatient1" value="3" ng-model="PP.checkoutpatient">
                                     <span data-toggle="modal" data-target="#relationship">Retainership</span>
                                 </label>
                             </div>
                             <div class="radio radio-styled">
-                                <label>
-                                    <input ng-click="flag_to_show_retainer = false; flag_to_show_nhis = false;" type="radio" ng-init="PP.checkoutpatient = 4" name="checkoutpatient" value="4" ng-model="PP.checkoutpatient">
+                                <label><!-- ng-init="PP.checkoutpatient = 4" -->
+                                    <input ng-click="flag_to_show_retainer = false; flag_to_show_nhis = false;" type="radio"  name="checkoutpatient1" value="4" ng-model="PP.checkoutpatient">
                                     <span>FHSS</span>
                                 </label>
                             </div>
@@ -607,7 +607,7 @@
                             <div class="radio radio-styled">
                                 <label>
                                     <input ng-click="flag_to_show_retainer_update = false; flag_to_show_nhis_update = false;" type="radio" ng-init="PP.checkoutpatient = 1" name="checkoutpatient" value="1" ng-checked="HPUpdate.plan_id == '1'" ng-model="PP.checkoutpatient">
-                                    <span>General</span>
+                                    <span>Private</span>
                                 </label>
                             </div>
                             <div class="radio radio-styled">
@@ -1063,7 +1063,7 @@
                         </div>
                      <div class="row margin-bottom-xxl">
                     <div class="col-lg-3">
-                        <label>Speciality</label>
+                        <label>Beneficiary</label>
                     </div>
                     <div class="col-lg-3 select-speciality padding-0 margin-top-5">
                         <div class="radio radio-styled col-lg-6 margin-0">
@@ -1174,7 +1174,7 @@
                         </div>
                     <div class="row margin-bottom-xxl">
                     <div class="col-lg-3">
-                        <label>Speciality</label>
+                        <label>Beneficiary</label>
                     </div>
                     <div class="col-lg-3 select-speciality padding-0 margin-top-5">
                         <div class="radio radio-styled col-lg-6 margin-0">
@@ -1286,7 +1286,7 @@
                         </div>
                      <div class="row margin-bottom-xxl">
                     <div class="col-lg-3">
-                        <label>Speciality</label>
+                        <label>Beneficiary</label>
                     </div>
                     <div class="col-lg-3 select-speciality padding-0 margin-top-5">
                         <div class="radio radio-styled col-lg-6 margin-0">
@@ -1397,7 +1397,7 @@
                         </div>
                     <div class="row margin-bottom-xxl">
                     <div class="col-lg-3">
-                        <label>Speciality</label>
+                        <label>Beneficiary</label>
                     </div>
                     <div class="col-lg-3 select-speciality padding-0 margin-top-5">
                         <div class="radio radio-styled col-lg-6 margin-0">

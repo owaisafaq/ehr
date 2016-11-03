@@ -11,7 +11,7 @@
                     <span class="txt-style-2 col-lg-12 capitalize">E{{EID || encounterID}}</span>
                 </div>
                 <div class="col-lg-2">
-                    <label class="txt-style-1 text-uppercase col-lg-12">Patient Name {{visitStatus}}</label>
+                    <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
                     <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.first_name}} {{displayInfo.last_name}}</span>
                 </div>
                 <div class="col-lg-2">
@@ -54,7 +54,7 @@
                     <!--</div>-->
                 </div>
                 <div class="create_counter">
-                    <button type="button" ng-click="goToEncounter();" class="add button-custom pull-right open-custom_pop" ng-if="visitStatus == 1" ng-hide="gotoencounter">Go To Encouter</button>
+                    <!-- <button type="button" ng-click="goToEncounter();" class="add button-custom pull-right open-custom_pop" ng-if="visitStatus == 1" ng-hide="gotoencounter">Go To Encouter</button> -->
                     <button type="button" ng-click="openCreateEncounter();" class="add button-custom pull-right open-custom_pop" ng-hide="disabledEncounterButton" ng-if="visitStatus == 0">create encounter</button>
                     <button type="button" class="calendar button-custom pull-right" ng-hide="disabledEncounterButton" data-toggle="modal" data-target="#createAppointment">Create Appointment</button>
                     <button type="button" data-toggle="modal" data-target="#neworder" class="microscope button-custom pull-right" ng-hide="disabledEncounterButton">Order Labs</button>
@@ -145,7 +145,7 @@
             </div>
             <div class="card-body col-lg-12">
                 <div>
-                    <input class="encounter-search-bar" ng-change="getSearchPatient(search);" type="text" ng-model="search" placeholder="Search for a patient">
+                    <input class="encounter-search-bar" ng-change="getSearchPatient(search1);" type="text" ng-model="search1" placeholder="Search for a patient">
                 </div>
             </div><!--end .card-body -->
             <div class="table-header col-lg-12">
@@ -187,7 +187,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="encounter in allEncounter | filter:search">
+                            <tr ng-repeat="encounter in allEncounter | filter:{ first_name: listsearch}">
                                 <td align="center">
                                     <!-- <div class="radio radio-styled">
                                         <label>
@@ -298,8 +298,9 @@
                 <div class="col-lg-3">
                     <select class="form-control" id="priority" ng-model="Order.priority" placeholder="Select Priority">
                         <option value=""></option>
-                        <option>Urgent</option>
-                        <option>Urgent</option>
+                        <option>Low</option>
+                        <option>Medium</option>
+                        <option>High</option>
                     </select>
                 </div>
                 <div class="col-lg-1">

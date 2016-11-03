@@ -3615,3 +3615,18 @@ AppEHR.factory("ImportPatient", function ($resource) {
     };
     return updatedRole;
 });
+AppEHR.factory("SearchPatientByColumns", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'search_patient_listing', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var updatedRole = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return updatedRole;
+});

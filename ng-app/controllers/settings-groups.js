@@ -159,7 +159,14 @@ console.log($('#editRole .right_chip[data-id="' + id + '"').length , $('#editRol
         return html;
     }
 
-    $(document).on('click','.rights_icons > span',function () {
+    $(document).on('click','#addRole .rights_icons > span',function () {
+        console.log("i am in add")
+        console.log($(this))
+        $(this).toggleClass('active');
+    });
+    $(document).on('click','#editRole .rights_icons > span',function () {
+        console.log("i am in edit")
+        //console.log($(this))
         $(this).toggleClass('active');
     });
 

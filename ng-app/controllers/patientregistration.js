@@ -55,6 +55,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         $scope.patientPlantRadios = false;
         $scope.imageUploading = true;
         $scope.updateState = false;
+        //$scope.PI.nationality = 97
         //$scope.PI.identity_type = dropDownInfo.IdType[0].id;
         //$scope.PI.kin_relationship = dropDownInfo.relationship[0].id;
         //$scope.PI.dependant_relationship = dropDownInfo.relationship[0].id;
@@ -273,8 +274,8 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 if (res.status == true && res.data.length > 0) {
                     angular.copy(res.data, $scope.employerStates);
                 }/*else{
-                 
-                 }*/
+                
+                }*/
             }
             function employerStateFailed(error) {
                 console.log(error);
@@ -353,7 +354,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     patient_state: $scope.PI.patient_state == undefined ? '' : $scope.PI.patient_state,
                     tribe: $scope.PI.tribe == undefined ? '' : $scope.PI.tribe,
                     language: $scope.PI.language == undefined ? '' : $scope.PI.language,
-                    nationality: $scope.PI.nationality == undefined ? '' : $scope.PI.nationality,
+                    nationality: $scope.PI.nationality == undefined ? '97' : $scope.PI.nationality,
                     blood_group: $scope.PI.blood_group == undefined ? '' : $scope.PI.blood_group,
                     father_firstname: $scope.PI.father_firstname == undefined ? '' : $scope.PI.father_firstname,
                     father_middlename: $scope.PI.father_middlename == undefined ? '' : $scope.PI.father_middlename,
@@ -367,7 +368,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 };
                 $rootScope.loader = 'show';
                 if ($window.sessionStorage.patient_id == undefined) {
-                    console.log(dataToBeAdded);
+                    console.log(dataToBeAdded); //return true;
                     PatientInformation.save(dataToBeAdded, patientInformationSuccess, patientInformationFailed);
                 } else {
                     console.log(PI, 'PI');
@@ -434,7 +435,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     mobile_number: $scope.PI.adress.mobile_number == undefined ? '' : ($scope.countryCode == undefined ? '234' : $scope.countryCode.country_code) + '' + $scope.PI.adress.mobile_number,
                     house_number: $scope.PI.adress.house_number == undefined ? '' : $scope.PI.adress.house_number,
                     street: $scope.PI.adress.street == undefined ? '' : $scope.PI.adress.street,
-                    country: $scope.PI.adress.country == undefined ? '' : $scope.PI.adress.country,
+                    country: $scope.PI.adress.country == undefined ? '97' : $scope.PI.adress.country,
                     state: PIAdress.state == undefined ? '' : (PIAdress.state == undefined ? $scope.PI.adress.state.id : $scope.PI.adress.state),
                     city: $scope.PI.adress.city == undefined ? '' : $scope.PI.adress.city,
                     email: $scope.PI.adress.email == undefined ? '' : $scope.PI.adress.email,
@@ -446,13 +447,13 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     permanent_email: $scope.PI.adress.permanent_email == undefined ? '' : $scope.PI.adress.permanent_email,
                     permanent_housenumber: $scope.PI.adress.permanent_housenumber == undefined ? '' : $scope.PI.adress.permanent_housenumber,
                     permanent_street: $scope.PI.adress.permanent_street == undefined ? '' : $scope.PI.adress.permanent_street,
-                    permanent_country: $scope.PI.adress.permanent_country == undefined ? '' : ($scope.PI.adress.permanent_country.id == undefined ? $scope.PI.adress.permanent_country : $scope.PI.adress.permanent_country.id),
+                    permanent_country: $scope.PI.adress.permanent_country == undefined ? '97' : ($scope.PI.adress.permanent_country.id == undefined ? $scope.PI.adress.permanent_country : $scope.PI.adress.permanent_country.id),
                     //city: $scope.PI.adress.city == undefined ? '' : $scope.PI.adress.city.id,
                     permanent_state: $scope.PI.adress.permanent_state == undefined ? '' : ($scope.PI.adress.permanent_state.id == undefined ? $scope.PI.adress.permanent_state : $scope.PI.adress.permanent_state.id),
                     permanent_city: $scope.PI.adress.permanent_city == undefined ? '' : $scope.PI.adress.permanent_city,
                     permanent_postalCode: $scope.PI.adress.permanent_postalCode == undefined ? '' : $scope.PI.adress.permanent_postalCode
                 };
-                
+                console.log(dataToBeAdded); //return true;
                 if ($scope.address_id == undefined) {
                     PatientRegistrationAddress.save(dataToBeAdded, patientAddressSuccess, patientAddressFailed);
                     function patientAddressSuccess(res) {
@@ -535,12 +536,13 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     kin_email: $scope.PI.kin.kin_email == undefined ? '' : $scope.PI.kin.kin_email,
                     kin_house_number: $scope.PI.kin.kin_house_number == undefined ? '' : $scope.PI.kin.kin_house_number,
                     kin_street: $scope.PI.kin.kin_street == undefined ? '' : $scope.PI.kin.kin_street,
-                    kin_country: $scope.PI.kin.kin_country == undefined ? '' : $scope.PI.kin.kin_country.id,
+                    kin_country: $scope.PI.kin.kin_country == undefined ? '97' : $scope.PI.kin.kin_country.id,
                     kin_state: $scope.PI.kin.kin_state == undefined ? '' : ($scope.PI.kin.kin_state.id == undefined ? $scope.PI.kin.kin_state : '' ),
                     kin_city: $scope.PI.kin.kin_city == undefined ? '' : $scope.PI.kin.kin_city,
                     kin_postal_code: $scope.PI.kin.kin_postal_code == undefined ? '' : $scope.PI.kin.kin_postal_code
                 };
                 if ($scope.kin_id == undefined) {
+                    console.log(dataToBeAdded); //return true;
                     PatientRegistrationKin.save(dataToBeAdded, patientKinSuccess, patientKinFailed);
                     function patientKinSuccess(res) {
                         if (res.status == true) {
@@ -613,11 +615,12 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     employer_email: $scope.PI.employer.employer_email == undefined ? '' : $scope.PI.employer.employer_email,
                     employer_house_number: $scope.PI.employer.employer_house_number == undefined ? '' : $scope.PI.employer.employer_house_number,
                     employer_street: $scope.PI.employer.employer_street == undefined ? '' : $scope.PI.employer.employer_street,
-                    employer_country: $scope.PI.employer.employer_country == undefined ? '' : $scope.PI.employer.employer_country.id,
+                    employer_country: $scope.PI.employer.employer_country == undefined ? '97' : $scope.PI.employer.employer_country.id,
                     employer_state: $scope.PI.employer.employer_state == undefined ? '' : $scope.PI.employer.employer_state.id,
                     employer_city: $scope.PI.employer.employer_city == undefined ? '' : $scope.PI.employer.employer_city
                 };
                 if ($scope.employer_id == undefined) {
+                    console.log(dataToBeAdded); return true;
                     PatientRegistrationEmployer.save(dataToBeAdded, patientEmployerSuccess, patientEmployerFailed);
                     function patientEmployerSuccess(res) {
                         if (res.status == true) {
@@ -686,19 +689,24 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             todayDate = new Date();
             todayYear = todayDate.getFullYear();
             todayMonth = todayDate.getMonth()+1;
-            var abc = todayYear - splitDate[0];
+            var abc = todayYear - splitDate[2];
             var abcmonth = todayMonth - splitDate[1];
-            console.log("monthdiff",abcmonth);
+            //console.log(birthday);
             if(abc != 0){
-                $scope.birthdate = new Date(splitDate[0], splitDate[1], splitDate[2]);
+                $scope.birthdate = new Date(splitDate[2], splitDate[1], splitDate[0]);
+
                 var ageDifMs = Date.now() - $scope.birthdate.getTime();
                 var ageDate = new Date(ageDifMs); // miliseconds from epoch
-                $scope.PI.age = Math.abs(ageDate.getUTCFullYear() - 1970)+" year";
+                //console.log(birthday, ageDate, todayYear - splitDate[0]);
+                $scope.PI.age = todayYear - splitDate[2];
+                $scope.PI.age = $scope.PI.age > 1 ? 'years' : "year"
+                //$scope.PI.age = Math.abs(ageDate.getUTCFullYear() - 1970)+" year";
             }else{
+                //console.log("abc=0",abc);
                 birthday=birthday.split("-"); 
                 var dobMonth= birthday[1]; 
-                var dobDay= birthday[2];
-                var dobYear= birthday[0];
+                var dobDay= birthday[0];
+                var dobYear= birthday[2];
                 var now = new Date();
                 var nowDay= now.getDate();
                 var nowMonth = now.getMonth() + 1;  //jan=0 so month+1
@@ -1742,12 +1750,16 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 }
             }
         }
-
+    if ($("input[name='checkoutpatient1']:checked").val()) {
+       alert($("input[name='checkoutpatient1']:checked").val());
+        return false;
+    }
+    $scope.PP.checkoutpatient = 1;
         $scope.savePlanData = function () {
             $scope.dataToBeAdded.token = $window.sessionStorage.token
             $scope.dataToBeAdded.patient_id = $window.sessionStorage.patient_id
             $scope.dataToBeAdded.plan_id = $scope.PP.checkoutpatient
-            //console.log($scope.PP.checkoutpatient);
+            console.log($scope.PP.checkoutpatient, 'gfgh'); return true;
             if ($scope.PP.checkoutpatient == 1)
             {
                 $scope.dataToBeAdded.retainership = '';
@@ -1846,6 +1858,8 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     console.log($scope.dataToBeAdded_send);
                     PatienPlanSaveData.save($scope.dataToBeAdded_send, PlanDataSuccess, PlanDataFailure)
                 //}
+            }else{
+                console.log('Hola Madrid');
             }
             function PlanDataSuccess(res) {
                 if (res.status == true) {

@@ -217,6 +217,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
 
         function PrescriptionSuccessPop(res) {
             console.log(res, "popup response");
+            $rootScope.loader = "hide";
             if (res.status == true) {
                 $('#addmedication').modal('hide');
                 $scope.medicationsDataPush = [];
@@ -266,6 +267,7 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
                 $scope.MedicationData.sig += sigData.route == undefined ? '' : sigData.route;
                 $scope.MedicationData.sig += sigData.frequency == undefined ? '' : " for " + sigData.frequency + " ";
                 $scope.MedicationData.sig += sigData.direction == undefined ? '' : sigData.direction + " ";
+                $scope.MedicationData.sig += sigData.durationText == undefined ? '' : sigData.durationText + " ";
                 $scope.MedicationData.sig += sigData.duration == undefined ? '' : sigData.duration;
             }
         }

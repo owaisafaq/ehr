@@ -1519,6 +1519,8 @@ Discharge Summary
     border: 2px solid #56aeea;
     padding: 14px 20px;
     box-sizing: border-box;
+    height: 150px;
+    overflow: auto;
 }
 .select-bed-dropdown .radio-styled{
     margin-bottom: 10px !important;

@@ -174,7 +174,7 @@
                             </a>
                         </li><!--end /menu-li -->
                         
-                          <li class="gui-folder" ng-hide="ROLES.Ward == undefined">
+                        <li class="gui-folder" ng-hide="ROLES.Ward == undefined">
                             <a>
                                 <div class="gui-icon"><i class="md md-hotel"></i></div>
                                 <span class="title">Ward Management</span>
@@ -191,6 +191,15 @@
                                 <span class="title">Billing</span>
                             </a>
                         </li><!--end /menu-li -->
+                        <li class="gui-folder">
+                            <a>
+                                <div class="gui-icon"><i class="md md-assignment"></i></div>
+                                <span class="title">Reporting</span>
+                            </a>
+                            <ul>
+                                <li><a href="http://demoz.online/form_ehr/nhis_form.html"><span class="title">NHMIS Reporting</span></a></li>
+                            </ul>
+                        </li>
                         <li class="gui-folder" ng-hide="ROLES.Pharmacy == undefined && ROLES.Inventory == undefined && ROLES.Pharmacy_prescription == undefined && ROLES.Stock == undefined && ROLES.Users == undefined && ROLES.Roles == undefined && ROLES.Billng_code == undefined && ROLES.Tax_rates == undefined && ROLES.Labs == 0 && ROLES.Facility == undefined && ROLES.templates == undefined">
                             <a>
                                 <div class="gui-icon"><i class="md md-settings"></i></div>
