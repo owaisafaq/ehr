@@ -147,29 +147,30 @@
                                 <tbody>
                                     <tr>
                                         <td colspan="1" align="right">
-                                            <h1 style="font-size:40px;color:#d0d0d0;display:inline-block;float:left;">LOGO</h1>
+                                            <!--<h1 style="font-size:24px;color:#1a1a1a;display:inline-block;float:left;">Hospital Logo</h1>-->
+                                            <img src="<?php echo $hospital->hospital_image; ?>">
                                         </td>
                                         <td colspan="1" align="center">
-                                            <h4 style="font-size:18px;color:#999999;display:inline-block;margin-left:10px;float:left;line-height:40px;">Hospital Name</h4>
+                                            <h4 style="font-size:18px;color:#999999;display:inline-block;margin-left:10px;float:left;line-height:40px;"><?php echo $hospital->name; ?></h4>
                                         </td>
 
                                         <td style="line-height:20px;" colspan="1">
                                             <table align="right">
                                                 <tr>
                                                     <td align="right">
-                                                        <span style="display:block;font-size:12px;color:#b8b8b8;">+1 555 555 5555</span>
+                                                        <span style="display:block;font-size:12px;color:#b8b8b8;">+<?php echo $hospital->phone;?></span>
                                                     </td>
                                                 </tr>
 
                                                 <tr>
                                                     <td align="right">
-                                                        <span style="display:block;font-size:12px;color:#b8b8b8;">info@hospitalname.com </span>
+                                                        <span style="display:block;font-size:12px;color:#b8b8b8;"><?php echo $hospital->website;?></span>
                                                     </td>
                                                 </tr>
 
                                                 <tr>
                                                     <td align="right">
-                                                        <span style="display:block;font-size:12px;color:#b8b8b8;">The House Street ST, Wetherfield, CA 75124 </span>
+                                                        <span style="display:block;font-size:12px;color:#b8b8b8;"><?php echo $hospital->address ;?><?php echo '<br>'; echo $hospital->city;?> </span>
                                                     </td>
                                                 </tr>
                                             </table>

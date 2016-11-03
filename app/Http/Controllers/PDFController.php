@@ -64,6 +64,10 @@ class PDFController extends Controller
         // All The Patient info is here just uncomment it when required
 
 
+        $hospital = DB::table('hospital')
+            ->select(DB::raw('id,name,CONCAT("' . $logo_image . '",image) as hospital_image,address,type,city,website,phone'))
+            ->first();
+
        $patient = DB::table('patient_lab_test_values')
              ->select(DB::raw('patients.id,CONCAT(patients.first_name," ",patients.last_name) AS patient_name,CONCAT("' . $logo_image . '",patients.patient_image) as patient_image,patients.age,patients.date_of_birth,maritial_status.name as marital_status,(CASE WHEN (sex = 1) THEN "Male" ELSE "Female" END) as gender'))
              ->leftJoin('lab_orders', 'lab_orders.id', '=', 'patient_lab_test_values.lab_order_id')
@@ -73,7 +77,7 @@ class PDFController extends Controller
 
       // array_push($arr,['patient'=>$patient]);
 
-        $data = ['data'=>$arr,'patient'=>$patient];
+        $data = ['data'=>$arr,'patient'=>$patient,'hospital'=>$hospital];
 
         $view =  app()->make('view')->make('report_pdf', $data)->render();
 //    return $view;
@@ -165,6 +169,10 @@ class PDFController extends Controller
 
         $logo_image = url('/') . '/uploaded_images/';
 
+        $hospital = DB::table('hospital')
+                ->select(DB::raw('id,name,CONCAT("'. $logo_image.'",image) as hospital_image,address,type,city,website,phone'))
+                 ->first();
+
         $patient = DB::table('patient_clinical_notes')
             ->select(DB::raw('patients.id,CONCAT(patients.first_name," ",patients.last_name) AS patient_name,CONCAT("' . $logo_image . '",patients.patient_image) as patient_image,patients.age,patients.date_of_birth,maritial_status.name as marital_status,(CASE WHEN (sex = 1) THEN "Male" ELSE "Female" END) as gender,patient_clinical_notes.diagnosis,patient_clinical_notes.visit_id'))
             ->leftJoin('patients', 'patient_clinical_notes.patient_id', '=', 'patients.id')
@@ -228,7 +236,7 @@ class PDFController extends Controller
 
         }
         
-        $data = ['data'=>$arr,'patient'=>$patient,'diagnosis'=>$diagnosis,'allergies'=>$allergies,'immunizations'=>$immmunizations,'orders'=>$orders,'active_problems'=>$active_problems,'family_history'=>$family_history];
+        $data = ['data'=>$arr,'patient'=>$patient,'hospital'=>$hospital,'diagnosis'=>$diagnosis,'allergies'=>$allergies,'immunizations'=>$immmunizations,'orders'=>$orders,'active_problems'=>$active_problems,'family_history'=>$family_history];
 
         $view =  app()->make('view')->make('clinical_notes_pdf', $data)->render();
 
@@ -275,6 +283,10 @@ class PDFController extends Controller
 
         $prescription_id = $request->input('prescription_id');
 
+        $hospital = DB::table('hospital')
+            ->select(DB::raw('id,name,CONCAT("' . $logo_image . '",image) as hospital_image,address,type,city,website,phone'))
+            ->first();
+
         $medication = DB::table('patient_prescription')
             ->leftJoin('patient_prescription_medicine', 'patient_prescription.id', '=', 'patient_prescription_medicine.prescription_id')
             ->select('medication', 'supplements', 'sig','dispense','reffills','pharmacy')
@@ -296,7 +308,7 @@ class PDFController extends Controller
               ->first();
 
 
-        $data = ['medication'=>$medication,'patient'=>$patient,'prescription_notes'=>$prescription_notes];
+        $data = ['medication'=>$medication,'patient'=>$patient,'hospital'=>$hospital,'prescription_notes'=>$prescription_notes];
 
         $view = app()->make('view')->make('prescription_pdf',$data)->render();
 
@@ -357,7 +369,7 @@ class PDFController extends Controller
                     ->leftJoin('language', 'language.id', '=', 'patients.language')
                     ->leftJoin('nationality', 'nationality.id', '=', 'patients.nationality')
                     ->select(DB::raw('patients.id,patient_unit_number,first_name,middle_name,last_name,date_of_birth,maritial_status.name as marital_status,religion.name as religion,(CASE WHEN (sex = 1) THEN "Male" ELSE "Female" END) as gender,states.name as state,patients.local_goverment_area,tribe,language.name as language,nationality.name as nationality,patient_address.mobile_number,patient_address.email'))
-                    ->where('patients.status', 1)
+                    ->where('patients.status',1)
                     ->where('patient_address.address_type', 'contact')
                     ->get();
 
@@ -374,9 +386,9 @@ class PDFController extends Controller
 
             });
 
-        })->store('xlsx');
+        })->store('csv');
 
-        $file_path = 'http://131.107.100.10//ehr/storage/exports/patients.xlsx';
+        $file_path = 'http://demoz.online/ehr/storage/exports/patients.csv';
 
 
         echo json_encode(array(

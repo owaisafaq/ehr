@@ -53,13 +53,14 @@
                                 <tbody>
                                     <tr>
                                         <td colspan="1" align="right">
-                                            <h1 style="font-size:24px;color:#1a1a1a;display:inline-block;float:left;">Hospital Logo</h1>
+                                            <!--<h1 style="font-size:24px;color:#1a1a1a;display:inline-block;float:left;">Hospital Logo</h1>-->
+                                            <img src="<?php echo $hospital->hospital_image; ?>">
                                         </td>
                                         <td style="line-height:20px;" colspan="1">
                                             <table align="right">
                                                 <tr>
                                                     <td align="right">
-                                                        <span style="display:block;font-size:12px;color:#939598;">ABC House, 19 Street, CA</span>
+                                                        <span style="display:block;font-size:12px;color:#939598;"><?php echo $hospital->address ;?><?php echo '<br>'; echo $hospital->city;?></span>
                                                     </td>
                                                 </tr>
                                             </table>

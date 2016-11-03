@@ -727,11 +727,19 @@ class OrderController extends Controller
 
             $bill_id = $bill->id;
 
+
+            $product = DB::table('labs')
+                ->select(DB::raw('name'))
+                ->where('id',$lab)
+                ->first();
+
+            $purpose = "Lab Order -"."$product->name";
+
             DB::table('invoice')
                 ->insert(
                     ['patient_id' => $patient_id,
                         'bill_id' => $bill_id,
-                        'description' => 'This invoice is generated for Lab Orders',
+                        'description' => $purpose,
                         'amount' => $total_amount,
                         'due'=> $total_amount,
                         'invoice_status' => 'pending',

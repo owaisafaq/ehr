@@ -84,6 +84,47 @@ class ApiController extends Controller
     }
 
 
+    public function search_patient_listing(Request $request)
+       {
+           $name = $request->input('name');
+           $column_name = $request->input('column_name');
+           if($column_name=='patients.id'){
+               $name = ltrim($name,"P000000");
+           }
+
+           $patients = DB::table('patients')
+               ->leftJoin('patient_address', 'patient_address.patient_id', '=', 'patients.id')
+               ->select(DB::raw('patients.id,first_name,last_name,date_of_birth,patient_address.phone_number'))
+               ->where( function ($q) use ($name,$column_name) {
+                   $q->where($column_name,'LIKE',"$name%")
+                     /*  ->orWhere('last_name','LIKE',"$name%")
+                       ->orWhere('date_of_birth','LIKE',"$name%")
+                       ->orWhere('phone_number','LIKE',"$name%")
+                       ->orWhere('patients.id','LIKE',"$name%")*/;
+                           })
+               ->where('patients.status',1)
+               ->where('patient_address.address_type','contact')
+               ->get();
+
+           foreach ($patients as $patient) {
+               $patient->id = str_pad($patient->id, 7, '0', STR_PAD_LEFT);
+           }
+
+           if (empty($patients)) {
+               $patient = array(
+                   "id" => '0',
+                   "first_name" => "",
+                   "last_name" => "",
+                   "date_of_birth" => "",
+                   "phone_number" => "",
+                   );
+               return response()->json(['status' => false, 'data' => $patient]);
+           } else {
+               return response()->json(['status' => true, 'data' => $patients]);
+           }
+       }
+
+
     public function search_doctor(Request $request)
     {
         $name = $request->input('name');
@@ -1111,7 +1152,7 @@ class ApiController extends Controller
         $labs = DB::table('labs')
             ->select(DB::raw('id,name'))
             ->where('status', 1)
-            ->where('name','!=','radiology')
+           // ->where('name','!=','radiology')
             ->get();
 
         $pharmacy = DB::table('pharmacy')
@@ -2534,7 +2575,7 @@ class ApiController extends Controller
                    ->where('patients.status', 1)
                    ->orderby('appointments.created_at','desc')
                    ->skip($offset)->take($limit)
-                   //->where('appointments.patient_id', $patient_id)
+                   ->where('appointments.patient_id', $patient_id)
                    ->get();
                $count = DB::table('appointments')
                    ->select(DB::raw('appointments.id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,appointment_status,start_time'))
@@ -2544,6 +2585,7 @@ class ApiController extends Controller
                    ->where('appointments.status', 1)
                    ->where('patients.status', 1)
                    ->orderby('appointments.created_at', 'desc')
+                   ->where('appointments.patient_id', $patient_id)
                    ->count();
            }else{
                $appointments = DB::table('appointments')
@@ -2554,6 +2596,7 @@ class ApiController extends Controller
                    ->where('appointments.status', 1)
                    ->where('patients.status', 1)
                    ->orderby('appointments.created_at','desc')
+                   ->where('appointments.patient_id', $patient_id)
                    ->get();
                $count = DB::table('appointments')
                      ->select(DB::raw('appointments.id,appointments.patient_id,patients.first_name,patients.middle_name,patients.last_name,doctors.name as doctor,departments.name as department,appointments.reason,appointments.other_reasons,pick_date,appointment_status,start_time'))
@@ -2563,6 +2606,7 @@ class ApiController extends Controller
                      ->where('appointments.status', 1)
                      ->where('patients.status', 1)
                      ->orderby('appointments.created_at', 'desc')
+                     ->where('appointments.patient_id', $patient_id)
                      ->count();
 
            }
@@ -3439,6 +3483,16 @@ class ApiController extends Controller
 
         }
 
+
+        $pharmacy = $patient_prescriptions[0]->pharmacy;
+
+        $product = DB::table('pharmacy')
+            ->select(DB::raw('name'))
+            ->where('id',$pharmacy)
+            ->first();
+
+        $purpose = "Prescription -". "$product->name";
+
         DB::table('prescription_notes')
             ->insert(
                 ['prescription_id' => $prescription_id,
@@ -3462,7 +3516,7 @@ class ApiController extends Controller
                 ->insert(
                     ['patient_id'=>$patient_id,
                         'bill_id'=>$bill_id,
-                        'description'=>'This invoice is generated for patient prescription',
+                        'description'=>$purpose,
                         'amount'=> 50,
                         'due'=> 50,
                         'invoice_status'=>'pending',

@@ -356,7 +356,7 @@ class SettingController extends Controller
 
        }
 
-    public function export_patients_data(Request $request)
+    public function export_patients_data_old(Request $request)
     {
         $file = $request->file('patients_data');
         $destinationPath = base_path() . '/public/patients_data';
@@ -380,6 +380,161 @@ class SettingController extends Controller
         return response()->json(['status' => true, 'message' => 'hello']);
 
     }
+
+    public function export_patients_data(Request $request)
+       {
+          // $user_id = Auth::user()->id;
+          //$course_id=$request->input('course_id');
+           $destinationPath = base_path() . '/public/patients_data';
+           $extension = $request->file('patients_data')->getClientOriginalExtension();
+
+           if ($extension == 'csv') {
+               $fileName = time() . '.' . $extension;
+               $request->file('patients_data')->move($destinationPath, $fileName);
+               $fileneww = $destinationPath . '/' . $fileName;
+               $fileas = file($fileneww);
+              //unset($fileas[0]);
+              // dd($fileas);
+               for ($i = 1; $i < count($fileas); $i++) {
+                   $data = explode(',', $fileas[$i]);
+                  // dd($data);
+                   if ($data[0] != null) {
+                       $state = $data[8];
+                       $state = str_replace('"','',$state);
+                       if ($state == '') {
+                           $state_id = 0;
+                       }else{
+                           $state_id = DB::table('states')
+                               ->select(DB::raw('*'))
+                               ->where('name',$state)
+                               ->first();
+                           if(empty($state_id)){
+                               $state_id = 0;
+                           }else{
+                               $state_id = $state_id->id;
+                           }
+                       }
+                       $marital_status = $data[5];
+                       $marital_status = str_replace('"', '', $marital_status);
+                       if ($marital_status == '') {
+                           $marital_status_id = 0;
+                       } else {
+                           $marital_status_id = DB::table('maritial_status')
+                               ->select(DB::raw('*'))
+                               ->where('name', $marital_status)
+                               ->first();
+                           if (empty($marital_status_id)) {
+                               $marital_status_id = 0;
+                           } else {
+                               $marital_status_id = $marital_status_id->id;
+                           }
+                       }
+
+                       $religion = $data[6];
+                       $religion = str_replace('"', '', $religion);
+                       if ($religion == '') {
+                           $religion_id = 0;
+                       } else {
+                           $religion_id = DB::table('religion')
+                               ->select(DB::raw('*'))
+                               ->where('name',$religion)
+                               ->first();
+                           if (empty($religion_id)) {
+                               $religion_id = 0;
+                           } else {
+                               $religion_id = $religion_id->id;
+                           }
+                       }
+                       $gender = str_replace('"', '', $data[7]);
+                       if ($gender == 'Female') {
+
+                           $sex = 0;
+                       } else {
+                           $sex = 1;
+                       }
+
+                       $language = $data[11];
+                       $language = str_replace('"', '', $language);
+                       if ($language == '') {
+                           $language_id = 0;
+                       } else {
+                           $language_id = DB::table('language')
+                               ->select(DB::raw('*'))
+                               ->where('name', $language)
+                               ->first();
+                           if (empty($language_id)) {
+                               $language_id = 0;
+                           } else {
+                               $language_id = $language_id->id;
+                           }
+                       }
+
+                       $nationality = $data[12];
+
+                       $nationality = str_replace('"', '', $nationality);
+                       if ($nationality == '') {
+                           $nationality_id = 0;
+                       } else {
+                           $nationality_id = DB::table('nationality')
+                               ->select(DB::raw('*'))
+                               ->where('name',$nationality)
+                               ->first();
+                           if (empty($marital_status_id)) {
+                               $nationality_id = 0;
+                           } else {
+                               $nationality_id = $nationality_id->id;
+                           }
+                       }
+                       $unit_number = str_replace('"', '', $data[0]);
+                       $first_name = str_replace('"', '', $data[1]);
+                       $middle_name = str_replace('"', '', $data[2]);
+                       $last_name = str_replace('"', '', $data[3]);
+                       $date_of_birth = str_replace('"', '', $data[4]);
+                       $local_goverment_area = str_replace('"', '', $data[9]);
+                       $tribe = str_replace('"', '', $data[10]);
+                       $mobile_number = str_replace('"', '', $data[13]);
+                       $mail_address = str_replace('"', '', $data[14]);
+
+                       DB::table('patients')->insert(
+                           ['first_name' => $first_name,
+                               'middle_name' => $middle_name,
+                               'last_name' => $last_name,
+                               'date_of_birth' => $date_of_birth,
+                               'sex' => $sex,
+                               'marital_status' => $marital_status_id,
+                               'religion' => $religion_id,
+                               'patient_unit_number' => $unit_number,
+                               'state' => $state_id,
+                               'local_goverment_area' => $local_goverment_area,
+                               'tribe' => $tribe,
+                               'nationality' => $nationality_id,
+                               'language' => $language_id,
+                               'created_at' => date("Y-m-d  H:i:s")
+                           ]
+                       );
+
+                       $patient_id = DB::getPdo()->lastInsertId();
+
+                       DB::table('patient_address')->insert(
+                                ['patient_id' => $patient_id,
+                                    'email' => $mail_address,
+                                    'address_type' => 'contact',
+                                    'mobile_number' => $mobile_number,
+                                    'created_at' => date("Y-m-d  H:i:s")
+                                ]
+                            );
+                   }
+
+               }
+
+               return response()->json(['status'=> true,'message'=> 'File exported successfully']);
+           }
+
+           else{
+               return response()->json(['status' => false, 'message' => 'File not exported']);
+           }
+
+       }
 
 
     public function add_department(Request $request)
