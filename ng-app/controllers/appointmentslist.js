@@ -260,7 +260,7 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
         		//end_time: dataToBeAdded.endTime,
         		priority: dataToBeAdded.priority == undefined ? '' : dataToBeAdded.priority
         	}, createAppointmentSuccess, createAppointmentFailure);
-console.log($("#searchpatient").val())
+            console.log($("#searchpatient").val())
         	function createAppointmentSuccess(res){
         		console.log(res);
         		if(res.status == true){

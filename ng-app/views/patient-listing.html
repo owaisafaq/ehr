@@ -16,7 +16,7 @@
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Age</label>
-                    <span class="txt-style-2 col-lg-12">{{displayInfo.age}} Years</span>
+                    <span class="txt-style-2 col-lg-12">{{displayInfo.age}}</span>
                 </div>
                 <div class="col-lg-2">
                     <label class="txt-style-1 text-uppercase col-lg-12">Sex</label>
@@ -45,7 +45,7 @@
                         <!---->
                         <select ng-model="filterType" class="form-control" placeholder="Select Search By" ng-change="findPatient();">
                             <option></option>
-                            <option value="id">ID</option>
+                            <option value="patients.id">ID</option>
                             <option value="first_name">First Name</option>
                             <option value="last_name">Last Name</option>
                             <option value="date_of_birth">Date of Birth</option>
@@ -56,15 +56,16 @@
                         <button type="submit">
                             <i class="fa fa-search"></i>
                         </button>
-                        <input ng-model="search[filterType]" ng-disabled="disabledSearchBar" class="search_field" type="text" placeholder="Search for a patient" value="">
+                        <!-- <input ng-model="search[filterType]" ng-disabled="disabledSearchBar" class="search_field" type="text" placeholder="Search for a patient" value=""> -->
+                        <input ng-model="searchByColumns" ng-disabled="disabledSearchBar" class="search_field" type="text" placeholder="Search for a patient" value="" ng-change="patientSearch(searchByColumns, filterType);">
                     </div>
                 </div>
 
-                <button type="button" data-toggle="modal" data-target="#addpatient" class="btn ink-reaction button-style-1 button-style-1 pull-right" ng-disabled="idCardDisabledBtn">create patient id card</button>
-                <a href="{{importFileURL}}" download type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10">Import</a>
+                <button type="button" data-toggle="modal" data-target="#addpatient" class="btn ink-reaction button-style-1 button-style-1 pull-right" ng-disabled="idCardDisabledBtn">create patient id card</button><!-- href="{{importFileURL}}" -->
+                <button href="{{importFileURL}} download type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10" ng-click="exportPatient();" ng-hide="ROLES.Patient_Reports_ImportExport == undefined">Export</button>
                <!--  <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10" ng-click="exportPatient();">export</button> -->
                <!--  <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10" ng-click="importPatient();" href="{{importFileURL}}">import</button> -->
-                <button class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10" ngf-select="uploadFiles($files, $invalidFiles)" accept=".xls,.xlsx"  type="file" ng-click="exportPatient();">export</button>
+                <button class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10" ngf-select="uploadFiles($files, $invalidFiles)" accept=".xls,.xlsx"  type="file" ng-hide="ROLES.Patient_Reports_ImportExport == undefined">Import</button>
             </div><!-- ngf-max-size="1MB" -->
             <div class="card-body col-lg-12">
                 <div class="icons_con" ng-init="hideOptions = true;">
@@ -98,7 +99,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="patientList in patientLists | filter: search | orderBy:sortOrder">
+                            <tr ng-repeat="patientList in patientLists | orderBy:sortOrder">
                                 <td align="center">
                                     <div class="radio radio-styled">
                                         <label>

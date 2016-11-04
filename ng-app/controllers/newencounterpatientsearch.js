@@ -51,9 +51,9 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 		GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: string}, getPatientSuccess, getPatientFailure);
 		function getPatientSuccess(res){
 			if(res.status == true){
-				$scope.action = /*string ||*/ "";
+				$scope.action = string// "";
 				console.log(1, $scope.allEncounter);
-				console.log(res);
+				// console.log(res);
 				$scope.disabledEncounterButton = false;
 				$scope.patientInfo = true;
 				$rootScope.loader = "hide";
@@ -66,11 +66,13 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 				$scope.EID = res.data.encounter_id;
 				$scope.PIDwithName = string + " " + $scope.displayInfo.first_name + " " + $scope.displayInfo.last_name;
 				for(var k=0; k < $scope.allEncounter.length; k++){
-                    
 					if($scope.EID == $scope.allEncounter[k].id){
 						$scope.buttonDisabled = true;
+						$scope.action = $scope.allEncounter[k].id;
                         console.log($scope.allEncounter[k].id, $scope.EID, "mm");
 						//console.log($scope.allEncounter[k], $scope.EID);
+					}else if(res.is_visit == 0){
+						$scope.action = '';
 					}
 				}
 				$scope.visitStatus = res.is_visit;
@@ -166,7 +168,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
         }
     }
 
-	function getPatientSuccess(res){
+	/*function getPatientSuccess(res){
 		$scope.patientInfo = true;
 		$rootScope.loader = "hide";
 		if(res.status == true){
@@ -176,7 +178,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 			$scope.displayInfo.gender = res.data.sex;
 			$scope.displayInfo.marital_status = res.data.marital_status;
 		}
-	}
+	}*/
 
 	function getPatientFailure(error){
 		$('#internetError').modal('show');

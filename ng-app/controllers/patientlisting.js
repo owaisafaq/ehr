@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPatients', '$window', '$routeParams', 'GetPatientInfo', 'CheckoutPatient', 'DeletePatient', 'Upload', '$timeout', 'ImportPatient', function ($scope, $rootScope, GetAllPatients, $window, $routeParams, GetPatientInfo, CheckoutPatient, DeletePatient, Upload, $timeout, ImportPatient) {
+AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPatients', '$window', '$routeParams', 'GetPatientInfo', 'CheckoutPatient', 'DeletePatient', 'Upload', '$timeout', 'ImportPatient', 'SearchPatientByColumns', function ($scope, $rootScope, GetAllPatients, $window, $routeParams, GetPatientInfo, CheckoutPatient, DeletePatient, Upload, $timeout, ImportPatient, SearchPatientByColumns) {
         $scope.action = '';
         $rootScope.pageTitle = "EHR - Patient Listing";
         $scope.displayInfo = {};
@@ -13,17 +13,22 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
         $scope.search = {};
         $scope.disabledSearchBar = true;
         $scope.idCardDisabledBtn = true;
+        $scope.flagWard = false;
+        $scope.flagBeds = false;
+        $scope.flagSpeciality = false;
         GetAllPatients.get({
             token: $window.sessionStorage.token,
             offset: $scope.offset, limit: $scope.itemsPerPage
         }, GetAllPatientsSuccess, GetAllPatientsFailure);
-        ImportPatient.save({token: $window.sessionStorage.token}, importSuccess, GetAllPatientsFailure);
+        /*ImportPatient.save({token: $window.sessionStorage.token}, importSuccess, GetAllPatientsFailure);
         function importSuccess(res){
-            console.log(res);
+            console.log(res, 'export');
             if(res.status == true){
                 $scope.importFileURL = res.data;
+            }else if(res.error_code == 500){
+                $rootScope.RolesAccess(res.message);
             }
-        }
+        }*/
         $scope.curPage = 0;
         $scope.pageSize = 15;
         $scope.numberOfPages = function() {
@@ -321,9 +326,17 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
             $scope.disabledSearchBar = false;
         }
 
-        $scope.exportPatient = function(){
-            
-        }
+        //$scope.exportPatient = function(){
+            ImportPatient.save({token: $window.sessionStorage.token}, importSuccess, GetAllPatientsFailure);
+            function importSuccess(res){
+                console.log(res, 'export');
+                if(res.status == true){
+                    $scope.importFileURL = res.data;
+                }else if(res.error_code == 500){
+                    $rootScope.RolesAccess(res.message);
+                }
+            }
+        //}
 
         $scope.uploadFiles = function (files, errFiles) {
             $scope.files = files;
@@ -345,7 +358,12 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
                     $timeout(function () {
                         file.result = response.data;
                         //console.log(response);
-                        
+                        console.log(response);
+                        if(response.data.message == "File not exported"){
+                            $rootScope.RolesAccess(response.data.message);
+                        }else{
+                            $('#exportModal').modal('show');
+                        }
                         //$scope.PI.imageOrignalName = response.data.name;
                         //$scope.PI.exportModal = response.data.image;
                         if(files.length == i){
@@ -354,6 +372,7 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
                         i++;
                     });
                 }, function (response) {
+                    console.log(response);
                     if (response.status > 0){
                         $scope.errorMsg = response.status + ': ' + response.data;
                     }else if(res.error_code == 500){
@@ -361,7 +380,7 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
                         $rootScope.RolesAccess(res.message);
                     }
                 }, function (evt) {
-                    $('#exportModal').modal('show');
+                    
                     file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
                 });
             });
@@ -404,6 +423,28 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
                 $scope.sortOrder = "first_name";
                 $scope.sortingSpeciality = "fa-caret-down";
                 console.log(2, $scope.sortOrder);
+            }
+        }
+
+        $scope.patientSearch = function(string, column){
+            if(column == "patient_id" && (string.search("P") || string.search("p"))){
+                string = string.replace(/P/ , "");
+                console.log('0 to 1', string);
+            }
+            SearchPatientByColumns.get({
+                token: $window.sessionStorage.token,
+                name: string,
+                column_name: column
+            }, searchPatientSuccess, GetAllPatientsFailure)
+        }
+
+        function searchPatientSuccess(res){
+            if(res.status == true){
+                $scope.patientLists = [];
+                $scope.patientLists = res.data;
+                $scope.patientCount = res.count;
+            }else{
+                $scope.patientLists = [];
             }
         }
 

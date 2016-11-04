@@ -821,10 +821,14 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
 
         var date = new Date();
         date.setDate(date.getDate()-1);
-        $('.select-dateAge').datepicker({autoclose: true, todayHighlight: true, format: 'yyyy-mm-dd', endDate: date});
+        $('.select-dateAge').datepicker({autoclose: true, todayHighlight: true, format: 'dd-mm-yyyy', endDate: date});
         $('.select-date').datepicker({autoclose: true, todayHighlight: true, format: 'yyyy-mm-dd'});
         $('select').not('.select_searchFields,.search-ajax,.chosen-select, #autoship_option').select2({minimumResultsForSearch: Infinity});
         $('.select_searchFields').select2();
+        $(".infoNationality").select2('data', {id: '97', text: 'Nigarian'});
+        $(".addressCountry").select2('data', {id: '97', text: 'Nigeria'});
+        $(".kinCountry").select2('data', {id: '97', text: 'Nigeria'});
+        $(".employerCountry").select2('data', {id: '97', text: 'Nigeria'});
         $(".maskPhone").inputmask("99-9999999");
         $(".maskMobile").inputmask("99999999999");
 //        $(".maskCost").inputmask({mask: "9999.99", numericInput: true,placeholder:" ", rightAlignNumerics: false,maxlength: false,greedy:false});
@@ -892,7 +896,7 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
                             //console.log(item);
                             myResults.push({
                                 'id': item.id,
-                                'text': item.patient_id + " "+ item.first_name + " " + item.last_name
+                                'text': 'P'+item.patient_id + " "+ item.first_name + " " + item.last_name
                             });
                         });
                     }

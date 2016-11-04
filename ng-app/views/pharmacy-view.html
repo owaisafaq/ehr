@@ -419,7 +419,10 @@
                                 <div class="col-lg-12">
                                     <label>Duration</label>
                                 </div>
-                                <div class="col-lg-12 margin-bottom-xxl">
+                                <div class="col-lg-6 margin-bottom-xxl">
+                                    <input type="text" ng-model="buildInstructions.durationText" placeholder="Duration">
+                                </div>
+                                <div class="col-lg-6 margin-bottom-xxl">
                                     <select class="form-control" ng-model="buildInstructions.duration" placeholder="Select">
                                         <option></option>
                                         <option ng-repeat="duration in medicineUnits.duration" value="{{duration.duration}}">{{duration.duration}}</option>

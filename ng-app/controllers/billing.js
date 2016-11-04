@@ -47,11 +47,13 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	//Get All Invoices
 //        function invoiceByBill(billId){}
 	
-	$scope.SelectedPatientWithInvoice = function(patient_id,invoice_id, tAmount){
+	$scope.SelectedPatientWithInvoice = function(patient_id,invoice_id, tAmount, status){
+
 		$scope.patient_id = patient_id;
 		$scope.invoice_id = invoice_id;
 		$scope.tAmount = tAmount;
 		$scope.deleteInvoiceButton = false;
+		$scope.invoiceDelete = status;
 
 		$rootScope.loader = "show";
 		GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: patient_id}, getPatientInfoSuccess, getPatientInfoFailure);
@@ -387,6 +389,11 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 
 
 	$scope.deletingInvoice = function (invoice_id){
+		console.log($scope.invoiceDelete);
+		if($scope.invoiceDelete == "Paid" || $scope.invoiceDelete == "paid"){
+			$('#freeze').modal('show');
+			return true;
+		}
 		$rootScope.loader = "show";
 		deleteInvoice.save({
 			token: $window.sessionStorage.token,
