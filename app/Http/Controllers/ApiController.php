@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Exception\HttpResponseException;
 use JWTAuth;
+use Auth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -1149,16 +1150,56 @@ class ApiController extends Controller
             ->where('status', 1)
             ->get();
 
-        $labs = DB::table('labs')
-            ->select(DB::raw('id,name'))
-            ->where('status', 1)
-           // ->where('name','!=','radiology')
-            ->get();
-
         $pharmacy = DB::table('pharmacy')
             ->select(DB::raw('id,name'))
             ->where('status', 1)
             ->get();
+
+
+        $method_name = $request->segment(2);
+
+        $context_method = DB::table('context_methods')
+            ->select(DB::raw('*'))
+            ->where('name', $method_name)
+            ->first();
+
+        $context_id = $context_method->context_id;
+        $right = $context_method->right;
+
+        $user_id = Auth::user()->id;
+
+        $role_id = DB::table('users')
+            ->select(DB::raw('role_id'))
+            ->where('id', $user_id)
+            ->first();
+
+        $role_id = $role_id->role_id;
+
+        $user_lab_types = DB::table('role_rights')
+            ->select(DB::raw('type'))
+            ->where('role_id', $role_id)
+            ->where('context_id', $context_id)
+            ->where($right, 1)
+            ->where('type', '!=', 0)
+            ->get();
+
+        if (empty($user_lab_types)) {
+            $lab_types = '';
+        } else {
+            $new_arr = array();
+            foreach ($user_lab_types as $types) {
+                $new_arr[] = $types->type;
+            }
+            $lab_types = implode(',', $new_arr);
+        }
+
+
+        $labs = DB::table('labs')
+            ->select(DB::raw('id,name'))
+            ->where('status', 1)
+            ->whereIn('id',explode(",",$lab_types))
+            ->get();
+
 
         $data = array(
             "religion" => $religion,
