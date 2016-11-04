@@ -388,6 +388,11 @@ class OtherController extends Controller
             ->where('status', 1)
             ->count();
 
+        $todays_visits = DB::table('visits')
+            ->where('status', 1)
+            ->whereMonth('created_at', '=', date('m'))
+            ->count();
+
         $appointment_count = DB::table('appointments')
             ->where('status', 1)
             ->count();
@@ -423,15 +428,18 @@ class OtherController extends Controller
         $patients_admitted_count = DB::table('patients_admitted')
             ->where('status', 1)
             ->where('is_discharged','!=',1)
+            ->whereMonth('admit_date', '=', date('m'))
             ->count();
 
         $patient_prescription_count = DB::table('patient_prescription')
-            ->where('status', 1)
+            ->where('status',1)
+            ->whereMonth('created_at', '=', date('m'))
             ->count();
 
         $data = array(
             "patients_count" => $patients_count,
             "encounter_count" => $visits_count,
+            "todays_encounter_count" => $todays_visits,
             "patient_registration_count" => $patients_count,
             "appointments_count" => $appointment_count,
             "pharmacy_count" => $pharmacy_count,

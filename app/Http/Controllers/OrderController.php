@@ -143,7 +143,8 @@ class OrderController extends Controller
                 ->where('lab_orders.status', 1)
                 ->where('patients.status', 1)
                // ->where('labs.name','!=','radiology')
-                ->whereIn('lab_orders.lab',[$lab_types])
+               // ->whereIn('lab_orders.lab',[$lab_types])
+                ->whereIn('lab_orders.lab',explode(",",$lab_types))
                 ->groupby('lab_orders.id')
                 ->skip($offset)->take($limit)
                 ->get();
@@ -158,7 +159,8 @@ class OrderController extends Controller
                 ->where('lab_orders.status', 1)
                 ->where('patients.status', 1)
                 //->where('labs.name','!=','radiology')
-                ->whereIn('lab_orders.lab',[$lab_types])
+                //->whereIn('lab_orders.lab',[$lab_types])
+                ->whereIn('lab_orders.lab',explode(",",$lab_types))
                 ->groupby('lab_orders.id')
                 ->get();
 
@@ -176,7 +178,8 @@ class OrderController extends Controller
                 ->where('lab_orders.status', 1)
                 ->where('patients.status', 1)
                // ->where('labs.name','!=','radiology')
-                ->whereIn('lab_orders.lab',[$lab_types])
+               // ->whereIn('lab_orders.lab',[$lab_types])
+                ->whereIn('lab_orders.lab',explode(",",$lab_types))
                 ->groupby('lab_orders.id')
                 ->get();
 
