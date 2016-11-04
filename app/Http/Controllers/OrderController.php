@@ -415,7 +415,7 @@ class OrderController extends Controller
                 ->where('patients.status', 1)
                 ->where('patients.id', $patient_id)
                 ->where('lab_orders.visit_id', $visit_id)
-                ->whereIn('lab_orders.lab',[$lab_types])
+                ->whereIn('lab_orders.lab',explode(",",$lab_types))
                 ->groupby('lab_orders.id')
                 ->skip($offset)->take($limit)
                 ->get();
@@ -431,7 +431,7 @@ class OrderController extends Controller
                 ->where('patients.status', 1)
                 ->where('patients.id', $patient_id)
                 ->where('lab_orders.visit_id', $visit_id)
-                ->whereIn('lab_orders.lab',[$lab_types])
+                ->whereIn('lab_orders.lab',explode(",",$lab_types))
                 ->groupby('lab_orders.id')
                 ->get();
             $count = count($count);
@@ -447,7 +447,7 @@ class OrderController extends Controller
                 ->where('patients.status', 1)
                 ->where('patients.id', $patient_id)
                 ->where('lab_orders.visit_id', $visit_id)
-                ->whereIn('lab_orders.lab',[$lab_types])
+                ->whereIn('lab_orders.lab',explode(",",$lab_types))
                 ->groupby('lab_orders.id')
                 ->get();
             $count = count($orders);
@@ -558,7 +558,7 @@ class OrderController extends Controller
             ->where('lab_orders.status', 1)
             ->whereIn('order_status', ['completed', 'cancelled'])
             ->groupby('lab_orders.id')
-            ->whereIn('lab_orders.lab',[$lab_types])
+            ->whereIn('lab_orders.lab',explode(",",$lab_types))
             ->where('patients.status', 1)
             ->get();
 
