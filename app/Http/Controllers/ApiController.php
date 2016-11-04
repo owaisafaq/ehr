@@ -3746,10 +3746,13 @@ class ApiController extends Controller
         $prescription_id = $request->input('precription_id');
         $prescriptions = DB::table('patient_prescription')
             ->leftJoin('patient_prescription_medicine', 'patient_prescription_medicine.prescription_id', '=', 'patient_prescription.id')
-            ->select(DB::raw('*,patient_prescription_medicine.id as prescribe_medication_id,medication_status,patient_prescription_medicine.medication as medication_id,patient_prescription_medicine.amount'))
+            ->leftJoin('inventory_products','inventory_products.id','=','patient_prescription_medicine.medication')
+            ->Join('stock','inventory_products.id','=','stock.product_id')
+            ->select(DB::raw('*,patient_prescription_medicine.id as prescribe_medication_id,medication_status,patient_prescription_medicine.medication as medication_id,stock.cost_per_item as amount'))
             ->where('patient_prescription.id', $prescription_id)
             ->where('patient_prescription.status', 1)
             ->where('patient_prescription_medicine.status', 1)
+            ->groupby('inventory_products.id')
             ->get();
 
         foreach ($prescriptions as $prescription) {
