@@ -223,7 +223,7 @@
 
                     <tr>
                         <td>
-                            <table style="border-collapse: separate;width: 100%;margin-top: 20px;background-color: #fbfbfb;padding: 20px;">
+                            <table style="border-collapse: separate;width: 100%;margin-top: 20px;background-color: #fbfbfb;padding: 20px">
 
                                 <tbody>
                                     <tr>
@@ -283,20 +283,18 @@
                             </table>
                         </td>
                     </tr>
-
-
                     <tr>
                         <td>
-                            <table style="width:100%;/*margin-top:30px;*/box-sizing:border-box;"  class="wrap header">
+                            <table style="width:100%;box-sizing:border-box"  class="wrap header">
 
-                                <?php foreach ($data as $d) { ?>
+                                <?php for ($i=0;$i<=3;$i++) { ?>
                                     <tr>
                                         <td style="padding-bottom:20px;">
-                                            <h4 style="font-size:12px;color:#1a1a1a;font-weight:bold;"><?php echo $d['field']->displayName; ?></h4>
+                                            <h4 style="font-size:12px;color:#1a1a1a;font-weight:bold;"><?php echo $data[$i]['field']->displayName; ?></h4>
                                         </td>
                                     </tr>
 
-                                    <?php if ($d['field']->displayName == 'Diagnosis') { ?>
+                                    <?php if ($data[$i]['field']->displayName == 'Diagnosis') { ?>
                                         <?php if (!empty($diagnosis)) { ?>
 
                                             <?php foreach ($diagnosis as $diagnose) { ?>
@@ -317,8 +315,53 @@
 
                                     <tr>
                                         <td style="padding-bottom:20px;">
-                                            <p style="<?php if ($d['field']->displayName == 'Diagnosis') { ?> display: none; <?php } ?>font-size:12px !important;color:#333333;line-height:18px !important;">
-                                                <?php echo $d['value']; ?>
+                                            <p style="<?php if ($data[$i]['field']->displayName == 'Diagnosis') { ?> display: none; <?php } ?>font-size:12px !important;color:#333333;line-height:18px !important;">
+                                                <?php echo $data[$i]['value']; ?>
+                                            </p>
+                                        </td>
+                                    </tr>
+
+
+                                <?php } ?>
+
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <table style="width:100%;box-sizing:border-box" class="wrap header">
+
+                                <?php for ($i=4; $i <= count($data); $i++) { ?>
+                                    <tr>
+                                        <td style="padding-bottom:20px;">
+                                            <h4 style="font-size:12px;color:#1a1a1a;font-weight:bold;"><?php echo $data[$i]['field']->displayName; ?></h4>
+                                        </td>
+                                    </tr>
+
+                                    <?php if ($data[$i]['field']->displayName == 'Diagnosis') { ?>
+                                        <?php if (!empty($diagnosis)) { ?>
+
+                                            <?php foreach ($diagnosis as $diagnose) { ?>
+
+                                                <tr>
+                                                    <td style="padding-bottom:20px;">
+                                                        <p style="font-size:12px !important;color:#333333;line-height:18px !important;">
+                                                            <?php echo $diagnose['diagnosis']; ?>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                            <?php }
+
+                                        } ?>
+
+                                    <?php } ?>
+
+
+                                    <tr>
+                                        <td style="padding-bottom:20px;">
+                                            <p style="<?php if ($data[$i]['field']->displayName == 'Diagnosis') { ?> display: none; <?php } ?>font-size:12px !important;color:#333333;line-height:18px !important;">
+                                                <?php echo $data[$i]['value']; ?>
                                             </p>
                                         </td>
                                     </tr>
