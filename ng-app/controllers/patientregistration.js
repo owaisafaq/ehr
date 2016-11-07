@@ -620,7 +620,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     employer_city: $scope.PI.employer.employer_city == undefined ? '' : $scope.PI.employer.employer_city
                 };
                 if ($scope.employer_id == undefined) {
-                    console.log(dataToBeAdded); return true;
+                    console.log(dataToBeAdded); //return true;
                     PatientRegistrationEmployer.save(dataToBeAdded, patientEmployerSuccess, patientEmployerFailed);
                     function patientEmployerSuccess(res) {
                         if (res.status == true) {
@@ -699,7 +699,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 var ageDate = new Date(ageDifMs); // miliseconds from epoch
                 //console.log(birthday, ageDate, todayYear - splitDate[0]);
                 $scope.PI.age = todayYear - splitDate[2];
-                $scope.PI.age = $scope.PI.age > 1 ? 'years' : "year"
+                $scope.PI.age = $scope.PI.age > 1 ? $scope.PI.age+' years' : $scope.PI.age+" year"
                 //$scope.PI.age = Math.abs(ageDate.getUTCFullYear() - 1970)+" year";
             }else{
                 //console.log("abc=0",abc);
@@ -1750,16 +1750,17 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 }
             }
         }
+    $scope.PP.checkoutpatient = 1;
     if ($("input[name='checkoutpatient1']:checked").val()) {
        alert($("input[name='checkoutpatient1']:checked").val());
         return false;
     }
-    $scope.PP.checkoutpatient = 1;
+    
         $scope.savePlanData = function () {
             $scope.dataToBeAdded.token = $window.sessionStorage.token
             $scope.dataToBeAdded.patient_id = $window.sessionStorage.patient_id
             $scope.dataToBeAdded.plan_id = $scope.PP.checkoutpatient
-            console.log($scope.PP.checkoutpatient, 'gfgh'); return true;
+            console.log($scope.PP.checkoutpatient, 'gfgh'); //return true;
             if ($scope.PP.checkoutpatient == 1)
             {
                 $scope.dataToBeAdded.retainership = '';

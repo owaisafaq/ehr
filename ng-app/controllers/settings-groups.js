@@ -115,7 +115,7 @@ AppEHR.controller('settingsGroups', ['$scope', '$rootScope', '$window', '$routeP
             if(id != '' && template_id != '') {
                 var rightsArray = $('#editRole .add-multiple option:selected').attr('availablerights');
                 rightsArray = rightsArray.split(',');
-console.log($('#editRole .right_chip[data-id="' + id + '"').length , $('#editRole .right_chip[data-lab-id="' + template_id + '"').length);
+                console.log($('#editRole .right_chip[data-id="' + id + '"').length , $('#editRole .right_chip[data-lab-id="' + template_id + '"').length);
 
                 if ($('#editRole .right_chip[data-id="' + id + '"][data-lab-id="' + template_id + '"]').length == 0) {
                     console.log('here');
@@ -158,16 +158,12 @@ console.log($('#editRole .right_chip[data-id="' + id + '"').length , $('#editRol
         }
         return html;
     }
-
-    $(document).on('click','#addRole .rights_icons > span',function () {
-        console.log("i am in add")
-        console.log($(this))
-        $(this).toggleClass('active');
-    });
-    $(document).on('click','#editRole .rights_icons > span',function () {
-        console.log("i am in edit")
+    
+    $(document).off('click','#addRole .rights_icons > span, #editRole .rights_icons > span').on('click','#addRole .rights_icons > span, #editRole .rights_icons > span',function () {
+        console.log("i am in add");
         //console.log($(this))
         $(this).toggleClass('active');
+        return true;
     });
 
     GetAllContexts.get({

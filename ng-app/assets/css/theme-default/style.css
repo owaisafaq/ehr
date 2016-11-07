@@ -1521,6 +1521,7 @@ Discharge Summary
     box-sizing: border-box;
     height: 150px;
     overflow: auto;
+    overflow-x: hidden;
 }
 .select-bed-dropdown .radio-styled{
     margin-bottom: 10px !important;

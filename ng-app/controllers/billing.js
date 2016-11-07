@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData','GetBillInvoices','SendEmail', 'CheckoutPatient', 'deleteInvoice', 'AddToBill', 'GetAllBillingCodes', 'GetAllproducts', 'SendEmail', 'GetBillingWithDates', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData,GetBillInvoices,SendEmail, CheckoutPatient, deleteInvoice, AddToBill, GetAllBillingCodes, GetAllproducts, SendEmail, GetBillingWithDates){
+AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData','GetBillInvoices','SendEmail', 'CheckoutPatient', 'deleteInvoice', 'AddToBill', 'GetAllBillingCodes', 'GetAllproducts', 'SendEmail', 'GetBillingWithDates', 'DropDownData', 'GetAllWardsDropDown', 'GetBedsByWard', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData,GetBillInvoices,SendEmail, CheckoutPatient, deleteInvoice, AddToBill, GetAllBillingCodes, GetAllproducts, SendEmail, GetBillingWithDates, DropDownData, GetAllWardsDropDown, GetBedsByWard){
 	$rootScope.pageTitle = "EHR - Billing";
 	$scope.BillListings={};
 	$scope.selectedPatient = {};
@@ -422,24 +422,28 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	}
 
 	/*CHECKOUT*/
-
-        $scope.checkout = function (CO) {
+		$scope.CO = {};
+        $scope.checkout = function (dataToBeAdded) {
         	$rootScope.loader = "show";
-            var CheckoutDetails = {
-                token: $window.sessionStorage.token,
-                visit_id: $scope.EID,
-                patient_id: $scope.patient_id,
-                reason: $('input:radio[name="checkoutpatient"]:checked').val(),
-                notes: $('.checkout_patient_tab_con > div.active textarea').val() == undefined ? '' : $('.checkout_patient_tab_con > div.active textarea').val(),
-                pick_date: CO.date,
-                pick_time: CO.time,
-                admit_date: CO.date,
-                start_time: CO.time,
-                department_id: CO.date,
-                ward_id: CO.date
-            }
-            CheckoutPatient.save(CheckoutDetails, checkoutSuccess, checkoutSuccessFailure);
+        	console.log(dataToBeAdded); //return false;
+            CheckoutPatient.save({
+	    		token: $window.sessionStorage.token, 
+	    		patient_id: $scope.patient_id,
+	    		visit_id: $scope.EID,
+	    		reason: $('input:radio[name="checkoutpatient"]:checked').val(),
+	            notes: $('.checkout_patient_tab_con > div.active textarea').val() == undefined ? '' : $('.checkout_patient_tab_con > div.active textarea').val(),
+	    		pick_date: dataToBeAdded.date == undefined ? '' : dataToBeAdded.date,
+	    		pick_time: dataToBeAdded.time == undefined ? '' : dataToBeAdded.time,
+	    		expected_discharge_date: dataToBeAdded.discharge == undefined ? '' : dataToBeAdded.discharge,
+	    		admit_date: $scope.admittedDate == undefined ? '' : $scope.admittedDate,
+	    		start_time: dataToBeAdded.time == undefined ? '' : dataToBeAdded.time,
+	    		department_id: dataToBeAdded.CPN == undefined ? '' : dataToBeAdded.CPN,
+	    		ward_id: dataToBeAdded.ward == undefined ? '' : dataToBeAdded.ward,
+	    		bed_id: $scope.CO.bedNumber == undefined ? '' : $scope.CO.bedNumber
+	    	}, checkoutSuccess, checkoutSuccessFailure);
         }
+
+	    	
         function checkoutSuccess(res) {
         	if(res.status == true){
 	            console.log(res)
@@ -448,10 +452,11 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	            $scope.errorMessage = res.message;
 	            $scope.errorSymbol = "fa fa-check";// 
 	            $scope.message = true;
-	            $('#simpleModal1').modal('hide');
+	            //$('#checkout').modal('hide');
 	            $('.checkout_patient_tab_con > div.active textarea').val('');
 	            $('input:radio[name="checkoutpatient"]').prop("checked", false);
 	            $('input:radio[name="checkoutpatient"]').eq(0).trigger("click");
+	            setTimeout(function() {$('#checkout').modal('hide');$scope.message = false;}, 1000);
             }else if(res.error_code == 500){
                 console.log(res);
                 $rootScope.RolesAccess(res.message);
@@ -531,5 +536,75 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
                 $rootScope.RolesAccess(res.message);
             }
         }
+
+        DropDownData.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id}, dropDownSuccess, dropDownFailed);
+
+		function dropDownSuccess(res){
+			if(res.status == true){
+				$scope.encountersDropdownData = res.data;
+				console.log(res);
+			}
+		}
+
+		function dropDownFailed(error){
+			$('#internetError').modal('show');
+			console.log(error);
+		}
+
+		GetAllWardsDropDown.get({
+			token: $window.sessionStorage.token
+		}, wardsDropDownSuccess, wardsDropDownFailure);
+
+		function wardsDropDownSuccess(res){
+			$rootScope.loader = "hide";
+			if(res.status == true){
+				$scope.wardDropdown = res.data;
+			}
+		}
+		function wardsDropDownFailure(error){
+			console.log(error);
+			$('#internetError').modal('show');
+		}
+		$scope.wardselect = true;
+		$scope.wardSelected = function(wid){
+			$scope.wardselect = false;
+			console.log(wid);
+			GetBedsByWard.get({
+				token: $window.sessionStorage.token,
+				ward_id: wid
+			}, getBedsWardSuccess, getBedsWardFailure);
+			function getBedsWardSuccess(res){
+				console.log(res);
+				if(res.status == true){
+					$scope.noOFBeds = res.data;
+				}
+			}
+			function getBedsWardFailure(error){
+				console.log(error);
+				$('#internetError').modal('show');
+			}
+		}
+
+		$scope.bedSelected = function(bedID){
+			console.log(bedID);
+			$scope.CO.bedNumber = bedID;
+		}
+		var d = new Date();
+		$scope.admittedDateYear = d.getFullYear();
+		$scope.admittedDateMonth = d.getMonth();
+		$scope.admittedDateDay = d.getDay();
+		$scope.admittedDate = $scope.admittedDateYear + "-" + $scope.admittedDateMonth + "-" + $scope.admittedDateDay;
+
+		$scope.showBed = false;
+	    $scope.showbedFlag = false;
+	    $scope.showbeds = function(){
+	    	if($scope.showbedFlag == false){
+	    		$scope.showBed = true;
+	    		$scope.showbedFlag = true;
+	    	}else{
+	    		$scope.showBed = false;
+	    		$scope.showbedFlag = false;
+	    	}
+	    }
         
 }]);

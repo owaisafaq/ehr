@@ -46,7 +46,7 @@ AppEHR.controller('pharmacyPrescription', ['$scope', '$rootScope', '$window', 'P
 	}
 
 	$scope.goToPrescription = function(){
-		$window.location.href = "#/pharmacy-view/" + $scope.prescriptionID /*+ "/" + $scope.encounterID*/ + "/" + $scope.patientID;
+		$window.location.href = "#/pharmacy-view/" + $scope.pharmacyID + "/" + $scope.prescriptionID /*+ "/" + $scope.encounterID*/ + "/" + $scope.patientID;
 	}
 
     $scope.search = function(item){ // search data by patient name or partient id
