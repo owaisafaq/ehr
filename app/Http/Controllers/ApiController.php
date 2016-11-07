@@ -1585,6 +1585,9 @@ class ApiController extends Controller
             ->where('status', 1)
             ->first();
 
+        $patient_info->sex = (string) $patient_info->sex;
+        $patient_info->marital_status = (string) $patient_info->marital_status;
+
         $patient_address = DB::table('patient_address')
             ->select(DB::raw('*'))
             ->where('patient_id', $patient_id)
@@ -3743,27 +3746,29 @@ class ApiController extends Controller
 
     public function get_prescription(Request $request)
     {
+        $pharmacy_id = $request->input('pharmacy_id');
+
         $prescription_id = $request->input('precription_id');
         $prescriptions = DB::table('patient_prescription')
             ->leftJoin('patient_prescription_medicine', 'patient_prescription_medicine.prescription_id', '=', 'patient_prescription.id')
-            ->leftJoin('inventory_products','inventory_products.id','=','patient_prescription_medicine.medication')
-            ->Join('stock','inventory_products.id','=','stock.product_id')
-            ->select(DB::raw('*,patient_prescription_medicine.id as prescribe_medication_id,medication_status,patient_prescription_medicine.medication as medication_id,stock.cost_per_item as amount'))
+            ->select(DB::raw('*,patient_prescription_medicine.id as prescribe_medication_id,medication_status,patient_prescription_medicine.medication as medication_id'))
             ->where('patient_prescription.id', $prescription_id)
             ->where('patient_prescription.status', 1)
-            ->where('patient_prescription_medicine.status', 1)
-            ->groupby('inventory_products.id')
+            ->where('patient_prescription_medicine.status',1)
             ->get();
 
         foreach ($prescriptions as $prescription) {
 
             $medication  = DB::table('inventory_products')
-                ->select(DB::raw('id,name'))
-                ->where('id', $prescription->medication)
-                ->where('status', 1)
+                ->leftJoin('stock','inventory_products.id','=','stock.product_id')
+                ->select(DB::raw('inventory_products.id,inventory_products.name as medication_name,stock.cost_per_item as amount'))
+                ->where('inventory_products.id',$prescription->medication_id)
+                ->where('inventory_products.status',1)
+                ->where('stock.pharmacy_id',$pharmacy_id)
                 ->first();
 
-            $prescription->medication = $medication->name;
+            $prescription->medication = $medication->medication_name;
+            $prescription->amount = $medication->amount;
 
             $pharmacy  = DB::table('pharmacy')
                       ->select(DB::raw('id,name'))
@@ -3775,7 +3780,6 @@ class ApiController extends Controller
             $prescription->pharmacy_id = $pharmacy->id;
 
         }
-
 
         $prescription_notes = DB::table('prescription_notes')
             ->select(DB::raw('note_for_pharmacy'))
@@ -3793,11 +3797,7 @@ class ApiController extends Controller
             ->where('patient_prescription.id', $prescription_id)
             ->first();
 
-
-
         return response()->json(['status' => true, 'data' => $prescriptions, 'notes' => $notes, 'prescription_data' => $prescription_data,'pharmacy_name'=>$prescriptions[0]->pharmacy,'pharmacy_id'=>$prescriptions[0]->pharmacy_id]);
-
-
     }
 
     public function dispense_medication(Request $request)
@@ -3967,17 +3967,24 @@ class ApiController extends Controller
 
 
     public function get_prescription_medicines(Request $request){
+        $pharmacy_id = $request->input('pharmacy_id');
         $data = DB::table('inventory_products')
-            ->select(DB::raw('id,name'))
-            ->where('group','Drugs')
+            ->leftJoin('stock', 'inventory_products.id', '=', 'stock.product_id')
+            ->select(DB::raw('inventory_products.id,inventory_products.name'))
+            ->where('inventory_products.group','Drugs')
+            ->where('inventory_products.status', 1)
+            ->where('stock.pharmacy_id',$pharmacy_id)
             ->get();
         return response()->json(['status' => true, 'data' => $data]);
     }
     public function get_prescription_supplements(Request $request){
+        $pharmacy_id = $request->input('pharmacy_id');
         $data = DB::table('inventory_products')
-            ->select(DB::raw('id,name'))
-            ->where('status', 1)
-            ->where('group','Supplements')
+            ->leftJoin('stock', 'inventory_products.id', '=', 'stock.product_id')
+            ->select(DB::raw('inventory_products.id,inventory_products.name'))
+            ->where('inventory_products.status', 1)
+            ->where('inventory_products.group','Supplements')
+            ->where('stock.pharmacy_id',$pharmacy_id)
             ->get();
         return response()->json(['status' => true, 'data' => $data]);
     }
