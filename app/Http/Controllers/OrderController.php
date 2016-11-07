@@ -679,6 +679,22 @@ class OrderController extends Controller
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
+        $visits = DB::table('visits')
+            ->select(DB::raw('*'))
+            ->where('patient_id', $patient_id)
+            ->where('visit_status','queue')
+            ->where('status', 1)
+            ->first();
+
+
+        if (empty($visits)) {
+            return response()->json(['status' => false, 'message' =>'Missing Active Encounter','error_code'=>200]);
+        }
+
+        if(!isset($visit_id) || $visit_id==0){
+            $visit_id = $visits->id;
+        }
+
         DB::table('visits')
             ->where('id', $visit_id)
             ->update(['visit_status' => 'physician', 'updated_at' => date("Y-m-d  H:i:s")]);
