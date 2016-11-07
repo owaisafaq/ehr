@@ -682,7 +682,7 @@ class OrderController extends Controller
         $visits = DB::table('visits')
             ->select(DB::raw('*'))
             ->where('patient_id', $patient_id)
-            ->where('visit_status','queue')
+            ->where('visit_status','!=','checkout')
             ->where('status', 1)
             ->first();
 
