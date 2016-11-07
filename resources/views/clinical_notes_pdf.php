@@ -326,6 +326,16 @@
 
                                 <?php } ?>
 
+                            </table>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        </td>
+                            <table style="width:100%;box-sizing:border-box;" class="wrap header">
+
+
                                 <tr>
                                     <td style="padding-bottom:10px;">
                                         <span style="font-size:12px;color:#1a1a1a;font-weight:bold;">

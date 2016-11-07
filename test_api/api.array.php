@@ -1,9 +1,9 @@
 <?php
 
 require 'api.class.php';
-//define('HOST', 'http://131.107.100.10/ehr/public/api/');
+define('HOST', 'http://131.107.100.10/ehr/public/api/');
 //define('HOST', 'http://localhost/ehr/public/api/');
-define('HOST', 'http://demoz.online/ehr/public/api/');
+//define('HOST', 'http://demoz.online/ehr/public/api/');
 //define('HOST', 'http://demoz.online/dev/ehr/public/api/');
 define('APP', '');
 define('ROUTE', '');
@@ -2176,6 +2176,7 @@ $api->name = "Get Prescription";
 $api->url = HOST . 'get_prescription';
 $api->method = "GET";
 $api->params->precription_id = "1";
+$api->params->pharmacy_id = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
@@ -3019,6 +3020,7 @@ $api = new api();
 $api->name = "Get Prescription Medicines";
 $api->url = HOST . 'get_prescription_medicines';
 $api->method = "GET";
+$api->params->pharmacy_id = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;
@@ -3029,6 +3031,7 @@ $api = new api();
 $api->name = "Get Prescription Supplements";
 $api->url = HOST . 'get_prescription_supplements';
 $api->method = "GET";
+$api->params->pharmacy_id = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;

@@ -286,9 +286,20 @@ class InventoryAPIController extends Controller
         $cost_per_item = $request->input('cost_per_item');
         $pack = $request->input('pack');
 
+
+        $count = DB::table('stock')
+            ->select(DB::raw('*'))
+            ->where('product_id', $product_id)
+            ->where('pharmacy_id', $pharmacy_id)
+            ->count();
+
+        if ($count >= 1) {
+            return response()->json(['status' => false, 'message' => "Product can not be added again in the same stock of the pharmacy!"]);
+        }
+
+
         $id = DB::table('stock')->insertGetId(
-            [
-                'product_id'=>$product_id,
+            ['product_id'=>$product_id,
                 'pharmacy_id'=>$pharmacy_id,
                 'manufacturer_id'=>$manufacturer_id,
                 'dept_id'=>$dept_id,

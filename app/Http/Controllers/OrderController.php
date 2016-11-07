@@ -143,7 +143,8 @@ class OrderController extends Controller
                 ->where('lab_orders.status', 1)
                 ->where('patients.status', 1)
                // ->where('labs.name','!=','radiology')
-                ->whereIn('lab_orders.lab',[$lab_types])
+               // ->whereIn('lab_orders.lab',[$lab_types])
+                ->whereIn('lab_orders.lab',explode(",",$lab_types))
                 ->groupby('lab_orders.id')
                 ->skip($offset)->take($limit)
                 ->get();
@@ -158,7 +159,8 @@ class OrderController extends Controller
                 ->where('lab_orders.status', 1)
                 ->where('patients.status', 1)
                 //->where('labs.name','!=','radiology')
-                ->whereIn('lab_orders.lab',[$lab_types])
+                //->whereIn('lab_orders.lab',[$lab_types])
+                ->whereIn('lab_orders.lab',explode(",",$lab_types))
                 ->groupby('lab_orders.id')
                 ->get();
 
@@ -176,7 +178,8 @@ class OrderController extends Controller
                 ->where('lab_orders.status', 1)
                 ->where('patients.status', 1)
                // ->where('labs.name','!=','radiology')
-                ->whereIn('lab_orders.lab',[$lab_types])
+               // ->whereIn('lab_orders.lab',[$lab_types])
+                ->whereIn('lab_orders.lab',explode(",",$lab_types))
                 ->groupby('lab_orders.id')
                 ->get();
 
@@ -412,7 +415,7 @@ class OrderController extends Controller
                 ->where('patients.status', 1)
                 ->where('patients.id', $patient_id)
                 ->where('lab_orders.visit_id', $visit_id)
-                ->whereIn('lab_orders.lab',[$lab_types])
+                ->whereIn('lab_orders.lab',explode(",",$lab_types))
                 ->groupby('lab_orders.id')
                 ->skip($offset)->take($limit)
                 ->get();
@@ -428,7 +431,7 @@ class OrderController extends Controller
                 ->where('patients.status', 1)
                 ->where('patients.id', $patient_id)
                 ->where('lab_orders.visit_id', $visit_id)
-                ->whereIn('lab_orders.lab',[$lab_types])
+                ->whereIn('lab_orders.lab',explode(",",$lab_types))
                 ->groupby('lab_orders.id')
                 ->get();
             $count = count($count);
@@ -444,7 +447,7 @@ class OrderController extends Controller
                 ->where('patients.status', 1)
                 ->where('patients.id', $patient_id)
                 ->where('lab_orders.visit_id', $visit_id)
-                ->whereIn('lab_orders.lab',[$lab_types])
+                ->whereIn('lab_orders.lab',explode(",",$lab_types))
                 ->groupby('lab_orders.id')
                 ->get();
             $count = count($orders);
@@ -555,7 +558,7 @@ class OrderController extends Controller
             ->where('lab_orders.status', 1)
             ->whereIn('order_status', ['completed', 'cancelled'])
             ->groupby('lab_orders.id')
-            ->whereIn('lab_orders.lab',[$lab_types])
+            ->whereIn('lab_orders.lab',explode(",",$lab_types))
             ->where('patients.status', 1)
             ->get();
 
@@ -675,6 +678,22 @@ class OrderController extends Controller
         $notes = $request->input('notes');
 
         $currentdatetime = date("Y-m-d  H:i:s");
+
+        $visits = DB::table('visits')
+            ->select(DB::raw('*'))
+            ->where('patient_id', $patient_id)
+            ->where('visit_status','queue')
+            ->where('status', 1)
+            ->first();
+
+
+        if (empty($visits)) {
+            return response()->json(['status' => false, 'message' =>'Missing Active Encounter','error_code'=>200]);
+        }
+
+        if(!isset($visit_id) || $visit_id==0){
+            $visit_id = $visits->id;
+        }
 
         DB::table('visits')
             ->where('id', $visit_id)
