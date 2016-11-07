@@ -62,10 +62,10 @@
                 </div>
 
                 <button type="button" data-toggle="modal" data-target="#addpatient" class="btn ink-reaction button-style-1 button-style-1 pull-right" ng-disabled="idCardDisabledBtn">create patient id card</button><!-- href="{{importFileURL}}" -->
-                <button href="{{importFileURL}} download type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10" ng-click="exportPatient();" ng-hide="ROLES.Patient_Reports_ImportExport == undefined">Export</button>
+                <a href="{{importFileURL}}" download type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10" ng-click="exportPatient();" ng-show="ROLES.Patient_Reports_ImportExport.update_right == 1">Export</a>
                <!--  <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10" ng-click="exportPatient();">export</button> -->
                <!--  <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10" ng-click="importPatient();" href="{{importFileURL}}">import</button> -->
-                <button class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10" ngf-select="uploadFiles($files, $invalidFiles)" accept=".xls,.xlsx"  type="file" ng-hide="ROLES.Patient_Reports_ImportExport == undefined">Import</button>
+                <button class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-10" ngf-select="uploadFiles($files, $invalidFiles)" accept=".csv"  type="file" ng-show="ROLES.Patient_Reports_ImportExport.view_right == 1">Import</button>
             </div><!-- ngf-max-size="1MB" -->
             <div class="card-body col-lg-12">
                 <div class="icons_con" ng-init="hideOptions = true;">
@@ -118,7 +118,7 @@
                         
                         </tfoot>
                     </table>
-<!--                    <div class="pagination pagination-centered pull-right" ng-show="patientCount">
+                    <!--                    <div class="pagination pagination-centered pull-right" ng-show="patientCount">
                         <ul class="pagination-controle pagination">
                             <li class="prev-page">
                                 <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
@@ -200,7 +200,8 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade modal-size_1" id="simpleModal1" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+
+<div class="modal fade" id="simpleModal1" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-mid">
         <form class="custom-form" ng-submit="checkout(CO)">
             <div class="modal-content">
@@ -269,50 +270,73 @@
                             </div>
                         </div>
                         <div id="admitPatient" class="row">
+                            <div class="margin-bottom-xxl row">
                             <div class="col-lg-12">
                                 <span class="txt-style-4">Presenting Complaint: Captured from Clinical Note</span>
                             </div>
+                                </div>
+                            <div class="margin-bottom-xxl row">
                             <div class="col-lg-3">
                                 <label>to specialty</label>
                             </div>
                             <div class="col-lg-3 select-con">
                                 <select class="form-control" ng-model="CO.CPN" placeholder="Clinic Progress Notes">
                                     <option value=""></option>
-                                    <option>2</option>
-                                    <option>3</option>
+                                <option value="{{w.id}}" ng-repeat="w in encountersDropdownData.departments">{{w.name}}</option>
                                 </select>
                             </div>
                             <div class="col-lg-3">
                                 <label>admit to ward</label>
-                            </div>
+                            </div><!-- ng-class="{true: 'error'}[submitted && moveForm.ward.$invalid]"  -->
                             <div class="col-lg-3 select-con select-con_small">
-                                <select class="form-control" ng-model="CO.ward" placeholder="Select Ward">
-                                    <option value=""></option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                </select>
-                                <a class="ward-button"></a>
+                                <select class="form-control" name="ward" ng-change="wardSelected(CO.ward);" ng-model="CO.ward" placeholder="Select Ward">
+                                <option value=""></option>
+                                <option value="{{w.id}}" ng-repeat="w in wardDropdown">{{w.name}}</option>
+                            </select>
+                                <div class="ward-button-con" ng-hide="wardselect">
+                                    <button class="ward-button" ng-click="showbeds();" type="button"></button>
+                                    <div class="select-bed-dropdown" ng-hide="showBed">
+                                        <div class="radio radio-styled" ng-repeat="beds in noOFBeds">
+                                            <div class="radio radio-styled">
+                                                <label>
+                                                    <input type="radio" name="checked" ng-model="action" ng-click="bedSelected(beds.id);">
+                                                    <span>{{beds.id}}</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            </div>
+                            <div class="margin-bottom-xxl row">
                             <div class="col-lg-3">
                                 <label>Admitted DATE</label>
                             </div>
                             <div class="col-lg-3">
-                                <label class="txt-style-4">April 05, 2016</label>
+                                <label class="txt-style-4">{{admittedDate}}</label>
                             </div>
                             <div class="col-lg-3">
                                 <label>Estimated Discharge</label>
                             </div>
                             <div class="col-lg-3">
-                                <div class="input-group bootstrap-timepicker timepicker col-lg-12">
+                                <!-- <div class="input-group bootstrap-timepicker timepicker col-lg-12">
                                     <input type="text" class="form-control input-small timepicker" ng-model="CO.discharge">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                </div> -->
+                                <div class="input-group date select-date col-lg-12">
+                                    <div class="input-group-content">
+                                        <input type="text" class="form-control" placeholder="Select Date" ng-model="CO.discharge">
+                                    </div>
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
                             </div>
-
+                                </div>
+                            <div class="margin-bottom-xxl row">
                             <div class="col-lg-12">
                                 <label class="margin-bottom-xl">Note</label>
                                 <textarea class="margin-bottom-lg" placeholder="Write Here..." ng-model="CO.note"></textarea>
                             </div>
+                                </div>
                         </div>
                         <div id="dead" class="row">
                             <div class="col-lg-12">

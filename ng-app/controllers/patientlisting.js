@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPatients', '$window', '$routeParams', 'GetPatientInfo', 'CheckoutPatient', 'DeletePatient', 'Upload', '$timeout', 'ImportPatient', 'SearchPatientByColumns', function ($scope, $rootScope, GetAllPatients, $window, $routeParams, GetPatientInfo, CheckoutPatient, DeletePatient, Upload, $timeout, ImportPatient, SearchPatientByColumns) {
+AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPatients', '$window', '$routeParams', 'GetPatientInfo', 'CheckoutPatient', 'DeletePatient', 'Upload', '$timeout', 'ImportPatient', 'SearchPatientByColumns', 'DropDownData', 'GetAllWardsDropDown', 'GetBedsByWard', function ($scope, $rootScope, GetAllPatients, $window, $routeParams, GetPatientInfo, CheckoutPatient, DeletePatient, Upload, $timeout, ImportPatient, SearchPatientByColumns, DropDownData, GetAllWardsDropDown, GetBedsByWard) {
         $scope.action = '';
         $rootScope.pageTitle = "EHR - Patient Listing";
         $scope.displayInfo = {};
@@ -244,31 +244,37 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
 
         $scope.CO = {};
         $scope.checkout = function (dataToBeAdded){
-            $scope.message = false;
-            $rootScope.loader = "show";
+            console.log(dataToBeAdded);
             CheckoutPatient.save({
                 token: $window.sessionStorage.token, 
-                patient_id: $scope.patientID,
+                patient_id: $scope.displayInfo.patient_id,
                 visit_id: $scope.displayInfo.encounter_id,
                 reason: $('input:radio[name="checkoutpatient"]:checked').val(),
                 notes: $('.checkout_patient_tab_con > div.active textarea').val() == undefined ? '' : $('.checkout_patient_tab_con > div.active textarea').val(),
-                pick_date: dataToBeAdded.date,
-                pick_time: dataToBeAdded.time,
-                admit_date: dataToBeAdded.date,
-                start_time: dataToBeAdded.time,
-                //department_id: dataToBeAdded.ward,
-                ward_id: dataToBeAdded.ward,
+                pick_date: dataToBeAdded.date == undefined ? '' : dataToBeAdded.date,
+                expected_discharge_date: dataToBeAdded.discharge == undefined ? '' : dataToBeAdded.discharge,
+                pick_time: dataToBeAdded.time == undefined ? '' : dataToBeAdded.time,
+                admit_date: $scope.admittedDate == undefined ? '' : $scope.admittedDate,
+                start_time: dataToBeAdded.time == undefined ? '' : dataToBeAdded.time,
+                department_id: dataToBeAdded.CPN == undefined ? '' : dataToBeAdded.CPN,
+                ward_id: dataToBeAdded.ward == undefined ? '' : dataToBeAdded.ward,
+                bed_id: $scope.CO.bedNumber == undefined ? '' : $scope.CO.bedNumber
             }, checkoutSuccess, checkoutFailure);
         }
 
         function checkoutSuccess(res){
+            $rootScope.loader = "hide";
             if(res.status ==  true){
-                $rootScope.loader = "hide";
+                
                 $scope.messageType = "alert-success";
                 $scope.errorMessage = res.message;
                 $scope.errorSymbol = "fa fa-check";// 
                 $scope.message = true;
                 setTimeout(function() {$('#simpleModal1').modal('hide');}, 1000);
+                GetAllPatients.get({
+                    token: $window.sessionStorage.token,
+                    offset: $scope.offset, limit: $scope.itemsPerPage
+                }, GetAllPatientsSuccess, GetAllPatientsFailure);
             }else if(res.error_code == 500){
                 $rootScope.RolesAccess(res.message);
             }
@@ -326,16 +332,19 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
             $scope.disabledSearchBar = false;
         }
 
-        //$scope.exportPatient = function(){
+        //$scope.exportPatient = function(){ view import
+        if($rootScope.ROLES.Patient_Reports_ImportExport.update_right == 1){
             ImportPatient.save({token: $window.sessionStorage.token}, importSuccess, GetAllPatientsFailure);
             function importSuccess(res){
-                console.log(res, 'export');
+                console.log(res, $rootScope.ROLES.Patient_Reports_ImportExport.update_right );
                 if(res.status == true){
                     $scope.importFileURL = res.data;
                 }else if(res.error_code == 500){
+                    $scope.importFileURL = "javascript:;";
                     $rootScope.RolesAccess(res.message);
                 }
             }
+        }
         //}
 
         $scope.uploadFiles = function (files, errFiles) {
@@ -448,4 +457,74 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
             }
         }
 
+        DropDownData.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id}, dropDownSuccess, dropDownFailed);
+
+        function dropDownSuccess(res){
+            if(res.status == true){
+                $scope.encountersDropdownData = res.data;
+                console.log(res);
+            }
+        }
+        function dropDownFailed(error){
+            $('#internetError').modal('show');
+            console.log(error);
+        }
+
+    GetAllWardsDropDown.get({
+        token: $window.sessionStorage.token
+    }, wardsDropDownSuccess, wardsDropDownFailure);
+
+    function wardsDropDownSuccess(res){
+        $rootScope.loader = "hide";
+        if(res.status == true){
+            $scope.wardDropdown = res.data;
+        }
+    }
+    function wardsDropDownFailure(error){
+        console.log(error);
+        $('#internetError').modal('show');
+    }
+    $scope.wardselect = true;
+    $scope.wardSelected = function(wid){
+        $scope.wardselect = false;
+        console.log(wid);
+        GetBedsByWard.get({
+            token: $window.sessionStorage.token,
+            ward_id: wid
+        }, getBedsWardSuccess, getBedsWardFailure);
+        function getBedsWardSuccess(res){
+            console.log(res);
+            if(res.status == true){
+                $scope.noOFBeds = res.data;
+            }
+        }
+        function getBedsWardFailure(error){
+            console.log(error);
+            $('#internetError').modal('show');
+        }
+    }
+
+    $scope.bedSelected = function(bedID){
+        console.log(bedID);
+        $scope.CO.bedNumber = bedID;
+    }
+    $scope.showBed = false;
+    $scope.showbedFlag = false;
+    $scope.showbeds = function(){
+        if($scope.showbedFlag == false){
+            $scope.showBed = true;
+            $scope.showbedFlag = true;
+        }else{
+            $scope.showBed = false;
+            $scope.showbedFlag = false;
+        }
+    }
+
+    var d = new Date();
+    $scope.admittedDateYear = d.getFullYear();
+    $scope.admittedDateMonth = d.getMonth();
+    $scope.admittedDateDay = d.getDay();
+    $scope.admittedDate = $scope.admittedDateYear + "-" + $scope.admittedDateMonth + "-" + $scope.admittedDateDay
+    console.log($scope.admittedDate);
+    $scope.CO = {};
 }]);

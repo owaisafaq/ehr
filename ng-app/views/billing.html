@@ -30,7 +30,7 @@
                     <!-- <a href="javascript:;" class="button-style-2">
                         <img src="assets/img/assign_blue.png" />
                     </a> -->
-                    <a href="javascript:void(0);" data-target="#simpleModal1" data-toggle="modal" class="button-style-2">
+                    <a href="javascript:void(0);" data-target="#checkout" data-toggle="modal" class="button-style-2">
                         <img src="assets/img/discharge_icn_blue.png" />
                     </a>
                 </div>
@@ -1301,8 +1301,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-<div class="modal fade modal-size_2" id="simpleModal1" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+<div class="modal fade" id="checkout" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-mid">
         <form class="custom-form" ng-submit="checkout(CO)">
             <div class="modal-content">
@@ -1370,58 +1369,74 @@
                                 <textarea class="margin-bottom-lg" placeholder="Write Here..." ng-model="CO.note"></textarea>
                             </div>
                         </div>
-                        <div id="admitPatient" class="">
-                            <div class="row margin-bottom-xxl">
-                                <div class="col-lg-12">
-                                    <span class="txt-style-4">Presenting Complaint: Captured from Clinical Note</span>
-                                </div>
+                        <div id="admitPatient" class="row">
+                            <div class="margin-bottom-xxl row">
+                            <div class="col-lg-12">
+                                <span class="txt-style-4">Presenting Complaint: Captured from Clinical Note</span>
                             </div>
-                            <div class="row margin-bottom-xxl">
-                                <div class="col-lg-3">
-                                    <label>to specialty</label>
                                 </div>
-                                <div class="col-lg-3 select-con">
-                                    <select class="form-control" ng-model="CO.CPN" placeholder="Clinic Progress Notes">
-                                        <option value=""></option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                    </select>
-                                </div>
-                                <div class="col-lg-3">
-                                    <label>admit to ward</label>
-                                </div>
-                                <div class="col-lg-3 select-con select-con_small">
-                                    <select class="form-control" ng-model="CO.ward" placeholder="Select Ward">
-                                        <option value=""></option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                    </select>
-                                    <a class="ward-button"></a>
-                                </div>
+                            <div class="margin-bottom-xxl row">
+                            <div class="col-lg-3">
+                                <label>to specialty</label>
                             </div>
-                            <div class="row margin-bottom-xxl">
-                                <div class="col-lg-3">
-                                    <label>Admitted DATE</label>
-                                </div>
-                                <div class="col-lg-3">
-                                    <label class="txt-style-4">April 05, 2016</label>
-                                </div>
-                                <div class="col-lg-3">
-                                    <label>Estimated Discharge</label>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="input-group bootstrap-timepicker timepicker col-lg-12">
-                                        <input type="text" class="form-control input-small timepicker" ng-model="CO.discharge">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                            <div class="col-lg-3 select-con">
+                                <select class="form-control" ng-model="CO.CPN" placeholder="Clinic Progress Notes">
+                                    <option value=""></option>
+                                <option value="{{w.id}}" ng-repeat="w in encountersDropdownData.departments">{{w.name}}</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3">
+                                <label>admit to ward</label>
+                            </div><!-- ng-class="{true: 'error'}[submitted && moveForm.ward.$invalid]"  -->
+                            <div class="col-lg-3 select-con select-con_small">
+                                <select class="form-control" name="ward" ng-change="wardSelected(CO.ward);" ng-model="CO.ward" placeholder="Select Ward">
+                                <option value=""></option>
+                                <option value="{{w.id}}" ng-repeat="w in wardDropdown">{{w.name}}</option>
+                            </select>
+                                <div class="ward-button-con" ng-hide="wardselect">
+                                    <button class="ward-button" ng-click="showbeds();" type="button"></button>
+                                    <div class="select-bed-dropdown" ng-hide="showBed">
+                                        <div class="radio radio-styled" ng-repeat="beds in noOFBeds">
+                                            <div class="radio radio-styled">
+                                                <label>
+                                                    <input type="radio" name="checked" ng-model="action" ng-click="bedSelected(beds.id);">
+                                                    <span>{{beds.id}}</span>
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row margin-bottom-xxl">
-                                <div class="col-lg-12">
-                                    <label class="margin-bottom-xl">Note</label>
-                                    <textarea class="margin-bottom-lg" placeholder="Write Here..." ng-model="CO.note"></textarea>
+                            </div>
+                            <div class="margin-bottom-xxl row">
+                            <div class="col-lg-3">
+                                <label>Admitted DATE</label>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="txt-style-4">{{admittedDate}}</label>
+                            </div>
+                            <div class="col-lg-3">
+                                <label>Estimated Discharge</label>
+                            </div>
+                            <div class="col-lg-3">
+                                <!-- <div class="input-group bootstrap-timepicker timepicker col-lg-12">
+                                    <input type="text" class="form-control input-small timepicker" ng-model="CO.discharge">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                </div> -->
+                                <div class="input-group date select-date col-lg-12">
+                                    <div class="input-group-content">
+                                        <input type="text" class="form-control" placeholder="Select Date" ng-model="CO.discharge">
+                                    </div>
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
                             </div>
+                                </div>
+                            <div class="margin-bottom-xxl row">
+                            <div class="col-lg-12">
+                                <label class="margin-bottom-xl">Note</label>
+                                <textarea class="margin-bottom-lg" placeholder="Write Here..." ng-model="CO.note"></textarea>
+                            </div>
+                                </div>
                         </div>
                         <div id="dead" class="row">
                             <div class="col-lg-12">

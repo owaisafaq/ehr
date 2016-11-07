@@ -895,6 +895,10 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
         }else if(res.error_code == 500){
             console.log(res);
             $rootScope.RolesAccess(res.message);
+        }else if(res.error_code == 200){
+            console.log(res);
+            $scope.errorLabOrder = res.message;
+            $('#error200').modal('show');
         } else {
             $scope.hideLoader = "hide";
             $scope.OrderBtn = false;

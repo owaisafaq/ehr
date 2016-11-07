@@ -85,7 +85,8 @@ AppEHR.controller('wardsDischargeSummaryController', ['$scope', '$rootScope','$w
 		$('#internetError').modal('show');
 	}
 
-	$scope.admitPatientSelected = function(index, PID){
+	$scope.admitPatientSelected = function(index, PID, paID){
+		$scope.patiID = paID;
 		if($scope.editbutton == false){
 			$scope.SaveButton = true;
 		}else{
@@ -205,7 +206,7 @@ AppEHR.controller('wardsDischargeSummaryController', ['$scope', '$rootScope','$w
 
     $scope.dischagePatient = function(){
     	$rootScope.loader = "show";
-    	DischargePatient.save({token: $window.sessionStorage.token, patient_id: $scope.admitID}, dischargeSuccess, dischargeFailure);
+    	DischargePatient.save({token: $window.sessionStorage.token, patient_id: $scope.patiID}, dischargeSuccess, dischargeFailure);
     }
     function dischargeSuccess(res){
     	$rootScope.loader = "hide";

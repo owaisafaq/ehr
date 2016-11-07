@@ -403,7 +403,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', function 
                         }
                     }
                 }).
-                when('/pharmacy-view/:prescriptionID/:patientID', {
+                when('/pharmacy-view/:pharmacyID/:prescriptionID/:patientID', {
                     templateUrl: 'views/pharmacy-view.html',
                     controller: 'pharmacyView',
                     resolve: {
@@ -695,10 +695,12 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
                 $rootScope.headerErrorSymbol = "fa fa-check";// 
                 $rootScope.headerMessage = true;
                 $rootScope.headerSubmitted = false;
+                $rootScope.secondOptionsEnable = true;
                 $('#autocomplete2').val('');
-                $window.location.href = "#/new-encounter-encounter-list/"+res.visit_id+"/"+$rootScope.HEADERSEARCHPATIENTID;
+                //$window.location.href = "#/new-encounter-encounter-list/"+res.visit_id+"/"+$rootScope.HEADERSEARCHPATIENTID;
                 $timeout(function(){
                     $rootScope.headerMessage = false;
+                    $rootScope.secondOptionsEnable = true;
                     $rootScope.encounterHeaderSearchBar = true;
                     $('.create_counter_header').addClass('hide');
                 }, 2000);
@@ -870,7 +872,6 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
             },
             minimumInputLength: 2,
         });
-        
         
          $(".search-ajax-appointment").select2({
             placeholder: 'Select Patient',

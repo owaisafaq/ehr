@@ -420,6 +420,10 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
                 //$window.location.href = "#/lab-order-listing/" + $scope.PID + "/" + $scope.encounterID;
             },500);
             $scope.orderSelected = false;
+        }else if(res.error_code == 200){
+            console.log(res);
+            $scope.errorLabOrder = res.message;
+            $('#error200').modal('show');
         }else if(res.error_code == 500){
             console.log(res);
             $rootScope.RolesAccess(res.message);
@@ -493,7 +497,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
     		visit_id: $scope.encounterID,
     		reason: $('input:radio[name="checkoutpatient"]:checked').val(),
             notes: $('.checkout_patient_tab_con > div.active textarea').val() == undefined ? '' : $('.checkout_patient_tab_con > div.active textarea').val(),
-    		pick_date: dataToBeAdded.date == undefined ? '' : dataToBeAdded.date,
+    		pick_date: dataToBeAdded.date == undefined ? dataToBeAdded.discharge : dataToBeAdded.date,
     		pick_time: dataToBeAdded.time == undefined ? '' : dataToBeAdded.time,
     		admit_date: $scope.admittedDate == undefined ? '' : $scope.admittedDate,
     		start_time: dataToBeAdded.time == undefined ? '' : dataToBeAdded.time,
@@ -742,6 +746,8 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
         $rootScope.loader = "show";
         $scope.buttonDisabled = false;
         $scope.patientInfo = false;
+        $scope.disabledEncounterButton = true;
+        $scope.buttonDisabled = true;
         RemoveEncounter.get({token: $window.sessionStorage.token, visit_id: dltID}, encounterDeleteSuccess, encounterDeletefailure);
     }
 

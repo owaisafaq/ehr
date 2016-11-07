@@ -799,7 +799,7 @@
                                 </div>
                                 <div class="col-lg-6 margin-bottom-xxl">
                                     <input type="text" placeholder="systolic (mm hg)"  ng-class="{
-                                            true: 'error'}[vital.diastolic != undefined && vital.systolic == undefined]" ng-model="vital.systolic" numbers-only required/>
+                                            true: 'error'}[vital.diastolic != undefined && vital.systolic == undefined]" ng-model="vital.systolic" class="maskCost" required/>
                                     <p ng-show="vital.diastolic != undefined && vital.systolic == undefined" class="help-block PIValid">Required</p>
                                 </div>
                                 <div class="col-lg-6">
@@ -808,7 +808,7 @@
                                 <div class="col-lg-6">
                                     <input type="text" placeholder="diastolic (mm hg)" ng-class="{
                                             true
-                                            : 'error'}[vital.diastolic == undefined && vital.systolic != undefined]" ng-model="vital.diastolic" numbers-only required/>
+                                            : 'error'}[vital.diastolic == undefined && vital.systolic != undefined]" ng-model="vital.diastolic" class="maskCost" required/>
                                     <p ng-show="vital.systolic != undefined && vital.diastolic == undefined" class="help-block PIValid">Required</p>
                                 </div>
                             </div>
@@ -821,13 +821,13 @@
                                     <label>pulse</label>
                                 </div>
                                 <div class="col-lg-6 margin-bottom-xxl">
-                                    <input type="text" placeholder="pulse" ng-model="vital.pulse" numbers-only/>
+                                    <input type="text" placeholder="pulse" ng-model="vital.pulse" class="maskCost"/>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>respiratory rate</label>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" placeholder="respiratory rate" ng-model="vital.respiratoryRate" numbers-only/>
+                                    <input type="text" placeholder="respiratory rate" ng-model="vital.respiratoryRate" class="maskCost"/>
                                 </div>
                             </div>
 
@@ -839,13 +839,13 @@
                                     <label>temperature (c)</label>
                                 </div>
                                 <div class="col-lg-6 margin-bottom-xxl">
-                                    <input type="text" placeholder="temperature (c)" ng-model="vital.temperaturec" numbers-only ng-keyup="GetTempcVal()"/>
+                                    <input type="text" placeholder="temperature (c)" ng-model="vital.temperaturec" class="maskCost" ng-keyup="GetTempcVal()"/>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>temperature (f)</label>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" placeholder="temperature (f)" ng-model="vital.temperaturef" ng-keyup="GetTempfVal()" numbers-only/>
+                                    <input type="text" placeholder="temperature (f)" ng-model="vital.temperaturef" ng-keyup="GetTempfVal()" class="maskCost"/>
                                 </div>
                             </div>
                         </div>
@@ -871,7 +871,7 @@
                                 <label>weight (kg)</label>
                             </div>
                             <div class="col-lg-6 margin-bottom-xxl">
-                                <input type="text" ng-class="{true: 'error'}[vital.weight == undefined && vital.height != undefined]" placeholder="weight (kg)" ng-model="vital.weight" numbers-only ng-keyup="Calculatebmi()" required/>
+                                <input type="text" ng-class="{true: 'error'}[vital.weight == undefined && vital.height != undefined]" placeholder="weight (kg)" ng-model="vital.weight" class="maskCost" ng-keyup="Calculatebmi()" required/>
                                 <p ng-show="vital.weight == undefined && vital.height != undefined" class="help-block PIValid">Required</p>
                             </div>
 
@@ -879,7 +879,7 @@
                                 <label>height (cm)</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" ng-class="{true: 'error'}[vital.height == undefined && vital.weight != undefined]" placeholder="height (cm)" ng-model="vital.height" ng-keyup="Calculatebmi()" numbers-only required />
+                                <input type="text" ng-class="{true: 'error'}[vital.height == undefined && vital.weight != undefined]" placeholder="height (cm)" ng-model="vital.height" ng-keyup="Calculatebmi()" class="maskCost" required />
                                 <p ng-show="vital.height == undefined && vital.weight != undefined" class="help-block PIValid">Required</p>
                             </div>
                         </div>
@@ -1343,7 +1343,7 @@
                         <div class="col-lg-6">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <label>Dose</label>
+                                    <label>Drug-Form</label>
                                 </div>
                                 <div class="col-lg-12 margin-bottom-xxl">
                                     <select class="form-control" ng-model="buildInstructions.dose" placeholder="Select">
