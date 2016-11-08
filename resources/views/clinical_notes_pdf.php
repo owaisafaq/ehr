@@ -148,7 +148,7 @@
                                     <tr>
                                         <td colspan="1" align="right">
                                             <!--<h1 style="font-size:24px;color:#1a1a1a;display:inline-block;float:left;">Hospital Logo</h1>-->
-                                            <img src="<?php echo $hospital->hospital_image; ?>">
+                                            <img src="<?php echo $hospital->hospital_image; ?>" height="70px" width="90px">
                                         </td>
                                         <td colspan="1" align="center">
                                             <h4 style="font-size:18px;color:#999999;display:inline-block;margin-left:10px;float:left;line-height:40px;"><?php echo $hospital->name; ?></h4>
