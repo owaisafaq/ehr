@@ -123,6 +123,9 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     //Lab Order History
      $app->get('get_lab_order_history','App\Http\Controllers\OrderController@get_lab_order_history');
 
+    //Lab Order Pdf
+    $app->get('get_lab_test_pdf', 'App\Http\Controllers\PDFController@get_lab_test_pdf');
+    $app->post('add_lab_test_values', 'App\Http\Controllers\OrderController@add_lab_test_values');
 
 });
 
@@ -169,11 +172,11 @@ $app->group(['prefix' => 'api', 'middleware' => ['jwt.auth','App\Http\Middleware
     $app->post('cancel_lab_order', 'App\Http\Controllers\OrderController@cancel_lab_order');
     $app->post('update_lab_test', 'App\Http\Controllers\OrderController@update_lab_test');
 
-    $app->post('add_lab_test_values', 'App\Http\Controllers\OrderController@add_lab_test_values');
+   // $app->post('add_lab_test_values', 'App\Http\Controllers\OrderController@add_lab_test_values');
     $app->post('update_lab_test_values', 'App\Http\Controllers\OrderController@update_lab_test_values');
 
-    //Lab Order Pdf
-    $app->get('get_lab_test_pdf','App\Http\Controllers\PDFController@get_lab_test_pdf');
+ /*   //Lab Order Pdf
+    $app->get('get_lab_test_pdf','App\Http\Controllers\PDFController@get_lab_test_pdf');*/
 
 
     //Sign Of Lab Report
@@ -479,6 +482,7 @@ $app->group(['prefix'=>'api','middleware'=>['jwt.auth','App\Http\Middleware\Chec
     $app->post('enrollUserByCSV','App\Http\Controllers\SettingController@enrollUserByCSV');
 
 });
+
 
 $app->group(['prefix'=>'api'], function () use ($app) {
     //testing importexport

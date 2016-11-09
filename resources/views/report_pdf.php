@@ -54,7 +54,7 @@
                                     <tr>
                                         <td colspan="1" align="right">
                                             <!--<h1 style="font-size:24px;color:#1a1a1a;display:inline-block;float:left;">Hospital Logo</h1>-->
-                                            <img src="<?php echo $hospital->hospital_image; ?>">
+                                            <img src="<?php echo $hospital->hospital_image; ?>" height="70px" width="90px">
                                         </td>
                                         <td style="line-height:20px;" colspan="1">
                                             <table align="right">
