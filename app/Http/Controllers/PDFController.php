@@ -431,7 +431,6 @@ class PDFController extends Controller
         echo json_encode(array(
             'status' => true,
             'data' => $file_path
-
         ), JSON_UNESCAPED_SLASHES);
 
     }
