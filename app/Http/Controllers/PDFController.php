@@ -404,4 +404,36 @@ class PDFController extends Controller
 
     }
 
+    public function export_nhis()
+    {
+        Excel::create('nhis', function ($excel) {
+
+            $excel->sheet('nhis', function ($sheet) {
+
+                $nhis = DB::table('NHIS_BASIC')
+                    ->leftJoin('NHIS_DATA', 'NHIS_BASIC.ID', '=', 'NHIS_DATA.form_id')
+                    ->select(DB::raw('*'))
+                    ->get();
+
+                $i = 1;
+                foreach ($nhis as $nhis_data) {
+                    $sheet->row($i,$nhis_data);
+                    $i++;
+                }
+                // Sheet manipulation
+            });
+
+        })->store('csv');
+
+        $file_path = 'http://demoz.online/ehr/storage/exports/nhis.csv';
+
+
+        echo json_encode(array(
+            'status' => true,
+            'data' => $file_path
+
+        ), JSON_UNESCAPED_SLASHES);
+
+    }
+
 }

@@ -479,3 +479,9 @@ $app->group(['prefix'=>'api','middleware'=>['jwt.auth','App\Http\Middleware\Chec
     $app->post('enrollUserByCSV','App\Http\Controllers\SettingController@enrollUserByCSV');
 
 });
+
+$app->group(['prefix'=>'api'], function () use ($app) {
+    //testing importexport
+    $app->post('export_nhis','App\Http\Controllers\PDFController@export_nhis');
+
+});
