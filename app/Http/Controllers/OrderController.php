@@ -500,7 +500,6 @@ class OrderController extends Controller
 
     public function get_lab_order_history(Request $request)
     {
-
         $method_name = $request->segment(2);
 
         $context_method = DB::table('context_methods')
@@ -561,7 +560,7 @@ class OrderController extends Controller
                 ->leftJoin('lab_tests', 'lab_tests.id', '=', 'lab_order_tests.lab_test')
                 ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
                 ->where('lab_orders.status', 1)
-                ->whereIn('order_status', ['completed', 'cancelled'])
+               // ->whereIn('order_status', ['completed', 'cancelled'])
                 ->groupby('lab_orders.id')
                 ->whereIn('lab_orders.lab', explode(",", $lab_types))
                 ->skip($offset)->take($limit)
@@ -569,19 +568,19 @@ class OrderController extends Controller
                 ->get();
 
             $count = DB::table('lab_orders')
-                ->select(DB::raw('lab_orders.id,lab_orders.patient_id,CONCAT(patients.first_name," ",patients.last_name) as patient_name,lab_orders.order_status,labs.name as lab_name,patients.age,patients.marital_status,patients.sex,maritial_status.name as marital_status,lab_order_tests.created_at,lab_orders.updated_at,lab_tests.name as lab_test_name,lab_order_tests.id as lab_order_test_id'))
+                ->select(DB::raw('*'))
                 ->leftJoin('patients', 'lab_orders.patient_id', '=', 'patients.id')
                 ->leftJoin('labs', 'labs.id', '=', 'lab_orders.lab')
                 ->leftJoin('lab_order_tests', 'lab_order_tests.lab_order_id', '=', 'lab_orders.id')
                 ->leftJoin('lab_tests', 'lab_tests.id', '=', 'lab_order_tests.lab_test')
                 ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
                 ->where('lab_orders.status', 1)
-                ->whereIn('order_status', ['completed', 'cancelled'])
                 ->groupby('lab_orders.id')
                 ->whereIn('lab_orders.lab', explode(",", $lab_types))
                 ->where('patients.status', 1)
-                ->count();
+                ->get();
 
+            $count = count($count);
         }
         else{
             $orders = DB::table('lab_orders')
@@ -592,13 +591,13 @@ class OrderController extends Controller
                 ->leftJoin('lab_tests', 'lab_tests.id', '=', 'lab_order_tests.lab_test')
                 ->leftJoin('maritial_status', 'maritial_status.id', '=', 'patients.marital_status')
                 ->where('lab_orders.status', 1)
-                ->whereIn('order_status', ['completed', 'cancelled'])
+              //  ->whereIn('order_status', ['completed', 'cancelled'])
                 ->groupby('lab_orders.id')
                 ->whereIn('lab_orders.lab', explode(",", $lab_types))
                 ->where('patients.status', 1)
                 ->get();
 
-            $count = $count($orders);
+            $count = count($orders);
         }
 
 

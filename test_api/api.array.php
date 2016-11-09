@@ -1290,6 +1290,8 @@ $api->name = "Get All Lab Orders History";
 $api->url = HOST . 'get_lab_order_history';
 $api->method = "GET";
 $api->description = "Get All Lab Lab Orders History";
+$api->params->limit = "0";
+$api->params->offset = "0";
 $api->params->token = "123";
 
 $api_arr [] = $api;
