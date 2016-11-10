@@ -489,3 +489,13 @@ $app->group(['prefix'=>'api'], function () use ($app) {
     $app->post('export_nhis','App\Http\Controllers\PDFController@export_nhis');
 
 });
+
+
+
+$app->group(['prefix'=>'api','middleware' => 'jwt.auth'], function () use ($app) {
+    //testing importexport
+    $app->get('get_all_patient_orders','App\Http\Controllers\OrderController@get_all_patient_orders');
+    $app->post('waive_bill','App\Http\Controllers\BillingController@waive_bill');
+    $app->post('waive_invoice','App\Http\Controllers\BillingController@waive_invoice');
+
+});
