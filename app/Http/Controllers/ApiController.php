@@ -230,6 +230,7 @@ class ApiController extends Controller
         $language = $request->input('language');
 
         $currentdatetime = date("Y-m-d  H:i:s");
+        $receipt_id = $request->input('receipt_id');
 
         $patient_id = $request->input('patient_id');
 
@@ -270,6 +271,16 @@ class ApiController extends Controller
                     'updated_at' => $currentdatetime));
 
 
+            if (isset($receipt_id)) {
+                DB::table('billing')
+                    ->where('id', $receipt_id)
+                    ->update(
+                        ['patient_id' => $patient_id,
+                            'updated_at' => date("Y-m-d  H:i:s")
+                        ]);
+
+            }
+
             return response()->json(['status' => true, 'message' => "Patient updated successfully", "patient_id" => $patient_id]);
 
 
@@ -309,6 +320,16 @@ class ApiController extends Controller
 
 
             $patient_id = DB::getPdo()->lastInsertId();
+
+            if (isset($receipt_id)) {
+                DB::table('billing')
+                    ->where('id',$receipt_id)
+                    ->update(
+                        ['patient_id'=>$patient_id,
+                            'updated_at' => date("Y-m-d  H:i:s")
+                        ]);
+
+            }
 
 
             return response()->json(['status' => true, 'message' => "Patient registered successfully", "patient_id" => $patient_id]);
@@ -954,6 +975,7 @@ class ApiController extends Controller
         DB::table('billing')->insert(
                  ['patient_id' => $patient_id,
                      'encounter_id' => $visit_id,
+                     'bill_purpose' => 'encounter',
                      'created_at' => $currentdatetime] );
 
 

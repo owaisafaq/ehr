@@ -784,12 +784,17 @@ class BillingController extends Controller
     public function search_patient_bill(Request $request)
     {
         $name = $request->input('name');
+        $name =  ltrim($name,0);
         $patient = DB::table('billing')
             ->select(DB::raw('id as receipt_id'))
             ->where(function ($q) use ($name) {
-                $q->where('patient_name', 'LIKE', "$name%");
+                $q->where('id', 'LIKE', "%$name");
             })
             ->first();
+
+        if (empty($patient)) {
+            return response()->json(['status' => false, 'message' => 'Not a valid receipt']);
+        }
 
         return response()->json(['status' => true, 'data' => $patient]);
     }
