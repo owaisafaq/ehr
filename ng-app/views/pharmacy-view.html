@@ -57,6 +57,7 @@
                                     <button type="button" ng-click="updateDispense()" class="update button-custom pull-right">update medication</button>
                                     <button data-toggle="modal" data-target="#addmedication" class="add button-custom pull-right">add medication</button>
                                     <button type="button" class="dispense_pharmacy button-custom pull-right" ng-hide="dispensePharmacyButton" ng-click="despensePharmacyFUn();">dispense pharmacy</button>
+                                    <button type="button" class="add button-custom pull-right" ng-hide="dispensePharmacyButton" data-toggle="modal" data-target="#addMaterials">Add Material</button>
                                 </div>
                                 <table class="table table-striped no-margin table-custom table-custom_big editable_table">
                                     <thead>
@@ -622,6 +623,62 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">OK</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade modal-size_2" id="addMaterials" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Add Material</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form">
+                <div class="row margin-bottom-xxl">
+                    <div class="col-lg-2">
+                        <label>Add Material</label>
+                    </div>
+                    <div class="col-lg-9 select-con" id="selectInventory">
+                        <select class="select_searchFields form-control" placeholder="Select Material" ng-model="prod_cat_name" ng-options="inventory.cat_name for inventory in allProdByCat track by inventory.id">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <div class="col-lg-1">
+                         <span class="plus" ng-click="addMaterial()"><i class="md-add"></i></span>
+                    </div>
+                </div>
+                    <div class="row margin-bottom-xxl">
+                        <div class="col-lg-2">
+                            <label>Quantity</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input class="form-control" ng-model="prod_quantity" type="text" placeholder="01" numbers-only>
+                        </div>
+                    </div>
+                <div class="row" ng-show="addedMaterial.length > 0">
+                    <table class="table table-striped no-margin table-custom">
+                        <thead>
+                            <tr>
+                                <th>Material</th>
+                                <th>Cost</th>
+                                <th>Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--ng-repeat=""-->
+                            <tr ng-repeat="add in addedMaterial">
+                                <td>{{add.material}}</td>
+                                <td>{{add.cost}}</td>
+                                <td>{{add.quantity}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                    </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal" ng-click="addMaterials()" ng-disabled="addedMaterial.length == 0">sAVE</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

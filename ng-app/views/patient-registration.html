@@ -25,7 +25,10 @@
                                 <input type="text" numbers-only disabled placeholder="Patient ID" ng-model="PI.patient_ID" class="yellow" />
                             </div>
                             <div class="col-lg-3">
-                                <label>Unit Number</label>
+                                <!-- <label>Unit Number</label> -->
+                                <input type="text" numbers-only placeholder="Receipt ID" ng-model="PI.receiptID" class="yellow {{billSearchClass}}" name="receiptID" ng-class="{true: 'error'}[submitted && userForm1.receiptID.$invalid]" required ng-change="searchPatientForBill(PI.receiptID);"/>
+                                <p class="help-block PIValid" ng-show="submitted && userForm1.receiptID.$error.required">Required</p>
+                                <p class="help-block PIValid" ng-show="invalidIdSearch">Invalid ID</p>
                             </div>
                             <div class="col-lg-3">
                                 <input type="text" numbers-only placeholder="Unit Numbers" name="patient_unit_number" ng-model="PI.patient_unit_number" required class="yellow"/>
@@ -1580,6 +1583,22 @@
             </div>
             <div class="modal-body">
                 <p class="modal-subtext">Patient Successfully Added</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade modal-size_1" id="billidFailure" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Error</h2>
+            </div>
+            <div class="modal-body">
+                <p class="modal-subtext">Invalid receipt ID</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>

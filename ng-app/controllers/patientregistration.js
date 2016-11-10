@@ -1,5 +1,5 @@
 var AppEHR = angular.module('AppEHR');
-AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', 'PatientInformation', 'fileUpload', '$location', '$filter', 'Upload', '$timeout', 'PatientRegistrationAddress', 'PatientRegistrationKin', 'PatientRegistrationEmployer', '$routeParams', 'GetPatientAllData', 'PatienPlanSaveData', '$compile', '$http', 'GetArchives', 'RemoveArchives', 'EditArchives', 'AddFolderArchives', 'ListFolderArchives', 'GetResourcesByFolderArchives', 'DeleteFolderArchives', 'EditFolderArchives', 'SaveFiles', 'fileUpload', 'FolderUpContent', 'FolderUpFolders', 'DownloadArchive', function ($rootScope, $scope, $window, Countries, States, GetLocalGovermentArea, City, DropDownData, PatientInformation, fileUpload, $location, $filter, Upload, $timeout, PatientRegistrationAddress, PatientRegistrationKin, PatientRegistrationEmployer, $routeParams, GetPatientAllData, PatienPlanSaveData, $compile, $http, GetArchives, RemoveArchives, EditArchives, AddFolderArchives, ListFolderArchives, GetResourcesByFolderArchives, DeleteFolderArchives, EditFolderArchives, SaveFiles, fileUpload, FolderUpContent, FolderUpFolders, DownloadArchive) {
+AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$window', 'Countries', 'States', 'GetLocalGovermentArea', 'City', 'DropDownData', 'PatientInformation', 'fileUpload', '$location', '$filter', 'Upload', '$timeout', 'PatientRegistrationAddress', 'PatientRegistrationKin', 'PatientRegistrationEmployer', '$routeParams', 'GetPatientAllData', 'PatienPlanSaveData', '$compile', '$http', 'GetArchives', 'RemoveArchives', 'EditArchives', 'AddFolderArchives', 'ListFolderArchives', 'GetResourcesByFolderArchives', 'DeleteFolderArchives', 'EditFolderArchives', 'SaveFiles', 'fileUpload', 'FolderUpContent', 'FolderUpFolders', 'DownloadArchive', 'SearchPatientForBill', function ($rootScope, $scope, $window, Countries, States, GetLocalGovermentArea, City, DropDownData, PatientInformation, fileUpload, $location, $filter, Upload, $timeout, PatientRegistrationAddress, PatientRegistrationKin, PatientRegistrationEmployer, $routeParams, GetPatientAllData, PatienPlanSaveData, $compile, $http, GetArchives, RemoveArchives, EditArchives, AddFolderArchives, ListFolderArchives, GetResourcesByFolderArchives, DeleteFolderArchives, EditFolderArchives, SaveFiles, fileUpload, FolderUpContent, FolderUpFolders, DownloadArchive, SearchPatientForBill) {
         $rootScope.pageTitle = "EHR - Patient Registration";
         //$rootScope.loader = "show";
         $scope.PI = $rootScope.PI;
@@ -334,10 +334,11 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
         // patient information API
         $scope.validatePatientInfo = function (PI) {
-            if (PI.first_name != undefined && PI.last_name != undefined && PI.date_of_birth != undefined && PI.age != undefined && PI.sex != undefined && PI.maritial_status != undefined && PI.patient_state != undefined) {
+            if (PI.first_name != undefined && PI.last_name != undefined && PI.date_of_birth != undefined && PI.age != undefined && PI.sex != undefined && PI.maritial_status != undefined && PI.patient_state != undefined && PI.receiptID != undefined) {
                 
                 var dataToBeAdded = {
                     token: $window.sessionStorage.token,
+                    receipt_id: $scope.PI.receiptID == undefined ? '' : $scope.PI.receiptID,
                     patient_unit_number: $scope.PI.patient_unit_number == undefined ? '' : $scope.PI.patient_unit_number,
                     first_name: $scope.PI.first_name == undefined ? '' : $scope.PI.first_name,
                     middle_name: $scope.PI.middle_name == undefined ? '' : $scope.PI.middle_name,
@@ -1900,7 +1901,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             
             
             
-            GetLocalGovermentArea.get({token: $window.sessionStorage.token, state_id: 0}, LGASuccessIndep, LGAFailedIndep); 
+        GetLocalGovermentArea.get({token: $window.sessionStorage.token, state_id: 0}, LGASuccessIndep, LGAFailedIndep); 
                 function LGASuccessIndep(res) {
                     if (res.status == true && res.data.length > 0) {
                         $scope.patientInfolocalGovtAreaIndependent = res.data
@@ -1924,5 +1925,21 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         function downloadFailure(error){
             console.log(error);
         }
-            
+
+        $scope.searchPatientForBill = function(string){
+            console.log(string);
+            SearchPatientForBill.save({token: $window.sessionStorage.token, name: string}, searchByBillSuccess, downloadFailure);
+        }
+
+        function searchByBillSuccess(res){
+            console.log(res); //return true;
+            if (res.status == false) {
+                //$('#billidFailure').modal('show');
+                $scope.invalidIdSearch = true;
+                $scope.billSearchClass = "falilure-red";
+            }else if(res.status == true){
+                $scope.invalidIdSearch = false;
+                $scope.billSearchClass = "success-green";
+            }
+        }
     }]);

@@ -16,6 +16,7 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
         $scope.flagWard = false;
         $scope.flagBeds = false;
         $scope.flagSpeciality = false;
+        $scope.numberOfRecordsDropDown = numberOfRecordsDropDown;
         GetAllPatients.get({
             token: $window.sessionStorage.token,
             offset: $scope.offset, limit: $scope.itemsPerPage
@@ -30,6 +31,7 @@ AppEHR.controller('patientListingController', ['$scope', '$rootScope', 'GetAllPa
             }
         }*/
         $scope.curPage = 0;
+        $scope.pageSizeDropdown = '';
         $scope.pageSize = 15;
         $scope.numberOfPages = function() {
             return Math.ceil($scope.patientCount / $scope.pageSize);

@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootScope', '$window', '$routeParams', 'GetPatientInfo', 'ClinicalProgressNotesFields', 'GetTemplatesDropDown', 'SetClinicalProgressNotes', 'PatienPrescription', 'GetPrescription', 'GetAllMedications', 'DropDownData', 'CheckoutPatient', 'GetMedicineUnits', 'getTemplateCategory', 'getTemplates', 'getTemplateData', 'ReferralPatient', 'ClinicalReport', 'GetAllWardsDropDown', 'GetBedsByWard', 'Upload', 'AddAttachmentClinical', 'SignOffClinicalProgress', 'CheckClinicalNotesStatus', 'UpdatePatientClinicalNotes', 'GetDiagnosisList', 'getCliTemplateCategory', 'addOrder', 'GetAllPatients', 'GetLabTests', '$timeout', function($scope, $rootScope, $window, $routeParams, GetPatientInfo, ClinicalProgressNotesFields, GetTemplatesDropDown, SetClinicalProgressNotes, PatienPrescription, GetPrescription, GetAllMedications, DropDownData, CheckoutPatient, GetMedicineUnits, getTemplateCategory, getTemplates, getTemplateData, ReferralPatient, ClinicalReport, GetAllWardsDropDown, GetBedsByWard, Upload, AddAttachmentClinical, SignOffClinicalProgress, CheckClinicalNotesStatus, UpdatePatientClinicalNotes, GetDiagnosisList, getCliTemplateCategory, addOrder, GetAllPatients, GetLabTests, $timeout){
+AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootScope', '$window', '$routeParams', 'GetPatientInfo', 'ClinicalProgressNotesFields', 'GetTemplatesDropDown', 'SetClinicalProgressNotes', 'PatienPrescription', 'GetPrescription', 'GetAllMedications', 'DropDownData', 'CheckoutPatient', 'GetMedicineUnits', 'getTemplateCategory', 'getTemplates', 'getTemplateData', 'ReferralPatient', 'ClinicalReport', 'GetAllWardsDropDown', 'GetBedsByWard', 'Upload', 'AddAttachmentClinical', 'SignOffClinicalProgress', 'CheckClinicalNotesStatus', 'UpdatePatientClinicalNotes', 'GetDiagnosisList', 'getCliTemplateCategory', 'addOrder', 'GetAllPatients', 'GetLabTests', '$timeout', 'DownloadReferral', function($scope, $rootScope, $window, $routeParams, GetPatientInfo, ClinicalProgressNotesFields, GetTemplatesDropDown, SetClinicalProgressNotes, PatienPrescription, GetPrescription, GetAllMedications, DropDownData, CheckoutPatient, GetMedicineUnits, getTemplateCategory, getTemplates, getTemplateData, ReferralPatient, ClinicalReport, GetAllWardsDropDown, GetBedsByWard, Upload, AddAttachmentClinical, SignOffClinicalProgress, CheckClinicalNotesStatus, UpdatePatientClinicalNotes, GetDiagnosisList, getCliTemplateCategory, addOrder, GetAllPatients, GetLabTests, $timeout, DownloadReferral){
 	$rootScope.pageTitle = "EHR - Clinical Documentation - Clinic Progress Note";
 	$scope.displayInfo = {};
 	$scope.templates = {};
@@ -43,7 +43,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 
   function TemplateCategorySuccess(res) {
       if (res.status == true) {
-        console.log('ooo', res)
+        //console.log('ooo', res)
           $scope.categories = res.data;
           if($scope.doUpdate == true){
             $scope.template = res.data.template_id;
@@ -97,13 +97,10 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
           visit_id: $scope.displayInfo.encounter_id,
           patient_id: $routeParams.patientID
       }, checkClinicalStatusSuccess, checkClinicalStatusFailure);
-
-        
 		}
 	}
   function checkClinicalStatusSuccess(res){
-      console.log(res);
-      
+      //console.log(res);
       if(res.status == true && res.data.length > 0){
           console.log(res)
           console.log("res")
@@ -138,16 +135,30 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 
                 $scope.getDiagnosis();
                 console.log("got diagnosis", i);
-                $scope.diagnosisAgaya = true;
+                //$scope.diagnosisAgaya = true;
                 //templateCl.fields[i].type = "hidden";
                 //delete templateCl.fields[i];
-                templateCl.fields.splice(i, 1);
+                //templateCl.fields.splice(i, 1);
                 
                 if(Object.keys(filledVal)[i] == 'Diagnosis'){
                   delete filledVal.Diagnosis;
                 }
                 //console.log(Object.keys(filledVal)[i], '1', filledVal[Object.keys(filledVal)[i]], templateCl.fields[i].name);
                 console.log(templateCl, 'from diagnosis', filledVal);
+                $scope.renderedTemplate.fields.push({
+                  "displayName": templateCl.fields[i].displayName,
+                  "name": templateCl.fields[i].name,
+                  "type": "selectlist",//templateCl.fields[i].type == "number" ? "text" : templateCl.fields[i].type,
+                  //"value": filledVal[Object.keys(filledVal)[i]] == undefined ? '' : filledVal[Object.keys(filledVal)[i]],
+                  //"value": Object.keys(filledVal)[i] == templateCl.fields[i].name || Object.keys(filledVal)[i] == templateCl.fields[i].displayName ? filledVal[Object.keys(filledVal)[i]] : '',
+                  "validation": templateCl.fields[i].validation,
+                  "ng-model": "1diagnosis",
+                  "class": "nun",
+                  "id": "autoship_option",
+                  "style": "width:100%;display:block!important",
+                  "multiple": "true",
+                  "options": []
+                });
                 //i++;
             }else{
                 //console.log(Object.keys(filledVal)[i] == templateCl.fields[i].name, i);
@@ -630,10 +641,12 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
           console.log(res);
           if(res.status == true){
             $scope.referral = {};
+            $scope.referralID = res.referal_id;
             $scope.referral.type = "internal";
             $scope.externalDoctor = false;
-            $('#referral').modal('hide');
+            //$('#referral').modal('hide');
             $('#successmodal').modal('show');
+            $scope.downloadReferral();
           }else if(res.error_code == 500){
               console.log(res);
               $rootScope.RolesAccess(res.message);
@@ -963,4 +976,17 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
       $scope.lab_test_total = 00;
       //$scope.Order.selected_labName = "Radiology";
      }
+     $scope.downloadReferral = function(){
+      DownloadReferral.save({
+        token: $window.sessionStorage.token,
+        refral_id: $scope.referralID
+      }, downlaodFerralSuccess, GetLabTestsFailure);
+    }
+    function downlaodFerralSuccess(res) { // on success
+      if (res.status == true) {
+        console.log(res, 'download reff');
+        $('#downloadRef').attr('href', res.data);
+        //$scope.downloadReferralLink = res.data;
+      }
+    }
 }]);

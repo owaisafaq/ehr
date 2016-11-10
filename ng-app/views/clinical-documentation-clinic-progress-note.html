@@ -94,19 +94,18 @@
                             <div id="accordion3" class="collapse in form-builder-styling">
                                 <div class="card-body">
                                     <form class="custom-form">
-
-                                    <div class="row" ng-show="diagnosisAgaya" ng-class="{true: 'disabled-fields'}[is_signoff == 1]">
-                                        <!--<div>-->
-                                            <label class="col-lg-2">Diagnosis</label>
-                                        <!--</div>-->
-                                        <div class="col-lg-9 chosen-styling margin-0">
-                                            <select class="chosen-select nun" ng-model="diagnosis" multiple data-placeholder="Choose Diagnosis" style="width:100%;display:none!important" id="autoship_option">
-                                                <!-- <option value="1">+ve</option>
-                                                <option value="2">-ve</option>
-                                                <option value="3">Futher test required</option> -->
-                                            </select>
+                                        <div class="row" ng-show="diagnosisAgaya" ng-class="{true: 'disabled-fields'}[is_signoff == 1]">
+                                            <!--<div>-->
+                                                <label class="col-lg-2">Diagnosis</label>
+                                            <!--</div>-->
+                                            <div class="col-lg-9 chosen-styling margin-0">
+                                                <select class="chosen-select nun" ng-model="diagnosis" multiple data-placeholder="Choose Diagnosis" style="width:100%;display:none!important" id="autoship_option">
+                                                    <!-- <option value="1">+ve</option>
+                                                    <option value="2">-ve</option>
+                                                    <option value="3">Futher test required</option> -->
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
                                         <div class="row"><div fg-form fg-form-data="myFormData" fg-schema="mySchema" ng-class="{true: 'disabled-fields'}[is_signoff == 1]" ng-hide="newTemp" class="margin-0"></div></div>
                                         <div class="row"><div fg-form fg-form-data="myFormDataNewTemp" fg-schema="mySchemaNewTemp" ng-class="{true: 'disabled-fields'}[is_signoff == 1]" class="margin-0" ng-show="newTemp"></div></div>
                                     </form>
@@ -328,6 +327,8 @@
                                 <span class="text-left">Send Medication List, Diagnosis and Allergies</span>
                         </label>
                     </div>
+                    <!-- <button type="button" ng-click="downloadReferral();" ng-disabled="downloadButtonActive"></button> -->
+                    <a href="javascript:;" class="btn btn-default button-style-1" id="downloadRef" style="padding: 12px;margin-bottom: 3px;" download>Download</a>
                     <button type="submit" class="btn btn-default button-style-1">refer</button>
                     <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
                 </div>

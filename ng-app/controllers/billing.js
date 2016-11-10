@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData','GetBillInvoices','SendEmail', 'CheckoutPatient', 'deleteInvoice', 'AddToBill', 'GetAllBillingCodes', 'GetAllproducts', 'SendEmail', 'GetBillingWithDates', 'DropDownData', 'GetAllWardsDropDown', 'GetBedsByWard', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData,GetBillInvoices,SendEmail, CheckoutPatient, deleteInvoice, AddToBill, GetAllBillingCodes, GetAllproducts, SendEmail, GetBillingWithDates, DropDownData, GetAllWardsDropDown, GetBedsByWard){
+AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData','GetBillInvoices','SendEmail', 'CheckoutPatient', 'deleteInvoice', 'AddToBill', 'GetAllBillingCodes', 'GetAllproducts', 'SendEmail', 'GetBillingWithDates', 'DropDownData', 'GetAllWardsDropDown', 'GetBedsByWard', 'AddPatientRegBill', 'WaiveBill', 'WaiveBillInvoice', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData,GetBillInvoices,SendEmail, CheckoutPatient, deleteInvoice, AddToBill, GetAllBillingCodes, GetAllproducts, SendEmail, GetBillingWithDates, DropDownData, GetAllWardsDropDown, GetBedsByWard, AddPatientRegBill, WaiveBill, WaiveBillInvoice){
 	$rootScope.pageTitle = "EHR - Billing";
 	$scope.BillListings={};
 	$scope.selectedPatient = {};
@@ -279,6 +279,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 
 
 	$scope.SelectedPatient = function(patient_id,bill_id){
+		if(patient_id == "" || patient_id == undefined) return true;
         $scope.disable_tabs = false;
 		console.log(patient_id);
 		console.log(bill_id);
@@ -315,10 +316,10 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 			$('#internetError').modal('show');
 			console.log(error);
 		}
-    GetAllInvoices.get({
-		token: $window.sessionStorage.token,
-        bill_id : bill_id
-	}, GetAllInvoicesSuccess, GetAllInvoicesFailure);
+	    GetAllInvoices.get({
+			token: $window.sessionStorage.token,
+	        bill_id : bill_id
+		}, GetAllInvoicesSuccess, GetAllInvoicesFailure);
 
 	
 	};
@@ -605,6 +606,65 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	    		$scope.showBed = false;
 	    		$scope.showbedFlag = false;
 	    	}
+	    }
+
+	    $scope.patientRegBill = function(patientName){
+	    	console.log(patientName);// return true;
+	    	AddPatientRegBill.save({
+	    		token: $window.sessionStorage.token,
+	    		patient_name: patientName
+	    	}, addPatientRegBillSuccess,wardsDropDownFailure);
+	    	function addPatientRegBillSuccess(res){
+				console.log(res, "regbill");
+				if(res.status == true){
+					$scope.dynamicMsg = "Patient Registration Bill Generated";
+					$('#pregbillSuccess').modal('show');
+					$('#patientRegBill').modal('hide');
+					GetAllBills.get({
+						token: $window.sessionStorage.token,
+					}, GetAllBillsSuccess, GetAllBillsFailure);
+				}
+			}
+	    }
+
+	    $scope.waiveBill = function(){
+	    	console.log($scope.bill_id);// return true;
+	    	WaiveBill.save({
+	    		token: $window.sessionStorage.token,
+	    		bill_id: $scope.bill_id
+	    	}, WaiveBillSuccess,wardsDropDownFailure);
+	    	function WaiveBillSuccess(res){
+				console.log(res, "WaiveBill");
+				if(res.status == true){
+					$scope.dynamicMsg = "Bill has been Paid";
+					$('#pregbillSuccess').modal('show');
+					$('#WaiveBill').modal('hide');
+					$scope.disable_tabs = true;
+					GetAllBills.get({
+						token: $window.sessionStorage.token,
+					}, GetAllBillsSuccess, GetAllBillsFailure);
+				}
+			}
+	    }
+
+	    $scope.waiveBillInvoice = function(){
+	    	console.log($scope.invoice_id); //return true;
+	    	WaiveBillInvoice.save({
+	    		token: $window.sessionStorage.token,
+	    		invoice_id: $scope.invoice_id
+	    	}, WaiveBillISuccess,wardsDropDownFailure);
+	    	function WaiveBillISuccess(res){
+				console.log(res, "WaiveBillInvoice");
+				if(res.status == true){
+					$scope.dynamicMsg = "Invoice has been Paid";
+					$('#pregbillSuccess').modal('show');
+					$('#WaiveBillInvoice').modal('hide');
+					GetAllInvoices.get({
+						token: $window.sessionStorage.token,
+				        bill_id : $scope.bill_id
+					}, GetAllInvoicesSuccess, GetAllInvoicesFailure);
+				}
+			}
 	    }
         
 }]);

@@ -865,5 +865,39 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 	            }
 	        }
 	    };
+	    $scope.roomsDropdown = [
+	    	{"id": "1", "name": "Room1"},
+	    	{"id": "2", "name": "Room2"},
+	    	{"id": "3", "name": "Room3"}
+	    ];
+	    //GetAllRooms.get({token: $window.sessionStorage.token}, roomsSuccess, roomsFailure);
+	    function roomsSuccess(res){
+	    	$scope.roomsDropdown = res.dataToBeAdded;
+	    }
+	    function roomsFailure(error){
+	    	$('#internetError').modal('show');
+            console.log(error);
+	    }
+
+	    $scope.assigningRoom = function(roomID){
+	    	console.log(roomID);return true;
+	    	if(roomID != undefined || roomID != '')
+	    		AssignRooms.save({token: $window.sessionStorage.token, room_id: roomID, patient_id: $scope.PID}, assignRoomsSuccess, roomsFailure);
+	    }
+
+	    function assignRoomsSuccess(res) {
+            console.log(res);
+            if (res.status == true) {
+            	$('#assignRoom').modal('hide');
+            	GetAllEncounters.get({
+			        token: $window.sessionStorage.token,
+			        offset: 0,
+			        limit: $scope.itemsPerPage
+			    }, getPatientEncounters, getPatientEncountersFailure);
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
+            }
+        }
 
 }]);
