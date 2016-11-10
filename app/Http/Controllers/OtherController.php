@@ -1221,7 +1221,6 @@ class OtherController extends Controller
         $patient_materials  = json_decode($material);
         $currentdatetime = date("Y-m-d  H:i:s");
 
-
         foreach ($patient_materials as $materials) {
 
             DB::table('materials')
@@ -1237,6 +1236,31 @@ class OtherController extends Controller
         }
 
         return response()->json(['status' => true, 'message' => 'Material Added Successfully']);
+
+    }
+
+    public function add_prescription_material(Request $request)
+    {
+        $prescripion_id = $request->input('prescripion_id');
+        $material = $request->input('material');
+        $patient_materials = json_decode($material);
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+        foreach ($patient_materials as $materials) {
+
+            DB::table('materials')
+                ->insert(
+                    ['prescription_id' => $prescripion_id,
+                        'material' => $materials->material,
+                        'cost' => $materials->cost,
+                        'quantity' => $materials->quantity,
+                        'created_at' => $currentdatetime
+                    ]
+                );
+        }
+
+        return response()->json(['status' => true, 'message' => 'Material Added Successfully']);
+
 
     }
 

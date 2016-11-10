@@ -1,9 +1,9 @@
 <?php
 
 require 'api.class.php';
-define('HOST', 'http://131.107.100.10/ehr/public/api/');
+//define('HOST', 'http://131.107.100.10/ehr/public/api/');
 //define('HOST', 'http://localhost/ehr/public/api/');
-//define('HOST', 'http://demoz.online/ehr/public/api/');
+define('HOST', 'http://demoz.online/ehr/public/api/');
 //define('HOST', 'http://demoz.online/dev/ehr/public/api/');
 define('APP', '');
 define('ROUTE', '');
@@ -1290,6 +1290,8 @@ $api->name = "Get All Lab Orders History";
 $api->url = HOST . 'get_lab_order_history';
 $api->method = "GET";
 $api->description = "Get All Lab Lab Orders History";
+$api->params->limit = "0";
+$api->params->offset = "0";
 $api->params->token = "123";
 
 $api_arr [] = $api;
@@ -1880,6 +1882,7 @@ $api->url = HOST . 'get_all_bills';
 $api->method = "GET";
 $api->params->token = "123435";
 
+$api_arr [] = $api;
 
 //Add Invoice to Bills
 $api = new api();
@@ -3501,5 +3504,97 @@ $api->params->token = "123435";
 
 $api_arr [] = $api;
 
+
+
+//Export Nhis
+$api = new api();
+$api->name = "Export Nhis";
+$api->url = HOST . 'export_nhis';
+$api->method = "POST";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Get all patient orders
+$api = new api();
+$api->name = "Get all patient orders";
+$api->url = HOST . 'get_all_patient_orders';
+$api->method = "GET";
+$api->params->offset = "1";
+$api->params->limit = "1";
+$api->params->patient_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Waive Bill
+$api = new api();
+$api->name = "Waive Bill";
+$api->url = HOST . 'waive_bill';
+$api->method = "POST";
+$api->params->bill_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Waive Invoice
+$api = new api();
+$api->name = "Waive Invoice";
+$api->url = HOST . 'waive_invoice';
+$api->method = "POST";
+$api->params->invoice_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Add Patient Bill
+$api = new api();
+$api->name = "Add Patient Bill";
+$api->url = HOST . 'add_patient_bill';
+$api->method = "POST";
+$api->params->patient_name = "Jack";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+// Search Patient Bill
+$api = new api();
+$api->name = "Search Patient Bill";
+$api->url = HOST . 'search_patient_bill';
+$api->method = "POST";
+$api->description = "Search Patient Bill";
+$api->params->name = "owais";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Add Prescription Material
+$api = new api();
+$api->name = "Add Prescription Material";
+$api->url = HOST . 'add_prescription_material';
+$api->method = "POST";
+$api->description = "Add Prescription Material";
+$api->params->prescripion_id = "1";
+$api->params->material = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+//Download Patient Referal
+$api = new api();
+$api->name = "Download Patient Referal";
+$api->url = HOST . 'download_patient_referal';
+$api->method = "GET";
+$api->params->refral_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
 
 

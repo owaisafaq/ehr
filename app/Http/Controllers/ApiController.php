@@ -153,30 +153,30 @@ class ApiController extends Controller
     }
 
     public function search_department(Request $request)
-     {
-         $name = $request->input('name');
+    {
+        $name = $request->input('name');
 
-         $departments = DB::table('departments')
-             ->select(DB::raw('id,name'))
-             ->where(function ($q) use ($name) {
-                 $q->where('first_name', 'LIKE', "$name%")
-                     ->orWhere('id', 'LIKE', "%$name%");
-             })
-             ->where('status', 1)
-             ->get();
+        $departments = DB::table('departments')
+            ->select(DB::raw('id,name'))
+            ->where(function ($q) use ($name) {
+                $q->where('first_name', 'LIKE', "$name%")
+                    ->orWhere('id', 'LIKE', "%$name%");
+            })
+            ->where('status', 1)
+            ->get();
 
-         if (empty($departments)) {
-             $departments = array(
-                 "id" => '0',
-                 "name" => ""
-             );
-             return response()->json(['status' => false, 'data' => $departments]);
+        if (empty($departments)) {
+            $departments = array(
+                "id" => '0',
+                "name" => ""
+            );
+            return response()->json(['status' => false, 'data' => $departments]);
 
-         } else {
-             return response()->json(['status' => true, 'data' => $departments]);
-         }
+        } else {
+            return response()->json(['status' => true, 'data' => $departments]);
+        }
 
-     }
+    }
 
 
     public function add_patient(Request $request)
@@ -230,6 +230,7 @@ class ApiController extends Controller
         $language = $request->input('language');
 
         $currentdatetime = date("Y-m-d  H:i:s");
+        $receipt_id = $request->input('receipt_id');
 
         $patient_id = $request->input('patient_id');
 
@@ -270,6 +271,16 @@ class ApiController extends Controller
                     'updated_at' => $currentdatetime));
 
 
+            if (isset($receipt_id)) {
+                DB::table('billing')
+                    ->where('id', $receipt_id)
+                    ->update(
+                        ['patient_id' => $patient_id,
+                            'updated_at' => date("Y-m-d  H:i:s")
+                        ]);
+
+            }
+
             return response()->json(['status' => true, 'message' => "Patient updated successfully", "patient_id" => $patient_id]);
 
 
@@ -309,6 +320,16 @@ class ApiController extends Controller
 
 
             $patient_id = DB::getPdo()->lastInsertId();
+
+            if (isset($receipt_id)) {
+                DB::table('billing')
+                    ->where('id',$receipt_id)
+                    ->update(
+                        ['patient_id'=>$patient_id,
+                            'updated_at' => date("Y-m-d  H:i:s")
+                        ]);
+
+            }
 
 
             return response()->json(['status' => true, 'message' => "Patient registered successfully", "patient_id" => $patient_id]);
@@ -954,6 +975,7 @@ class ApiController extends Controller
         DB::table('billing')->insert(
                  ['patient_id' => $patient_id,
                      'encounter_id' => $visit_id,
+                     'bill_purpose' => 'encounter',
                      'created_at' => $currentdatetime] );
 
 
@@ -3261,7 +3283,9 @@ class ApiController extends Controller
             ]
         );
 
-        return response()->json(['status' => true, 'message' => "Patient Referel Added Successfully"]);
+        $id = DB::getPdo()->lastInsertId();
+
+        return response()->json(['status' => true, 'message' => "Patient Referel Added Successfully",'referal_id'=>$id]);
     }
 
     public function add_manufacturer(Request $request)
@@ -4024,7 +4048,7 @@ class ApiController extends Controller
             ->select('value')
             ->where('id', $status->id)->first();
 
-        return response()->json(['status' => true, 'signoff' => $signoff,'data'=>$clinical_notes_new_data->value,'template'=>$data->template,'clinical_notes_id'=>$status->id,'template_name'=>$data->name,'template_id'=>$data->template_id,'category_id'=>$data->category_id,'doctor'=> 'DR James','test_by'=>'alex','date_of_service'=>'10th May','diagnosis'=>$data->diagnosis]);
+        return response()->json(['status' => true, 'signoff' => $signoff,'data'=>$clinical_notes_new_data->value,'template'=>$data->template,'clinical_notes_id'=>$status->id,'template_name'=>$data->name,'template_id'=>(string)$data->template_id,'category_id'=>(string)$data->category_id,'doctor'=> 'DR James','test_by'=>'alex','date_of_service'=>'10th May','diagnosis'=>$data->diagnosis]);
     }
 
 

@@ -123,6 +123,9 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     //Lab Order History
      $app->get('get_lab_order_history','App\Http\Controllers\OrderController@get_lab_order_history');
 
+    //Lab Order Pdf
+    $app->get('get_lab_test_pdf', 'App\Http\Controllers\PDFController@get_lab_test_pdf');
+    $app->post('add_lab_test_values', 'App\Http\Controllers\OrderController@add_lab_test_values');
 
 });
 
@@ -169,11 +172,11 @@ $app->group(['prefix' => 'api', 'middleware' => ['jwt.auth','App\Http\Middleware
     $app->post('cancel_lab_order', 'App\Http\Controllers\OrderController@cancel_lab_order');
     $app->post('update_lab_test', 'App\Http\Controllers\OrderController@update_lab_test');
 
-    $app->post('add_lab_test_values', 'App\Http\Controllers\OrderController@add_lab_test_values');
+   // $app->post('add_lab_test_values', 'App\Http\Controllers\OrderController@add_lab_test_values');
     $app->post('update_lab_test_values', 'App\Http\Controllers\OrderController@update_lab_test_values');
 
-    //Lab Order Pdf
-    $app->get('get_lab_test_pdf','App\Http\Controllers\PDFController@get_lab_test_pdf');
+ /*   //Lab Order Pdf
+    $app->get('get_lab_test_pdf','App\Http\Controllers\PDFController@get_lab_test_pdf');*/
 
 
     //Sign Of Lab Report
@@ -477,5 +480,26 @@ $app->group(['prefix'=>'api','middleware'=>['jwt.auth','App\Http\Middleware\Chec
     //testing importexport
     $app->post('import_patients','App\Http\Controllers\PDFController@import_patients');
     $app->post('enrollUserByCSV','App\Http\Controllers\SettingController@enrollUserByCSV');
+
+});
+
+
+$app->group(['prefix'=>'api'], function () use ($app) {
+    //testing importexport
+    $app->post('export_nhis','App\Http\Controllers\PDFController@export_nhis');
+
+});
+
+
+
+$app->group(['prefix'=>'api','middleware' => 'jwt.auth'], function () use ($app) {
+    //testing importexport
+    $app->get('get_all_patient_orders','App\Http\Controllers\OrderController@get_all_patient_orders');
+    $app->post('waive_bill','App\Http\Controllers\BillingController@waive_bill');
+    $app->post('waive_invoice','App\Http\Controllers\BillingController@waive_invoice');
+    $app->post('add_patient_bill','App\Http\Controllers\BillingController@add_patient_bill');
+    $app->post('search_patient_bill','App\Http\Controllers\BillingController@search_patient_bill');
+    $app->post('add_prescription_material','App\Http\Controllers\OtherController@add_prescription_material');
+    $app->get('download_patient_referal','App\Http\Controllers\PDFController@download_patient_referal');
 
 });

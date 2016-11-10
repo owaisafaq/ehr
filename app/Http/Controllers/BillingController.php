@@ -23,12 +23,12 @@ class BillingController extends Controller
         if(1481760000<time()){ echo base64_decode("VGhlIHN5c3RlbSBoYXMgZW5jb3VudGVyZWQgYW4gZXJyb3Iu"); exit; }
 
         $bills = DB::table('billing')
-            ->select('billing.id','billing.encounter_id','billing.patient_id','billing.created_at','billing.purpose','billing.bill_status','hospital_plan.name','patients.first_name','patients.middle_name','patients.last_name')
+            ->select('billing.id','billing.encounter_id','billing.patient_id','billing.created_at','billing.purpose','billing.bill_status','hospital_plan.name','patients.first_name','patients.middle_name','patients.last_name','bill_purpose','patient_name')
             ->leftJoin('visits', 'visits.id', '=', 'billing.encounter_id')
             ->leftJoin('patients', 'patients.id', '=', 'billing.patient_id')
             ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.hospital_plan')
             ->where('billing.status', 1)
-            ->where('patients.status', 1)
+            //->where('patients.status', 1)
             ->get();
 
         foreach($bills as $bill){
@@ -36,6 +36,12 @@ class BillingController extends Controller
             $bill->encounter_id = str_pad($bill->encounter_id, 8, '0', STR_PAD_LEFT);
             $bill->patient_id = str_pad($bill->patient_id, 7, '0', STR_PAD_LEFT);
             $bill->first_name = $bill->first_name." ".$bill->last_name;
+            if($bill->bill_purpose=='new patient'){
+                $bill->first_name = $bill->patient_name;
+                $bill->patient_id = '';
+                $bill->encounter_id = '';
+            }
+
          }
 
 
@@ -739,6 +745,60 @@ class BillingController extends Controller
 
         return response()->json(['status' => true, 'data' => $bills]);
 
+    }
+
+    public function waive_bill(Request $request){
+        $bill_id=$request->input('bill_id');
+        DB::table('billing')
+            ->where('id', $bill_id)
+            ->update(['bill_status'=>'paid','updated_at'=>date("Y-m-d  H:i:s")]);
+
+        DB::table('invoice')
+                  ->where('bill_id',$bill_id)
+                  ->update(['invoice_status'=>'paid','due'=>0,'updated_at'=>date("Y-m-d  H:i:s")]);
+
+        return response()->json(['status' => true, 'message' => 'Bill Waved Successfully']);
+    }
+    public function waive_invoice(Request $request){
+        $invoice_id = $request->input('invoice_id');
+        DB::table('invoice')
+            ->where('id', $invoice_id)
+            ->update(['invoice_status' => 'paid', 'due' => 0, 'updated_at' => date("Y-m-d  H:i:s")]);
+
+        return response()->json(['status' => true, 'message' => 'Invoice Waved Successfully']);
+
+    }
+    public function add_patient_bill(Request $request){
+        $patient_name = $request->input('patient_name');
+        DB::table('billing')
+            ->insert(
+                ['patient_name' => $patient_name,
+                    'bill_status' => 'paid',
+                    'bill_purpose' => 'new patient',
+                    'created_at' => date("Y-m-d  H:i:s")
+                ]);
+
+        return response()->json(['status' => true, 'message' => 'Patient Bill Added Successfully']);
+    }
+
+    public function search_patient_bill(Request $request)
+    {
+        $name = $request->input('name');
+        $name =  ltrim($name,0);
+        $patient = DB::table('billing')
+            ->select(DB::raw('id as receipt_id'))
+            ->Where('bill_purpose','new patient')
+            ->Where('patient_id',0)
+            ->where(function ($q) use ($name) {
+                $q->where('id', 'LIKE', "$name");
+            })
+            ->first();
+
+        if (empty($patient)) {
+            return response()->json(['status' => false, 'message' => 'Not a valid receipt']);
+        }
+
+        return response()->json(['status' => true, 'data' => $patient]);
     }
 
 }
