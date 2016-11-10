@@ -153,30 +153,30 @@ class ApiController extends Controller
     }
 
     public function search_department(Request $request)
-     {
-         $name = $request->input('name');
+    {
+        $name = $request->input('name');
 
-         $departments = DB::table('departments')
-             ->select(DB::raw('id,name'))
-             ->where(function ($q) use ($name) {
-                 $q->where('first_name', 'LIKE', "$name%")
-                     ->orWhere('id', 'LIKE', "%$name%");
-             })
-             ->where('status', 1)
-             ->get();
+        $departments = DB::table('departments')
+            ->select(DB::raw('id,name'))
+            ->where(function ($q) use ($name) {
+                $q->where('first_name', 'LIKE', "$name%")
+                    ->orWhere('id', 'LIKE', "%$name%");
+            })
+            ->where('status', 1)
+            ->get();
 
-         if (empty($departments)) {
-             $departments = array(
-                 "id" => '0',
-                 "name" => ""
-             );
-             return response()->json(['status' => false, 'data' => $departments]);
+        if (empty($departments)) {
+            $departments = array(
+                "id" => '0',
+                "name" => ""
+            );
+            return response()->json(['status' => false, 'data' => $departments]);
 
-         } else {
-             return response()->json(['status' => true, 'data' => $departments]);
-         }
+        } else {
+            return response()->json(['status' => true, 'data' => $departments]);
+        }
 
-     }
+    }
 
 
     public function add_patient(Request $request)
