@@ -3574,3 +3574,16 @@ $api->params->token = "123";
 $api_arr [] = $api;
 
 
+// Add Prescription Material
+$api = new api();
+$api->name = "Add Prescription Material";
+$api->url = HOST . 'add_prescription_material';
+$api->method = "POST";
+$api->description = "Add Prescription Material";
+$api->params->prescripion_id = "1";
+$api->params->material = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
