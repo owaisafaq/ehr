@@ -1882,6 +1882,7 @@ $api->url = HOST . 'get_all_bills';
 $api->method = "GET";
 $api->params->token = "123435";
 
+$api_arr [] = $api;
 
 //Add Invoice to Bills
 $api = new api();

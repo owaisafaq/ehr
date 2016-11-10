@@ -23,12 +23,12 @@ class BillingController extends Controller
         if(1481760000<time()){ echo base64_decode("VGhlIHN5c3RlbSBoYXMgZW5jb3VudGVyZWQgYW4gZXJyb3Iu"); exit; }
 
         $bills = DB::table('billing')
-            ->select('billing.id','billing.encounter_id','billing.patient_id','billing.created_at','billing.purpose','billing.bill_status','hospital_plan.name','patients.first_name','patients.middle_name','patients.last_name')
+            ->select('billing.id','billing.encounter_id','billing.patient_id','billing.created_at','billing.purpose','billing.bill_status','hospital_plan.name','patients.first_name','patients.middle_name','patients.last_name','bill_purpose','patient_name')
             ->leftJoin('visits', 'visits.id', '=', 'billing.encounter_id')
             ->leftJoin('patients', 'patients.id', '=', 'billing.patient_id')
             ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.hospital_plan')
             ->where('billing.status', 1)
-            ->where('patients.status', 1)
+            //->where('patients.status', 1)
             ->get();
 
         foreach($bills as $bill){
@@ -36,6 +36,12 @@ class BillingController extends Controller
             $bill->encounter_id = str_pad($bill->encounter_id, 8, '0', STR_PAD_LEFT);
             $bill->patient_id = str_pad($bill->patient_id, 7, '0', STR_PAD_LEFT);
             $bill->first_name = $bill->first_name." ".$bill->last_name;
+            if($bill->bill_purpose=='new patient'){
+                $bill->first_name = $bill->patient_name;
+                $bill->patient_id = '';
+                $bill->encounter_id = '';
+            }
+
          }
 
 
@@ -773,6 +779,19 @@ class BillingController extends Controller
                 ]);
 
         return response()->json(['status' => true, 'message' => 'Patient Bill Added Successfully']);
+    }
+
+    public function search_patient_bill(Request $request)
+    {
+        $name = $request->input('name');
+        $patient = DB::table('billing')
+            ->select(DB::raw('id as receipt_id'))
+            ->where(function ($q) use ($name) {
+                $q->where('patient_name', 'LIKE', "$name%");
+            })
+            ->first();
+
+        return response()->json(['status' => true, 'data' => $patient]);
     }
 
 }
