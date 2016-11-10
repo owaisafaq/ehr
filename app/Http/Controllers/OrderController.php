@@ -1251,6 +1251,68 @@ class OrderController extends Controller
 
     }
 
+
+    public function get_all_patient_orders(Request $request)
+    {
+
+        $patient_id = $request->input('patient_id');
+        $limit = $request->input('limit');
+        $offset = $request->input('offset');
+
+        if ($limit > 0 || $offset > 0) {
+
+            $orders = DB::table('lab_orders')
+                ->select(DB::raw('lab_orders.id,lab_orders.patient_id,patients.first_name as patient_name,lab_orders.order_status,visit_id,lab_tests.name as lab_test_name,lab_order_tests.id as lab_test_id,labs.name as lab_name'))
+                ->leftJoin('patients', 'lab_orders.patient_id', '=', 'patients.id')
+                ->leftJoin('labs', 'labs.id', '=', 'lab_orders.lab')
+                ->leftJoin('lab_order_tests', 'lab_order_tests.lab_order_id', '=', 'lab_orders.id')
+                ->leftJoin('lab_tests', 'lab_tests.id', '=', 'lab_order_tests.lab_test')
+                ->where('lab_orders.status', 1)
+                ->where('patients.status', 1)
+                ->where('lab_orders.patient_id', $patient_id)
+                ->skip($offset)->take($limit)
+                ->get();
+
+            $count = DB::table('lab_orders')
+                ->select(DB::raw('lab_orders.id,lab_orders.patient_id,patients.first_name as patient_name,lab_orders.order_status,visit_id,lab_tests.name as lab_test_name,lab_order_tests.id as lab_test_id,labs.name as lab_name'))
+                ->leftJoin('patients', 'lab_orders.patient_id', '=', 'patients.id')
+                ->leftJoin('labs', 'labs.id', '=', 'lab_orders.lab')
+                ->leftJoin('lab_order_tests', 'lab_order_tests.lab_order_id', '=', 'lab_orders.id')
+                ->leftJoin('lab_tests', 'lab_tests.id', '=', 'lab_order_tests.lab_test')
+                ->where('lab_orders.status', 1)
+                ->where('patients.status', 1)
+                ->where('lab_orders.patient_id', $patient_id)
+                ->get();
+            $count = count($count);
+        } else {
+            $orders = DB::table('lab_orders')
+                ->select(DB::raw('lab_orders.id,lab_orders.patient_id,patients.first_name as patient_name,lab_orders.order_status,visit_id,lab_tests.name as lab_test_name,lab_order_tests.id as lab_test_id,labs.name as lab_name'))
+                ->leftJoin('patients', 'lab_orders.patient_id', '=', 'patients.id')
+                ->leftJoin('labs', 'labs.id', '=', 'lab_orders.lab')
+                ->leftJoin('lab_order_tests', 'lab_order_tests.lab_order_id', '=', 'lab_orders.id')
+                ->leftJoin('lab_tests', 'lab_tests.id', '=', 'lab_order_tests.lab_test')
+                ->where('lab_orders.status',1)
+                ->where('patients.status', 1)
+                ->where('lab_orders.patient_id', $patient_id)
+                ->get();
+            $count = count($orders);
+        }
+
+
+        foreach ($orders as $lab_orders) {
+            $lab_orders->patient_id = str_pad($lab_orders->patient_id, 7, '0', STR_PAD_LEFT);
+            $lab_orders->visit_id = str_pad($lab_orders->visit_id, 8, '0', STR_PAD_LEFT);
+            $lab_orders->id = str_pad($lab_orders->id, 8, '0', STR_PAD_LEFT);
+            $lab_orders->id = 'L' . $lab_orders->id;
+            $lab_orders->ordered_by = 'Dr Smith';
+            $lab_orders->handled_by = 'James';
+        }
+
+        return response()->json(['status' => true, 'data' => $orders,'count'=>$count]);
+
+
+    }
+
 }
 
 

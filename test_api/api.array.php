@@ -3514,3 +3514,39 @@ $api->params->token = "123435";
 
 $api_arr [] = $api;
 
+
+//Get all patient orders
+$api = new api();
+$api->name = "Get all patient orders";
+$api->url = HOST . 'get_all_patient_orders';
+$api->method = "GET";
+$api->params->offset = "1";
+$api->params->limit = "1";
+$api->params->patient_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Waive Bill
+$api = new api();
+$api->name = "Waive Bill";
+$api->url = HOST . 'waive_bill';
+$api->method = "POST";
+$api->params->bill_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+//Waive Invoice
+$api = new api();
+$api->name = "Waive Invoice";
+$api->url = HOST . 'waive_invoice';
+$api->method = "POST";
+$api->params->invoice_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+

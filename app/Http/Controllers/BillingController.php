@@ -741,4 +741,26 @@ class BillingController extends Controller
 
     }
 
+    public function waive_bill(Request $request){
+        $bill_id=$request->input('bill_id');
+        DB::table('billing')
+            ->where('id', $bill_id)
+            ->update(['bill_status'=>'paid','updated_at'=>date("Y-m-d  H:i:s")]);
+
+        DB::table('invoice')
+                  ->where('bill_id',$bill_id)
+                  ->update(['invoice_status'=>'paid','due'=>0,'updated_at'=>date("Y-m-d  H:i:s")]);
+
+        return response()->json(['status' => true, 'message' => 'Bill Waved Successfully']);
+    }
+    public function waive_invoice(Request $request){
+        $invoice_id = $request->input('invoice_id');
+        DB::table('invoice')
+            ->where('id', $invoice_id)
+            ->update(['invoice_status' => 'paid', 'due' => 0, 'updated_at' => date("Y-m-d  H:i:s")]);
+
+        return response()->json(['status' => true, 'message' => 'Invoice Waved Successfully']);
+
+    }
+
 }
