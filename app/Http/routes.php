@@ -500,5 +500,6 @@ $app->group(['prefix'=>'api','middleware' => 'jwt.auth'], function () use ($app)
     $app->post('add_patient_bill','App\Http\Controllers\BillingController@add_patient_bill');
     $app->post('search_patient_bill','App\Http\Controllers\BillingController@search_patient_bill');
     $app->post('add_prescription_material','App\Http\Controllers\OtherController@add_prescription_material');
+    $app->get('download_patient_referal','App\Http\Controllers\PDFController@download_patient_referal');
 
 });
