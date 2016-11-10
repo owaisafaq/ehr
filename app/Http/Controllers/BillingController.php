@@ -788,8 +788,9 @@ class BillingController extends Controller
         $patient = DB::table('billing')
             ->select(DB::raw('id as receipt_id'))
             ->Where('bill_purpose','new patient')
+            ->Where('patient_id',0)
             ->where(function ($q) use ($name) {
-                $q->where('id', 'LIKE', "%$name");
+                $q->where('id', 'LIKE', "$name");
             })
             ->first();
 
