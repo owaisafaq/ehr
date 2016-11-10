@@ -3283,7 +3283,9 @@ class ApiController extends Controller
             ]
         );
 
-        return response()->json(['status' => true, 'message' => "Patient Referel Added Successfully"]);
+        $id = DB::getPdo()->lastInsertId();
+
+        return response()->json(['status' => true, 'message' => "Patient Referel Added Successfully",'referal_id'=>$id]);
     }
 
     public function add_manufacturer(Request $request)

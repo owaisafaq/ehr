@@ -327,6 +327,50 @@ class PDFController extends Controller
         ), JSON_UNESCAPED_SLASHES);
     }
 
+
+    public function download_patient_referal(Request $request){
+        $refral_id = $request->input('refral_id');
+        $referal = DB::table('patient_referels')
+            ->select(DB::raw('*'))
+            ->where('id',$refral_id)
+            ->first();
+
+        $hospital = DB::table('hospital')
+            ->select(DB::raw('id,name,CONCAT("' . $logo_image . '",image) as hospital_image,address,type,city,website,phone'))
+            ->first();
+
+        $logo_image = url('/') . '/uploaded_images/';
+
+        $patient = DB::table('patients')
+            ->select(DB::raw('patients.id,CONCAT(patients.first_name," ",patients.last_name) AS patient_name,CONCAT("' . $logo_image . '",patients.patient_image) as patient_image,patients.age,patients.date_of_birth,maritial_status.name as marital_status,(CASE WHEN (sex = 1) THEN "Male" ELSE "Female" END) as gender'))
+            ->leftJoin('patient_referels', 'patients.id', '=', 'patient_referels.patient_id')
+            ->leftJoin('maritial_status', 'patients.marital_status', '=', 'maritial_status.id')
+            ->where('patients.id', $patient_id)
+            ->first();
+
+        $data = ['referal'=> $referal, 'patient' => $patient, 'hospital' => $hospital];
+
+        $view = app()->make('view')->make('referal_pdf', $data)->render();
+
+        $pdf = PDF::loadHTML($view);
+
+        $path = base_path() . '/public/patient_referal.pdf';
+
+        $pdf->save($path);
+
+        $file_archive = url('/').'/patient_referal.pdf';
+
+        echo json_encode(array(
+            'status' => true,
+            'data' => $file_archive
+
+        ), JSON_UNESCAPED_SLASHES);
+
+
+
+
+    }
+
     public function download_archive(Request $request){
 
         $archive_id = $request->input('resource_id');

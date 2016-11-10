@@ -3587,3 +3587,14 @@ $api->params->token = "123";
 $api_arr [] = $api;
 
 
+//Download Patient Referal
+$api = new api();
+$api->name = "Download Patient Referal";
+$api->url = HOST . 'download_patient_referal';
+$api->method = "GET";
+$api->params->refral_id = "1";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
