@@ -147,6 +147,7 @@
                     <li><a showtab href="#medications">medications</a></li>
                     <li><a showtab href="#supplements">supplements</a></li>
                     <li><a showtab href="#allergies">allergies</a></li>
+                    <li><a showtab href="#labs">Labs</a></li>
                     <li><a showtab href="#archive">documents</a></li>
                 </ul>
             </div><!--end .card-head -->
@@ -586,22 +587,6 @@
                             </tr>
                         </tbody>
                     </table>
-                    <!--                    <div class="pagination pagination-centered" ng-show="allergiesCount">
-                        <ul class="pagination-controle pagination">
-                            <li class="enterKey">
-                                <input type="text" width="5px" class="keyUpAllergy" ng-model="pageNumberAllergy" numbers-only placeholder="Page Number"/>
-                            </li>
-                            <li>
-                              <button type="button" class="btn btn-primary" ng-disabled="allergyCurPage == 0" ng-click="allergyCurPage=allergyCurPage-1; paginationPrev(pageSize, allergyCurPage);"> &lt; PREV</button>
-                            </li>
-                            <li>
-                              <span>Page {{allergyCurPage + 1}} of {{ numberOfPages() }}</span>
-                            </li>
-                            <li>
-                              <button type="button" class="btn btn-primary" ng-disabled="allergyCurPage >= allergiesCount/pageSize - 1" ng-click="allergyCurPage = allergyCurPage+1; paginationNext(pageSize, allergyCurPage);">NEXT &gt;</button>
-                            </li>
-                        </ul>
-                    </div>-->
                     <div class="pagination pagination-centered pull-right" ng-show="allergiesCount">
                         <ul class="pagination-controle pagination">
                             <li class="prev-page">
@@ -614,6 +599,48 @@
                              <li class="next-page">
                               <!--<button type="button" class="btn btn-primary" ng-disabled="supplementsCurPage >= supplementsCount/pageSize - 1" ng-click="supplementsCurPage = supplementsCurPage+1; supplementPaginationNext(pageSize, supplementsCurPage);"><i class="fa fa-caret-right"></i></button>-->
                               <button type="button" class="btn btn-primary" ng-disabled="allergyCurPage >= allergiesCount/pageSize - 1" ng-click="allergyCurPage = allergyCurPage+1; paginationNext(pageSize, allergyCurPage);"><i class="fa fa-caret-right"></i></button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab-pane" id="labs"> 
+                    <!-- <button class="btn ink-reaction button-style-1 button-style-1 pull-right margin-bottom-xxl" data-toggle="modal" data-target="#addallergies" ng-disabled="is_visit == 0">Add Allergies</button> -->
+                    <table class="table table-striped no-margin table-custom table-custom_big editable_table selectAndDateTable">
+                        <thead>
+                            <tr>
+                                <th>Encounter ID</th>
+                                <th>Lab Order ID</th>
+                                <th>Test Name</th>
+                                <th>Lab</th>
+                                <th>ORDERED BY</th>
+                                <th>status</th>
+                                <th>HANDLING BY</th>
+                                <th>Report</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="labsOrder in labsOrders">
+                                <td>E{{labsOrder.visit_id}}</td>
+                                <td>{{labsOrder.id}}</td>
+                                <td>{{labsOrder.lab_test_name}}</td>
+                                <td>{{labsOrder.lab_name}}</td>
+                                <td>{{labsOrder.ordered_by}}</td>
+                                <td>{{labsOrder.order_status}}</td>
+                                <td>{{labsOrder.handled_by}}</td>
+                                <td><a href="javascript:;" ng-click="viewLabTestReport(labsOrder.lab_test_id);">View {{labsOrder.lab_test_id}}</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="pagination pagination-centered pull-right" ng-show="labsCount">
+                        <ul class="pagination-controle pagination">
+                            <li class="prev-page">
+                                <button type="button" class="btn btn-primary" ng-disabled="labCurPage == 0" ng-click="labCurPage=labCurPage-1; labPaginationPrev(pageSize, labCurPage);"><i class="fa fa-caret-left"></i></button>
+                            </li>
+                            <li>
+                                <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberAllergy" numbers-only value="{{labCurPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPagesLabs() }}</span>
+                            </li>
+                             <li class="next-page">
+                              <button type="button" class="btn btn-primary" ng-disabled="labCurPage >= labsCount/pageSize - 1" ng-click="labCurPage = labCurPage+1; labPaginationNext(pageSize, labCurPage);"><i class="fa fa-caret-right"></i></button>
                             </li>
                         </ul>
                     </div>
@@ -1560,5 +1587,24 @@
                 </div>
             </div><!-- /.modal-content -->
         </form>
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade modal-size_1" id="previewReport"  tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Lab Test Report</h2>
+            </div>
+            <div class="modal-body" style="height: 500px;width: 100%;">
+            <!-- <div class="icons_con pull-right no-margin">
+                <button class="update button-custom" ng-disabled="is_signoff == 1" data-dismiss="modal">update report</button>
+            </div> -->
+                <div class="showPdf"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1"  data-dismiss="modal" >OK</button>
+                <!-- ng-click="doSignOff();" ng-disabled="is_signoff == 1" -->
+            </div>
+        </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

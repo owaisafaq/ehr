@@ -1,5 +1,5 @@
-var serverPath = "http://131.107.100.10/ehr/public/api/";
-//var serverPath = "http://demoz.online/ehr/public/api/";
+//var serverPath = "http://131.107.100.10/ehr/public/api/";
+var serverPath = "http://demoz.online/ehr/public/api/";
 //var serverPath = "http://demoz.online/dev/ehr/public/api/";
 //var serverPath = "http://131.107.100.10/ehr/public/api/";
 //var serverPath = "http://demoz.online/ehr/public/api/";
@@ -53,6 +53,13 @@ var reason = [
     {"id": "High", "name": "High"},
     {"id": "Average", "name": "Average"},
     {"id": "Low", "name": "Low"}
+];
+var numberOfRecordsDropDown = [
+    {"id": "10", "name": "10"},
+    {"id": "20", "name": "20"},
+    {"id": "30", "name": "30"},
+    {"id": "40", "name": "40"},
+    {"id": "50", "name": "50"}
 ];
 /*var medicationDropDowns = [
     {"id": "1", "name": "abc"},

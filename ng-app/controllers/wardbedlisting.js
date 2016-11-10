@@ -13,6 +13,8 @@ AppEHR.controller('wardBedListingController', ['$scope', '$rootScope', '$window'
     $scope.flagWard = false;
     $scope.flagSpeciality = false;
     $scope.flagBeds = false;
+    $scope.pageSizeDropdown = '';
+    $scope.numberOfRecordsDropDown = numberOfRecordsDropDown;
 	GetAllWards.get({
 		token: $window.sessionStorage.token, 
 		limit: $scope.itemsPerPage, 
@@ -161,18 +163,32 @@ AppEHR.controller('wardBedListingController', ['$scope', '$rootScope', '$window'
 
     $scope.paginationNext = function(pageSize, curPage){
         $rootScope.loader = "show";
-        GetAllWards.get({
-            token: $window.sessionStorage.token,
-            offset: (pageSize * curPage), limit: $scope.itemsPerPage
-        }, getWardsSuccess, getWardsFailure);
+        if($scope.selectBox == true){
+            GetAllWards.get({
+                token: $window.sessionStorage.token,
+                offset: (pageSize * curPage), limit: $scope.selectBoxLimit
+            }, getWardsSuccess, getWardsFailure);
+        }else{
+            GetAllWards.get({
+                token: $window.sessionStorage.token,
+                offset: (pageSize * curPage), limit: $scope.itemsPerPage
+            }, getWardsSuccess, getWardsFailure);
+        }
     }
 
     $scope.paginationPrev = function(pageSize, curPage){
         $rootScope.loader = "show";
-        GetAllWards.get({
-            token: $window.sessionStorage.token,
-            offset: (pageSize * curPage), limit: $scope.itemsPerPage
-        }, getWardsSuccess, getWardsFailure);
+        if($scope.selectBox == true){
+            GetAllWards.get({
+                token: $window.sessionStorage.token,
+                offset: (pageSize * curPage), limit: $scope.selectBoxLimit
+            }, getWardsSuccess, getWardsFailure);
+        }else{
+            GetAllWards.get({
+                token: $window.sessionStorage.token,
+                offset: (pageSize * curPage), limit: $scope.itemsPerPage
+            }, getWardsSuccess, getWardsFailure);
+        }
     }
 
     $scope.editformsubmission = function(){
@@ -264,4 +280,15 @@ AppEHR.controller('wardBedListingController', ['$scope', '$rootScope', '$window'
         }
     }
 
+    $scope.selectBoxValue = function(value){
+        $scope.selectBox = true;
+        $scope.pageSize = value;
+        $scope.selectBoxLimit = value;
+        $rootScope.loader = "show";
+        $scope.pageNumber = '';
+        GetAllWards.get({
+            token: $window.sessionStorage.token, 
+            offset: ($scope.pageSize * $scope.curPage), limit: value
+        }, getWardsSuccess, getWardsFailure);
+    }
 }]);

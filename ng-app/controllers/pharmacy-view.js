@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription', '$window', 'GetPrescription', '$routeParams', 'PatienPrescriptionUpdate', 'GetPatientInfo', 'GetAllMedications', 'DropDownData', 'DeleteMedication', 'AddMedicationInPrescription', 'GetMedicineUnits', 'CheckoutPatient', "GetPrescriptionSupplements", "GetMedications", 'PrescriptionPDF', 'DespensePharmacy', 'QueryMedication', 'DropDownData', 'PharmacyPrescription', 'GetAllWardsDropDown', 'GetBedsByWard', function ($scope, $rootScope, PatienPrescription, $window, GetPrescription, $routeParams, PatienPrescriptionUpdate, GetPatientInfo, GetAllMedications, DropDownData, DeleteMedication, AddMedicationInPrescription, GetMedicineUnits, CheckoutPatient, GetPrescriptionSupplements, GetMedications, PrescriptionPDF, DespensePharmacy, QueryMedication, DropDownData, PharmacyPrescription, GetAllWardsDropDown, GetBedsByWard) {
+AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription', '$window', 'GetPrescription', '$routeParams', 'PatienPrescriptionUpdate', 'GetPatientInfo', 'GetAllMedications', 'DropDownData', 'DeleteMedication', 'AddMedicationInPrescription', 'GetMedicineUnits', 'CheckoutPatient', "GetPrescriptionSupplements", "GetMedications", 'PrescriptionPDF', 'DespensePharmacy', 'QueryMedication', 'DropDownData', 'PharmacyPrescription', 'GetAllWardsDropDown', 'GetBedsByWard', 'AddMaterialByCat', 'getInventory', 'AddPrescriptionMaterials', function ($scope, $rootScope, PatienPrescription, $window, GetPrescription, $routeParams, PatienPrescriptionUpdate, GetPatientInfo, GetAllMedications, DropDownData, DeleteMedication, AddMedicationInPrescription, GetMedicineUnits, CheckoutPatient, GetPrescriptionSupplements, GetMedications, PrescriptionPDF, DespensePharmacy, QueryMedication, DropDownData, PharmacyPrescription, GetAllWardsDropDown, GetBedsByWard, AddMaterialByCat, getInventory, AddPrescriptionMaterials) {
         $rootScope.pageTitle = "EHR - Pharmacy VIew";
         $scope.PrescriptionView = [];
         $scope.medicationsDataPush = [];
@@ -35,8 +35,6 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
 
         function prescriptionSuccess(res) {
             if(res.status == true){
-//                console.log("all");
-//                console.log(res);
                 $scope.patient_id = res.data.patient_id;
                 $scope.PrescriptionViews = res.data;
                 $scope.PrescriptionViewsGetId = res.data;
@@ -555,5 +553,54 @@ AppEHR.controller('pharmacyView', ['$scope', '$rootScope', 'PatienPrescription',
         $scope.admittedDate = $scope.admittedDateYear + "-" + $scope.admittedDateMonth + "-" + $scope.admittedDateDay
         console.log($scope.admittedDate);
         $scope.CO = {};
+
+        getInventory.get({
+            token: $window.sessionStorage.token
+        }, getInventorySuccess, getInventoryFailure);
+        function getInventorySuccess(res){
+            $scope.allProdByCat = res.data;
+            console.log("success")
+        }
+        function getInventoryFailure(res){
+            console.log(res);
+            console.log("error")
+        }
+        $scope.addedMaterial = [];
+        $scope.addedMaterialDB = [];
+        $scope.addMaterial = function (){
+            $scope.addedMaterial.push({
+                "material": "" + $scope.prod_cat_name.cat_name + "",
+                "cost": "" + $scope.prod_quantity * $scope.prod_cat_name.cost + "",
+                "quantity": $scope.prod_quantity
+            });
+            $scope.addedMaterialDB.push({
+                "material": "" + $scope.prod_cat_name.id + "",
+                "cost": "" + $scope.prod_quantity * $scope.prod_cat_name.cost + "",
+                "quantity": $scope.prod_quantity
+            });
+            $scope.prod_quantity = "";
+            $("#selectInventory select").select2("val", "");
+                
+        }
+        $scope.addMaterials = function (){
+            AddPrescriptionMaterials.save({
+                prescripion_id: $routeParams.prescriptionID,
+                material: JSON.stringify($scope.addedMaterialDB),
+                token: $window.sessionStorage.token,
+            }, addMaterialSuccess, addMaterialFailure);
+        }
+        function addMaterialSuccess(res){ 
+            if(res.status == true){
+                $('#addMaterials').modal('hide');
+                console.log(res.message);
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
+            }
+        }
+        function addMaterialFailure(res){
+            console.log(res.data);
+            console.log("failure");
+        }
 
 }]);

@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-lg-1">
                     <label class="txt-style-1 text-uppercase col-lg-12 adjust-2">Age</label>
-                    <span class="txt-style-2 col-lg-12">{{displayInfo.age}}</span>
+                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.age}}</span>
                 </div>
                 <div class="col-lg-1">
                     <label class="txt-style-1 text-uppercase col-lg-12">Sex</label>
@@ -74,8 +74,6 @@
                                 <div class="col-lg-6">
                                     <select class="form-control" ng-class="{true: 'error'}[submitted && encounterFormAdd.department.$invalid]" name="department" ng-model="addEncounter.department" placeholder="Select Facility/Dept" required>
                                         <option value=""></option>
-                                        <!-- <option value="1">1</option>
-                                        <option value="2">2</option> -->
                                         <option ng-repeat="department in encountersDropdownData.departments" value="{{department.id}}">{{department.name}}</option>
                                     </select>
                                     <p class="help-block PIValid" ng-show="submitted && encounterFormAdd.department.$error.required">Required</p>
@@ -168,6 +166,7 @@
                 <button type="button" data-toggle="modal" class="notes button-custom pull-right" ng-hide="buttonDisabled" data-target="#addclinical" ng-click="goToClinicalNotes();">Clinical Notes</button>
 
                 <button type="button" data-toggle="modal" class="add button-custom pull-right" data-target="#addpatient" ng-hide="buttonDisabled">Add Vitals</button>
+                <button type="button" data-toggle="modal" class="assign button-custom pull-right" data-target="#assignRoom" ng-hide="buttonDisabled">Assign Room</button>
             </div>
             <div class="card-body col-lg-12">
                 <div>
@@ -183,7 +182,7 @@
                                 <th>visit type</th>
                                 <!-- <th>visit class</th> -->
                                 <th>whom to see</th>
-                                <!-- <th>Exam Room</th> -->
+                                <th>Room</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -210,7 +209,7 @@
                                 <td>{{encounter.encounter_type}}</td>
                                 <!-- <td>{{encounter.encounter_class}}</td> -->
                                 <td>{{encounter.name}}</td>
-                                <!-- <td>{{encounter.name}}</td> -->
+                                <td>{{encounter.room}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -877,6 +876,33 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
             </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade modal-size_1" id="assignRoom" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Assign Room</h2>
+            </div>
+            <form novalidate name="assignRoomed" ng-submit="assigningRoom(roomAssigned);">
+                <div class="modal-body">
+                    <div class="col-lg-3">
+                        <label>Rooms</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <select class="form-control" ng-class="{true: 'error'}[submitted && assignRoomed.rooms.$invalid]" name="rooms" ng-model="roomAssigned" placeholder="Select" required>
+                            <option value=""></option>
+                            <option ng-repeat="r in roomsDropdown" value="{{r.id}}">{{r.name}}</option>
+                        </select>
+                        <p class="help-block PIValid" ng-show="submitted && assignRoomed.rooms.$error.required">Required</p>
+                    </div>
+                </div><br/>
+            <div class="modal-footer margin-top-10">
+                <button type="submit" class="btn btn-default button-style-1" ng-click="submitted=true;">Save</button>
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal" ng-click="submitted=false;">Cancel</button>
+            </div>
+            </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

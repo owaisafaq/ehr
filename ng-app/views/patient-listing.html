@@ -78,13 +78,13 @@
                 <button class="delete button-custom pull-right" data-toggle="modal" data-target="#deleteModal" ng-hide="hideOptions">Delete</button>
                 <div>
                 <div class="col-lg-2">
-                    <select ng-model="pageSize" class="form-control" ng-change="selectBoxValue(pageSize);" data-placeholder="Number of Record">
-                        <option></option>
-                        <option value="10">10</option>
-                        <option value="20">20</option>
+                    <select ng-model="pageSizeDropdown" class="form-control" ng-change="selectBoxValue(pageSizeDropdown);" placeholder="Number of Record">
+                        <option value=""></option>
+                        <option value="{{num.id}}" ng-repeat="num in numberOfRecordsDropDown">{{num.name}}</option>
+                        <!-- <option value="20">20</option>
                         <option value="30">30</option>
                         <option value="40">40</option>
-                        <option value="50">50</option>
+                        <option value="50">50</option> -->
                     </select>
                 </div>
                     <table class="table table-striped no-margin table-custom">
@@ -150,7 +150,7 @@
                                 <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
                             </li>                            
                             <li>
-                                <span class="pagination-detail">DPage <input type="text" width="5px" ng-model="pageNumber" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
+                                <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumber" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
                             </li>
                             <li class="next-page">
                               <button type="button" class="btn btn-primary" ng-disabled="curPage >= patientCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>

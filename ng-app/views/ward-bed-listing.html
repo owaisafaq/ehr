@@ -18,6 +18,12 @@
                 <button class="add button-custom pull-right" data-toggle="modal" data-target="#createWard">Add</button>
                 <button type="button" class="btn ink-reaction button-style-1 button-style-1_b pull-right margin-right-20 margin-top-5" ng-hide="buttonDisabled" ng-click="bedShematic();">Bed shematic</button>
             </div>
+            <!-- <div class="col-lg-2">
+                <select ng-model="pageSizeDropdown" class="form-control" ng-change="selectBoxValue(pageSizeDropdown);" placeholder="Number of Record">
+                    <option value=""></option>
+                    <option value="{{num.id}}" ng-repeat="num in numberOfRecordsDropDown">{{num.name}}</option>
+                </select>
+            </div> -->
             <div class="card-body col-lg-12">
                 <div>
                     <table class="table table-striped no-margin table-custom">
@@ -47,20 +53,7 @@
                             </tr>
                         </tbody>
                     </table>
-<!--                    <div class="pagination pagination-centered" ng-show="wardsCount">
-                        <ul class="pagination-controle pagination">
-                            <li>
-                              <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"> &lt; PREV</button>
-                            </li>
-                            <li>
-                              <span>Page {{curPage + 1}} of {{ numberOfPages() }}</span>
-                            </li>
-                            <li>
-                              <button type="button" class="btn btn-primary" ng-disabled="curPage >= wardsCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);">NEXT &gt;</button>
-                            </li>
-                        </ul>
-                    </div>-->
-<div class="pagination pagination-centered pull-right" ng-show="wardsCount">
+                    <div class="pagination pagination-centered pull-right" ng-show="wardsCount && !selectBox">
                         <ul class="pagination-controle pagination">
                             <li class="prev-page">
                                 <!--<button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>-->
@@ -70,6 +63,21 @@
                                 <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumber" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
                             </li>
                              <li class="next-page">
+                              <!--<button type="button" class="btn btn-primary" ng-disabled="curPage >= patientCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>-->
+                              <button type="button" class="btn btn-primary" ng-disabled="curPage >= wardsCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="pagination pagination-centered pull-right" ng-show="wardsCount && selectBox">
+                        <ul class="pagination-controle pagination">
+                            <li class="prev-page">
+                                <!--<button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>-->
+                                <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
+                            </li>                            
+                            <li>
+                                <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumber" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
+                            </li>
+                            <li class="next-page">
                               <!--<button type="button" class="btn btn-primary" ng-disabled="curPage >= patientCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>-->
                               <button type="button" class="btn btn-primary" ng-disabled="curPage >= wardsCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
                             </li>

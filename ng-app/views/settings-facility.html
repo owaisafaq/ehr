@@ -3,8 +3,8 @@
         <div class="card margin-0">
             <div class="card-head">
                 <ul class="nav nav-tabs nav-justified custom-tab" data-toggle="tabs">
-                    <li><a showtab href="#facilities-profile">Facilities Profile</a></li>
-                    <li class="active"><a showtab href="#spec-depart">Specialities & Departments</a></li>
+                    <li ng-hide="ROLES.Facility == undefined"><a showtab href="#facilities-profile">Facilities Profile</a></li>
+                    <li class="active" ng-hide="ROLES.Specialties == undefined"><a showtab href="#spec-depart">Specialities & Departments</a></li>
                 </ul>
             </div>
             <div class="card-body tab-content col-lg-12 custom-card-body padding-top-0">

@@ -1,5 +1,5 @@
 var AppEHR = angular.module('AppEHR');
-AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', 'GetResourcesByFolderArchives', 'ListFolderArchives', 'EditFolderArchives', 'DeleteFolderArchives', 'RemoveArchives', 'Upload', 'SaveFiles', '$timeout', 'DropDownData', 'ADDSupplements', 'ADDAllergy', 'AddFolderArchives','EditArchives', 'PatienPrescription', 'FolderUpContent', 'FolderUpFolders', 'ListImmunization', 'DeleteImmunization', 'AddImmunization', 'GetAllMedications', 'CheckoutPatient', 'GetMedicineUnits', 'GetPrescriptionSupplements', 'GetMedications', 'GetPatientAppointment', 'GetAP', 'DeleteAP', 'AddAP', 'DeleteFamily', 'ListFamily', 'DeleteAppointments', 'AddFamily', 'ClinicalReport', 'GetAllWardsDropDown', 'GetBedsByWard', 'DownloadArchive', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy, GetResourcesByFolderArchives, ListFolderArchives, EditFolderArchives, DeleteFolderArchives, RemoveArchives, Upload, SaveFiles, $timeout, DropDownData, ADDSupplements, ADDAllergy, AddFolderArchives,EditArchives,PatienPrescription, FolderUpContent,FolderUpFolders, ListImmunization, DeleteImmunization, AddImmunization, GetAllMedications, CheckoutPatient, GetMedicineUnits, GetPrescriptionSupplements, GetMedications, GetPatientAppointment, GetAP, DeleteAP, AddAP, DeleteFamily, ListFamily, DeleteAppointments, AddFamily, ClinicalReport, GetAllWardsDropDown, GetBedsByWard, DownloadArchive) {
+AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope', 'PatientDemographics', '$window', '$routeParams', 'GetEncountersByPatients', 'AddVitals', 'GetPatientMedications', 'GetVitalsInfo', 'GetSupplements', 'GetAllergies', 'UpdateAllergies', 'RemoveAllergy', 'GetResourcesByFolderArchives', 'ListFolderArchives', 'EditFolderArchives', 'DeleteFolderArchives', 'RemoveArchives', 'Upload', 'SaveFiles', '$timeout', 'DropDownData', 'ADDSupplements', 'ADDAllergy', 'AddFolderArchives','EditArchives', 'PatienPrescription', 'FolderUpContent', 'FolderUpFolders', 'ListImmunization', 'DeleteImmunization', 'AddImmunization', 'GetAllMedications', 'CheckoutPatient', 'GetMedicineUnits', 'GetPrescriptionSupplements', 'GetMedications', 'GetPatientAppointment', 'GetAP', 'DeleteAP', 'AddAP', 'DeleteFamily', 'ListFamily', 'DeleteAppointments', 'AddFamily', 'ClinicalReport', 'GetAllWardsDropDown', 'GetBedsByWard', 'DownloadArchive', 'GetLabsByPatient', 'orderReport', function ($scope, $rootScope, PatientDemographics, $window, $routeParams, GetEncountersByPatients, AddVitals, GetPatientMedications, GetVitalsInfo, GetSupplements, GetAllergies, UpdateAllergies, RemoveAllergy, GetResourcesByFolderArchives, ListFolderArchives, EditFolderArchives, DeleteFolderArchives, RemoveArchives, Upload, SaveFiles, $timeout, DropDownData, ADDSupplements, ADDAllergy, AddFolderArchives,EditArchives,PatienPrescription, FolderUpContent,FolderUpFolders, ListImmunization, DeleteImmunization, AddImmunization, GetAllMedications, CheckoutPatient, GetMedicineUnits, GetPrescriptionSupplements, GetMedications, GetPatientAppointment, GetAP, DeleteAP, AddAP, DeleteFamily, ListFamily, DeleteAppointments, AddFamily, ClinicalReport, GetAllWardsDropDown, GetBedsByWard, DownloadArchive, GetLabsByPatient, orderReport) {
         $rootScope.pageTitle = "EHR - Patient Summary Demographics";
         $scope.vital = {};
         $scope.PI = {};
@@ -1559,4 +1559,83 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
         function downloadFailure(error){
             console.log(error);
         }*/
+
+        /*LABS*/
+        GetLabsByPatient.get({
+            token: $window.sessionStorage.token,
+            offset: $scope.offset,
+            limit: $scope.itemsPerPage,
+            patient_id: $routeParams.patientID
+        }, GetLabsSuccess, GetLabsFailure);
+        function GetLabsSuccess(res) {
+            $rootScope.loader = "hide";
+            if (res.status == true) {
+                $scope.labsOrders = res.data;
+                $scope.labsCount = res.count;
+            }
+        }
+
+        function GetLabsFailure(error) {
+            console.log(error);
+            $('#internetError').modal('show');
+        }
+
+        /*LABS PAGINATION*/
+        $scope.labCurPage = 0;
+        $scope.numberOfPagesLabs = function() {
+          return Math.ceil($scope.labsCount / $scope.pageSize);
+        };
+
+        $scope.labPaginationNext = function(pageSize, curPage){
+            $rootScope.loader = "show";
+            GetPatientMedications.get({
+                token: $window.sessionStorage.token,
+                offset: (pageSize * curPage),
+                limit: $scope.itemsPerPage,
+                patient_id: $routeParams.patientID
+            }, GetLabsSuccess, GetLabsFailure);
+        }
+
+        $scope.labPaginationPrev = function(pageSize, curPage){
+            $rootScope.loader = "show";
+            GetPatientMedications.get({
+                token: $window.sessionStorage.token,
+                offset: (pageSize - 1) * curPage,
+                limit: $scope.itemsPerPage,
+                patient_id: $routeParams.patientID
+            }, GetLabsSuccess, GetLabsFailure);
+        }
+
+        $scope.viewLabTestReport = function(testId){
+            $rootScope.loader = "show";
+            $('#previewReport').modal('show');
+            $('.showPdf').html("<iframe src=></iframe>");
+            orderReport.save({
+                lab_test_id: testId, //    will place there orderID/21 api is in progress
+                token: $window.sessionStorage.token
+            }, orderReportSuccess, orderReportFailure);
+        }
+
+        function orderReportSuccess(res){
+            console.log(res, "report");
+            $rootScope.loader = "hide";
+            if (res.status == true) {
+                //$scope.labtestid = res.lab_test_id;
+                $('.showPdf').html("<iframe src="+res.data+"></iframe>");
+                //$scope.signoffStatus = res.is_signup;
+                //$scope.signoffId = res.lab_test_id;
+            }else if(res.error_code == 500){
+                console.log(res);
+                $rootScope.RolesAccess(res.message);
+            }
+        }
+
+        function orderReportFailure(res){
+            console.log(res);
+            $rootScope.loader = "hide";
+            $('.showPdf').html("<iframe src=></iframe>");
+            //$('#internetError').modal('show');
+        }
+
+
 }]);

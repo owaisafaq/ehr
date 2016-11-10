@@ -18,6 +18,8 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
 	$scope.PatientSearch = serverPath;
     $scope.encounterFields = {};
     $scope.addEncounter = {};
+    $scope.pageSizeDropdown = '';
+    $scope.numberOfRecordsDropDown = numberOfRecordsDropDown;
     $scope.searchByAppointmentViewBy = false;
 	GetAppointmentsByPatient.get({
 		token: $window.sessionStorage.token, 
@@ -27,7 +29,7 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
 
 	function allAppointmentsSuccess(res){
 		$rootScope.loader = "hide";
-        console.log(res);
+        //console.log(res);
 		if(res.status == true){
 			if(res.data.length == 0){
 				$scope.modalHeading = "Result";
@@ -185,18 +187,36 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
 
     $scope.paginationNext = function(pageSize, curPage){
         $rootScope.loader = "show";
-        GetAppointmentsByPatient.get({
-            token: $window.sessionStorage.token,
-            offset: (pageSize * curPage), limit: $scope.itemsPerPage
-        }, allAppointmentsSuccess, allAppointmentsFailure);
+        if($scope.selectBox == true){
+            console.log("pageSize", pageSize, "curPage", curPage);
+            GetAppointmentsByPatient.get({
+                token: $window.sessionStorage.token,
+                offset: (pageSize * curPage), limit: $scope.selectBoxLimit
+            }, allAppointmentsSuccess, allAppointmentsFailure);
+        }else{
+            console.log("else pageSize", pageSize, "curPage", curPage);
+            GetAppointmentsByPatient.get({
+                token: $window.sessionStorage.token,
+                offset: (pageSize * curPage), limit: $scope.itemsPerPage
+            }, allAppointmentsSuccess, allAppointmentsFailure);
+        }
     }
 
     $scope.paginationPrev = function(pageSize, curPage){
         $rootScope.loader = "show";
-        GetAppointmentsByPatient.get({
-            token: $window.sessionStorage.token,
-            offset: (pageSize * curPage), limit: $scope.itemsPerPage
-        }, allAppointmentsSuccess, allAppointmentsFailure);
+        if($scope.selectBox == true){
+            console.log("pageSize", pageSize, "curPage", curPage);
+            GetAppointmentsByPatient.get({
+                token: $window.sessionStorage.token,
+                offset: (pageSize * curPage), limit: $scope.selectBoxLimit
+            }, allAppointmentsSuccess, allAppointmentsFailure);
+        }else{
+            console.log("else pageSize", pageSize, "curPage", curPage);
+            GetAppointmentsByPatient.get({
+                token: $window.sessionStorage.token,
+                offset: (pageSize * curPage), limit: $scope.itemsPerPage
+            }, allAppointmentsSuccess, allAppointmentsFailure);
+        }
     }
 
     $scope.deleteAppointments = function(){
@@ -495,6 +515,27 @@ AppEHR.controller('appointmentsListController', ['$scope', '$rootScope', '$windo
         function reminderAppointmentFailure(error){
             console.log(error);
             $rootScope.loader = "hide";
+        }
+    }
+
+    $scope.selectBoxValue = function(value){
+        $scope.selectBox = true;
+        $scope.pageSize = value;
+        $scope.selectBoxLimit = value;
+        $rootScope.loader = "show";
+        $scope.pageNumber = '';
+        if($scope.curPage == 1){
+            GetAppointmentsByPatient.get({
+                token: $window.sessionStorage.token, 
+                limit: value, 
+                offset: 0, limit: value
+            }, allAppointmentsSuccess, allAppointmentsFailure);
+        }else{
+            GetAppointmentsByPatient.get({
+                token: $window.sessionStorage.token, 
+                limit: value, 
+                offset: ($scope.pageSize * $scope.curPage), limit: value
+            }, allAppointmentsSuccess, allAppointmentsFailure);
         }
     }
 }]);

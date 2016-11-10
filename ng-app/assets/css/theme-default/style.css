@@ -710,6 +710,9 @@ Table Styling
 .add{
     background: url(../..//img/plus.png) no-repeat top center;
 }
+/*.assign{
+    background: url(../..//img/plus.png) no-repeat top center;
+}*/
 .download{
     background: url(../..//img/download_icon.png) no-repeat top center;
 }
@@ -3873,4 +3876,10 @@ select#autoship_option.ng-hide,select#autoship_option2.ng-hide,select#autoship_o
     height: 25px;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+.success-green{
+    border-color: green!important;
+}
+.falilure-red{
+    border-color: red!important;
 }
