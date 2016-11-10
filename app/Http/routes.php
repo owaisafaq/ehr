@@ -497,5 +497,6 @@ $app->group(['prefix'=>'api','middleware' => 'jwt.auth'], function () use ($app)
     $app->get('get_all_patient_orders','App\Http\Controllers\OrderController@get_all_patient_orders');
     $app->post('waive_bill','App\Http\Controllers\BillingController@waive_bill');
     $app->post('waive_invoice','App\Http\Controllers\BillingController@waive_invoice');
+    $app->post('add_patient_bill','App\Http\Controllers\BillingController@add_patient_bill');
 
 });

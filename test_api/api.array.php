@@ -3550,3 +3550,26 @@ $api->params->token = "123435";
 $api_arr [] = $api;
 
 
+//Add Patient Bill
+$api = new api();
+$api->name = "Add Patient Bill";
+$api->url = HOST . 'add_patient_bill';
+$api->method = "POST";
+$api->params->patient_name = "Jack";
+$api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+// Search Patient Bill
+$api = new api();
+$api->name = "Search Patient Bill";
+$api->url = HOST . 'search_patient_bill';
+$api->method = "POST";
+$api->description = "Search Patient Bill";
+$api->params->name = "owais";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+

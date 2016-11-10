@@ -762,5 +762,17 @@ class BillingController extends Controller
         return response()->json(['status' => true, 'message' => 'Invoice Waved Successfully']);
 
     }
+    public function add_patient_bill(Request $request){
+        $patient_name = $request->input('patient_name');
+        DB::table('billing')
+            ->insert(
+                ['patient_name' => $patient_name,
+                    'bill_status' => 'paid',
+                    'bill_purpose' => 'new patient',
+                    'created_at' => date("Y-m-d  H:i:s")
+                ]);
+
+        return response()->json(['status' => true, 'message' => 'Patient Bill Added Successfully']);
+    }
 
 }
