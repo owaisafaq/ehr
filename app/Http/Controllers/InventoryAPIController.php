@@ -193,6 +193,9 @@ class InventoryAPIController extends Controller
            // ->where(['stock.status'=>1])
             ->groupby('inventory_products.id')
             ->get();
+        foreach($stock as $stocks){
+            $stocks->product_id = str_pad($stocks->product_id,5, '0', STR_PAD_LEFT);
+        }
         if($stock){
             return response()->json(['status' => true, 'message' => "Stock Found.", 'data'=>$stock], 200);
         }else{
