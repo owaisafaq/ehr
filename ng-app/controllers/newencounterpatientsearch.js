@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope', '$window', 'AddEncounter', '$timeout', 'GetVisits', '$rootScope', 'GetPatientInfo', 'DropDownData', '$http', 'GetAllPatients', 'GetLabTests', 'addOrder', 'GetAllLabOrders', 'CheckoutPatient', 'GetAllEncounters', 'AddAppointments', 'GetOneEncounter', 'RemoveEncounter', 'UpdateEncounter', 'AddVitals', 'GetAllWardsDropDown', 'GetBedsByWard', function($scope, $rootScope, $window, AddEncounter, $timeout, GetVisits, $rootScope, GetPatientInfo, DropDownData, $http, GetAllPatients, GetLabTests, addOrder, GetAllLabOrders, CheckoutPatient, GetAllEncounters, AddAppointments, GetOneEncounter, RemoveEncounter, UpdateEncounter, AddVitals, GetAllWardsDropDown, GetBedsByWard){
+AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope', '$window', 'AddEncounter', '$timeout', 'GetVisits', '$rootScope', 'GetPatientInfo', 'DropDownData', '$http', 'GetAllPatients', 'GetLabTests', 'addOrder', 'GetAllLabOrders', 'CheckoutPatient', 'GetAllEncounters', 'AddAppointments', 'GetOneEncounter', 'RemoveEncounter', 'UpdateEncounter', 'AddVitals', 'GetAllWardsDropDown', 'GetBedsByWard', 'UpdateVisitRoom', function($scope, $rootScope, $window, AddEncounter, $timeout, GetVisits, $rootScope, GetPatientInfo, DropDownData, $http, GetAllPatients, GetLabTests, addOrder, GetAllLabOrders, CheckoutPatient, GetAllEncounters, AddAppointments, GetOneEncounter, RemoveEncounter, UpdateEncounter, AddVitals, GetAllWardsDropDown, GetBedsByWard, UpdateVisitRoom){
 	$rootScope.loader = "show";
 	$rootScope.pageTitle = "EHR - New Encounter Patient Search";
 	$scope.addEncounter = {};
@@ -18,6 +18,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 	$scope.reason = reason;
 	$scope.PatientSearch = serverPath;
 	$scope.updateEncounter = {};
+	$scope.updateAssignRoom = {};
 	//$rootScope.loader = "show";
 	//GetVisits.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id}, getVisitsSuccess, getVisitsFailed);
 	DropDownData.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id}, dropDownSuccess, dropDownFailed);
@@ -51,9 +52,9 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 		GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: string}, getPatientSuccess, getPatientFailure);
 		function getPatientSuccess(res){
 			if(res.status == true){
-				$scope.action = string// "";
+				$scope.action = /*string ||*/ "";
 				console.log(1, $scope.allEncounter);
-				// console.log(res);
+				console.log(res);
 				$scope.disabledEncounterButton = false;
 				$scope.patientInfo = true;
 				$rootScope.loader = "hide";
@@ -66,13 +67,11 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 				$scope.EID = res.data.encounter_id;
 				$scope.PIDwithName = string + " " + $scope.displayInfo.first_name + " " + $scope.displayInfo.last_name;
 				for(var k=0; k < $scope.allEncounter.length; k++){
+                    
 					if($scope.EID == $scope.allEncounter[k].id){
 						$scope.buttonDisabled = true;
-						$scope.action = $scope.allEncounter[k].id;
                         console.log($scope.allEncounter[k].id, $scope.EID, "mm");
 						//console.log($scope.allEncounter[k], $scope.EID);
-					}else if(res.is_visit == 0){
-						$scope.action = '';
 					}
 				}
 				$scope.visitStatus = res.is_visit;
@@ -168,7 +167,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
         }
     }
 
-	/*function getPatientSuccess(res){
+	function getPatientSuccess(res){
 		$scope.patientInfo = true;
 		$rootScope.loader = "hide";
 		if(res.status == true){
@@ -178,7 +177,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 			$scope.displayInfo.gender = res.data.sex;
 			$scope.displayInfo.marital_status = res.data.marital_status;
 		}
-	}*/
+	}
 
 	function getPatientFailure(error){
 		$('#internetError').modal('show');
@@ -188,6 +187,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 	$scope.openCreateEncounter = function(){
 		$scope.message = false;
 		$scope.closePopUp = false;
+        $('.counter_pop').css({'min-height': 'unset'});
 		if(angular.equals({}, $scope.addEncounter) == false){
 			$scope.addEncounter = {};
 		}		
@@ -227,11 +227,12 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
                 encounter_class: updateData.class == undefined ? '' : updateData.class,
                 encounter_type: updateData.type,
                 whom_to_see: updateData.wts,
+                room: updateData.room,
                 reason_of_visit: updateData.reason_of_visit == undefined ? '' : updateData.reason_of_visit
             }, updateEncounterSuccess, updateEncounterFailure);
         }
     }
-
+	
     function updateEncounterSuccess(res) {
         if (res.status == true) {
             $scope.hideLoader = 'hide';
@@ -281,6 +282,14 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 	$scope.goToClinicalNotes = function () {
         $window.location.href = "#/clinical-documentation-clinic-progress-note/" + $scope.PID;
     }
+	
+	$scope.assignRoom = function () {
+        UpdateVisitRoom.save({
+            token: $window.sessionStorage.token,
+            visit_id: $scope.encounterID == undefined ? $scope.EID : $scope.encounterID,
+            room: $scope.updateAssignForm.room.$viewValue
+        }, updateEncounterSuccess, updateEncounterFailure);
+	}
 
 	function encounterSuccess(res){
 		console.log(res);
@@ -420,10 +429,6 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
                 //$window.location.href = "#/lab-order-listing/" + $scope.PID + "/" + $scope.encounterID;
             },500);
             $scope.orderSelected = false;
-        }else if(res.error_code == 200){
-            console.log(res);
-            $scope.errorLabOrder = res.message;
-            $('#error200').modal('show');
         }else if(res.error_code == 500){
             console.log(res);
             $rootScope.RolesAccess(res.message);
@@ -497,7 +502,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
     		visit_id: $scope.encounterID,
     		reason: $('input:radio[name="checkoutpatient"]:checked').val(),
             notes: $('.checkout_patient_tab_con > div.active textarea').val() == undefined ? '' : $('.checkout_patient_tab_con > div.active textarea').val(),
-    		pick_date: dataToBeAdded.date == undefined ? dataToBeAdded.discharge : dataToBeAdded.date,
+    		pick_date: dataToBeAdded.date == undefined ? '' : dataToBeAdded.date,
     		pick_time: dataToBeAdded.time == undefined ? '' : dataToBeAdded.time,
     		admit_date: $scope.admittedDate == undefined ? '' : $scope.admittedDate,
     		start_time: dataToBeAdded.time == undefined ? '' : dataToBeAdded.time,
@@ -714,6 +719,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
         var eid = $scope.encounterID == undefined ? $scope.EID : $scope.encounterID;
         console.log(eid);
         GetOneEncounter.get({token: $window.sessionStorage.token, visit_id: eid}, getOneEncounterSuccess, getOneEncounterFailure);
+        $('.counter_pop').css({'min-height': 'unset'});
         $scope.updateEncounterPopUp = true;
     }
 
@@ -729,7 +735,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
             $scope.updateEncounter.type = res.data.encounter_type;
             $scope.updateEncounter.wts = res.data.whom_to_see;
             $scope.updateEncounter.reason_of_visit = res.data.reason_of_visit;
-
+            $scope.updateEncounter.room = res.data.room_id;
         }
         setTimeout(function () {
             $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
@@ -746,8 +752,6 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
         $rootScope.loader = "show";
         $scope.buttonDisabled = false;
         $scope.patientInfo = false;
-        $scope.disabledEncounterButton = true;
-        $scope.buttonDisabled = true;
         RemoveEncounter.get({token: $window.sessionStorage.token, visit_id: dltID}, encounterDeleteSuccess, encounterDeletefailure);
     }
 
@@ -865,39 +869,5 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 	            }
 	        }
 	    };
-	    $scope.roomsDropdown = [
-	    	{"id": "1", "name": "Room1"},
-	    	{"id": "2", "name": "Room2"},
-	    	{"id": "3", "name": "Room3"}
-	    ];
-	    //GetAllRooms.get({token: $window.sessionStorage.token}, roomsSuccess, roomsFailure);
-	    function roomsSuccess(res){
-	    	$scope.roomsDropdown = res.dataToBeAdded;
-	    }
-	    function roomsFailure(error){
-	    	$('#internetError').modal('show');
-            console.log(error);
-	    }
-
-	    $scope.assigningRoom = function(roomID){
-	    	console.log(roomID);return true;
-	    	if(roomID != undefined || roomID != '')
-	    		AssignRooms.save({token: $window.sessionStorage.token, room_id: roomID, patient_id: $scope.PID}, assignRoomsSuccess, roomsFailure);
-	    }
-
-	    function assignRoomsSuccess(res) {
-            console.log(res);
-            if (res.status == true) {
-            	$('#assignRoom').modal('hide');
-            	GetAllEncounters.get({
-			        token: $window.sessionStorage.token,
-			        offset: 0,
-			        limit: $scope.itemsPerPage
-			    }, getPatientEncounters, getPatientEncountersFailure);
-            }else if(res.error_code == 500){
-                console.log(res);
-                $rootScope.RolesAccess(res.message);
-            }
-        }
 
 }]);

@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('settingsFacility', ['$scope', '$rootScope', '$window', '$routeParams', 'Countries','States', 'GetHospitalProfile', 'addUpdateHospital','Upload', 'GetAllDepartments', 'GetDepartment', 'deleteDepartment', 'addDepartment', 'editDepartment', '$timeout', function($scope, $rootScope,$window,$routeParams,Countries,States,GetHospitalProfile,addUpdateHospital,Upload,GetAllDepartments,GetDepartment,deleteDepartment,addDepartment,editDepartment,$timeout){
+AppEHR.controller('settingsFacility', ['$scope', '$rootScope', '$window', '$routeParams', 'Countries','States', 'GetHospitalProfile', 'addUpdateHospital','Upload', 'GetAllDepartments', 'GetDepartment', 'deleteDepartment', 'addDepartment', 'editDepartment', 'GetAllRooms', 'GetRoom', 'deleteRoom', 'addRoom', 'editRoom', '$timeout', function($scope, $rootScope,$window,$routeParams,Countries,States,GetHospitalProfile,addUpdateHospital,Upload,GetAllDepartments,GetDepartment,deleteDepartment,addDepartment,editDepartment,GetAllRooms,GetRoom,deleteRoom,addRoom,editRoom,$timeout){
 	$rootScope.pageTitle = "EHR - Setting - Facility";
     $rootScope.loader = "show";
     $scope.itemsPerPage = 15;
@@ -331,6 +331,187 @@ AppEHR.controller('settingsFacility', ['$scope', '$rootScope', '$window', '$rout
         }
     }
     function editDepartmentFailure(error){ // on failure
+        console.log(error);
+        $('#internetError').modal('show');
+    }
+    
+    GetAllRooms.get({
+        token: $window.sessionStorage.token,
+        offset: 0, limit: $scope.itemsPerPage
+    }, GetAllRoomsSuccess, GetAllRoomsFailure);
+
+    function GetAllRoomsSuccess(res) {
+        $rootScope.loader = "hide";
+        if (res.status == true) {
+            if(res.data.length == 0){
+                $('#noResultFound').modal('show');
+            }
+            $scope.RoomLists = res.data;
+            $scope.roomCount = res.count;
+        }
+    }
+    function GetAllRoomsFailure(error) {
+        $('#internetError').modal('show');
+        console.log(error);
+    }
+
+    $scope.numberOfPages = function() {
+        return Math.ceil($scope.roomCount / $scope.pageSize);
+    };
+
+    $scope.paginationNext = function(pageSize, curPage){
+        $rootScope.loader = "show";
+        GetAllRooms.get({
+            token: $window.sessionStorage.token,
+            offset: (pageSize * curPage), limit: $scope.itemsPerPage
+        }, GetAllRoomsSuccess, GetAllRoomsFailure);
+    };
+
+    $scope.paginationPrev = function(pageSize, curPage){
+        $rootScope.loader = "show";
+        GetAllRooms.get({
+            token: $window.sessionStorage.token,
+            offset: (pageSize - 1) * curPage, limit: $scope.itemsPerPage
+        }, GetAllRoomsSuccess, GetAllRoomsFailure);
+    };
+
+    $scope.confirmRemoveRoom = function(id){
+        $scope.deleteRoomId = id;
+        $('#confirmation_room').modal('show');
+    };
+    $scope.removeRoom = function(){
+        $rootScope.loader = "show";
+        deleteRoom.get({
+            token: $window.sessionStorage.token,
+            room_id: $scope.deleteRoomId
+        }, deleteRoomSuccess, deleteRoomFailure)
+    };
+
+    function deleteRoomSuccess(res){
+        if(res.status == true){
+            $scope.deleteRoomId = 0;
+            $('#confirmation').modal('hide');
+            GetAllRooms.get({
+                token: $window.sessionStorage.token
+            }, GetAllRoomsSuccess, GetAllRoomsFailure);
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        }
+    }
+
+    function deleteRoomFailure(error){
+        console.log(error);
+        $('#confirmation').modal('hide');
+        $('#internetError').modal('show');
+    }
+
+    $scope.createRoom = function (roomData){
+        addRoom.save({
+            token : $window.sessionStorage.token,
+            name : roomData.name,
+            code: roomData.code,
+            description : roomData.description
+        },addRoomSuccess,addRoomFailure);
+    };
+    function addRoomSuccess(res){ // on success
+        if (res.status == true) {
+            $scope.hideLoader = 'hide';
+            $scope.message = true;
+            $scope.addRoomBtn = false;
+            $scope.errorMessage = res.message;
+            $scope.messageType = 'alert-success';
+            $scope.errorSymbol = 'fa fa-check';
+            $scope.roomData = {};
+            $scope.submitted = false;
+            $timeout(function(){
+                $scope.message = false;
+                $('#addNewRoom').modal('hide');
+                $scope.errorMessage = "";
+            },1500);
+            GetAllRooms.get({
+                token: $window.sessionStorage.token
+            }, GetAllRoomsSuccess, GetAllRoomsFailure);
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        } else {
+            $scope.hideLoader = "hide";
+            $scope.addRoomBtn = false;
+            $scope.message = true;
+            $scope.messageType = "alert-danger";
+            $scope.errorMessage = res.message;
+            $scope.errorSymbol = "fa fa-times";
+        }
+    }
+    function addRoomFailure(error){ // on failure
+        console.log(error);
+        $('#internetError').modal('show');
+    }
+
+    $scope.roomDetail = function(id){
+        GetRoom.get({
+            token: $window.sessionStorage.token,
+            room_id: id
+        }, GetRoomSuccess, GetRoomFailure);
+    };
+    function GetRoomSuccess(res) {
+        $rootScope.loader = "hide";
+        if (res.status == true) {
+            $scope.editRoomData = res.data;
+            setTimeout(function () {
+                $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
+            },100);
+            $('#editNewRoom').modal('show');
+        }
+    }
+    function GetRoomFailure(error) {
+        $('#internetError').modal('show');
+        console.log(error);
+    }
+
+    $scope.updateRoom = function(editRoomData){
+        $rootScope.loader = "show";
+        editRoom.save({
+            token : $window.sessionStorage.token,
+            room_id: editRoomData.id,
+            name : editRoomData.name,
+            code: editRoomData.code,
+            description : editRoomData.description
+        },editRoomSuccess,editRoomFailure);
+    };
+
+    function editRoomSuccess(res){ // on success
+        if (res.status == true) {
+            $rootScope.loader = 'hide';
+            $scope.message = true;
+            $scope.updateRoomBtn = false;
+            $scope.errorMessage = res.message;
+            $scope.messageType = 'alert-success';
+            $scope.errorSymbol = 'fa fa-check';
+            GetAllRooms.get({
+                token: $window.sessionStorage.token
+            }, GetAllRoomsSuccess, GetAllRoomsFailure);
+            $timeout(function(){
+                $scope.message = false;
+                $scope.submitted = false;
+                $('#editNewRoom').modal('hide');
+                $scope.errorMessage = "";
+                $scope.editRoomData = {};
+            },1500);
+        }else if(res.error_code == 500){
+            console.log(res);
+            $rootScope.RolesAccess(res.message);
+        } else {
+            $rootScope.loader = "hide";
+            $scope.updateRoomBtn = false;
+            $scope.message = true;
+            $scope.messageType = "alert-danger";
+            $scope.errorMessage = res.message;
+            $scope.errorSymbol = "fa fa-times";
+        }
+    }
+    function editRoomFailure(error){ // on failure
         console.log(error);
         $('#internetError').modal('show');
     }

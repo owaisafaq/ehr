@@ -1942,4 +1942,19 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 $scope.billSearchClass = "success-green";
             }
         }
+        $scope.myChannel = {
+            // the fields below are all optional
+            videoHeight: 800,
+            videoWidth: 600,
+            video: null // Will reference the video element on success
+        };
+        $scope.onError = function (err) {
+            console.log(err, "webcam error");
+        };
+        $scope.onStream = function (stream) {
+            console.log(stream, "webcam stream");
+        };
+        $scope.onSuccess = function (res) {
+            console.log(res, "webcam stream");
+        };
     }]);

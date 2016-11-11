@@ -1521,15 +1521,23 @@
             </div>
             <form class="custom-form" novalidate name="Preg" ng-submit="patientRegBill(patientName)">
             <div class="modal-body">
-                    <div class="row" ng-show="product_show == 'product'">
-                        <div class="col-lg-3 margin-top-10">
-                            <label>Patient Name</label>
-                        </div>
-                        <div class="col-lg-9 margin-top-10">
-                            <input type="text" class="form-control" name="patientname" ng-class="{true: 'error'}[Preg.patientname.$invalid && submitted]" placeholder="" ng-model="patientName" required/>
-                        <p ng-show="Preg.patientname.$error.required && submitted" class="help-block PIValid">Required</p>
-                        </div>
+                <div class="row" ng-show="product_show == 'product'">
+                    <div class="col-lg-3 margin-top-10">
+                        <label>Bill ID</label>
                     </div>
+                    <div class="col-lg-9 margin-top-10">
+                        <input type="text" ng-model="patientBillID" ng-disabled="true"/>
+                    </div>
+                </div>
+                <div class="row" ng-show="product_show == 'product'">
+                    <div class="col-lg-3 margin-top-10">
+                        <label>Patient Name</label>
+                    </div>
+                    <div class="col-lg-9 margin-top-10">
+                        <input type="text" class="form-control" name="patientname" ng-class="{true: 'error'}[Preg.patientname.$invalid && submitted]" placeholder="" ng-model="patientName" required/>
+                    <p ng-show="Preg.patientname.$error.required && submitted" class="help-block PIValid">Required</p>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="submit" ng-click="submitted=true" class="btn btn-default button-style-1">Add</button>

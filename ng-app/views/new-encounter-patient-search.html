@@ -11,7 +11,7 @@
                     <span class="txt-style-2 col-lg-12 capitalize">E{{EID || encounterID}}</span>
                 </div>
                 <div class="col-lg-2">
-                    <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
+                    <label class="txt-style-1 text-uppercase col-lg-12">Patient Name {{visitStatus}}</label>
                     <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.first_name}} {{displayInfo.last_name}}</span>
                 </div>
                 <div class="col-lg-2">
@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-lg-1">
                     <label class="txt-style-1 text-uppercase col-lg-12 adjust-2">Age</label>
-                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.age}}</span>
+                    <span class="txt-style-2 col-lg-12">{{displayInfo.age}}</span>
                 </div>
                 <div class="col-lg-1">
                     <label class="txt-style-1 text-uppercase col-lg-12">Sex</label>
@@ -54,7 +54,7 @@
                     <!--</div>-->
                 </div>
                 <div class="create_counter">
-                    <!-- <button type="button" ng-click="goToEncounter();" class="add button-custom pull-right open-custom_pop" ng-if="visitStatus == 1" ng-hide="gotoencounter">Go To Encouter</button> -->
+                    <button type="button" ng-click="goToEncounter();" class="add button-custom pull-right open-custom_pop" ng-if="visitStatus == 1" ng-hide="gotoencounter">Go To Encouter</button>
                     <button type="button" ng-click="openCreateEncounter();" class="add button-custom pull-right open-custom_pop" ng-hide="disabledEncounterButton" ng-if="visitStatus == 0">create encounter</button>
                     <button type="button" class="calendar button-custom pull-right" ng-hide="disabledEncounterButton" data-toggle="modal" data-target="#createAppointment">Create Appointment</button>
                     <button type="button" data-toggle="modal" data-target="#neworder" class="microscope button-custom pull-right" ng-hide="disabledEncounterButton">Order Labs</button>
@@ -74,6 +74,8 @@
                                 <div class="col-lg-6">
                                     <select class="form-control" ng-class="{true: 'error'}[submitted && encounterFormAdd.department.$invalid]" name="department" ng-model="addEncounter.department" placeholder="Select Facility/Dept" required>
                                         <option value=""></option>
+                                        <!-- <option value="1">1</option>
+                                        <option value="2">2</option> -->
                                         <option ng-repeat="department in encountersDropdownData.departments" value="{{department.id}}">{{department.name}}</option>
                                     </select>
                                     <p class="help-block PIValid" ng-show="submitted && encounterFormAdd.department.$error.required">Required</p>
@@ -110,25 +112,6 @@
                                     <p class="help-block PIValid" ng-show="submitted && encounterFormAdd.type.$error.required">Required</p>
                                 </div>
 
-                                <div class="col-lg-6">
-                                    <label>whom to see</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <select class="form-control" ng-class="{true: 'error'}[submitted && encounterFormAdd.wts.$invalid]" name="wts" ng-model="addEncounter.wts" placeholder="Select Whom To See" required>
-                                        <option value=""></option>
-                                        <option ng-repeat="wts in encountersDropdownData.doctors" value="{{wts.id}}">{{wts.name}}</option>
-                                        <!-- <option value="1">1</option>
-                                        <option value="2">2</option> -->
-                                    </select>
-                                    <p class="help-block PIValid" ng-show="submitted && encounterFormAdd.wts.$error.required">Required</p>
-                                </div> 
-                                <div class="col-lg-6">
-                                    <label>Reason of Visit</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <textarea  ng-model="addEncounter.reason_of_visit" placeholder="Reason of Visit"></textarea>
-                                </div> 
-
                                 <div class="col-lg-12">
                                 <img src="assets/img/loader.gif" class="pull-right encounter-loader {{hideLoader}}"/>
                                     <div class="pull-right">
@@ -143,7 +126,7 @@
             </div>
             <div class="card-body col-lg-12">
                 <div>
-                    <input class="encounter-search-bar" ng-change="getSearchPatient(search1);" type="text" ng-model="search1" placeholder="Search for a patient">
+                    <input class="encounter-search-bar" ng-change="getSearchPatient(search);" type="text" ng-model="search" placeholder="Search for a patient">
                 </div>
             </div><!--end .card-body -->
             <div class="table-header col-lg-12">
@@ -157,6 +140,8 @@
                     </div>
                 </div>
                 <!--ng-click="checkout(action);"-->
+                <button type="button"  class="checkout button-custom pull-right" data-toggle="modal" data-target="#assignRoom" ng-hide="buttonDisabled">Assign Room</button>
+
                 <button type="button"  class="checkout button-custom pull-right" data-toggle="modal" data-target="#checkout" ng-click="CO = {};" ng-hide="buttonDisabled">Checkout</button>
 
                 <button type="button" class="delete button-custom pull-right" ng-hide="buttonDisabled" data-target="#removeEncounter" data-toggle="modal">remove</button>
@@ -166,7 +151,6 @@
                 <button type="button" data-toggle="modal" class="notes button-custom pull-right" ng-hide="buttonDisabled" data-target="#addclinical" ng-click="goToClinicalNotes();">Clinical Notes</button>
 
                 <button type="button" data-toggle="modal" class="add button-custom pull-right" data-target="#addpatient" ng-hide="buttonDisabled">Add Vitals</button>
-                <button type="button" data-toggle="modal" class="assign button-custom pull-right" data-target="#assignRoom" ng-hide="buttonDisabled">Assign Room</button>
             </div>
             <div class="card-body col-lg-12">
                 <div>
@@ -181,12 +165,12 @@
                                 <th>Speciality</th>
                                 <th>visit type</th>
                                 <!-- <th>visit class</th> -->
-                                <th>whom to see</th>
                                 <th>Room</th>
+                                <!-- <th>Exam Room</th> -->
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="encounter in allEncounter | filter:{ first_name: listsearch}">
+                            <tr ng-repeat="encounter in allEncounter | filter:search">
                                 <td align="center">
                                     <!-- <div class="radio radio-styled">
                                         <label>
@@ -208,8 +192,8 @@
                                 <td>{{encounter.faculty}}</td>
                                 <td>{{encounter.encounter_type}}</td>
                                 <!-- <td>{{encounter.encounter_class}}</td> -->
-                                <td>{{encounter.name}}</td>
                                 <td>{{encounter.room}}</td>
+                                <!-- <td>{{encounter.name}}</td> -->
                             </tr>
                         </tbody>
                     </table>
@@ -297,9 +281,8 @@
                 <div class="col-lg-3">
                     <select class="form-control" id="priority" ng-model="Order.priority" placeholder="Select Priority">
                         <option value=""></option>
-                        <option>Low</option>
-                        <option>Medium</option>
-                        <option>High</option>
+                        <option>Urgent</option>
+                        <option>Urgent</option>
                     </select>
                 </div>
                 <div class="col-lg-1">
@@ -481,15 +464,9 @@
                                 <label>Estimated Discharge</label>
                             </div>
                             <div class="col-lg-3">
-                                <!-- <div class="input-group bootstrap-timepicker timepicker col-lg-12">
+                                <div class="input-group bootstrap-timepicker timepicker col-lg-12">
                                     <input type="text" class="form-control input-small timepicker" ng-model="CO.discharge">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-                                </div> -->
-                                <div class="input-group date select-date col-lg-12">
-                                    <div class="input-group-content">
-                                        <input type="text" class="form-control" placeholder="Select Date" ng-model="CO.discharge">
-                                    </div>
-                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
                             </div>
                                 </div>
@@ -670,28 +647,17 @@
                 </select>
                 <p class="help-block PIValid" ng-show="submitted && encounterForm.type.$error.required">Required</p>
             </div>
+<div class="col-lg-6">
+                <label>Room</label>
+            </div>
 
             <div class="col-lg-6">
-                <label>whom to see</label>
-            </div>
-            <div class="col-lg-6">
-                <select class="form-control" ng-class="{true: 'error'}[submitted && encounterForm.wts.$invalid]" name="wts" ng-model="updateEncounter.wts" placeholder="Select whom to see" required>
+                <select class="form-control" ng-class="{true: 'error'}[submitted && encounterForm.room.$invalid]" name="room" ng-model="updateEncounter.room" placeholder="Select" required>
                     <option value=""></option>
-                    <option ng-selected="updateEncounter.wts == wts.id" ng-repeat="wts in encountersDropdownData.doctors" value="{{wts.id}}">{{wts.name}}</option>
-                    <!-- <option value="1">1</option>
-                    <option value="2">2</option> -->
+                    <option ng-selected="updateEncounter.room == room.id" ng-repeat="room in encountersDropdownData.rooms" value="{{room.id}}">{{room.name}}</option>
                 </select>
-                <p class="help-block PIValid" ng-show="submitted && encounterForm.wts.$error.required">Required</p>
-            </div> 
-            <div class="col-lg-6">
-                <label>Reason of Visit</label>
+                <p class="help-block PIValid" ng-show="submitted && encounterForm.room.$error.required">Required</p>
             </div>
-            <div class="col-lg-6">
-
-            <textarea ng-model="updateEncounter.reason_of_visit" >{{updateEncounter.reason_of_visit}}</textarea>
-                <p class="help-block PIValid" ng-show="submitted && encounterForm.wts.$error.required">Required</p>
-            </div>
-
             <div class="col-lg-12">
             <img src="assets/img/loader.gif" class="pull-right encounter-loader {{hideLoader}}"/>
                 <div class="pull-right">
@@ -737,18 +703,18 @@
                                     <label>systolic (mm hg)</label>
                                 </div>
                                 <div class="col-lg-6 margin-bottom-xxl">
-                                    <input type="text" class="maskCost" placeholder="systolic (mm hg)"  ng-class="{
+                                    <input type="text" placeholder="systolic (mm hg)"  ng-class="{
                                             true
-                                            : 'error'}[vital.diastolic != undefined && vital.systolic == undefined]" ng-model="vital.systolic" required/>
+                                            : 'error'}[vital.diastolic != undefined && vital.systolic == undefined]" ng-model="vital.systolic" numbers-only required/>
                                     <p ng-show="vital.diastolic != undefined && vital.systolic == undefined" class="help-block PIValid">Required</p>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>diastolic (mm hg)</label>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" class="maskCost" placeholder="diastolic (mm hg)" ng-class="{
+                                    <input type="text" placeholder="diastolic (mm hg)" ng-class="{
                                             true
-                                            : 'error'}[vital.diastolic == undefined && vital.systolic != undefined]" ng-model="vital.diastolic"  required/>
+                                            : 'error'}[vital.diastolic == undefined && vital.systolic != undefined]" ng-model="vital.diastolic" numbers-only required/>
                                     <p ng-show="vital.systolic != undefined && vital.diastolic == undefined" class="help-block PIValid">Required</p>
                                 </div>
                             </div>
@@ -761,7 +727,7 @@
                                     <label>pulse</label>
                                 </div>
                                 <div class="col-lg-6 margin-bottom-xxl">
-                                    <input type="text" placeholder="pulse" ng-model="vital.pulse" class="maskCost"/>
+                                    <input type="text" placeholder="pulse" ng-model="vital.pulse" numbers-only/>
                                 </div>
                                 <!-- <div class="col-lg-12">
                                     <label class="label-style">Pulse Rate (min/bpm)</label>
@@ -770,7 +736,7 @@
                                     <label>respiratory rate</label>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" placeholder="respiratory rate" ng-model="vital.respiratoryRate"  class="maskCost"/>
+                                    <input type="text" placeholder="respiratory rate" ng-model="vital.respiratoryRate" numbers-only/>
                                 </div>
                             </div>
 
@@ -782,13 +748,13 @@
                                     <label>temperature (c)</label>
                                 </div>
                                 <div class="col-lg-6 margin-bottom-xxl">
-                                    <input type="text" placeholder="temperature (c)" ng-model="vital.temperaturec"  ng-change="GetTempcVal()" id="tempc" class="maskCost"/>
+                                    <input type="text" placeholder="temperature (c)" ng-model="vital.temperaturec" numbers-only ng-change="GetTempcVal()" id="tempc"/>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>temperature (f)</label>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" placeholder="temperature (f)" ng-model="vital.temperaturef" ng-change="GetTempfVal()" id="tempf"  class="maskCost"/>
+                                    <input type="text" placeholder="temperature (f)" ng-model="vital.temperaturef" ng-change="GetTempfVal()" id="tempf" numbers-only/>
                                 </div>
                             </div>
                         </div>
@@ -814,7 +780,7 @@
                                 <label>weight (kg)</label>
                             </div>
                             <div class="col-lg-6 margin-bottom-xxl">
-                                <input type="text" ng-class="{true: 'error'}[vital.weight == undefined && vital.height != undefined]" placeholder="weight (kg)" ng-model="vital.weight" ng-keyup="Calculatebmi()" required class="maskCost"/>
+                                <input type="text" ng-class="{true: 'error'}[vital.weight == undefined && vital.height != undefined]" placeholder="weight (kg)" ng-model="vital.weight" numbers-only ng-keyup="Calculatebmi()" required/>
                                 <p ng-show="vital.weight == undefined && vital.height != undefined" class="help-block PIValid">Required</p>
                             </div>
 
@@ -822,7 +788,7 @@
                                 <label>height (cm)</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" ng-class="{true: 'error'}[vital.height == undefined && vital.weight != undefined]" placeholder="height (cm)" ng-model="vital.height" ng-keyup="Calculatebmi()" required class="maskCost"/>
+                                <input type="text" ng-class="{true: 'error'}[vital.height == undefined && vital.weight != undefined]" placeholder="height (cm)" ng-model="vital.height" ng-keyup="Calculatebmi()" numbers-only required />
                                 <p ng-show="vital.height == undefined && vital.weight != undefined" class="help-block PIValid">Required</p>
                             </div>
                         </div>
@@ -864,45 +830,30 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade modal-size_1" id="error200" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header pop_head">
-                <h2>Error</h2>
-            </div>
-            <div class="modal-body">
-                <p class="modal-subtext">{{errorLabOrder}}</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 <div class="modal fade modal-size_1" id="assignRoom" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
                 <h2>Assign Room</h2>
             </div>
-            <form novalidate name="assignRoomed" ng-submit="assigningRoom(roomAssigned);">
-                <div class="modal-body">
-                    <div class="col-lg-3">
-                        <label>Rooms</label>
-                    </div>
-                    <div class="col-lg-9">
-                        <select class="form-control" ng-class="{true: 'error'}[submitted && assignRoomed.rooms.$invalid]" name="rooms" ng-model="roomAssigned" placeholder="Select" required>
-                            <option value=""></option>
-                            <option ng-repeat="r in roomsDropdown" value="{{r.id}}">{{r.name}}</option>
-                        </select>
-                        <p class="help-block PIValid" ng-show="submitted && assignRoomed.rooms.$error.required">Required</p>
-                    </div>
-                </div><br/>
-            <div class="modal-footer margin-top-10">
-                <button type="submit" class="btn btn-default button-style-1" ng-click="submitted=true;">Save</button>
-                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal" ng-click="submitted=false;">Cancel</button>
+            <div class="modal-body">
+        <form class="custom-form" name="updateAssignForm" ng-model="myForm" novalidate>
+            <div class="col-lg-6">
+                <label>Room</label>
             </div>
-            </form>
+            <div class="col-lg-6">
+                <select class="form-control" ng-class="{true: 'error'}[submitted && updateAssignForm.room.$invalid]" name="room" ng-model="updateAssignRoom.room" placeholder="Select" required>
+                    <option ng-selected="updateAssignForm.room == room.id" ng-repeat="room in encountersDropdownData.rooms" value="{{room.id}}">{{room.name}}</option>
+                </select>
+                <p class="help-block PIValid" ng-show="submitted && updateAssignForm.room.$error.required">Required</p>
+            </div><br>
+            		</form>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-toggle="modal" data-dismiss="modal" ng-click="assignRoom(updateAssignForm);">Ok</button>
+                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

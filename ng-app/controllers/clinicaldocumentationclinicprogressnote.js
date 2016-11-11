@@ -621,6 +621,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
         }
 
         $scope.addReferral = function(referalData){
+          $rootScope.loader = "show";
           console.log(referalData);
           ReferralPatient.save({
             token: $window.sessionStorage.token,
@@ -642,10 +643,11 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
           if(res.status == true){
             $scope.referral = {};
             $scope.referralID = res.referal_id;
+            console.log($scope.referralID, 'referal id');
             $scope.referral.type = "internal";
             $scope.externalDoctor = false;
             //$('#referral').modal('hide');
-            $('#successmodal').modal('show');
+            
             $scope.downloadReferral();
           }else if(res.error_code == 500){
               console.log(res);
@@ -979,11 +981,13 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
      $scope.downloadReferral = function(){
       DownloadReferral.save({
         token: $window.sessionStorage.token,
-        refral_id: $scope.referralID
+        referal_id: $scope.referralID
       }, downlaodFerralSuccess, GetLabTestsFailure);
     }
     function downlaodFerralSuccess(res) { // on success
+      $rootScope.loader = "hide";
       if (res.status == true) {
+        $('#successmodal').modal('show');
         console.log(res, 'download reff');
         $('#downloadRef').attr('href', res.data);
         //$scope.downloadReferralLink = res.data;
