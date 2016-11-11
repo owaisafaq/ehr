@@ -3749,4 +3749,93 @@ AppEHR.factory("DownloadReferral", function ($resource) {
         }
     };
     return updatedRole;
+});AppEHR.factory("GetAllRooms", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_rooms', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var Rooms = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return Rooms;
+});
+AppEHR.factory("GetRoom", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_room', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var Room = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return Room;
+});
+AppEHR.factory("deleteRoom", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'delete_room', params, {
+            get: {method: 'POST'}
+        });
+        return res2;
+    }
+    var deletedRoom = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return deletedRoom;
+});
+AppEHR.factory("addRoom", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'add_room', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var addedRoom = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return addedRoom;
+});
+AppEHR.factory("editRoom", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'update_room', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var updatedRoom = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return updatedRoom;
+});
+AppEHR.factory("UpdateVisitRoom", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'update_visit_room', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
 });

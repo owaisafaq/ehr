@@ -3,8 +3,9 @@
         <div class="card margin-0">
             <div class="card-head">
                 <ul class="nav nav-tabs nav-justified custom-tab" data-toggle="tabs">
-                    <li ng-hide="ROLES.Facility == undefined"><a showtab href="#facilities-profile">Facilities Profile</a></li>
-                    <li class="active" ng-hide="ROLES.Specialties == undefined"><a showtab href="#spec-depart">Specialities & Departments</a></li>
+                    <li><a showtab href="#facilities-profile">Facilities Profile</a></li>
+                    <li><a showtab href="#room-locations">Room & Locations</a></li>
+                    <li class="active"><a showtab href="#spec-depart">Specialities & Departments</a></li>
                 </ul>
             </div>
             <div class="card-body tab-content col-lg-12 custom-card-body padding-top-0">
@@ -176,6 +177,63 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane" id="room-locations" ng-hide="ROLES.Room != undefined">
+                    <div class="table-header row background-none inv_header">
+                        <h2 class="heading-style pull-left margin-top-30">Rooms & Locations</h2>
+                        <div class="pull-right">
+                            <button data-target="#addNewRoom" data-toggle="modal" class="add button-custom pull-right add_inventory">New room</button>
+                        </div>
+                        <div class="pull-right">
+                            <div class="header-search pull-left margin-top-10">
+                                <button type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <input class="search_field" ng-model="speciSearch" type="text" placeholder="Search room">
+                            </div>
+                        </div>
+                    </div>
+                    <form class="custom-form">
+                        <table class="table table-striped no-margin table-custom table-custom_big inventory_detail">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Room Name</th>
+                                <th>Description</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody><!--  |filter:cat_search -->
+                            <tr ng-repeat="RoomList in RoomLists| filter: {name:speciSearch}">
+                                <td><a href="#" class="link-style_3">{{RoomList.name}}</a></td>
+                                <td>{{RoomList.code}}</td>
+                                <td>{{RoomList.description}}</td>
+                                <td>
+                                    <div class="billing_actions pull-right">
+                                        <a href="javascript:;" class="setting-button"></a>
+                                        <div class="tool-tip_popup">
+                                            <a href="javascript:;" ng-click="roomDetail(RoomList.id)">Edit</a>
+                                            <a href="javascript:;" ng-click="confirmRemoveRoom(RoomList.id)">Delete</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="pagination pagination-centered pull-right" ng-show="pharmacyCount">
+                            <ul class="pagination-controle pagination">
+                                <li class="prev-page">
+                                    <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage = curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
+                                </li>
+                                <li>
+                                    <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberPharmacy" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
+                                </li>
+                                <li class="next-page">
+                                    <button type="button" class="btn btn-primary" ng-disabled="curPage >= pharmacyCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
+                                </li>
+                            </ul>
                         </div>
                     </form>
                 </div>
@@ -543,6 +601,22 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<div class="modal fade modal-size_1" id="confirmation_room" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Confirmation</h2>
+            </div>
+            <div class="modal-body">
+                <p class="modal-subtext">Do you want to Delete?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-toggle="modal" ng-click="removeRoom();"  data-dismiss="modal">Ok</button>
+                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <div class="modal fade modal-size_1" id="fileUploadedSuccess" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -554,6 +628,104 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade modal-size_1" id="addNewRoom" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Add New Room</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form" name="userForm2" ng-model="myForm" novalidate ng-submit="createRoom(roomData);">
+                    <div class="row margin-bottom-xxl">
+                        <div class="alert {{messageType}}" role="alert" ng-show="message">
+                            <i class="{{errorSymbol}}"></i> {{errorMessage}}
+                        </div>
+                    </div>
+                    <div class="row margin-bottom-xxl col-md-6">
+                        <div class="col-lg-2">
+                            <label>Name</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm2.name.$invalid]"  name="name" required  ng-model="roomData.name" />
+                            <p class="help-block PIValid" ng-show="submitted && userForm2.name.$error.required">Required</p>
+                        </div>
+                    </div>
+                    <div class="row margin-bottom-xxl col-md-6 pull-right">
+                        <div class="col-lg-2">
+                            <label>Code</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm2.code.$invalid]"  name="code" required  ng-model="roomData.code" />
+                            <p class="help-block PIValid" ng-show="submitted && userForm2.code.$error.required">Required</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <label>Description</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <textarea placeholder="Write Here..." name="description" ng-model="roomData.description" ng-class="{true: 'error'}[submitted && userForm2.description.$invalid]" required></textarea>
+                            <p class="help-block PIValid" ng-show="submitted && userForm2.description.$error.required">Required</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer row">
+                        <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;" ng-disabled="submitted && userForm2.$invalid">Add</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal" ng-disabled="addRoomBtn">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade modal-size_2" id="editNewRoom" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Edit New Room</h2>
+            </div>
+            <div class="modal-body">
+                <form class="custom-form" name="userForm3" ng-model="myForm" novalidate ng-submit="updateRoom(editRoomData);">
+                    <div class="row margin-bottom-xxl">
+                        <div class="alert {{messageType}}" role="alert" ng-show="message">
+                            <i class="{{errorSymbol}}"></i> {{errorMessage}}
+                        </div>
+                    </div>
+                    <div class="row margin-bottom-xxl col-md-6">
+                        <div class="col-lg-2">
+                            <label>Name</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm3.name.$invalid]"  name="name" required  ng-model="editRoomData.name" />
+                            <p class="help-block PIValid" ng-show="submitted && userForm3.name.$error.required">Required</p>
+                        </div>
+                    </div>
+                    <div class="row margin-bottom-xxl col-md-6 pull-right">
+                        <div class="col-lg-2">
+                            <label>Code</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" placeholder="" ng-class="{true: 'error'}[submitted && userForm3.code.$invalid]"  name="name" required  ng-model="editRoomData.code" />
+                            <p class="help-block PIValid" ng-show="submitted && userForm3.code.$error.required">Required</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <label>Description</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <textarea placeholder="Write Here..." name="description" ng-model="editRoomData.description" ng-class="{true: 'error'}[submitted && userForm3.description.$invalid]" required></textarea>
+                            <p class="help-block PIValid" ng-show="submitted && userForm3.description.$error.required">Required</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer row">
+                        <button type="submit" class="btn btn-default button-style-1" ng-click="submitted = true;" ng-disabled="submitted && userForm3.$invalid">Edit</button>
+                        <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal" ng-disabled="updateRoomBtn">Cancel</button>
+                    </div>
+                </form>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
