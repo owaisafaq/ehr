@@ -1176,6 +1176,11 @@ class ApiController extends Controller
             ->where('status', 1)
             ->get();
 
+        $rooms = DB::table('rooms')
+             ->select(DB::raw('id,name'))
+             ->where('status', 1)
+             ->get();
+
 
         $method_name = $request->segment(2);
 
@@ -1241,7 +1246,8 @@ class ApiController extends Controller
             "doctors" => $doctors,
             "labs" => $labs,
             "manufacturer" => $manufacturers,
-            "pharmacy" => $pharmacy
+            "pharmacy" => $pharmacy,
+            "rooms" => $rooms
 
         );
 

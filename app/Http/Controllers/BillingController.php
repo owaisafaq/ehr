@@ -776,8 +776,9 @@ class BillingController extends Controller
                     'bill_purpose' => 'new patient',
                     'created_at' => date("Y-m-d  H:i:s")
                 ]);
+        $id = DB::getPdo()->lastInsertId();
 
-        return response()->json(['status' => true, 'message' => 'Patient Bill Added Successfully']);
+        return response()->json(['status' => true, 'message' => 'Patient Bill Added Successfully','bill_id'=>$id]);
     }
 
     public function search_patient_bill(Request $request)
