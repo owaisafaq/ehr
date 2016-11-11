@@ -620,7 +620,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 					$scope.patientBillID = res.bill_id;
 					$scope.dynamicMsg = "Patient Registration Bill Generated";
 					$('#pregbillSuccess').modal('show');
-					$('#patientRegBill').modal('hide');
+					//$('#patientRegBill').modal('hide');
 					GetAllBills.get({
 						token: $window.sessionStorage.token,
 					}, GetAllBillsSuccess, GetAllBillsFailure);

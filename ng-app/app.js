@@ -1,5 +1,5 @@
 var AppEHR = angular.module('AppEHR', [
-    'ngRoute', 'ngResource', 'ngFileUpload', 'angular.filter', 'fg', 'ngSanitize', 'markdown', 'oc.lazyLoad', 'webcam'
+    'ngRoute', 'ngResource', 'ngFileUpload', 'angular.filter', 'fg', 'ngSanitize', 'markdown', 'oc.lazyLoad', 'webcam', 'omr.directives'
 ]);
 AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', function ($httpProvider, $routeProvider, $locationProvider) {
         $locationProvider.hashPrefix();

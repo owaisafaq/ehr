@@ -1957,4 +1957,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         $scope.onSuccess = function (res) {
             console.log(res, "webcam stream");
         };
+        $scope.ngCameraCapture = function(webcam){
+            console.log(webcam, "angular-camera");
+        }
     }]);
