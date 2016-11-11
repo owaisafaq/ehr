@@ -4084,5 +4084,21 @@ class ApiController extends Controller
             ->get();
         return response()->json(['status' => true, 'data' => $data]);
     }
+
+    public function update_visit_room(Request $request)
+    {
+        $visit_id = intval($request->input('visit_id'));
+
+        $room = intval($request->input('room'));
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+        DB::table('visits')
+            ->where('id', $visit_id)
+            ->update(array('room' => $room, 'updated_at' => $currentdatetime));
+
+        return response()->json(['status' => true, 'message' => 'visit updated successfully']);
+    }
 }
 

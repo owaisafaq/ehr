@@ -814,4 +814,88 @@ class SettingController extends Controller
         return response()->json(['status'=> true,'message'=> 'Role Group Updated Successfully']);
     }
 
+    public function add_room(Request $request)
+       {
+           $name = $request->input('name');
+           $description = $request->input('description');
+           $code = $request->input('code');
+
+           DB::table('rooms')
+               ->insert(['name' => $name, 'code' => $code, 'description' => $description, 'created_at' => date("Y-m-d  H:i:s")]);
+
+           return response()->json(['status' => true, 'message' => 'Room Added successfully']);
+
+       }
+
+       public function get_rooms(Request $request)
+       {
+           $limit = $request->input('limit');
+           $offset = $request->input('offset');
+
+           if ($limit > 0 || $offset > 0) {
+
+               $rooms = DB::table('rooms')
+                   ->select(DB::raw('*'))
+                   ->where('status', 1)
+                   ->skip($offset)->take($limit)
+                   ->get();
+
+               $count = DB::table('rooms')
+                   ->select(DB::raw('*'))
+                   ->where('status', 1)
+                   ->count();
+           } else {
+
+               $rooms = DB::table('rooms')
+                   ->select(DB::raw('*'))
+                   ->where('status', 1)
+                   ->get();
+               $count = count($rooms);
+           }
+
+           return response()->json(['status' => true, 'data' => $rooms, 'count' => $count]);
+
+       }
+
+       public function get_room(Request $request)
+       {
+           $room_id = $request->input('room_id');
+
+           $room = DB::table('rooms')
+               ->select(DB::raw('*'))
+               ->where('id', $room_id)
+               ->where('status', 1)
+               ->first();
+
+           return response()->json(['status' => true, 'data' => $room]);
+
+       }
+
+       public function update_room(Request $request)
+       {
+           $room_id = $request->input('room_id');
+           $name = $request->input('name');
+           $code = $request->input('code');
+           $description = $request->input('description');
+
+           DB::table('rooms')
+               ->where('id', $room_id)
+               ->update(['name' => $name, 'code' => $code, 'description' => $description, 'updated_at' => date("Y-m-d  H:i:s")]);
+
+           return response()->json(['status' => true, 'message' => 'Room updated successfully']);
+
+       }
+
+       public function delete_room(Request $request)
+       {
+           $room_id = $request->input('room_id');
+
+           DB::table('rooms')
+               ->where('id', $room_id)
+               ->update(['status' => 0, 'updated_at' => date("Y-m-d  H:i:s")]);
+
+           return response()->json(['status' => true, 'message' => 'Room deleted successfully']);
+
+       }
+
 }
