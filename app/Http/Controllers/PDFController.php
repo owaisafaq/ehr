@@ -329,7 +329,7 @@ class PDFController extends Controller
 
 
     public function download_patient_referal(Request $request){
-        $refral_id = $request->input('refral_id');
+        $refral_id = $request->input('referal_id');
         $referal = DB::table('patient_referels')
             ->select(DB::raw('*'))
             ->where('id',$refral_id)
@@ -365,9 +365,6 @@ class PDFController extends Controller
             'data' => $file_archive
 
         ), JSON_UNESCAPED_SLASHES);
-
-
-
 
     }
 
