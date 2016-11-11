@@ -2,8 +2,8 @@
 
 require 'api.class.php';
 //define('HOST', 'http://131.107.100.10/ehr/public/api/');
-define('HOST', 'http://localhost/ehr/public/api/');
-//define('HOST', 'http://demoz.online/ehr/public/api/');
+//define('HOST', 'http://localhost/ehr/public/api/');
+define('HOST', 'http://demoz.online/ehr/public/api/');
 //define('HOST', 'http://demoz.online/dev/ehr/public/api/');
 define('APP', '');
 define('ROUTE', '');
@@ -3592,7 +3592,7 @@ $api = new api();
 $api->name = "Download Patient Referal";
 $api->url = HOST . 'download_patient_referal';
 $api->method = "GET";
-$api->params->refral_id = "1";
+$api->params->referal_id = "1";
 $api->params->token = "123435";
 
 $api_arr [] = $api;

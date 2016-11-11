@@ -1176,6 +1176,11 @@ class ApiController extends Controller
             ->where('status', 1)
             ->get();
 
+        $rooms = DB::table('rooms')
+             ->select(DB::raw('id,name'))
+             ->where('status', 1)
+             ->get();
+
 
         $method_name = $request->segment(2);
 
@@ -1241,7 +1246,8 @@ class ApiController extends Controller
             "doctors" => $doctors,
             "labs" => $labs,
             "manufacturer" => $manufacturers,
-            "pharmacy" => $pharmacy
+            "pharmacy" => $pharmacy,
+            "rooms" => $rooms
 
         );
 
@@ -4083,6 +4089,22 @@ class ApiController extends Controller
             ->orWhere('cat_group', '=', 'Documents')
             ->get();
         return response()->json(['status' => true, 'data' => $data]);
+    }
+
+    public function update_visit_room(Request $request)
+    {
+        $visit_id = intval($request->input('visit_id'));
+
+        $room = intval($request->input('room'));
+
+        $currentdatetime = date("Y-m-d  H:i:s");
+
+
+        DB::table('visits')
+            ->where('id', $visit_id)
+            ->update(array('room' => $room, 'updated_at' => $currentdatetime));
+
+        return response()->json(['status' => true, 'message' => 'visit updated successfully']);
     }
 }
 

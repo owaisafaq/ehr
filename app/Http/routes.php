@@ -502,4 +502,14 @@ $app->group(['prefix'=>'api','middleware' => 'jwt.auth'], function () use ($app)
     $app->post('add_prescription_material','App\Http\Controllers\OtherController@add_prescription_material');
     $app->get('download_patient_referal','App\Http\Controllers\PDFController@download_patient_referal');
 
+
+    //room apis
+    $app->post('add_room', 'App\Http\Controllers\SettingController@add_room');
+    $app->get('get_rooms', 'App\Http\Controllers\SettingController@get_rooms');
+    $app->get('get_room', 'App\Http\Controllers\SettingController@get_room');
+    $app->post('update_room', 'App\Http\Controllers\SettingController@update_room');
+    $app->post('delete_room', 'App\Http\Controllers\SettingController@delete_room');
+    $app->post('update_visit_room','App\Http\Controllers\ApiController@update_visit_room');
+    $app->post('search_room', 'App\Http\Controllers\ApiController@search_room');
+
 });
