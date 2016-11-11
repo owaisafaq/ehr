@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-lg-1">
                     <label class="txt-style-1 text-uppercase col-lg-12 adjust-2">Age</label>
-                    <span class="txt-style-2 col-lg-12">{{displayInfo.age}}</span>
+                    <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.age}}</span>
                 </div>
                 <div class="col-lg-1">
                     <label class="txt-style-1 text-uppercase col-lg-12">Sex</label>
@@ -54,7 +54,7 @@
                     <!--</div>-->
                 </div>
                 <div class="create_counter">
-                    <button type="button" ng-click="goToEncounter();" class="add button-custom pull-right open-custom_pop" ng-if="visitStatus == 1" ng-hide="gotoencounter">Go To Encouter</button>
+                    <!-- <button type="button" ng-click="goToEncounter();" class="add button-custom pull-right open-custom_pop" ng-if="visitStatus == 1" ng-hide="gotoencounter">Go To Encouter</button> -->
                     <button type="button" ng-click="openCreateEncounter();" class="add button-custom pull-right open-custom_pop" ng-hide="disabledEncounterButton" ng-if="visitStatus == 0">create encounter</button>
                     <button type="button" class="calendar button-custom pull-right" ng-hide="disabledEncounterButton" data-toggle="modal" data-target="#createAppointment">Create Appointment</button>
                     <button type="button" data-toggle="modal" data-target="#neworder" class="microscope button-custom pull-right" ng-hide="disabledEncounterButton">Order Labs</button>
@@ -126,7 +126,7 @@
             </div>
             <div class="card-body col-lg-12">
                 <div>
-                    <input class="encounter-search-bar" ng-change="getSearchPatient(search);" type="text" ng-model="search" placeholder="Search for a patient">
+                    <input class="encounter-search-bar" ng-change="getSearchPatient(search1);" type="text" ng-model="search1" placeholder="Search for a patient">
                 </div>
             </div><!--end .card-body -->
             <div class="table-header col-lg-12">
@@ -170,7 +170,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="encounter in allEncounter | filter:search">
+                            <tr ng-repeat="encounter in allEncounter | filter:{ first_name: listsearch}">
                                 <td align="center">
                                     <!-- <div class="radio radio-styled">
                                         <label>
@@ -281,8 +281,9 @@
                 <div class="col-lg-3">
                     <select class="form-control" id="priority" ng-model="Order.priority" placeholder="Select Priority">
                         <option value=""></option>
-                        <option>Urgent</option>
-                        <option>Urgent</option>
+                        <option>Low</option>
+                        <option>Medium</option>
+                        <option>High</option>
                     </select>
                 </div>
                 <div class="col-lg-1">
@@ -464,9 +465,11 @@
                                 <label>Estimated Discharge</label>
                             </div>
                             <div class="col-lg-3">
-                                <div class="input-group bootstrap-timepicker timepicker col-lg-12">
-                                    <input type="text" class="form-control input-small timepicker" ng-model="CO.discharge">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                <div class="input-group date select-date col-lg-12">
+                                    <div class="input-group-content">
+                                        <input type="text" class="form-control" placeholder="Select Date" ng-model="CO.discharge">
+                                    </div>
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
                             </div>
                                 </div>
@@ -703,7 +706,7 @@
                                     <label>systolic (mm hg)</label>
                                 </div>
                                 <div class="col-lg-6 margin-bottom-xxl">
-                                    <input type="text" placeholder="systolic (mm hg)"  ng-class="{
+                                    <input type="text" class="maskCost" placeholder="systolic (mm hg)"  ng-class="{
                                             true
                                             : 'error'}[vital.diastolic != undefined && vital.systolic == undefined]" ng-model="vital.systolic" numbers-only required/>
                                     <p ng-show="vital.diastolic != undefined && vital.systolic == undefined" class="help-block PIValid">Required</p>
@@ -712,7 +715,7 @@
                                     <label>diastolic (mm hg)</label>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" placeholder="diastolic (mm hg)" ng-class="{
+                                    <input type="text" class="maskCost" placeholder="diastolic (mm hg)" ng-class="{
                                             true
                                             : 'error'}[vital.diastolic == undefined && vital.systolic != undefined]" ng-model="vital.diastolic" numbers-only required/>
                                     <p ng-show="vital.systolic != undefined && vital.diastolic == undefined" class="help-block PIValid">Required</p>
@@ -727,7 +730,7 @@
                                     <label>pulse</label>
                                 </div>
                                 <div class="col-lg-6 margin-bottom-xxl">
-                                    <input type="text" placeholder="pulse" ng-model="vital.pulse" numbers-only/>
+                                    <input type="text" placeholder="pulse" ng-model="vital.pulse" class="maskCost"/>
                                 </div>
                                 <!-- <div class="col-lg-12">
                                     <label class="label-style">Pulse Rate (min/bpm)</label>
@@ -736,7 +739,7 @@
                                     <label>respiratory rate</label>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" placeholder="respiratory rate" ng-model="vital.respiratoryRate" numbers-only/>
+                                    <input type="text" placeholder="respiratory rate" ng-model="vital.respiratoryRate" class="maskCost"/>
                                 </div>
                             </div>
 
@@ -748,13 +751,13 @@
                                     <label>temperature (c)</label>
                                 </div>
                                 <div class="col-lg-6 margin-bottom-xxl">
-                                    <input type="text" placeholder="temperature (c)" ng-model="vital.temperaturec" numbers-only ng-change="GetTempcVal()" id="tempc"/>
+                                    <input type="text" placeholder="temperature (c)" ng-model="vital.temperaturec" ng-change="GetTempcVal()" id="tempc" class="maskCost"/>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>temperature (f)</label>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" placeholder="temperature (f)" ng-model="vital.temperaturef" ng-change="GetTempfVal()" id="tempf" numbers-only/>
+                                    <input type="text" placeholder="temperature (f)" ng-model="vital.temperaturef" ng-change="GetTempfVal()" id="tempf" class="maskCost"/>
                                 </div>
                             </div>
                         </div>
@@ -780,7 +783,7 @@
                                 <label>weight (kg)</label>
                             </div>
                             <div class="col-lg-6 margin-bottom-xxl">
-                                <input type="text" ng-class="{true: 'error'}[vital.weight == undefined && vital.height != undefined]" placeholder="weight (kg)" ng-model="vital.weight" numbers-only ng-keyup="Calculatebmi()" required/>
+                                <input type="text" ng-class="{true: 'error'}[vital.weight == undefined && vital.height != undefined]" placeholder="weight (kg)" ng-model="vital.weight" ng-keyup="Calculatebmi()" required class="maskCost"/>
                                 <p ng-show="vital.weight == undefined && vital.height != undefined" class="help-block PIValid">Required</p>
                             </div>
 
@@ -788,7 +791,7 @@
                                 <label>height (cm)</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" ng-class="{true: 'error'}[vital.height == undefined && vital.weight != undefined]" placeholder="height (cm)" ng-model="vital.height" ng-keyup="Calculatebmi()" numbers-only required />
+                                <input type="text" ng-class="{true: 'error'}[vital.height == undefined && vital.weight != undefined]" placeholder="height (cm)" ng-model="vital.height" ng-keyup="Calculatebmi()" required class="maskCost" />
                                 <p ng-show="vital.height == undefined && vital.weight != undefined" class="help-block PIValid">Required</p>
                             </div>
                         </div>
@@ -826,6 +829,21 @@
                 </form>
             </div>
              <div class="modal-footer">
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade modal-size_1" id="error200" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Error</h2>
+            </div>
+            <div class="modal-body">
+                <p class="modal-subtext">{{errorLabOrder}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

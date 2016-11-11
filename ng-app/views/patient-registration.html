@@ -73,8 +73,7 @@
                                     <input type="file" ngf-select="uploadFiles($files, $invalidFiles, 1)" name="file" accept="image/*">
                                     <div class="btn-browse">
                                         <span class="browse">Browse</span>
-                                        <!-- <span class="web-cam"></span> -->
-                                        <webcam on-stream="onStream(stream)" on-streaming="onSuccess()"  on-error="onError(err)" placeholder="'/assets/img/browse_icn.png'" channel="myChannel"></webcam>
+                                        
                                     </div>
                                 </div>
                                 <span ng-hide="imageUploading" class="float-right image-uploading-text ng-hide">Image uploading... </span> 
@@ -127,6 +126,9 @@
                                 </div> -->
                             </div>
                             <div class="col-lg-3">
+                                <div class="file-field">
+                                    <span class="web-cam" data-target="#webCam" data-toggle="modal"></span>
+                                </div>
                             </div>
                             <div class="col-lg-3">
                                 <select class="form-control select_searchFields" ng-model="PI.patient_state" ng-change="addressLocalGovtAreaByStatesIndependent(PI.patient_state, 0);" placeholder="State of Origin" name="origin" ng-class="{true:'error'}[submitted && userForm1.origin.$invalid]" required>
@@ -1599,6 +1601,31 @@
             </div>
             <div class="modal-body">
                 <p class="modal-subtext">Invalid receipt ID</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade modal-size_1" id="webCam" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Web Cam Capture</h2>
+            </div>
+            <div class="modal-body">
+                <webcam on-stream="onStream(stream)" on-streaming="onSuccess()"  on-error="onError(err)" placeholder="'/assets/img/browse_icn.png'" channel="myChannel"></webcam>
+                <ng-camera
+                  type="photo"
+                  enabled="true"
+                  width="640"
+                  height="480"
+                  countdown="3"
+                  ng-model="media"
+                  overlay-src="ng-app/assets/img/browse_icn.png"
+                  capture="ngCameraCapture(media)"
+                  capture-message="Go!"></ng-camera>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
