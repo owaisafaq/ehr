@@ -548,6 +548,10 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', function 
                 otherwise({
                     redirectTo: '/dashboard'
                 });
+        /*$locationProvider.html5Mode({
+          enabled: true,
+          requireBase: false
+        });*/
     }]);
 AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData, $timeout, $routeParams) {
     if (sessionStorage.length == 0) {
@@ -731,6 +735,7 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
     }
     
     $rootScope.$on("$routeChangeStart", function (event, next, current) {
+
         if ($location.$$path != '/login' && $location.$$path != '/') {
             $rootScope.backgroundImg = "";
             $rootScope.class = "show";
@@ -766,6 +771,7 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
     $rootScope.loader = "";
     
     $rootScope.$on('$viewContentLoaded', function () {
+        $rootScope.mainLoader = "hide";
             $(".scrollbar").mCustomScrollbar();
             $(".scroll-container").mCustomScrollbar();
         // transfers sessionStorage from one tab to another

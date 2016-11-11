@@ -72,8 +72,8 @@
                                     </div>
                                     <input type="file" ngf-select="uploadFiles($files, $invalidFiles, 1)" name="file" accept="image/*">
                                     <div class="btn-browse">
-                                        <span class="browse">Browse</span>
-                                        
+                                        <span class="browse">Browse</span><!--  data-target="#webCam" data-toggle="modal" -->
+                                        <span class="web-cam"></span>
                                     </div>
                                 </div>
                                 <span ng-hide="imageUploading" class="float-right image-uploading-text ng-hide">Image uploading... </span> 
@@ -127,7 +127,7 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="file-field">
-                                    <span class="web-cam" data-target="#webCam" data-toggle="modal"></span>
+                                    <!-- <span class="web-cam" data-target="#webCam" data-toggle="modal"></span> -->
                                 </div>
                             </div>
                             <div class="col-lg-3">

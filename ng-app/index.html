@@ -3,7 +3,7 @@
     <head>
         <title>{{pageTitle}}</title>
         <!--BEGIN META--> 
-        <!-- <base href="http://localhost/aplos_ehr/ng-app/"> -->
+        <!-- <base href="/ehr/ng-app/"> -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="keywords" content="your,keywords">
@@ -37,6 +37,7 @@
         <![endif]-->
     </head>
     <body class="menubar-hoverable header-fixed">
+        <div class="loader {{mainLoader}}"></div>
         <header id="header" class="hide {{class}}">
             <form novalidate>
                 <div class="headerbar hidden-print">
@@ -225,7 +226,7 @@
                         </li>
                         
                         
-<!--                        <li>
+                        <!--                        <li>
                             <a href="#/billing" >
                                 <div class="gui-icon"><i class="md md-my-library-books"></i></div>
                                 <span class="title">Billing</span>
