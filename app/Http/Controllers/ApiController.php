@@ -3731,6 +3731,20 @@ class ApiController extends Controller
 
         foreach ($patient_prescriptions as $patient_prescription) {
 
+     /*       $product = DB::table('stock')
+                ->select(DB::raw('quantity'))
+                ->where('pharmacy_id', $patient_prescription->pharmacy)
+                ->where('product_id', $patient_prescription->medication)
+                ->first();
+
+            $product_quantity = $product->quantity;
+
+            $remaining = $patient_prescription->dispense-$product_quantity;
+
+            if ($remaining < 1) {
+                return response()->json(['status' => false, 'message' => 'Insufficcient Storage']);
+            }*/
+
             DB::table('patient_prescription_medicine')
                 ->insert(
                     ['prescription_id' => $prescription_id,
