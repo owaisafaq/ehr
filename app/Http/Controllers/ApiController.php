@@ -3601,7 +3601,7 @@ class ApiController extends Controller
             ->where('id', $visit_id)
             ->update(['visit_status' => 'physician', 'updated_at' => date("Y-m-d  H:i:s")]);
 
-
+        $total_amount = 0;
         foreach ($patient_prescriptions as $patient_prescription) {
 
             /*       $product = DB::table('stock')
@@ -3631,6 +3631,15 @@ class ApiController extends Controller
                     ]
                 );
 
+            $cost = DB::table('stock')
+                ->select(DB::raw('cost_per_item'))
+                ->where('pharmacy_id', $patient_prescription->pharmacy)
+                ->where('product_id', $patient_prescription->medication)
+                ->first();
+
+            $product_cost = $cost->cost_per_item;
+            $dispense_cost = $product_cost*$patient_prescription->dispense;
+            $total_amount += $dispense_cost;
         }
 
 
@@ -3667,8 +3676,8 @@ class ApiController extends Controller
                     ['patient_id'=>$patient_id,
                         'bill_id'=>$bill_id,
                         'description'=>$purpose,
-                        'amount'=> 50,
-                        'due'=> 50,
+                        'amount'=> $total_amount,
+                        'due'=> $total_amount,
                         'invoice_status'=>'pending',
                         'created_at' =>$currentdatetime
                     ]
