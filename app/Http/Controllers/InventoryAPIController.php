@@ -183,23 +183,52 @@ class InventoryAPIController extends Controller
     }
 
     //Stock APIs.
-    public function get_stock(){
-        $stock = DB::table('inventory_products')
-            ->select('inventory_products.id as product_id','inventory_categories.id as category_id',
-                     'inventory_categories.cat_name as category_name',
-                     'inventory_products.name as product_name','cost_per_item', 'quantity','order_quantity','inventory_products.reorder_level','stock.stock_status')
-            ->leftJoin('stock','inventory_products.id','=','stock.product_id')
-            ->leftJoin('inventory_categories','inventory_products.cat_id','=','inventory_categories.id')
-            ->where(['inventory_products.status'=>1])
-            ->groupby('inventory_products.id')
-            ->get();
+    public function get_stock(Request $request){
+        $limit = $request->input('limit');
+        $offset = $request->input('offset');
+
+        if ($offset == 0 && $limit == 0) {
+            $stock = DB::table('inventory_products')
+                ->select('inventory_products.id as product_id', 'inventory_categories.id as category_id',
+                    'inventory_categories.cat_name as category_name',
+                    'inventory_products.name as product_name', 'cost_per_item', 'quantity', 'order_quantity', 'inventory_products.reorder_level', 'stock.stock_status')
+                ->leftJoin('stock', 'inventory_products.id', '=', 'stock.product_id')
+                ->leftJoin('inventory_categories', 'inventory_products.cat_id', '=', 'inventory_categories.id')
+                ->where(['inventory_products.status' => 1])
+                ->groupby('inventory_products.id')
+                ->skip($offset)->take($limit)
+                ->get();
+
+            $count = DB::table('inventory_products')
+                ->select('inventory_products.id as product_id', 'inventory_categories.id as category_id',
+                    'inventory_categories.cat_name as category_name',
+                    'inventory_products.name as product_name', 'cost_per_item', 'quantity', 'order_quantity', 'inventory_products.reorder_level', 'stock.stock_status')
+                ->leftJoin('stock', 'inventory_products.id', '=', 'stock.product_id')
+                ->leftJoin('inventory_categories', 'inventory_products.cat_id', '=', 'inventory_categories.id')
+                ->where(['inventory_products.status' => 1])
+                ->groupby('inventory_products.id')
+                ->count();
+        }else{
+            $stock = DB::table('inventory_products')
+                ->select('inventory_products.id as product_id', 'inventory_categories.id as category_id',
+                    'inventory_categories.cat_name as category_name',
+                    'inventory_products.name as product_name', 'cost_per_item', 'quantity', 'order_quantity', 'inventory_products.reorder_level', 'stock.stock_status')
+                ->leftJoin('stock', 'inventory_products.id', '=', 'stock.product_id')
+                ->leftJoin('inventory_categories', 'inventory_products.cat_id', '=', 'inventory_categories.id')
+                ->where(['inventory_products.status' => 1])
+                ->groupby('inventory_products.id')
+                ->skip($offset)->take($limit)
+                ->get();
+            $count = count($stock);
+
+        }
         foreach($stock as $stocks){
             $stocks->product_id = str_pad($stocks->product_id,5, '0', STR_PAD_LEFT);
         }
         if($stock){
-            return response()->json(['status' => true, 'message' => "Stock Found.", 'data'=>$stock], 200);
+            return response()->json(['status' => true, 'message' => "Stock Found.", 'data'=>$stock,'count'=>$count], 200);
         }else{
-            return response()->json(['status' => true, 'message' => "Stock not found", 'data'=>$stock], 200);
+            return response()->json(['status' => true, 'message' => "Stock not found", 'data'=>$stock,'count'=>$count], 200);
         }
 
     }
