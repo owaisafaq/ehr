@@ -190,7 +190,7 @@ class InventoryAPIController extends Controller
                      'inventory_products.name as product_name','cost_per_item', 'quantity','order_quantity','inventory_products.reorder_level','stock.stock_status')
             ->leftJoin('stock','inventory_products.id','=','stock.product_id')
             ->leftJoin('inventory_categories','inventory_products.cat_id','=','inventory_categories.id')
-           // ->where(['stock.status'=>1])
+            ->where(['inventory_products.status'=>1])
             ->groupby('inventory_products.id')
             ->get();
         foreach($stock as $stocks){
