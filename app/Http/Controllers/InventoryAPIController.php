@@ -363,12 +363,14 @@ class InventoryAPIController extends Controller
     }
     public function delete_stock(Request $request){
         $id = $request->input('stock_id');
-        $count = DB::table('stock')->where('id', $id)->update(['status'=>0]);
-        if($count){
-            return response()->json(['status' => true, 'message' => "Supplier Deleted Successfully"], 200);
-        }else{
+        $product_id = $request->input('product_id');
+        $count = DB::table('stock')->where('product_id',$product_id)->update(['status'=>0]);
+        DB::table('inventory_products')->where('id',$product_id)->update(['status'=>0]);
+        //if($count){
+            return response()->json(['status' => true, 'message' => "Inventory Deleted Successfully"], 200);
+       /* }else{
             return response()->json(['status' => false, 'message' => "Error!"], 404);
-        }
+        }*/
     }
 
     //Product APIs.
