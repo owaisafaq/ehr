@@ -3882,7 +3882,6 @@ class ApiController extends Controller
                 ->select(DB::raw('patient_prescription.id,patient_prescription.patient_id,patients.first_name,patients.last_name,patient_prescription.visit_id,hospital_plan.name as patient_plan,patient_prescription.total_amount,patient_prescription.paid,patient_prescription.prescription_status'))
                 ->where('patient_prescription.status', 1)
                 ->where('patient_prescription_medicine.pharmacy', $pharmacy_id)
-                ->skip($offset)->take($limit)
                 ->get();
 
             $count = count($prescriptions);
@@ -3896,7 +3895,6 @@ class ApiController extends Controller
             $pharmacy  = DB::table('pharmacy')
                        ->select(DB::raw('id,name'))
                        ->where('id', $pharmacy_id)
-                       //->where('status', 1)
                        ->first();
 
              $prescription->pharmacy = $pharmacy->name;
