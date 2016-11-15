@@ -198,21 +198,45 @@ class BillingController extends Controller
     {
         $bill_id = $request->input('bill_id');
         //$bill_id = 7;
-        $bills = DB::table('invoice')
-            ->select('invoice.*', 'hospital_plan.id as plan_id', 'hospital_plan.name as plan_name','patients.first_name','patients.middle_name','patients.last_name')
-            ->leftJoin('patients', 'patients.id', '=', 'invoice.patient_id')
-            ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.hospital_plan')
-            ->where('invoice.bill_id',$bill_id)
-            ->where('invoice.status', 1)
-            ->where('patients.status', 1)
-            ->get();
 
+        $limit = $request->input('limit');
+        $offset = $request->input('offset');
+        if ($offset > 0 || $limit > 0) {
+            $bills = DB::table('invoice')
+                ->select('invoice.*', 'hospital_plan.id as plan_id', 'hospital_plan.name as plan_name', 'patients.first_name', 'patients.middle_name', 'patients.last_name')
+                ->leftJoin('patients', 'patients.id', '=', 'invoice.patient_id')
+                ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.hospital_plan')
+                ->where('invoice.bill_id', $bill_id)
+                ->where('invoice.status', 1)
+                ->where('patients.status', 1)
+                ->skip($offset)->take($limit)
+                ->get();
+
+            $count = DB::table('invoice')
+                ->select('invoice.*', 'hospital_plan.id as plan_id', 'hospital_plan.name as plan_name', 'patients.first_name', 'patients.middle_name', 'patients.last_name')
+                ->leftJoin('patients', 'patients.id', '=', 'invoice.patient_id')
+                ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.hospital_plan')
+                ->where('invoice.bill_id', $bill_id)
+                ->where('invoice.status', 1)
+                ->where('patients.status', 1)
+                ->count();
+        }else{
+            $bills = DB::table('invoice')
+                ->select('invoice.*', 'hospital_plan.id as plan_id', 'hospital_plan.name as plan_name', 'patients.first_name', 'patients.middle_name', 'patients.last_name')
+                ->leftJoin('patients', 'patients.id', '=', 'invoice.patient_id')
+                ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.hospital_plan')
+                ->where('invoice.bill_id', $bill_id)
+                ->where('invoice.status', 1)
+                ->where('patients.status', 1)
+                ->get();
+            $count = count($bills);
+        }
         foreach ($bills as $bill) {
             $bill->id = str_pad($bill->id, 8, '0', STR_PAD_LEFT);
             $bill->patient_id = str_pad($bill->patient_id, 7, '0', STR_PAD_LEFT);
         }
 
-            return response()->json(['status' => true, 'message' => 'Invoices found', 'data' => $bills]);
+            return response()->json(['status'=>true,'message'=>'Invoices found','data'=> $bills,'count'=>$count]);
     }
 
     public function update_invoice(Request $request)

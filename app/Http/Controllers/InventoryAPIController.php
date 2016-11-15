@@ -81,12 +81,21 @@ class InventoryAPIController extends Controller
     }
 
     //Supplier APIS.
-    public function get_suppliers(){
-        $suppliers = DB::table('suppliers')->where('status',1)->get();
-        if($suppliers){
-            return response()->json(['status' => true, 'message' => "Suppliers Found ", 'data'=>$suppliers], 200);
+    public function get_suppliers(Request $request){
+        $limit = $request->input('limit');
+        $offset = $request->input('offset');
+        if ($offset > 0 || $limit > 0) {
+            $suppliers = DB::table('suppliers')->where('status', 1)->skip($offset)->take($limit)->get();
+            $count = DB::table('suppliers')->where('status', 1)->count();
         }else{
-            return response()->json(['status' => true, 'message' => "Suppliers not found",'data'=>$suppliers], 200);
+            $suppliers = DB::table('suppliers')->where('status', 1)->get();
+            $count = count($suppliers);
+        }
+
+        if($suppliers){
+            return response()->json(['status' => true, 'message' => "Suppliers Found ", 'data'=>$suppliers,'count'=>$count], 200);
+        }else{
+            return response()->json(['status' => true, 'message' => "Suppliers not found",'data'=>$suppliers,'count'=>$count], 200);
         }
     }
     public function get_single_supplier(Request $request){
