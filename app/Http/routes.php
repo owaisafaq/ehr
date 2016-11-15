@@ -512,4 +512,7 @@ $app->group(['prefix'=>'api','middleware' => 'jwt.auth'], function () use ($app)
     $app->post('update_visit_room','App\Http\Controllers\ApiController@update_visit_room');
     $app->post('search_room', 'App\Http\Controllers\ApiController@search_room');
 
+
+    //Bill Purposes
+    $app->get('get_bill_purposes','App\Http\Controllers\BillingController@get_bill_purposes');
 });

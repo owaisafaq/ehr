@@ -1401,6 +1401,8 @@ $api = new api();
 $api->name = "Get Stocks";
 $api->url = HOST . 'get_stock';
 $api->method = "GET";
+$api->params->limit = "0";
+$api->params->offset = "0";
 $api->params->token = "";
 
 $api_arr [] = $api;
@@ -1904,6 +1906,8 @@ $api->name = "Get All Invoices";
 $api->url = HOST . 'get_all_invoices';
 $api->method = "GET";
 $api->params->bill_id = "1";
+$api->params->offset = "1";
+$api->params->limit = "1";
 $api->params->token = "123435";
 
 
@@ -3594,6 +3598,19 @@ $api->url = HOST . 'download_patient_referal';
 $api->method = "GET";
 $api->params->referal_id = "1";
 $api->params->token = "123435";
+
+$api_arr [] = $api;
+
+
+// Get  Bill Purpose's
+$api = new api();
+$api->name = "Get Bill Purpose's";
+$api->url = HOST . 'get_bill_purposes';
+$api->method = "GET";
+$api->description = "Get Bill Purpose's";
+$api->params->purpose = "";
+$api->params->hospital_plan = "self";
+$api->params->token = "123";
 
 $api_arr [] = $api;
 

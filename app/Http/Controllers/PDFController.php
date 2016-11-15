@@ -429,7 +429,7 @@ class PDFController extends Controller
 
         })->store('csv');
 
-        $file_path = 'http://demoz.online/ehr/storage/exports/patients.csv';
+        $file_path = 'http://localhost/ehr/storage/exports/patients.csv';
 
 
         echo json_encode(array(
@@ -466,7 +466,7 @@ class PDFController extends Controller
 
         })->store('csv');
 
-        $file_path = 'http://demoz.online/ehr/storage/exports/nhis.csv';
+        $file_path = 'http://localhost/ehr/storage/exports/nhis.csv';
 
 
         echo json_encode(array(

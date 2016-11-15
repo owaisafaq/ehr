@@ -3601,8 +3601,22 @@ class ApiController extends Controller
             ->where('id', $visit_id)
             ->update(['visit_status' => 'physician', 'updated_at' => date("Y-m-d  H:i:s")]);
 
-
+        $total_amount = 0;
         foreach ($patient_prescriptions as $patient_prescription) {
+
+            /*       $product = DB::table('stock')
+                         ->select(DB::raw('quantity'))
+                         ->where('pharmacy_id', $patient_prescription->pharmacy)
+                         ->where('product_id', $patient_prescription->medication)
+                         ->first();
+
+                     $product_quantity = $product->quantity;
+
+                     $remaining = $patient_prescription->dispense-$product_quantity;
+
+                     if ($remaining < 1) {
+                         return response()->json(['status' => false, 'message' => 'Insufficcient Storage']);
+                     }*/
 
             DB::table('patient_prescription_medicine')
                 ->insert(
@@ -3617,6 +3631,15 @@ class ApiController extends Controller
                     ]
                 );
 
+            $cost = DB::table('stock')
+                ->select(DB::raw('cost_per_item'))
+                ->where('pharmacy_id', $patient_prescription->pharmacy)
+                ->where('product_id', $patient_prescription->medication)
+                ->first();
+
+            $product_cost = $cost->cost_per_item;
+            $dispense_cost = $product_cost*$patient_prescription->dispense;
+            $total_amount += $dispense_cost;
         }
 
 
@@ -3653,8 +3676,8 @@ class ApiController extends Controller
                     ['patient_id'=>$patient_id,
                         'bill_id'=>$bill_id,
                         'description'=>$purpose,
-                        'amount'=> 50,
-                        'due'=> 50,
+                        'amount'=> $total_amount,
+                        'due'=> $total_amount,
                         'invoice_status'=>'pending',
                         'created_at' =>$currentdatetime
                     ]
@@ -3673,6 +3696,7 @@ class ApiController extends Controller
         $prescribe_medication_id = $request->input('prescribe_medication_id');
         $prescription_id = $request->input('precription_id');
         $note_for_pharmacy = $request->input('note_for_pharmacy');
+        $visit_id  = $request->input('visit_id');
 
         $prescription = html_entity_decode($request->input('prescription'));
 
@@ -3687,6 +3711,7 @@ class ApiController extends Controller
 
         DB::table('patient_prescription_medicine')->where('prescription_id', $prescription_id)->delete();
 
+        $total_amount = 0;
         foreach ($patient_prescriptions as $patient_prescription) {
 
             DB::table('patient_prescription_medicine')
@@ -3703,6 +3728,17 @@ class ApiController extends Controller
                     ]
                 );
 
+
+            $cost = DB::table('stock')
+                ->select(DB::raw('cost_per_item'))
+                ->where('pharmacy_id', $patient_prescription->pharmacy_id)
+                ->where('product_id', $patient_prescription->medication)
+                ->first();
+
+            $product_cost = $cost->cost_per_item;
+            $dispense_cost = $product_cost * $patient_prescription->dispense;
+            $total_amount += $dispense_cost;
+
         }
 
         DB::table('prescription_notes')->where('prescription_id','=', $prescription_id)->delete();
@@ -3714,6 +3750,28 @@ class ApiController extends Controller
                     'created_at' => $currentdatetime
                 ]
             );
+
+
+        $bill = DB::table('billing')
+            ->select(DB::raw('id'))
+            ->where('encounter_id', $visit_id)
+            ->where('status', 1)
+            ->first();
+
+        if (!empty($bill)) {
+            $bill_id = $bill->id;
+            DB::table('invoice')
+                ->where('bill_id',$bill_id)
+                ->where('description','LIKE',"Prescription%")
+                ->update(
+                    ['amount' => $total_amount,
+                        'due' => $total_amount,
+                        'invoice_status' => 'pending',
+                        'updated_at' => $currentdatetime
+                    ]
+                );
+        }
+
 
         return response()->json(['status' => true, 'message' => 'Prescrpition Updated Successfully']);
 
@@ -3730,6 +3788,20 @@ class ApiController extends Controller
 
 
         foreach ($patient_prescriptions as $patient_prescription) {
+
+     /*       $product = DB::table('stock')
+                ->select(DB::raw('quantity'))
+                ->where('pharmacy_id', $patient_prescription->pharmacy)
+                ->where('product_id', $patient_prescription->medication)
+                ->first();
+
+            $product_quantity = $product->quantity;
+
+            $remaining = $patient_prescription->dispense-$product_quantity;
+
+            if ($remaining < 1) {
+                return response()->json(['status' => false, 'message' => 'Insufficcient Storage']);
+            }*/
 
             DB::table('patient_prescription_medicine')
                 ->insert(
@@ -3810,7 +3882,6 @@ class ApiController extends Controller
                 ->select(DB::raw('patient_prescription.id,patient_prescription.patient_id,patients.first_name,patients.last_name,patient_prescription.visit_id,hospital_plan.name as patient_plan,patient_prescription.total_amount,patient_prescription.paid,patient_prescription.prescription_status'))
                 ->where('patient_prescription.status', 1)
                 ->where('patient_prescription_medicine.pharmacy', $pharmacy_id)
-                ->skip($offset)->take($limit)
                 ->get();
 
             $count = count($prescriptions);
@@ -3824,7 +3895,6 @@ class ApiController extends Controller
             $pharmacy  = DB::table('pharmacy')
                        ->select(DB::raw('id,name'))
                        ->where('id', $pharmacy_id)
-                       //->where('status', 1)
                        ->first();
 
              $prescription->pharmacy = $pharmacy->name;
