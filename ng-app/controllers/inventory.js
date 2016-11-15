@@ -6,7 +6,10 @@ var AppEHR = angular.module('AppEHR');
         $scope.cat_unique = {};
         $scope.inventory = {};
         $scope.selectedSupplier = {};
+        $scope.limit = 15;
         GetAllInventory.get({
+            offset: 0,
+            limit: $scope.limit,
             token: $window.sessionStorage.token,
         }, GetAllInventorySuccess, GetAllInventoryFailure);
         function GetAllInventorySuccess(res) {
@@ -17,6 +20,7 @@ var AppEHR = angular.module('AppEHR');
                     return true;
                 }
                 $scope.InventoryLists = res.data;
+                $scope.inventoryCount = res.count;
                 console.log($scope.InventoryLists, 'inventory');
             }else if(res.error_code == 500){
                 console.log(res);
@@ -30,14 +34,16 @@ var AppEHR = angular.module('AppEHR');
         }
 
         GetAllSuppliers.get({
-        token: $window.sessionStorage.token
-
+            token: $window.sessionStorage.token,
+            offset: 0,
+            limit: $scope.limit
         }, GetAllSupplierSuccess, GetAllSupplierFailure);
-                function GetAllSupplierSuccess(res) {
-                if (res.status == true) {
+        function GetAllSupplierSuccess(res) {
+            if (res.status == true) {
                 $scope.SuppplierLists = res.data;
-                }
-                }
+                $scope.supplimentsCount = res.count;
+            }
+        }
 
         function GetAllSupplierFailure(error) {
         $('#internetError').modal('show');
@@ -167,7 +173,7 @@ var AppEHR = angular.module('AppEHR');
                 }
 // Add Inventory
         $scope.AddInventory = function (inventory) {
-            if (inventory.product_name != undefined && inventory.reorder_level != undefined && inventory.order_quantity != undefined && inventory.quantity != undefined && inventory.price != undefined) {
+            if (inventory.product_name != undefined && inventory.reorder_level != undefined && inventory.order_quantity != undefined && inventory.quantity != undefined && inventory.price != undefined && inventory.pharmacy_id != undefined) {
             $rootScope.loader = 'show';
                 
             var val = inventory.price;
@@ -516,13 +522,13 @@ var AppEHR = angular.module('AppEHR');
                 console.log(stockID);
                         $scope.stockID = stockID;
                         $rootScope.loader = "show";
-                        DeleteInventory.save({token: $window.sessionStorage.token, stock_id: stockID}, deleteStockInfoSuccess, deleteStockInfoFailure);
+                        DeleteInventory.save({token: $window.sessionStorage.token, product_id: stockID}, deleteStockInfoSuccess, deleteStockInfoFailure);
                         function deleteStockInfoSuccess(res) {
                             if (res.status == true) {
                             $rootScope.loader = "hide";
                                     console.log("Deleted");
                                     GetAllInventory.get({
-                                    token: $window.sessionStorage.token,
+                                        token: $window.sessionStorage.token,
                                     }, GetAllInventorySuccess, GetAllInventoryFailure);
                             }else if(res.error_code == 500){
                                 console.log(res);
@@ -840,13 +846,15 @@ var AppEHR = angular.module('AppEHR');
 
                 };
                 GetAllCategories.get({
-                group : 'Drugs',
-                        token: $window.sessionStorage.token
-
+                    group : 'Drugs',
+                    offset: 0,
+                    limit: $scope.limit,
+                    token: $window.sessionStorage.token
                 }, GetAllCategoriesSuccess, GetAllCategoriesFailure);
                 function GetAllCategoriesSuccess(res) {
                 if (res.status == true) {
-                $scope.CategoryLists = res.data;
+                    $scope.CategoryLists = res.data;
+                    $scope.catCount = res.count;
                 }
                 }
 
@@ -872,4 +880,73 @@ var AppEHR = angular.module('AppEHR');
                 console.log(error);
         }
         })
+
+        $scope.curPage = 0;
+        $scope.pageSize = 15;
+        $scope.numberOfPages = function() {
+            return Math.ceil($scope.inventoryCount / $scope.pageSize);
+        };
+
+        $scope.paginationNext = function(pageSize, curPage){
+            $rootScope.loader = "show";
+            GetAllInventory.get({
+                token: $window.sessionStorage.token,
+                offset: (pageSize * curPage), limit: $scope.limit
+            }, GetAllInventorySuccess, GetAllInventoryFailure);
+        }
+
+        $scope.paginationPrev = function(pageSize, curPage){
+            $rootScope.loader = "show";
+            GetAllInventory.get({
+                token: $window.sessionStorage.token,
+                offset: (pageSize - 1) * curPage, limit: $scope.limit
+            }, GetAllInventorySuccess, GetAllInventoryFailure);
+            
+        }
+
+        $scope.curPageSupplements = 0;
+        $scope.pageSizeSupplements = 15;
+        $scope.numberOfPagesInvoices = function() {
+          return Math.ceil($scope.supplimentsCount / $scope.pageSize);
+        };
+
+        $scope.paginationNextS = function(pageSize, curPage){
+            $rootScope.loader = "show";
+            GetAllSuppliers.get({
+                token: $window.sessionStorage.token,
+                offset: (pageSize * curPage), limit: $scope.limit
+            }, GetAllSupplierSuccess, GetAllSupplierFailure);
+        }
+
+        $scope.paginationPrevS = function(pageSize, curPage){
+            $rootScope.loader = "show";
+            GetAllSuppliers.get({
+                token: $window.sessionStorage.token,
+                offset: (pageSize * curPage), limit: $scope.limit
+            }, GetAllSupplierSuccess, GetAllSupplierFailure);
+        }
+
+        $scope.curPageCat = 0;
+        $scope.pageSizeCat = 15;
+        $scope.numberOfPagesCat = function() {
+          return Math.ceil($scope.catCount / $scope.pageSize);
+        };
+
+        $scope.paginationNextC = function(pageSize, curPage){
+            $rootScope.loader = "show";
+            GetAllCategories.get({
+                group : 'Drugs',
+                offset: (pageSize * curPage), limit: $scope.limit,
+                token: $window.sessionStorage.token
+            }, GetAllCategoriesSuccess, GetAllCategoriesFailure);
+        }
+
+        $scope.paginationPrevC = function(pageSize, curPage){
+            $rootScope.loader = "show";
+            GetAllCategories.get({
+                group : 'Drugs',
+                offset: (pageSize * curPage), limit: $scope.limit,
+                token: $window.sessionStorage.token
+            }, GetAllCategoriesSuccess, GetAllCategoriesFailure);
+        }
 }]);

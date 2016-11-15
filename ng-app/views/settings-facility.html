@@ -277,16 +277,16 @@
                             </tr>
                             </tbody>
                         </table>
-                        <div class="pagination pagination-centered pull-right" ng-show="pharmacyCount">
+                        <div class="pagination pagination-centered pull-right" ng-show="departmentCount">
                             <ul class="pagination-controle pagination">
                                 <li class="prev-page">
-                                    <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage = curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
+                                    <button type="button" class="btn btn-primary" ng-disabled="curPageD == 0" ng-click="curPageD = curPageD-1; paginationPrevD(pageSizeD, curPageD);"><i class="fa fa-caret-left"></i></button>
                                 </li>
                                 <li>
-                                    <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberPharmacy" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
+                                    <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberDepartment" numbers-only value="{{curPageD + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPagesD() }}</span>
                                 </li>
                                 <li class="next-page">
-                                    <button type="button" class="btn btn-primary" ng-disabled="curPage >= pharmacyCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
+                                    <button type="button" class="btn btn-primary" ng-disabled="curPageD >= departmentCount/pageSizeD - 1" ng-click="curPageD = curPageD+1; paginationNextD(pageSizeD, curPageD);"><i class="fa fa-caret-right"></i></button>
                                 </li>
                             </ul>
                         </div>

@@ -554,6 +554,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', function 
         });*/
     }]);
 AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData, $timeout, $routeParams) {
+    $rootScope.pageTitle = "EHR";
     if (sessionStorage.length == 0) {
         //console.log(1111111111111111);
         //            var path = $location.$$path;

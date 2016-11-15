@@ -3883,3 +3883,7 @@ select#autoship_option.ng-hide,select#autoship_option2.ng-hide,select#autoship_o
 .falilure-red{
     border-color: red!important;
 }
+fieldset > div {
+    display: inline-block;
+    width: 100%;
+}

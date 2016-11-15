@@ -3839,3 +3839,18 @@ AppEHR.factory("UpdateVisitRoom", function ($resource) {
     };
     return patientRegistrationEmployer;
 });
+AppEHR.factory("GetBillsByPurposes", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_bill_purposes', params, {
+            get: {method: 'get'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+});

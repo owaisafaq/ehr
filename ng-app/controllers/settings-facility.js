@@ -6,6 +6,8 @@ AppEHR.controller('settingsFacility', ['$scope', '$rootScope', '$window', '$rout
     $scope.itemsPerPage = 15;
     $scope.curPage = 0;
     $scope.pageSize = 15;
+    $scope.curPageD = 0;
+    $scope.pageSizeD = 15;
     $scope.deleteDepartmentId = 0;
     $scope.imageUploading = true;
 	Countries.get({
@@ -176,11 +178,11 @@ AppEHR.controller('settingsFacility', ['$scope', '$rootScope', '$window', '$rout
         console.log(error);
     }
 
-    $scope.numberOfPages = function() {
+    $scope.numberOfPagesD = function() {
         return Math.ceil($scope.departmentCount / $scope.pageSize);
     };
 
-    $scope.paginationNext = function(pageSize, curPage){
+    $scope.paginationNextD = function(pageSize, curPage){
         $rootScope.loader = "show";
         GetAllDepartments.get({
             token: $window.sessionStorage.token,
@@ -188,7 +190,7 @@ AppEHR.controller('settingsFacility', ['$scope', '$rootScope', '$window', '$rout
         }, GetAllDepartmentsSuccess, GetAllDepartmentsFailure);
     };
 
-    $scope.paginationPrev = function(pageSize, curPage){
+    $scope.paginationPrevD = function(pageSize, curPage){
         $rootScope.loader = "show";
         GetAllDepartments.get({
             token: $window.sessionStorage.token,

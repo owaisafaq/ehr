@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData','GetBillInvoices','SendEmail', 'CheckoutPatient', 'deleteInvoice', 'AddToBill', 'GetAllBillingCodes', 'GetAllproducts', 'SendEmail', 'GetBillingWithDates', 'DropDownData', 'GetAllWardsDropDown', 'GetBedsByWard', 'AddPatientRegBill', 'WaiveBill', 'WaiveBillInvoice', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData,GetBillInvoices,SendEmail, CheckoutPatient, deleteInvoice, AddToBill, GetAllBillingCodes, GetAllproducts, SendEmail, GetBillingWithDates, DropDownData, GetAllWardsDropDown, GetBedsByWard, AddPatientRegBill, WaiveBill, WaiveBillInvoice){
+AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData','GetBillInvoices','SendEmail', 'CheckoutPatient', 'deleteInvoice', 'AddToBill', 'GetAllBillingCodes', 'GetAllproducts', 'SendEmail', 'GetBillingWithDates', 'DropDownData', 'GetAllWardsDropDown', 'GetBedsByWard', 'AddPatientRegBill', 'WaiveBill', 'WaiveBillInvoice', 'GetBillsByPurposes', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData,GetBillInvoices,SendEmail, CheckoutPatient, deleteInvoice, AddToBill, GetAllBillingCodes, GetAllproducts, SendEmail, GetBillingWithDates, DropDownData, GetAllWardsDropDown, GetBedsByWard, AddPatientRegBill, WaiveBill, WaiveBillInvoice, GetBillsByPurposes){
 	$rootScope.pageTitle = "EHR - Billing";
 	$scope.BillListings={};
 	$scope.selectedPatient = {};
@@ -11,6 +11,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	$scope.tabs_sec = 'qqqqq';
     $scope.product_show= 'product';
     $scope.deleteInvoiceButton = true;
+    $scope.limit = 15;
 
 	if($routeParams.patientID != undefined){
 		$scope.patientID = $routeParams.patientID;
@@ -20,6 +21,8 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	//Get Bills
 	GetAllBills.get({
 		token: $window.sessionStorage.token,
+		offset: 0,
+		limit: $scope.limit
 	}, GetAllBillsSuccess, GetAllBillsFailure);
 
 	function GetAllBillsSuccess(res) {
@@ -28,11 +31,12 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 			$rootScope.loader = "hide";
 			if(res.data.length == 0){
 				$('#noResultFound').modal('show');
-				return true;
+				//return true;
 			}
 			$scope.BillListings = res.data;
-                        console.log(res.data);
-                        console.log("catch me here")
+			$scope.billCount = res.count;
+            console.log(res.data);
+            console.log("catch me here")
 		}else if(res.error_code == 500){
             console.log(res);
             $rootScope.RolesAccess(res.message);
@@ -150,6 +154,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 
 				GetAllBills.get({
 					token: $window.sessionStorage.token,
+					offset:0, limit: $scope.limit
 				}, GetAllBillsSuccess, GetAllBillsFailure);
 
 				/*				$('#radio-2').prop("checked", true);
@@ -328,6 +333,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
         console.log("catch me here");
 		if (res.status == true) {
 			$scope.InvoiceListings = res.data;
+			$scope.BillInvoicesCount = res.count;
 			console.log($scope.InvoiceListings)
 		}else if(res.error_code == 500){
             console.log(res);
@@ -623,6 +629,8 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 					//$('#patientRegBill').modal('hide');
 					GetAllBills.get({
 						token: $window.sessionStorage.token,
+						offset: 0,
+						limit: $scope.limit
 					}, GetAllBillsSuccess, GetAllBillsFailure);
 				}
 			}
@@ -643,6 +651,8 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 					$scope.disable_tabs = true;
 					GetAllBills.get({
 						token: $window.sessionStorage.token,
+						offset: 0,
+						limit: $scope.limit
 					}, GetAllBillsSuccess, GetAllBillsFailure);
 				}
 			}
@@ -666,6 +676,83 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 					}, GetAllInvoicesSuccess, GetAllInvoicesFailure);
 				}
 			}
+	    }
+
+	    $scope.curPage = 0;
+	    $scope.pageSize = 15;
+	    $scope.numberOfPages = function() {
+	      return Math.ceil($scope.billCount / $scope.pageSize);
+	    };
+
+	    $scope.paginationNext = function(pageSize, curPage){
+	        $rootScope.loader = "show";
+            GetAllBills.get({
+                token: $window.sessionStorage.token,
+                offset: (pageSize * curPage), limit: $scope.limit
+            }, GetAllBillsSuccess, GetAllBillsFailure);
+	    }
+
+	    $scope.paginationPrev = function(pageSize, curPage){
+	        $rootScope.loader = "show";
+            GetAllBills.get({
+                token: $window.sessionStorage.token,
+                offset: (pageSize * curPage), limit: $scope.limit
+            }, GetAllBillsSuccess, GetAllBillsFailure);
+	    }
+
+	    $scope.billSortingByPurpose = function(purpose){
+	    	if(purpose == "all"){
+	    		GetAllBills.get({
+					token: $window.sessionStorage.token,
+					offset: 0,
+					limit: $scope.limit
+				}, GetAllBillsSuccess, GetAllBillsFailure);
+	    	}else{
+		    	GetBillsByPurposes.get({
+		    		token: $window.sessionStorage.token,
+		    		purpose: purpose,
+		    		hospital_plan: ""
+		    	}, GetAllBillsSuccess, GetAllBillsFailure);
+		    }
+	    }
+	    $scope.billSortingByPlan = function(plan){
+	    	if(plan == "all"){
+	    		GetAllBills.get({
+					token: $window.sessionStorage.token,
+					offset: 0,
+					limit: $scope.limit
+				}, GetAllBillsSuccess, GetAllBillsFailure);
+	    	}else{
+		    	GetBillsByPurposes.get({
+		    		token: $window.sessionStorage.token,
+		    		purpose: "",
+		    		hospital_plan: plan
+		    	}, GetAllBillsSuccess, GetAllBillsFailure);
+		    }
+	    }
+
+	    $scope.curPageInvoices = 0;
+	    $scope.pageSizeInvoices = 15;
+	    $scope.numberOfPagesInvoices = function() {
+	      return Math.ceil($scope.BillInvoicesCount / $scope.pageSize);
+	    };
+
+	    $scope.paginationNextI = function(pageSize, curPage){
+	        $rootScope.loader = "show";
+	        GetAllInvoices.get({
+				token: $window.sessionStorage.token,
+		        bill_id : $scope.bill_id,
+		        offset: (pageSize * curPage), limit: $scope.limit
+			}, GetAllInvoicesSuccess, GetAllInvoicesFailure);
+	    }
+
+	    $scope.paginationPrevI = function(pageSize, curPage){
+	        $rootScope.loader = "show";
+	        GetAllInvoices.get({
+				token: $window.sessionStorage.token,
+		        bill_id : $scope.bill_id,
+		        offset: (pageSize * curPage), limit: $scope.limit
+			}, GetAllInvoicesSuccess, GetAllInvoicesFailure);
 	    }
         
 }]);

@@ -1231,17 +1231,17 @@
             <div class="modal-body">
                 <form class="custom-form" novalidate ng-submit="savePharmacyPopUp()">
                     <!--<div class="row">-->
-                        <div class="row margin-bottom-xxl">
-                            <div class="col-lg-3">
-                                <label>Medication</label>
-                            </div>
-                            <div class="col-lg-9">
-                                <select ng-model="MedicationData.medication" class="form-control getMedicineName select_searchFields" placeholder="Select Medication">
-                                    <option></option>
-                                    <option ng-selected="MedicationData.medication == medicationDropData.id" value="{{medicationDropData.id}}" ng-repeat="medicationDropData in getDrugs">{{medicationDropData.name}}</option>
-                                </select>
-                            </div>
+                    <div class="row margin-bottom-xxl">
+                        <div class="col-lg-3">
+                            <label>Pharmacy</label>
                         </div>
+                        <div class="col-lg-9">
+                            <select ng-model="MedicationData.pharmacy" class="form-control getpharmacyName" placeholder="Select Pharmacy" ng-change="medicationByPharmacy(MedicationData.pharmacy);">
+                                <option></option>
+                                <option ng-selected="MedicationData.pharmacy == pharmacyDataDrop.id" value="{{pharmacyDataDrop.id}}" ng-repeat="pharmacyDataDrop in allPharmacies">{{pharmacyDataDrop.name}}</option>
+                            </select>
+                        </div>
+                    </div>
                             <div class="row margin-bottom-xxl">
                                 <div class="col-lg-3">
                                     <label>SIG</label>
@@ -1271,12 +1271,13 @@
                     </div>
                     <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
-                            <label>Pharmacy</label>
+                            <label>Medication</label>
                         </div>
                         <div class="col-lg-9">
-                            <select ng-model="MedicationData.pharmacy" class="form-control getpharmacyName" placeholder="Select Pharmacy">
+                            
+                            <select ng-model="MedicationData.medication" class="form-control getMedicineName select_searchFields" placeholder="Select Medication">
                                 <option></option>
-                                <option ng-selected="MedicationData.pharmacy == pharmacyDataDrop.id" value="{{pharmacyDataDrop.id}}" ng-repeat="pharmacyDataDrop in allPharmacies">{{pharmacyDataDrop.name}}</option>
+                                <option ng-selected="MedicationData.medication == medicationDropData.id" value="{{medicationDropData.id}}" ng-repeat="medicationDropData in getDrugs">{{medicationDropData.name}}</option>
                             </select>
                         </div>
                     </div>
@@ -1600,6 +1601,22 @@
                 <button class="update button-custom" ng-disabled="is_signoff == 1" data-dismiss="modal">update report</button>
             </div> -->
                 <div class="showPdf"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default button-style-1"  data-dismiss="modal" >OK</button>
+                <!-- ng-click="doSignOff();" ng-disabled="is_signoff == 1" -->
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade modal-size_1" id="prescriptionError"  tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pop_head">
+                <h2>Error</h2>
+            </div>
+            <div class="modal-body">
+                <p>Prescrpition with this encounter already added</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default button-style-1"  data-dismiss="modal" >OK</button>

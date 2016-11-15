@@ -90,20 +90,21 @@
                         </div>
                         <span class="txt-style-3 pull-left text-uppercase">Plan</span>
                         <div class="col-lg-2">
-                            <select class="form-control" ng-model="search_plan_bill">
+                            <select class="form-control" ng-model="search_plan_bill" placeholder="Select" ng-change="billSortingByPlan(search_plan_bill);">
                                 <option value=""></option>
-                                <option selected value="self">Private</option>
-                                <option>NHIS</option>
-                                <option>Retainers</option>
-                                <option>FHSS</option>
+                                <option value="all">All</option>
+                                <option value="self">Private</option>
+                                <option value="NHIS">NHIS</option>
+                                <option value="Retainers">Retainers</option>
+                                <option value="FHSS">FHSS</option>
                             </select>
                         </div>
                         <span class="txt-style-3 pull-left text-uppercase">Purpose</span>
                         <div class="col-lg-2">
-                            <select class="form-control" ng-model="searchPurpose" placeholder="Select">
+                            <select class="form-control" ng-model="searchPurpose" placeholder="Select" ng-change="billSortingByPurpose(searchPurpose);">
                                 <option value=""></option>
-                                <option value="">All</option>
-                                <option value="New Patient">New Patient</option>
+                                <option value="all">All</option>
+                                <option value="new_patient">New Patient</option>
                                 <option value="encounter">Encounter</option>
                             </select>
                         </div>
@@ -124,7 +125,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="Bill in BillListings|filter:search_all_bill |filter:search_plan_bill | filter:searchPurpose">
+                                <tr ng-repeat="Bill in BillListings|filter:search_all_bill">
                                     <td align="center">
                                         <div class="radio radio-styled">
                                             <label>
@@ -145,6 +146,19 @@
 
                             </tbody>
                         </table>
+                        <div class="pagination pagination-centered pull-right" ng-show="billCount">
+                        <ul class="pagination-controle pagination">
+                            <li class="prev-page">
+                                <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
+                            </li>                            
+                            <li>
+                                <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumber" numbers-only value="{{curPage + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPages() }}</span>
+                            </li>
+                             <li class="next-page">
+                              <button type="button" class="btn btn-primary" ng-disabled="curPage >= billCount/pageSize - 1" ng-click="curPage = curPage+1; paginationNext(pageSize, curPage);"><i class="fa fa-caret-right"></i></button>
+                            </li>
+                        </ul>
+                    </div>
                     </form>
                 </div>
 
@@ -240,6 +254,19 @@
 
                                 </tbody>
                             </table>
+                            <div class="pagination pagination-centered pull-right" ng-show="BillInvoicesCount">
+                                <ul class="pagination-controle pagination">
+                                    <li class="prev-page">
+                                        <button type="button" class="btn btn-primary" ng-disabled="curPageInvoices == 0" ng-click="curPageInvoices = curPageInvoices-1; paginationPrevI(pageSizeInvoices, curPageInvoices);"><i class="fa fa-caret-left"></i></button>
+                                    </li>
+                                    <li>
+                                        <span class="pagination-detail">Page <input type="text" width="5px" ng-model="pageNumberInvoices" numbers-only value="{{curPageInvoices + 1}}" placeholder="Page Number"/><span class="space-both-side">of</span>{{ numberOfPagesInvoices() }}</span>
+                                    </li>
+                                    <li class="next-page">
+                                        <button type="button" class="btn btn-primary" ng-disabled="curPageInvoices >= BillInvoicesCount/pageSizeInvoices - 1" ng-click="curPageInvoices = curPageInvoices+1; paginationNextI(pageSizeInvoices, curPageInvoices);"><i class="fa fa-caret-right"></i></button>
+                                    </li>
+                                </ul>
+                            </div>
                         </form>
                     </div>
 

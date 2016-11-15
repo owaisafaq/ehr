@@ -94,20 +94,15 @@
                             <div id="accordion3" class="collapse in form-builder-styling">
                                 <div class="card-body">
                                     <form class="custom-form">
-                                        <div class="row" ng-show="diagnosisAgaya" ng-class="{true: 'disabled-fields'}[is_signoff == 1]">
-                                            <!--<div>-->
+                                        <!-- <div class="row" ng-show="diagnosisMultiDrop" ng-class="{true: 'disabled-fields'}[is_signoff == 1]">
                                                 <label class="col-lg-2">Diagnosis</label>
-                                            <!--</div>-->
                                             <div class="col-lg-9 chosen-styling margin-0">
                                                 <select class="chosen-select nun" ng-model="diagnosis" multiple data-placeholder="Choose Diagnosis" style="width:100%;display:none!important" id="autoship_option">
-                                                    <!-- <option value="1">+ve</option>
-                                                    <option value="2">-ve</option>
-                                                    <option value="3">Futher test required</option> -->
                                                 </select>
                                             </div>
-                                        </div>
-                                        <div class="row"><div fg-form fg-form-data="myFormData" fg-schema="mySchema" ng-class="{true: 'disabled-fields'}[is_signoff == 1]" ng-hide="newTemp" class="margin-0"></div></div>
-                                        <div class="row"><div fg-form fg-form-data="myFormDataNewTemp" fg-schema="mySchemaNewTemp" ng-class="{true: 'disabled-fields'}[is_signoff == 1]" class="margin-0" ng-show="newTemp"></div></div>
+                                        </div> -->
+                                        <div class="row"><div fg-form fg-form-data="myFormData" fg-schema="mySchema" ng-class="{true: 'disabled-fields'}[is_signoff == 1]" ng-hide="newTemp" class="margin-0 addSchema"></div></div>
+                                        <div class="row"><div fg-form fg-form-data="myFormDataNewTemp" fg-schema="mySchemaNewTemp" ng-class="{true: 'disabled-fields'}[is_signoff == 1]" class="margin-0 editSchema" ng-show="newTemp"></div></div>
                                     </form>
                                 </div>
                             </div>

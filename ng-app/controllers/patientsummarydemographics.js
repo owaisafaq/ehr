@@ -1089,6 +1089,8 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
            }else if(res.error_code == 500){
                 console.log(res);
                 $rootScope.RolesAccess(res.message);
+            }else{
+                $('#prescriptionError').modal('show');
             }
         }
 
@@ -1217,11 +1219,12 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
                 }
             }
         });
-
-        GetAllMedications.get({
-            token: $window.sessionStorage.token,
-            patient_id: $scope.PID
-        }, getAllMedicationsSuccess, getAllMedicationsFailure);
+        
+            GetAllMedications.get({
+                token: $window.sessionStorage.token,
+                patient_id: $scope.PID
+            }, getAllMedicationsSuccess, getAllMedicationsFailure);
+        
         $scope.allMedications = [];
         $scope.allPharmacies = [];
         function getAllMedicationsSuccess(res){
@@ -1367,7 +1370,9 @@ AppEHR.controller('patientSummaryDemographicsController', ['$scope', '$rootScope
             console.log(res);
             $('#internetError').modal('show');
         }
-        GetMedications.save({token: $window.sessionStorage.token}, getMediSuccess, getMediFailure);
+        $scope.medicationByPharmacy = function(pharmacyID){
+            GetMedications.save({token: $window.sessionStorage.token,  pharmacy_id: pharmacyID}, getMediSuccess, getMediFailure);
+        }
         function getMediSuccess(res) {
             console.log(res, "drugs")
            $scope.getDrugs = res.data;
