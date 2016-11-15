@@ -57,21 +57,57 @@ class BillingController extends Controller
             $bill->encounter_id = str_pad($bill->encounter_id, 8, '0', STR_PAD_LEFT);
             $bill->patient_id = str_pad($bill->patient_id, 7, '0', STR_PAD_LEFT);
             $bill->first_name = $bill->first_name." ".$bill->last_name;
-            if($bill->bill_purpose=='new patient'){
+            if($bill->bill_purpose=='new_patient'){
                 $bill->first_name = $bill->patient_name;
                 $bill->patient_id = '';
                 $bill->encounter_id = '';
             }
-
-         }
+        }
 
 
         if ($bills) {
             return response()->json(['status' => true, 'message' => 'Bills found', 'data' => $bills,'count'=>$count]);
 
         } else {
-            return response()->json(['status' => true, 'message' => 'Bills not found','data' => $bills,'count'=>$count]);
+            return response()->json(['status' => true, 'message'=>'Bills not found','data'=>$bills,'count'=>$count]);
         }
+    }
+
+
+    public function get_bill_purposes(Request $request){
+        $purpose = $request->input('purpose');
+        $hospital_plan = $request->input('hospital_plan');
+        if ($purpose != '') {
+            $bills = DB::table('billing')
+                ->select('billing.id', 'billing.encounter_id', 'billing.patient_id', 'billing.created_at', 'billing.purpose', 'billing.bill_status', 'hospital_plan.name', 'patients.first_name', 'patients.middle_name', 'patients.last_name', 'bill_purpose', 'patient_name')
+                ->leftJoin('visits', 'visits.id', '=', 'billing.encounter_id')
+                ->leftJoin('patients', 'patients.id', '=', 'billing.patient_id')
+                ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.hospital_plan')
+                ->where('billing.status', 1)
+                ->where('billing.bill_purpose',$purpose)
+                ->get();
+        } else {
+            $bills = DB::table('billing')
+                ->select('billing.id', 'billing.encounter_id', 'billing.patient_id', 'billing.created_at', 'billing.purpose', 'billing.bill_status', 'hospital_plan.name', 'patients.first_name', 'patients.middle_name', 'patients.last_name', 'bill_purpose', 'patient_name')
+                ->leftJoin('visits', 'visits.id', '=', 'billing.encounter_id')
+                ->leftJoin('patients', 'patients.id', '=', 'billing.patient_id')
+                ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.hospital_plan')
+                ->where('billing.status', 1)
+                ->where('hospital_plan.name', $hospital_plan)
+                ->get();
+        }
+        foreach ($bills as $bill) {
+            $bill->id = str_pad($bill->id, 8, '0', STR_PAD_LEFT);
+            $bill->encounter_id = str_pad($bill->encounter_id, 8, '0', STR_PAD_LEFT);
+            $bill->patient_id = str_pad($bill->patient_id, 7, '0', STR_PAD_LEFT);
+            $bill->first_name = $bill->first_name . " " . $bill->last_name;
+            if ($bill->bill_purpose == 'new_patient') {
+                $bill->first_name = $bill->patient_name;
+                $bill->patient_id = '';
+                $bill->encounter_id = '';
+            }
+        }
+        return response()->json(['status' => true,'data'=>$bills,]);
     }
 
     public function add_invoice_to_bills(Request $request){
@@ -795,7 +831,7 @@ class BillingController extends Controller
             ->insert(
                 ['patient_name' => $patient_name,
                     'bill_status' => 'paid',
-                    'bill_purpose' => 'new patient',
+                    'bill_purpose' => 'new_patient',
                     'created_at' => date("Y-m-d  H:i:s")
                 ]);
         $id = DB::getPdo()->lastInsertId();
@@ -809,7 +845,7 @@ class BillingController extends Controller
         $name =  ltrim($name,0);
         $patient = DB::table('billing')
             ->select(DB::raw('id as receipt_id'))
-            ->Where('bill_purpose','new patient')
+            ->Where('bill_purpose','new_patient')
             ->Where('patient_id',0)
             ->where(function ($q) use ($name) {
                 $q->where('id', 'LIKE', "$name");
