@@ -1,5 +1,5 @@
 var AppEHR = angular.module('AppEHR');
-        AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllInventory', 'GetAllSuppliers', 'AddCategory', 'GetAllCategories', 'AddSupplier', 'GetSingleSupplier', 'UpdateSuppliers', 'GetSingleCategory', 'GetSingleStock', 'updateCategory', 'DeleteCategory', 'DeleteSupplier', 'AddInventory', 'AddProduct', 'DeleteInventory', 'GetSingleProduct', 'GetAllPharmacies', 'GetReorderLevel', 'updateReorderLevel', 'GetProduct', 'ProductUpdate', 'Countries', 'States', 'City', 'AddMoreStock', '$timeout', function($scope, $rootScope, $window, $routeParams, GetAllInventory, GetAllSuppliers, AddCategory, GetAllCategories, AddSupplier, GetSingleSupplier, UpdateSuppliers, GetSingleCategory, GetSingleStock, updateCategory, DeleteCategory, DeleteSupplier, AddInventory, AddProduct, DeleteInventory, GetSingleProduct, GetAllPharmacies, GetReorderLevel, updateReorderLevel, GetProduct, ProductUpdate, Countries, States, City, AddMoreStock, $timeout){
+        AppEHR.controller('Inventory', ['$scope', '$rootScope', '$window', '$routeParams', 'GetAllInventory', 'GetAllSuppliers', 'AddCategory', 'GetAllCategories', 'AddSupplier', 'GetSingleSupplier', 'UpdateSuppliers', 'GetSingleCategory', 'GetSingleStock', 'updateCategory', 'DeleteCategory', 'DeleteSupplier', 'AddInventory', 'AddProduct', 'DeleteInventory', 'GetSingleProduct', 'GetAllPharmacies', 'GetReorderLevel', 'updateReorderLevel', 'GetProduct', 'ProductUpdate', 'Countries', 'States', 'City', 'AddMoreStock', '$timeout', 'CategoriesByGroup', function($scope, $rootScope, $window, $routeParams, GetAllInventory, GetAllSuppliers, AddCategory, GetAllCategories, AddSupplier, GetSingleSupplier, UpdateSuppliers, GetSingleCategory, GetSingleStock, updateCategory, DeleteCategory, DeleteSupplier, AddInventory, AddProduct, DeleteInventory, GetSingleProduct, GetAllPharmacies, GetReorderLevel, updateReorderLevel, GetProduct, ProductUpdate, Countries, States, City, AddMoreStock, $timeout, CategoriesByGroup){
         $rootScope.pageTitle = "EHR - Inventory";
         $scope.displayInfo = {};
         $rootScope.loader = "show";
@@ -642,33 +642,36 @@ var AppEHR = angular.module('AppEHR');
                 }
                 };
                 $scope.productDetail = function (productID) {
-                console.log(productID);
-                        $scope.productID = productID;
-                        $(".inventory_detail").hide();
-                        $(".inv_header").hide();
-                        $("#stock_det").hide();
-                        $(".add-drug-supplements").hide();
-                        $(".edit_prod").show();
-                        $rootScope.loader = "show";
-                        GetProduct.get({token: $window.sessionStorage.token, product_id: productID}, getProductInfoSuccess, getProductInfoFailure);
-                        function getProductInfoSuccess(res) {
+                    console.log(productID);
+                    $scope.productID = productID;
+                    $(".inventory_detail").hide();
+                    $(".inventPagination").hide();
+                    $(".inv_header").hide();
+                    $("#stock_det").hide();
+                    $(".add-drug-supplements").hide();
+                    $(".edit_prod").show();
+                    $rootScope.loader = "show";
+                    GetProduct.get({token: $window.sessionStorage.token, product_id: productID}, getProductInfoSuccess, getProductInfoFailure);
+                    function getProductInfoSuccess(res) {
                         if (res.status == true) {
-                        //console.log(res);
+                            //console.log(res);
+                            $rootScope.loader = "hide";
+                            $scope.catByGroup();
+                            //$scope.SupplierSelected = true;
+                            setTimeout(function () {
+                                $('select').not('.select_searchFields,.search-ajax').select2({minimumResultsForSearch: Infinity});
+                            },100);
+                            $scope.editinventory = res.data;
+                            console.log($scope.editinventory);
+                            /*$(".inventory_detail").hide();
+                             $("#stock_det").show();*/
+                        }
+                    }
+                    function getProductInfoFailure(error) {
                         $rootScope.loader = "hide";
-                                //$scope.SupplierSelected = true;
-                                $scope.editinventory = res.data;
-                                console.log($scope.editinventory);
-                                /*$(".inventory_detail").hide();
-                                 $("#stock_det").show();*/
-
-
-                        }
-                        }
-                function getProductInfoFailure(error) {
-                $rootScope.loader = "hide";
                         $('#internetError').modal('show');
                         console.log(error);
-                }
+                    }
                 };
 // Get Product ReorderLevel
 
@@ -948,5 +951,18 @@ var AppEHR = angular.module('AppEHR');
                 offset: (pageSize * curPage), limit: $scope.limit,
                 token: $window.sessionStorage.token
             }, GetAllCategoriesSuccess, GetAllCategoriesFailure);
+        }
+
+        $scope.catByGroup = function(group){
+            CategoriesByGroup.get({
+                token: $window.sessionStorage.token,
+                group: group == undefined ? "Drugs" : group
+            }, catByGroupSuccess, GetAllCategoriesFailure);
+        }
+
+        function catByGroupSuccess(res){
+            if(res.status == true){
+                $scope.catByGroupData = res.data;
+            }
         }
 }]);

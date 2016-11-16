@@ -59,7 +59,7 @@
                                 <button type="submit">
                                     <i class="fa fa-search"></i>
                                 </button>
-                                <input class="search_field" type="text" placeholder="Patient Name or Id" ng-model="search_all_bill">
+                                <input class="search_field" type="text" placeholder="Patient Name or Id" ng-model="search_all_bill" ng-change="searchBillsByPatient(search_all_bill);">
                             </div>
                         </div>
                         <div class="pull-right col-lg-7">
@@ -125,11 +125,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="Bill in BillListings|filter:search_all_bill">
+                                <tr ng-repeat="Bill in BillListings">
                                     <td align="center">
                                         <div class="radio radio-styled">
                                             <label>
-                                                <input type="radio" ng-click="SelectedPatient(Bill.patient_id, Bill.id)" name="optionsRadios" value="option1"><span></span>
+                                                <input type="radio" ng-click="SelectedPatient(Bill.patient_id, Bill.id, Bill.bill_status)" name="optionsRadios" value="option1"><span></span>
                                             </label>
                                         </div>
                                     </td>
@@ -1546,9 +1546,9 @@
             <div class="modal-header pop_head">
                 <h2>Patient Registration Bill</h2>
             </div>
-            <form class="custom-form" novalidate name="Preg" ng-submit="patientRegBill(patientName)">
+            <form class="custom-form" novalidate name="Preg" ng-submit="patientRegBill(patientName, patientAmount)">
             <div class="modal-body">
-                <div class="row" ng-show="product_show == 'product'">
+                <div class="row">
                     <div class="col-lg-3 margin-top-10">
                         <label>Bill ID</label>
                     </div>
@@ -1556,7 +1556,7 @@
                         <input type="text" ng-model="patientBillID" ng-disabled="true"/>
                     </div>
                 </div>
-                <div class="row" ng-show="product_show == 'product'">
+                <div class="row">
                     <div class="col-lg-3 margin-top-10">
                         <label>Patient Name</label>
                     </div>
@@ -1565,6 +1565,15 @@
                     <p ng-show="Preg.patientname.$error.required && submitted" class="help-block PIValid">Required</p>
                     </div>
                 </div>
+                <!-- <div class="row">
+                    <div class="col-lg-3 margin-top-10">
+                        <label>Amount Paid</label>
+                    </div>
+                    <div class="col-lg-9 margin-top-10">
+                        <input type="text" class="form-control" name="patientname" ng-class="{true: 'error'}[Preg.patientname.$invalid && submitted]" placeholder="" ng-model="patientAmount" required/>
+                    <p ng-show="Preg.patientname.$error.required && submitted" class="help-block PIValid">Required</p>
+                    </div>
+                </div> -->
             </div>
             <div class="modal-footer">
                 <button type="submit" ng-click="submitted=true" class="btn btn-default button-style-1">Add</button>
