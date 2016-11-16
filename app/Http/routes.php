@@ -521,6 +521,7 @@ $app->group(['prefix'=>'api','middleware' => 'jwt.auth'], function () use ($app)
 
     //Bill Purposes
     $app->get('get_bill_purposes','App\Http\Controllers\BillingController@get_bill_purposes');
+    $app->get('get_inventory_categories_groups','App\Http\Controllers\InventoryAPIController@get_inventory_categories_groups');
 
 
 });

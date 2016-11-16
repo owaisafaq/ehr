@@ -3639,3 +3639,16 @@ $api->params->token = "123";
 
 $api_arr [] = $api;
 
+
+// Get Inventory Categories by groups
+$api = new api();
+$api->name = "Get Inventory Categories by groups";
+$api->url = HOST . 'get_inventory_categories_groups';
+$api->method = "GET";
+$api->description = "Get Inventory Categories by groups";
+$api->params->group = "Drugs";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
