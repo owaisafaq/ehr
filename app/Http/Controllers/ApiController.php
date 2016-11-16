@@ -955,6 +955,9 @@ class ApiController extends Controller
             ->where('patient_id',$patient_id)
             ->update(['status' => 0,'updated_at' => $currentdatetime]);
 
+        if($whom_to_see=='' || !isset($whom_to_see)){
+            $whom_to_see = 0;
+        }
 
         DB::table('visits')->insert(
             ['patient_id' => $patient_id,
@@ -3480,9 +3483,7 @@ class ApiController extends Controller
 
 
     public function get_template(Request $request){
-
         $template_id= $request->input('template_id');
-
         $template = DB::table('templates')
             ->leftJoin('template_categories','templates.category_id', '=', 'template_categories.id')
             ->select(DB::raw('templates.id,templates.name,template_categories.name as category,templates.category_id,templates.description,templates.template'))
@@ -3491,7 +3492,6 @@ class ApiController extends Controller
             ->first();
 
         return response()->json(['status' => true, 'data' => $template]);
-
     }
 
 

@@ -127,6 +127,8 @@ $app->group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () use ($a
     $app->get('get_lab_test_pdf', 'App\Http\Controllers\PDFController@get_lab_test_pdf');
     $app->post('add_lab_test_values', 'App\Http\Controllers\OrderController@add_lab_test_values');
 
+    $app->get('get_template','App\Http\Controllers\ApiController@get_template');
+
 });
 
 
@@ -138,7 +140,7 @@ $app->group(['prefix' => 'api', 'middleware' => ['jwt.auth','App\Http\Middleware
     //Templates
 
     $app->get('get_templates','App\Http\Controllers\ApiController@get_templates');
-    $app->get('get_template','App\Http\Controllers\ApiController@get_template');
+   // $app->get('get_template','App\Http\Controllers\ApiController@get_template');
     $app->post('delete_template','App\Http\Controllers\ApiController@delete_template');
     $app->post('add_template','App\Http\Controllers\ApiController@add_template');
     $app->post('edit_template','App\Http\Controllers\ApiController@edit_template');
