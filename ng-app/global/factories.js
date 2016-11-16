@@ -3854,3 +3854,33 @@ AppEHR.factory("GetBillsByPurposes", function ($resource) {
     };
     return patientRegistrationEmployer;
 });
+AppEHR.factory("BillsByPatients", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'search_patient_bills', params, {
+            save: {method: 'POST'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        save: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.save(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+})
+AppEHR.factory("CategoriesByGroup", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'get_inventory_categories_groups', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+})

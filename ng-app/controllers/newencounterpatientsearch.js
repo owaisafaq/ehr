@@ -205,7 +205,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 			//$scope.addEncounterBtn = true;
 			AddEncounter.save({
 				token: $window.sessionStorage.token, 
-				patient_id: $scope.displayInfo.patient_id,
+				patient_id: $scope.addEncounter.selectedPatientID,
 				department_id: addEncounter.department,
 				encounter_class: addEncounter.class == undefined ? '' : addEncounter.class,
 				encounter_type: addEncounter.type,
@@ -337,6 +337,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
     }, GetAllPatientsSuccess, GetAllPatientsFailure);
     function GetAllPatientsSuccess(res) { // on success
         if (res.status == true) {
+        	console.log(res.data, "all patients");
             $scope.patients = res.data;
         }
     }
@@ -400,7 +401,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
         $scope.OrderBtn = true; // disabling submit button until request is complete
         addOrder.save({ // sending data over addOrder factory which will create new order
             token: $window.sessionStorage.token,
-            patient_id: $scope.createOrderPatientID,//$scope.Order.patient_id,
+            patient_id: $scope.Order.patient_id, //$scope.createOrderPatientID,//$scope.Order.patient_id,
             lab: $scope.Order.selected_lab,
             lab_test: JSON.stringify($scope.lab_tests),
             clinical_information: '',//$scope.Order.clinical_information,
@@ -433,13 +434,15 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
             $scope.orderSelected = false;
 	}else if(res.error_code == 200){
             console.log(res);
+            $scope.OrderBtn = false;
+            $rootScope.loader = 'hide';
             $scope.errorLabOrder = res.message;
             $('#error200').modal('show');
         }else if(res.error_code == 500){
             console.log(res);
             $rootScope.RolesAccess(res.message);
         } else {
-            $scope.hideLoader = "hide";
+            $rootScope.loader = 'hide';
             $scope.OrderBtn = false;
             $scope.message = true;
             $scope.messageType = "alert-danger";
@@ -621,7 +624,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
             offset: (pageSize * curPage), limit: $scope.itemsPerPage
         }, getPatientEncounters, getPatientEncountersFailure);
     }
-
+    $scope.date = new Date();
     $scope.createAppointments = function(dataToBeAdded){
     	console.log(dataToBeAdded);
         if(dataToBeAdded.department != undefined && dataToBeAdded.otherReason != undefined && dataToBeAdded.date != undefined && dataToBeAdded.startTime != undefined && dataToBeAdded.doctor != undefined){
@@ -629,7 +632,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
         	$rootScope.loader = "show";
         	AddAppointments.save({
         		token: $window.sessionStorage.token,
-        		patient_id: $scope.createOrderPatientID,
+        		patient_id: $scope.selectedPatientID, //$scope.createOrderPatientID,
         		//visit_id: $scope.encounterID,
         		department: dataToBeAdded.department == undefined ? '' : dataToBeAdded.department,
         		reason: dataToBeAdded.reason == undefined ? '' : dataToBeAdded.reason,
@@ -684,8 +687,8 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
                                 if(patients.status == true){
                                     response($.map(patients.data, function (value, key) {
                                         return {
-                                            label: value.first_name == "" || value.first_name == undefined ? "No patient found" : value.id + " - " + value.first_name + " " + value.last_name,
-                                            value: value.id == "" ? '0' : value.id
+                                            label: value.first_name == "" || value.first_name == undefined ? "No patient found" : value.patient_id + " - " + value.first_name + " " + value.last_name,
+                                            value: value.patient_id == "" ? '0' : value.patient_id
                                         }
                                     }));
                                     patients.data = [];
@@ -700,6 +703,52 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
                                 $scope.appointment.appointmentSearch = ui.item.label;
                                 $scope.selectedPatientID = $scope.appointment.appointmentSearch.split(' - ');
                                 $scope.appointment.selectedPatientID = $scope.selectedPatientID[0];
+                                return false;
+                            }
+                        });
+                    }
+                });
+            }
+        }
+    });
+
+    $('#findPatientEncounter').on('input', function(){
+        var input = $('#findPatientEncounter').val();
+        console.log("jajajajajja");
+        if(input != undefined || input != ''){
+            if(input.length == 0){
+                $('.headerWithSwitchingImages').addClass('ng-hide');
+                $('.headerWithSwitchingImages1').removeClass('ng-hide');
+            }else{
+                $.ajax({
+                    url: $('#findPatientEncounter').data('source'),
+                    dataType: "json",
+                    type: "POST",
+                    delay: 500,
+                    minLength: 2,
+                    data: {name: input, token: $window.sessionStorage.token},
+                    success: function (patients) {
+                        $("#findPatientEncounter").autocomplete({
+                            source: function (request, response) {
+                                if(patients.status == true){
+                                    response($.map(patients.data, function (value, key) {
+                                        return {
+                                            label: value.first_name == "" || value.first_name == undefined ? "No patient found" : value.patient_id + " - " + value.first_name + " " + value.last_name,
+                                            value: value.patient_id == "" ? '0' : value.patient_id
+                                        }
+                                    }));
+                                    patients.data = [];
+                                }else{
+                                    response({label:"No Patient Found"});
+                                    patients.data = [];
+                                }
+                            },
+                            select: function(event, ui) {
+                                $('#findPatientEncounter').val(ui.item.label);
+                                console.log(ui.item.label);
+                                $scope.addEncounter.appointmentSearch = ui.item.label;
+                                $scope.selectedPatientIDForEncounter = $scope.addEncounter.appointmentSearch.split(' - ');
+                                $scope.addEncounter.selectedPatientID = $scope.selectedPatientIDForEncounter[0];
                                 return false;
                             }
                         });

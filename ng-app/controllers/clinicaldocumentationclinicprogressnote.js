@@ -138,7 +138,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
                 //templateCl.fields[i].type = "hidden";
                 
                 //templateCl.fields.splice(i, 1);
-                var diagnosisIndex = i;
+                var diagnosisIndexV = i;
                 delete templateCl.fields[i];
                 if(Object.keys(filledVal)[i] == 'Diagnosis'){
                   delete filledVal.Diagnosis;
@@ -164,12 +164,20 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
         if($scope.clinicalNotesID != undefined) $scope.selectedRow = true;
         $scope.is_signoff = res.signoff;
         $scope.mySchema = $scope.renderedTemplate;
-        if(diagnosisIndex != undefined){
+        if(diagnosisIndexV != undefined){
           $(".addSchema fieldset").ready(function(){
-            //console.log("diag index",diagnosisIndex);
-            //$scope.renderedTemplate.fields.splice($scope.diagnosisIndex, 1);/*ng-class="/{true: 'disabled-fields'}/" [is_signoff == 1]*/
+            //console.log("diag index",diagnosisIndexV);
+            //$scope.renderedTemplate.fields.splice($scope.diagnosisIndexV, 1);/*ng-class="/{true: 'disabled-fields'}/" [is_signoff == 1]*/
             var extraField = "<div class='row'><label style='padding-left: 24px;' ng-class='is_signoff == 1 ? disabled-fields : disabled-fields11 ' class='col-lg-2'>Diagnosis</label><div class='col-lg-9 chosen-styling margin-0'><select class='chosen-select nun' ng-model='diagnosis' multiple data-placeholder='Choose Diagnosis' style='width:100%;display:none!important' id='autoship_option'></select></div></div>";
-            setTimeout(function() { $(".addSchema fieldset > div:nth-child(" + (diagnosisIndex) + ")").after(extraField); $scope.getDiagnosis(); }, 2000);
+            setTimeout(function() { 
+              if(diagnosisIndexV == 0){
+                $(".addSchema fieldset > div:nth-child(" + (diagnosisIndexV+1) + ")").before(extraField);
+                $scope.getDiagnosis(); 
+              }else if(diagnosisIndexV > 0){
+                $(".addSchema fieldset > div:nth-child(" + (diagnosisIndexV) + ")").after(extraField);
+                $scope.getDiagnosis(); 
+              }
+            }, 2000);
           });
         }
         $scope.showAccordion = true;
@@ -269,7 +277,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
                   $scope.getDiagnosis();
                   console.log("got diagnosis");
                   $scope.lengthError = true;
-                  $scope.diagnosisIndex = i;
+                  $scope.diagnosisIndexC = i;
                   /*console.log('hola!',$scope.diagnosis);
                   $scope.diagnosis = [];
                   console.log('hola!',$scope.diagnosis);*/
@@ -284,15 +292,23 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
           $scope.newTemp = true;
           console.log(templateCl, 'new temp');
           $scope.mySchemaNewTemp = templateCl;
-          if($scope.diagnosisIndex != undefined){
+          if($scope.diagnosisIndexC != undefined){
             $(".editSchema fieldset").ready(function(){
-              //console.log("diag index",diagnosisIndex);
-              //$scope.renderedTemplate.fields.splice($scope.diagnosisIndex, 1);/*ng-class="/{true: 'disabled-fields'}/" [is_signoff == 1]*/
+              //console.log("diag index",diagnosisIndexC);
+              //$scope.renderedTemplate.fields.splice($scope.diagnosisIndexC, 1);/*ng-class="/{true: 'disabled-fields'}/" [is_signoff == 1]*/
               
 
               var extraField = "<div class='row'><label style='padding-left: 24px;' ng-class='is_signoff == 1 ? disabled-fields : disabled-fields11 ' class='col-lg-2'>Diagnosis</label><div class='col-lg-9 chosen-styling margin-0'><select class='chosen-select nun' ng-model='diagnosis' multiple data-placeholder='Choose Diagnosis' style='width:100%;display:none!important' id='autoship_option'></select></div></div>";
 
-              setTimeout(function() { $(".editSchema fieldset > div:nth-child(" + ($scope.diagnosisIndex) + ")").after(extraField); $scope.getDiagnosis(); }, 2000);
+              setTimeout(function() { 
+                if($scope.diagnosisIndexC == 0){
+                  $(".editSchema fieldset > div:nth-child(" + ($scope.diagnosisIndexC+1) + ")").before(extraField); 
+                  $scope.getDiagnosis();
+                }else if($scope.diagnosisIndexC > 0){
+                  $(".editSchema fieldset > div:nth-child(" + ($scope.diagnosisIndexC) + ")").after(extraField); 
+                  $scope.getDiagnosis();
+                }
+              }, 2000);
             });
           }
         }else{
@@ -308,7 +324,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
                 if(templateCl.fields[i].displayName == 'Diagnosis'){
                   $scope.getDiagnosis();
                   console.log("got diagnosis");
-                  $scope.diagnosisIndex = i;
+                  $scope.diagnosisIndexE = i;
                   /*console.log('hola!',$scope.diagnosis);
                   $scope.diagnosis = [];
                   
@@ -323,15 +339,23 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
             i++;
           }
           $scope.mySchema = templateCl;
-          if($scope.diagnosisIndex != undefined){
+          if($scope.diagnosisIndexE != undefined){
             $(".addSchema fieldset").ready(function(){
-              //console.log("diag index",diagnosisIndex);
-              //$scope.renderedTemplate.fields.splice($scope.diagnosisIndex, 1);/*ng-class="/{true: 'disabled-fields'}/" [is_signoff == 1]*/
+              //console.log("diag index",diagnosisIndexE);
+              //$scope.renderedTemplate.fields.splice($scope.diagnosisIndexE, 1);/*ng-class="/{true: 'disabled-fields'}/" [is_signoff == 1]*/
               
 
               var extraField = "<div class='row'><label ng-class='is_signoff == 1 ? disabled-fields : disabled-fields11 ' class='col-lg-2' style='padding-left: 24px;'>Diagnosis</label><div class='col-lg-9 chosen-styling margin-0'><select class='chosen-select nun' ng-model='diagnosis' multiple data-placeholder='Choose Diagnosis' style='width:100%;display:none!important' id='autoship_option'></select></div></div>";
 
-              setTimeout(function() { $(".addSchema fieldset > div:nth-child(" + ($scope.diagnosisIndex) + ")").after(extraField); $scope.getDiagnosis(); }, 2000);
+              setTimeout(function() { 
+                if($scope.diagnosisIndexE == 0){
+                  $(".editSchema fieldset > div:nth-child(" + ($scope.diagnosisIndexE+1) + ")").before(extraField); 
+                  $scope.getDiagnosis();
+                }else if($scope.diagnosisIndexE > 0){
+                  $(".addSchema fieldset > div:nth-child(" + ($scope.diagnosisIndexE) + ")").after(extraField); 
+                  $scope.getDiagnosis();
+                }
+              }, 2000);
             });
           }
           //$scope.mySchema = JSON.parse(res.data.template);
@@ -657,7 +681,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
         function addReferralSuccess(res){
           console.log(res);
           if(res.status == true){
-            $scope.referral = {};
+            //$scope.referral = {};
             $scope.referralID = res.referal_id;
             console.log($scope.referralID, 'referal id');
             $scope.referral.type = "internal";
@@ -1008,6 +1032,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
         $('#successmodal').modal('show');
         console.log(res, 'download reff');
         $('#downloadRef').attr('href', res.data);
+        $('#downloadRef').attr('download', true);
         //$scope.downloadReferralLink = res.data;
       }
     }

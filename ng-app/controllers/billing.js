@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData','GetBillInvoices','SendEmail', 'CheckoutPatient', 'deleteInvoice', 'AddToBill', 'GetAllBillingCodes', 'GetAllproducts', 'SendEmail', 'GetBillingWithDates', 'DropDownData', 'GetAllWardsDropDown', 'GetBedsByWard', 'AddPatientRegBill', 'WaiveBill', 'WaiveBillInvoice', 'GetBillsByPurposes', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData,GetBillInvoices,SendEmail, CheckoutPatient, deleteInvoice, AddToBill, GetAllBillingCodes, GetAllproducts, SendEmail, GetBillingWithDates, DropDownData, GetAllWardsDropDown, GetBedsByWard, AddPatientRegBill, WaiveBill, WaiveBillInvoice, GetBillsByPurposes){
+AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$location','GetAllBills','GetAllInvoices','GetPatientInfo','InvoiecStatus','ProcessPayment','InvoiceData','GetBillInvoices','SendEmail', 'CheckoutPatient', 'deleteInvoice', 'AddToBill', 'GetAllBillingCodes', 'GetAllproducts', 'SendEmail', 'GetBillingWithDates', 'DropDownData', 'GetAllWardsDropDown', 'GetBedsByWard', 'AddPatientRegBill', 'WaiveBill', 'WaiveBillInvoice', 'GetBillsByPurposes', 'BillsByPatients', function($scope, $rootScope,$window,$routeParams,$location,GetAllBills,GetAllInvoices,GetPatientInfo,InvoiecStatus,ProcessPayment,InvoiceData,GetBillInvoices,SendEmail, CheckoutPatient, deleteInvoice, AddToBill, GetAllBillingCodes, GetAllproducts, SendEmail, GetBillingWithDates, DropDownData, GetAllWardsDropDown, GetBedsByWard, AddPatientRegBill, WaiveBill, WaiveBillInvoice, GetBillsByPurposes, BillsByPatients){
 	$rootScope.pageTitle = "EHR - Billing";
 	$scope.BillListings={};
 	$scope.selectedPatient = {};
@@ -58,6 +58,8 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 		$scope.tAmount = tAmount;
 		$scope.deleteInvoiceButton = false;
 		$scope.invoiceDelete = status;
+		if(status == "paid") $scope.deleteInvoiceButton = true;
+		else $scope.deleteInvoiceButton = false;
 
 		$rootScope.loader = "show";
 		GetPatientInfo.get({token: $window.sessionStorage.token, patient_id: patient_id}, getPatientInfoSuccess, getPatientInfoFailure);
@@ -276,19 +278,18 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 			$('#internetError').modal('show');
 			console.log(error);
 		}
-
-		
-
-
 	};
 
 
-	$scope.SelectedPatient = function(patient_id,bill_id){
+	$scope.SelectedPatient = function(patient_id,bill_id, bill_status){
 		if(patient_id == "" || patient_id == undefined) return true;
-        $scope.disable_tabs = false;
-		console.log(patient_id);
-		console.log(bill_id);
+		if(bill_status == "paid") $scope.disable_tabs = true;
+		else $scope.disable_tabs = false;
+       // $scope.disable_tabs = false;
+		console.log(patient_id, bill_id);
+		console.log(bill_status);
 		$scope.bill_id=bill_id;
+		$scope.bill_status=bill_status;
 		$scope.patient_id = patient_id;
 		//$scope.invoice_id = invoice_id;
 
@@ -614,16 +615,18 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 	    	}
 	    }
 
-	    $scope.patientRegBill = function(patientName){
+	    $scope.patientRegBill = function(patientName, patientAmount){
 	    	console.log(patientName);// return true;
+	    	//if(patientName == undefined || patientName == '' || patientAmount == undefined || patientAmount == '') return true;
 	    	AddPatientRegBill.save({
 	    		token: $window.sessionStorage.token,
-	    		patient_name: patientName
+	    		patient_name: patientName,
+	    		amount: patientAmount
 	    	}, addPatientRegBillSuccess,wardsDropDownFailure);
 	    	function addPatientRegBillSuccess(res){
 				console.log(res, "regbill");
 				if(res.status == true){
-					$scope.patientBillID = res.bill_id;
+					$scope.patientBillID = "B"+res.bill_id;
 					$scope.dynamicMsg = "Patient Registration Bill Generated";
 					$('#pregbillSuccess').modal('show');
 					//$('#patientRegBill').modal('hide');
@@ -649,6 +652,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 					$('#pregbillSuccess').modal('show');
 					$('#WaiveBill').modal('hide');
 					$scope.disable_tabs = true;
+					$scope.curPage = 0;
 					GetAllBills.get({
 						token: $window.sessionStorage.token,
 						offset: 0,
@@ -754,5 +758,16 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 		        offset: (pageSize * curPage), limit: $scope.limit
 			}, GetAllInvoicesSuccess, GetAllInvoicesFailure);
 	    }
+
+	    $scope.searchBillsByPatient = function(string){
+	    	console.log(string);
+	    	BillsByPatients.save({
+	    		token: $window.sessionStorage.token,
+	    		name: string
+	    	}, GetAllBillsSuccess,GetAllInvoicesFailure);
+	    }
+
+	    
+
         
 }]);

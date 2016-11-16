@@ -612,9 +612,9 @@
                                 <th>Lab Order ID</th>
                                 <th>Test Name</th>
                                 <th>Lab</th>
-                                <th>ORDERED BY</th>
+                                <!-- <th>ORDERED BY</th>
                                 <th>status</th>
-                                <th>HANDLING BY</th>
+                                <th>HANDLING BY</th> -->
                                 <th>Report</th>
                             </tr>
                         </thead>
@@ -624,9 +624,9 @@
                                 <td>{{labsOrder.id}}</td>
                                 <td>{{labsOrder.lab_test_name}}</td>
                                 <td>{{labsOrder.lab_name}}</td>
-                                <td>{{labsOrder.ordered_by}}</td>
+                                <!-- <td>{{labsOrder.ordered_by}}</td>
                                 <td>{{labsOrder.order_status}}</td>
-                                <td>{{labsOrder.handled_by}}</td>
+                                <td>{{labsOrder.handled_by}}</td> -->
                                 <td><a href="javascript:;" ng-click="viewLabTestReport(labsOrder.lab_test_id);">View</a></td>
                             </tr>
                         </tbody>

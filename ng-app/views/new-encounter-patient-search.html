@@ -11,7 +11,7 @@
                     <span class="txt-style-2 col-lg-12 capitalize">E{{EID || encounterID}}</span>
                 </div>
                 <div class="col-lg-2">
-                    <label class="txt-style-1 text-uppercase col-lg-12">Patient Name {{visitStatus}}</label>
+                    <label class="txt-style-1 text-uppercase col-lg-12">Patient Name</label>
                     <span class="txt-style-2 col-lg-12 capitalize">{{displayInfo.first_name}} {{displayInfo.last_name}}</span>
                 </div>
                 <div class="col-lg-2">
@@ -55,9 +55,9 @@
                 </div>
                 <div class="create_counter">
                     <!-- <button type="button" ng-click="goToEncounter();" class="add button-custom pull-right open-custom_pop" ng-if="visitStatus == 1" ng-hide="gotoencounter">Go To Encouter</button> -->
-                    <button type="button" ng-click="openCreateEncounter();" class="add button-custom pull-right open-custom_pop" ng-hide="disabledEncounterButton" ng-if="visitStatus == 0">create encounter</button>
-                    <button type="button" class="calendar button-custom pull-right" ng-hide="disabledEncounterButton" data-toggle="modal" data-target="#createAppointment">Create Appointment</button>
-                    <button type="button" data-toggle="modal" data-target="#neworder" class="microscope button-custom pull-right" ng-hide="disabledEncounterButton">Order Labs</button>
+                    <button type="button" ng-click="openCreateEncounter();" class="add button-custom pull-right open-custom_pop" >create encounter</button> <!-- ng-hide="disabledEncounterButton" ng-if="visitStatus == 0" -->
+                    <button type="button" class="calendar button-custom pull-right" data-toggle="modal" data-target="#createAppointment">Create Appointment</button> <!--  ng-hide="disabledEncounterButton" -->
+                    <button type="button" data-toggle="modal" data-target="#neworder" class="microscope button-custom pull-right">Order Labs</button><!-- ng-hide="disabledEncounterButton" -->
                     <button type="button" data-toggle="modal" data-target="#scanbarcode" class="scan-icon button-custom pull-right">scan barcode</button>
                     <div class="counter_pop custom_popup" ng-hide="closePopUp">
                         <div class="pop_head col-lg-12">
@@ -68,6 +68,10 @@
                                 <i class="{{errorSymbol}}"></i> {{errorMessage}}
                             </div>
                             <form class="custom-form" name="encounterFormAdd" ng-model="myForm" novalidate ng-submit="validateEncounterForm(addEncounter);" >
+                                <div class="col-lg-12">
+                                    <input class="search_field" type="text" ng-model="addEncounter.selectedPatientID" placeholder="Search by Name or Patient Id" id="findPatientEncounter" data-source="{{PatientSearch}}search_patient_without_encounters" name="patientID" ng-class="{true: 'error'}[submitted && myFormAdd.patientID.$invalid]" required>
+                                    <p class="help-block PIValid" ng-show="submitted && encounterFormAdd.patientID.$error.required">Required</p>
+                                </div>
                                 <div class="col-lg-6">
                                     <label>clinic facility / Dept</label>
                                 </div>
@@ -125,11 +129,11 @@
                 </div>
             </div>
             <div class="card-body col-lg-12">
-                <div>
+               <!--  <div>
                     <input class="encounter-search-bar" ng-change="getSearchPatient(search1);" type="text" ng-model="search1" placeholder="Search for a patient">
-                </div>
-            </div><!--end .card-body -->
-            <div class="table-header col-lg-12">
+                </div> -->
+            </div>
+            <div class="col-lg-12 padding-30">
                 <div class="pull-left">
                     <!-- <span class="txt-style-3 pull-left text-uppercase">Encounter List</span> -->
                     <div class="header-search margin-right-0 pull-left">
@@ -244,12 +248,12 @@
             <div class="modal-body">
                 <div class="row margin-bottom-xxl">
                 <div class="col-lg-12">
-                    <!-- <select class="form-control select_searchFields" ng-model="Order.patient_id" placeholder="Select Patient" name="patient_id" ng-class="{true: 'error'}[submitted && addForm.patient_id.$invalid]" required>
+                    <select class="form-control select_searchFields" ng-model="Order.patient_id" placeholder="Select Patient" name="patient_id" ng-class="{true: 'error'}[submitted && addForm.patient_id.$invalid]" required>
                         <option value=""></option>
-                        <option ng-repeat="patient in patients" value="{{ patient.id }}" ng-selected="Order.patient_id == patient.id">{{ patient.first_name + ' ' + patient.last_name }}</option>
+                        <option ng-repeat="patient in patients" value="{{ patient.id }}" ng-selected="Order.patient_id == patient.id">{{ patient.id + ' ' + patient.first_name + ' ' + patient.last_name }}</option>
                     </select>
-                    <p class="help-block PIValid" ng-show="submitted && addForm.patient_id.$error.required">Required</p> -->
-                    <input type="text" disabled="true" ng-value="PIDwithName" ng-model="Order.patient_id">
+                    <p class="help-block PIValid" ng-show="submitted && addForm.patient_id.$error.required">Required</p>
+                    <!-- <input type="text" disabled="true" ng-value="PIDwithName" ng-model="Order.patient_id"> -->
                 </div>
                     </div>
                 <div class="row margin-bottom-xxl">
@@ -507,12 +511,12 @@
                     <div class="col-lg-12 margin-top-10">
                         <div class="col-lg-12">
                         <div class="header-search margin-right-0 col-lg-12">
-                            <!-- <button type="submit">
+                            <button type="submit">
                                 <i class="fa fa-search"></i>
                             </button>
-                            <input class="search_field" type="text" ng-model="appointment.appointmentSearch" placeholder="Search by Name or Patient Id" id="findPatient" data-source="{{PatientSearch}}search_patient" name="FindPatient" ng-class="{true: 'error'}[submitted && myFormAdd.FindPatient.$invalid]" required> -->
-                            <input type="text" value="{{prefilledPatientName}}" disabled="true" ng-value="PIDwithName" ng-model="appointment.selectedPatientID">
-                            <input type="hidden" ng-model="appointment.selectedPatientID" />
+                            <input class="search_field" type="text" ng-model="appointment.appointmentSearch" placeholder="Search by Name or Patient Id" id="findPatient" data-source="{{PatientSearch}}search_patient" name="FindPatient" ng-class="{true: 'error'}[submitted && myFormAdd.FindPatient.$invalid]" required>
+                            <!-- <input type="text" value="{{prefilledPatientName}}" disabled="true" ng-value="PIDwithName" ng-model="appointment.selectedPatientID">
+                            <input type="hidden" ng-model="appointment.selectedPatientID" /> -->
                         </div>
                             </div>
                         </div>
