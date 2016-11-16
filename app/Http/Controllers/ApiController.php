@@ -939,7 +939,6 @@ class ApiController extends Controller
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
-
         $visit_count = DB::table('visits')
              ->select(DB::raw('*'))
              ->where('patient_id', $patient_id)
@@ -970,7 +969,6 @@ class ApiController extends Controller
                 'created_at' => $currentdatetime
             ]
         );
-
 
         $visit_id = DB::getPdo()->lastInsertId();
 
