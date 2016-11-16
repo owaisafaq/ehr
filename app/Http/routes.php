@@ -41,6 +41,11 @@ $app->group(['prefix' => 'api'], function () use ($app) {
     $app->options('upload_hospital_image','App\Http\Controllers\SettingController@optupload_hospital_image');
     $app->post('export_patients_data', 'App\Http\Controllers\SettingController@export_patients_data');
     $app->options('export_patients_data','App\Http\Controllers\SettingController@optexport_patients_data');
+
+   //Search Patients without encounters
+    $app->post('search_patient_without_encounters', 'App\Http\Controllers\ApiController@search_patient_without_encounters');
+
+
 });
 
 
@@ -515,9 +520,6 @@ $app->group(['prefix'=>'api','middleware' => 'jwt.auth'], function () use ($app)
 
     //Bill Purposes
     $app->get('get_bill_purposes','App\Http\Controllers\BillingController@get_bill_purposes');
-
-    //Search Patients without encounters
-    $app->post('search_patient_without_encounters','App\Http\Controllers\ApiController@search_patient_without_encounters');
 
 
 });
