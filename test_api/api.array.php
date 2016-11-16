@@ -3627,3 +3627,15 @@ $api->params->token = "123";
 $api_arr [] = $api;
 
 
+
+// Search Patient Bills
+$api = new api();
+$api->name = "Search Patient Bills";
+$api->url = HOST . 'search_patient_bills';
+$api->method = "POST";
+$api->description = "Search Patient Bills";
+$api->params->name = "owais";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
