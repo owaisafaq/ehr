@@ -50,7 +50,7 @@ class InventoryAPIController extends Controller
     public function get_inventory_categories_groups(Request $request){
         $group = $request->input('group');
         $categories = DB::table('inventory_categories')
-            ->select('cat_name')
+            ->select('*')
             ->where('status', 1)
             ->where('cat_group', $group)
             ->get();
