@@ -3332,12 +3332,11 @@ class ApiController extends Controller
         $category_id = $request->input('category_id');
         $template_type  = $request->input('template_type');
 
-        if($category_id = '' || !isset($category_id)){
+        if($category_id == '' || !isset($category_id)){
             $category_id =0;
         }
 
         if($category_id != 0) {
-
             $templates = DB::table('templates')
                 ->leftJoin('template_categories', 'template_categories.id', '=', 'templates.category_id')
                 ->leftJoin('template_types', 'template_types.id', '=', 'template_categories.template_type')
@@ -3354,8 +3353,6 @@ class ApiController extends Controller
                 ->where('templates.status', 1)
                 ->where('template_categories.template_type',$template_type)
                 ->get();
-
-
         }
 
         return response()->json(['status' => true, 'data' => $templates]);
