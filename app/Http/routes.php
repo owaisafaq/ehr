@@ -44,6 +44,7 @@ $app->group(['prefix' => 'api'], function () use ($app) {
 
    //Search Patients without encounters
     $app->post('search_patient_without_encounters', 'App\Http\Controllers\ApiController@search_patient_without_encounters');
+    $app->post('search_patient_bills', 'App\Http\Controllers\ApiController@search_patient_bills');
 
 
 });

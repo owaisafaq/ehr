@@ -859,6 +859,7 @@ class BillingController extends Controller
                     'created_at' => date("Y-m-d  H:i:s")
                 ]);
         $id = DB::getPdo()->lastInsertId();
+        $id = str_pad($id, 8, '0', STR_PAD_LEFT);
 
         return response()->json(['status' => true, 'message' => 'Patient Bill Added Successfully','bill_id'=>$id]);
     }

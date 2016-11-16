@@ -146,6 +146,36 @@ class ApiController extends Controller
         return response()->json(['status' => true, 'data' => $patients]);
 
     }
+    public function search_patient_bills(Request $request){
+        $name = $request->input('name');
+        $bills = DB::table('billing')
+            ->select('billing.id', 'billing.encounter_id', 'billing.patient_id', 'billing.created_at', 'billing.purpose', 'billing.bill_status', 'hospital_plan.name', 'patients.first_name', 'patients.middle_name', 'patients.last_name', 'bill_purpose', 'patient_name')
+            ->leftJoin('visits', 'visits.id', '=', 'billing.encounter_id')
+            ->leftJoin('patients', 'patients.id', '=', 'billing.patient_id')
+            ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.hospital_plan')
+            ->where(function ($q) use ($name) {
+                $q->where('patients.first_name', 'LIKE', "$name%")
+                    ->orWhere('patients.id', 'LIKE', "$name%");
+            })
+            ->where('billing.status', 1);
+        foreach ($bills as $bill) {
+            $bill->id = str_pad($bill->id, 8, '0', STR_PAD_LEFT);
+            $bill->encounter_id = str_pad($bill->encounter_id, 8, '0', STR_PAD_LEFT);
+            $bill->patient_id = str_pad($bill->patient_id, 7, '0', STR_PAD_LEFT);
+            $bill->first_name = $bill->first_name . " " . $bill->last_name;
+            if ($bill->bill_purpose == 'new_patient') {
+                $bill->first_name = $bill->patient_name;
+                $bill->patient_id = '';
+                $bill->encounter_id = '';
+            }
+        }
+        if ($bills) {
+            return response()->json(['status' => true, 'message' => 'Bills found', 'data' => $bills, 'count' => $count]);
+
+        } else {
+            return response()->json(['status' => true, 'message' => 'Bills not found', 'data' => $bills, 'count' => $count]);
+        }
+    }
 
 
     public function search_doctor(Request $request)
