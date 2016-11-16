@@ -126,6 +126,60 @@ class ApiController extends Controller
        }
 
 
+    public function search_patient_without_encounters(Request $request)
+    {
+        $name = $request->input('name');
+        $patients = DB::table('patients')
+            ->leftJoin('visits', 'visits.patient_id','=','patients.id')
+            ->select(DB::raw('patients.id,first_name,last_name'))
+            ->where(function ($q) use ($name) {
+                $q->where('first_name', 'LIKE', "$name%")
+                    ->orWhere('patients.id', 'LIKE', "$name%");
+            })
+            ->where('patients.status', 1)
+            ->where('visits.id','=',null)
+            ->get();
+
+        foreach ($patients as $patient) {
+            $patient->patient_id = str_pad($patient->id, 7, '0', STR_PAD_LEFT);
+        }
+        return response()->json(['status' => true, 'data' => $patients]);
+
+    }
+    public function search_patient_bills(Request $request){
+        $name = $request->input('name');
+        $bills = DB::table('billing')
+            ->select('billing.id as bill_id', 'billing.encounter_id', 'billing.patient_id', 'billing.created_at', 'billing.purpose', 'billing.bill_status', 'hospital_plan.name', 'patients.first_name', 'patients.middle_name', 'patients.last_name', 'bill_purpose', 'patient_name')
+            ->leftJoin('visits', 'visits.id', '=', 'billing.encounter_id')
+            ->leftJoin('patients', 'patients.id', '=', 'billing.patient_id')
+            ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.hospital_plan')
+            ->where(function ($q) use ($name) {
+                $q->where('patients.first_name', 'LIKE', "$name%")
+                    ->orWhere('patients.id', 'LIKE', "$name%");
+            })
+            ->where('billing.status', 1)
+            ->get();
+        foreach ($bills as $bill) {
+
+            $bill->id = str_pad($bill->id, 8, '0', STR_PAD_LEFT);
+            $bill->encounter_id = str_pad($bill->encounter_id, 8, '0', STR_PAD_LEFT);
+            $bill->patient_id = str_pad($bill->patient_id, 7, '0', STR_PAD_LEFT);
+            $bill->first_name = $bill->first_name . " " . $bill->last_name;
+            if ($bill->bill_purpose == 'new_patient') {
+                $bill->first_name = $bill->patient_name;
+                $bill->patient_id = '';
+                $bill->encounter_id = '';
+            }
+        }
+        if ($bills) {
+            return response()->json(['status' => true, 'message' => 'Bills found', 'data' => $bills]);
+
+        } else {
+            return response()->json(['status' => true, 'message' => 'Bills not found', 'data' => $bills]);
+        }
+    }
+
+
     public function search_doctor(Request $request)
     {
         $name = $request->input('name');
@@ -939,7 +993,6 @@ class ApiController extends Controller
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
-
         $visit_count = DB::table('visits')
              ->select(DB::raw('*'))
              ->where('patient_id', $patient_id)
@@ -955,6 +1008,9 @@ class ApiController extends Controller
             ->where('patient_id',$patient_id)
             ->update(['status' => 0,'updated_at' => $currentdatetime]);
 
+        if($whom_to_see=='' || !isset($whom_to_see)){
+            $whom_to_see = 0;
+        }
 
         DB::table('visits')->insert(
             ['patient_id' => $patient_id,
@@ -967,7 +1023,6 @@ class ApiController extends Controller
                 'created_at' => $currentdatetime
             ]
         );
-
 
         $visit_id = DB::getPdo()->lastInsertId();
 
@@ -3332,12 +3387,11 @@ class ApiController extends Controller
         $category_id = $request->input('category_id');
         $template_type  = $request->input('template_type');
 
-        if($category_id = '' || !isset($category_id)){
+        if($category_id == '' || !isset($category_id)){
             $category_id =0;
         }
 
         if($category_id != 0) {
-
             $templates = DB::table('templates')
                 ->leftJoin('template_categories', 'template_categories.id', '=', 'templates.category_id')
                 ->leftJoin('template_types', 'template_types.id', '=', 'template_categories.template_type')
@@ -3354,8 +3408,6 @@ class ApiController extends Controller
                 ->where('templates.status', 1)
                 ->where('template_categories.template_type',$template_type)
                 ->get();
-
-
         }
 
         return response()->json(['status' => true, 'data' => $templates]);
@@ -3483,9 +3535,7 @@ class ApiController extends Controller
 
 
     public function get_template(Request $request){
-
         $template_id= $request->input('template_id');
-
         $template = DB::table('templates')
             ->leftJoin('template_categories','templates.category_id', '=', 'template_categories.id')
             ->select(DB::raw('templates.id,templates.name,template_categories.name as category,templates.category_id,templates.description,templates.template'))
@@ -3494,7 +3544,6 @@ class ApiController extends Controller
             ->first();
 
         return response()->json(['status' => true, 'data' => $template]);
-
     }
 
 

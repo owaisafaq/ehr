@@ -153,7 +153,7 @@ class CheckRoles
                     ->where($right,1)
                     ->where('type', $type_id)
                     ->get();
-            } elseif (strpos($method_name,'template') !== false || strpos($method_name,'lab_template') !== false) {
+            } elseif ((strpos($method_name,'template') && $method_name!='get_template') !== false || strpos($method_name,'lab_template') !== false) {
                 if ($request->has('template_type')) {
                     $type_id = $request->template_type;
                 } elseif ($request->has('template_id')) {

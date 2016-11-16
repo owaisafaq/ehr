@@ -47,6 +47,16 @@ class InventoryAPIController extends Controller
             return response()->json(['status' => true, 'message' => "Categories not found",'data'=>$categories,'count'=>$count], 200);
         }
     }
+    public function get_inventory_categories_groups(Request $request){
+        $group = $request->input('group');
+        $categories = DB::table('inventory_categories')
+            ->select('cat_name')
+            ->where('status', 1)
+            ->where('cat_group', $group)
+            ->get();
+        return response()->json(['status' => true, 'message' => "Categories Found", 'data'=>$categories]);
+
+    }
     public function get_single_category(Request $request){
         $id = $request->input('cat_id');
         $categories = DB::table('inventory_categories')->where(['status'=>1, 'id'=>$id])->first();
