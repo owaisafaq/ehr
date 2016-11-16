@@ -515,4 +515,9 @@ $app->group(['prefix'=>'api','middleware' => 'jwt.auth'], function () use ($app)
 
     //Bill Purposes
     $app->get('get_bill_purposes','App\Http\Controllers\BillingController@get_bill_purposes');
+
+    //Search Patients without encounters
+    $app->post('search_patient_without_encounters','App\Http\Controllers\ApiController@search_patient_without_encounters');
+
+
 });

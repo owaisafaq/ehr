@@ -126,6 +126,28 @@ class ApiController extends Controller
        }
 
 
+    public function search_patient_without_encounters(Request $request)
+    {
+        $name = $request->input('name');
+        $patients = DB::table('patients')
+            ->leftJoin('visits', 'visits.patient_id','=','patients.id')
+            ->select(DB::raw('patients.id,first_name,last_name'))
+            ->where(function ($q) use ($name) {
+                $q->where('first_name', 'LIKE', "$name%")
+                    ->orWhere('patients.id', 'LIKE', "$name%");
+            })
+            ->where('patients.status', 1)
+            ->where('visits.id','=',null)
+            ->get();
+
+        foreach ($patients as $patient) {
+            $patient->patient_id = str_pad($patient->id, 7, '0', STR_PAD_LEFT);
+        }
+        return response()->json(['status' => true, 'data' => $patients]);
+
+    }
+
+
     public function search_doctor(Request $request)
     {
         $name = $request->input('name');

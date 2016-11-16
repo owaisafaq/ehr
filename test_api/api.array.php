@@ -3602,7 +3602,7 @@ $api->params->token = "123435";
 $api_arr [] = $api;
 
 
-// Get  Bill Purpose's
+// Get Bill Purpose's
 $api = new api();
 $api->name = "Get Bill Purpose's";
 $api->url = HOST . 'get_bill_purposes';
@@ -3610,6 +3610,18 @@ $api->method = "GET";
 $api->description = "Get Bill Purpose's";
 $api->params->purpose = "";
 $api->params->hospital_plan = "self";
+$api->params->token = "123";
+
+$api_arr [] = $api;
+
+
+// Search Patients without encounters
+$api = new api();
+$api->name = "Search Patients without encounters";
+$api->url = HOST . 'search_patient_without_encounters';
+$api->method = "POST";
+$api->description = "Search Patients without encounters";
+$api->params->name = "owais";
 $api->params->token = "123";
 
 $api_arr [] = $api;
