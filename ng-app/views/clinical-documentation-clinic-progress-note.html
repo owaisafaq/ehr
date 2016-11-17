@@ -100,7 +100,7 @@
                                                 </select>
                                             </div>
                                         </div> -->
-                                        <div class="row"><div fg-form fg-form-data="myFormData" fg-schema="mySchema" ng-class="{true: 'disabled-fields'}[is_signoff == 1]" ng-hide="newTemp" class="margin-0 addSchema"></div></div>
+                                        <div class="row"><div fg-form fg-form-data="myFormData" fg-schema="mySchema" ng-class="{true: 'disabled-fields1'}[is_signoff == 1]" ng-hide="newTemp" class="margin-0 addSchema"></div></div>
                                         <div class="row"><div fg-form fg-form-data="myFormDataNewTemp" fg-schema="mySchemaNewTemp" ng-class="{true: 'disabled-fields'}[is_signoff == 1]" class="margin-0 editSchema" ng-show="newTemp"></div></div>
                                     </form>
                                 </div>
@@ -200,7 +200,7 @@
                         <button type="button" class="check-out button-custom open-custom_pop" data-toggle="modal" data-target="#checkout">Checkout Patient</button>
                         <button type="button" ng-click="signOFF();" class="finalize-report button-custom " ng-show="selectedRow" ng-disabled="is_signoff == 1">Sign Off</button>
                         <button type="button" class="view-report button-custom pull-right open-custom_pop" ng-show="enablePreviewreport" data-toggle="modal" data-target="#previewReport" ng-click="openPreviewReport();">Preview Report</button>
-                        <button type="button" class="save button-custom" ng-show="selectedRow" ng-click="saveClinicalNotes(myFormData,myFormDataNewTemp);" ng-disabled="is_signoff == 1">Save Changes</button>
+                        <button type="button" class="save button-custom" ng-show="selectedRow" ng-click="saveClinicalNotes(myFormData,myFormDataNewTemp);" ng-disabled="is_signoff == 11">Save Changes</button>
                         <button class="add button-custom pull-right" ngf-select="uploadFiles($files, $invalidFiles)" multiple type="file" ngf-max-size="10MB" ng-hide="disabledEncounterButton" ng-disabled="is_signoff == 1">Add Attachment</button>
                         <button type="button" data-toggle="modal" data-target="#referral" class="refer-patient button-custom pull-right" ng-disabled="is_signoff == 1">Refer Patient</button>
                         <!--ng-disabled="disabledFooterButton"-->
@@ -322,7 +322,7 @@
                         </label>
                     </div>
                     <!-- <button type="button" ng-click="downloadReferral();" ng-disabled="downloadButtonActive"></button> -->
-                    <a href="javascript:;" class="btn btn-default button-style-1" id="downloadRef" style="padding: 12px;margin-bottom: 3px;" {{download}}>Download</a>
+                    <a href="javascript:;" class="btn button-style-1 button-style-1_a" id="downloadRef" {{download}}>Download</a>
                     <button type="submit" class="btn btn-default button-style-1">refer</button>
                     <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
                 </div>
@@ -341,6 +341,17 @@
                     <!--<div class="row">-->
                     <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
+                            <label>Pharmacy</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <select ng-model="MedicationData.pharmacy" class="form-control getpharmacyName" placeholder="Select Pharmacy" ng-change="medicationByPharmacy(MedicationData.pharmacy);" id="select_pharmacy">
+                                <option></option>
+                                <option ng-selected="MedicationData.pharmacy == pharmacyDataDrop.id" value="{{pharmacyDataDrop.id}}" ng-repeat="pharmacyDataDrop in allPharmacies">{{pharmacyDataDrop.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- <div class="row margin-bottom-xxl">
+                        <div class="col-lg-3">
                             <label>Medication</label>
                         </div>
                         <div class="col-lg-9">
@@ -349,8 +360,8 @@
                                 <option ng-selected="MedicationData.medication == medicationDropData.id" value="{{medicationDropData.id}}" ng-repeat="medicationDropData in allMedications">{{medicationDropData.name}}</option>
                             </select>
                         </div>
-                    </div>
-<div class="row margin-bottom-xxl">
+                    </div> -->
+                    <div class="row margin-bottom-xxl">
                         <div class="col-lg-3">
                             <label>SIG</label>
                         </div>
@@ -361,7 +372,7 @@
                             <!--open_sig-->
                             <a href="!#" class="setting-button button-custom pull-right" data-toggle="modal" data-target="#addsig"></a>
                         </div>
-</div>
+                    </div>
                     <div class="row margin-bottom-xxl">
 
                         <div class="col-lg-3">
@@ -379,14 +390,14 @@
                         </div>
                     </div>
                     <div class="row margin-bottom-xxl">
-
                         <div class="col-lg-3">
-                            <label>Pharmacy</label>
+                            <label>Medication</label>
                         </div>
                         <div class="col-lg-9">
-                            <select ng-model="MedicationData.pharmacy" class="form-control" placeholder="Select Pharmacy" id="select_pharmacy">
+                            
+                            <select ng-model="MedicationData.medication" class="form-control getMedicineName select_searchFields medicationNeme" placeholder="Select Medication">
                                 <option></option>
-                                <option ng-selected="MedicationData.pharmacy == pharmacyDataDrop.name" value="{{pharmacyDataDrop.id}}" ng-repeat="pharmacyDataDrop in allPharmacies">{{pharmacyDataDrop.name}}</option>
+                                <option ng-selected="MedicationData.medication == medicationDropData.id" value="{{medicationDropData.id}}" ng-repeat="medicationDropData in getDrugs">{{medicationDropData.name}}</option>
                             </select>
                         </div>
                     </div>
@@ -625,9 +636,9 @@
                                 <div class="col-lg-12">
                                     <span class="txt-style-4">Presenting Complaint: Captured from Clinical Note</span>
                                 </div>
-                                </div>
+                            </div>
                             <div class="row margin-bottom-xxl">
-                                <div class="col-lg-3">
+                                <!-- <div class="col-lg-3">
                                     <label>to specialty</label>
                                 </div>
 
@@ -636,7 +647,7 @@
                                     <option value=""></option>
                                     <option ng-repeat="s in dropDownDATA.departments" ng-value="s.id">{{s.name}}</option>
                                 </select>
-                            </div>
+                            </div> -->
                             <div class="col-lg-3">
                                 <label>admit to ward</label>
                             </div>
@@ -671,9 +682,15 @@
                                 <label>Estimated Discharge</label>
                             </div>
                             <div class="col-lg-3">
-                                <div class="input-group bootstrap-timepicker timepicker col-lg-12">
+                               <!--  <div class="input-group bootstrap-timepicker timepicker col-lg-12">
                                     <input type="text" class="form-control input-small timepicker"  ng-model="CO.time">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                </div> -->
+                                <div class="input-group date select-date col-lg-12">
+                                    <div class="input-group-content">
+                                        <input type="text" class="form-control" placeholder="Select Date" ng-model="CO.discharge">
+                                    </div>
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
                             </div>
                                 </div>

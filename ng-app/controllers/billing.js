@@ -627,6 +627,7 @@ AppEHR.controller('billing', ['$scope', '$rootScope','$window','$routeParams','$
 				console.log(res, "regbill");
 				if(res.status == true){
 					$scope.patientBillID = "B"+res.bill_id;
+					$scope.disabledPatientRegButton = true;
 					$scope.dynamicMsg = "Patient Registration Bill Generated";
 					$('#pregbillSuccess').modal('show');
 					//$('#patientRegBill').modal('hide');

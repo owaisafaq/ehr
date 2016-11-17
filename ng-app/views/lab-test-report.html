@@ -30,7 +30,7 @@
                         <img src="assets/img/assign_blue.png" />
                     </a> -->
                     <a href="javascript:;" class="button-style-2">
-                        <img src="assets/img/discharge_icn_blue.png" />
+                        <img src="assets/img/discharge_icn_blue.png" data-toggle="modal" data-target="#checkout"/>
                     </a>                             
                 </div>
             </div>
@@ -249,7 +249,7 @@
                             <div class="col-lg-12">
                                 <span class="txt-style-4">Presenting Complaint: Captured from Clinical Note</span>
                             </div>
-                            <div class="col-lg-3">
+                            <!-- <div class="col-lg-3">
                                 <label>to specialty</label>
                             </div>
                             <div class="col-lg-3 select-con">
@@ -257,7 +257,7 @@
                                     <option value=""></option>
                                     <option ng-repeat="s in dropDownDATA.departments" ng-value="s.id">{{s.name}}</option>
                                 </select>
-                            </div>
+                            </div> -->
                             <div class="col-lg-3">
                                 <label>admit to ward</label>
                             </div>
@@ -284,15 +284,21 @@
                                 <label>Admitted DATE</label>
                             </div>
                             <div class="col-lg-3">
-                                <label class="txt-style-4">{{displayInfo.visit_created_at}}</label>
+                                <label class="txt-style-4">{{labTest.created_at}}</label>
                             </div>
                             <div class="col-lg-3">
                                 <label>Estimated Discharge</label>
                             </div>
                             <div class="col-lg-3">
-                                <div class="input-group bootstrap-timepicker timepicker col-lg-12">
+                                <!-- <div class="input-group bootstrap-timepicker timepicker col-lg-12">
                                     <input type="text" class="form-control input-small timepicker"  ng-model="CO.time">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                </div> -->
+                                <div class="input-group date select-date col-lg-12">
+                                    <div class="input-group-content">
+                                        <input type="text" class="form-control" placeholder="Select Date" ng-model="CO.discharge">
+                                    </div>
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
                             </div>
 

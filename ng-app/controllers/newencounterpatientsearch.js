@@ -517,7 +517,8 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
     		start_time: dataToBeAdded.time == undefined ? '' : dataToBeAdded.time,
     		department_id: dataToBeAdded.CPN == undefined ? '' : dataToBeAdded.CPN,
     		ward_id: dataToBeAdded.ward == undefined ? '' : dataToBeAdded.ward,
-    		bed_id: $scope.CO.bedNumber == undefined ? '' : $scope.CO.bedNumber
+    		bed_id: $scope.CO.bedNumber == undefined ? '' : $scope.CO.bedNumber,
+    		expected_discharge_date: dataToBeAdded.discharge == undefined ? '' : dataToBeAdded.discharge
     	}, checkoutSuccess, checkoutFailure);
     }
 
