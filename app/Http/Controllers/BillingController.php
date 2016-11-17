@@ -256,20 +256,14 @@ class BillingController extends Controller
         $invoice_amount = $amount->due;
         $bill_id = $amount->bill_id;
 
-
         if ($due == 0) {
-
             $status = 'pending';
-
             DB::table('invoice')
                 ->where('id', $invoice_id)
                 ->update(
                     ['due' => $invoice_amount, 'invoice_status' => $status,'updated_at'=>$currentdatetime]);
 
-
-
             return response()->json(['status' => true, 'message' => 'Invoice Updated successfully']);
-
         }
 
         $total_amount = $invoice_amount - $due;
@@ -280,10 +274,9 @@ class BillingController extends Controller
                 ->where('id', $invoice_id)
                 ->update(
                     ['due' => $total_amount,
-                        'invoice_status' => 'draft']);
+                        'invoice_status' => 'deposit']);
 
             return response()->json(['status' => true, 'message' => 'Invoice Updated successfully']);
-
 
         } else {
             DB::table('invoice')
@@ -291,7 +284,6 @@ class BillingController extends Controller
                 ->update(
                     ['due' => $total_amount,
                         'invoice_status' => 'paid']);
-
 
             $count = DB::table('invoice')
                        ->select('*')
@@ -306,7 +298,6 @@ class BillingController extends Controller
                     ->update(
                         ['bill_status' => 'paid']);
             }
-
 
             return response()->json(['status' => true, 'message' => 'Invoice Updated successfully']);
 
@@ -867,19 +858,25 @@ class BillingController extends Controller
     public function search_patient_bill(Request $request)
     {
         $name = $request->input('name');
+        $name = ltrim($name, 'B');
         $name =  ltrim($name,0);
         $patient = DB::table('billing')
-            ->select(DB::raw('id as receipt_id'))
+            ->select(DB::raw('id as receipt_id,patient_name'))
             ->Where('bill_purpose','new_patient')
-            ->Where('patient_id',0)
             ->where(function ($q) use ($name) {
-                $q->where('id', 'LIKE', "$name");
+                $q->where('id', 'LIKE', "$name%");
             })
-            ->first();
-
+            ->get();
         if (empty($patient)) {
             return response()->json(['status' => false, 'message' => 'Not a valid receipt']);
         }
+
+        if (!empty($patient)) {
+            foreach($patient as $bill){
+                $bill->receipt_id = str_pad($bill->receipt_id, 8, '0', STR_PAD_LEFT);
+                $bill->receipt_id = 'B' . $bill->receipt_id;
+            }}
+
 
         return response()->json(['status' => true, 'data' => $patient]);
     }
