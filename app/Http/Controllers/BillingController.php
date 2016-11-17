@@ -256,20 +256,14 @@ class BillingController extends Controller
         $invoice_amount = $amount->due;
         $bill_id = $amount->bill_id;
 
-
         if ($due == 0) {
-
             $status = 'pending';
-
             DB::table('invoice')
                 ->where('id', $invoice_id)
                 ->update(
                     ['due' => $invoice_amount, 'invoice_status' => $status,'updated_at'=>$currentdatetime]);
 
-
-
             return response()->json(['status' => true, 'message' => 'Invoice Updated successfully']);
-
         }
 
         $total_amount = $invoice_amount - $due;
@@ -280,10 +274,9 @@ class BillingController extends Controller
                 ->where('id', $invoice_id)
                 ->update(
                     ['due' => $total_amount,
-                        'invoice_status' => 'draft']);
+                        'invoice_status' => 'deposit']);
 
             return response()->json(['status' => true, 'message' => 'Invoice Updated successfully']);
-
 
         } else {
             DB::table('invoice')
@@ -291,7 +284,6 @@ class BillingController extends Controller
                 ->update(
                     ['due' => $total_amount,
                         'invoice_status' => 'paid']);
-
 
             $count = DB::table('invoice')
                        ->select('*')
@@ -306,7 +298,6 @@ class BillingController extends Controller
                     ->update(
                         ['bill_status' => 'paid']);
             }
-
 
             return response()->json(['status' => true, 'message' => 'Invoice Updated successfully']);
 
