@@ -3234,7 +3234,7 @@ class ApiController extends Controller
             DB::table('patients_admitted')->insert(
                 ['checkout_id' => $checkout,
                     'patient_id' => $patient_id,
-                    'department_id' => $department_id,
+                   // 'department_id' => $department_id,
                     'ward_id' => $ward_id,
                     'admit_date' => $admit_date,
                     'expected_discharge_date'=>$expected_discharge_date,
