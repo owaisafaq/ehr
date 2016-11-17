@@ -880,7 +880,7 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
             minimumInputLength: 2,
         });
         
-         $(".search-ajax-appointment").select2({
+        $(".search-ajax-appointment").select2({
             placeholder: 'Select Patient',
             ajax: {
                 url: serverPath+"search_patient",
@@ -905,6 +905,43 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
                             myResults.push({
                                 'id': item.id,
                                 'text': 'P'+item.patient_id + " "+ item.first_name + " " + item.last_name
+                            });
+                        });
+                    }
+                    return {
+                        results: myResults
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 2,
+        });
+
+        $(".search-ajax-receipt").select2({
+            placeholder: '',
+            ajax: {
+                url: serverPath+"search_patient_bill",
+                delay: 250,
+                type: "POST",
+                data: function (params, page) {
+                    return {
+                        term: params,
+                        name: params
+                    };
+                },
+                results: function (data, page) {
+                    var myResults = [];
+                    if (data.status == false) {
+                        myResults.push({
+                            'text': "No Result Found"
+                        });
+                    }
+                    else {
+                        $.each(data['data'], function (index, item) {
+                            //console.log(item);
+                            myResults.push({
+                                'id': item.receipt_id,
+                                'text': item.receipt_id + " "+ item.patient_name
                             });
                         });
                     }

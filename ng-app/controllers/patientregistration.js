@@ -1057,6 +1057,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
             });
         };
+        $scope.serverPath = serverPath;
         $scope.files = [];
         $scope.patient_archive = [];
         $scope.saveAndClose = true;
@@ -1927,19 +1928,18 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         }
 
         $scope.searchPatientForBill = function(string){
-            console.log(string);
             SearchPatientForBill.save({token: $window.sessionStorage.token, name: string}, searchByBillSuccess, downloadFailure);
         }
 
         function searchByBillSuccess(res){
             console.log(res); //return true;
             if (res.status == false) {
-                //$('#billidFailure').modal('show');
-                $scope.invalidIdSearch = true;
+                $scope.invalidIdSearch = false;
                 $scope.billSearchClass = "falilure-red";
             }else if(res.status == true){
-                $scope.invalidIdSearch = false;
-                $scope.billSearchClass = "success-green";
+                $scope.allReceipt = res.data;
+                /*$scope.invalidIdSearch = false;
+                $scope.billSearchClass = "success-green";*/
             }
         }
         $scope.myChannel = {
@@ -1960,4 +1960,31 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         $scope.ngCameraCapture = function(webcam){
             console.log(webcam, "angular-camera");
         }
+        /*SEARCH BY Receipt ID*/
+       /* $('#searchpatientReceipt').on('input', function(){
+            var input = $('#searchpatientReceipt').val();
+            if(input != undefined || input != ''){
+                $('.headerWithSwitchingImages').addClass('ng-hide');
+                $('.headerWithSwitchingImages1').removeClass('ng-hide');
+               $scope.searchPatientForBill(input);
+                //console.log(patientsRecript, "plugin");
+                $("#searchpatientReceipt").autocomplete({
+                    source: function (request, response) {
+                        response($.map($scope.allReceipt, function (value, key) {
+                            return {
+                                label: value.name == "" ? "No Receipt found" : value.name,
+                                value: value.receipt_id == "" ? '0' : value.receipt_id
+                            }
+                        }));
+                        patientsRecript.data = [];
+                        $scope.invalidIdSearch = false;
+                        $scope.billSearchClass = "success-green";
+                    },
+                    select: function(event, ui) {
+                        $scope.PI.receiptID = ui.item.label;
+                        return false;
+                    }
+                });
+            }
+        });*/
     }]);

@@ -21,7 +21,6 @@
                                     <option ng-repeat="category in CategoryLists" value="{{category.cat_name}}">
                                         {{category.cat_name}}
                                     </option>
-
                                 </select>
                             </div>
                             <span class="txt-style-3 pull-left text-uppercase">status</span>
@@ -30,7 +29,6 @@
                                     <option value="">All</option>
                                     <option value="active"  >Active</option>
                                     <option value="inactive">InActive</option>
-
                                 </select>
                             </div>
                         </div>
@@ -48,8 +46,6 @@
                         </div>
                     </div>
                     <form class="custom-form">
-
-
                         <table class="table table-striped no-margin table-custom table-custom_big inventory_detail">
                             <thead>
                                 <tr>
@@ -455,19 +451,18 @@
                                         </select>
                                     </div>
                                     <div class="col-lg-3">
-                                        <label>category {{editinventory.cat_id}}</label>
+                                        <label>category</label>
                                     </div>
                                     <div class="col-lg-3">
                                         <select class="form-control" ng-model="editinventory.cat_id" placeholder="Select">
-                                            <option value=""></option>
-                                            <option ng-repeat="category in catByGroupData" value="{{category.id}}" ng-selected="editinventory.id == category.id">{{category.cat_name}} {{category.id}}</option>
+                                            <option ng-repeat="category in catByGroupData" value="{{category.id}}" ng-selected="editinventory.cat_id == category.id">{{category.cat_name}}</option>
                                         </select>
                                     </div>
                                     <div class="col-lg-3">
                                         <label>product name</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <input type="text" ng-model="editinventory.name"   placeholder="" />
+                                        <input type="text" ng-model="editinventory.name" placeholder="" />
                                     </div>
                                     <div class="col-lg-3">
                                         <label>product id</label>
