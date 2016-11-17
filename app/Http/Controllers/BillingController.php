@@ -858,17 +858,13 @@ class BillingController extends Controller
     public function search_patient_bill(Request $request)
     {
         $name = $request->input('name');
-
-        if (strpos($name,'0') !== false) {
-            $name = ltrim($name, 'B');
-        }
+        $name = ltrim($name, 'B');
         $name =  ltrim($name,0);
         $patient = DB::table('billing')
             ->select(DB::raw('id as receipt_id,patient_name'))
             ->Where('bill_purpose','new_patient')
             ->where(function ($q) use ($name) {
-                $q->where('id', 'LIKE', "$name%")
-                    ->orWhere('patient_name','LIKE',"$name%");
+                $q->where('id', 'LIKE', "$name%");
             })
             ->get();
         if (empty($patient)) {

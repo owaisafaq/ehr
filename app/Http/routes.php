@@ -45,7 +45,7 @@ $app->group(['prefix' => 'api'], function () use ($app) {
    //Search Patients without encounters
     $app->post('search_patient_without_encounters', 'App\Http\Controllers\ApiController@search_patient_without_encounters');
     $app->post('search_patient_bills', 'App\Http\Controllers\ApiController@search_patient_bills');
-
+    $app->post('search_patient_bill','App\Http\Controllers\BillingController@search_patient_bill');
 
 });
 
@@ -504,7 +504,7 @@ $app->group(['prefix'=>'api','middleware' => 'jwt.auth'], function () use ($app)
     $app->post('waive_bill','App\Http\Controllers\BillingController@waive_bill');
     $app->post('waive_invoice','App\Http\Controllers\BillingController@waive_invoice');
     $app->post('add_patient_bill','App\Http\Controllers\BillingController@add_patient_bill');
-    $app->post('search_patient_bill','App\Http\Controllers\BillingController@search_patient_bill');
+   // $app->post('search_patient_bill','App\Http\Controllers\BillingController@search_patient_bill');
     $app->post('add_prescription_material','App\Http\Controllers\OtherController@add_prescription_material');
     $app->get('download_patient_referal','App\Http\Controllers\PDFController@download_patient_referal');
 
