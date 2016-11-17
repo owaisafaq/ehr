@@ -1827,7 +1827,8 @@ class ApiController extends Controller
                 ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
                 ->leftJoin('departments', 'departments.id', '=', 'visits.department_id')
                 ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
-                ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,visits.created_at,patients.status,visits.reason_of_visit'))
+                ->leftJoin('rooms', 'rooms.id', '=', 'visits.room')
+                ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,visits.created_at,patients.status,visits.reason_of_visit,rooms.name as room'))
                 ->orderby('visits.id', 'desc')
                 ->where('visits.patient_id', '!=', 'null')
               //  ->where('visits.patient_id', $patient_id)
@@ -1841,7 +1842,8 @@ class ApiController extends Controller
                 ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
                 ->leftJoin('departments', 'departments.id', '=', 'visits.department_id')
                 ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
-                ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,visits.created_at,patients.status,visits.reason_of_visit'))
+                ->leftJoin('rooms', 'rooms.id', '=', 'visits.room')
+                ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,visits.created_at,patients.status,visits.reason_of_visit,rooms.name as room'))
                 ->orderby('visits.id', 'desc')
                 ->where('visits.patient_id', '!=', 'null')
               //  ->where('visits.patient_id', $patient_id)
@@ -1857,7 +1859,8 @@ class ApiController extends Controller
                 ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
                 ->leftJoin('departments', 'departments.id', '=', 'visits.department_id')
                 ->leftJoin('patients', 'patients.id', '=', 'visits.patient_id')
-                ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,visits.created_at,patients.status,visits.reason_of_visit'))
+                ->leftJoin('rooms', 'rooms.id', '=', 'visits.room')
+                ->select(DB::raw('visits.id,visits.patient_id,patients.first_name,patients.middle_name,patients.last_name,visits.encounter_class,visits.encounter_type,visits.whom_to_see,visits.decscribe_whom_to_see,doctors.name,departments.name as faculty,visits.created_at,patients.status,visits.reason_of_visit,rooms.name as room'))
                 ->orderby('visits.id', 'desc')
                 ->where('visits.patient_id', '!=', 'null')
               //  ->where('visits.patient_id', $patient_id)
@@ -3231,7 +3234,7 @@ class ApiController extends Controller
             DB::table('patients_admitted')->insert(
                 ['checkout_id' => $checkout,
                     'patient_id' => $patient_id,
-                    'department_id' => $department_id,
+                   // 'department_id' => $department_id,
                     'ward_id' => $ward_id,
                     'admit_date' => $admit_date,
                     'expected_discharge_date'=>$expected_discharge_date,

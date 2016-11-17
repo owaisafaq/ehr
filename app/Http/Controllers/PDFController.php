@@ -345,7 +345,7 @@ class PDFController extends Controller
             ->select(DB::raw('patients.id,CONCAT(patients.first_name," ",patients.last_name) AS patient_name,CONCAT("' . $logo_image . '",patients.patient_image) as patient_image,patients.age,patients.date_of_birth,maritial_status.name as marital_status,(CASE WHEN (sex = 1) THEN "Male" ELSE "Female" END) as gender'))
             ->leftJoin('patient_referels', 'patients.id', '=', 'patient_referels.patient_id')
             ->leftJoin('maritial_status', 'patients.marital_status', '=', 'maritial_status.id')
-            ->where('patients.id', $patient_id)
+            ->where('patients.id', $referal->patient_id)
             ->first();
 
         $data = ['referal'=> $referal, 'patient' => $patient, 'hospital' => $hospital];
@@ -429,7 +429,7 @@ class PDFController extends Controller
 
         })->store('csv');
 
-        $file_path = 'http://localhost/ehr/storage/exports/patients.csv';
+        $file_path = 'http://demoz.onlin/ehr/storage/exports/patients.csv';
 
 
         echo json_encode(array(
@@ -466,7 +466,7 @@ class PDFController extends Controller
 
         })->store('csv');
 
-        $file_path = 'http://localhost/ehr/storage/exports/nhis.csv';
+        $file_path = 'http://demoz.onlin/ehr/storage/exports/nhis.csv';
 
 
         echo json_encode(array(
