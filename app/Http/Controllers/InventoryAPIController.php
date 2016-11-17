@@ -24,20 +24,38 @@ class InventoryAPIController extends Controller
         $group = $request->input('group');
         $limit = $request->input('limit');
         $offset = $request->input('offset');
-         if ($offset > 0 || $limit > 0) {
-             $categories = DB::table('inventory_categories')
+        if($group=='' || !isset($group)){
+            $group = 'All';
+        }
+        if ($offset > 0 || $limit > 0) {
+            $categories = DB::table('inventory_categories')
                  ->where('status', 1)
-                 ->where('cat_group', $group)
+                 ->where(function($query) use ($group){
+                     if ($group!='All') {
+                         $query->where('cat_group',$group);
+                     }
+                 })
+                // ->where('cat_group', $group)
                  ->skip($offset)->take($limit)
                  ->get();
-             $count = DB::table('inventory_categories')
-                 ->where('status', 1)
-                 ->where('cat_group', $group)
-                 ->count();
+            $count = count(DB::table('inventory_categories')
+                ->where('status', 1)
+                ->where(function ($query) use ($group) {
+                    if ($group != 'All') {
+                        $query->where('cat_group', $group);
+                    }
+                })
+                //  ->where('cat_group', $group)
+                ->get());
          }else{
              $categories = DB::table('inventory_categories')
                  ->where('status', 1)
-                 ->where('cat_group', $group)
+                 ->where(function ($query) use ($group) {
+                     if ($group != 'All') {
+                         $query->where('cat_group', $group);
+                     }
+                 })
+               //  ->where('cat_group', $group)
                  ->get();
              $count = count($categories);
          }
