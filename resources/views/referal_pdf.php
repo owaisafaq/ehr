@@ -46,7 +46,7 @@
         style="border-collapse: separate;width: 100%;box-sizing: border-box;padding: 20px;display: block;background-color: #464c61;">
         <tr>
             <td>
-                <h3 style="color: #fff;">Order Reports Sign Off</h3>
+                <h3 style="color: #fff;">Patient Report</h3>
             </td>
         </tr>
     </table>
@@ -171,6 +171,100 @@
                     </table>
                 </td>
             </tr>
+
+
+            <tr>
+                </td>
+                <table style="width:100%;box-sizing:border-box;" class="wrap header">
+                    <tr>
+                        <td style="padding-bottom:10px;">
+                        <span style="font-size:12px;color:#1a1a1a;font-weight:bold;">
+                        Immunizations
+                        </span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding-bottom:20px;">
+                            <ul style="font-size:12px;color:#1a1a1a;padding:0 16px;margin:0;">
+                                <?php foreach ($immunizations as $immunization) { ?>
+                                    <li><?php echo $immunization->name; ?></li>
+                                <?php } ?>
+                            </ul>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td style="padding-bottom:20px;">
+                            <h4 style="font-size:12px;color:#1a1a1a;font-weight:bold;">Family History</h4>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom:20px;">
+                            <?php foreach ($family_history as $history) { ?>
+                                <p style="font-size:12px !important;color:#333333;line-height:18px !important;"><?php echo $history->name; ?></p>
+                            <?php } ?>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td style="padding-bottom:10px;">
+                            <span style="font-size:12px;color:#1a1a1a;font-weight:bold;">
+                               Active Problems
+                            </span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding-bottom:20px;">
+                            <ul style="font-size:12px;color:#1a1a1a;padding:0 16px;margin: 0;">
+                                <?php foreach ($active_problems as $problems) { ?>
+                                    <li><?php echo $problems->name; ?></li>
+                                <?php } ?>
+                            </ul>
+                        </td>
+                    </tr>
+
+                </table>
+                </td>
+            </tr>
+
+
+            <!--owais do your code here-->
+            <tr>
+                <td>
+                    <table style="width: 100%;">
+                        <thead>
+                        <tr>
+                            <th style="padding: 10px; text-align: left; background: #ebebeb; font-size: 12px; color: #1a1a1a; font-weight: bold;">
+                                Order ID:
+                            </th>
+                            <th style="padding: 10px; text-align: left; background: #ebebeb; font-size: 12px; color: #1a1a1a; font-weight: bold;">
+                                lab
+                            </th>
+                            <th style="padding: 10px; text-align: left; background: #ebebeb; font-size: 12px; color: #1a1a1a; font-weight: bold;">
+                                Ordered By
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($orders as $order) { ?>
+                            <tr style="border:1px solid #ebebeb;">
+                                <td style="padding: 10px; border-right:1px solid #ebebeb; color: #666666; background: #f9f9f9; font-size: 13px; color: #666666;"><?php echo $order->id; ?></td>
+                                <td style="padding: 10px; border-right:1px solid #ebebeb; color: #666666; background: #f9f9f9; font-size: 13px; color: #666666;"><?php echo $order->lab_name; ?></td>
+                                <td style="padding: 10px; color: #666666; background: #f9f9f9; font-size: 13px; color: #666666;">
+                                    Dr James
+                                </td>
+                            </tr>
+                        <?php } ?>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+
+
 
             <tr>
                 <td style="padding-top: 30px;">

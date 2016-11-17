@@ -348,7 +348,42 @@ class PDFController extends Controller
             ->where('patients.id', $referal->patient_id)
             ->first();
 
-        $data = ['referal'=> $referal, 'patient' => $patient, 'hospital' => $hospital];
+
+        $visit_id = $referal->visit_id;
+
+        $allergies = DB::table('patient_allergies')
+            ->select(DB::raw('*'))
+            ->where('visit_id', $visit_id)
+            ->get();
+
+        $immmunizations = DB::table('patient_immunizations')
+            ->select(DB::raw('*'))
+            ->where('patient_id', $patient->id)
+            ->where('status', 1)
+            ->get();
+
+        $active_problems = DB::table('active_problems')
+            ->select(DB::raw('*'))
+            ->where('patient_id', $patient->id)
+            ->where('status', 1)
+            ->get();
+
+        $family_history = DB::table('family_history')
+            ->select(DB::raw('*'))
+            ->where('patient_id', $patient->id)
+            ->where('status', 1)
+            ->get();
+
+
+        $orders = DB::table('lab_orders')
+            ->select(DB::raw('lab_orders.id,lab_orders.patient_id,labs.name as lab_name'))
+            ->leftJoin('labs', 'labs.id', '=', 'lab_orders.lab')
+            ->where('lab_orders.patient_id', $patient->id)
+            ->where('lab_orders.status', 1)
+            ->get();
+
+
+        $data = ['referal'=> $referal,'patient'=>$patient,'hospital'=>$hospital,'allergies'=>$allergies,'immunizations'=>$immmunizations,'orders'=>$orders,'active_problems'=>$active_problems,'family_history'=>$family_history];
 
         $view = app()->make('view')->make('referal_pdf', $data)->render();
 
@@ -429,7 +464,7 @@ class PDFController extends Controller
 
         })->store('csv');
 
-        $file_path = 'http://demoz.onlin/ehr/storage/exports/patients.csv';
+        $file_path = 'http://localhost/ehr/storage/exports/patients.csv';
 
 
         echo json_encode(array(
@@ -466,7 +501,7 @@ class PDFController extends Controller
 
         })->store('csv');
 
-        $file_path = 'http://demoz.onlin/ehr/storage/exports/nhis.csv';
+        $file_path = 'http://localhost/ehr/storage/exports/nhis.csv';
 
 
         echo json_encode(array(
