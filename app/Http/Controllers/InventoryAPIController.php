@@ -221,7 +221,12 @@ class InventoryAPIController extends Controller
         $limit = $request->input('limit');
         $offset = $request->input('offset');
 
-        if ($offset == 0 && $limit == 0) {
+        if(!isset($limit) && !isset($offset)){
+            $limit = 0;
+            $offset = 0;
+        }
+
+        if ($offset > 0 || $limit > 0) {
             $stock = DB::table('inventory_products')
                 ->select('inventory_products.id as product_id', 'inventory_categories.id as category_id',
                     'inventory_categories.cat_name as category_name',
@@ -233,7 +238,7 @@ class InventoryAPIController extends Controller
                 ->skip($offset)->take($limit)
                 ->get();
 
-            $count = DB::table('inventory_products')
+            $count = count(DB::table('inventory_products')
                 ->select('inventory_products.id as product_id', 'inventory_categories.id as category_id',
                     'inventory_categories.cat_name as category_name',
                     'inventory_products.name as product_name', 'cost_per_item', 'quantity', 'order_quantity', 'inventory_products.reorder_level', 'stock.stock_status')
@@ -241,7 +246,7 @@ class InventoryAPIController extends Controller
                 ->leftJoin('inventory_categories', 'inventory_products.cat_id', '=', 'inventory_categories.id')
                 ->where(['inventory_products.status' => 1])
                 ->groupby('inventory_products.id')
-                ->count();
+                ->get());
         }else{
             $stock = DB::table('inventory_products')
                 ->select('inventory_products.id as product_id', 'inventory_categories.id as category_id',
@@ -251,7 +256,6 @@ class InventoryAPIController extends Controller
                 ->leftJoin('inventory_categories', 'inventory_products.cat_id', '=', 'inventory_categories.id')
                 ->where(['inventory_products.status' => 1])
                 ->groupby('inventory_products.id')
-                ->skip($offset)->take($limit)
                 ->get();
             $count = count($stock);
 
