@@ -1,6 +1,6 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootScope', '$window', '$routeParams', 'GetPatientInfo', 'ClinicalProgressNotesFields', 'GetTemplatesDropDown', 'SetClinicalProgressNotes', 'PatienPrescription', 'GetPrescription', 'GetAllMedications', 'DropDownData', 'CheckoutPatient', 'GetMedicineUnits', 'getTemplateCategory', 'getTemplates', 'getTemplateData', 'ReferralPatient', 'ClinicalReport', 'GetAllWardsDropDown', 'GetBedsByWard', 'Upload', 'AddAttachmentClinical', 'SignOffClinicalProgress', 'CheckClinicalNotesStatus', 'UpdatePatientClinicalNotes', 'GetDiagnosisList', 'getCliTemplateCategory', 'addOrder', 'GetAllPatients', 'GetLabTests', '$timeout', 'DownloadReferral', function($scope, $rootScope, $window, $routeParams, GetPatientInfo, ClinicalProgressNotesFields, GetTemplatesDropDown, SetClinicalProgressNotes, PatienPrescription, GetPrescription, GetAllMedications, DropDownData, CheckoutPatient, GetMedicineUnits, getTemplateCategory, getTemplates, getTemplateData, ReferralPatient, ClinicalReport, GetAllWardsDropDown, GetBedsByWard, Upload, AddAttachmentClinical, SignOffClinicalProgress, CheckClinicalNotesStatus, UpdatePatientClinicalNotes, GetDiagnosisList, getCliTemplateCategory, addOrder, GetAllPatients, GetLabTests, $timeout, DownloadReferral){
+AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootScope', '$window', '$routeParams', 'GetPatientInfo', 'ClinicalProgressNotesFields', 'GetTemplatesDropDown', 'SetClinicalProgressNotes', 'PatienPrescription', 'GetPrescription', 'GetAllMedications', 'DropDownData', 'CheckoutPatient', 'GetMedicineUnits', 'getTemplateCategory', 'getTemplates', 'getTemplateData', 'ReferralPatient', 'ClinicalReport', 'GetAllWardsDropDown', 'GetBedsByWard', 'Upload', 'AddAttachmentClinical', 'SignOffClinicalProgress', 'CheckClinicalNotesStatus', 'UpdatePatientClinicalNotes', 'GetDiagnosisList', 'getCliTemplateCategory', 'addOrder', 'GetAllPatients', 'GetLabTests', '$timeout', 'DownloadReferral', 'GetMedications', function($scope, $rootScope, $window, $routeParams, GetPatientInfo, ClinicalProgressNotesFields, GetTemplatesDropDown, SetClinicalProgressNotes, PatienPrescription, GetPrescription, GetAllMedications, DropDownData, CheckoutPatient, GetMedicineUnits, getTemplateCategory, getTemplates, getTemplateData, ReferralPatient, ClinicalReport, GetAllWardsDropDown, GetBedsByWard, Upload, AddAttachmentClinical, SignOffClinicalProgress, CheckClinicalNotesStatus, UpdatePatientClinicalNotes, GetDiagnosisList, getCliTemplateCategory, addOrder, GetAllPatients, GetLabTests, $timeout, DownloadReferral, GetMedications){
 	$rootScope.pageTitle = "EHR - Clinical Documentation - Clinic Progress Note";
 	$scope.displayInfo = {};
 	$scope.templates = {};
@@ -381,9 +381,10 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
   $scope.buildTempDataUpdate.fields = [];
 	$scope.saveClinicalNotes = function(data, updateTemp){
 		$rootScope.loader = "show";
-    console.log(data, $scope.diagnosis, updateTemp); //return true;
+      var myValues = $('.chosen-select, .nun').chosen().val();
+    console.log(data, myValues, updateTemp); return true;
     if($scope.clinicalNotesID == undefined){
-		  SetClinicalProgressNotes.save({token: $window.sessionStorage.token, value:data, patient_id: $routeParams.patientID, visit_id: $scope.displayInfo.encounter_id, template_id: $scope.tempId, diagnosis: $scope.diagnosis == undefined || $scope.diagnosis.length == 0 ? 0 : "["+$scope.diagnosis+"]" }, saveClinicalSuccess, saveClinicalFailure);
+		  SetClinicalProgressNotes.save({token: $window.sessionStorage.token, value:data, patient_id: $routeParams.patientID, visit_id: $scope.displayInfo.encounter_id, template_id: $scope.tempId, diagnosis: $('.nun').val() == undefined || $scope.diagnosis.length == 0 ? 0 : "["+$scope.diagnosis+"]" }, saveClinicalSuccess, saveClinicalFailure);
     }else {
         /*for(var l = 0; l < $scope.ttemmpp.fields.length; l++){
           $scope.buildTempDataUpdate.fields.push({
@@ -462,6 +463,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 
 		/*PRISCRIPITON*/
     $scope.addMedication = function (checkEdit) {
+      //console.log($('#select_pharmacy option:selected').text());return true;
        var AddMedications = {
            medication: $scope.MedicationData.medication,
            medicationName:  $(".medicationNeme option:selected").text(),
@@ -477,7 +479,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
            sig: $scope.MedicationData.sig,
            dispense: $scope.MedicationData.dispense,
            reffills: $scope.MedicationData.reffills,
-           pharmacy:  $scope.MedicationData.pharmacy,
+           pharmacy:  $('#select_pharmacy option:selected').text(),
            note_of_pharmacy: $scope.MedicationData.note_of_pharmacy,
        }
        $scope.note = $scope.MedicationData.note_of_pharmacy;
@@ -601,10 +603,10 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
           $('#internetError').modal('show');
             console.log(error);
         }
-
+        $('#downloadRef').hide();
         /*CHECKOUT*/
 
-        $scope.checkoutPatient = function (CO) {
+        $scope.checkoutPatient = function (dataToBeAdded) {
           $scope.message = false;
             var CheckoutDetails = {
                 token: $window.sessionStorage.token,
@@ -612,13 +614,14 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
                 patient_id: $routeParams.patientID,
                 reason: $('input:radio[name="checkoutpatient"]:checked').val(),
                 notes: $('.checkout_patient_tab_con > div.active textarea').val() == undefined ? '' : $('.checkout_patient_tab_con > div.active textarea').val(),
-                pick_date: CO.date,
-                pick_time: CO.time,
-                admit_date: $scope.displayInfo.visit_created_at,
-                start_time: CO.time,
-                department_id: CO.department,
-                ward_id: CO.ward,
-                bed_id: $scope.bedNumber
+                pick_date: dataToBeAdded.date == undefined ? dataToBeAdded.discharge : dataToBeAdded.date,
+                pick_time: dataToBeAdded.time == undefined ? '' : dataToBeAdded.time,
+                admit_date: $scope.admittedDate == undefined ? '' : $scope.admittedDate,
+                start_time: dataToBeAdded.time == undefined ? '' : dataToBeAdded.time,
+                department_id: dataToBeAdded.CPN == undefined ? '' : dataToBeAdded.CPN,
+                ward_id: dataToBeAdded.ward == undefined ? '' : dataToBeAdded.ward,
+                bed_id: $scope.CO.bedNumber == undefined ? '' : $scope.CO.bedNumber,
+                expected_discharge_date: dataToBeAdded.discharge == undefined ? '': dataToBeAdded.discharge
             }
             $rootScope.loader = "show";
             CheckoutPatient.save(CheckoutDetails, checkoutSuccess, checkoutSuccessFailure);
@@ -645,6 +648,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
             }
         }
         function  checkoutSuccessFailure(res) {
+          $rootScope.loader = "hide";
           $('#internetError').modal('show');
           console.log(res)
         }
@@ -682,6 +686,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
           console.log(res);
           if(res.status == true){
             //$scope.referral = {};
+            $('#downloadRef').show();
             $scope.referralID = res.referal_id;
             console.log($scope.referralID, 'referal id');
             $scope.referral.type = "internal";
@@ -1035,5 +1040,17 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
         $('#downloadRef').attr('download', true);
         //$scope.downloadReferralLink = res.data;
       }
+    }
+
+    $scope.medicationByPharmacy = function(pharmacyID){
+        GetMedications.save({token: $window.sessionStorage.token,  pharmacy_id: pharmacyID}, getMediSuccess, getMediFailure);
+    }
+    function getMediSuccess(res) {
+        console.log(res, "drugs")
+       $scope.getDrugs = res.data;
+    }
+    function getMediFailure(res) {
+        console.log(res);
+        $('#internetError').modal('show');
     }
 }]);

@@ -335,7 +335,7 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', '$routeParams', '$wi
             console.log(error);
         }
 
-    $scope.checkoutPatient = function (CO) {
+    $scope.checkoutPatient = function (dataToBeAdded) {
         $scope.message = false;
         var CheckoutDetails = {
             token: $window.sessionStorage.token,
@@ -343,13 +343,14 @@ AppEHR.controller('labTestReport', ['$scope', '$rootScope', '$routeParams', '$wi
             patient_id: $scope.labTest.patient_id,
             reason: $('input:radio[name="checkoutpatient"]:checked').val(),
             notes: $('.checkout_patient_tab_con > div.active textarea').val() == undefined ? '' : $('.checkout_patient_tab_con > div.active textarea').val(),
-            pick_date: CO.date,
-            pick_time: CO.time,
-            admit_date: '2016-08-08',//$scope.displayInfo.visit_created_at,
-            start_time: CO.time,
-            department_id: CO.department,
-            ward_id: CO.ward,
-            bed_id: $scope.bedNumber
+            pick_date: dataToBeAdded.date == undefined ? dataToBeAdded.discharge : dataToBeAdded.date,
+            pick_time: dataToBeAdded.time == undefined ? '' : dataToBeAdded.time,
+            admit_date: $scope.admittedDate == undefined ? '' : $scope.admittedDate,
+            start_time: dataToBeAdded.time == undefined ? '' : dataToBeAdded.time,
+            department_id: dataToBeAdded.CPN == undefined ? '' : dataToBeAdded.CPN,
+            ward_id: dataToBeAdded.ward == undefined ? '' : dataToBeAdded.ward,
+            bed_id: $scope.CO.bedNumber == undefined ? '' : $scope.CO.bedNumber,
+            expected_discharge_date: dataToBeAdded.discharge == undefined ? '': dataToBeAdded.discharge
         }
         console.log(CheckoutDetails);
         $rootScope.loader = "show";

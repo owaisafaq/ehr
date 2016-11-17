@@ -1416,7 +1416,7 @@
                             </div>
                                 </div>
                             <div class="margin-bottom-xxl row">
-                            <div class="col-lg-3">
+                            <!-- <div class="col-lg-3">
                                 <label>to specialty</label>
                             </div>
                             <div class="col-lg-3 select-con">
@@ -1424,7 +1424,7 @@
                                     <option value=""></option>
                                 <option value="{{w.id}}" ng-repeat="w in encountersDropdownData.departments">{{w.name}}</option>
                                 </select>
-                            </div>
+                            </div> -->
                             <div class="col-lg-3">
                                 <label>admit to ward</label>
                             </div><!-- ng-class="{true: 'error'}[submitted && moveForm.ward.$invalid]"  -->
@@ -1576,8 +1576,8 @@
                 </div> -->
             </div>
             <div class="modal-footer">
-                <button type="submit" ng-click="submitted=true" class="btn btn-default button-style-1">Add</button>
-                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">Cancel</button>
+                <button type="submit" ng-click="submitted=true" class="btn btn-default button-style-1" ng-disabled="disabledPatientRegButton || {true: true}[Preg.patientname.$invalid]">Add</button>
+                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal" ng-click="disabledPatientRegButton = false; patientBillID = ''">Cancel</button>
             </div>
             </form>
         </div><!-- /.modal-content -->
