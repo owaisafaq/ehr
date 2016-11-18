@@ -3768,6 +3768,17 @@ Pagination
 .chosen-styling #autoship_option option:active,.chosen-styling #autoship_option option:focus,.chosen-styling #autoship_option option:checked{
     background: #e9ecf4 !important;
 }
+.chosen-styling #autoship_option2{
+    margin-top: 5px;
+    border: 1px solid #e8ebed;
+    padding: 5px;
+}
+.chosen-styling #autoship_option2 option{
+    margin-bottom: 5px;
+}
+.chosen-styling #autoship_option option:active,.chosen-styling #autoship_option2 option:focus,.chosen-styling #autoship_option2 option:checked{
+    background: #e9ecf4 !important;
+}
 .chosen-styling .select2-container-multi .select2-choices .select2-search-field input{
     width: 140px !important;
     border: 1px solid #e8ebed;

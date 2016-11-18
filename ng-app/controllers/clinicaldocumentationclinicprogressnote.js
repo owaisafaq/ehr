@@ -81,7 +81,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 	function getPatientSuccess(res){
 		if(res.status == true){
 			$scope.displayInfo.first_name = res.data.first_name;
-                        $scope.displayInfo.last_name = res.data.last_name;
+      $scope.displayInfo.last_name = res.data.last_name;
 			$scope.displayInfo.id = res.data.id;
 			$scope.displayInfo.patient_id = res.data.id;
 			$scope.displayInfo.age = res.data.age;
@@ -100,10 +100,10 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 		}
 	}
   function checkClinicalStatusSuccess(res){
-      //console.log(res);
+      console.log(res);
       if(res.status == true && res.data.length > 0){
-          //console.log(res)
-          //console.log("res")
+        //console.log(res)
+        //console.log("res")
         $scope.doUpdate = true;
         $scope.tid = res.template_id;
         $scope.cid = res.category_id;
@@ -168,7 +168,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
           $(".addSchema fieldset").ready(function(){
             //console.log("diag index",diagnosisIndexV);
             //$scope.renderedTemplate.fields.splice($scope.diagnosisIndexV, 1);/*ng-class="/{true: 'disabled-fields'}/" [is_signoff == 1]*/
-            var extraField = "<div class='row'><label style='padding-left: 24px;' ng-class='is_signoff == 1 ? disabled-fields : disabled-fields11 ' class='col-lg-2'>Diagnosis</label><div class='col-lg-9 chosen-styling margin-0'><select class='chosen-select nun' ng-model='diagnosis' multiple data-placeholder='Choose Diagnosis' style='width:100%;display:none!important' id='autoship_option'></select></div></div>";
+            var extraField = "<div class='row diagnosisClassFade'><label style='padding-left: 24px;' ng-class='is_signoff == 1 ? disabled-fields : disabled-fields11 ' class='col-lg-2'>Diagnosis</label><div class='col-lg-9 chosen-styling margin-0'><select class='chosen-select nun' ng-model='diagnosis' multiple data-placeholder='Choose Diagnosis' style='width:100%;display:none!important' id='autoship_option'></select></div></div>";
             setTimeout(function() { 
               if(diagnosisIndexV == 0){
                 $(".addSchema fieldset > div:nth-child(" + (diagnosisIndexV+1) + ")").before(extraField);
@@ -272,12 +272,14 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
           $(".chosen-select").val('').trigger("chosen:updated");
           $('.chosen-select').prop('selected', false).trigger('chosen:updated');
           //$('.chosen-select').chosen();
+          $(".diagnosisFieldEdit").hide();
           for (var key in templateCl.fields) {
                 if(templateCl.fields[i].displayName == 'Diagnosis'){
                   $scope.getDiagnosis();
                   console.log("got diagnosis");
                   $scope.lengthError = true;
                   $scope.diagnosisIndexC = i;
+                  $('.diagnosisClassFade').hide();
                   /*console.log('hola!',$scope.diagnosis);
                   $scope.diagnosis = [];
                   console.log('hola!',$scope.diagnosis);*/
@@ -296,13 +298,11 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
             $(".editSchema fieldset").ready(function(){
               //console.log("diag index",diagnosisIndexC);
               //$scope.renderedTemplate.fields.splice($scope.diagnosisIndexC, 1);/*ng-class="/{true: 'disabled-fields'}/" [is_signoff == 1]*/
-              
-
-              var extraField = "<div class='row'><label style='padding-left: 24px;' ng-class='is_signoff == 1 ? disabled-fields : disabled-fields11 ' class='col-lg-2'>Diagnosis</label><div class='col-lg-9 chosen-styling margin-0'><select class='chosen-select nun' ng-model='diagnosis' multiple data-placeholder='Choose Diagnosis' style='width:100%;display:none!important' id='autoship_option'></select></div></div>";
+              var extraField = "<div class='row diagnosisFieldEdit'><label style='padding-left: 24px;' ng-class='is_signoff == 1 ? disabled-fields : disabled-fields11 ' class='col-lg-2'>Diagnosis </label><div class='col-lg-9 chosen-styling margin-0' style='padding-left: 24px;'><select class='chosen-select nun' ng-model='diagnosis' multiple data-placeholder='Choose Diagnosis' style='width:100%;display:none!important' id='autoship_option'></select></div></div>";
 
               setTimeout(function() { 
                 if($scope.diagnosisIndexC == 0){
-                  $(".editSchema fieldset > div:nth-child(" + ($scope.diagnosisIndexC+1) + ")").before(extraField); 
+                  $(".editSchema fieldset > div:nth-child(" + ($scope.diagnosisIndexC+1) + ")").before(extraField);
                   $scope.getDiagnosis();
                 }else if($scope.diagnosisIndexC > 0){
                   $(".editSchema fieldset > div:nth-child(" + ($scope.diagnosisIndexC) + ")").after(extraField); 
@@ -349,7 +349,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 
               setTimeout(function() { 
                 if($scope.diagnosisIndexE == 0){
-                  $(".editSchema fieldset > div:nth-child(" + ($scope.diagnosisIndexE+1) + ")").before(extraField); 
+                  $(".addSchema fieldset > div:nth-child(" + ($scope.diagnosisIndexE+1) + ")").before(extraField); 
                   $scope.getDiagnosis();
                 }else if($scope.diagnosisIndexE > 0){
                   $(".addSchema fieldset > div:nth-child(" + ($scope.diagnosisIndexE) + ")").after(extraField); 
@@ -381,11 +381,15 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
   $scope.buildTempDataUpdate.fields = [];
 	$scope.saveClinicalNotes = function(data, updateTemp){
 		$rootScope.loader = "show";
-      var myValues = $('.chosen-select, .nun').chosen().val();
-    console.log(data, myValues, updateTemp); return true;
+     //$scope.diagnosis;
+     //return true;
     if($scope.clinicalNotesID == undefined){
-		  SetClinicalProgressNotes.save({token: $window.sessionStorage.token, value:data, patient_id: $routeParams.patientID, visit_id: $scope.displayInfo.encounter_id, template_id: $scope.tempId, diagnosis: $('.nun').val() == undefined || $scope.diagnosis.length == 0 ? 0 : "["+$scope.diagnosis+"]" }, saveClinicalSuccess, saveClinicalFailure);
+      var myValues = $("#autoship_option").val();
+      console.log(/*data, */myValues, updateTemp);
+		  SetClinicalProgressNotes.save({token: $window.sessionStorage.token, value:data, patient_id: $routeParams.patientID, visit_id: $scope.displayInfo.encounter_id, template_id: $scope.tempId, diagnosis: myValues == undefined || myValues.length == 0 ? 0 : "["+myValues+"]" }, saveClinicalSuccess, saveClinicalFailure);
     }else {
+      var myValues = $("#autoship_option").val();
+      console.log(/*data, */myValues, updateTemp);
         /*for(var l = 0; l < $scope.ttemmpp.fields.length; l++){
           $scope.buildTempDataUpdate.fields.push({
             "displayName": $scope.ttemmpp.fields[l].displayName,
@@ -399,11 +403,11 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
         }
         console.log($scope.buildTempDataUpdate.fields);
         return true;*/
-          var uniqueNames = [];
-          $.each($scope.diagnosis, function(i, el){
+          /*var uniqueNames = [];
+          $.each(myValues, function(i, el){
               if($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
           });
-          console.log(uniqueNames);
+          console.log(uniqueNames);*/
         UpdatePatientClinicalNotes.save({
           token: $window.sessionStorage.token,
           clinical_notes_id: $scope.clinicalNotesID,
@@ -411,7 +415,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
           visit_id: $scope.displayInfo.encounter_id,
           template_id: $scope.tempId == undefined ? $scope.tid : $scope.tempId,
           value: $scope.newTemp == true ? updateTemp : data,
-          diagnosis: $scope.diagnosis == undefined || $scope.diagnosis.length == 0 ? 0 : "["+uniqueNames+"]"
+          diagnosis: myValues == undefined || myValues.length == 0 ? 0 : "["+myValues+"]"
         }, updateClinicalNotesSuccess, updateClinicalNotesFailure);
     }
 
@@ -839,11 +843,15 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
           $('.chosen-select').append($("<option></option>").attr("value",value.id).text(value.name+" "+value.code));
           //$scope.icd10.push({"value": value.id, "name": value.name});
         })
+
         $(".chosen-select").css('display', "block");
         $scope.diagnosis_id = 1;
         if($scope.doUpdate == true){
           console.log('in or out');
-          $(".chosen-select").val($scope.diagnosis); 
+          //$(".chosen-select").val(["1","2"]);
+          $("#autoship_option").val($scope.diagnosis);
+          $(".chosen-select").val($("#autoship_option").val());
+          //console.log($('.chosen-select').chosen());
           $('.default,.chosen-container').hide();
         }else{
           if($scope.lengthError == true) $('.chosen-select').chosen();
