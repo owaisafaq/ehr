@@ -153,7 +153,7 @@ class CheckRoles
                     ->where($right,1)
                     ->where('type', $type_id)
                     ->get();
-            } elseif ((strpos($method_name,'template') && $method_name!='get_template' && $method_name!='delete_template') !== false || strpos($method_name,'lab_template') !== false) {
+            } elseif ((strpos($method_name,'template') !== false) || strpos($method_name,'lab_template') !== false) {
                 if ($request->has('template_type')) {
                     $type_id = $request->template_type;
                 } elseif ($request->has('template_id')) {
@@ -162,10 +162,9 @@ class CheckRoles
                         ->where('id',$request->template_id)
                         ->first();
                     $cat_id = $category->category_id;
-
                     $type = DB::table('template_categories')
                         ->select(DB::raw('template_type'))
-                        ->where('id',$request->$cat_id)
+                        ->where('id',$cat_id)
                         ->first();
                     $type_id = $type->template_type;
 

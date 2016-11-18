@@ -31,6 +31,7 @@ class BillingController extends Controller
                 ->leftJoin('patients', 'patients.id', '=', 'billing.patient_id')
                 ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.hospital_plan')
                 ->where('billing.status', 1)
+                ->orderBy('billing.id','desc')
                 ->skip($offset)->take($limit)
                 ->get();
             $count = DB::table('billing')
@@ -39,6 +40,7 @@ class BillingController extends Controller
                 ->leftJoin('patients', 'patients.id', '=', 'billing.patient_id')
                 ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.hospital_plan')
                 ->where('billing.status', 1)
+                ->orderBy('billing.id','desc')
                 ->count();
         } else {
             $bills = DB::table('billing')
@@ -47,6 +49,7 @@ class BillingController extends Controller
                 ->leftJoin('patients', 'patients.id', '=', 'billing.patient_id')
                 ->leftJoin('hospital_plan', 'hospital_plan.id', '=', 'patients.hospital_plan')
                 ->where('billing.status', 1)
+                ->orderBy('billing.id','desc')
                 ->get();
 
             $count = count($bills);
@@ -197,8 +200,6 @@ class BillingController extends Controller
     public function get_all_invoices(Request $request)
     {
         $bill_id = $request->input('bill_id');
-        //$bill_id = 7;
-
         $limit = $request->input('limit');
         $offset = $request->input('offset');
         if ($offset > 0 || $limit > 0) {
@@ -209,6 +210,7 @@ class BillingController extends Controller
                 ->where('invoice.bill_id', $bill_id)
                 ->where('invoice.status', 1)
                 ->where('patients.status', 1)
+                ->orderBy('invoice.id', 'desc')
                 ->skip($offset)->take($limit)
                 ->get();
 
@@ -219,6 +221,7 @@ class BillingController extends Controller
                 ->where('invoice.bill_id', $bill_id)
                 ->where('invoice.status', 1)
                 ->where('patients.status', 1)
+                ->orderBy('invoice.id', 'desc')
                 ->count();
         }else{
             $bills = DB::table('invoice')
@@ -228,6 +231,7 @@ class BillingController extends Controller
                 ->where('invoice.bill_id', $bill_id)
                 ->where('invoice.status', 1)
                 ->where('patients.status', 1)
+                ->orderBy('invoice.id', 'desc')
                 ->get();
             $count = count($bills);
         }
