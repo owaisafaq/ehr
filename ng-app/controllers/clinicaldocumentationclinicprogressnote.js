@@ -389,6 +389,7 @@ AppEHR.controller('clinicalDocumentationClinicProgressNote', ['$scope', '$rootSc
 		  SetClinicalProgressNotes.save({token: $window.sessionStorage.token, value:data, patient_id: $routeParams.patientID, visit_id: $scope.displayInfo.encounter_id, template_id: $scope.tempId, diagnosis: myValues == undefined || myValues.length == 0 ? 0 : "["+myValues+"]" }, saveClinicalSuccess, saveClinicalFailure);
     }else {
       var myValues = $("#autoship_option").val();
+      //$('.diagnosisFieldEdit').();
       console.log(/*data, */myValues, updateTemp);
         /*for(var l = 0; l < $scope.ttemmpp.fields.length; l++){
           $scope.buildTempDataUpdate.fields.push({

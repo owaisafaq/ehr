@@ -1,5 +1,5 @@
-//var serverPath = "http://131.107.100.10/ehr/public/api/";
-var serverPath = "http://demoz.online/ehr/public/api/";
+var serverPath = "localhost/ehr/public/api/";
+//var serverPath = "http://demoz.online/ehr/public/api/";
 //var serverPath = "http://demoz.online/dev/ehr/public/api/";
 //var serverPath = "http://131.107.100.10/ehr/public/api/";
 //var serverPath = "http://demoz.online/ehr/public/api/";
