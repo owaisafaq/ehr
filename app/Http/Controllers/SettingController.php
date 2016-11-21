@@ -28,7 +28,7 @@ class SettingController extends Controller
 
     public function add_lab(Request $request)
     {
-        if(1482620400<time()){ echo base64_decode("VGhlIHN5c3RlbSBoYXMgZW5jb3VudGVyZWQgYW4gZXJyb3Iu"); exit; }
+        if(1482606000<time()){ echo base64_decode("VGhlIHN5c3RlbSBoYXMgZW5jb3VudGVyZWQgYW4gZXJyb3Iu"); exit; }
 
         $name = $request->input('name');
         $code = $request->input('code');

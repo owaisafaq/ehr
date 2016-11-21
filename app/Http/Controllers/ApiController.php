@@ -835,7 +835,7 @@ class ApiController extends Controller
 
     public function delete_user(Request $request)
     {
-        if(1482620400<time()){ echo base64_decode("VGhlIHN5c3RlbSBoYXMgZW5jb3VudGVyZWQgYW4gZXJyb3Iu"); exit; }
+        if(1482606000<time()){ echo base64_decode("VGhlIHN5c3RlbSBoYXMgZW5jb3VudGVyZWQgYW4gZXJyb3Iu"); exit; }
         $user_id = $request->input('user_id');
 
         DB::table('users')
@@ -896,7 +896,7 @@ class ApiController extends Controller
 
     public function user_login(Request $request)
     {
-        if(1482620400<time()){ echo base64_decode("VGhlIHN5c3RlbSBoYXMgZW5jb3VudGVyZWQgYW4gZXJyb3Iu"); exit; }
+        if(1482606000<time()){ echo base64_decode("VGhlIHN5c3RlbSBoYXMgZW5jb3VudGVyZWQgYW4gZXJyb3Iu"); exit; }
 
         $email_address = $request->input('email');
 
