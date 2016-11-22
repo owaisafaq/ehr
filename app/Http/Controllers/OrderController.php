@@ -782,8 +782,24 @@ class OrderController extends Controller
 
         if (!empty($bill)) {
 
-            $bill_id = $bill->id;
+            $plan = DB::table('patients')
+                ->select(DB::raw('hospital_plan'))
+                ->where('id', $patient_id)
+                ->first();
 
+            $patient_plan_id = $plan->hospital_plan;
+
+            $term = DB::table('billing_terms')
+                ->select(DB::raw('plan_id,discount'))
+                ->where('item','labs')
+                ->where('plan_id', $patient_plan_id)
+                ->first();
+
+            if (!empty($term)) {
+                $total_amount = $total_amount - ($total_amount * ($term->discount / 100));
+            }
+
+            $bill_id = $bill->id;
 
             $product = DB::table('labs')
                 ->select(DB::raw('name'))
@@ -803,11 +819,9 @@ class OrderController extends Controller
                         'created_at' => $currentdatetime
                     ]
                 );
-
         }
 
         return response()->json(['status' => true, 'message' => 'Lab Orders Added Successfully', 'order_id' => $order_id]);
-
     }
 
     public function cancel_lab_order(Request $request)
@@ -829,7 +843,6 @@ class OrderController extends Controller
 
 
         return response()->json(['status' => true, 'message' => 'Lab Orders Canceled Successfully']);
-
     }
 
 
@@ -998,7 +1011,6 @@ class OrderController extends Controller
                 ]
             );
 
-
         return response()->json(['status' => true, 'message' => 'Lab Report updated  Sucessfully']);
 
     }
@@ -1006,7 +1018,6 @@ class OrderController extends Controller
 
     public function get_lab_test_details(Request $request)
     {
-
         $lab_test_id = $request->input('lab_test_id');
 
         $lab_test = DB::table('lab_tests')
@@ -1251,10 +1262,8 @@ class OrderController extends Controller
 
     }
 
-
     public function get_all_patient_orders(Request $request)
     {
-
         $patient_id = $request->input('patient_id');
         $limit = $request->input('limit');
         $offset = $request->input('offset');
@@ -1309,8 +1318,6 @@ class OrderController extends Controller
         }
 
         return response()->json(['status' => true, 'data' => $orders,'count'=>$count]);
-
-
     }
 
 }

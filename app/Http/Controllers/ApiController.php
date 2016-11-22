@@ -3721,6 +3721,23 @@ class ApiController extends Controller
 
         if (!empty($bill)) {
 
+            $plan = DB::table('patients')
+                ->select(DB::raw('hospital_plan'))
+                ->where('id', $patient_id)
+                ->first();
+
+            $patient_plan_id = $plan->hospital_plan;
+
+            $term = DB::table('billing_terms')
+                ->select(DB::raw('plan_id,discount'))
+                ->where('item','pharmacy_prescription')
+                ->where('plan_id',$patient_plan_id)
+                ->first();
+
+            if (!empty($term)) {
+                $total_amount = $total_amount-($total_amount * ($term->discount / 100));
+            }
+
             $bill_id = $bill->id;
 
             DB::table('invoice')
@@ -3738,13 +3755,10 @@ class ApiController extends Controller
         }
 
         return response()->json(['status' => true, 'message' => 'Prescrpition Added Successfully']);
-
-
     }
 
     public function update_patient_prescription(Request $request)
     {
-
         $prescribe_medication_id = $request->input('prescribe_medication_id');
         $prescription_id = $request->input('precription_id');
         $note_for_pharmacy = $request->input('note_for_pharmacy');
@@ -3805,13 +3819,32 @@ class ApiController extends Controller
 
 
         $bill = DB::table('billing')
-            ->select(DB::raw('id'))
-            ->where('encounter_id', $visit_id)
+            ->select(DB::raw('*'))
+            ->where('encounter_id',$visit_id)
             ->where('status', 1)
             ->first();
 
         if (!empty($bill)) {
             $bill_id = $bill->id;
+            $patient_id = $bill->patient_id;
+
+            $plan = DB::table('patients')
+                ->select(DB::raw('hospital_plan'))
+                ->where('id', $patient_id)
+                ->first();
+
+            $patient_plan_id = $plan->hospital_plan;
+
+            $term = DB::table('billing_terms')
+                ->select(DB::raw('plan_id,discount'))
+                ->where('item', 'pharmacy_prescription')
+                ->where('plan_id', $patient_plan_id)
+                ->first();
+
+            if (!empty($term)) {
+                $total_amount = $total_amount - ($total_amount * ($term->discount/100));
+            }
+
             DB::table('invoice')
                 ->where('bill_id',$bill_id)
                 ->where('description','LIKE',"Prescription%")
@@ -3824,9 +3857,7 @@ class ApiController extends Controller
                 );
         }
 
-
         return response()->json(['status' => true, 'message' => 'Prescrpition Updated Successfully']);
-
 
     }
 
