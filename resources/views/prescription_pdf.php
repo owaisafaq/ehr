@@ -183,7 +183,7 @@
                         <td style="padding: 30px 0 5px;">
                             <h3 style="font-size: 13px;color: #1a1a1a;">Note</h3>
                         </td>
-                        </tr>
+                    </tr>
                     <tr>
                         <td style="padding-bottom: 30px; border-bottom: 1px solid #ebebeb;">
                             <p style="font-size: 13px; line-height: 20px; color: #999999;"><?php echo $prescription_notes->note_for_pharmacy?></p>
