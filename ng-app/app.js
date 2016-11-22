@@ -566,7 +566,7 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
     }
     if($window.sessionStorage.roles != undefined)
         $rootScope.ROLES = JSON.parse($window.sessionStorage.roles);
-    console.log($rootScope.ROLES);
+        console.log($rootScope.ROLES);
     $rootScope.RolesAccess = function(msg){
         if(!$('#rolesAccess').hasClass('in')){
             $rootScope.rolesAccessMsg = msg;
@@ -599,7 +599,7 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
                                         response($.map(patients.data, function (value, key) {
                                             return {
                                                 label: value.first_name == "" || value.first_name == undefined ? "No patient found" : value.first_name + " " + value.last_name,
-                                                value: value.id == "" ? '0' : value.id
+                                                value: value.patient_id == "" ? '0' : value.patient_id
                                             }
                                         }));
                                         patients.data = [];
@@ -623,6 +623,9 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
                                     }else{
                                         $('#autocomplete2').val(ui.item.label);
                                         var selectId = ui.item.value;
+                                        console.log(ui.item.value, ui.item.label);
+                                       //$rootScope.searchPatientForEncounterModal = ui.item.value +" - "+ ui.item.label;
+                                        $("#findPatientEncounterHeader").val(ui.item.value +" - "+ ui.item.label);
                                         //$rootScope.HEADERSEARCHPATIENTID = selectId;
                                         getter(selectId);
                                         $('.headerWithSwitchingImages').removeClass('ng-hide');
@@ -659,9 +662,14 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
     
     $rootScope.encounterHeaderBar = function(){
         //console.log('ookok');
+
         $rootScope.headerHideLoader = "hide";
         $rootScope.encounterHeaderSearchBar = false;
-        $('.create_counter_header').removeClass('hide');
+        $('.headerEncounter').removeClass('hide');
+        $('.headerEncounter').removeClass('ng-hide');
+        $('.headerEncounter').removeClass('show');
+        $('.headerEncounter > .counter_pop').css('display', "block");
+        //$('.create_counter_header').addClass('show');
         DropDownData.get({token: $window.sessionStorage.token, patient_id: $window.sessionStorage.patient_id}, dropDownSuccess, dropDownFailed);
         function dropDownSuccess(res){
             if(res.status == true){
@@ -674,9 +682,55 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
         }
     }
     $rootScope.dismissHeaderEncounterModal = function(){
-        $('.create_counter_header').addClass('hide');
+        $('.headerEncounter').addClass('hide');
+        $('.headerEncounter > .counter_pop').css('display', "none");
+        $('.headerWithSwitchingImages').addClass('hide');
         //$rootScope.encounterHeaderSearchBar = true;
     }
+    $('#findPatientEncounterHeader').on('input', function(){
+        var input = $('#findPatientEncounterHeader').val();
+        if(input != undefined || input != ''){
+            if(input.length == 0){
+                $('.headerWithSwitchingImages').addClass('ng-hide');
+                $('.headerWithSwitchingImages1').removeClass('ng-hide');
+            }else{
+                $.ajax({
+                    url: serverPath + "search_patient_without_encounters",
+                    dataType: "json",
+                    type: "POST",
+                    delay: 500,
+                    minLength: 2,
+                    data: {name: input, token: $window.sessionStorage.token},
+                    success: function (patients) {
+                        $("#findPatientEncounterHeader").autocomplete({
+                            source: function (request, response) {
+                                if(patients.status == true){
+                                    response($.map(patients.data, function (value, key) {
+                                        return {
+                                            label: value.first_name == "" || value.first_name == undefined ? "No patient found" : value.patient_id + " - " + value.first_name + " " + value.last_name,
+                                            value: value.patient_id == "" ? '0' : value.patient_id
+                                        }
+                                    }));
+                                    patients.data = [];
+                                }else{
+                                    response({label:"No Patient Found"});
+                                    patients.data = [];
+                                }
+                            },
+                            select: function(event, ui) {
+                                $('#findPatientEncounterHeader').val(ui.item.label);
+                                console.log(ui.item.label);
+                                $scope.addEncounter.appointmentSearch = ui.item.label;
+                                $scope.selectedPatientIDForEncounter = $scope.addEncounter.appointmentSearch.split(' - ');
+                                $scope.addEncounter.selectedPatientID = $scope.selectedPatientIDForEncounter[0];
+                                return false;
+                            }
+                        });
+                    }
+                });
+            }
+        }
+    });
     $rootScope.headerEncounterAdd = function(addEncounter){
         $rootScope.headerHideLoader = "show";
         $rootScope.addEncounter = {};
@@ -686,7 +740,7 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
             patient_id: $rootScope.HEADERSEARCHPATIENTID,
             department_id: addEncounter.department,
             encounter_class: addEncounter.class == undefined ? '' : addEncounter.class,
-            encounter_type: addEncounter.type,
+            encounter_type: addEncounter.type == undefined ? '' : addEncounter.type,
             reason_of_visit: addEncounter.describeWTS == undefined ? '' : addEncounter.describeWTS,
             whom_to_see: addEncounter.wts == undefined ? '' : addEncounter.wts,
             decscribe_whom_to_see : addEncounter.describeWTS == undefined ? '' : addEncounter.describeWTS
@@ -700,15 +754,22 @@ AppEHR.run(function ($rootScope, $location, $window, AddEncounter, DropDownData,
                 $rootScope.headerErrorSymbol = "fa fa-check";// 
                 $rootScope.headerMessage = true;
                 $rootScope.headerSubmitted = false;
-                $rootScope.secondOptionsEnable = true;
+                //$rootScope.secondOptionsEnable = true;
+                $('.headerWithSwitchingImages').addClass('hide');
+                //$('.headerWithSwitchingImages').addClass('show');
                 $('#autocomplete2').val('');
                 //$window.location.href = "#/new-encounter-encounter-list/"+res.visit_id+"/"+$rootScope.HEADERSEARCHPATIENTID;
                 $timeout(function(){
                     $rootScope.headerMessage = false;
-                    $rootScope.secondOptionsEnable = true;
+                    //$rootScope.secondOptionsEnable = true;
                     $rootScope.encounterHeaderSearchBar = true;
                     $('.create_counter_header').addClass('hide');
+                    $('.headerEncounter').removeClass('hide');
+                    $('.headerEncounter').removeClass('ng-hide');
+                    $('.headerEncounter > .counter_pop').css('display', "none");
                 }, 2000);
+                //console.log($rootScope.secondOptionsEnable, "----");
+                //$rootScope.secondOptionsEnable = true;
             }else if(res.error_code == 500){
                 console.log(res);
                 $rootScope.RolesAccess(res.message);

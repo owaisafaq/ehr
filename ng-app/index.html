@@ -48,7 +48,7 @@
                         <a href="javascript:;" class="white-btn disabled-header-option headerleftOptions"><img src="assets/img/report_icn.png" /></a>
                     </div>
                     <div class="headerbar-left headerWithSwitchingImages" ng-hide="secondOptionsEnable">
-                        <a href="#/patient-registration" ng-click="loadView(PI);" class="white-btn"><img src="assets/img/add_person.png" /></a>
+                        <a href="#/patient-registration" ng-click="loadView(PI);" class="white-btn"><img src="assets/img/add_person.png"/></a>
                         <a href="javascript:;" class="white-btn headerleftOptions" ng-click="encounterHeaderBar()"><img src="assets/img/heart_plus.png" /></a>
                         <a href="javascript:;" class="white-btn headerleftOptions" ng-click="billingheaderBar();"><img src="assets/img/content_icn_white_2.png" /></a>
                         <a href="javascript:;" class="white-btn headerleftOptions" ng-click="medicalHistoryheaderBar();"><img src="assets/img/report_icn.png" /></a>
@@ -272,7 +272,7 @@
             </div><!--end #menubar-->
             <!-- END MENUBAR -->
             <!-- ENCOUNTER MODAL ng-hide="encounterHeaderSearchBar"-->
-            <div class="create_counter_header hide">
+            <div class="create_counter_header headerEncounter hide">
                 <div class="counter_pop counter_pop2 custom_popup">
                     <div class="pop_head col-lg-12">
                         <h2 class="">Create New Encounter</h2> 
@@ -282,6 +282,9 @@
                             <i class="{{headerErrorSymbol}}"></i> {{headerErrorMessage}}
                         </div>
                         <form class="custom-form" name="encounterForm" ng-model="myForm" novalidate ng-submit="headerEncounterAdd(addEncounter);" >
+                            <div class="col-lg-12">
+                                <input class="search_field" type="text" ng-model="addEncounter.selectedPatientID" placeholder="Search by Name or Patient Id" id="findPatientEncounterHeader" data-source="{{PatientSearch}}search_patient_without_encounters" ng-disabled="true">
+                            </div>
                             <div class="col-lg-6">
                                 <label>clinic facility / Dept</label>
                             </div>
@@ -326,24 +329,22 @@
                                 <p class="help-block PIValid" ng-show="headerSubmitted && encounterForm.type.$error.required">Required</p>
                             </div>
 
-                            <div class="col-lg-6">
+                            <!-- <div class="col-lg-6">
                                 <label>whom to see</label>
                             </div>
                             <div class="col-lg-6">
                                 <select class="form-control" ng-class="{true: 'error'}[headerSubmitted && encounterForm.wts.$invalid]" name="wts" ng-model="addEncounter.wts" placeholder="Select whom to see" required>
                                     <option value=""></option>
                                     <option ng-repeat="wts in headerEncountersDropdownData.doctors" value="{{wts.id}}">{{wts.name}}</option>
-                                    <!-- <option value="1">1</option>
-                                    <option value="2">2</option> -->
                                 </select>
                                 <p class="help-block PIValid" ng-show="headerSubmitted && encounterForm.wts.$error.required">Required</p>
-                            </div> 
-                            <div class="col-lg-6">
+                            </div>  -->
+                            <!-- <div class="col-lg-6">
                                 <label>Reason of visit</label>
                             </div>
                             <div class="col-lg-6">
                                 <textarea  ng-model="addEncounter.describeWTS"></textarea>
-                            </div> 
+                            </div>  -->
 
                             <div class="col-lg-12">
                                 <div class="pull-right">

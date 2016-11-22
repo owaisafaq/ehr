@@ -1944,12 +1944,15 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         }
         $scope.myChannel = {
             // the fields below are all optional
-            videoHeight: 800,
+            videoHeight: 500,
             videoWidth: 600,
             video: null // Will reference the video element on success
         };
         $scope.onError = function (err) {
-            console.log(err, "webcam error");
+            if(err.name == "DevicesNotFoundError"){
+                console.log(err, "webcam error");
+                $scope.WebcamDeviceError = "Device Not Found";
+            }
         };
         $scope.onStream = function (stream) {
             console.log(stream, "webcam stream");
