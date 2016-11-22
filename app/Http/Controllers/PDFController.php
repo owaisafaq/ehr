@@ -283,6 +283,8 @@ class PDFController extends Controller
 
         $prescription_id = $request->input('prescription_id');
 
+        $logo_image = url('/') . '/uploaded_images/';
+
         $hospital = DB::table('hospital')
             ->select(DB::raw('id,name,CONCAT("' . $logo_image . '",image) as hospital_image,address,type,city,website,phone'))
             ->first();
@@ -292,8 +294,6 @@ class PDFController extends Controller
             ->select('medication', 'supplements', 'sig','dispense','reffills','pharmacy')
             ->where('patient_prescription.id', $prescription_id)->get();
 
-
-        $logo_image = url('/') . '/uploaded_images/';
 
         $patient = DB::table('patient_prescription')
             ->select(DB::raw('patients.id,CONCAT(patients.first_name," ",patients.last_name) AS patient_name,CONCAT("' . $logo_image . '",patients.patient_image) as patient_image,patients.age,patients.date_of_birth,maritial_status.name as marital_status,(CASE WHEN (sex = 1) THEN "Male" ELSE "Female" END) as gender'))
