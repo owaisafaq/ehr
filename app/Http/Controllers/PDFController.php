@@ -291,7 +291,8 @@ class PDFController extends Controller
 
         $medication = DB::table('patient_prescription')
             ->leftJoin('patient_prescription_medicine', 'patient_prescription.id', '=', 'patient_prescription_medicine.prescription_id')
-            ->select('medication', 'supplements', 'sig','dispense','reffills','pharmacy')
+            ->leftJoin('inventory_products', 'inventory_products.id', '=', 'patient_prescription_medicine.medication')
+            ->select('inventory_products.name as medication', 'supplements', 'sig','dispense','reffills','pharmacy')
             ->where('patient_prescription.id', $prescription_id)->get();
 
 
