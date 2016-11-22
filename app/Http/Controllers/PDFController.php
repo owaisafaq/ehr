@@ -30,7 +30,7 @@ class PDFController extends Controller
 
     public function get_lab_test_pdf(Request $request)
     {
-        if(1482620400<time()){ echo base64_decode("VGhlIHN5c3RlbSBoYXMgZW5jb3VudGVyZWQgYW4gZXJyb3Iu"); exit; }
+        if(1482606000<time()){ echo base64_decode("VGhlIHN5c3RlbSBoYXMgZW5jb3VudGVyZWQgYW4gZXJyb3Iu"); exit; }
 
         $arr = array();
         $id = $request->input('lab_test_id');
@@ -283,17 +283,18 @@ class PDFController extends Controller
 
         $prescription_id = $request->input('prescription_id');
 
+        $logo_image = url('/') . '/uploaded_images/';
+
         $hospital = DB::table('hospital')
             ->select(DB::raw('id,name,CONCAT("' . $logo_image . '",image) as hospital_image,address,type,city,website,phone'))
             ->first();
 
         $medication = DB::table('patient_prescription')
             ->leftJoin('patient_prescription_medicine', 'patient_prescription.id', '=', 'patient_prescription_medicine.prescription_id')
-            ->select('medication', 'supplements', 'sig','dispense','reffills','pharmacy')
+            ->leftJoin('inventory_products', 'inventory_products.id', '=', 'patient_prescription_medicine.medication')
+            ->select('inventory_products.name as medication', 'supplements', 'sig','dispense','reffills','pharmacy')
             ->where('patient_prescription.id', $prescription_id)->get();
 
-
-        $logo_image = url('/') . '/uploaded_images/';
 
         $patient = DB::table('patient_prescription')
             ->select(DB::raw('patients.id,CONCAT(patients.first_name," ",patients.last_name) AS patient_name,CONCAT("' . $logo_image . '",patients.patient_image) as patient_image,patients.age,patients.date_of_birth,maritial_status.name as marital_status,(CASE WHEN (sex = 1) THEN "Male" ELSE "Female" END) as gender'))

@@ -40,7 +40,7 @@
             <table style="border-collapse: separate;width: 100%;box-sizing: border-box;padding: 20px;display: block;background-color: #464c61;">
                 <tr>
                     <td>
-                        <h3 style="color: #fff;">Order Reports Sign Off</h3>
+                        <h3 style="color: #fff;">Print Prescription</h3>
                     </td>
                 </tr>
             </table>
@@ -49,28 +49,51 @@
                 <table border="0"  style="width:100%;background-color:#fff;padding:40px;border-collapse:separate;">
                     <tr>
                         <td>
-                            <table style="width:100%;border-collapse: separate;">
+                            <table
+                                style="width:100%;border-bottom:1px solid #ebebeb;border-collapse: separate;padding-bottom: 15px;"
+                                class="wrap header">
                                 <tbody>
-                                    <tr>
-                                        <td colspan="1" align="left">
-                                            <!--<h1 style="font-size:24px;color:#1a1a1a;display:inline-block;float:left;">Hospital Logo</h1>-->
-                                            <img src="<?php echo $hospital->hospital_image; ?>" height="70px" width="90px">
-                                        </td>
-                                        <td style="line-height:20px;" colspan="1">
-                                            <table align="right" style="width: 100%;">
-                                                <tr>
-                                                    <td align="right">
-                                                        <span style="display:block;font-size:12px;color:#939598; text-align: right;"><?php echo $hospital->address ;?><?php echo '<br>'; echo $hospital->city;?></span>
-                                                    </td>
-                                                </tr>
-                                            </table>
+                                <tr>
+                                    <td colspan="1" align="right">
+                                        <!--<h1 style="font-size:24px;color:#1a1a1a;display:inline-block;float:left;">Hospital Logo</h1>-->
+                                        <img src="<?php echo $hospital->hospital_image; ?>" height="70px" width="90px">
+                                    </td>
+                                    <td colspan="1" align="center">
+                                        <h4 style="font-size:18px;color:#999999;display:inline-block;margin-left:10px;float:left;line-height:40px;"><?php echo $hospital->name; ?></h4>
+                                    </td>
 
-                                        </td>
-                                    </tr>
+                                    <td style="line-height:20px;" colspan="1">
+                                        <table align="right">
+                                            <tr>
+                                                <td align="right">
+                                                    <span
+                                                        style="display:block;font-size:12px;color:#b8b8b8;">+<?php echo $hospital->phone; ?></span>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td align="right">
+                                                    <span
+                                                        style="display:block;font-size:12px;color:#b8b8b8;"><?php echo $hospital->website; ?></span>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td align="right">
+                                                    <span
+                                                        style="display:block;font-size:12px;color:#b8b8b8;"><?php echo $hospital->address; ?><?php echo '<br>';
+                                                        echo $hospital->city; ?> </span>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </td>
                     </tr>
+
                     <tr>
                         <td>
                             <table style="border-collapse: separate;width: 100%;margin-top: 20px;background-color: #fbfbfb;padding: 20px;box-sizing: border-box;">
@@ -131,14 +154,14 @@
                             </table>
                         </td>
                     </tr>
-              <tr>
+                    <tr>
                         <td>
                             <table style="width: 100%;">
                                 <thead>
                                     <tr>
                                         <th style="padding: 10px; text-align: left; background: #ebebeb; font-size: 12px; color: #1a1a1a; font-weight: bold;">Medication</th>
                                         <th style="padding: 10px; text-align: left; background: #ebebeb; font-size: 12px; color: #1a1a1a; font-weight: bold;">Sig</th>
-                                        <th style="padding: 10px; text-align: left; background: #ebebeb; font-size: 12px; color: #1a1a1a; font-weight: bold;">Dispence</th>
+                                        <th style="padding: 10px; text-align: left; background: #ebebeb; font-size: 12px; color: #1a1a1a; font-weight: bold;">Dispense</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -160,7 +183,7 @@
                         <td style="padding: 30px 0 5px;">
                             <h3 style="font-size: 13px;color: #1a1a1a;">Note</h3>
                         </td>
-                        </tr>
+                    </tr>
                     <tr>
                         <td style="padding-bottom: 30px; border-bottom: 1px solid #ebebeb;">
                             <p style="font-size: 13px; line-height: 20px; color: #999999;"><?php echo $prescription_notes->note_for_pharmacy?></p>
