@@ -71,7 +71,7 @@
                                     <input type="file" ngf-select="uploadFiles($files, $invalidFiles, 1)" name="file" accept="image/*">
                                     <div class="btn-browse">
                                         <span class="browse">Browse</span><!--  data-target="#webCam" data-toggle="modal" -->
-                                        <span class="web-cam"></span>
+                                        <!-- <span class="web-cam"></span> -->
                                     </div>
                                 </div>
                                 <span ng-hide="imageUploading" class="float-right image-uploading-text ng-hide">Image uploading... </span> 
@@ -125,7 +125,7 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="file-field">
-                                    <!-- <span class="web-cam" data-target="#webCam" data-toggle="modal"></span> -->
+                                    <span class="web-cam" data-target="#webCam" data-toggle="modal"></span>
                                 </div>
                             </div>
                             <div class="col-lg-3">
@@ -1625,6 +1625,7 @@
                 <h2>Web Cam Capture</h2>
             </div>
             <div class="modal-body">
+                <h1>{{WebcamDeviceError}}</h1>
                 <webcam on-stream="onStream(stream)" on-streaming="onSuccess()"  on-error="onError(err)" placeholder="'/assets/img/browse_icn.png'" channel="myChannel"></webcam>
                 <ng-camera
                   type="photo"
