@@ -73,7 +73,7 @@
                                     <p class="help-block PIValid" ng-show="submitted && encounterFormAdd.patientID.$error.required">Required</p>
                                 </div>
                                 <div class="col-lg-1">
-                                    <button type="button" data-toggle="modal" data-target="#scanbarcode" class="scan-icon button-custom"></button>
+                                    <button type="button" class="scan-icon button-custom" ng-click="autoFocused();" style="width: 25px;"></button>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>clinic facility / Dept</label>
@@ -209,7 +209,7 @@
                             ng-init="begin = (currentPage-1)*numPerPage; end = begin + numPerPage"
                             data-ng-change="begin = (currentPage-1)*numPerPage; end = begin + numPerPage">
                         </pagination> -->
-<!--                    <div class="pagination pagination-centered" ng-show="allEncounterCount">
+                    <!--                    <div class="pagination pagination-centered" ng-show="allEncounterCount">
                         <ul class="pagination-controle pagination">
                             <li>
                               <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"> &lt; PREV</button>
@@ -222,7 +222,7 @@
                             </li>
                         </ul>
                     </div>-->
-<div class="pagination pagination-centered pull-right" ng-show="allEncounterCount">
+                    <div class="pagination pagination-centered pull-right" ng-show="allEncounterCount">
                         <ul class="pagination-controle pagination">
                             <li class="prev-page">
                                 <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1; paginationPrev(pageSize, curPage);"><i class="fa fa-caret-left"></i></button>
@@ -251,15 +251,16 @@
             <div class="modal-body">
                 <div class="row margin-bottom-xxl">
                     <div class="col-lg-11">
-                        <select class="form-control select_searchFields" ng-model="Order.patient_id" placeholder="Select Patient" name="patient_id" ng-class="{true: 'error'}[submitted && addForm.patient_id.$invalid]" required>
+                        <!-- <select class="form-control select_searchFields" ng-model="Order.patient_id" placeholder="Select Patient" name="patient_id" ng-class="{true: 'error'}[submitted && addForm.patient_id.$invalid]" required>
                             <option value=""></option>
                             <option ng-repeat="patient in patients" value="{{ patient.id }}" ng-selected="Order.patient_id == patient.id">{{ patient.id + ' ' + patient.first_name + ' ' + patient.last_name }}</option>
-                        </select>
+                        </select> -->
+                        <input class="select_searchFields" type="text" ng-model="appointment.appointmentSearch" placeholder="Search by Name or Patient Id" id="findPatient" data-source="{{PatientSearch}}search_patient" name="patient_id" ng-class="{true: 'error'}[submitted && addForm.patient_id.$invalid]" required>
                         <p class="help-block PIValid" ng-show="submitted && addForm.patient_id.$error.required">Required</p>
                         <!-- <input type="text" disabled="true" ng-value="PIDwithName" ng-model="Order.patient_id"> -->
                     </div>
                     <div class="col-lg-1">
-                        <button type="button" data-toggle="modal" data-target="#scanbarcode" class="scan-icon button-custom"></button>
+                        <button type="button" ng-click="autoFocused();" class="scan-icon button-custom" style="width: 25px;"></button>
                     </div>
                 </div>
                 <div class="row margin-bottom-xxl">
@@ -526,7 +527,7 @@
                             </div>
                         </div>
                         <div class="col-lg-1">
-                            <button type="button" data-toggle="modal" data-target="#scanbarcode" class="scan-icon button-custom"></button>
+                            <button type="button" ng-click="autoFocused();" class="scan-icon button-custom" style="width: 25px;"></button>
                         </div>
                     </div>
                 </div>
@@ -832,16 +833,17 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pop_head">
-                <h2>Insert Bar Code</h2>
+                <h2>Scan Bar Code</h2>
             </div>
             <div class="modal-body">
-                <form class="custom-form">
-                    <!--<div class="row">-->
-                <input class="form-control" type="text" placeholder="Insert Bar Code" />
+                <!-- <form class="custom-form">-->
+                <!--<div class="row">-->
+                    <input class="form-control focusedField" id="abc" type="text" placeholder="Scan Bar Code" autofocus/>
                 <!--</div>-->
-                </form>
+                <!-- </form> -->
             </div>
              <div class="modal-footer">
+                <button type="button" class="btn button-style-1 button-style-1_a" data-dismiss="modal">OK</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

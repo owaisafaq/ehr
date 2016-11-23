@@ -235,7 +235,7 @@
                                         <td align="center">
                                             <div class="radio radio-styled">
                                                 <label>
-                                                    <input type="radio" id="radio-{{Invoice.id}}" ng-click="SelectedPatientWithInvoice(Invoice.patient_id, Invoice.id, Invoice.amount, Invoice.invoice_status)" name="optionsRadios"><span></span>
+                                                    <input type="radio" id="radio-{{Invoice.id}}" ng-click="SelectedPatientWithInvoice(Invoice.patient_id, Invoice.id, Invoice.due, Invoice.invoice_status)" name="optionsRadios"><span></span>
                                                 </label>
                                             </div>
                                         </td>
@@ -1110,13 +1110,6 @@
     </div><!-- /.modal-dialog -->
 
 </div><!-- /.modal -->
-
-
-
-
-
-
-
 
 <div class="modal fade modal-size_1" id="addpatient" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
