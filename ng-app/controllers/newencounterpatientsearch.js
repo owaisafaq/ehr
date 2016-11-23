@@ -37,7 +37,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 	$scope.Order = {};
 	// on change
 	$scope.getSearchPatient = function(string){
-		console.log(string);
+		//console.log(string);
 		//$scope.buttonDisabled = true;
 		$scope.gotoencounter = true;
 		$scope.action = /*string ||*/ "";
@@ -53,7 +53,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 		function getPatientSuccess(res){
 			if(res.status == true){
 				$scope.action = string// "";
-				console.log(1, $scope.allEncounter);
+				//console.log(1, $scope.allEncounter);
 				//console.log(res);
 				$scope.disabledEncounterButton = false;
 				$scope.patientInfo = true;
@@ -70,7 +70,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 					if($scope.EID == $scope.allEncounter[k].id){
 						$scope.buttonDisabled = true;
 						$scope.action = $scope.allEncounter[k].id;
-                        console.log($scope.allEncounter[k].id, $scope.EID, "mm");
+                        //console.log($scope.allEncounter[k].id, $scope.EID, "mm");
 						//console.log($scope.allEncounter[k], $scope.EID);
 					}else if(res.is_visit == 0){
 						$scope.action = '';
@@ -294,7 +294,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
 	}
 
 	function encounterSuccess(res){
-		console.log(res);
+		//console.log(res);
 		$scope.hideLoader = "hide";
 		if(res.status == true){
 			$scope.submitted = false;
@@ -337,7 +337,7 @@ AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope'
     }, GetAllPatientsSuccess, GetAllPatientsFailure);
     function GetAllPatientsSuccess(res) { // on success
         if (res.status == true) {
-        	console.log(res.data, "all patients");
+        	//console.log(res.data, "all patients");
             $scope.patients = res.data;
         }
     }
@@ -916,8 +916,6 @@ $scope.disabledEncounterButton = true;
         $scope.parseFloat = function (val) {
             return isNaN(parseFloat(val)) ? 0 : parseFloat(val);
         }
-        
-
 		$scope.search = function(item){ 
 	        if($scope.listsearch == undefined){
 	            return true;
@@ -927,5 +925,39 @@ $scope.disabledEncounterButton = true;
 	            }
 	        }
 	    };
+	    $scope.barCodeScanValue = '';
+	    $scope.autoFocused = function(){
+	    	$(".focusedField").val('');
+	    	$("#scanbarcode").modal("show");
+	    	var startFocusing = setInterval(function(){
+	    		$scope.barCodeScanValue = $(".focusedField").val();
+	    		$scope.Order.patient_id = $(".focusedField").val();
+	    		console.log($(".focusedField").val());
+	    		if($(".focusedField").val() != '' && $(".focusedField").val() != undefined && $(".focusedField").val() != null){
+	    			/*API HIT*/
+	    			$("#scanbarcode").modal("hide");
+	    			if(!$("#scanbarcode").hasClass('in')){
+	    				//$scope.Order.patient_id = "123";
+	    				setTimeout(function () {
+	                    	$('select').not('.select_searchFields').select2({minimumResultsForSearch: Infinity});
+	                    },1000);
+	    				$("#findPatient").val($(".focusedField").val());
+	    				$("#findPatientEncounter").val($(".focusedField").val());
+	    				$(".select_searchFields").val($(".focusedField").val());
+	    				$scope.Order.patient_id = $(".select_searchFields").val($(".focusedField").val());
+	    				$scope.Order.patient_id = $(".focusedField").val();
+	    				$scope.appointment.appointmentSearch = $(".focusedField").val();
+	    				$scope.addEncounter.selectedPatientID = $(".focusedField").val()
+	    				console.log($(".select_searchFields").val(), 'o.O');
+	    				
+
+	    			}
+	    			console.log($scope.Order.patient_id, 'if');
+	    			clearInterval(startFocusing);
+	    		}
+	    		$(".focusedField").focus();
+	    	}, 1000);
+	    	//$scope.focusedField = "autofocus";
+	    }
 
 }]);
