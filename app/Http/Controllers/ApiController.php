@@ -1612,9 +1612,9 @@ class ApiController extends Controller
             ->get();
 
         foreach ($patients as $patient) {
+            $patient->id = str_pad($patient->id, 7, '0', STR_PAD_LEFT);
             $patient->barcode = "http://demoz.online/php-barcode-master/barcode.php?text=$patient->id";
             $patient->encounter_id = str_pad($patient->encounter_id, 8, '0', STR_PAD_LEFT);
-            $patient->id = str_pad($patient->id, 7, '0', STR_PAD_LEFT);
         }
 
         $is_visit = 1;
