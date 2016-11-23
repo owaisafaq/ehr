@@ -121,6 +121,14 @@ class BillingController extends Controller
         $service_id = $request->input('service_id');
         $patient_id = $request->input('patient_id');
 
+        $plan = DB::table('patients')
+            ->select(DB::raw('hospital_plan'))
+            ->where('id', $patient_id)
+            ->first();
+
+        $patient_plan_id = $plan->hospital_plan;
+        $invoice_status = 'pending';
+
         if ($product_id > 0) {
 
             $cost = DB::table('inventory_products')
@@ -134,6 +142,16 @@ class BillingController extends Controller
                 $amount = 50;
             }
 
+            $term = DB::table('billing_terms')
+                ->select(DB::raw('plan_id,discount'))
+                ->where('item','products')
+                ->where('plan_id',$patient_plan_id)
+                ->first();
+
+            if (!empty($term)) {
+                $amount = $amount - ($amount * ($term->discount / 100));
+                $invoice_status = 'paid';
+            }
 
             $product = DB::table('inventory_products')
                 ->leftJoin('inventory_categories','inventory_products.cat_id','=','inventory_categories.id')
@@ -151,7 +169,7 @@ class BillingController extends Controller
                         'description' => $purpose,
                         'amount' => $amount,
                         'due' => $amount,
-                        'invoice_status' => 'pending',
+                        'invoice_status' => $invoice_status,
                         'type' => 'product',
                         'created_at' => date("Y-m-d  H:i:s")
                     ]
@@ -175,6 +193,17 @@ class BillingController extends Controller
 
             $amount = $amount->charge;
 
+            $term = DB::table('billing_terms')
+                ->select(DB::raw('plan_id,discount'))
+                ->where('item','services')
+                ->where('plan_id',$patient_plan_id)
+                ->first();
+
+            if (!empty($term)) {
+                $amount = $amount - ($amount * ($term->discount / 100));
+                $invoice_status = 'paid';
+            }
+
             DB::table('invoice')
                 ->insert(
                     ['patient_id' => $patient_id,
@@ -183,7 +212,7 @@ class BillingController extends Controller
                         'description' => $purpose,
                         'amount' => $amount,
                         'due' => $amount,
-                        'invoice_status' => 'pending',
+                        'invoice_status' => $invoice_status,
                         'type' => 'service',
                         'created_at' => date("Y-m-d  H:i:s")
                     ]
