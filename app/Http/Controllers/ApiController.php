@@ -4259,5 +4259,19 @@ class ApiController extends Controller
 
         return response()->json(['status' => true, 'message' => 'visit updated successfully']);
     }
+
+    public function check_patient_exists(Request $request){
+          $patient_id = $request->input('patient_id');
+          $count = DB::table('patients')
+              ->select('*')
+              ->where('id',$patient_id)
+              ->Where('status',1)
+              ->count();
+        if ($count < 1) {
+            return response()->json(['status' => true, 'error_code' => 304]);
+        } else {
+            return response()->json(['status' => true, 'error_code' => 200]);
+        }
+    }
 }
 

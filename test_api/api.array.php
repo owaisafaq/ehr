@@ -2,8 +2,8 @@
 
 require 'api.class.php';
 //define('HOST', 'http://131.107.100.10/ehr/public/api/');
-define('HOST', 'http://localhost/ehr/public/api/');
-//define('HOST', 'http://demoz.online/ehr/public/api/');
+//define('HOST', 'http://localhost/ehr/public/api/');
+define('HOST', 'http://demoz.online/ehr/public/api/');
 //define('HOST', 'http://demoz.online/dev/ehr/public/api/');
 define('APP', '');
 define('ROUTE', '');
@@ -3651,4 +3651,16 @@ $api->params->token = "123";
 
 $api_arr [] = $api;
 
+
+
+// Check Patient Exists
+$api = new api();
+$api->name = "Check Patient Exists";
+$api->url = HOST . 'check_patient_exists';
+$api->method = "GET";
+$api->description = "Check Patient Exists";
+$api->params->patient_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
 
