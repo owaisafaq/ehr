@@ -1613,7 +1613,7 @@ class ApiController extends Controller
 
         foreach ($patients as $patient) {
             $patient->id = str_pad($patient->id, 7, '0', STR_PAD_LEFT);
-            $patient->barcode = "http://demoz.online/php-barcode-master/barcode.php?text=$patient->id";
+            $patient->barcode = "http://demoz.online/php-barcode-master/barcode.php?text=$patient->id%20$patient->first_name%20$patient->last_name";
             $patient->encounter_id = str_pad($patient->encounter_id, 8, '0', STR_PAD_LEFT);
         }
 
