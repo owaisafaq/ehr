@@ -1322,9 +1322,7 @@ class OtherController extends Controller
         $limit = $request->input('limit');
         $offset = $request->input('offset');
 
-
         if ($limit > 0 || $offset > 0) {
-
             $visits = DB::table('visits')
                 ->select(DB::raw('visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name,visits.reason_of_visit'))
                 ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
@@ -1333,8 +1331,6 @@ class OtherController extends Controller
                 ->where('visits.status',1)
                 ->skip($offset)->take($limit)
                 ->get();
-
-
             $count = DB::table('visits')
                 ->select(DB::raw('visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name,visits.reason_of_visit'))
                 ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
@@ -1342,9 +1338,7 @@ class OtherController extends Controller
                 ->whereDay('visits.created_at', '=', date('d'))
                 ->where('visits.status', 1)
                 ->count();
-
         } else {
-
             $visits = DB::table('visits')
                 ->select(DB::raw('visits.id,visits.created_at,visits.encounter_type,doctors.name,visits.decscribe_whom_to_see,patients.first_name,patients.middle_name,patients.last_name,visits.reason_of_visit'))
                 ->leftJoin('doctors', 'doctors.id', '=', 'visits.whom_to_see')
@@ -1352,14 +1346,14 @@ class OtherController extends Controller
                 ->whereDay('visits.created_at', '=', date('d'))
                 ->where('visits.status', 1)
                 ->get();
-
             $count = count($visits);
-
         }
 
+        foreach($visits as $visit){
+            $visit->created_at = date("H:i:s",strtotime($visit->created_at));
+        }
 
         return response()->json(['status' => true, 'data' => $visits, 'count' => $count]);
-
     }
 }
 
