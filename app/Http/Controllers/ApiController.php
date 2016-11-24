@@ -14,6 +14,7 @@ use Illuminate\Http\Response as IlluminateResponse;
 
 use Illuminate\Support\Facades\File;
 use DB;
+use Carbon\Carbon;
 
 
 class ApiController extends Controller
@@ -1970,6 +1971,13 @@ class ApiController extends Controller
             ->where('patients.status', 1)
             ->first();
 
+
+        $t1 = Carbon::parse($demographics->date_of_birth);
+        $t2 = Carbon::parse( Carbon::now());
+
+        $diff = $t1->diff(@$t2);
+
+        $demographics->age = $diff->y.' '.'Years';
 
         if ($demographics->sex == 1) {
             $demographics->gender = 'Male';
