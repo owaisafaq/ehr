@@ -223,6 +223,8 @@ $api->params->tribe = "mangolian";
 $api->params->language = "english";
 $api->params->nationality = "1";
 $api->params->blood_group = "1";
+$api->params->is_webcam = "1";
+
 
 $api->params->token = "123";
 
