@@ -292,6 +292,17 @@ class ApiController extends Controller
         $fileName = $request->input('patient_image');
         $image_name = $request->input('image_name');
 
+        $is_webcam = $request->input('is_webcam');
+
+        if($is_webcam == true){
+            $fileName = time().".png";
+            $image_name = $first_name.".png";
+            $path =  base_path() . '/public/uploaded_images/'.$fileName;
+            $img = $request->input('base_img');
+            $img = substr($img, strpos($img, ",")+1);
+            $data = base64_decode($img);
+            $success = file_put_contents($path, $data);
+        }
 
         if (isset($patient_id)) {
 
@@ -409,8 +420,6 @@ class ApiController extends Controller
         $image->move($destinationPath, $fileName);
 
         return response()->json(['status' => true, 'message' => "Patient Image Uploaded Successfully", "image" => $fileName,'name'=> $original_name]);
-
-
     }
 
     public function optupload_patient_image(Request $request)
