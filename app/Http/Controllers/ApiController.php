@@ -298,7 +298,7 @@ class ApiController extends Controller
             $fileName = time().".png";
             $image_name = $first_name.".png";
             $path =  base_path() . '/public/uploaded_images/'.$fileName;
-            $img = $request->input('base_img');
+            $img = $request->input('image_name');
             $img = substr($img, strpos($img, ",")+1);
             $data = base64_decode($img);
             $success = file_put_contents($path, $data);
