@@ -436,9 +436,7 @@ class ApiController extends Controller
 
     public function optupload_patient_image(Request $request)
     {
-
         return response()->json(['status' => true, 'message' => 'hello']);
-
     }
 
 
@@ -448,7 +446,6 @@ class ApiController extends Controller
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
-
         DB::table('patients')
             ->where('id', $patient_id)
             ->update(
@@ -457,9 +454,7 @@ class ApiController extends Controller
                 ]
             );
 
-
         return response()->json(['status' => true, 'message' => "Patient Deleted successfully"]);
-
     }
 
 
@@ -512,7 +507,6 @@ class ApiController extends Controller
                 'created_at' => $currentdatetime
             ]
         );
-
 
         $address_id = DB::getPdo()->lastInsertId();
 
