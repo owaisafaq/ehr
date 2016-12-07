@@ -422,6 +422,18 @@ class ApiController extends Controller
         return response()->json(['status' => true, 'message' => "Patient Image Uploaded Successfully", "image" => $fileName,'name'=> $original_name]);
     }
 
+    public function upload_webcam_image(Request $request)
+    {
+        $fileName = time() . ".png";
+        $image_name = $first_name . ".png";
+        $path = base_path() . '/public/uploaded_images/' . $fileName;
+        $img = $request->input('base_img');
+        $img = substr($img, strpos($img, ",") + 1);
+        $data = base64_decode($img);
+        $success = file_put_contents($path, $data);
+        print $success ? $fileName : 'Unable to save the file.';
+    }
+
     public function optupload_patient_image(Request $request)
     {
 
