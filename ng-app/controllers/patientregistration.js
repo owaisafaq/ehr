@@ -334,7 +334,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
         // patient information API
         $scope.validatePatientInfo = function (PI) {
-            if (PI.first_name != undefined && PI.last_name != undefined && PI.date_of_birth != undefined && PI.age != undefined && PI.sex != undefined && PI.maritial_status != undefined && PI.patient_state != undefined && PI.receiptID != undefined) {
+            if (PI.first_name != undefined && PI.last_name != undefined && PI.date_of_birth != undefined && PI.age != undefined && PI.sex != undefined && PI.maritial_status != undefined && PI.patient_state != undefined /*&& PI.receiptID != undefined*/) {
                 
                 var dataToBeAdded = {
                     token: $window.sessionStorage.token,
@@ -365,7 +365,8 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     mother_lastname: $scope.PI.mother_lastname == undefined ? '' : $scope.PI.mother_lastname,
                     refered_name: $scope.PI.refered_name == undefined ? '' : $scope.PI.refered_name,
                     image_name: $scope.PI.imageOrignalName == undefined ? '' : $scope.PI.imageOrignalName,
-                    patient_image: $scope.PI.patient_image == undefined ? '' : $scope.PI.patient_image, //.name
+                    patient_image: $scope.PI.patient_image == undefined ? '' : $scope.PI.patient_image,
+                    is_webcam: $scope.is_webcam == true ? true : false //.name
                 };
                 $rootScope.loader = 'show';
                 if ($window.sessionStorage.patient_id == undefined) {
@@ -1752,11 +1753,11 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 }
             }
         }
-    $scope.PP.checkoutpatient = 1;
-    if ($("input[name='checkoutpatient1']:checked").val()) {
-       alert($("input[name='checkoutpatient1']:checked").val());
-        return false;
-    }
+        $scope.PP.checkoutpatient = 1;
+        if ($("input[name='checkoutpatient1']:checked").val()) {
+           alert($("input[name='checkoutpatient1']:checked").val());
+            return false;
+        }
     
         $scope.savePlanData = function () {
             $scope.dataToBeAdded.token = $window.sessionStorage.token
@@ -1891,7 +1892,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
             }
         }
-//        States.get({token: $window.sessionStorage.token, country_id: country}, stateSuccess, stateFailed);
+            //        States.get({token: $window.sessionStorage.token, country_id: country}, stateSuccess, stateFailed);
          States.get({token: $window.sessionStorage.token, country_id: ""}, stateDirectSuccess, stateDirectFailed);
             function stateDirectSuccess(res){
                 $scope.IndependentStates = res.data;
@@ -1942,12 +1943,8 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 $scope.billSearchClass = "success-green";*/
             }
         }
-        $scope.myChannel = {
-            // the fields below are all optional
-            videoHeight: 500,
-            videoWidth: 600,
-            video: null // Will reference the video element on success
-        };
+
+        $scope.myChannel = {videoHeight: 500, videoWidth: 500};
         $scope.onError = function (err) {
             if(err.name == "DevicesNotFoundError"){
                 console.log(err, "webcam error");
@@ -1955,14 +1952,109 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
             }
         };
         $scope.onStream = function (stream) {
-            console.log(stream, "webcam stream");
+            console.log(stream, "webcam onStream");
         };
         $scope.onSuccess = function (res) {
-            console.log(res, "webcam stream");
+            console.log(res, "webcam onSuccess", $scope.myChannel);
         };
         $scope.ngCameraCapture = function(webcam){
             console.log(webcam, "angular-camera");
         }
+        var _video = null, patData = null;
+
+        $scope.patOpts = {x: 0, y: 0, w: 25, h: 25};
+
+        // Setup a channel to receive a video property
+        // with a reference to the video element
+        // See the HTML binding in main.html
+        $scope.myChannel = {};
+        //$scope.channel.video;
+        $scope.webcamError = false;
+        $scope.onError = function (err) {
+            $scope.$apply(
+                function() {
+                    $scope.webcamError = err;
+                }
+            );
+        };
+
+        $scope.onSuccess = function () {
+            // The video element contains the captured camera data
+            _video = $scope.myChannel.video;
+            //console.log(_video, '123321');
+            $scope.$apply(function() {
+                $scope.patOpts.w = _video.width;
+                $scope.patOpts.h = _video.height;
+                //$scope.showDemos = true;
+            });
+        };
+
+        /*$scope.onStream = function (stream) {
+            // You could do something manually with the stream.
+        };*/
+
+        $scope.makeSnapshot = function() {
+            if (_video) {
+                var patCanvas = document.querySelector('#snapshot');
+                if (!patCanvas) return;
+                patCanvas.width = _video.width;
+                patCanvas.height = _video.height;
+                var ctxPat = patCanvas.getContext('2d');
+                var idata = getVideoData($scope.patOpts.x, $scope.patOpts.y, $scope.patOpts.w, $scope.patOpts.h);
+                ctxPat.putImageData(idata, 0, 0);
+                sendSnapshotToServer(patCanvas.toDataURL());
+                patData = idata;
+                $scope.removeImage = true;
+                $scope.showRemoveButton = true;
+            }
+        };
+        
+        /**
+            * Redirect the browser to the URL given.
+            * Used to download the image by passing a dataURL string
+        */
+        $scope.downloadSnapshot = function(dataURL) {
+            window.location.href = dataURL;
+        };
+        
+        var getVideoData = function(x, y, w, h) {
+            var hiddenCanvas = document.createElement('canvas');
+            hiddenCanvas.width = _video.width;
+            hiddenCanvas.height = _video.height;
+            var ctx = hiddenCanvas.getContext('2d');
+            ctx.drawImage(_video, 0, 0, _video.width, _video.height);
+            return ctx.getImageData(x, y, w, h);
+        };
+
+        /**
+         * This function could be used to send the image data
+         * to a backend server that expects base64 encoded images.
+         *
+         * In this example, we simply store it in the scope for display.
+        */
+        var sendSnapshotToServer = function(imgBase64) {
+            $scope.snapshotData = imgBase64;
+            $scope.PI.patient_image = $scope.snapshotData;
+            $scope.saveButton = false;
+        };
+        $scope.saveButton = true;
+        $scope.removeSnapshot = function(){
+            $scope.is_webcam = false;
+            $scope.removeImage = false;
+            $scope.showRemoveButton = false;
+            $scope.snapshotData = null;
+            $scope.PI.patient_image = undefined;
+            $scope.webcamImage = false;
+            $scope.saveButton = true;
+            // console.log($scope.PI.patient_image);
+        };
+
+        $scope.saveWebCamImage = function(){
+            $scope.webcamImage = true;
+            $scope.is_webcam = true;
+            console.log($scope.PI.patient_image);
+        }
+
         /*SEARCH BY Receipt ID*/
        /* $('#searchpatientReceipt').on('input', function(){
             var input = $('#searchpatientReceipt').val();

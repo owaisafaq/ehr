@@ -207,7 +207,7 @@
                             </thead>
                             <tbody><!--  |filter:cat_search -->
                             <tr ng-repeat="RoomList in RoomLists| filter: {name:speciSearch}">
-                                <td><a href="#" class="link-style_3">{{RoomList.name}}</a></td>
+                                <td class="capitalize">{{RoomList.name}}</td>
                                 <td>{{RoomList.code}}</td>
                                 <td>{{RoomList.description}}</td>
                                 <td>
@@ -263,7 +263,7 @@
                             </thead>
                             <tbody><!--  |filter:cat_search -->
                             <tr ng-repeat="DepartmentList in DepartmentLists| filter: {name:speciSearch}">
-                                <td><a href="#" class="link-style_3">{{DepartmentList.name}}</a></td>
+                                <td class="capitalize">{{DepartmentList.name}}</td>
                                 <td>{{DepartmentList.description}}</td>
                                 <td>
                                     <div class="billing_actions pull-right">

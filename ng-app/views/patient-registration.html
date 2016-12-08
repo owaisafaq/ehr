@@ -68,9 +68,10 @@
                                         <input class="file-path yellow" ng-model="PI.imageOrignalName" type="text" placeholder="Upload Image" id="csv">
                                         <input ng-model="PI.patient_image" type="hidden">
                                     </div>
-                                    <input type="file" ngf-select="uploadFiles($files, $invalidFiles, 1)" name="file" accept="image/*">
+                                    <input type="file" ngf-select="uploadFiles($files, $invalidFiles, 1)" name="file" accept="image/*" ng-disabled="webcamImage">
                                     <div class="btn-browse">
-                                        <span class="browse">Browse</span><!--  data-target="#webCam" data-toggle="modal" -->
+                                        <span class="browse">Browse</span>
+                                        <!--  data-target="#webCam" data-toggle="modal" -->
                                         <!-- <span class="web-cam"></span> -->
                                     </div>
                                 </div>
@@ -1626,20 +1627,18 @@
             </div>
             <div class="modal-body">
                 <h1>{{WebcamDeviceError}}</h1>
-                <webcam on-stream="onStream(stream)" on-streaming="onSuccess()"  on-error="onError(err)" placeholder="'/assets/img/browse_icn.png'" channel="myChannel"></webcam>
-                <ng-camera
-                  type="photo"
-                  enabled="true"
-                  width="640"
-                  height="480"
-                  countdown="3"
-                  ng-model="media"
-                  overlay-src="ng-app/assets/img/browse_icn.png"
-                  capture="ngCameraCapture(media)"
-                  capture-message="Go!"></ng-camera>
+                <div class="alert alert-error ng-scope" ng-show="webcamError" style="">
+                    <span>Webcam could not be started. Did you give access to it?</span>
+                </div>
+                <webcam on-stream="onStream(stream)" on-streaming="onSuccess()" on-access-denied="onError(err)" placeholder="'/assets/img/browse_icn.png'" channel="myChannel"></webcam>
+                <!-- <ng-camera type="photo" enabled="true" width="640" height="480" countdown="3" ng-model="media" overlay-src="ng-app/assets/img/browse_icn.png" capture="ngCameraCapture(media)" capture-message="Go!"></ng-camera> -->
+                <!-- <webcam channel="channel" on-streaming="onSuccess()" on-error="onError(err)" on-stream="onStream(stream)"></webcam> -->
+                <canvas id="snapshot" width="300" height="300" ng-show="removeImage"></canvas>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal">Ok</button>
+            <div class="modal-footer"> 
+                <button type="button" ng-click="makeSnapshot()" class="btn button-style-1">take picture</button>
+                <button type="button" ng-click="removeSnapshot();" class="btn button-style-1" ng-show="showRemoveButton">remove</button>
+                <button type="button" class="btn btn-default button-style-1" data-dismiss="modal" ng-click="saveWebCamImage();" ng-disabled="saveButton">Save</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

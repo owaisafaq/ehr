@@ -148,7 +148,7 @@ AppEHR.controller('clinicalProgressTemplate', ['$scope', '$rootScope', 'mySchema
         token: $window.sessionStorage.token,
         template_type: 1
     }, getTemplateSuccess, getTemplateFailure);
-
+ 
     function getTemplateSuccess(res) {
         if (res.status == true) {
             $rootScope.loader = "hide";

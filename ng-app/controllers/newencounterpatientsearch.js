@@ -1,7 +1,7 @@
 var AppEHR = angular.module('AppEHR');
 
-AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope', '$window', 'AddEncounter', '$timeout', 'GetVisits', '$rootScope', 'GetPatientInfo', 'DropDownData', '$http', 'GetAllPatients', 'GetLabTests', 'addOrder', 'GetAllLabOrders', 'CheckoutPatient', 'GetAllEncounters', 'AddAppointments', 'GetOneEncounter', 'RemoveEncounter', 'UpdateEncounter', 'AddVitals', 'GetAllWardsDropDown', 'GetBedsByWard', 'UpdateVisitRoom', function($scope, $rootScope, $window, AddEncounter, $timeout, GetVisits, $rootScope, GetPatientInfo, DropDownData, $http, GetAllPatients, GetLabTests, addOrder, GetAllLabOrders, CheckoutPatient, GetAllEncounters, AddAppointments, GetOneEncounter, RemoveEncounter, UpdateEncounter, AddVitals, GetAllWardsDropDown, GetBedsByWard, UpdateVisitRoom){
-	$rootScope.loader = "show";
+AppEHR.controller('newEncounterPatientSearchController', ['$scope', '$rootScope', '$window', 'AddEncounter', '$timeout', 'GetVisits', '$rootScope', 'GetPatientInfo', 'DropDownData', '$http', 'GetAllPatients', 'GetLabTests', 'addOrder', 'GetAllLabOrders', 'CheckoutPatient', 'GetAllEncounters', 'AddAppointments', 'GetOneEncounter', 'RemoveEncounter', 'UpdateEncounter', 'AddVitals', 'GetAllWardsDropDown', 'GetBedsByWard', 'UpdateVisitRoom', 'CheckPatientExists', function($scope, $rootScope, $window, AddEncounter, $timeout, GetVisits, $rootScope, GetPatientInfo, DropDownData, $http, GetAllPatients, GetLabTests, addOrder, GetAllLabOrders, CheckoutPatient, GetAllEncounters, AddAppointments, GetOneEncounter, RemoveEncounter, UpdateEncounter, AddVitals, GetAllWardsDropDown, GetBedsByWard, UpdateVisitRoom, CheckPatientExists){
+	$rootScope.loader = "show"; 
 	$rootScope.pageTitle = "EHR - New Encounter Patient Search";
 	$scope.addEncounter = {};
 	$scope.allEncounters = [];
@@ -932,32 +932,45 @@ $scope.disabledEncounterButton = true;
 	    	var startFocusing = setInterval(function(){
 	    		$scope.barCodeScanValue = $(".focusedField").val();
 	    		$scope.Order.patient_id = $(".focusedField").val();
-	    		console.log($(".focusedField").val());
+	    		console.log($(".focusedField").val(), 'focused fields before');
 	    		if($(".focusedField").val() != '' && $(".focusedField").val() != undefined && $(".focusedField").val() != null){
 	    			/*API HIT*/
-	    			$("#scanbarcode").modal("hide");
-	    			if(!$("#scanbarcode").hasClass('in')){
-	    				//$scope.Order.patient_id = "123";
-	    				setTimeout(function () {
-	                    	$('select').not('.select_searchFields').select2({minimumResultsForSearch: Infinity});
-	                    },1000);
-	    				$("#findPatient").val($(".focusedField").val());
-	    				$("#findPatientEncounter").val($(".focusedField").val());
-	    				$(".select_searchFields").val($(".focusedField").val());
-	    				$scope.Order.patient_id = $(".select_searchFields").val($(".focusedField").val());
-	    				$scope.Order.patient_id = $(".focusedField").val();
-	    				$scope.appointment.appointmentSearch = $(".focusedField").val();
-	    				$scope.addEncounter.selectedPatientID = $(".focusedField").val()
-	    				console.log($(".select_searchFields").val(), 'o.O');
-	    				
-
+	    			console.log($(".focusedField").val(), 'if succ');
+	    			var splittingVal = $(".focusedField").val().split(' ');
+	    			console.log(splittingVal, 'splittingValue');
+	    			var patientExistID = splittingVal;
+	    			console.log($(".focusedField").val(), 'focused fields after', patientExistID);
+	    			//console.log($(".focusedField").val(), patientExistID);
+	    			patientExistID = patientExistID[0];
+	    			CheckPatientExists.get({token: $window.sessionStorage.token, patient_id: patientExistID}, patientExistSuccess, vitalFailure);
+	    			function patientExistSuccess(res){
+	    				//console.log(res);
+	    				if(res.error_code == 304) {$scope.invalidBarCodeColor = "failure-red"; $scope.invalidBarCode = "Invalid Bar Code"; $scope.barcodeError = true; return true; }
+	    				$("#scanbarcode").modal("hide");
+		    			if(!$("#scanbarcode").hasClass('in')){
+		    				//$scope.Order.patient_id = "123";
+		    				$scope.barcodeError = true;
+		    				$scope.invalidBarCodeColor = ""; $scope.invalidBarCode = "";
+		    				setTimeout(function () {
+		                    	$('select').not('.select_searchFields').select2({minimumResultsForSearch: Infinity});
+		                    },1000);
+		    				$("#findPatient").val($(".focusedField").val());
+		    				$("#findPatientEncounter").val($(".focusedField").val());
+		    				$(".select_searchFields").val($(".focusedField").val());
+		    				$scope.Order.patient_id = patientExistID;
+		    				$scope.selectedPatientID = patientExistID;
+		    				$scope.addEncounter.selectedPatientID = patientExistID;
+		    				//$scope.Order.patient_id = $(".focusedField").val();
+		    				$scope.appointment.appointmentSearch = $(".focusedField").val();
+		    				//$scope.addEncounter.selectedPatientID = $(".focusedField").val()
+		    				//console.log($(".select_searchFields").val(), 'o.O');
+		    			}
 	    			}
-	    			console.log($scope.Order.patient_id, 'if');
+	    			//console.log($scope.Order.patient_id, 'if');
 	    			clearInterval(startFocusing);
 	    		}
 	    		$(".focusedField").focus();
 	    	}, 1000);
 	    	//$scope.focusedField = "autofocus";
 	    }
-
 }]);

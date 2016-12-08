@@ -284,7 +284,11 @@ AppEHR.controller('settingsGroups', ['$scope', '$rootScope', '$window', '$routeP
                 if(value.update_right == 1) update_class = ' active';
                 if(value.delete_right == 1) delete_class = ' active';
                 if(value.view_right == 1) read_class = ' active'; /*+ '" data-template-id="'*/
-                $('#editRole .rights_list .mCSB_container').append('<div class="right_chip" '+ roleType+' data-id="' + value.context_id + '"'  + '><span>' + value.context + " " + value.role_type + '</span>' + get_context_rightsUpdate(available_rights, read_class, delete_class, update_class, add_class) + '</div>');
+                if(value.role_type != "Lab Deleted"){
+                    $('#editRole .rights_list .mCSB_container').append('<div class="right_chip" '+ roleType+' data-id="' + value.context_id + '"'  + '><span>' + value.context + " " + value.role_type + '</span>' + get_context_rightsUpdate(available_rights, read_class, delete_class, update_class, add_class) + '</div>');
+                }/*else{
+                    $('#editRole .rights_list .mCSB_container').append('<div class="right_chip" '+ roleType+' data-id="' + value.context_id + '"'  + '><span>' + value.context + " " + value.role_type + '</span>' + get_context_rightsUpdate(available_rights, read_class, delete_class, update_class, add_class) + '</div>');
+                }*/
             });
             //$scope.labTypeFlag = true;
             $('#editRole').modal('show');

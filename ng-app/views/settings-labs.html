@@ -112,7 +112,7 @@
                             <tbody><!-- |filter:cat_search -->
                                 <tr ng-repeat="LabTest in LabTests | filter:{lab:labType} | filter:
                                 {name: searchTest}">
-                                    <td><a href="javscript:;" class="link-style_3 capitalize">{{LabTest.name}}</a></td>
+                                    <td class="capitalize">{{LabTest.name}}</td>
                                     <td>{{LabTest.description}}</td>
                                     <td>{{LabTest.lonic_code}}</td>
                                     <td class="capitalize">{{LabTest.lab}}</td>
