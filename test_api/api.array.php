@@ -2,8 +2,8 @@
 
 require 'api.class.php';
 //define('HOST', 'http://131.107.100.10/ehr/public/api/');
-define('HOST', 'http://localhost/ehr/public/api/');
-//define('HOST', 'http://demoz.online/ehr/public/api/');
+//define('HOST', 'http://localhost/ehr/public/api/');
+define('HOST', 'http://demoz.online/ehr/public/api/');
 //define('HOST', 'http://demoz.online/dev/ehr/public/api/');
 define('APP', '');
 define('ROUTE', '');
@@ -205,6 +205,7 @@ $api->params->date_of_birth = "18-02-1990";
 $api->params->age = "20";
 $api->params->sex = "1";
 $api->params->patient_image = "";
+$api->params->image_name = "";
 $api->params->marital_status = "1";
 $api->params->religion = "1";
 $api->params->father_firstname = "ahmed";
@@ -223,6 +224,8 @@ $api->params->tribe = "mangolian";
 $api->params->language = "english";
 $api->params->nationality = "1";
 $api->params->blood_group = "1";
+$api->params->is_webcam = "1";
+
 
 $api->params->token = "123";
 
@@ -3651,4 +3654,16 @@ $api->params->token = "123";
 
 $api_arr [] = $api;
 
+
+
+// Check Patient Exists
+$api = new api();
+$api->name = "Check Patient Exists";
+$api->url = HOST . 'check_patient_exists';
+$api->method = "GET";
+$api->description = "Check Patient Exists";
+$api->params->patient_id = "1";
+$api->params->token = "123";
+
+$api_arr [] = $api;
 

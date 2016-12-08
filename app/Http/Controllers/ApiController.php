@@ -14,6 +14,7 @@ use Illuminate\Http\Response as IlluminateResponse;
 
 use Illuminate\Support\Facades\File;
 use DB;
+use Carbon\Carbon;
 
 
 class ApiController extends Controller
@@ -291,6 +292,18 @@ class ApiController extends Controller
         $fileName = $request->input('patient_image');
         $image_name = $request->input('image_name');
 
+        $is_webcam = $request->input('is_webcam');
+
+        if($is_webcam == true){
+            $fileName = time().".png";
+            $image_name = $first_name.".png";
+            $path =  base_path() . '/public/uploaded_images/'.$fileName;
+            $img = $request->input('image_name');
+            $img = str_replace(' ', '', $img);
+            $img = substr($img, strpos($img, ",")+1);
+            $data = base64_decode($img);
+            $success = file_put_contents($path, $data);
+        }
 
         if (isset($patient_id)) {
 
@@ -408,15 +421,24 @@ class ApiController extends Controller
         $image->move($destinationPath, $fileName);
 
         return response()->json(['status' => true, 'message' => "Patient Image Uploaded Successfully", "image" => $fileName,'name'=> $original_name]);
+    }
 
-
+    public function upload_webcam_image(Request $request)
+    {
+       //dd($request['base_img']);
+        $fileName = time() . ".png";
+        $image_name = $first_name . ".png";
+        $path = base_path() . '/public/uploaded_images/' . $fileName;
+        $img = $request->input('base_img');
+        $img = substr($img, strpos($img, ",") + 1);
+        $data = base64_decode($img);
+        $success = file_put_contents($path, $data);
+        print $success ? $fileName : 'Unable to save the file.';
     }
 
     public function optupload_patient_image(Request $request)
     {
-
         return response()->json(['status' => true, 'message' => 'hello']);
-
     }
 
 
@@ -426,7 +448,6 @@ class ApiController extends Controller
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
-
         DB::table('patients')
             ->where('id', $patient_id)
             ->update(
@@ -435,9 +456,7 @@ class ApiController extends Controller
                 ]
             );
 
-
         return response()->json(['status' => true, 'message' => "Patient Deleted successfully"]);
-
     }
 
 
@@ -490,7 +509,6 @@ class ApiController extends Controller
                 'created_at' => $currentdatetime
             ]
         );
-
 
         $address_id = DB::getPdo()->lastInsertId();
 
@@ -1970,6 +1988,13 @@ class ApiController extends Controller
             ->where('patients.status', 1)
             ->first();
 
+
+        $t1 = Carbon::parse($demographics->date_of_birth);
+        $t2 = Carbon::parse( Carbon::now());
+
+        $diff = $t1->diff(@$t2);
+
+        $demographics->age = $diff->y.' '.'Years';
 
         if ($demographics->sex == 1) {
             $demographics->gender = 'Male';
@@ -4258,6 +4283,24 @@ class ApiController extends Controller
             ->update(array('room' => $room, 'updated_at' => $currentdatetime));
 
         return response()->json(['status' => true, 'message' => 'visit updated successfully']);
+    }
+
+    public function check_patient_exists(Request $request){
+        $patient_id = $request->input('patient_id');
+        if (preg_match("/[a-z]/i",$patient_id)) {
+            $patient_id = 0;
+        }
+
+        $count = DB::table('patients')
+            ->select('*')
+            ->where('id', '=', $patient_id)
+            ->Where('status', 1)
+            ->count();
+        if ($count < 1) {
+            return response()->json(['status' => true, 'error_code' => 304]);
+        } else {
+            return response()->json(['status' => true, 'error_code' => 200]);
+        }
     }
 }
 

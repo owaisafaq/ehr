@@ -47,6 +47,8 @@ $app->group(['prefix' => 'api'], function () use ($app) {
     $app->post('search_patient_bills', 'App\Http\Controllers\ApiController@search_patient_bills');
     $app->post('search_patient_bill','App\Http\Controllers\BillingController@search_patient_bill');
 
+    //
+    $app->post('upload_webcam_image','App\Http\Controllers\ApiController@upload_webcam_image');
 });
 
 
@@ -522,6 +524,7 @@ $app->group(['prefix'=>'api','middleware' => 'jwt.auth'], function () use ($app)
     //Bill Purposes
     $app->get('get_bill_purposes','App\Http\Controllers\BillingController@get_bill_purposes');
     $app->get('get_inventory_categories_groups','App\Http\Controllers\InventoryAPIController@get_inventory_categories_groups');
+    $app->get('check_patient_exists','App\Http\Controllers\ApiController@check_patient_exists');
 
 
 });
