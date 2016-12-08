@@ -236,73 +236,79 @@ class ApiController extends Controller
 
     public function add_patient(Request $request)
     {
-        $first_name = $request->input('first_name');
+       // return $request->getContent();
 
-        $middle_name = $request->input('middle_name');
+        $data = json_decode($request->getContent());
 
-        $last_name = $request->input('last_name');
+        $first_name = /*$request->input('first_name');*/ $data->first_name;
 
-        $date_of_birth = $request->input('date_of_birth');
+        $middle_name =/* $request->input('middle_name');*/ $data->middle_name;
 
-        $age = $request->input('age');
+        $last_name = /*$request->input('last_name');*/$data->last_name;
 
-        $sex = $request->input('sex');
+        $date_of_birth = /*$request->input('date_of_birth');*/$data->date_of_birth;
 
-        $marital_status = $request->input('marital_status');
+        $age = /*$request->input('age');*/$data->age;
 
-        $religion = $request->input('religion');
+        $sex = /*$request->input('sex');*/$data->sex;
 
-        $father_firstname = $request->input('father_firstname');
+        $marital_status = /*$request->input('marital_status');*/$data->marital_status;
 
-        $father_middlename = $request->input('father_middlename');
+        $religion = /*$request->input('religion');*/$data->religion;
 
-        $father_lastname = $request->input('father_lastname');
+        $father_firstname = /*$request->input('father_firstname');*/$data->father_firstname;
 
-        $mother_firstname = $request->input('mother_firstname');
+        $father_middlename = /*$request->input('father_middlename');*/$data->father_middlename;
 
-        $mother_middlename = $request->input('mother_middlename');
+        $father_lastname = /*$request->input('father_lastname');*/$data->father_lastname;
 
-        $mother_lastname = $request->input('mother_lastname');
+        $mother_firstname = /*$request->input('mother_firstname');*/$data->mother_firstname;
 
-        $refered_name = $request->input('refered_name');
+        $mother_middlename = /*$request->input('mother_middlename');*/$data->mother_middlename;
 
-        $patient_unit_number = $request->input('patient_unit_number');
+        $mother_lastname = /*$request->input('mother_lastname');*/$data->mother_lastname;
 
-        $identity_type = $request->input('identity_type');
+        $refered_name = /*$request->input('refered_name');*/$data->refered_name;
 
-        $identity_number = $request->input('identity_number');
+        $patient_unit_number = /*$request->input('patient_unit_number');*/$data->patient_unit_number;
 
-        $patient_state = $request->input('patient_state');
+        $identity_type =/* $request->input('identity_type');*/$data->identity_type;
 
-        $patient_local_goverment_area = $request->input('patient_local_goverment_area');
+        $identity_number = /*$request->input('identity_number');*/$data->identity_number;
 
-        $tribe = $request->input('tribe');
+        $patient_state = /*$request->input('patient_state');*/$data->patient_state;
 
-        $nationality = $request->input('nationality');
+        $patient_local_goverment_area = /*$request->input('patient_local_goverment_area');*/$data->patient_local_goverment_area;
 
-        $blood_group = $request->input('blood_group');
+        $tribe = /*$request->input('tribe');*/$data->tribe;
 
-        $language = $request->input('language');
+        $nationality = /*$request->input('nationality');*/$data->nationality;
+
+        $blood_group = /*$request->input('blood_group');*/$data->blood_group;
+
+        $language = /*$request->input('language');*/$data->language;
 
         $currentdatetime = date("Y-m-d  H:i:s");
-        $receipt_id = $request->input('receipt_id');
 
-        $patient_id = $request->input('patient_id');
+        $receipt_id = /*$request->input('receipt_id');*/$data->receipt_id;
 
-        $fileName = $request->input('patient_image');
-        $image_name = $request->input('image_name');
+        $patient_id = /*$request->input('patient_id');*/$data->patient_id;
 
-        $is_webcam = $request->input('is_webcam');
+        $fileName = /*$request->input('patient_image');*/$data->patient_image;
+
+        $image_name = /*$request->input('image_name');*/$data->image_name;
+
+        $is_webcam = /*$request->input('is_webcam');*/$data->is_webcam;
 
         if($is_webcam == true){
-            $fileName = time().".png";
-            $image_name = $first_name.".png";
-            $path =  base_path() . '/public/uploaded_images/'.$fileName;
-            $img = $request->input('image_name');
-            $img = str_replace(' ', '', $img);
-            $img = substr($img, strpos($img, ",")+1);
+            $fileName = time() . ".png";
+            //  $image_name = $first_name . ".png";
+            $path = base_path() . '/public/uploaded_images/' . $fileName;
+            $img = $image_name;
+            $img = substr($img, strpos($img, ",") + 1);
             $data = base64_decode($img);
             $success = file_put_contents($path, $data);
+            $image_name = $first_name.".png";
         }
 
         if (isset($patient_id)) {
@@ -425,11 +431,11 @@ class ApiController extends Controller
 
     public function upload_webcam_image(Request $request)
     {
-       //dd($request['base_img']);
         $fileName = time() . ".png";
         $image_name = $first_name . ".png";
         $path = base_path() . '/public/uploaded_images/' . $fileName;
-        $img = $request->input('base_img');
+        $img =/* $request->input('base_img');*/ $request->getContent();
+        dd($img);
         $img = substr($img, strpos($img, ",") + 1);
         $data = base64_decode($img);
         $success = file_put_contents($path, $data);
