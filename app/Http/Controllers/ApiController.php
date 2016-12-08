@@ -425,6 +425,7 @@ class ApiController extends Controller
 
     public function upload_webcam_image(Request $request)
     {
+       //dd($request['base_img']);
         $fileName = time() . ".png";
         $image_name = $first_name . ".png";
         $path = base_path() . '/public/uploaded_images/' . $fileName;
