@@ -238,73 +238,73 @@ class ApiController extends Controller
     {
        // return $request->getContent();
 
-        $data = json_decode($request->getContent());
+        /*$data = json_decode($request->getContent());*/
 
-        $first_name = /*$request->input('first_name');*/ $data->first_name;
+        $first_name = $request->input('first_name'); // $data->first_name;
 
-        $middle_name =/* $request->input('middle_name');*/ $data->middle_name;
+        $middle_name = $request->input('middle_name'); // $data->middle_name;*/
 
-        $last_name = /*$request->input('last_name');*/$data->last_name;
+        $last_name = $request->input('last_name'); // $data->last_name;*/
 
-        $date_of_birth = /*$request->input('date_of_birth');*/$data->date_of_birth;
+        $date_of_birth = $request->input('date_of_birth'); // $data->date_of_birth;*/
 
-        $age = /*$request->input('age');*/$data->age;
+        $age = $request->input('age'); // $data->age;*/
 
-        $sex = /*$request->input('sex');*/$data->sex;
+        $sex = $request->input('sex'); // $data->sex;*/
 
-        $marital_status = /*$request->input('marital_status');*/$data->marital_status;
+        $marital_status = $request->input('marital_status'); // $data->marital_status;*/
 
-        $religion = /*$request->input('religion');*/$data->religion;
+        $religion = $request->input('religion'); // $data->religion;*/
 
-        $father_firstname = /*$request->input('father_firstname');*/$data->father_firstname;
+        $father_firstname = $request->input('father_firstname'); // $data->father_firstname;*/
 
-        $father_middlename = /*$request->input('father_middlename');*/$data->father_middlename;
+        $father_middlename = $request->input('father_middlename');  // $data->father_middlename;*/
 
-        $father_lastname = /*$request->input('father_lastname');*/$data->father_lastname;
+        $father_lastname = $request->input('father_lastname'); //$data->father_lastname;
 
-        $mother_firstname = /*$request->input('mother_firstname');*/$data->mother_firstname;
+        $mother_firstname = $request->input('mother_firstname'); //$data->mother_firstname;
 
-        $mother_middlename = /*$request->input('mother_middlename');*/$data->mother_middlename;
+        $mother_middlename = $request->input('mother_middlename'); //$data->mother_middlename;
 
-        $mother_lastname = /*$request->input('mother_lastname');*/$data->mother_lastname;
+        $mother_lastname = $request->input('mother_lastname'); //$data->mother_lastname;
 
-        $refered_name = /*$request->input('refered_name');*/$data->refered_name;
+        $refered_name = $request->input('refered_name'); //$data->refered_name;
 
-        $patient_unit_number = /*$request->input('patient_unit_number');*/$data->patient_unit_number;
+        $patient_unit_number = $request->input('patient_unit_number'); //$data->patient_unit_number;
 
-        $identity_type =/* $request->input('identity_type');*/$data->identity_type;
+        $identity_type = $request->input('identity_type'); //$data->identity_type;
 
-        $identity_number = /*$request->input('identity_number');*/$data->identity_number;
+        $identity_number = $request->input('identity_number'); //$data->identity_number;
 
-        $patient_state = /*$request->input('patient_state');*/$data->patient_state;
+        $patient_state = $request->input('patient_state'); //$data->patient_state;
 
-        $patient_local_goverment_area = /*$request->input('patient_local_goverment_area');*/$data->patient_local_goverment_area;
+        $patient_local_goverment_area = $request->input('patient_local_goverment_area'); //$data->patient_local_goverment_area;
 
-        $tribe = /*$request->input('tribe');*/$data->tribe;
+        $tribe = $request->input('tribe'); //$data->tribe;
 
-        $nationality = /*$request->input('nationality');*/$data->nationality;
+        $nationality = $request->input('nationality'); //$data->nationality;
 
-        $blood_group = /*$request->input('blood_group');*/$data->blood_group;
+        $blood_group = $request->input('blood_group'); //$data->blood_group;
 
-        $language = /*$request->input('language');*/$data->language;
+        $language = $request->input('language'); //$data->language;
 
         $currentdatetime = date("Y-m-d  H:i:s");
 
-        $receipt_id = /*$request->input('receipt_id');*/$data->receipt_id;
+        $receipt_id = $request->input('receipt_id'); //$data->receipt_id;
 
-        $patient_id = /*$request->input('patient_id');*/$data->patient_id;
+        $patient_id = $request->input('patient_id'); //$data->patient_id;
 
-        $fileName = /*$request->input('patient_image');*/$data->patient_image;
+        $fileName = $request->input('patient_image'); //$data->patient_image;
 
-        $image_name = /*$request->input('image_name');*/$data->image_name;
+        $image_name = $request->input('image_name'); //$data->image_name;
 
-        $is_webcam = /*$request->input('is_webcam');*/$data->is_webcam;
+        $is_webcam = $request->input('is_webcam'); //$data->is_webcam;
 
         if($is_webcam == true){
             $fileName = time() . ".png";
             //  $image_name = $first_name . ".png";
             $path = base_path() . '/public/uploaded_images/' . $fileName;
-            $img = $data->patient_image;
+            $img =  $request->input('patient_image');
             $img = substr($img, strpos($img, ",") + 1);
             $data = base64_decode($img);
             $success = file_put_contents($path, $data);
