@@ -70,7 +70,7 @@ AppEHR.controller('dashboard', ['$scope', '$rootScope', '$window', 'DashboardCou
             offset: (pageSize * curPage), limit: $scope.itemsPerPage
         }, todayAppointmentsSuccess, dashboardFailure);
     }
-//Encoutners
+	// Encoutners
     GetTodayEncounters.get({
 		token: $window.sessionStorage.token,
 		offset: 0, 
@@ -105,4 +105,10 @@ AppEHR.controller('dashboard', ['$scope', '$rootScope', '$window', 'DashboardCou
             offset: (pageSize * curPage), limit: $scope.itemsPerPage
         }, todayEncountersSuccess, dashboardFailure);
     }
+
+    /*$scope.splitEncounterDate = function(dateTime){
+    	if(dateTime == undefined || dateTime == '') return true;
+    	dateTime = dateTime.split(' ');
+    	return dateTime[1];
+    }*/
 }]);

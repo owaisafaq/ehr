@@ -838,7 +838,8 @@
             <div class="modal-body">
                 <!-- <form class="custom-form">-->
                 <!--<div class="row">-->
-                    <input class="form-control focusedField" id="abc" type="text" placeholder="Scan Bar Code" autofocus/>
+                    <input class="form-control focusedField {{invalidBarCodeColor}}" id="abc" type="text" placeholder="Scan Bar Code" autofocus/>
+                    <p ng-show="barcodeError" class="help-block PIValid">{{invalidBarCode}}</p>
                 <!--</div>-->
                 <!-- </form> -->
             </div>

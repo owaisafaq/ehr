@@ -7,10 +7,21 @@ AppEHR.factory("AUTH", function ($resource) {
 });
 AppEHR.factory("PatientInformation", function ($resource) {
     function getResource(params, body) {
-        var res2 = $resource(serverPath + 'add_patient', params, {
-            save: {method: 'POST'},
+        var res2 = $resource(serverPath + 'add_patient', body, {
+            save: {
+                method: 'OPTIONS',
+                transformRequest: function(obj) {
+                  var str = [];
+                  for(var p in obj)
+                  str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                  return str.join("&");
+                },
+                //async : true
+                headers: { 'Content-type': 'application/json' }
+            },
             update: {method: 'PUT'},
-            get: {method: 'GET'}
+            get: { method: 'GET', headers: { 'Content-length': '9999999' },headers: { 'Content-type': 'application/x-www-form-urlencoded' } }
+
         });
         return res2;
     }
@@ -25,6 +36,7 @@ AppEHR.factory("PatientInformation", function ($resource) {
         },
         get: function (params, body, success) {
             var res = getResource(params, body);
+
             return res.get(params, body, success);
         }
     };
@@ -3872,6 +3884,21 @@ AppEHR.factory("BillsByPatients", function ($resource) {
 AppEHR.factory("CategoriesByGroup", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'get_inventory_categories_groups', params, {
+            get: {method: 'GET'}
+        });
+        return res2;
+    }
+    var patientRegistrationEmployer = {
+        get: function (params, body, success) {
+            var res = getResource(params, body);
+            return res.get(params, body, success);
+        }
+    };
+    return patientRegistrationEmployer;
+})
+AppEHR.factory("CheckPatientExists", function ($resource) {
+    function getResource(params, body) {
+        var res2 = $resource(serverPath + 'check_patient_exists', params, {
             get: {method: 'GET'}
         });
         return res2;
