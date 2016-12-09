@@ -366,15 +366,14 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                     refered_name: $scope.PI.refered_name == undefined ? '' : $scope.PI.refered_name,
                     image_name: $scope.PI.imageOrignalName == undefined ? '' : $scope.PI.imageOrignalName,
                     patient_image: $scope.PI.patient_image == undefined ? '' : $scope.PI.patient_image,
-                    is_webcam: $scope.is_webcam == true ? true : false //.name
+                    is_webcam: $scope.is_webcam == true ? true : false
                 };
                 $rootScope.loader = 'show';
                 if ($window.sessionStorage.patient_id == undefined) {
                     console.log(dataToBeAdded); //return true;
-
                     $http({
                         method: 'POST',
-                        url: 'http://131.107.100.10/ehr/public/api/add_patient?token='+$window.sessionStorage.token,
+                        url: serverPath+'add_patient?token='+$window.sessionStorage.token,
                         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                         transformRequest: function(obj) {
                             var str = [];
@@ -383,14 +382,25 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                             return str.join("&");
                         },
                         data: dataToBeAdded
-                    }).success(function () {});
+                    }).success(function (res) { patientInformationSuccess(res) });
 
                     //PatientInformation.save(dataToBeAdded, patientInformationSuccess, patientInformationFailed);
                 } else {
-                    console.log(PI, 'PI');
                     console.log(dataToBeAdded, 'dataToBeAdded');
                     dataToBeAdded.patient_id = $window.sessionStorage.patient_id;
-                    PatientInformation.save(dataToBeAdded, patientInfoUpdateSucess, patientInfoUpdateFailed);
+                    $http({
+                        method: 'POST',
+                        url: serverPath+'add_patient?token='+$window.sessionStorage.token,
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                        transformRequest: function(obj) {
+                            var str = [];
+                            for(var p in obj)
+                                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                            return str.join("&");
+                        },
+                        data: dataToBeAdded
+                    }).success(function (res) { patientInfoUpdateSucess(res) });
+                    //PatientInformation.save(dataToBeAdded, patientInfoUpdateSucess, patientInfoUpdateFailed);
                 }
                 function patientInformationSuccess(res) {
                     if (res.status == true) {
@@ -2066,7 +2076,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
         $scope.saveWebCamImage = function(){
             $scope.webcamImage = true;
             $scope.is_webcam = true;
-            console.log($scope.PI.patient_image);
+            //console.log($scope.PI.patient_image);
         }
 
         /*SEARCH BY Receipt ID*/
