@@ -7,21 +7,18 @@ AppEHR.factory("AUTH", function ($resource) {
 });
 AppEHR.factory("PatientInformation", function ($resource) {
     function getResource(params, body) {
-        var res2 = $resource(serverPath + 'add_patient', body, {
+        var res2 = $resource(serverPath + 'add_patient', params, {
             save: {
                 method: 'OPTIONS',
-                transformRequest: function(obj) {
-                  var str = [];
-                  for(var p in obj)
-                  str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                  return str.join("&");
+                transformRequest: function (data) {
+                     // modify data then
+                     return angular.toJson(data);
                 },
                 //async : true
-                headers: { 'Content-type': 'application/json' }
+                headers: { 'Content-type': 'application/x-www-form-urlencoded', 'Content-length': 300000 }
             },
             update: {method: 'PUT'},
-            get: { method: 'GET', headers: { 'Content-length': '9999999' },headers: { 'Content-type': 'application/x-www-form-urlencoded' } }
-
+            get: { method: 'GET', headers: { 'Content-length': '9999999', 'Content-type': 'application/x-www-form-urlencoded' } }
         });
         return res2;
     }

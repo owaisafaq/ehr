@@ -5,6 +5,7 @@ AppEHR.config(['$httpProvider', '$routeProvider', '$locationProvider', function 
         $locationProvider.hashPrefix();
         $httpProvider.defaults.headers.common = {};
         $httpProvider.defaults.headers.post = {};
+        $httpProvider.defaults.headers.options = {};
         $httpProvider.defaults.headers.put = {};
         $httpProvider.defaults.headers.patch = {};
         $routeProvider.

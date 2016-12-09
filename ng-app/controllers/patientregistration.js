@@ -371,7 +371,21 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
                 $rootScope.loader = 'show';
                 if ($window.sessionStorage.patient_id == undefined) {
                     console.log(dataToBeAdded); //return true;
-                    PatientInformation.save(dataToBeAdded, patientInformationSuccess, patientInformationFailed);
+
+                    $http({
+                        method: 'POST',
+                        url: 'http://131.107.100.10/ehr/public/api/add_patient?token='+$window.sessionStorage.token,
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                        transformRequest: function(obj) {
+                            var str = [];
+                            for(var p in obj)
+                                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                            return str.join("&");
+                        },
+                        data: dataToBeAdded
+                    }).success(function () {});
+
+                    //PatientInformation.save(dataToBeAdded, patientInformationSuccess, patientInformationFailed);
                 } else {
                     console.log(PI, 'PI');
                     console.log(dataToBeAdded, 'dataToBeAdded');
