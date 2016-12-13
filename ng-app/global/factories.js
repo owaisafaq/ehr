@@ -9,7 +9,7 @@ AppEHR.factory("PatientInformation", function ($resource) {
     function getResource(params, body) {
         var res2 = $resource(serverPath + 'add_patient', params, {
             save: {
-                method: 'OPTIONS',
+                method: 'POST',
                 transformRequest: function (data) {
                      // modify data then
                      return angular.toJson(data);
