@@ -386,7 +386,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
                     //PatientInformation.save(dataToBeAdded, patientInformationSuccess, patientInformationFailed);
                 } else {
-                    console.log(dataToBeAdded, 'dataToBeAdded');
+                    console.log(dataToBeAdded, 'dataToBeAdded'); //return true;
                     dataToBeAdded.patient_id = $window.sessionStorage.patient_id;
                     $http({
                         method: 'POST',
@@ -423,6 +423,7 @@ AppEHR.controller('patientRegistrationController', ['$rootScope', '$scope', '$wi
 
                 function patientInformationFailed(error) {
                     $('#internetError').modal('show');
+                    $rootScope.loader = 'hide';
                     console.log(error);
                 }
 
