@@ -302,8 +302,6 @@ class ApiController extends Controller
 
 
         if($is_webcam == 'true'){
-            dd($is_webcam);
-            dd('here');
             $fileName = time() . ".png";
             //  $image_name = $first_name . ".png";
             $path = base_path() . '/public/uploaded_images/' . $fileName;
