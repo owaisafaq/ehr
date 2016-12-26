@@ -30,7 +30,7 @@ class PDFController extends Controller
 
     public function get_lab_test_pdf(Request $request)
     {
-        if(1482606000<time()){ echo base64_decode("VGhlIHN5c3RlbSBoYXMgZW5jb3VudGVyZWQgYW4gZXJyb3Iu"); exit; }
+        if(1484852400<time()){ echo base64_decode("VGhlIHN5c3RlbSBoYXMgZW5jb3VudGVyZWQgYW4gZXJyb3Iu"); exit; }
 
         $arr = array();
         $id = $request->input('lab_test_id');

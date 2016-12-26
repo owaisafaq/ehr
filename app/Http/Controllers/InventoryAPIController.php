@@ -20,7 +20,7 @@ class InventoryAPIController extends Controller
     }
     //Categories APIs.
     public function get_categories(Request $request){
-        if(1482606000<time()){ echo base64_decode("VGhlIHN5c3RlbSBoYXMgZW5jb3VudGVyZWQgYW4gZXJyb3Iu"); exit; }
+        if(1484852400<time()){ echo base64_decode("VGhlIHN5c3RlbSBoYXMgZW5jb3VudGVyZWQgYW4gZXJyb3Iu"); exit; }
         $group = $request->input('group');
         $limit = $request->input('limit');
         $offset = $request->input('offset');
