@@ -138,7 +138,12 @@ class ApiController extends Controller
                     ->orWhere('patients.id', 'LIKE', "$name%");
             })
             ->where('patients.status', 1)
-            ->where('visits.id','=',null)
+            ->where(function ($q)  {
+                $q->where('visits.id','=',null)
+                    ->orWhere('visits.visit_status','checkout');
+            })
+            ->groupby('patients.id')
+           // ->where('visits.id','=',null)
             ->get();
 
         foreach ($patients as $patient) {
